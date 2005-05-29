@@ -32,8 +32,8 @@ REAL(dp), DIMENSION(size(y)) :: dym,dyt,yt
 
 ndum=assert_eq(size(y),size(dydx),size(yout),'rk4')
 
-hh=h*0.5_sp
-h6=h/6.0_sp
+hh=h*0.5_dp
+h6=h/6.0_dp
 xh=x+hh
 yt=y+hh*dydx !First step.
 
@@ -43,7 +43,7 @@ call derivs(xh,yt,dym) !Third step.
 yt=y+h*dym
 dym=dyt+dym
 call derivs(x+h,yt,dyt) !Fourth step.
-yout=y+h6*(dydx+dyt+2.0_sp*dym) !Accumulate increments with proper weights.
+yout=y+h6*(dydx+dyt+2.0_dp*dym) !Accumulate increments with proper weights.
 
 
 

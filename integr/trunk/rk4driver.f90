@@ -4,7 +4,7 @@ SUBROUTINE rk4driver(xi,yi,xf,nsteps,y,derivs)
 ! to cover a range xi to xf of the independed variable.
 
 
-USE nrtype ; USE ifc_integr
+USE nrtype ; USE ifc_integr; USE nrutil, ONLY : assert_eq
 
 IMPLICIT none
 
@@ -25,13 +25,16 @@ END INTERFACE
 !
 
 REAL(dp) ::h, v(size(yi))
-INTEGER(I4B) ::i
+INTEGER(I4B) ::i,ndum,mdum
 
-h = (xf-xi)/nsteps
+ndum=assert_eq(size(y,1),nsteps+1,'rk4Pdriver:y-1')
+mdum=assert_eq(size(y,2),size(yi),'rk4Pdriver:y-2')
+
+h = (xf-xi)/Real(nsteps,dp)
 
 y(1,:)=yi
 
-DO i=2,nsteps
+DO i=2,nsteps+1
 	call derivs(y(i-1,1),y(i-1,:),v)
 	CALL rk4(y(i-1,:),v,y(i-1,1),h,y(i,:),derivs)
 END DO
