@@ -6,7 +6,10 @@ OPTFULL = -fastsse
 TARGET = libnr
 OBJ = nrtype.o nr.o nrutil.o 
 MOD = nrtype.mod nr.mod nrutil.mod
-INSTALLDIR = /home/vasimos/lib64/nr
+# Where to find user libraries:
+userLibPATH = /home/vasimos/lib64
+# Where to find user modules:
+userModPATH = $(userLibPATH)/modules
 
 $(TARGET): $(OBJ)
 	ar cr $(TARGET).a $(OBJ)
@@ -20,8 +23,8 @@ $(TARGET): $(OBJ)
 $(OBJ): nrtype.f90
 
 
-install:	
-	cp *.mod $(INSTALLDIR)
-	cp $(TARGET).a $(INSTALLDIR)
+install:
+	cp *.mod $(userModPATH)
+	cp $(TARGET).a $(userLibPATH)
 clean:
 	rm -f *.o *.mod *.a
