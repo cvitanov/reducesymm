@@ -1,4 +1,5 @@
 # Makefile to produce a static library and modules from nr*.f90 modules.
+# by vasimos
 
 COMP = pgf90
 OPTFULL = -fastsse
