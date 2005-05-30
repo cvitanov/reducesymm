@@ -27,8 +27,8 @@ END INTERFACE
 REAL(dp) ::h, v(size(yi))
 INTEGER(I4B) ::i,ndum,mdum
 
-ndum=assert_eq(size(y,1),nsteps+1,'rk4Pdriver:y-1')
-mdum=assert_eq(size(y,2),size(yi),'rk4Pdriver:y-2')
+ndum=assert_eq(size(y,1),nsteps+1,'rk4driver: y dim1')
+mdum=assert_eq(size(y,2),size(yi),'rk4driver: y dim2')
 
 h = (xf-xi)/Real(nsteps,dp)
 

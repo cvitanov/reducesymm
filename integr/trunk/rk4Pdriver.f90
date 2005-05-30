@@ -1,44 +1,52 @@
-SUBROUTINE rk4driver(xi,yi,xf,nsteps,y,derivs)
+SUBROUTINE rk4Pdriver(xi,yi,xf,nsteps,y,derivs,p,sect)
 
-! Driver that simply repeats the integration steps of rk4 in order
-! to cover a range xi to xf of the independed variable.
-
-
-USE nrtype ; USE ifc_integr; USE nrutil, ONLY : assert_eq
+USE nrtype ; USE intfaces ; USE nrutil, ONLY : assert_eq
 
 IMPLICIT none
 
-REAL(dp), INTENT(IN) :: xi,xf
-REAL(dp), DIMENSION(:), INTENT(IN) :: yi
-REAL(dp), DIMENSION(:,:), INTENT(OUT) :: y
-INTEGER(I4B), INTENT(IN) :: nsteps
+REAL(DP), INTENT(IN) :: xi,xf
+REAL(DP), DIMENSION(:), INTENT(IN) :: yi
+REAL(DP), DIMENSION(:,:), INTENT(OUT) :: y
+INTEGER(I4B), INTENT(IN) :: nsteps, p, sect
 INTERFACE
-	SUBROUTINE derivs(x,y,dydx)
+	SUBROUTINE derivs(x,y,dydx,kappa)
 		USE nrtype
 		IMPLICIT NONE
-		REAL(dp), INTENT(IN) :: x
-		REAL(dp), DIMENSION(:), INTENT(IN) :: y
-		REAL(dp), DIMENSION(:), INTENT(OUT) :: dydx	
+		REAL(DP), INTENT(IN) :: x,kappa
+		REAL(DP), DIMENSION(:), INTENT(IN) :: y
+		REAL(DP), DIMENSION(:), INTENT(OUT) :: dydx	
 	END SUBROUTINE derivs
 END INTERFACE
 !
 !
 
-REAL(dp) ::h, v(size(yi))
-INTEGER(I4B) ::i,ndum,mdum
+REAL(DP) ::h, v(size(yi)), kappa
+INTEGER(I4B) ::i,idum, ndum
 
-ndum=assert_eq(size(y,1),nsteps+1,'rk4Pdriver:y-1')
-mdum=assert_eq(size(y,2),size(yi),'rk4Pdriver:y-2')
+ndum=assert_eq(size(y,1),nsteps+1,'rk4Pdriver: y dim1')
+mdum=assert_eq(size(y,2),size(yi),'rk4Pdriver: y dim2')
 
-h = (xf-xi)/Real(nsteps,dp)
+h=(xf-xi)/Real(nsteps,dp)
 
-y(1,:)=yi
+y(1,:) = yi
 
-DO i=2,nsteps+1
-	call derivs(y(i-1,1),y(i-1,:),v)
-	CALL rk4(y(i-1,:),v,y(i-1,1),h,y(i,:),derivs)
-END DO
+kappa = 1.0_dp
 
+
+if ( p == 1 ) then
+	DO i=2,nsteps+1
+		kappa=1.0_dp	
+		call derivs(y(i-1,size(y,2)),y(i-1,:),v, kappa)
+		kappa=1.0_dp/v(sect)
+		call derivs(y(i-1,size(y,2)),y(i-1,:),v, kappa)
+		CALL rk4(y(i-1,:),v,y(i-1,size(y,2)),h,y(i,:),derivs,p,sect)
+	END DO
+else
+	DO i=2,nsteps+1
+		call derivs(y(i-1,size(y,2)),y(i-1,:),v, kappa)
+		CALL rk4(y(i-1,:),v,y(i-1,size(y,2)),h,y(i,:),derivs,p,sect)
+	END DO
+end if
 
 
 

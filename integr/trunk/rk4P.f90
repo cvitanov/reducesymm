@@ -1,50 +1,61 @@
-Subroutine rk4(y,dydx,x,h,yout,derivs)
+Subroutine rk4P(y,dydx,x,h,yout,derivs,p,sect)
 
-! From Numerical Recipes Book.
-
-
-USE nrtype; USE nrutil, ONLY : assert_eq
+USE nrtype ; USE intfaces
 
 IMPLICIT NONE
 
-REAL(dp), DIMENSION(:), INTENT(IN) :: y,dydx
-REAL(dp), INTENT(IN) :: x,h
-REAL(dp), DIMENSION(:), INTENT(OUT) :: yout
+REAL(DP), DIMENSION(:), INTENT(IN) :: y,dydx
+REAL(DP), INTENT(IN) :: x,h
+REAL(DP), DIMENSION(:), INTENT(OUT) :: yout
+INTEGER(I4B), INTENT(IN) :: p,sect
 INTERFACE
-	SUBROUTINE derivs(x,y,dydx)
+	SUBROUTINE derivs(x,y,dydx,kappa)
 		USE nrtype
 		IMPLICIT NONE
-		REAL(dp), INTENT(IN) :: x
-		REAL(dp), DIMENSION(:), INTENT(IN) :: y
-		REAL(dp), DIMENSION(:), INTENT(OUT) :: dydx	
+		REAL(DP), INTENT(IN) :: x, kappa
+		REAL(DP), DIMENSION(:), INTENT(IN) :: y
+		REAL(DP), DIMENSION(:), INTENT(OUT) :: dydx	
 	END SUBROUTINE derivs
 END INTERFACE
 
-!Given values for the N variables y and their derivatives dydx known at x, use the fourthorder
-!Runge-Kutta method to advance the solution over an interval h and return the incremented
-!variables as yout, which need not be a distinct array from y. y, dydx and yout
-!are all of length N. The user supplies the subroutine derivs(x,y,dydx), which returns
-!derivatives dydx at x.
 
-INTEGER(I4B) :: ndum
-REAL(dp) :: h6,hh,xh
-REAL(dp), DIMENSION(size(y)) :: dym,dyt,yt
 
-ndum=assert_eq(size(y),size(dydx),size(yout),'rk4')
+REAL(DP), DIMENSION(size(y)) :: k1,k2,k3,k4,v
+REAL(DP) :: kappa
 
-hh=h*0.5_dp
-h6=h/6.0_dp
-xh=x+hh
-yt=y+hh*dydx !First step.
+ndum=assert_eq(size(y),size(dydx),size(yout),'rk4P')
 
-call derivs(xh,yt,dyt) !Second step.
-yt=y+hh*dyt
-call derivs(xh,yt,dym) !Third step.
-yt=y+h*dym
-dym=dyt+dym
-call derivs(x+h,yt,dyt) !Fourth step.
-yout=y+h6*(dydx+dyt+2.0_dp*dym) !Accumulate increments with proper weights.
+
+kappa=1.0_dp
+
+
+k1 = h*dydx
 
 
 
-END SUBROUTINE rk4
+if (p == 0 ) then
+	call derivs(x + h/2.0_dp , y + k1/2.0_dp, v, kappa)
+	k2 = h*v
+	call derivs(x + h/2.0_dp , y + k2/2.0_dp, v, kappa)
+	k3 = h*v
+else
+	kappa=1.0_dp
+	call derivs(x + h/2.0_dp , y + k1/2.0_dp, v, kappa)
+	kappa=1.0_dp/v(sect)
+	call derivs(x + h/2.0_dp , y + k1/2.0_dp, v, kappa)
+	k2 = h*v
+	kappa=1.0_dp
+	call derivs(x + h/2.0_dp , y + k2/2.0_dp, v, kappa)
+	kappa=1.0_dp/v(sect)
+	call derivs(x + h/2.0_dp , y + k2/2.0_dp, v, kappa)
+	k3 = h*v
+	kappa=1.0_dp
+	call derivs(x + h, y + k3,v, kappa)
+	kappa=1.0_dp/v(sect)
+end if 
+
+call derivs(x + h, y + k3,v, kappa)
+k4 = h*v
+yout = y + k1/6.0_dp+ k2/3.0_dp+ k3/3.0_dp+ k4/6.0_dp
+
+end subroutine
