@@ -6,12 +6,14 @@ COMP = pgf90
 OPTFULL = -fastsse
 TARGET = libintegr
 OBJ = rk4.o rk4driver.o rk4P.o rk4Pdriver.o
-MOD = ifc_integr.mod
+targetMod = ifc_integr.mod
 # Where to find user libraries:
 userLibPATH = /home/vasimos/lib64
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
+# Names of user libraries
 nrLIB = nr
+integrLIB= integr
 
 $(TARGET): $(OBJ)
 	ar cr $(TARGET).a $(OBJ)
@@ -20,14 +22,19 @@ $(TARGET): $(OBJ)
 %.o: %.f90
 	$(COMP) -c $(OPTFULL) -o $@ -I$(userModPATH) -L$(userLibPATH)  $< -l$(nrLIB)
 
-$(OBJ): $(MOD)
+$(OBJ): $(targetMod)
 
-$(MOD): 
+$(targetMod): 
 	$(COMP) -c -I$(userModPATH) ifc_integr.f90 
 
 
 install:
 	cp *.mod $(userModPATH)
 	cp $(TARGET).a $(userLibPATH)
+
+uninstall:
+	rm -f $(userModPATH)/$(targetMod)
+	rm -f $(userLibPATH)/$(TARGET).a
+
 clean:
 	rm -f *.o *.mod *.a
