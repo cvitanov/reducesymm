@@ -1,6 +1,6 @@
 Subroutine rk4P(y,dydx,x,h,yout,derivs,p,sect)
 
-USE nrtype ; USE intfaces
+USE nrtype ; USE nrutil, ONLY : assert_eq
 
 IMPLICIT NONE
 
@@ -22,6 +22,7 @@ END INTERFACE
 
 REAL(DP), DIMENSION(size(y)) :: k1,k2,k3,k4,v
 REAL(DP) :: kappa
+integer(i4b) :: ndum
 
 ndum=assert_eq(size(y),size(dydx),size(yout),'rk4P')
 
