@@ -41,5 +41,46 @@ INTERFACE
 	END SUBROUTINE
 END INTERFACE
 
+INTERFACE
+	SUBROUTINE rk4P(y,dydx,x,h,yout,derivs,p,sect)
+		USE nrtype
+		IMPLICIT NONE
+		REAL(DP), DIMENSION(:), INTENT(IN) :: y,dydx
+		REAL(DP), INTENT(IN) :: x,h
+		REAL(DP), DIMENSION(:), INTENT(OUT) :: yout
+		INTEGER(I4B), INTENT(IN) :: p,sect
+		INTERFACE
+			SUBROUTINE derivs(x,y,dydx,kappa)
+				USE nrtype
+				IMPLICIT NONE
+				REAL(DP), INTENT(IN) :: x,kappa
+				REAL(DP), DIMENSION(:), INTENT(IN) :: y
+				REAL(DP), DIMENSION(:), INTENT(OUT) :: dydx	
+			END SUBROUTINE derivs
+		END INTERFACE
+	END SUBROUTINE rk4P
+END INTERFACE
+
+INTERFACE
+	SUBROUTINE rk4Pdriver(xi,yi,xf,nsteps,y,derivs,p,sect)
+		USE nrtype
+		IMPLICIT none
+		REAL(DP), INTENT(IN) :: xi,xf
+		REAL(DP), DIMENSION(:), INTENT(IN) :: yi
+		REAL(DP), DIMENSION(:,:), INTENT(OUT) :: y
+		INTEGER(I4B), INTENT(IN) :: nsteps,p,sect
+		INTERFACE
+			SUBROUTINE derivs(x,y,dydx,kappa)
+				USE nrtype
+				IMPLICIT NONE
+				REAL(DP), INTENT(IN) :: x,kappa
+				REAL(DP), DIMENSION(:), INTENT(IN) :: y
+				REAL(DP), DIMENSION(:), INTENT(OUT) :: dydx	
+			END SUBROUTINE derivs
+		END INTERFACE
+	END SUBROUTINE rk4Pdriver
+END INTERFACE
+
+
 
 END MODULE
