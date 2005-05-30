@@ -23,7 +23,7 @@ $(TARGET): $(OBJ)
 $(OBJ): $(MOD)
 
 $(MOD): 
-	$(COMP) -c -I$(userModPATH) -L$(userLibPATH) ifc_integr.f90 -l$(nrLIB)
+	$(COMP) -c -I$(userModPATH) ifc_integr.f90 
 
 
 install:
