@@ -2,6 +2,26 @@ MODULE ifc_integr
 
 ! Contains all the subroutine declarations.
 
+interface
+	subroutine integrP(yi,Delta_x,qfP,yP,nsteps,nstepsP,nInters,sect,derivs)
+		USE nrtype 
+		IMPLICIT NONE
+		integer(i4b), intent(in) :: nsteps, nstepsP, nInters, sect
+		real(dp), intent(in) ::  yi(:), Delta_x, qfP
+		real(dp), intent(out) :: yP(:,:)
+		INTERFACE
+			SUBROUTINE derivs(x,y,dydx)
+				USE nrtype
+				IMPLICIT NONE
+				REAL(dp), INTENT(IN) :: x
+				REAL(dp), DIMENSION(:), INTENT(IN) :: y
+				REAL(dp), DIMENSION(:), INTENT(OUT) :: dydx	
+			END SUBROUTINE derivs
+		END INTERFACE
+	end subroutine
+end interface
+
+
 INTERFACE
 	SUBROUTINE rk4(y,dydx,x,h,yout,derivs)
 		USE nrtype

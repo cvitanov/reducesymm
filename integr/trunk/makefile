@@ -5,7 +5,7 @@
 COMP = pgf90 
 OPTFULL = -fastsse
 TARGET = libintegr
-OBJ = rk4.o rk4driver.o rk4P.o rk4Pdriver.o
+OBJ = integrP.o rk4.o rk4driver.o rk4P.o rk4Pdriver.o 
 targetMod = ifc_integr.mod
 # Where to find user libraries:
 userLibPATH = /home/vasimos/lib64

@@ -1,6 +1,8 @@
 subroutine integrP(yi,Delta_x,qfP,yP,nsteps,nstepsP,nInters,sect,derivs)
 
-USE nrtype; USE ifc_integr
+USE nrtype 
+USE ifc_integr, only: rk4P, rk4Pdriver
+USE nrutil, only: assert_eq 
 
 IMPLICIT NONE
 
@@ -24,11 +26,11 @@ END INTERFACE
 
 
 
-ndum = assert_eq(size(yP,1), nstepsP, "integrP: nstepsP")
-d = assert_eq(size(yi),size(yP,2, "integrP: d-1")) - 1 
+ndum = assert_eq(size(yP,1), nInters, "integrP: nstepsP")
+d = assert_eq(size(yi),size(yP,2), "integrP: d-1") - 1 
 
-allocate(y(nsteps,d+1))
-allocate(y_poinc(nstepsP,d+1))
+allocate(y(nsteps+1,d+1))
+allocate(y_poinc(nstepsP+1,d+1))
 
 p=0
 
@@ -41,13 +43,13 @@ end do
 xi=y(1,d+1)
 
 do while( (iI<nInters) )
-	call rk4driver(y(1,d+1),y(1,:),y(1,d+1)+Delta_x,nsteps,y,derivs,p,sect)
+	call rk4Pdriver(y(1,d+1),y(1,:),y(1,d+1)+Delta_x,nsteps,y,derivs,p,sect)
 	if  ( ( y(nsteps,sect) > qfP ) .AND. ( y(1,sect) < qfP  ) ) THEN ! Intersected Poincare, refine.
 		p=1
-		call rk4driver(y(1,sect),y(1,:),qfP,nstepsP,y_poinc,derivs,p,sect)
+		call rk4Pdriver(y(1,sect),y(1,:),qfP,nstepsP,y_poinc,derivs,p,sect)
 		iI=iI+1
 		p=0
-		yP(iI) = y_poinc(nstepsP,:)
+		yP(iI,:) = y_poinc(nstepsP,:)
 		y=0.0_dp
 		y(1,:)=y_poinc(nstepsP,:)
 		y(1,sect)=qfP
