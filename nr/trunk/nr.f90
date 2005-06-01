@@ -1,4 +1,3 @@
-!     Last change:  V    19 Feb 2004    6:09 pm
 MODULE nr
 	INTERFACE
 		SUBROUTINE airy(x,ai,bi,aip,bip)
