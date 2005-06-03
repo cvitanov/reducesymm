@@ -145,8 +145,8 @@ the loop deviates from the true flow by the misalignment of the loop tangent vec
 
  \subsection{A Jacobian Matrix for a Loop}
  
-  The Jacobian matrix $\mathbf{J}^t(x_o)$ describes the deformation of the neighborhood of a point $x_o$ under a flow $f^t$, 
-  in the linear approximation,
+  The Jacobian matrix $\mathbf{J}^t(x_o)$ describes the deformation of the neighborhood 
+  of a point $x_o$ under a flow $f^t$, in the linear approximation,
   \beq
   	\mathbf{J}^t_{ij}(x_o)=\left. \fp{f^t_i(x_o)_i}{x_{o_j} }\right|_{x=x_o} \, .
 	\label{eq:def:J}
@@ -176,9 +176,9 @@ the loop deviates from the true flow by the misalignment of the loop tangent vec
    and we cannot calculate the Jacobian along it. Inspired by the time-ordered 
    product \refeq{eq:def:Jacobian}, we \emph{define} the Jacobian along any path as
    \bea
-  	\Js^s(x_o) & \equiv & \mathbf{T} e^{\int ds  \mathbf{A}\left(x(s))\right)} 		\continue
+  	\Js^s(x_o) & \equiv & \mathbf{T} e^{\int ds\,  \dtds\, \mathbf{A}\left(x(s))\right)} 		\continue
 			& \equiv &  \lim_{m\rightarrow \infty} \prod_{n=m}^1
-			  	e^{ \Delta s \, \mathbf{A}\left(x(n\, \Delta s)\right) }\,, 
+			  	e^{ \Delta s \,\dtds\, \mathbf{A}\left(x(n\, \Delta s)\right) }\,, 
 	\label{eq:def:sJacobian}
   \eea 
    where $s\in[s_i,s_f]$ parameterizes the path, $\Delta s = (s_f-s_i)/m$ and $\mathbf{T}$ now
@@ -187,13 +187,13 @@ the loop deviates from the true flow by the misalignment of the loop tangent vec
    
    Obviously, $\Js^s(x_o)$ is a solution of the differential equation
    \beq
-   	\fd{\Js^s(x_o)}{s}=\mathbf{A}(x(s))\Js^s(x_o).
+   	\fd{\Js^s(x_o)}{s}=\dtds\,\mathbf{A}(x(s))\,\Js^s(x_o).
 	\label{eq:difJ}
    \eeq 
    
 
 
- \subsection{Properties of $\mathbf{J}_L$}
+ \subsection{Properties of $\JL$}
  
   We now prove that $\JL$ shares with $\Jp$ the property that its eigenvalues do not 
   depend on the initial point on the loop. Definition \refeq{eq:def:sJacobian} establishes 
@@ -237,27 +237,29 @@ the loop deviates from the true flow by the misalignment of the loop tangent vec
   group property \refeq{eq:Jgroup} and not the specific definition of $\Js$ or the fact that it was computed
   along a loop and not a periodic orbit. 
   
-  We would also like to prove that the eigenvalues of $\mathbf{J}_L$ are invariant under a change of
-  variables, $y=h(x)$. For notational simplicity we temporarilly drop the index $L$ in $\mathbf{J}_L$.
-  Let $\mathbf{K}^s(y_o)$ denote the Jacobian for the loop in the new variables, with $y_o=h(x_o)$.
+  We would also like to prove that the eigenvalues of $\JL$ are invariant under a change of
+  variables, $y=h(x)$. For notational simplicity we temporarilly drop the tilde in $\Js$.
+  Let $\mathbf{\hat{J}}^s(y_o)$ denote the Jacobian for the loop in the new variables, with $y_o=h(x_o)$.
   Then, according to the definition of the Jacobian on a loop
   \beq
-   	\frac{d\mathbf{K}^s}{ds}=\frac{\partial u}{\partial y}\mathbf{K}^s\,,
-	\label{eq:difK}
+   	\frac{d\mathbf{\hat{J}}^s}{ds}=\hdtds\mathbf{\hat{A}}\mathbf{\hat{J}}^s\,,
+	\label{eq:difhatJ}
   \eeq
-  where 
+  where $\hat{A}_{ij}= \frac{\partial u_i}{\partial y_j}$ the matrix of variations in the new
+  coordinates and
   \bea
   	u_i & = & \fd{y_i}{t} \continue
-	 	& = & \fp{h_i}{x_j} v_j
+	 	& = & \fp{h_i}{x_j} v_j \,.
   \eea
-  and in we adopt the convention of  summing over repeated indices.
+  From now on we adopt the convention of summing over repeated indices.
   For notational compactness we define the matrix
   \beq
   	H_{ij}=\fp{h_i}{x_j}\,.
   \eeq 
-  Then, for the matrix elements of $\partial{u}/\partial{y}$ we have
+  Then, for the matrix elements of $\mathbf{\hat{A}}$ we have
   \bea
- 	\frac{\partial u_i}{\partial y_j} & = & \frac{\partial u_i}{\partial x_k}\frac{\partial x_k}{\partial y_j} \continue
+ 	\hat{A}_{ij} & = & \frac{\partial u_i}{\partial y_j} \continue
+		& = & \frac{\partial u_i}{\partial x_k}\frac{\partial x_k}{\partial y_j} \continue
 		& = & \frac{\partial}{\partial x_k} \left(H_{im} v_m \right)
 				\frac{\partial x_k}{\partial y_j} \continue
 		& = &  \left(\fp{H_{im}}{x_k}v_m + H_{im} A_{mk} \right)H^{-1}_{kj}\,,
@@ -265,87 +267,58 @@ the loop deviates from the true flow by the misalignment of the loop tangent vec
   \eea
   where $H^{-1}_{ij}=\fsp{h^{-1}_i}{y_j}$. 
   
-  To relate the eigenvalues of $\mathbf{J}$ and $\mathbf{K}$ we form the matrix
+  To relate the eigenvalues of $\mathbf{J}$ and $\mathbf{\hat{J}}$ we form the matrix
   \beq
-  	\mathbf{N}^s \equiv \mathbf{K}^s(y_o)-\mathbf{H}(x(s)) \mathbf{J}^s(x_o) \mathbf{H}^{-1}(x_o)\,,
+  	\mathbf{N}^s \equiv \mathbf{\hat{J}}^s(y_o)-\mathbf{H}(x(s)) \mathbf{J}^s(x_o) \mathbf{H}^{-1}(x_o)\,,
 	\label{eq:def:N}
   \eeq
   Differentiating with respect to $s$, 
   \beq
-  	\fd{N_{ij}^s}{s}  =  \fd{K_{ij}^s}{s}-\fd{H_{im}}{s}J^s_{mk}H^{-1}_{kj}
+  	\fd{N_{ij}^s}{s}  =  \fd{\hat{J}_{ij}^s}{s}-\fd{H_{im}}{s}J^s_{mk}H^{-1}_{kj}
 						-H_{im}\fd{J^s_{mk}}{s}H^{-1}_{kj} \,,
   \eeq
-  or, using \refeq{eq:difJ} and \refeq{eq:difK},
+  or, using \refeq{eq:difJ} and \refeq{eq:difhatJ},
   \beq
-	\fd{N_{ij}^s}{s}  = \fp{u_i}{y_m} K^s_{mj}-\fp{H_{im}}{x_n}\fd{x_n}{s}J_{mk}H^{-1}_{kj}
-						-H_{im}A_{mn}J^s_{nk}H^{-1}_{kj} \,.
+	\fd{N_{ij}^s}{s}  = \hdtds\hat{A}_{im} \hat{J}^s_{mj}-\fp{H_{im}}{x_n}\fd{x_n}{s}J_{mk}H^{-1}_{kj}
+						-H_{im} \dtds A_{mn}J^s_{nk}H^{-1}_{kj} \,.
   \eeq
   With the use of \refeq{eq:uv} and renaming of the dummy indices $n\leftrightarrow m$ in the last term, this reads
   \beq	
-	\fd{N_{ij}^s}{s} =   \left(\fp{H_{in}}{x_k}v_n + H_{in} A_{nk} \right)
-				H^{-1}_{km}(x(s)) K^s_{mj} 
+	\fd{N_{ij}^s}{s} = \hdtds \left(\fp{H_{in}}{x_k}v_n + H_{in} A_{nk} \right)
+				H^{-1}_{km}(x(s)) \hat{J}^s_{mj} 
 				-\left(\fp{H_{im}}{x_n}\fd{x_n}{s}
-						+H_{in} A_{nm}\right)J^s_{mk}H^{-1}_{kj}(x_o) \,.
+						+\dtds H_{in} A_{nm}\right)J^s_{mk}H^{-1}_{kj}(x_o) \,.
   \eeq
-  Inserting the identity matrix $\mathbf{1} = \mathbf{H}^{-1}(x(s))\mathbf{H}(x(s))$ in the second term and noting that
+  Inserting the identity matrix $\mathbf{1} = \mathbf{H}^{-1}(x(s))\mathbf{H}(x(s))$ in the second term, noting that
   \beq
   	\fp{H_{in}}{x_k}=\fps{h_i}{x_k}{x_n}=\fp{H_{ik}}{x_n}\,,
   \eeq
-  we get
-  \beq	
-	\fd{N_{ij}^s}{s} =  \left(\fp{H_{ik}}{x_n}v_n + H_{in} A_{nk} \right)
-				H^{-1}_{km}(x(s)) K^s_{mj} 
+  and using the fact that $\dtds=\hdtds=\fd{t}{s}$ we get
+  \bea
+	\fd{N_{ij}^s}{s} & = &  \left(\fp{H_{ik}}{x_n} \fd{x_n}{s} + \fd{t}{s} H_{in} A_{nk} \right)
+				H^{-1}_{km}(x(s)) \hat{J}^s_{mj} 
 				-\left(\fp{H_{im}}{x_n}\fd{x_n}{s}
-						+H_{in}A_{nm}\right)H^{-1}_{mq}H_{ql}J^s_{lk}H^{-1}_{kj}(x_o) \,.
+						+\fd{t}{s}H_{in}A_{nm}\right)H^{-1}_{mq}H_{ql}J^s_{lk}H^{-1}_{kj}(x_o) \continue
+			& = & \left(\fp{H_{ik}}{x_n} \fd{x_n}{s} + \fd{t}{s} H_{in} A_{nk} \right) H^{-1}_{km} N_{mj} \,,
 	\label{eq:dNds}
-  \eeq
+  \eea
+  where we used \refeq{eq:def:N} in the last step.  The initial condition is found from \refeq{eq:def:N} 
+  to be $\mathbf{N}^0=0$ and thus the solution will be $\mathbf{N}^s \equiv 0$ for every $s$. Thus
+ \beq
+ 	\mathbf{\hat{J}}^s(y_o)=\mathbf{H}(x(s))\mathbf{J}^s\mathbf{H}^{-1}(x_o)\,.
+ \eeq  
+ On a closed loop we have $x(S)=x_o$ and thus
+ \beq
+ 	\mathbf{\hat{J}}_L(y_o)=\mathbf{H}(x_o)\mathbf{J}_L\mathbf{H}^{-1}(x_o)\,,
+ \eeq
+ which means that $\mathbf{\hat{J}}_L$ and $\mathbf{J}_L$ are related by a similarity transformation and therefore
+ share the same eigenvalues. 
   
-  Were it not $\fd{x}{s} \neq v$ this could be factored to get $dN^s_{ij}/ds=(\ldots)_{ik}N^s_{kj}$. 
-  This would allow us to complete the proof. The proof is valid only if we  are computing the 
-  Jacobian on a periodic orbit and its remaining part is given in \refAppe{appe:ProofInvJacPO}.  
-     
-%   The Jacobian is not in general a symmetric matrix and thus it is not
-%   diagonalizable by a unitary similarity transformation, while its eigenvectors
-%   do not form an orthonormal set. Therefore we use the metric 
-%   \beq
-% 	\mathbf{M}(x) = \mathbf{J}_L^T(x) \mathbf{J}_L(x)\,,
-%   \eeq
-%   where the superscript $T$ denotes the transpose of a matrix.
-%   $\mathbf{M}$ is symmetric and thus diagonalizable by a unitary similarity
-%   transformation and possesses a complete set of orthogonal eigenvectors.
-   
-%   \subsection{Redefinition of the Jacobian}
-%   
-%    Define
-%    \beq
-%    	\fd{\Js^s(x_o)}{s}=\fd{t}{s}\mathbf{A}(x(s))\Js^s(x_o).
-% 	\label{eq:dJ}
-%    \eeq 
-%    
+  
+
    
     
 \subsection{The variational method}
-%   
-%   With this choice of metric we consider minimizing the functional 
-%  \beq
-%     \overline{F}^2=\frac{1}{S}\oint \left(\mathbf{J}_L\, \mathbf{P} \tilde{v}\right)^T			
-%     		\left(\mathbf{J}_L\, \mathbf{P}  \tilde{v}\right) \, ds \,,
-%     \label{eq:functionalPJ}
-%  \eeq
-%  where
-%  \beq
-%  	P_{ij}=\delta_{ij}-\frac{v_i v_j}{v^2}
-%  \eeq 
-%  The operator $v_iv_j/v^2$ acting on a vector projects it to the direction parallel to the velocity and thus 
-%  $\mathbf{P}$ projects a vector on the plane transverse to $v$. The motivation to act with $\mathbf{P}$ on 
-%  $\tilde{v}$ is that we are interested in penalizing components of $v$ transverse to the direction of the 
-%  velocity. We observe that \refeq{eq:functionalPJ} will have the minimum value of zero on a periodic orbit.
-% 
-%  $\mathbf{P}$ is obviously symmetric and thus, from \refeq{eq:functionalPJ},
-%  \beq
-%      \overline{F}^2=\frac{1}{S}\oint \tilde{v}^T  \mathbf{P}\, \mathbf{J}_L^T \mathbf{J}_L\, \mathbf{P}  
-%      \tilde{v} \, ds \,.
-%  \eeq
 
  We will try to motivate our variational method in terms of the path integral formulation of a random work, \cf\ \refref{Risken}.
  We consider a discretized loop consisting of $N$ point. At each point $x_i$ we form the difference $x_{i+1}-f^{\Delta t_i}(x)$, where $x_i+1$
@@ -600,64 +573,7 @@ formulated.
 
 %\end{acknowledgments}         
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\appendix
-
-\section{Eigenvalues of $\mathbf{J}_p$ under smooth conjugacies}
-\label{appe:ProofInvJacPO}
-
- From \refeq{eq:dNds} with $s=t$, \ie\ when calculating $\mathbf{N}^t(x_o)$ along a periodic orbit we get
- \bea	
-	\fd{N_{ij}^t}{t}  	& = &  \left(\fp{H_{im}}{x_n}v_n + H_{in} A_{nm} \right) H^{-1}_{mq}(x(t)) K^t_{qj} 
-					-\left(\fp{H_{im}}{x_n}v_n + H_{in}A_{nm}\right)H^{-1}_{mq}(x(t))
-								H_{ql}(x(t))J^t_{lk}H^{-1}_{kj}(x_o) \continue
-	  			& = & \left(\fp{H_{im}}{x_n}v_n + H_{in} A_{nm} \right) H^{-1}_{mq}(x(t)) 
-					\left(K^t_{qj}- H_{ql}(x(t))J^t_{lk}H^{-1}_{kj}(x_o) \right) \continue
-				& = & \left(\fp{H_{im}}{x_n}v_n + H_{in} A_{nm} \right) H^{-1}_{mq}(x(t))
-					N_{qj} \,,
- \eea
- from the definition \refeq{eq:def:N} of $\mathbf{N}^s$. Thus we have a differential equation of the form 
- $\fsd{\mathbf{N}^t}{t}=\mathbf{B}(t) \mathbf{N}^t$ where 
- $B_{ij}=\left(\fp{H_{im}}{x_n}v_n + H_{in} A_{nm} \right) H^{-1}_{mj}(x(t))$. 
- The initial condition is found from \refeq{eq:def:N} to be $\mathbf{N}^0=0$ and thus the solution will be 
- $\mathbf{N}^t \equiv 0$ for all times. Thus
- \beq
- 	\mathbf{K}^t(y_o)=\mathbf{H}(x(t))\mathbf{J}^t\mathbf{H}^{-1}(x_o)\,.
- \eeq  
- On a periodic orbit for $t$ equal to the period $T_p$ we have $x(T_p)=x_o$ and thus
- \beq
- 	\mathbf{K}_p(y_o)=\mathbf{H}(x_o)\mathbf{J}_p\mathbf{H}(x_o)\,,
- \eeq
- which means that $\mathbf{K}$ and $\mathbf{J}$ are related by a similarity transformation and thus
- have the same eigenvalues. 
- 
-% \section{Project plan}
-% \label{appe:plan}
-% 
-% Tentative schedule:
-% 
-% \begin{enumerate}
-% %	   \item{\bf Tue Mar 8:}
-% %Stated the problem and presented motivation.
-% %	   \item{\bf  Tue Mar 15:}
-% %Will check the invariant meaning of the eigenvalues of Jacobian-like matrix along a loop.
-% %	   \item{\bf  Tue Mar 29:}
-% %Will try to write down PDE using $g=J^T J$.
-% %	   \item{\bf  Tue Apr  5:}
-% %Will try to implement the PDE for the R\"ossler system.
-% %	   \item{\bf  Fri Apr 8:}
-% %Write down PDE for the variational principle.   
-% %	   \item{\bf  Tue Apr 12:}
-% %Implement variational principle for R\"ossler.   
-% 	   \item{\bf  Tue Apr 19:}
-% Implement variational principle for R\"ossler and/or KS.   
-% 	   \item{\bf  Tue Apr 26:}
-% Fix the last few quirks ... 
-% 	   \item{\bf  Tue May 2:}
-% Project deadline
-% \end{enumerate}
-% 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
