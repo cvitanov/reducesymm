@@ -1,4 +1,4 @@
-Subroutine rk4(y,dydx,x,h,yout,derivs)
+Subroutine rk4(x,y,dydx,h,yout,derivs)
 
 ! From Numerical Recipes Book.
 
