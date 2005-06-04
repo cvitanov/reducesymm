@@ -62,7 +62,7 @@ INTERFACE
 END INTERFACE
 
 INTERFACE
-	SUBROUTINE rk4P(y,dydx,x,h,yout,derivs,p,sect)
+	SUBROUTINE rk4P(x,y,dydx,h,yout,derivs,p,sect)
 		USE nrtype
 		IMPLICIT NONE
 		REAL(DP), DIMENSION(:), INTENT(IN) :: y,dydx

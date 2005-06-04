@@ -39,12 +39,12 @@ if ( p == 1 ) then
 		call derivs(y(i-1,size(y,2)),y(i-1,:),v, kappa)
 		kappa=1.0_dp/v(sect)
 		call derivs(y(i-1,size(y,2)),y(i-1,:),v, kappa)
-		CALL rk4P(y(i-1,:),v,y(i-1,size(y,2)),h,y(i,:),derivs,p,sect)
+		CALL rk4P(y(i-1,size(y,2)),y(i-1,:),v,h,y(i,:),derivs,p,sect)
 	END DO
 else
 	DO i=2,nsteps+1
 		call derivs(y(i-1,size(y,2)),y(i-1,:),v, kappa)
-		CALL rk4P(y(i-1,:),v,y(i-1,size(y,2)),h,y(i,:),derivs,p,sect)
+		CALL rk4P(y(i-1,size(y,2)),y(i-1,:),v,h,y(i,:),derivs,p,sect)
 	END DO
 end if
 

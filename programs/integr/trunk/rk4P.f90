@@ -1,4 +1,4 @@
-Subroutine rk4P(y,dydx,x,h,yout,derivs,p,sect)
+Subroutine rk4P(x,y,dydx,h,yout,derivs,p,sect)
 
 USE nrtype ; USE nrutil, ONLY : assert_eq
 
