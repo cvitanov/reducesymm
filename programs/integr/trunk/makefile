@@ -5,7 +5,8 @@
 COMP = pgf90 
 OPTFULL = -fastsse
 TARGET = libintegr
-OBJ = eulerJ.o integrP.o rk2J.o rk2Jdriver.o rk4.o rk4driver.o rk4P.o rk4Pdriver.o 
+OBJ = eulerJ.o integrP.o rk2J.o rk2Jdriver.o rk4.o rk4driver.o rk4P.o rk4Pdriver.o
+srcMod = ifc_integr.f90 
 targetMod = ifc_integr.mod
 # Where to find user libraries:
 userLibPATH = /home/vasimos/lib64
@@ -15,15 +16,17 @@ userModPATH = $(userLibPATH)/modules
 nrLIB = nr
 integrLIB= integr
 
-$(TARGET): $(OBJ)
+$(TARGET): $(OBJ) $(targetMod) uninstall
 	ar cr $(TARGET).a $(OBJ)
 	ranlib $(TARGET).a
 
 %.o: %.f90
 	$(COMP) -c $(OPTFULL) -o $@ -I$(userModPATH) -L$(userLibPATH)  $< -l$(nrLIB)
 
-$(targetMod): $(OBJ)
-	$(COMP) -c -I$(userModPATH) ifc_integr.f90 
+$(OBJ): $(targetMod)
+
+$(targetMod): $(srcMod)
+	$(COMP) -c $(OPTFULL) -I$(userModPATH) $(srcMod)  
 
 
 install:
