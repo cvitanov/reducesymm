@@ -38,8 +38,6 @@ INTEGER(I4B) :: i,ndum, mdum
 ndum=assert_eq(size(y,1),nsteps+1,'rk2Jdriver: y dim1')
 mdum=assert_eq(size(y,2),size(yi),'rk2Jdriver: y dim2')
 
-print *,"in"
-
 h=(xf-xi)/Real(nsteps,dp)
 
 y(1,:)=yi
