@@ -22,9 +22,7 @@ $(TARGET): $(OBJ)
 %.o: %.f90
 	$(COMP) -c $(OPTFULL) -o $@ -I$(userModPATH) -L$(userLibPATH)  $< -l$(nrLIB)
 
-$(OBJ): $(targetMod)
-
-$(targetMod): 
+$(targetMod): $(OBJ)
 	$(COMP) -c -I$(userModPATH) ifc_integr.f90 
 
 
