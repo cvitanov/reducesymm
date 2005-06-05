@@ -1,0 +1,12 @@
+MODULE ifc_util
+
+INTERFACE
+	FUNCTION UnitMatrix(N)
+		USE nrtype
+		IMPLICIT NONE
+		INTEGER(I4B) :: N
+		REAL(DP) :: UnitMatrix(N,N)
+	END FUNCTION
+END INTERFACE
+
+END MODULE
