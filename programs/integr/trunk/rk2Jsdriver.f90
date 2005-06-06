@@ -1,4 +1,4 @@
-SUBROUTINE rk2Jdriver(xi,yi,xf,nsteps,y,Ji,Jout,MatVar,derivs)
+SUBROUTINE rk2Jsdriver(xi,yi,xf,nsteps,y,Ji,Jout,MatVar,derivs)
 
 USE nrtype ; USE ifc_integr, ONLY: rk2J 
 USE nrutil, ONLY : assert_eq
@@ -46,9 +46,6 @@ DO i=2,nsteps+1
 	call derivs(y(i-1,size(y,2)),y(i-1,:),v)
 	call rk2J(y(i-1,size(y,2)),y(i-1,:),v,h,y(i,:),Ji,Jout,MatVar,derivs)
 END DO
-
-
-
 
 
 END SUBROUTINE

@@ -74,14 +74,13 @@ interface
 	end subroutine
 end interface
 
-
 interface
 	SUBROUTINE rk2Jdriver(xi,yi,xf,nsteps,y,Ji,Jout,MatVar,derivs)
 		USE nrtype
 		IMPLICIT none
 		REAL(DP), INTENT(IN) :: xi,xf
 		REAL(DP), DIMENSION(:), INTENT(IN) :: yi
-		REAL(DP), DIMENSION(:,:), INTENT(OUT) :: y
+		REAL(DP), DIMENSION(:), INTENT(OUT) :: y
 		INTEGER(I4B), INTENT(IN) :: nsteps
 		REAL(DP), DIMENSION(:,:), INTENT(IN) :: Ji
 		real(dp), dimension(:,:), intent(out) :: Jout
@@ -112,7 +111,7 @@ interface
 		IMPLICIT none
 		REAL(DP), INTENT(IN) :: xi,xf
 		REAL(DP), DIMENSION(:), INTENT(IN) :: yi
-		REAL(DP), DIMENSION(:), INTENT(OUT) :: y
+		REAL(DP), DIMENSION(:,:), INTENT(OUT) :: y
 		INTEGER(I4B), INTENT(IN) :: nsteps
 		REAL(DP), DIMENSION(:,:), INTENT(IN) :: Ji
 		real(dp), dimension(:,:), intent(out) :: Jout
@@ -136,6 +135,7 @@ interface
 		end interface
 	END SUBROUTINE
 end interface
+
 
 INTERFACE
 	SUBROUTINE rk4(x,y,dydx,h,yout,derivs)

@@ -5,7 +5,7 @@
 COMP = pgf90 
 OPTFULL = -fastsse
 TARGET = libintegr
-OBJ = eulerJ.o integrP.o rk2J.o rk2Jdriver.o rk4.o rk4driver.o rk4P.o rk4Pdriver.o
+OBJ = eulerJ.o integrP.o rk2J.o rk2Jdriver.o rk2Jsdriver.o rk4.o rk4driver.o rk4P.o rk4Pdriver.o
 srcMod = ifc_integr.f90 
 targetMod = ifc_integr.mod
 # Where to find user libraries:
