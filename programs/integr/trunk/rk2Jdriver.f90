@@ -7,7 +7,7 @@ implicit none
 
 REAL(DP), INTENT(IN) :: xi,xf
 REAL(DP), DIMENSION(:), INTENT(IN) :: yi
-REAL(DP), DIMENSION(:,:), INTENT(OUT) :: y
+REAL(DP), DIMENSION(:), INTENT(OUT) :: y
 INTEGER(I4B), INTENT(IN) :: nsteps
 REAL(DP), DIMENSION(:,:), INTENT(IN) :: Ji
 real(dp), dimension(:,:), intent(out) :: Jout
@@ -33,21 +33,17 @@ end interface
 !
 
 REAL(DP) :: h, v(size(yi))
-INTEGER(I4B) :: i,ndum, mdum
+INTEGER(I4B) :: i, mdum
 
-ndum=assert_eq(size(y,1),nsteps+1,'rk2Jdriver: y dim1')
-mdum=assert_eq(size(y,2),size(yi),'rk2Jdriver: y dim2')
+mdum=assert_eq(size(y),size(yi),'rk2Jdriver: y dim2')
 
 h=(xf-xi)/Real(nsteps,dp)
-
-y(1,:)=yi
+y(:)=yi
 
 DO i=2,nsteps+1
-	call derivs(y(i-1,size(y,2)),y(i-1,:),v)
-	call rk2J(y(i-1,size(y,2)),y(i-1,:),v,h,y(i,:),Ji,Jout,MatVar,derivs)
+	call derivs(y(size(y)),y(:),v)
+	call rk2J(y(size(y)),y(:),v,h,y(:),Ji,Jout,MatVar,derivs)
 END DO
-
-
 
 
 
