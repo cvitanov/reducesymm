@@ -1,7 +1,7 @@
 PROGRAM integr
 
 USE nrtype
-USE ifc_integr, ONLY: rk4Pdriver, rk4driver, rk2Jdriver
+USE ifc_integr, ONLY: rk4Pdriver, rk4driver, rk2Jsdriver
 USE ifc_util, ONLY: UnitMatrix
 USE parameters
 
@@ -111,7 +111,7 @@ allocate(y(jnsteps+1,d+1))
 
 p=0
 
-call rk2Jdriver(jxi,jyi,jxf,jnsteps,y,J,J,roesslerVar,roesslerField)
+call rk2Jsdriver(jxi,jyi,jxf,jnsteps,y,J,J,roesslerVar,roesslerField)
 
 open(7,file="cycle.dat")
 do i=1,size(y,1)
@@ -120,7 +120,7 @@ end do
 close(7)
 
 open(8,file="pointPoinc.dat")
-	write(8,format_label) y(1,1:d)
+	write(8,format_label) jyi(1:d)
 close(8)
 
 open(9,file='J.dat')
