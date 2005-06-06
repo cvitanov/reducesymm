@@ -1,7 +1,9 @@
 PROGRAM integr
 
-USE nrtype; USE ifc_integr; USE parameters
-USE intfaces
+USE nrtype
+USE ifc_integr, ONLY: rk4Pdriver, rk4driver, rk2Jdriver
+USE ifc_util, ONLY: UnitMatrix
+USE parameters
 
 IMPLICIT NONE
 
@@ -35,17 +37,13 @@ interface
 		IMPLICIT NONE
 		REAL(DP), INTENT(IN) :: x
 		REAL(DP), DIMENSION(:), INTENT(IN) :: y
-		REAL(DP), DIMENSION(size(y),size(y)) :: MatVar
-	end function roesslerVar
+		REAL(DP), DIMENSION(size(y),size(y)) :: roesslerVar
+	end function 
 end interface
 
 
 
 INTEGER(I4B) :: idum, p=0
-
-
-
-
 
 allocate(y(nsteps+1,d+1), yclose(jnsteps+1,d))
 allocate(y_poinc(nsteps_poinc+1,d+1))
@@ -67,8 +65,6 @@ sect=1
 open (10, file='section.dat')
 	read(10,*)	xf_poinc
 close(10)
-
-
 
 !OPEN(10, file='roessler.dat')
 !OPEN(11, file='roessler-poinc.dat')

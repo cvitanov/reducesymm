@@ -9,17 +9,17 @@ IMPLICIT NONE
 REAL(DP), INTENT(IN) :: x
 REAL(DP), DIMENSION(:), INTENT(IN) :: y
 
-REAL(DP), DIMENSION(size(y),size(y)) :: MatVar
+REAL(DP), DIMENSION(size(y),size(y)) :: roesslerVar
 
-MatVar(1,1)=0
-MatVar(1,2)=-1
-MatVar(1,3)=-1
-MatVar(2,1)=1
-MatVar(2,2)=alpha
-MatVar(2,3)=0
-MatVar(3,1)=y(3)
-MatVar(3,2)=0
-MatVar(3,3)=y(1)-gamma
+roesslerVar(1,1)=0
+roesslerVar(1,2)=-1
+roesslerVar(1,3)=-1
+roesslerVar(2,1)=1
+roesslerVar(2,2)=alpha
+roesslerVar(2,3)=0
+roesslerVar(3,1)=y(3)
+roesslerVar(3,2)=0
+roesslerVar(3,3)=y(1)-gamma
 
 
 
