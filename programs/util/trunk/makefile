@@ -4,17 +4,17 @@
 # Choose compiler:
 COMP = pgf90 
 OPTFULL = -fastsse
-TARGET = libintegr
-OBJ = eulerJ.o integrP.o rk2J.o rk2Jdriver.o rk4.o rk4driver.o rk4P.o rk4Pdriver.o
-srcMod = ifc_integr.f90 
-targetMod = ifc_integr.mod
+TARGET = libutil
+OBJ = UnitMatrix.o
+srcMod = ifc_util.f90 
+targetMod = ifc_util.mod
 # Where to find user libraries:
 userLibPATH = /home/vasimos/lib64
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 # Names of user libraries
 nrLIB = nr
-integrLIB= integr
+utilLIB=util
 
 $(TARGET): $(OBJ) $(targetMod) uninstall
 	ar cr $(TARGET).a $(OBJ)
