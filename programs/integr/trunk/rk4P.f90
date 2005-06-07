@@ -30,33 +30,33 @@ ndum=assert_eq(size(y),size(dydx),size(yout),'rk4P')
 kappa=1.0_dp
 
 
-k1 = h*dydx
+k1 = h*dydx ! First step
 
 
 
-if (p == 0 ) then
-	call derivs(x + h/2.0_dp , y + k1/2.0_dp, v, kappa)
+if (p == 0 ) then ! Didn't cross Poincare Section
+	call derivs(x + h/2.0_dp , y + k1/2.0_dp, v, kappa) !Second Step
 	k2 = h*v
-	call derivs(x + h/2.0_dp , y + k2/2.0_dp, v, kappa)
+	call derivs(x + h/2.0_dp , y + k2/2.0_dp, v, kappa) !Third Step
 	k3 = h*v
-else
+else		! Crossed Poincare Section, change integration variable
 	kappa=1.0_dp
-	call derivs(x + h/2.0_dp , y + k1/2.0_dp, v, kappa)
+	call derivs(x + h/2.0_dp , y + k1/2.0_dp, v, kappa) 
 	kappa=1.0_dp/v(sect)
-	call derivs(x + h/2.0_dp , y + k1/2.0_dp, v, kappa)
+	call derivs(x + h/2.0_dp , y + k1/2.0_dp, v, kappa) !Second step
 	k2 = h*v
 	kappa=1.0_dp
 	call derivs(x + h/2.0_dp , y + k2/2.0_dp, v, kappa)
 	kappa=1.0_dp/v(sect)
-	call derivs(x + h/2.0_dp , y + k2/2.0_dp, v, kappa)
+	call derivs(x + h/2.0_dp , y + k2/2.0_dp, v, kappa) !Third step
 	k3 = h*v
 	kappa=1.0_dp
 	call derivs(x + h, y + k3,v, kappa)
 	kappa=1.0_dp/v(sect)
 end if 
 
-call derivs(x + h, y + k3,v, kappa)
+call derivs(x + h, y + k3,v, kappa) 			! Fourth step
 k4 = h*v
-yout = y + k1/6.0_dp+ k2/3.0_dp+ k3/3.0_dp+ k4/6.0_dp
+yout = y + k1/6.0_dp+ k2/3.0_dp+ k3/3.0_dp+ k4/6.0_dp	! Accumulate increments
 
 end subroutine
