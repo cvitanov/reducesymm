@@ -2,6 +2,25 @@ MODULE ifc_integr
 
 ! Contains all the subroutine declarations.
 
+interface
+	subroutine derivsJ(x,y,J,dJds,MatVar)
+		USE nrtype
+		IMPLICIT NONE
+		REAL(DP), DIMENSION(:), INTENT(IN) :: y
+		REAL(DP), INTENT(IN) :: x
+		REAL(DP), DIMENSION(:,:), INTENT(IN) :: J
+		REAL(DP), DIMENSION(:,:), INTENT(OUT) ::dJds
+		interface
+			function MatVar(x,y)
+				USE nrtype
+				IMPLICIT NONE
+				REAL(DP), INTENT(IN) :: x
+				REAL(DP), DIMENSION(:), INTENT(IN) :: y
+				REAL(DP), DIMENSION(size(y),size(y)) :: MatVar
+			end function MatVar
+		end interface
+	end subroutine
+end interface
 
 interface
 	subroutine eulerJ(x,y,J,Jout,h,MatVar)
@@ -176,6 +195,67 @@ INTERFACE
 		END INTERFACE
 	END SUBROUTINE
 END INTERFACE
+
+interface
+	Subroutine rk4J(x,y,dydx,h,yout,J,dJds,Jout,MatVar,derivs)
+		USE nrtype 
+		IMPLICIT NONE
+		REAL(DP), DIMENSION(:), INTENT(IN) :: y,dydx
+		REAL(DP), INTENT(IN) :: x,h
+		REAL(DP), DIMENSION(:), INTENT(OUT) :: yout
+		REAL(DP), DIMENSION(:,:), INTENT(IN) :: J, dJds
+		REAL(DP), DIMENSION(:,:), INTENT(OUT) :: Jout
+		INTERFACE
+			SUBROUTINE derivs(x,y,dydx)
+				USE nrtype
+				IMPLICIT NONE
+				REAL(DP), INTENT(IN) :: x
+				REAL(DP), DIMENSION(:), INTENT(IN) :: y
+				REAL(DP), DIMENSION(:), INTENT(OUT) :: dydx	
+			END SUBROUTINE derivs
+		END INTERFACE
+		interface
+			function MatVar(x,y)
+				USE nrtype
+				IMPLICIT NONE
+				REAL(DP), INTENT(IN) :: x
+				REAL(DP), DIMENSION(:), INTENT(IN) :: y
+				REAL(DP), DIMENSION(size(y),size(y)) :: MatVar
+			end function MatVar
+		end interface
+	end subroutine
+end interface
+
+interface
+	SUBROUTINE rk4Jdriver(xi,yi,xf,nsteps,y,Ji,Jout,MatVar,derivs)
+		USE nrtype
+		IMPLICIT none
+		REAL(DP), INTENT(IN) :: xi,xf
+		REAL(DP), DIMENSION(:), INTENT(IN) :: yi
+		REAL(DP), DIMENSION(:), INTENT(OUT) :: y
+		INTEGER(I4B), INTENT(IN) :: nsteps
+		REAL(DP), DIMENSION(:,:), INTENT(IN) :: Ji
+		real(dp), dimension(:,:), intent(out) :: Jout
+		INTERFACE
+			SUBROUTINE derivs(x,y,dydx)
+				USE nrtype
+				IMPLICIT NONE
+				REAL(DP), INTENT(IN) :: x
+				REAL(DP), DIMENSION(:), INTENT(IN) :: y
+				REAL(DP), DIMENSION(:), INTENT(OUT) :: dydx	
+			END SUBROUTINE derivs
+		END INTERFACE
+		interface
+			function MatVar(x,y)
+				USE nrtype
+				IMPLICIT NONE
+				REAL(DP), INTENT(IN) :: x
+				REAL(DP), DIMENSION(:), INTENT(IN) :: y
+				REAL(DP), DIMENSION(size(y),size(y)) :: MatVar
+			end function MatVar
+		end interface
+	END SUBROUTINE
+end interface
 
 INTERFACE
 	SUBROUTINE rk4P(x,y,dydx,h,yout,derivs,p,sect)
