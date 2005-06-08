@@ -1,8 +1,9 @@
 PROGRAM integr
 
 USE nrtype
-USE ifc_integr, ONLY: rk4Pdriver, rk4driver, rk2Jsdriver
+USE ifc_integr, ONLY: rk4Pdriver, rk4driver, rk4Jdriver
 USE ifc_util, ONLY: UnitMatrix
+USE F95_LAPACK, ONLY: LA_GEEV
 USE parameters
 
 IMPLICIT NONE
@@ -11,6 +12,7 @@ REAL(DP), DIMENSION(:,:), ALLOCATABLE :: y, yclose, y_poinc,  J
 REAL(DP) :: xi=0.0_dp, xf=0.1_dp, xf_poinc, jxi,jxf
 INTEGER(I4B) :: nsteps=1000, nsteps_poinc=1000, jnsteps=10000, i, sect, n_inters=0, total_inters=2
 REAL(DP), DIMENSION(:), ALLOCATABLE :: jyi
+real(dp), allocatable :: WI(:), WR(:)
 INTERFACE
 	SUBROUTINE roesslerField(x,y,dydx)
 		USE nrtype
@@ -103,25 +105,35 @@ do while( (n_inters<total_inters) )
 	end if
 end do
 
+open(8,file="pointPoinc.dat")
+	write(8,format_label) jyi(1:d)
+close(8)
+
+
 J=UnitMatrix(d)
 
 
 deallocate(y)
-allocate(y(jnsteps+1,d+1))
+! allocate(y(jnsteps+1,d+1))
 
 p=0
 
-call rk2Jsdriver(jxi,jyi,jxf,jnsteps,y,J,J,roesslerVar,roesslerField)
+call rk4Jdriver(jxi,jyi,jxf,jnsteps,jyi,J,J,roesslerVar,roesslerField)
 
-open(7,file="cycle.dat")
-do i=1,size(y,1)
-	write(7,format_label) y(i,1:d)
-end do
-close(7)
+allocate(WR(size(J,1)),WI(size(J,1)))
 
-open(8,file="pointPoinc.dat")
-	write(8,format_label) jyi(1:d)
-close(8)
+call LA_GEEV( J, WR, WI)
+
+print *, WR
+print *, WI
+
+! open(7,file="cycle.dat")
+! do i=1,size(y,1)
+! 	write(7,format_label) y(i,1:d)
+! end do
+! close(7)
+
+
 
 open(9,file='J.dat')
 
