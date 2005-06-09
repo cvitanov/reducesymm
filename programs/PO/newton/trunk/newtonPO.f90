@@ -1,7 +1,8 @@
 subroutine NewtonPO(yi,T,a,tol,maxIter,nsteps,derivs,MatVar,conv)
 
 use nrtype; use nrutil, only: assert_eq
-use ifc_util, only: UnitMatrix
+use ifc_util !, only: UnitMatrix
+use ifc_lu !, only: ludcmp, lubksb
 
 implicit none
 
@@ -30,15 +31,16 @@ interface
 end interface
 !
 !
-real(dp) :: y(size(yi)),diff(size(yi)), xi, xf, mx, mn, v(size(yi))
+real(dp) :: y(size(yi)),diff(size(yi)), ddum, xi, xf, mx, mn, v(size(yi))
 real(dp), dimension(size(yi)-1,size(yi)-1) :: J
-integer(i4b) :: i, ndum, ic
-real(dp) :: indx(size(yi))
+integer(i4b) :: i, ndum,  indx(size(yi))
 real(dp) :: LHM(size(yi),size(yi)), RHS(size(yi))
 
 ndum=assert_eq(size(y)-1,size(a),'NewtonPO')
 
 xi=0.0_dp
+
+
 
 conv=0
 
@@ -56,7 +58,7 @@ do i=1,maxIter
 	call derivs(y(size(y)),y,v)
 	call setLHM(J,v(1:size(v)-1),a,LHM)
 	call setRHS(diff(1:size(diff-1)),RHS) 
-	call ludcmp(LHM,indx,ic)
+	call ludcmp(LHM,indx,ddum)
 	call lubksb(LHM,indx,RHS)
 	yi(1:size(yi)-1) = y(1:size(y)-1) + RHS(1:size(RHS)-1) ! update y and T
 	yi(size(yi)) = 0.0_dp
