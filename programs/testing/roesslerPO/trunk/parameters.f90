@@ -1,0 +1,29 @@
+module parameters
+
+use nrtype
+
+implicit none
+
+real(dp), parameter :: Tguess=5.881088923425644, alpha=0.2_dp, beta=0.2_dp, gamma=5.7_dp
+real(dp), parameter :: tol=1e-13
+integer(i4b), parameter ::  d=3, sect=1, maxIter=1000, nstepsN = 1000, nsteps = 1000000 
+CHARACTER(len=*), parameter :: format_label='(3F16.10)'
+
+INTERFACE
+	subroutine init_a(a)
+	use nrtype
+	Real(dp), dimension(:), intent(inout) :: a
+	end subroutine
+END INTERFACE
+
+contains
+
+	subroutine init_a(a)
+	use nrtype
+	Real(dp), dimension(:), intent(inout) :: a
+	
+	a=0.0_dp
+	a(sect)=1.0_dp
+	end subroutine
+
+end module
