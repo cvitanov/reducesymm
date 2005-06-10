@@ -22,7 +22,7 @@ $(TARGET): $(OBJ) $(targetMod) uninstall
 	ranlib $(TARGET).a
 
 %.o: %.f90 
-	$(COMP) -c $(OPTFULL) -o $@ -I$(userModPATH) -L$(userLibPATH)  $< -l$(luLIB) -l$(util) -l$(nrLIB)
+	$(COMP) -c $(OPTFULL) -o $@ -I$(userModPATH) -L$(userLibPATH)  $< -l$(luLIB) -l$(utilLIB) -l$(nrLIB)
 
 $(OBJ): $(targetMod)
 

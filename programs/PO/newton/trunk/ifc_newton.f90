@@ -6,7 +6,7 @@ interface
 		implicit none
 		real(dp), intent(inout):: yi(:)
 		real(dp), intent(inout) :: T
-		real(dp), intent(in) :: a(:)
+		real(dp), intent(in) :: a(:), tol
 		integer(i4b), intent(in) :: maxIter,nsteps
 		integer(i4b), intent(out) :: conv
 		interface
