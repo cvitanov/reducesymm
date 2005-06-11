@@ -52,9 +52,17 @@ close(9)
 
 yi(d+1)=0.0_dp
 
-call NewtonPO(yi,T,a,tol,maxIter,nstepsN,roesslerField,roesslerVar,conv)
+call NewtonPO(yi,T,a,tol,maxIter,nstepsN,roesslerVar,roesslerField,conv,J)
 
-print *,conv
+print *,"converged?", conv
+
+call LA_GEEV( J, WR, WI)
+
+print *,"Eigenvalues of J, as returned from NewtonPO"
+Print *,"R",WR
+Print *,"I",WI
+
+
 
 xi=0.0_dp
 
@@ -62,32 +70,45 @@ xi=0.0_dp
 
 J=UnitMatrix(d)
 
-print format_label, yi
-
 call rk4Jdriver(xi,yi,T,nsteps,y,J,J,roesslerVar,roesslerField)
 
-print format_label, y
+Print *, "distance from initial point after integration:"
+print *, y(1:d)-yi(1:d)
 
 call LA_GEEV( J, WR, WI)
 
-Print *, WR
-Print *,WI
+print *,"Eigenvalues of J"
+Print *,"R",WR
+Print *,"I",WI
 
-Print '(F15.12)',1.0_dp-WR(d)
+Print *,"marginal eigenvalue-1",1.0_dp-WR(d)
 
 qfP = yi(sect)
 
-call integrP(yi,Delta_x,qfP,yP,nstepsN,nstepsP,nInters,sect,roesslerFieldP)
+call integrP(yi,Delta_x,qfP,yP,nstepsN,nstepsP,nInters,sect,direction,roesslerFieldP)
 
-print format_label, yP(1,:)-yi
+print *, "Distance from initial point after integrating with integrP"
+print *, yP(1,1:d)-yi(1:d)
+
+J=UnitMatrix(d)
+
+T = yP(d+1)
+
+call rk4Jdriver(xi,yi,T,nsteps,y,J,J,roesslerVar,roesslerField)
+
+print *,"Eigenvalues of J"
+Print *,"R",WR
+Print *,"I",WI
+
+Print *,"marginal eigenvalue-1",1.0_dp-WR(d)
 
 
 open (9, file='cycle.dat')
-write(9,format_label) yi(1:d)
+write(9,format_label3) yi(1:d)
 close(9)
 
 open (9, file='period.dat')
-write(9,format_label) T
+write(9,'(F20.17)') T
 close(9)
 
 end program
