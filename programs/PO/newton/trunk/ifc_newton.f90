@@ -1,7 +1,7 @@
 module ifc_newton
 
 interface
-	subroutine NewtonPO(yi,T,a,tol,maxIter,nsteps,derivs,MatVar,conv,J)
+	subroutine NewtonPO(yi,T,a,tol,maxIter,nsteps,MatVar,derivs,conv,J)
 		use nrtype
 		implicit none
 		real(dp), intent(inout):: yi(:)
