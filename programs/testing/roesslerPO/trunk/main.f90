@@ -1,14 +1,14 @@
 program newtonSearch
 
 use nrtype; use parameters
-use ifc_newton
-use ifc_integr
-use ifc_util
+use ifc_newton, only: NewtonPO
+use ifc_integr, only: rk4Jdriver, integrP
+use ifc_util, only: UnitMatrix
 use F95_LAPACK, only: LA_GEEV
 
 implicit none
 
-real(dp) :: T, yi(d+1), a(d), xi, J(d,d)
+real(dp) :: T, yi(d+1), y(d+1), a(d), xi, J(d,d), qfP, yP(nInters,d+1)
 integer(i4b) :: conv=0
 real(dp), dimension(d) :: WI, WR
 
@@ -21,6 +21,15 @@ INTERFACE
 		REAL(DP), DIMENSION(:), INTENT(IN) :: y
 		REAL(DP), DIMENSION(:), INTENT(OUT) :: dydx	
 	END SUBROUTINE roesslerField
+END INTERFACE
+INTERFACE
+	SUBROUTINE roesslerFieldP(x,y,dydx,kappa)
+		USE nrtype
+		IMPLICIT NONE
+		REAL(DP), INTENT(IN) :: x, kappa
+		REAL(DP), DIMENSION(:), INTENT(IN) :: y
+		REAL(DP), DIMENSION(:), INTENT(OUT) :: dydx	
+	END SUBROUTINE roesslerFieldP
 END INTERFACE
 interface
 	function roesslerVar(x,y)
@@ -53,14 +62,25 @@ xi=0.0_dp
 
 J=UnitMatrix(d)
 
-call rk4Jdriver(xi,yi,T,nsteps,yi,J,J,roesslerVar,roesslerField)
+print format_label, yi
+
+call rk4Jdriver(xi,yi,T,nsteps,y,J,J,roesslerVar,roesslerField)
+
+print format_label, y
 
 call LA_GEEV( J, WR, WI)
 
 Print *, WR
 Print *,WI
 
-Print '(E1.3)',1.0_dp-WR(d)
+Print '(F15.12)',1.0_dp-WR(d)
+
+qfP = yi(sect)
+
+call integrP(yi,Delta_x,qfP,yP,nstepsN,nstepsP,nInters,sect,roesslerFieldP)
+
+print format_label, yP(1,:)-yi
+
 
 open (9, file='cycle.dat')
 write(9,format_label) yi(1:d)

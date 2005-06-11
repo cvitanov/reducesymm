@@ -2,7 +2,7 @@
 
 # Choose compiler
 COMP = pgf90	
-OBJECTS = main.o parameters.o roesslerField.o roesslerVar.o
+OBJECTS = main.o parameters.o roesslerField.o roesslerFieldP.o roesslerVar.o
 # Set the outputfile
 TARGET = newt	
 # Where to find user libraries:
