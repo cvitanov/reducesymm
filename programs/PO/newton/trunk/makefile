@@ -3,7 +3,7 @@
 
 # Choose compiler:
 COMP = pgf90 
-OPTFULL = -gfastsse
+OPTFULL = -fastsse
 TARGET = libnewton
 OBJ = newtonPO.o setLHM.o  setRHS.o
 srcMod = ifc_newton.f90 

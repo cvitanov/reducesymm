@@ -1,4 +1,4 @@
-subroutine NewtonPO(yi,T,a,tol,maxIter,nsteps,derivs,MatVar,conv)
+subroutine NewtonPO(yi,T,a,tol,maxIter,nsteps,derivs,MatVar,conv,J)
 
 use nrtype
 use nrutil, only: assert_eq
@@ -14,6 +14,7 @@ real(dp), intent(inout) :: T
 real(dp), intent(in) :: a(:), tol
 integer(i4b), intent(in) :: maxIter,nsteps
 integer(i4b), intent(out) :: conv
+real(dp), intent(out) :: J(:,:)
 interface
 	subroutine derivs(x,y,dydx)
 		use nrtype
@@ -35,11 +36,10 @@ end interface
 !
 !
 real(dp) :: y(size(yi)),diff(size(yi)-1), ddum, xi, xf, mx, mn, v(size(yi))
-real(dp), dimension(size(yi)-1,size(yi)-1) :: J
 integer(i4b) :: i, ndum,  indx(size(yi))
 real(dp) :: LHM(size(yi),size(yi)), RHS(size(yi))
 
-ndum=assert_eq(size(y)-1,size(a),'NewtonPO')
+ndum=assert_eq(size(y)-1,size(a),size(J,1),size(J,2),'NewtonPO')
 
 xi=0.0_dp
 
@@ -66,5 +66,11 @@ do i=1,maxIter
 	yi(size(yi)) = 0.0_dp
 	T = T - RHS(size(RHS))
 end do
+
+if (conv == 1)	then
+	yi(size(yi)) = 0.0_dp
+	J = UnitMatrix(size(J,1))
+	call rk4Jdriver(xi,yi,T,nsteps,y,J,J,MatVar,derivs)
+end if
 
 end subroutine
