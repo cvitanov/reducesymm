@@ -44,11 +44,11 @@ end interface
 
 
 interface
-	subroutine integrP(yi,Delta_x,qfP,yP,nsteps,nstepsP,nInters,sect,derivs)
+	subroutine integrP(yi,Delta_x,qfP,yP,nsteps,nstepsP,nInters,sect,direction,derivs)
 		USE nrtype 
 		IMPLICIT NONE
 		integer(i4b), intent(in) :: nsteps, nstepsP, nInters, sect
-		real(dp), intent(in) ::  yi(:), Delta_x, qfP
+		real(dp), intent(in) ::  yi(:), Delta_x, qfP, direction
 		real(dp), intent(out) :: yP(:,:)
 		INTERFACE
 			SUBROUTINE derivs(x,y,dydx)

@@ -1,4 +1,4 @@
-subroutine integrP(yi,Delta_x,qfP,yP,nsteps,nstepsP,nInters,sect,derivs)
+subroutine integrP(yi,Delta_x,qfP,yP,nsteps,nstepsP,nInters,sect,direction,derivs)
 
 USE nrtype 
 USE ifc_integr, only: rk4P, rk4Pdriver
@@ -7,7 +7,7 @@ USE nrutil, only: assert_eq
 IMPLICIT NONE
 
 integer(i4b), intent(in) :: nsteps, nstepsP, nInters, sect
-real(dp), intent(in) ::  yi(:), Delta_x, qfP
+real(dp), intent(in) ::  yi(:), Delta_x, qfP, direction
 real(dp), intent(out) :: yP(:,:)
 
 REAL(DP), DIMENSION(:,:), ALLOCATABLE :: y, y_poinc
@@ -44,7 +44,7 @@ xi=y(1,d+1)
 
 do while( (iI<nInters) )
 	call rk4Pdriver(y(1,d+1),y(1,:),y(1,d+1)+Delta_x,nsteps,y,derivs,p,sect)
-	if  ( ( y(nsteps,sect) > qfP ) .AND. ( y(1,sect) < qfP  ) ) THEN ! Intersected Poincare, refine.
+	if  ( ( y(nsteps,sect)*direction < qfP*direction ) .AND. ( y(1,sect)*direction > qfP*direction  ) ) THEN ! Intersected Poincare, refine.
 		p=1
 		call rk4Pdriver(y(1,sect),y(1,:),qfP,nstepsP,y_poinc,derivs,p,sect)
 		iI=iI+1
