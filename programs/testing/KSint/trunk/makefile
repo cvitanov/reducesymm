@@ -2,23 +2,29 @@
 
 # Choose compiler
 COMP = pgf90	
-OBJECTS = integr.o  oscillator.o
+OBJECTS = integr.o  KSfield.o
 # Set the outputfile
-TARGET = osc 	
+TARGET = ks 	
 # Where to find user libraries:
 userLibPATH = /home/vasimos/lib64
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
+paramMod = parameters.mod
 nrLIB = nr
 integrLIB =integr
 
 
 $(TARGET): $(OBJECTS)
-	$(COMP) -o $(TARGET) -I$(userModPATH) -L$(userLibPATH) $(CFLAGS) $(OBJECTS) -l$(integrLIB) -l$(nrLIB)
+	$(COMP) -o $(TARGET) -I$(userModPATH) -I./ -L$(userLibPATH) $(CFLAGS) $(OBJECTS) -l$(integrLIB) -l$(nrLIB)
 
-%.o: %.f90 
-	$(COMP) -c -o $@ -I$(userModPATH) $(CFLAGS) $< 
+%.o: %.f90 $(paramMod)
+	$(COMP) -c -o $@ -I$(userModPATH) -I./ $(CFLAGS) $< 
 
+$(paramMod): parameters.f90
+	$(COMP) -c -o parameters.o -I$(userModPATH) $(CFLAGS) parameters.f90 
+
+
+	
 clean:
 	rm -f *.o $(TARGET) 
 	
