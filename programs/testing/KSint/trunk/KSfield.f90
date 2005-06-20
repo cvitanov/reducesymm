@@ -32,17 +32,23 @@ DO k=1,d
 	Rsdum=0.0_dp
 	Isdum=0.0_dp
 	DO m=1,k-1 !! a_o,c_o=0
-	     	Isdum = Isdum - Iy(m)*Iy(k-m) + Ry(m)*Ry(k-m)
-		Rsdum = Rsdum - Iy(m)*Ry(k-m) - Ry(m)*Iy(k-m)
+     		if (k-m /= 0) then
+			Isdum = Isdum - Iy(m)*Iy(k-m) + Ry(m)*Ry(k-m)
+			Rsdum = Rsdum - Iy(m)*Ry(k-m) - Ry(m)*Iy(k-m)
+		end if
 	END DO
+!	if (k<d-1) then
 	DO m=k+1,d
      		Isdum = Isdum + Iy(m)*Iy(m-k) + Ry(m)*Ry(m-k)  
 		Rsdum = Rsdum - Iy(m)*Ry(m-k) + Ry(m)*Iy(m-k)  
 	END DO
+!	end if
+!	if (k<d) then
 	DO m=1,d-k !! a_o,c_o=0
 		Isdum = Isdum + Iy(m)*Iy(k+m) + Ry(m)*Ry(k+m)
 		Rsdum = Rsdum + Iy(m)*Ry(k+m) - Ry(m)*Iy(k+m)
    	END DO
+!	end if
 	Idydt(k)= Iy(k)*(1-nu*k**2)*k**2 + k*Isdum
 	Rdydt(k)= Ry(k)*(1-nu*k**2)*k**2 + k*Rsdum 
 END DO
