@@ -5,7 +5,7 @@
 COMP = pgf90 
 OPTFULL = -fastsse
 TARGET = libutil
-OBJ = UnitMatrix.o
+OBJ = ifc_util.o UnitMatrix.o 
 srcMod = ifc_util.f90 
 targetMod = ifc_util.mod
 # Where to find user libraries:
