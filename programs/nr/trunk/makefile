@@ -12,7 +12,7 @@ userLibPATH = /home/vasimos/lib64
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 
-$(TARGET): $(OBJ) $(targetMod) uninstall
+$(TARGET): $(OBJ) uninstall
 	ar cr $(TARGET).a $(OBJ)
 	ranlib $(TARGET).a
 
