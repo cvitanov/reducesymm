@@ -14,7 +14,7 @@ REAL(DP), DIMENSION(:), INTENT(OUT) :: dydt
 
 REAL(DP), DIMENSION(INT(size(y)/2,i4b)) :: Ry, Iy
 REAL(DP), DIMENSION(INT(size(y)/2,i4b)) :: Rdydt, Idydt
-REAL(DP) :: Rsdum, Isdum
+REAL(DP) :: Rsdum, Isdum, q
 INTEGER :: m,k,d,ndum
 
 d=assert_eq(INT((size(y)-1)/2,i4b),INT((size(dydt)-1)/2,i4b),'KSField')
@@ -49,8 +49,9 @@ DO k=1,d
 		Rsdum = Rsdum + Iy(m)*Ry(k+m) - Ry(m)*Iy(k+m)
    	END DO
 !	end if
-	Idydt(k)= Iy(k)*(1-nu*k**2)*k**2 + k*Isdum
-	Rdydt(k)= Ry(k)*(1-nu*k**2)*k**2 + k*Rsdum 
+	q=k/L
+	Idydt(k)= Iy(k)*(1-q**2)*q**2 + q*Isdum
+	Rdydt(k)= Ry(k)*(1-q**2)*q**2 + q*Rsdum 
 END DO
 
 dydt(1:d)=Rdydt

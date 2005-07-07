@@ -2,7 +2,7 @@
 
 # Choose compiler
 COMP = pgf90	
-OBJECTS = integr.o  KSfield.o
+OBJECTS = integr.o  KSfield.o parameters.o
 # Set the outputfile
 TARGET = ks 	
 # Where to find user libraries:
