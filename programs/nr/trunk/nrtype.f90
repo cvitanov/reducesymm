@@ -1,5 +1,6 @@
 MODULE nrtype
-	INTEGER, PARAMETER :: I4B = SELECTED_INT_KIND(9) !!
+	integer, parameter :: i8b = selected_int_kind(18)
+	INTEGER, PARAMETER :: I4B = SELECTED_INT_KIND(9)
 	INTEGER, PARAMETER :: I2B = SELECTED_INT_KIND(4)
 	INTEGER, PARAMETER :: I1B = SELECTED_INT_KIND(2)
 	INTEGER, PARAMETER :: SP = KIND(1.0)
@@ -27,4 +28,5 @@ MODULE nrtype
 		INTEGER(I4B), DIMENSION(:), POINTER :: irow
 		INTEGER(I4B), DIMENSION(:), POINTER :: jcol
 	END TYPE sprs2_dp
+	complex(dpc), parameter :: ii = (0.0_dp,1.0_dp) ! imaginary i
 END MODULE nrtype
