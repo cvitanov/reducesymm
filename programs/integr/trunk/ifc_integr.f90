@@ -1,7 +1,16 @@
 MODULE ifc_integr
 
-! Contains all the subroutine declarations.
+use nrtype
 
+! Contains all procedure declarations and allocation of temporary storage arrays.
+
+! Storage of intermediate results to be communicated to the main programm or calling
+! procedure.
+real(dp), dimension(:), allocatable:: tSt
+real(dp), dimension(:,:), allocatable :: ySt
+complex(dpc), dimension(:,:), allocatable :: aSt
+
+! Procedure declarations
 interface
 	subroutine derivsJ(x,y,J,dJds,MatVar)
 		USE nrtype
@@ -19,6 +28,56 @@ interface
 				REAL(DP), DIMENSION(size(y),size(y)) :: MatVar
 			end function MatVar
 		end interface
+	end subroutine
+end interface
+
+interface
+	subroutine etdrk4Diag(a,h,aout,f0,f1,f2,f3,e,e2,SetNlin)
+		use nrtype
+		implicit none
+		complex(dpc), dimension(:), intent(in):: a
+		real(dp), intent(in) :: h
+		real(dp), dimension(:),intent(in) :: f0,f1,f2,f3,e,e2
+		complex(dpc), dimension(:), intent(out):: aout
+		interface
+			subroutine SetNlin(a,N_a)
+			use nrtype
+			implicit none
+			complex(dpc), intent(in) :: a
+			complex(dpc), intent(out) :: N_a
+			end subroutine
+		end interface
+	end subroutine
+end interface
+
+interface
+	subroutine etdrk4DiagDriverS(ti,ai,h,tf,af,f0,f1,f2,f3,e,e2,Nplt,SetNlin)
+		use nrtype
+		implicit none
+		complex(dpc), dimension(:), intent(in):: ai
+		real(dp), intent(in) :: ti,h,tf
+		real(dp), dimension(:),intent(in) :: f0,f1,f2,f3,e,e2
+		complex(dpc), dimension(:), intent(out) :: af
+		integer(i4b), intent(in) :: Nplt
+		interface
+			subroutine SetNlin(a,N_a)
+			use nrtype
+			implicit none
+			real(dpc), intent(in) :: a
+			real(dpc), intent(out) :: N_a
+			end subroutine
+		end interface
+	end subroutine
+end interface
+
+interface
+	subroutine etdrk4DiagPrefactors(Lin,h,R,M,f0,f1,f2,f3,e,e2)
+		use nrtype
+		implicit none
+		real(dp), intent(in) :: Lin(:)
+		real(dp), intent(in) :: h,R
+		integer(i4b),intent(in) :: M
+		real(dp), dimension(:),intent(out) :: f0,f1,f2,f3,e,e2
 	end subroutine
 end interface
 

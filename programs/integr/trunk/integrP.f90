@@ -12,7 +12,7 @@ real(dp), intent(out) :: yP(:,:)
 
 REAL(DP), DIMENSION(:,:), ALLOCATABLE :: y, y_poinc
 real(dp) :: xi
-INTEGER(I4B) :: d, p, iI = 0 
+INTEGER(I4B) :: d, p, iIrs = 0 
 INTEGER(I4B) :: idum, ndum, i
 INTERFACE
 	SUBROUTINE derivs(x,y,dydx)
@@ -42,14 +42,14 @@ end do
 
 xi=y(1,d+1)
 
-do while( (iI<nInters) )
+do while( (iIrs<nInters) )
 	call rk4Pdriver(y(1,d+1),y(1,:),y(1,d+1)+Delta_x,nsteps,y,derivs,p,sect)
 	if  ( ( y(nsteps,sect)*direction < qfP*direction ) .AND. ( y(1,sect)*direction > qfP*direction  ) ) THEN ! Intersected Poincare, refine.
 		p=1
 		call rk4Pdriver(y(1,sect),y(1,:),qfP,nstepsP,y_poinc,derivs,p,sect)
-		iI=iI+1
+		iIrs=iIrs+1
 		p=0
-		yP(iI,:) = y_poinc(nstepsP,:)
+		yP(iIrs,:) = y_poinc(nstepsP,:)
 		y=0.0_dp
 		y(1,:)=y_poinc(nstepsP,:)
 		y(1,sect)=qfP

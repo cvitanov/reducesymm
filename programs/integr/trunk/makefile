@@ -5,7 +5,7 @@
 COMP = pgf90 
 OPTFULL = -fastsse
 TARGET = libintegr
-OBJ = derivsJ.o eulerJ.o ifc_integr.o integrP.o rk2J.o rk2Jdriver.o rk2Jsdriver.o rk4.o rk4driver.o rk4J.o rk4Jdriver.o rk4P.o rk4Pdriver.o
+OBJ = derivsJ.o etdrk4Diag.o etdrk4DiagDriverS.o etdrk4DiagPrefactors.o eulerJ.o ifc_integr.o integrP.o rk2J.o rk2Jdriver.o rk2Jsdriver.o rk4.o rk4driver.o rk4J.o rk4Jdriver.o rk4P.o rk4Pdriver.o
 srcMod = ifc_integr.f90 
 targetMod = ifc_integr.mod
 # Where to find user libraries:
@@ -16,12 +16,12 @@ userModPATH = $(userLibPATH)/modules
 nrLIB = nr
 integrLIB= integr
 
-$(TARGET): $(OBJ) $(targetMod) uninstall
+$(TARGET): uninstall $(OBJ) $(targetMod) 
 	ar cr $(TARGET).a $(OBJ)
 	ranlib $(TARGET).a
 
 %.o: %.f90 
-	$(COMP) -c $(OPTFULL) -o $@ -I$(userModPATH) -L$(userLibPATH)  $< -l$(nrLIB)
+	$(COMP) -c $(OPTFULL) -o $@ -I$(userModPATH)  $<
 
 $(OBJ): $(targetMod)
 
