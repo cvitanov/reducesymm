@@ -16,7 +16,7 @@ IMPLICIT NONE
 
 REAL(dp), DIMENSION(:,:), ALLOCATABLE :: y
 REAL(dp) :: ti=0.0_dp, tf=952.38_dp
-INTEGER(I4B) :: nsteps=200000, xsteps=32, nrep =0,  d=32,i, k, j, skip=10
+INTEGER(I4B) :: nsteps=200000, xsteps=32, nrep =10,  d=32,i, k, j, skip=10
 REAL(DP), DIMENSION(nsteps+1,d) :: Ry, Iy
 complex(dpc) :: eminus,eplus
 real(dp) :: u(0:xsteps-1, nsteps) 
@@ -55,21 +55,21 @@ u=0.0_dp
 
 call rk4driver(ti,y(1,:),tf,nsteps,y,KSfield)
 
-OPEN(10, file='iksR.dat')
-
-DO i=1, size(y,1)
-	WRITE(10,format_label) y(i,1:d) 
-END DO
-
-CLOSE(10) 
-
-OPEN(10, file='iksI.dat')
-
-DO i=1, size(y,1)
-	WRITE(10,format_label) y(i,d+1:2*d) 
-END DO
-
-CLOSE(10) 
+! OPEN(10, file='iksR.dat')
+! 
+! DO i=1, size(y,1)
+! 	WRITE(10,format_label) y(i,1:d) 
+! END DO
+! 
+! CLOSE(10) 
+! 
+! OPEN(10, file='iksI.dat')
+! 
+! DO i=1, size(y,1)
+! 	WRITE(10,format_label) y(i,d+1:2*d) 
+! END DO
+! 
+! CLOSE(10) 
 
 !OPEN(10, file='ikst.dat')
 
@@ -109,7 +109,9 @@ open (10,file='ksu.dat')
 		write(10,flu) u(:,i)
 	end do
 close(10)
-
+open (10,file='eIC.dat')
+		write(10,flu) u(:,1)
+close(10)
 ! OPEN(10, file='ksR.dat')
 ! 
 ! DO i=1, size(y,1)
