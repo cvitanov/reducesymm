@@ -37,11 +37,15 @@ call SetLin_KS(Lin)
 call etdrk4DiagPrefactors(Lin,h,R,M,f0,f1,f2,f3,e,e2)
 
 u=0.0_dp
-do i=1,d
-	u(i)=twopi_d*real(i,dp)/real(d,dp)
-end do
+! do i=1,d
+! 	u(i)=twopi_d*real(i,dp)/real(d,dp)
+! end do
+! 
+! u=cos(u)*(1.0_dp+sin(u))
 
-u=cos(u)*(1.0_dp+sin(u))
+open(10,file='inp.dat')
+read(10,*) u
+close(10)
 
 call dfftw_plan_dft_r2c_1d(plan,d,u,ai,FFTW_ESTIMATE)
 call dfftw_execute(plan)
@@ -65,9 +69,13 @@ do i=1,size(aSt,1)
 end do
 close(9)
 
-open(10,file='kst.dat')
-write(10,frm_t) tSt
-close(10)
+!open(10,file='kst.dat')
+!write(10,frm_t) tSt
+!close(10)
+
+open(11,file='inp.dat')
+write(10,frm_u) v(size(v))
+close(11)
 
 
 end program

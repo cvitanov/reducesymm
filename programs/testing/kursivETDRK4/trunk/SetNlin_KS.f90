@@ -30,7 +30,7 @@ call dfftw_plan_dft_r2c_1d(plan,d,v,N_a,FFTW_ESTIMATE)
 call dfftw_execute(plan)
 call dfftw_destroy_plan(plan)
 do k=1,size(N_a) 
-	N_a(k)=-0.5_dp*ii*(k-1)*N_a(k)/L
+	N_a(k)=ii*(k-1)*N_a(k)/L
 end do
 
 end subroutine
