@@ -64,6 +64,13 @@ call etdrk4DiagDriverS(ti,ai,h,tf,af,f0,f1,f2,f3,e,e2,Nplt,SetNlin_KS)
 
 !print *,size(aSt,1),size(aSt,2)
 
+open(8,file='ksF.dat')
+do i=1,size(aSt,1)
+	write(8,frm_a) aSt(i)
+end do
+close(8)
+
+
 open(9,file='ksu.dat')
 do i=1,size(aSt,1)
 !	print *,aSt(i,2)
