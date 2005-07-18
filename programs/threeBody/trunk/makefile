@@ -1,13 +1,12 @@
-# Makefile to produce a static library and modules related to integration of ODE's.
 # by vasimos
 
 # Choose compiler:
 COMP = pgf90 
 OPTFULL = -fastsse
 TARGET = libthreeBody
-OBJ = CartToKSMcG_TBL.o  EOM_TBL.o  parameters.o ifc_threeBody.o
+OBJ = CartToKSMcG_TBL.o ifc_threeBody.o KSMcGtoCart_TBL.o
 srcMod = ifc_threeBody.f90 
-targetMod = ifc_integr.mod
+targetMod = ifc_threeBody.mod
 # Where to find user libraries:
 userLibPATH = /home/vasimos/lib64
 # Where to find user modules:
