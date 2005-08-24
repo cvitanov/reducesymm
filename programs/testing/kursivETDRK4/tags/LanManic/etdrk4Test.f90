@@ -72,7 +72,7 @@ open(8,file='ksF.dat')
 
 do j=1,Niter
 	print *,j
-	call etdrk4DiagDriverS(ti,ai,h,tf,af,f0,f1,f2,f3,e,e2,Nplt,SetNlin_KS)
+	call etdrk4DiagDriverS_a(ti,ai,h,tf,af,f0,f1,f2,f3,e,e2,Nplt,SetNlin_KS)
 	do i=1,size(aSt,1)
 		if ((aimag(aSt(i,2)) > 0.06_dp) .and. (aimag(aSt(i+1,2)) <=  0.06_dp) ) then
 			write(8,*) aimag(aSt(i,2)), aimag(aSt(i,4)),aimag(aSt(i,7))
