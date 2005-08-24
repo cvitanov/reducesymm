@@ -71,6 +71,26 @@ interface
 end interface
 
 interface
+	subroutine etdrk4DiagDriverS_a(ti,ai,h,tf,af,f0,f1,f2,f3,e,e2,Nplt,SetNlin)
+		use nrtype
+		implicit none
+		complex(dpc), dimension(:), intent(in):: ai
+		real(dp), intent(in) :: ti,h,tf
+		real(dp), dimension(:),intent(in) :: f0,f1,f2,f3,e,e2
+		complex(dpc), dimension(:), intent(out) :: af
+		integer(i4b), intent(in) :: Nplt
+		interface
+			subroutine SetNlin(a,N_a)
+			use nrtype
+			implicit none
+			real(dpc), intent(in) :: a
+			real(dpc), intent(out) :: N_a
+			end subroutine
+		end interface
+	end subroutine
+end interface
+
+interface
 	subroutine etdrk4DiagPrefactors(Lin,h,R,M,f0,f1,f2,f3,e,e2)
 		use nrtype
 		implicit none

@@ -1,4 +1,4 @@
-subroutine etdrk4DiagDriverS(ti,ai,h,tf,af,f0,f1,f2,f3,e,e2,Nplt,SetNlin)
+subroutine etdrk4DiagDriverS_a(ti,ai,h,tf,af,f0,f1,f2,f3,e,e2,Nplt,SetNlin)
 
 use nrtype
 use nrutil, only: assert_eq
@@ -21,7 +21,7 @@ interface
 end interface
 ! Simple driver for etdrk4Diag. plrt points are written in file exprtFile,
 ! specified in parameters.f90. The functions f0-1,e,e2 are precomputed
-! in calling routine.
+! in calling routine. Restricts results in the antisymmetric subspace.
 
 
 integer(i4b) :: d, Nsteps, plrt, i,j,k 
@@ -48,9 +48,9 @@ aSt(1,:)=ai
 do i=1,Nsteps
 	call etdrk4Diag(a,h,a,f0,f1,f2,f3,e,e2,SetNlin)
 	t=t+h
-! 	do k=1,size(a)
-! 		a(k)=ii*aimag(a(k))
-! 	end do
+ 	do k=1,size(a)
+ 		a(k)=ii*aimag(a(k))
+ 	end do
 	if (mod(i,plrt) == 0) then ! export some value
 		j=j+1
 		tSt(j)=t
