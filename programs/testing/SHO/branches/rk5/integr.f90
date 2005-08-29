@@ -9,13 +9,14 @@
 PROGRAM integr
 
 
-USE nrtype; USE ifc_integr
+USE nrtype; USE ifc_integr; USE ode_path
 
 IMPLICIT NONE
 
-REAL(dp), DIMENSION(:,:), ALLOCATABLE :: y
+REAL(dp), DIMENSION(:), ALLOCATABLE :: y
 REAL(dp) :: xi=0, xf=10
-INTEGER(I4B) :: nsteps=200, dmn=3,i
+INTEGER(I4B) :: dmn=3,i
+real(dp) :: eps=1e-10_dp, h1=1e-3_dp, hmin=1e-14_dp
 
 INTERFACE
 	SUBROUTINE oscillator(x,y,dydx)
@@ -27,22 +28,24 @@ INTERFACE
 	END SUBROUTINE oscillator
 END INTERFACE
 
+save_steps=.true.
+dxsav = 1e-6_dp
 
 
-allocate(y(nsteps+1,dmn))
+allocate(y(dmn))
 
 y=0
 
-y(1,1)=xi
-y(1,2)=0
-y(1,3)=1
+y(1)=xi
+y(2)=0
+y(3)=1
 
-call rk4driver(xi,y(1,:),xf,nsteps,y,oscillator) 
+call odeint(y,xi,xf,eps,h1,hmin,oscillator,rkqs) 
 
 OPEN(10, file='oscillator.dat')
 
-DO i=1, size(y,1)
-	WRITE(10,*) y(i,:) 
+DO i=1, size(yp,2)
+	WRITE(10,*) yp(:,i) 
 END DO
 
 CLOSE(10) 
