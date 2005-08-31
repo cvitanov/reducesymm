@@ -1,4 +1,4 @@
-subroutine integrP(yi,Delta_x,qfP,yP,nsteps,nstepsP,nInters,sect,direction,derivs)
+subroutine integrPrk4(yi,Delta_x,qfP,yP,nsteps,nstepsP,nInters,sect,direction,derivs)
 
 USE nrtype 
 USE ifc_integr, only: rk4P, rk4Pdriver

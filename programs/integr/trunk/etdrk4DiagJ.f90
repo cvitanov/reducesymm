@@ -28,8 +28,10 @@ ndum=assert_eq(size(f0), size(a), size(aout), 'etdrk4Diag-a' )
 
 call setNlin(a,Nlin_a)
 a1= e2*a + f0*Nlin_a 	! Take first step
+J1= J + At(a)J
 call setNlin(a1,Nlin_a1)
 a2= e2*a + f0*Nlin_a1	! Take second step
+J2= J + At(a1)J
 call setNlin(a2,Nlin_a2)
 a3= e2*a1 + f0*(2.0_dp*Nlin_a2-Nlin_a) ! Third step
 call setNlin(a3,Nlin_a3)

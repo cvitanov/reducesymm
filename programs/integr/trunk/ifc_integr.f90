@@ -6,9 +6,13 @@ use nrtype
 
 ! Storage of intermediate results to be communicated to the main programm or calling
 ! procedure.
+
+! Needed by
 real(dp), dimension(:), allocatable:: tSt
 real(dp), dimension(:,:), allocatable :: ySt
 complex(dpc), dimension(:,:), allocatable :: aSt
+
+
 
 ! Procedure declarations
 interface
@@ -123,7 +127,7 @@ end interface
 
 
 interface
-	subroutine integrP(yi,Delta_x,qfP,yP,nsteps,nstepsP,nInters,sect,direction,derivs)
+	subroutine integrPrk4(yi,Delta_x,qfP,yP,nsteps,nstepsP,nInters,sect,direction,derivs)
 		USE nrtype 
 		IMPLICIT NONE
 		integer(i4b), intent(in) :: nsteps, nstepsP, nInters, sect
@@ -141,6 +145,38 @@ interface
 	end subroutine
 end interface
 
+INTERFACE
+	SUBROUTINE odeint(ystart,x1,x2,eps,h1,hmin,derivs,rkqs)
+		USE nrtype
+		REAL(DP), DIMENSION(:), INTENT(INOUT) :: ystart
+		REAL(DP), INTENT(IN) :: x1,x2,eps,h1,hmin
+		INTERFACE
+			SUBROUTINE derivs(x,y,dydx)
+			USE nrtype
+			REAL(DP), INTENT(IN) :: x
+			REAL(DP), DIMENSION(:), INTENT(IN) :: y
+			REAL(DP), DIMENSION(:), INTENT(OUT) :: dydx
+			END SUBROUTINE derivs
+	!BL
+			SUBROUTINE rkqs(y,dydx,x,htry,eps,yscal,hdid,hnext,derivs)
+			USE nrtype
+			REAL(DP), DIMENSION(:), INTENT(INOUT) :: y
+			REAL(DP), DIMENSION(:), INTENT(IN) :: dydx,yscal
+			REAL(DP), INTENT(INOUT) :: x
+			REAL(DP), INTENT(IN) :: htry,eps
+			REAL(DP), INTENT(OUT) :: hdid,hnext
+				INTERFACE
+				SUBROUTINE derivs(x,y,dydx)
+					USE nrtype
+					REAL(DP), INTENT(IN) :: x
+					REAL(DP), DIMENSION(:), INTENT(IN) :: y
+					REAL(DP), DIMENSION(:), INTENT(OUT) :: dydx
+					END SUBROUTINE derivs
+				END INTERFACE
+			END SUBROUTINE rkqs
+		END INTERFACE
+	END SUBROUTINE odeint
+END INTERFACE
 
 interface
 	Subroutine rk2J(x,y,dydx,h,yout,Ji,Jout,MatVar,derivs)
@@ -376,6 +412,41 @@ INTERFACE
 	END SUBROUTINE rk4Pdriver
 END INTERFACE
 
+INTERFACE
+	SUBROUTINE rkck(y,dydx,x,h,yout,yerr,derivs)
+		USE nrtype
+		REAL(DP), DIMENSION(:), INTENT(IN) :: y,dydx
+		REAL(DP), INTENT(IN) :: x,h
+		REAL(DP), DIMENSION(:), INTENT(OUT) :: yout,yerr
+		INTERFACE
+			SUBROUTINE derivs(x,y,dydx)
+			USE nrtype
+			REAL(DP), INTENT(IN) :: x
+			REAL(DP), DIMENSION(:), INTENT(IN) :: y
+			REAL(DP), DIMENSION(:), INTENT(OUT) :: dydx
+			END SUBROUTINE derivs
+		END INTERFACE
+	END SUBROUTINE rkck
+END INTERFACE
+
+INTERFACE
+	SUBROUTINE rkqs(y,dydx,x,htry,eps,yscal,hdid,hnext,derivs)
+		USE nrtype
+		REAL(DP), DIMENSION(:), INTENT(INOUT) :: y
+		REAL(DP), DIMENSION(:), INTENT(IN) :: dydx,yscal
+		REAL(DP), INTENT(INOUT) :: x
+		REAL(DP), INTENT(IN) :: htry,eps
+		REAL(DP), INTENT(OUT) :: hdid,hnext
+		INTERFACE
+			SUBROUTINE derivs(x,y,dydx)
+			USE nrtype
+			REAL(DP), INTENT(IN) :: x
+			REAL(DP), DIMENSION(:), INTENT(IN) :: y
+			REAL(DP), DIMENSION(:), INTENT(OUT) :: dydx
+			END SUBROUTINE derivs
+		END INTERFACE
+	END SUBROUTINE rkqs
+END INTERFACE
 
 
 END MODULE
