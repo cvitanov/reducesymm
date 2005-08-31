@@ -13,6 +13,16 @@ interface
 end interface
 
 interface
+	subroutine EOM_TBL(tau,f,v)
+		use nrtype
+		implicit none
+		real(dp), dimension(:), intent(in) :: f
+		real(dp), intent(in) :: tau
+		real(dp), dimension(:), intent(out) :: v
+	end subroutine
+end interface
+
+interface
 	subroutine KSMcGtoCart_TBL(Et,Q,P,hyperR,x,p_x,E)
 		use nrtype
 		implicit none
