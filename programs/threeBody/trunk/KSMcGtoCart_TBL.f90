@@ -14,8 +14,8 @@ real(dp), dimension(size(Q)) :: Qdum,rdum
 !
 x(1)=hyperR*Q(1)**2
 x(2)=-hyperR*Q(2)**2
-p_x(1)=Q(1)*P(1)/(2*Sqrt(hyperR)*Q(1)**2)
-p_x(2)=-Q(2)*P(2)/(2*Sqrt(hyperR)*Q(2)**2)
+p_x(1)= P(1)/(2*Sqrt(hyperR)*Q(1))
+p_x(2)=-P(2)/(2*Sqrt(hyperR)*Q(2))
 E=Et/hyperR
 
 end subroutine

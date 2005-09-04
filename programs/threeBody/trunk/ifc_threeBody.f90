@@ -23,5 +23,63 @@ interface
 	end subroutine
 end interface
 
+interface 
+	subroutine TBLint(ystart,x1,x2,eps,h1,hmin,derivs,rkqs)
+		USE nrtype
+		IMPLICIT NONE
+		REAL(DP), DIMENSION(:), INTENT(INOUT) :: ystart
+		REAL(DP), INTENT(IN) :: x1,x2,eps,h1,hmin
+		INTERFACE
+			SUBROUTINE derivs(x,y,dydx)
+			USE nrtype
+			IMPLICIT NONE
+			REAL(DP), INTENT(IN) :: x
+			REAL(DP), DIMENSION(:), INTENT(IN) :: y
+			REAL(DP), DIMENSION(:), INTENT(OUT) :: dydx
+			END SUBROUTINE derivs
+	!BL
+			SUBROUTINE rkqs(y,dydx,x,htry,eps,yscal,hdid,hnext,derivs)
+			USE nrtype
+			IMPLICIT NONE
+			REAL(DP), DIMENSION(:), INTENT(INOUT) :: y
+			REAL(DP), DIMENSION(:), INTENT(IN) :: dydx,yscal
+			REAL(DP), INTENT(INOUT) :: x
+			REAL(DP), INTENT(IN) :: htry,eps
+			REAL(DP), INTENT(OUT) :: hdid,hnext
+			INTERFACE
+				SUBROUTINE derivs(x,y,dydx)
+				USE nrtype
+				IMPLICIT NONE
+				REAL(DP), INTENT(IN) :: x
+				REAL(DP), DIMENSION(:), INTENT(IN) :: y
+				REAL(DP), DIMENSION(:), INTENT(OUT) :: dydx
+				END SUBROUTINE derivs
+			END INTERFACE
+			END SUBROUTINE rkqs
+		END INTERFACE
+	end subroutine
+end interface
+
+interface
+	SUBROUTINE TBrkqs(y,dydx,x,htry,eps,yscal,hdid,hnext,derivs)
+		USE nrtype
+		IMPLICIT NONE
+		REAL(DP), DIMENSION(:), INTENT(INOUT) :: y
+		REAL(DP), DIMENSION(:), INTENT(IN) :: dydx,yscal
+		REAL(DP), INTENT(INOUT) :: x
+		REAL(DP), INTENT(IN) :: htry,eps
+		REAL(DP), INTENT(OUT) :: hdid,hnext
+		INTERFACE
+			SUBROUTINE derivs(x,y,dydx)
+				USE nrtype
+				IMPLICIT NONE
+				REAL(DP), INTENT(IN) :: x
+				REAL(DP), DIMENSION(:), INTENT(IN) :: y
+				REAL(DP), DIMENSION(:), INTENT(OUT) :: dydx
+			END SUBROUTINE derivs
+		END INTERFACE
+	END SUBROUTINE TBrkqs
+end interface
+
 
 end module

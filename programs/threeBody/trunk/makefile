@@ -4,7 +4,7 @@
 COMP = pgf90 
 OPTFULL = -fastsse
 TARGET = libthreeBody
-OBJ = CartToKSMcG_TBL.o ifc_threeBody.o KSMcGtoCart_TBL.o
+OBJ = CartToKSMcG_TBL.o ifc_threeBody.o KSMcGtoCart_TBL.o TBLint.o TBrkqs.o
 srcMod = ifc_threeBody.f90 
 targetMod = ifc_threeBody.mod
 # Where to find user libraries:
