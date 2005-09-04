@@ -51,7 +51,6 @@ END MODULE ode_path
 	real(dp) :: E
 	 
 	call KSMcGtoCart_TBL(ystart(5),ystart(1:2),ystart(3:4),ystart(6),xxstart,p_x,E)
-	print *,"after tr"
 	x=x1
 	h=sign(h1,x2-x1)
 	nok=0
@@ -64,13 +63,11 @@ END MODULE ode_path
 		allocate(xp(256))
 		allocate(yp(size(ystart),size(xp)))
 	end if
-	open(17,file="tmp.dat")
 	do nstp=1,MAXSTP
 		call derivs(x,y,dydx)
 		yscal(:)=abs((h)*dydx(:))+hmin
 		if (save_steps .and. (abs(x-xsav) > abs(dxsav)))  then 
 			call save_a_step
-			write(17,*) x,y(1),y(2),y(3)
 		end if
 		if ((x+h-x2)*(x+h-x1) > 0.0) h=x2-x
 		call rkqs(y,dydx,x,h,eps,yscal,hdid,hnext,derivs)
@@ -82,19 +79,15 @@ END MODULE ode_path
 		call KSMcGtoCart_TBL(y(5),y(1:2),y(3:4),y(6),xx,p_x,E)
 		print *,x,xx
 		if (  ( (x-x2)*(x2-x1) >= 0.0 ) .or. ( MaxVal(Abs(xx)) >= SAFEF*MaxVal(Abs(xxstart))) ) then ! then  !! Edited for TBL
-			ystart(:)=y(:)
++			ystart(:)=y(:)
 			if (save_steps) call save_a_step
-			close(17)
 			RETURN
 		end if
 		if (abs(hnext) < hmin) then 
-			close(17)
 			call nrerror('stepsize smaller than minimum in odeint')
 		end if
 		h=hnext
 	end do
-	close(17)
-!	print *,"t",x
 	call nrerror('too many steps in odeint')
 	CONTAINS
 !BL
