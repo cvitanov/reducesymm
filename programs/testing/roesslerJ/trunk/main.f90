@@ -143,6 +143,11 @@ end do
 
 close(9)
 
+open(17,file='period.dat')
+	write(17,*) jxf-jxi
+close(17)
+
+
 !CLOSE(11)
 
 !CLOSE(10) 

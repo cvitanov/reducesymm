@@ -1,44 +1,49 @@
 PROGRAM integr
 
 USE nrtype
-USE ifc_integr, ONLY: rk4Pdriver, rk4driver, rk4Jdriver
+USE ifc_integr
 USE ifc_util, ONLY: UnitMatrix
-USE F95_LAPACK, ONLY: LA_GEEV
+!USE F95_LAPACK, ONLY: LA_GEEV
 USE parameters
 
 IMPLICIT NONE
 
-REAL(DP), DIMENSION(:,:), ALLOCATABLE ::  J
-REAL(DP) :: xi=0.0_dp, xf
-INTEGER(I4B) :: jnsteps=10000, i, sect, n_inters=0, total_inters=2
-REAL(DP), DIMENSION(:), ALLOCATABLE :: yi
-real(dp), allocatable :: WI(:), WR(:)
-INTERFACE
-	SUBROUTINE roesslerField(x,y,dydx)
-		USE nrtype
-		IMPLICIT NONE
-		REAL(DP), INTENT(IN) :: x
-		REAL(DP), DIMENSION(:), INTENT(IN) :: y
-		REAL(DP), DIMENSION(:), INTENT(OUT) :: dydx	
-	END SUBROUTINE roesslerField
-END INTERFACE
+complex(dpc), DIMENSION(d,d) ::  J
+REAL(DP) :: ti=0.0_dp, tf, h
+INTEGER(I4B) :: nsteps=10000, Nplt=1000, i, M=32
+complex(dpc), DIMENSION(d) :: yi
+real(dp), dimension(d) :: yRi
+!real(dp), allocatable :: WI(:), WR(:)
+real(dp), dimension(d) :: Lin, f0,f1,f2,f3,e,e2
+REAL(dp) :: R=1.0_dp
+
 
 interface
-	function roesslerVar(x,y)
-		USE nrtype
-		IMPLICIT NONE
-		REAL(DP), INTENT(IN) :: x
-		REAL(DP), DIMENSION(:), INTENT(IN) :: y
-		REAL(DP), DIMENSION(size(y),size(y)) :: roesslerVar
-	end function 
+	subroutine SetLin_roessler(Lin)
+		use nrtype
+		implicit none
+		real(dp), dimension(:), intent(out) :: Lin
+	end subroutine
+end interface
+interface
+	subroutine SetNlin_roessler(a,N_a)
+		use nrtype
+		implicit none
+		complex(dpc), dimension(:), intent(in) :: a
+		complex(dpc), dimension(:), intent(out) :: N_a
+	end subroutine
+end interface
+interface
+	subroutine SetANdiag_roessler(a,ANdiag)
+	use nrtype
+	implicit none
+	complex(dpc), dimension(:), intent(in) :: a
+	complex(dpc), dimension(:,:), intent(out) :: ANdiag
+	end subroutine
 end interface
 
 
-
 INTEGER(I4B) :: idum, p=0
-
-allocate(yi(d+1))
-allocate(J(d,d))
 
 open(9,file='initial.dat')
 
@@ -48,40 +53,46 @@ close(9)
 
 open(17,file='period.dat')
 
-read(17,*) xf
+read(17,*) tf
 
 close(17)
 
-yi(d+1)=xi
+h=(tf-ti)/nsteps
 
-sect=1
+
+yi(d+1)=ti
 
 p=0
 
-print *,xi,xf
+print *,ti,tf
 print *,yi
 
 J=UnitMatrix(d)
 
-call rk4Jdriver(xi,yi,xf,jnsteps,yi,J,J,roesslerVar,roesslerField)
+call SetLin_Roessler(Lin)
+call etdrk4DiagPrefactors(Lin,h,R,M,f0,f1,f2,f3,e,e2)
 
-allocate(WR(size(J,1)),WI(size(J,1)))
+call etdrk4DiagJDriverS(ti,yi,J,h,tf,yi,J,f0,f1,f2,f3,e,e2,Nplt,SetNlin_roessler,SetANdiag_roessler)
 
-call LA_GEEV( J, WR, WI)
+!allocate(WR(size(J,1)),WI(size(J,1)))
 
-print *, WR
-print *, WI
+!call LA_GEEV( J, WR, WI)
 
-! open(7,file="cycle.dat")
-! do i=1,size(y,1)
-! 	write(7,format_label) y(i,1:d)
-! end do
-! close(7)
+!print *, WR
+!print *, WI
+
+
+
+open(7,file="cycle.dat")
+do i=1,size(aSt,1)
+	write(7,format_label) Real(aSt(i,1:d))
+end do
+close(7)
 
 open(9,file='J.dat')
 
 do i=1,d
-	write(9,format_label) J(i,:)
+	write(9,format_label) Real(J(i,:))
 end do
 
 close(9)

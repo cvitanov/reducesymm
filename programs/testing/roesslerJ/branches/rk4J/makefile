@@ -2,7 +2,7 @@
 
 # Choose compiler
 COMP = pgf90	
-OBJECTS = main.o parameters.o SetANdiag_roessler.o SetNlin_roessler.o SetLin_roessler.o
+OBJECTS = main.o roesslerField.o roesslerVar.o
 # Set the outputfile
 TARGET = j	
 # Where to find user libraries:
