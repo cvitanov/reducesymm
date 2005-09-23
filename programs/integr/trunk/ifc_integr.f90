@@ -95,6 +95,66 @@ interface
 end interface
 
 interface
+	subroutine etdrk4DiagJ(a,J,h,aout,Jout,f0,f1,f2,f3,e,e2,SetNlin,SetAndiag)
+		use nrtype
+		implicit none
+		complex(dpc), dimension(:), intent(in):: a ! Initial point
+		complex(dpc), dimension(:,:), intent(in):: J
+		real(dp), intent(in) :: h ! Step size
+		complex(dpc), dimension(:,:), intent(out):: Jout
+		real(dp), dimension(:),intent(in) :: f0,f1,f2,f3,e,e2 ! Functions of the linear operator
+		complex(dpc), dimension(:), intent(out):: aout ! Final point
+		interface
+			subroutine SetNlin(a,N_a)
+			use nrtype
+			implicit none
+			complex(dpc), dimension(:), intent(in) :: a
+			complex(dpc), dimension(:), intent(out) :: N_a
+			end subroutine
+		end interface
+		interface
+			subroutine SetAndiag(a,Andiag)
+			use nrtype
+			implicit none
+			complex(dpc), dimension(:), intent(in) :: a
+			complex(dpc), dimension(:,:), intent(out) :: Andiag
+			end subroutine
+		end interface
+	end subroutine
+end interface
+
+
+interface
+	subroutine etdrk4DiagJDriverS(ti,ai,Ji,h,tf,af,Jf,f0,f1,f2,f3,e,e2,Nplt,SetNlin,SetANdiag)
+		use nrtype
+		implicit none
+		complex(dpc), dimension(:), intent(in):: ai ! Initial point
+		complex(dpc), dimension(:,:), intent(in):: Ji 
+		real(dp), intent(in) :: ti,h,tf ! initial time, stepsize, final time
+		complex(dpc), dimension(:,:), intent(out):: Jf 
+		real(dp), dimension(:),intent(in) :: f0,f1,f2,f3,e,e2 ! precomputed functions of the linear operator
+		complex(dpc), dimension(:), intent(out) :: af ! Final point
+		integer(i4b), intent(in) :: Nplt ! Number of intermediate points to be exported
+		interface
+			subroutine SetNlin(a,N_a)
+			use nrtype
+			implicit none
+			complex(dpc), dimension(:), intent(in) :: a
+			complex(dpc), dimension(:), intent(out) :: N_a
+			end subroutine
+		end interface
+		interface
+			subroutine SetANdiag(a,ANdiag)
+			use nrtype
+			implicit none
+			complex(dpc), dimension(:), intent(in) :: a
+			complex(dpc), dimension(:,:), intent(out) :: ANdiag
+			end subroutine
+		end interface
+	end subroutine
+end interface
+
+interface
 	subroutine etdrk4DiagPrefactors(Lin,h,R,M,f0,f1,f2,f3,e,e2)
 		use nrtype
 		implicit none

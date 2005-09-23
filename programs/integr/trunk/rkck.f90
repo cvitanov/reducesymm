@@ -40,7 +40,5 @@
 	yout=y+h*(C1*dydx+C3*ak3+C4*ak4+C6*ak6)
 	yerr=h*(DC1*dydx+DC3*ak3+DC4*ak4+DC5*ak5+DC6*ak6)
 	
-	print *,"R",yout(6)
-	!print *,"err R",yerr(6)
-	
+
 	END SUBROUTINE rkck
