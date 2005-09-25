@@ -33,13 +33,13 @@ end interface
 ! Needs precomputed fuction f0-3,e,e2. SetNlin is calculated 
 ! at the various intermediate "positions".i
 
-integer(i4b) :: d
+integer(i4b) :: ndum
 complex(dpc), dimension(size(a)) :: a1,a2,a3,Nlin_a,Nlin_a1,Nlin_a2,Nlin_a3 !tmp vars
 complex(dpc), dimension(size(a),size(a)) :: ANdiag
-complex(dpc), dimension(size(a),size(a)) :: J1,J2,J3,Nlin_J,Nlin_J1,Nlin_J2,Nlin_J3
+complex(dpc), dimension(size(a),size(a)) :: kJ1,kJ2,kJ3,kJ4
 
 
-d=assert_eq(size(f0), size(a), size(aout), 'etdrk4Diag-a' )
+ndum=assert_eq(size(f0), size(a), size(aout), 'etdrk4Diag-a' )
 
 !Update $a$ first
 
@@ -53,20 +53,16 @@ call setNlin(a3,Nlin_a3)
 
 aout = e*a + f1*Nlin_a + f2*(Nlin_a1+Nlin_a2) + f3*Nlin_a3 ! Sum them up approprietly 
 
-!Then update \tilde{J} with points from the above calculation
+!Then update \tilde{J} using IFRK4 with points from the above calculation
 
 call setAndiag(a,ANdiag)
-Nlin_J = MatMul(ANdiag,J)
-J1 = DiagMul(e2,J,d) + DiagMul(f0,Nlin_J,d)
+kJ1 = h*MatMul(ANdiag,J)
 call setAndiag(a1,ANdiag)
-Nlin_J1 = MatMul(ANdiag,J1)
-J2 = DiagMul(e2,J,d) + DiagMul(f0,Nlin_J1,d)
-call setAndiag(a2,ANdiag)
-Nlin_J2 = MatMul(ANdiag,J2)
-J3 = DiagMul(e2,J1,d) + DiagMul(f0,2.0_dp*Nlin_J2+Nlin_J,d)
-call setAndiag(a3,ANdiag)
-Nlin_J3 = MatMul(ANdiag,J3)
+kJ2 = h*MatMul(ANdiag,DiagMul(e2,J+kJ1/2,size(e2)) )
+kJ3 = h*MatMul(ANdiag,DiagMul(e2,J,size(e2))+kJ2/2 )
+call setANdiag(aout,ANdiag)
+kJ4 = h*MatMul(ANdiag,DiagMul(e,J,size(e))+DiagMul(e2,kJ3,size(e2)))
 
-Jout = DiagMul(e,J,d) + DiagMul(f1,Nlin_J,d) + DiagMul(f2,Nlin_J1+Nlin_J2,d) + DiagMul(f3,Nlin_J3,d)
+Jout = DiagMul(e,J,size(e)) + DiagMul(e,kJ1,size(e))/6 + DiagMul(e2,kJ2 + kJ3,size(e2))/3 + kJ4/6
 
 end subroutine
