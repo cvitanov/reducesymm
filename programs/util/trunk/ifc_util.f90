@@ -9,4 +9,18 @@ INTERFACE
 	END FUNCTION
 END INTERFACE
 
+
+interface DiagMul
+	function DiagMul_rc(v,M,N)
+		use nrtype
+		implicit none
+		real(dp), dimension(N), intent(in) :: v
+		complex(dpc), dimension(N,N), intent(in) :: M
+		integer(i4b), intent(in) :: N
+		complex(dpc), dimension(N,N) :: DiagMul_rc
+	end function DiagMul_rc
+end interface 
+
+
+
 END MODULE
