@@ -10,7 +10,7 @@ IMPLICIT NONE
 
 REAL(DP), DIMENSION(:,:), ALLOCATABLE ::  J
 REAL(DP) :: xi=0.0_dp, xf
-INTEGER(I4B) :: jnsteps=10000, i
+INTEGER(I4B) :: jnsteps=1000000, i
 REAL(DP), DIMENSION(:), ALLOCATABLE :: yi
 real(dp), allocatable :: WI(:), WR(:)
 INTERFACE
@@ -56,8 +56,7 @@ yi(d+1)=xi
 
 p=0
 
-print *,xi,xf
-print *,yi
+print *,"stepsize",(xf-xi)/jnsteps
 
 J=UnitMatrix(d)
 
