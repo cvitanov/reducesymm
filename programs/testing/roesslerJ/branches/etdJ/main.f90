@@ -10,7 +10,7 @@ IMPLICIT NONE
 
 complex(dpc), DIMENSION(d,d) ::  J
 REAL(DP) :: ti=0.0_dp, tf, h
-INTEGER(I4B) :: nsteps=10000, Nplt=1000, i, M=32
+INTEGER(I4B) :: nsteps=1000000, Nplt=1000, i, M=32
 complex(dpc), DIMENSION(d) :: yi
 real(dp), dimension(d) :: yRi
 !real(dp), allocatable :: WI(:), WR(:)
@@ -59,20 +59,18 @@ close(17)
 
 h=(tf-ti)/nsteps
 
+print *,"timestep",h
 
 yi(d+1)=ti
 
 p=0
-
-print *,ti,tf
-print *,yi
 
 J=UnitMatrix(d)
 
 call SetLin_Roessler(Lin)
 call etdrk4DiagPrefactors(Lin,h,R,M,f0,f1,f2,f3,e,e2)
 
-call etdrk4DiagJDriverS(ti,yi,J,h,tf,yi,J,f0,f1,f2,f3,e,e2,Nplt,SetNlin_roessler,SetANdiag_roessler)
+call etdrk4DiagJDriverS(ti,yi,J,h,tf,yi,J,f0,f1,f2,f3,e,e2,Nplt,etdrk4DiagJ,SetNlin_roessler,SetANdiag_roessler)
 
 !allocate(WR(size(J,1)),WI(size(J,1)))
 
