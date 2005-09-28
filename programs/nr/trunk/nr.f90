@@ -1,3 +1,5 @@
+! odeint and related subroutines interfaces (rkck, rkqs) have been removed
+
 MODULE nr
 	INTERFACE
 		SUBROUTINE airy(x,ai,bi,aip,bip)
@@ -1821,38 +1823,6 @@ MODULE nr
 		END SUBROUTINE newt
 	END INTERFACE
 	INTERFACE
-		SUBROUTINE odeint(ystart,x1,x2,eps,h1,hmin,derivs,rkqs)
-		USE nrtype
-		REAL(SP), DIMENSION(:), INTENT(INOUT) :: ystart
-		REAL(SP), INTENT(IN) :: x1,x2,eps,h1,hmin
-		INTERFACE
-			SUBROUTINE derivs(x,y,dydx)
-			USE nrtype
-			REAL(SP), INTENT(IN) :: x
-			REAL(SP), DIMENSION(:), INTENT(IN) :: y
-			REAL(SP), DIMENSION(:), INTENT(OUT) :: dydx
-			END SUBROUTINE derivs
-!BL
-			SUBROUTINE rkqs(y,dydx,x,htry,eps,yscal,hdid,hnext,derivs)
-			USE nrtype
-			REAL(SP), DIMENSION(:), INTENT(INOUT) :: y
-			REAL(SP), DIMENSION(:), INTENT(IN) :: dydx,yscal
-			REAL(SP), INTENT(INOUT) :: x
-			REAL(SP), INTENT(IN) :: htry,eps
-			REAL(SP), INTENT(OUT) :: hdid,hnext
-				INTERFACE
-				SUBROUTINE derivs(x,y,dydx)
-					USE nrtype
-					REAL(SP), INTENT(IN) :: x
-					REAL(SP), DIMENSION(:), INTENT(IN) :: y
-					REAL(SP), DIMENSION(:), INTENT(OUT) :: dydx
-					END SUBROUTINE derivs
-				END INTERFACE
-			END SUBROUTINE rkqs
-		END INTERFACE
-		END SUBROUTINE odeint
-	END INTERFACE
-	INTERFACE
 		SUBROUTINE orthog(anu,alpha,beta,a,b)
 		USE nrtype
 		REAL(SP), DIMENSION(:), INTENT(IN) :: anu,alpha,beta
@@ -2362,22 +2332,6 @@ MODULE nr
 		END SUBROUTINE rk4
 	END INTERFACE
 	INTERFACE
-		SUBROUTINE rkck(y,dydx,x,h,yout,yerr,derivs)
-		USE nrtype
-		REAL(SP), DIMENSION(:), INTENT(IN) :: y,dydx
-		REAL(SP), INTENT(IN) :: x,h
-		REAL(SP), DIMENSION(:), INTENT(OUT) :: yout,yerr
-		INTERFACE
-			SUBROUTINE derivs(x,y,dydx)
-			USE nrtype
-			REAL(SP), INTENT(IN) :: x
-			REAL(SP), DIMENSION(:), INTENT(IN) :: y
-			REAL(SP), DIMENSION(:), INTENT(OUT) :: dydx
-			END SUBROUTINE derivs
-		END INTERFACE
-		END SUBROUTINE rkck
-	END INTERFACE
-	INTERFACE
 		SUBROUTINE rkdumb(vstart,x1,x2,nstep,derivs,kappa)
 		USE nrtype
 		REAL(DP), DIMENSION(:), INTENT(IN) :: vstart
@@ -2392,24 +2346,6 @@ MODULE nr
 			END SUBROUTINE derivs
 		END INTERFACE
 		END SUBROUTINE rkdumb
-	END INTERFACE
-	INTERFACE
-		SUBROUTINE rkqs(y,dydx,x,htry,eps,yscal,hdid,hnext,derivs)
-		USE nrtype
-		REAL(SP), DIMENSION(:), INTENT(INOUT) :: y
-		REAL(SP), DIMENSION(:), INTENT(IN) :: dydx,yscal
-		REAL(SP), INTENT(INOUT) :: x
-		REAL(SP), INTENT(IN) :: htry,eps
-		REAL(SP), INTENT(OUT) :: hdid,hnext
-		INTERFACE
-			SUBROUTINE derivs(x,y,dydx)
-			USE nrtype
-			REAL(SP), INTENT(IN) :: x
-			REAL(SP), DIMENSION(:), INTENT(IN) :: y
-			REAL(SP), DIMENSION(:), INTENT(OUT) :: dydx
-			END SUBROUTINE derivs
-		END INTERFACE
-		END SUBROUTINE rkqs
 	END INTERFACE
 	INTERFACE
 		SUBROUTINE rlft2(data,spec,speq,isign)

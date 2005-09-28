@@ -1,7 +1,8 @@
 MODULE nrutil
 
 !edited	imaxloc	to DP
-!		swap	to DP	
+!	swap	to DP
+!added 	reallocate_rv_d, reallocate_rm_d DP routines
 
 	USE nrtype
 	IMPLICIT NONE
@@ -20,7 +21,7 @@ MODULE nrutil
 			masked_swap_rs,masked_swap_rv,masked_swap_rm
 	END INTERFACE
 	INTERFACE reallocate
-		MODULE PROCEDURE reallocate_rv,reallocate_rm,&
+		MODULE PROCEDURE reallocate_rv,reallocate_rv_d,reallocate_rm,reallocate_rm_d,&
 			reallocate_iv,reallocate_im,reallocate_hv
 	END INTERFACE
 	INTERFACE imaxloc
@@ -221,6 +222,19 @@ CONTAINS
 	deallocate(p)
 	END FUNCTION reallocate_rv
 !BL
+	FUNCTION reallocate_rv_d(p,n)
+	REAL(DP), DIMENSION(:), POINTER :: p, reallocate_rv_d
+	INTEGER(I4B), INTENT(IN) :: n
+	INTEGER(I4B) :: nold,ierr
+	allocate(reallocate_rv_d(n),stat=ierr)
+	if (ierr /= 0) call &
+		nrerror('reallocate_rv_d: problem in attempt to allocate memory')
+	if (.not. associated(p)) RETURN
+	nold=size(p)
+	reallocate_rv_d(1:min(nold,n))=p(1:min(nold,n))
+	deallocate(p)
+	END FUNCTION reallocate_rv_d
+!BL
 	FUNCTION reallocate_iv(p,n)
 	INTEGER(I4B), DIMENSION(:), POINTER :: p, reallocate_iv
 	INTEGER(I4B), INTENT(IN) :: n
@@ -261,6 +275,21 @@ CONTAINS
 		p(1:min(nold,n),1:min(mold,m))
 	deallocate(p)
 	END FUNCTION reallocate_rm
+!BL
+	FUNCTION reallocate_rm_d(p,n,m)
+	REAL(DP), DIMENSION(:,:), POINTER :: p, reallocate_rm_d
+	INTEGER(I4B), INTENT(IN) :: n,m
+	INTEGER(I4B) :: nold,mold,ierr
+	allocate(reallocate_rm_d(n,m),stat=ierr)
+	if (ierr /= 0) call &
+		nrerror('reallocate_rm_d: problem in attempt to allocate memory')
+	if (.not. associated(p)) RETURN
+	nold=size(p,1)
+	mold=size(p,2)
+	reallocate_rm_d(1:min(nold,n),1:min(mold,m))=&
+		p(1:min(nold,n),1:min(mold,m))
+	deallocate(p)
+	END FUNCTION reallocate_rm_d
 !BL
 	FUNCTION reallocate_im(p,n,m)
 	INTEGER(I4B), DIMENSION(:,:), POINTER :: p, reallocate_im
