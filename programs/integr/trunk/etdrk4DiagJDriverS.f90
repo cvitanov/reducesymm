@@ -1,4 +1,4 @@
-subroutine etdrk4DiagJDriverS(ti,ai,Ji,h,tf,af,Jf,f0,f1,f2,f3,e,e2,Nplt,SetNlin,SetANdiag)
+subroutine etdrk4DiagJDriverS(ti,ai,Ji,h,tf,af,Jf,f0,f1,f2,f3,e,e2,Nplt,integrator,SetNlin,SetANdiag)
 
 use nrtype
 use nrutil, only: assert_eq
@@ -86,7 +86,7 @@ aSt(1,:)=ai
 Jf=Ji
 
 do i=1,Nsteps
-	call etdrk4DiagJ(a,Jf,h,a,Jf,f0,f1,f2,f3,e,e2,SetNlin,SetANdiag)
+	call integrator(a,Jf,h,a,Jf,f0,f1,f2,f3,e,e2,SetNlin,SetANdiag)
 	t=t+h
 	if (mod(i,plrt) == 0) then ! export some value
 		j=j+1

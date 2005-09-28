@@ -1,4 +1,4 @@
-subroutine etdrk4DiagJ(a,J,h,aout,Jout,f0,f1,f2,f3,e,e2,SetNlin,SetAndiag)
+subroutine etdrk4DiagJif(a,J,h,aout,Jout,f0,f1,f2,f3,e,e2,SetNlin,SetAndiag)
 
 use nrtype
 use nrutil, only: assert_eq

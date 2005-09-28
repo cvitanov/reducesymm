@@ -63,7 +63,7 @@ Nlin_J1 = MatMul(ANdiag,J1)
 J2 = DiagMul(e2,J,d) + DiagMul(f0,Nlin_J1,d)
 call setAndiag(a2,ANdiag)
 Nlin_J2 = MatMul(ANdiag,J2)
-J3 = DiagMul(e2,J1,d) + DiagMul(f0,2.0_dp*Nlin_J2+Nlin_J,d)
+J3 = DiagMul(e2,J1,d) + DiagMul(f0,2.0_dp*Nlin_J2-Nlin_J,d)
 call setAndiag(a3,ANdiag)
 Nlin_J3 = MatMul(ANdiag,J3)
 
