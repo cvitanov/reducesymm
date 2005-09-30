@@ -4,10 +4,10 @@
 # Choose compiler:
 COMP = pgf90 
 OPTFULL = -fastsse
-TARGET = libnewton
-OBJ = newtonPO.o setLHM.o  setRHS.o
-srcMod = ifc_newton.f90 
-targetMod = ifc_newton.mod
+TARGET = librpo
+OBJ = newtonRPO.o setLHM.o  setRHS.o
+srcMod = ifc_rpo.f90 
+targetMod = ifc_rpo.mod
 # Where to find user libraries:
 userLibPATH = /home/vasimos/lib64
 # Where to find user modules:
@@ -16,13 +16,15 @@ userModPATH = $(userLibPATH)/modules
 nrLIB = nr
 luLIB = lu 
 utilLIB = util
+lapackLIB = lapack95
+acmlLIB = acml
 
 $(TARGET): $(OBJ) $(targetMod) uninstall
 	ar cr $(TARGET).a $(OBJ)
 	ranlib $(TARGET).a
 
 %.o: %.f90 
-	$(COMP) -c $(OPTFULL) -o $@ -I$(userModPATH) -L$(userLibPATH)  $< -l$(luLIB) -l$(utilLIB) -l$(nrLIB)
+	$(COMP) -c $(OPTFULL) -o $@ -I$(userModPATH) -L$(userLibPATH)  $< -l$(lapackLIB) -l$(acmlLIB) -l$(utilLIB) -l$(nrLIB)
 
 $(OBJ): $(targetMod)
 

@@ -1,23 +1,37 @@
-subroutine setLHM(J,v,a,LHM)
+subroutine setLHM(f,J,v,q,R,diagk,LHM)
 
 use nrtype 
 use nrutil, only: assert_eq
-use ifc_util, only: UnitMatrix
+use ifc_util, only: UnitMatrix, DiagMul
 
 implicit none
 
-real(dp), dimension(:,:), intent(in) :: J
-real(dp), dimension(:), intent(in) :: a, v
-real(dp), dimension(:,:), intent(out) :: LHM 
+complex(dpc), dimension(:,:), intent(inout) :: J
+complex(dpc), dimension(:), intent(in) ::  f, v, q, R
+real(dp), dimension(:), intent(in) :: diagk
+complex(dpc), dimension(:,:), intent(out) :: LHM 
+!!
+integer(i4b) :: ndum
 
-integer(i4b) :: ndum,mdum
+ndum = assert_eq(size(v),size(J,1),size(f),'setLHM 1')
+ndum = assert_eq(ndum,q,size(LHM,1)-2,'setLHM 2')
+ndum = assert_eq(ndum,R,diagk,'setLHM 3')
+ndum = assert_eq(ndum,size(LHM,2)-2,'setLHM 4')
 
-ndum = assert_eq(size(v),size(J,1),size(a),'setLHM 1')
-mdum = assert_eq(ndum,size(LHM,1)-1,size(LHM,1)-1,'setLHM 2')
+LHM=0.0_dp
 
-LHM(1:size(v),1:size(v)) = UnitMatrix(size(v)) - J
-LHM(size(LHM,1),:) = a
-LHM(:,size(LHM,1)) = v
-LHM(size(LHM,1),size(LHM,1)) = 0.0_dp
+J = DiagMul(R,J,ndum) !! Destroys J, but we only need RJ
+
+LHM(1:size(v),1:size(v)) = UnitMatrix(size(v)) - J 
+
+LHM(size(LHM,1)-1,1:size(q)) = q*J
+LHM(size(LHM,1),1:size(q)) = q
+
+LHM(1:size(v),size(LHM,1)-1) = -R*v
+LHM(1:size(v),size(LHM,1)) = -ii*(R*(diagk*f))/L
+
+LHM(size(LHM,1)-1,size(LHM,1)-1) = -dot_product(q,LHM(1:size(v),size(LHM,1)-1))
+LHM(size(LHM,1)-1,size(LHM,1)) = -dot_product(q,LHM(1:size(v),size(LHM,1)))
+
 
 end subroutine
