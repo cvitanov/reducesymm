@@ -38,20 +38,26 @@ call SetLin_KS(Lin)
 call etdrk4DiagPrefactors(Lin,h,R,M,f0,f1,f2,f3,e,e2)
 
 u=0.0_dp
+do i=1,d
+	call Random_number(rnd)
+	u(i)=(1+0.5*rnd)*twopi_d*real(i,dp)/real(d,dp)
+end do
 
-open(10,file='ic.dat')
-read(10,*) u
-close(10)
+u=cos(u)*(1.0_dp+sin(u))
+
+! open(10,file='inp.dat')
+! read(10,*) u
+! close(10)
 
 call dfftw_plan_dft_r2c_1d(plan,d,u,ai,FFTW_ESTIMATE)
 call dfftw_execute(plan)
 call dfftw_destroy_plan(plan)
 
-print *,ai(1),ai(2)
+!print *,ai(1),ai(2)
 
 call etdrk4DiagDriverS(ti,ai,h,tf,af,f0,f1,f2,f3,e,e2,Nplt,SetNlin_KS)
 
-print *,size(aSt,1),size(aSt,2)
+!print *,size(aSt,1),size(aSt,2)
 
 open(9,file='ksu.dat')
 do i=1,size(aSt,1)
