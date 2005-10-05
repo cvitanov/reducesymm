@@ -2,7 +2,7 @@
 
 # Choose compiler
 COMP = pgf90	
-OBJECTS = etdrk4Test.o parameters.o SetLin_KS.o  SetNlin_KS.o
+OBJECTS = RPOshootingTest.o parameters.o SetANdiag.o SetLin_KS.o  SetNlin_KS.o 
 # Set the outputfile
 TARGET = ks 	
 # Where to find user libraries:
