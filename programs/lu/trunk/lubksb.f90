@@ -14,10 +14,10 @@ REAL(DP), DIMENSION(:), INTENT(INOUT) :: b
 !X. a and indx are not modified by this routine and can be left in place for successive calls
 !with different right-hand sides b. This routine takes into account the possibility that b will
 !begin with many zero elements, so it is efficient for use in matrix inversion.
-INTEGER(I4B) :: i,n,ii,ll
+INTEGER(I4B) :: i,n,iii,ll
 REAL(DP) :: summ
 n=assert_eq(size(a,1),size(a,2),size(indx),'lubksb')
-ii=0	!When ii is set to a positive value, it will become the index
+iii=0	!When iii is set to a positive value, it will become the index
 		!of the first nonvanishing element of b. We now do
 		!the forward substitution, equation (2.3.6). The only new
 		!wrinkle is to unscramble the permutation as we go.
@@ -25,10 +25,10 @@ do i=1,n
 	ll=indx(i)
 	summ=b(ll)
 	b(ll)=b(i)
-	if (ii /= 0) then
-		summ=summ-dot_product(a(i,ii:i-1),b(ii:i-1))
+	if (iii /= 0) then
+		summ=summ-dot_product(a(i,iii:i-1),b(iii:i-1))
 	else if (summ /= 0.0) then
-			ii=i	!A nonzero element was encountered, so from now on we will
+			iii=i	!A nonzero element was encountered, so from now on we will
 					!have to do the dot product above. 
 	end if
 	b(i)=summ

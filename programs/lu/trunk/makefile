@@ -9,7 +9,7 @@ OBJ = lubksb.o ludcmp.o
 srcMod = ifc_lu.f90 
 targetMod = ifc_lu.mod
 # Where to find user libraries:
-userLibPATH = /home/vasimos/lib64
+userLibPATH = /home/vasimos/lib
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 # Names of user libraries
