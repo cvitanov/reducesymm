@@ -8,7 +8,7 @@ OBJ = nrtype.o nr.o nrutil.o
 srcMod =  nrtype.f90 nr.f90 nrutil.f90
 targetMod = nrtype.mod nr.mod nrutil.mod
 # Where to find user libraries:
-userLibPATH = /home/vasimos/lib64
+userLibPATH = /home/vasimos/lib
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 
