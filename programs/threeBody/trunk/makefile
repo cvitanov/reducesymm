@@ -8,7 +8,7 @@ OBJ = CartToKSMcG_TBL.o ifc_threeBody.o KSMcGtoCart_TBL.o TBLint.o TBrkqs.o
 srcMod = ifc_threeBody.f90 
 targetMod = ifc_threeBody.mod
 # Where to find user libraries:
-userLibPATH = /home/vasimos/lib64
+userLibPATH = /home/vasimos/lib
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 # Names of user libraries

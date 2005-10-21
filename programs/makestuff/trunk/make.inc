@@ -5,7 +5,7 @@
 COMP = pgf90 
 OPTFULL = -fastsse
 # Where to find user libraries:
-userLibPATH = /home/vasimos/lib64
+userLibPATH = /home/vasimos/lib
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 # Names of user libraries

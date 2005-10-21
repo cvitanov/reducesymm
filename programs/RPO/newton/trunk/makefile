@@ -9,7 +9,7 @@ OBJ = newtonRPOetdrk4.o setLHM.o  setRHS.o
 srcMod = ifc_rpo.f90 
 targetMod = ifc_rpo.mod
 # Where to find user libraries:
-userLibPATH = /home/vasimos/lib64
+userLibPATH = /home/vasimos/lib
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 lapackModPATH = /usr/pgi/linux86-64/5.2/lib/lapack95_modules

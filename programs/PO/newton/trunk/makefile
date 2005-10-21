@@ -3,13 +3,13 @@
 
 # Choose compiler:
 COMP = pgf90 
-OPTFULL = -fastsse
+OPTFULL = -fastsse 
 TARGET = libnewton
 OBJ = newtonPO.o setLHM.o  setRHS.o
 srcMod = ifc_newton.f90 
 targetMod = ifc_newton.mod
 # Where to find user libraries:
-userLibPATH = /home/vasimos/lib64
+userLibPATH = /home/vasimos/lib
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 # Names of user libraries

@@ -79,7 +79,7 @@ END MODULE ode_path
 		call KSMcGtoCart_TBL(y(5),y(1:2),y(3:4),y(6),xx,p_x,E)
 		print *,x,xx
 		if (  ( (x-x2)*(x2-x1) >= 0.0 ) .or. ( MaxVal(Abs(xx)) >= SAFEF*MaxVal(Abs(xxstart))) ) then ! then  !! Edited for TBL
-+			ystart(:)=y(:)
+			ystart(:)=y(:)
 			if (save_steps) call save_a_step
 			RETURN
 		end if
