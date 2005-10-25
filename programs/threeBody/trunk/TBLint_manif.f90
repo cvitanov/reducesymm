@@ -1,19 +1,20 @@
-MODULE TBL_path
+MODULE TBL_path_manif
 	USE nrtype
 	INTEGER(I4B) :: nok,nbad,kount
 	LOGICAL(LGT), SAVE :: save_steps=.false.
 	REAL(DP) :: dxsav
 	REAL(DP), DIMENSION(:), POINTER :: xp
 	REAL(DP), DIMENSION(:,:), POINTER :: yp
-END MODULE TBL_path
+END MODULE TBL_path_manif
 
-	SUBROUTINE TBLint(ystart,x1,x2,eps,h1,hmin,derivs,rkqs)
+	SUBROUTINE TBLint_manif(ystart,x1,x2,eps,h1,hmin,derivs,rkqs,pChange)
 	USE nrtype; USE nrutil, ONLY : nrerror,reallocate
-	USE TBL_path
+	USE TBL_path_manif
 	USE ifc_threeBody
 	IMPLICIT NONE
 	REAL(DP), DIMENSION(:), INTENT(INOUT) :: ystart
 	REAL(DP), INTENT(IN) :: x1,x2,eps,h1,hmin
+	logical(lgt), intent(out) :: pChange
 	INTERFACE
 		SUBROUTINE derivs(x,y,dydx)
 		USE nrtype
@@ -42,13 +43,15 @@ END MODULE TBL_path
 		END INTERFACE
 		END SUBROUTINE rkqs
 	END INTERFACE
-	REAL(DP), PARAMETER :: TINY=1.0e-30_dp, SAFEF=1.05_dp
-	INTEGER(I4B), PARAMETER :: MAXSTP=10000000
+	REAL(DP), PARAMETER :: TINY=1.0e-30_dp, SAFEF=1.05_dp, xasym = 200.0_dp
+	INTEGER(I4B), PARAMETER :: MAXSTP=100000000
 	INTEGER(I4B) :: nstp
 	REAL(DP) :: h,hdid,hnext,x,xsav
 	REAL(DP), DIMENSION(size(ystart)) :: dydx,y,yscal
 	real(dp), dimension(2) :: xx,p_x,xxstart
 	real(dp) :: E
+
+	pChange=.false.
 	 
 	call KSMcGtoCart_TBL(ystart(5),ystart(1:2),ystart(3:4),ystart(6),xxstart,p_x,E)
 	x=x1
@@ -78,7 +81,14 @@ END MODULE TBL_path
 		end if
 		call KSMcGtoCart_TBL(y(5),y(1:2),y(3:4),y(6),xx,p_x,E)
 !		print *,x,xx
-		if (  ( (x-x2)*(x2-x1) >= 0.0 ) .or. ( MaxVal(Abs(xx)) >= SAFEF*MaxVal(Abs(xxstart))) ) then ! then  !! Edited for TBL
+		if ( p_x(1) < 0.0_dp ) then
+			pChange=.true.
+			ystart(:)=y(:)
+			if (save_steps) call save_a_step
+			RETURN	
+		end if
+		if (  ( (x-x2)*(x2-x1) >= 0.0 ) .or. ( MaxVal(Abs(xx)) >=  xasym ) ) then ! then  !! Edited for TBL
+!			print *,x
 			ystart(:)=y(:)
 			if (save_steps) call save_a_step
 			RETURN
@@ -101,4 +111,4 @@ END MODULE TBL_path
 	yp(:,kount)=y(:)
 	xsav=x
 	END SUBROUTINE save_a_step
-	END SUBROUTINE TBLint
+	END SUBROUTINE TBLint_manif

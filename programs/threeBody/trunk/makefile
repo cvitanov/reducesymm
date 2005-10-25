@@ -4,7 +4,7 @@
 COMP = pgf90 
 OPTFULL = -fastsse
 TARGET = libthreeBody
-OBJ = CartToKSMcG_TBL.o ifc_threeBody.o KSMcGtoCart_TBL.o TBLint.o TBrkqs.o
+OBJ = CartToKSMcG_TBL.o ifc_threeBody.o KSMcGtoCart_TBL.o TBLint.o TBLint_manif.o TBrkqs.o vectorize.o
 srcMod = ifc_threeBody.f90 
 targetMod = ifc_threeBody.mod
 # Where to find user libraries:
@@ -15,14 +15,14 @@ userModPATH = $(userLibPATH)/modules
 nrLIB = nr
 integrLIB= integr
 
-$(TARGET): uninstall $(OBJ) $(targetMod) 
+$(TARGET): uninstall $(OBJ) $(srcMod) 
 	ar cr $(TARGET).a $(OBJ)
 	ranlib $(TARGET).a
 
 %.o: %.f90 
 	$(COMP) -c $(OPTFULL) -o $@ -I$(userModPATH)  $<
 
-$(OBJ): $(targetMod)
+$(OBJ): $(srcMod)
 
 $(targetMod): $(srcMod)
 	$(COMP) -c $(OPTFULL) -I$(userModPATH) $(srcMod)  
