@@ -60,7 +60,9 @@ call etdrk4DiagDriverS(ti,ai,h,tf,af,f0,f1,f2,f3,e,e2,Nplt,SetNlin_KS)
 !print *,size(aSt,1),size(aSt,2)
 
 open(9,file='ksu.dat')
+open(17,file='ksa.dat')
 do i=1,size(aSt,1)
+	write(17,*) real(aSt(i,2)),imag(aSt(i,2)),real(aSt(i,3))
 !	print *,aSt(i,2)
         call dfftw_plan_dft_c2r_1d(invplan,d,aSt(i,:),v,FFTW_ESTIMATE)
 	call dfftw_execute(invplan)
@@ -70,6 +72,7 @@ do i=1,size(aSt,1)
 	write(9,frm_u) v
 end do
 close(9)
+close(17)
 
 !open(10,file='kst.dat')
 !write(10,frm_t) tSt
