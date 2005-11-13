@@ -13,6 +13,39 @@ interface
 end interface
 
 interface
+	subroutine findIC(xi,p_xi,E,Z)
+		use nrtype
+		implicit none
+		real(dp), dimension(:), intent(inout) :: xi
+		real(dp), dimension(:), intent(in) :: p_xi
+		real(dp), intent(in) :: E
+		real(dp), intent(in) :: Z
+	end subroutine
+end interface
+
+interface findSep
+	subroutine findSep_TBL(E,Z,xo,xmax,pUp,pDown,tol,Npoints,MaxAttempts,eps,h1,hmin,ti,taui,tauf,EOM_TBL)
+		use nrtype
+		implicit none
+		real(dp), intent(in) :: E, Z, xo,xmax
+		real(dp), dimension(:), intent(inout) ::  pUp, pDown
+		real(dp), intent(in) :: tol 
+		integer(i4b), intent(in) :: Npoints, MaxAttempts
+		real(dp), intent(in) :: eps, h1, hmin
+		real(dp), intent(in) :: ti, taui, tauf
+		interface
+			subroutine EOM_TBL(tau,f,v)
+				use nrtype
+				implicit none
+				real(dp), dimension(:), intent(in) :: f
+				real(dp), intent(in) :: tau
+				real(dp), dimension(:), intent(out) :: v
+			end subroutine
+		end interface
+	end subroutine
+end interface
+
+interface
 	subroutine KSMcGtoCart_TBL(Et,Q,P,hyperR,x,p_x,E)
 		use nrtype
 		implicit none
@@ -61,7 +94,7 @@ interface
 end interface
 
 interface 
-	subroutine TBLint_manif(ystart,x1,x2,eps,h1,hmin,derivs,rkqs,findMan)
+	subroutine TBLint_sep(ystart,x1,x2,eps,h1,hmin,derivs,rkqs,findMan)
 		USE nrtype
 		IMPLICIT NONE
 		REAL(DP), DIMENSION(:), INTENT(INOUT) :: ystart

@@ -4,7 +4,7 @@
 COMP = ifort 
 OPTFULL = -O2
 TARGET = libthreeBody
-OBJ = CartToKSMcG_TBL.o ifc_threeBody.o KSMcGtoCart_TBL.o TBLint.o TBLint_manif.o TBrkqs.o vectorize.o
+OBJ = CartToKSMcG_TBL.o findIC.o findSep.o ifc_threeBody.o KSMcGtoCart_TBL.o TBLint.o TBLint_sep.o TBrkqs.o vectorize.o
 srcMod = ifc_threeBody.f90 
 targetMod = ifc_threeBody.mod
 # Where to find user libraries:

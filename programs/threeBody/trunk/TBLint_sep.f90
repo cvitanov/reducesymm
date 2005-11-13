@@ -1,15 +1,15 @@
-MODULE TBL_path_manif
+MODULE TBL_path_sep
 	USE nrtype
 	INTEGER(I4B) :: nok,nbad,kount
 	LOGICAL(LGT), SAVE :: save_steps=.false.
 	REAL(DP) :: dxsav
 	REAL(DP), DIMENSION(:), POINTER :: xp
 	REAL(DP), DIMENSION(:,:), POINTER :: yp
-END MODULE TBL_path_manif
+END MODULE TBL_path_sep
 
-	SUBROUTINE TBLint_manif(ystart,x1,x2,eps,h1,hmin,derivs,rkqs,pChange)
+	SUBROUTINE TBLint_sep(ystart,x1,x2,eps,h1,hmin,derivs,rkqs,pChange)
 	USE nrtype; USE nrutil, ONLY : nrerror,reallocate
-	USE TBL_path_manif
+	USE TBL_path_sep
 	USE ifc_threeBody
 	IMPLICIT NONE
 	REAL(DP), DIMENSION(:), INTENT(INOUT) :: ystart
@@ -111,4 +111,4 @@ END MODULE TBL_path_manif
 	yp(:,kount)=y(:)
 	xsav=x
 	END SUBROUTINE save_a_step
-	END SUBROUTINE TBLint_manif
+	END SUBROUTINE TBLint_sep

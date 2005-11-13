@@ -1,6 +1,7 @@
 	SUBROUTINE TBrkqs(y,dydx,x,htry,eps,yscal,hdid,hnext,derivs)
 	USE nrtype; USE nrutil, ONLY : assert_eq,nrerror
 	USE ifc_integr, ONLY : rkck
+	USE ifc_threeBody
 	IMPLICIT NONE
 	REAL(DP), DIMENSION(:), INTENT(INOUT) :: y
 	REAL(DP), DIMENSION(:), INTENT(IN) :: dydx,yscal
@@ -21,11 +22,21 @@
 	REAL(DP), DIMENSION(size(y)) :: yerr,ytemp
 	REAL(DP), PARAMETER :: SAFETY=0.9_dp,PGROW=-0.2_dp,PSHRNK=-0.25_dp,&
 		ERRCON=1.89e-4
+	real(dp), dimension(2) :: xdum,p_xdum, xdum0,p_xdum0
+	real(dp) :: Edum,E,Eerr
 	ndum=assert_eq(size(y),size(dydx),size(yscal),'rkqs')
 	h=htry
+	call KSMcGtoCart_TBL(y(5),y(1:2),y(3:4),y(6),xdum0,p_xdum0,E) ! Calculate Energy to be able to compare
 	do
 		call rkck(y,dydx,x,h,ytemp,yerr,derivs)
-		if ( (Abs(1/(y(1)**2+y(2)**2)) - Abs(yerr(5)) ) <= 0 ) call nrerror('Energy trancution error larger than e-e interaction term.')
+		call KSMcGtoCart_TBL(y(5),y(1:2),y(3:4),y(6),xdum,p_xdum,Edum)
+		Eerr=Abs(E-Edum)
+		if ( (Abs(1/(xdum(1)+xdum(2))) - Eerr ) <= 0 ) then
+			open(23,file='error.dat')
+			write(23,*) xdum0,p_xdum0
+			close(23)
+			call nrerror('Energy trancution error larger than e-e interaction term.')
+		end if
 		errmax=maxval(abs(yerr(:)/yscal(:)))/eps
 		if (errmax <= 1.0) exit
 		htemp=SAFETY*h*(errmax**PSHRNK)
