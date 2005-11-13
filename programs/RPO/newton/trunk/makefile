@@ -2,8 +2,8 @@
 # by vasimos
 
 # Choose compiler:
-COMP = pgf90 
-OPTFULL = -fastsse
+COMP = ifort 
+OPTFULL = -O2
 TARGET = librpo
 OBJ = newtonRPOetdrk4.o setLHM.o  setRHS.o
 srcMod = ifc_rpo.f90 
@@ -12,8 +12,8 @@ targetMod = ifc_rpo.mod
 userLibPATH = /home/vasimos/lib
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
-lapackModPATH = /usr/pgi/linux86-64/5.2/lib/lapack95_modules
-lapackLibPATH = /usr/pgi/linux86-64/5.2/lib/
+lapackModPATH = /usr/lib64/lapack95_modules
+lapackLibPATH = /usr/lib64/
 # Names of user libraries
 nrLIB = nr
 utilLIB = util

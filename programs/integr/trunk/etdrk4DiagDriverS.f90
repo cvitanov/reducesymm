@@ -2,7 +2,7 @@ subroutine etdrk4DiagDriverS(ti,ai,h,tf,af,f0,f1,f2,f3,e,e2,Nplt,SetNlin)
 
 use nrtype
 use nrutil, only: assert_eq
-use ifc_integr !, only: etdrk4Diag
+use ifc_integr
 
 implicit none
 

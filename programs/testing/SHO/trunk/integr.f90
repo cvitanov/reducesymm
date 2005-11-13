@@ -42,7 +42,7 @@ call rk4driver(xi,y(1,:),xf,nsteps,y,oscillator)
 OPEN(10, file='oscillator.dat')
 
 DO i=1, size(y,1)
-	WRITE(10,*) y(i,:) 
+	WRITE(10,'(3F15.10)') y(i,:) 
 END DO
 
 CLOSE(10) 

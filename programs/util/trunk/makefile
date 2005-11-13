@@ -2,8 +2,8 @@
 # by vasimos
 
 # Choose compiler:
-COMP = pgf90 
-OPTFULL = -fastsse
+COMP = ifort 
+OPTFULL = -O2
 TARGET = libutil
 OBJ = ifc_util.o UnitMatrix.o DiagMul.o
 srcMod = ifc_util.f90 

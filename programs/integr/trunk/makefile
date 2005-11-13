@@ -2,10 +2,10 @@
 # by vasimos
 
 # Choose compiler:
-COMP = pgf90 
-OPTFULL = -fastsse
+COMP = ifort 
+OPTFULL = -O2
 TARGET = libintegr
-OBJ = derivsJ.o etdrk4Diag.o etdrk4DiagDriverS.o etdrk4DiagDriverS_a.o etdrk4DiagJ.o etdrk4DiagJif.o etdrk4DiagJDriverS.o etdrk4DiagPrefactors.o eulerJ.o ifc_integr.o integrPrk4.o odeint.o rk2J.o rk2Jdriver.o rk2Jsdriver.o rk4.o rk4driver.o rk4J.o rk4Jdriver.o rk4P.o rk4Pdriver.o rkck.o rkqs.o
+OBJ = ifc_integr.o derivsJ.o etdrk4Diag.o etdrk4DiagDriverS.o etdrk4DiagDriverS_a.o etdrk4DiagJ.o etdrk4DiagJif.o etdrk4DiagJDriverS.o etdrk4DiagPrefactors.o eulerJ.o integrPrk4.o odeint.o rk2J.o rk2Jdriver.o rk2Jsdriver.o rk4.o rk4driver.o rk4J.o rk4Jdriver.o rk4P.o rk4Pdriver.o rkck.o rkqs.o
 srcMod = ifc_integr.f90 
 targetMod = ifc_integr.mod ode_path.mod
 # Where to find user libraries:

@@ -2,8 +2,8 @@
 # by vasimos
 
 # Choose compiler:
-COMP = pgf90 
-OPTFULL = -g
+COMP = ifort 
+OPTFULL = -O2
 TARGET = liblu
 OBJ = lubksb.o ludcmp.o
 srcMod = ifc_lu.f90 

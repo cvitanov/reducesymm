@@ -47,8 +47,8 @@ interface
 			subroutine SetNlin(a,N_a)
 			use nrtype
 			implicit none
-			complex(dpc), intent(in) :: a
-			complex(dpc), intent(out) :: N_a
+			complex(dpc), dimension(:), intent(in) :: a
+			complex(dpc), dimension(:), intent(out) :: N_a
 			end subroutine
 		end interface
 	end subroutine
@@ -67,8 +67,8 @@ interface
 			subroutine SetNlin(a,N_a)
 			use nrtype
 			implicit none
-			real(dpc), intent(in) :: a
-			real(dpc), intent(out) :: N_a
+			real(dpc),  dimension(:), intent(in) :: a
+			real(dpc),  dimension(:), intent(out) :: N_a
 			end subroutine
 		end interface
 	end subroutine
@@ -87,8 +87,8 @@ interface
 			subroutine SetNlin(a,N_a)
 			use nrtype
 			implicit none
-			real(dpc), intent(in) :: a
-			real(dpc), intent(out) :: N_a
+			real(dpc),  dimension(:), intent(in) :: a
+			real(dpc),  dimension(:), intent(out) :: N_a
 			end subroutine
 		end interface
 	end subroutine

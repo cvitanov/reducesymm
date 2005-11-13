@@ -1,7 +1,7 @@
 # command line compiler options can be passed in CFLAGS
 
 # Choose compiler
-COMP = pgf90	
+COMP = ifort	
 OBJECTS = integr.o  oscillator.o
 # Set the outputfile
 TARGET = osc 	

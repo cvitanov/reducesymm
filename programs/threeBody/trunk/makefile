@@ -1,8 +1,8 @@
 # by vasimos
 
 # Choose compiler:
-COMP = pgf90 
-OPTFULL = -fastsse
+COMP = ifort 
+OPTFULL = -O2
 TARGET = libthreeBody
 OBJ = CartToKSMcG_TBL.o ifc_threeBody.o KSMcGtoCart_TBL.o TBLint.o TBLint_manif.o TBrkqs.o vectorize.o
 srcMod = ifc_threeBody.f90 

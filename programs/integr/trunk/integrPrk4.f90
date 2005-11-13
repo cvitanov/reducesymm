@@ -15,10 +15,10 @@ real(dp) :: xi
 INTEGER(I4B) :: d, p, iIrs = 0 
 INTEGER(I4B) :: idum, ndum, i
 INTERFACE
-	SUBROUTINE derivs(x,y,dydx)
+	SUBROUTINE derivs(x,y,dydx,kappa)
 		USE nrtype
 		IMPLICIT NONE
-		REAL(dp), INTENT(IN) :: x
+		REAL(DP), INTENT(IN) :: x,kappa
 		REAL(dp), DIMENSION(:), INTENT(IN) :: y
 		REAL(dp), DIMENSION(:), INTENT(OUT) :: dydx	
 	END SUBROUTINE derivs
