@@ -24,7 +24,7 @@ end interface
 ! in calling routine.
 
 
-integer(i4b) :: d, Nsteps, plrt, i,j 
+integer(i4b) :: d, Nsteps, plrt, i,j, dumm 
 complex(dpc), dimension(size(ai)) :: a
 real(dp) :: t
 
@@ -34,7 +34,7 @@ t=ti
 a=ai
 
 Nsteps=nint(tf/h)	! Calculate number of steps
-plrt=floor(Real(NSteps,dp)/Real(Nplt,dp)) ! Calculate after how many steps taken we should export values
+plrt=ceiling(Real(NSteps,dp)/Real(Nplt,dp)) ! Calculate after how many steps taken we should export values
 
 if (allocated(tSt)) deallocate(tSt) !Clear out old stored variables if necessary.
 if (allocated(aSt)) deallocate(aSt)
@@ -51,7 +51,8 @@ do i=1,Nsteps
 	if (mod(i,plrt) == 0) then ! export some value
 		j=j+1
 		tSt(j)=t
-		aSt(j,:)=a  
+		aSt(j,:)=a
+!		print *,i,j,t
 	end if
 end do
 
