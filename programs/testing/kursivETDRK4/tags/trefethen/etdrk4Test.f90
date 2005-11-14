@@ -12,7 +12,7 @@ include "fftw3.f"
 real(dp), dimension(d/2+1) :: Lin, f0,f1,f2,f3,e,e2
 real(dp), dimension(d) :: u,v
 integer(i4b) :: k,i
-complex(dpc), dimension(d/2+1) :: ai,af
+complex(dpc), dimension(d/2+1) :: ai,af,adum
 integer(i8b) :: plan,invplan
 
 interface
@@ -47,16 +47,18 @@ call dfftw_plan_dft_r2c_1d(plan,d,u,ai,FFTW_ESTIMATE)
 call dfftw_execute(plan)
 call dfftw_destroy_plan(plan)
 
-!print *,ai(1),ai(2)
 
 call etdrk4DiagDriverS(ti,ai,h,tf,af,f0,f1,f2,f3,e,e2,Nplt,SetNlin_KS)
 
 !print *,size(aSt,1),size(aSt,2)
 
 open(9,file='ksu.dat')
+open(10,file='ksa.dat')
 do i=1,size(aSt,1)
 !	print *,aSt(i,2)
-        call dfftw_plan_dft_c2r_1d(invplan,d,aSt(i,:),v,FFTW_ESTIMATE)
+	write(10,'(2F15.5)') Real(aSt(i,3)),Imag(aSt(i,3))
+	adum=aSt(i,:)
+        call dfftw_plan_dft_c2r_1d(invplan,d,adum,v,FFTW_ESTIMATE)
 	call dfftw_execute(invplan)
 	call dfftw_destroy_plan(invplan)
 !	print *,u
@@ -64,6 +66,7 @@ do i=1,size(aSt,1)
 	write(9,frm_u) v
 end do
 close(9)
+close(10)
 
 open(10,file='kst.dat')
 write(10,frm_t) tSt
