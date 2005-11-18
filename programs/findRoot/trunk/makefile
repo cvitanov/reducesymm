@@ -2,7 +2,7 @@
 COMP = ifort 
 OPTFULL = -O2
 TARGET = libfindRoot
-OBJ = ifc_findRoot.o zbrac.o zbrac.o zbracB.o
+OBJ = ifc_findRoot.o rtbis.o zbrac.o zbracB.o
 srcMod = ifc_findRoot.f90 
 targetMod = ifc_findRoot.mod
 # Where to find user libraries:
