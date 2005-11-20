@@ -55,6 +55,8 @@ call dfftw_destroy_plan(plan)
 
 !print *,ai(1),ai(2)
 
+ai(1)=(0.0,0.0)
+
 call etdrk4DiagDriverS(ti,ai,h,tf,af,f0,f1,f2,f3,e,e2,Nplt,SetNlin_KS)
 
 !print *,size(aSt,1),size(aSt,2)
