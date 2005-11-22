@@ -2,14 +2,14 @@
 # by vasimos
 
 # Choose compiler:
-COMP = ifort 
+COMP = 
 OPTFULL = -O2
 TARGET = libutil
 OBJ = ifc_util.o UnitMatrix.o DiagMul.o
 srcMod = ifc_util.f90 
 targetMod = ifc_util.mod
 # Where to find user libraries:
-userLibPATH = /home/vasimos/lib
+userLibPATH = /home/vasimos/lib-$(COMP)
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 # Names of user libraries
@@ -21,7 +21,7 @@ $(TARGET): $(OBJ) $(targetMod) uninstall
 	ranlib $(TARGET).a
 
 %.o: %.f90
-	$(COMP) -c $(OPTFULL) -o $@ -I$(userModPATH) -L$(userLibPATH)  $< -l$(nrLIB)
+	$(COMP) -c $(OPTFULL) -o $@ -I$(userModPATH) $< 
 
 $(OBJ): $(targetMod)
 
