@@ -1,14 +1,14 @@
 # Makefile to produce a static library and modules from nr*.f90 modules.
 # by vasimos
 
-COMP = ifort 
+COMP =  
 OPTFULL = -O2
 TARGET = libnr
 OBJ = nrtype.o nr.o nrutil.o 
 srcMod =  nrtype.f90 nr.f90 nrutil.f90
 targetMod = nrtype.mod nr.mod nrutil.mod
 # Where to find user libraries:
-userLibPATH = /home/vasimos/lib
+userLibPATH = /home/vasimos/lib-$(COMP)
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 
