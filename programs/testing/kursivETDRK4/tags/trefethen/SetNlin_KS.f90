@@ -25,10 +25,11 @@ adum=a
 call dfftw_plan_dft_c2r_1d(invplan,d,adum,v,FFTW_ESTIMATE)
 call dfftw_execute(invplan)
 call dfftw_destroy_plan(invplan)
-v=(v/size(v))**2
+v=v**2
 call dfftw_plan_dft_r2c_1d(plan,d,v,N_a,FFTW_ESTIMATE)
 call dfftw_execute(plan)
 call dfftw_destroy_plan(plan)
+N_a=N_a/size(v)
 do k=1,size(N_a) 
 	N_a(k)=-0.5_dp*ii*(k-1)*N_a(k)/L
 end do

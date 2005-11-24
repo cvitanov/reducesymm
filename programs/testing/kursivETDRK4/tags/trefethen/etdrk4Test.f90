@@ -47,6 +47,7 @@ call dfftw_plan_dft_r2c_1d(plan,d,u,ai,FFTW_ESTIMATE)
 call dfftw_execute(plan)
 call dfftw_destroy_plan(plan)
 
+ai=ai/size(u)
 
 call etdrk4DiagDriverS(ti,ai,h,tf,af,f0,f1,f2,f3,e,e2,Nplt,SetNlin_KS)
 
@@ -62,7 +63,7 @@ do i=1,size(aSt,1)
 	call dfftw_execute(invplan)
 	call dfftw_destroy_plan(invplan)
 !	print *,u
-	v=v/size(v)
+!	v=v/size(v)
 	write(9,frm_u) v
 end do
 close(9)
