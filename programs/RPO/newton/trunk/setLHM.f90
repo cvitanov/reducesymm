@@ -14,6 +14,7 @@ complex(dpc), dimension(:,:), intent(out) :: LHM
 integer(i4b) :: ndum
 
 ndum = assert_eq(size(v),size(J,1),size(f),'setLHM 1')
+print *,ndum,size(q),size(LHM,1)
 ndum = assert_eq(ndum,size(q),size(LHM,1)-2,'setLHM 2')
 ndum = assert_eq(ndum,size(R),size(diagk),'setLHM 3')
 ndum = assert_eq(ndum,size(LHM,2)-2,'setLHM 4')

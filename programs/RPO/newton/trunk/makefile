@@ -2,14 +2,13 @@
 # by vasimos
 
 # Choose compiler:
-COMP = ifort 
-OPTFULL = -O2
+COMP = 
 TARGET = librpo
-OBJ = newtonRPOetdrk4.o setLHM.o  setRHS.o
+OBJ = ifc_rpo.o newtonRPOetdrk4.o setLHM.o  setRHS.o
 srcMod = ifc_rpo.f90 
 targetMod = ifc_rpo.mod
 # Where to find user libraries:
-userLibPATH = /home/vasimos/lib
+userLibPATH = /home/vasimos/lib-$(COMP)
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 lapackModPATH = /usr/lib64/lapack95_modules
@@ -20,17 +19,18 @@ utilLIB = util
 lapackLIB = lapack95
 acmlLIB = acml
 
-$(TARGET): $(OBJ) $(targetMod) uninstall
+$(TARGET): uninstall $(OBJ) $(targetMod) 
 	ar cr $(TARGET).a $(OBJ)
 	ranlib $(TARGET).a
 
 %.o: %.f90 
-	$(COMP) -c $(OPTFULL) -o $@ -I$(lapackModPATH)  -L$(lapackLibPATH) -I$(userModPATH) -L$(userLibPATH)  $< -l$(lapackLIB) -l$(acmlLIB) -l$(utilLIB) -l$(nrLIB)
+	$(COMP) -c $(CFLAGS) -o $@ -I$(lapackModPATH)  -L$(lapackLibPATH) -I$(userModPATH) -L$(userLibPATH)  $< -l$(lapackLIB) -l$(acmlLIB) -l$(utilLIB) -l$(nrLIB)
 
 $(OBJ): $(targetMod)
 
 $(targetMod): $(srcMod)
-	$(COMP) -c $(OPTFULL) -I$(lapackModPATH) -I$(userModPATH) $(srcMod)  
+	$(COMP) -c $(CFLAGS) -I$(lapackModPATH) -I$(userModPATH) $(srcMod) -l$(lapackLIB) 
+ 
 
 
 install:

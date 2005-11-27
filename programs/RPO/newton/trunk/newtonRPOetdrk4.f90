@@ -1,13 +1,12 @@
-subroutine newtonPOetdrk4(ai,T,kappa,q,tol,maxIter,h,diagk,f0,f1,f2,f3,e,e2,SetLin,SetNlin,SetANdiag,conv,J)
+subroutine newtonRPOetdrk4(ai,T,kappa,q,tol,maxIter,h,diagk,f0,f1,f2,f3,e,e2,SetLin,SetNlin,SetANdiag,conv,J)
 
 use nrtype
 use nrutil, only: assert_eq
 use ifc_util, only: UnitMatrix
-use ifc_lu, only: lubksb, ludcmp
 use ifc_integr, only: etdrk4DiagJDriverS, etdrk4DiagJ
 use ifc_rpo, only: setLHM, setRHS
 use la_precision, only: wp => dp
-use f95_lapack, only: la_gesv
+use f95_lapack, only: LA_GESV
 
 implicit none
 
@@ -47,10 +46,11 @@ interface
 end interface
 !
 !
-complex(dpc), dimension(size(ai)) :: af,diff, v, RHS 
-real(dp) :: ddum, ti, tf, mx 
+complex(dpc), dimension(size(ai)) :: af,diff, v
+complex(dpc), dimension(size(ai)+2) :: RHS 
+real(dp) :: ddum, ti, mx 
 integer(i4b) :: i, ndum, Nplt=1
-complex(dpc), dimension(size(ai),size(ai)) :: LHM
+complex(dpc), dimension(size(ai)+2,size(ai)+2) :: LHM
 real(dp), dimension(size(ai)) :: Lin
 complex(dpc), dimension(size(ai)) :: N_a, R
 
@@ -60,12 +60,14 @@ ti=0.0_dp
 
 conv=0
 
+R = exp(kappa*diagk) 
+
 do i=1,maxIter
+	print *,i
 	J = UnitMatrix(size(J,1))
-	call etdrk4DiagJDriverS(ti,ai,J,h,tf,af,J,f0,f1,f2,f3,e,e2,Nplt,etdrk4DiagJ,SetNlin,SetANdiag)
+	call etdrk4DiagJDriverS(ti,ai,J,h,T,af,J,f0,f1,f2,f3,e,e2,Nplt,etdrk4DiagJ,SetNlin,SetANdiag)
 	diff = R*af(1:size(af)-1)-ai(1:size(ai)-1)
 	mx=maxval(Abs(diff))
-	print *,mx
 	if (mx < tol) then
 		conv=1
 		exit
