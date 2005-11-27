@@ -1,0 +1,448 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 5.2'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[     12874,        364]*)
+(*NotebookOutlinePosition[     13503,        386]*)
+(*  CellTagsIndexPosition[     13459,        382]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+Cell[BoxData[
+    \(SetDirectory["\<./\>"]\)], "Input"],
+
+Cell[BoxData[
+    \(\(v = Import["\<ksu.dat\>"];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(a = Import["\<ksa.dat\>"];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[a]\)], "Input"],
+
+Cell[BoxData[
+    \(Needs["\<LinearAlgebra`MatrixManipulation`\>"]\)], "Input"],
+
+Cell[BoxData[
+    \(<< Graphics`Graphics3D`\)], "Input"],
+
+Cell[BoxData[{
+    \(Clear[hpy]\), "\n", 
+    \(hby[x_] := 
+      Hue[0.7 + x/2] /; 0 \[LessEqual] x \[LessEqual] \ 0.5\), "\n", 
+    \(hby[x_] := 
+      Hue[\((x - 0.5)\)/2.5] /; 0.5 < x \[LessEqual] \ 1\)}], "Input"],
+
+Cell[BoxData[
+    \(Ltilde = 38.5/\((2  \[Pi])\)\)], "Input"],
+
+Cell[BoxData[{
+    \(\(rng = {6500, 7000};\)\), "\n", 
+    \(\(traj = 
+        ScatterPlot3D[Take[TakeColumns[a, 3], rng], AspectRatio \[Rule] 1, 
+          PlotJoined \[Rule] True, PlotRange \[Rule] All, 
+          AxesLabel \[Rule] \ {\*"\"\<Real(\!\(a\_2\))\>\"", \
+\*"\"\<Im(\!\(a\_2\))\>\"", \*"\"\<Real(\!\(a\_4\))\>\""}, 
+          DisplayFunction \[Rule] Identity];\)\), "\n", 
+    \(\(plt = 
+        ListDensityPlot[Take[v, rng], Mesh \[Rule] False, 
+          ColorFunction \[Rule] hby, AspectRatio \[Rule] 2, 
+          MeshRange \[Rule] {{0, 2  \[Pi]*Ltilde}, rng}, \ 
+          AxesLabel \[Rule] {"\<x\>", "\<t\>"}, ImageSize \[Rule] 400, 
+          DisplayFunction \[Rule] Identity];\)\), "\n", 
+    \(\(pla = 
+        Show[GraphicsArray[{traj, plt}], 
+          ImageSize \[Rule] \ 1000];\)\)}], "Input"],
+
+Cell[BoxData[{
+    \(\(rng = {3210, 3300};\)\), "\n", 
+    \(\(trajC = 
+        ScatterPlot3D[Take[TakeColumns[a, 3], rng], AspectRatio \[Rule] 1, 
+          PlotJoined \[Rule] True, PlotRange \[Rule] All, 
+          AxesLabel \[Rule] \ {\*"\"\<Real(\!\(a\_2\))\>\"", \
+\*"\"\<Im(\!\(a\_2\))\>\"", \*"\"\<Real(\!\(a\_4\))\>\""}, 
+          DisplayFunction \[Rule] Identity, 
+          PlotStyle \[Rule] {\ RGBColor[1, 0, 0]}];\)\), "\n", 
+    \(\(plt = 
+        ListDensityPlot[Take[v, rng], Mesh \[Rule] False, 
+          ColorFunction \[Rule] hby, AspectRatio \[Rule] 2, 
+          MeshRange \[Rule] {{0, 2  \[Pi]*Ltilde}, rng}\ , 
+          AxesLabel \[Rule] {"\<x\>", "\<t\>"}, ImageSize \[Rule] 400, 
+          DisplayFunction \[Rule] Identity];\)\), "\n", 
+    \(\(pla = 
+        Show[GraphicsArray[{trajC, plt}], 
+          ImageSize \[Rule] \ 1000];\)\)}], "Input"],
+
+Cell[BoxData[
+    \(Show[traj, trajC, DisplayFunction \[Rule] $DisplayFunction, 
+      ImageSize \[Rule] \ 600]\)], "Input"],
+
+Cell[BoxData[
+    \(\(Get["\<MathGL3d`OpenGLViewer`\>"];\)\)], "Input"],
+
+Cell[BoxData[
+    \(MVShow3D[traj]\)], "Input"],
+
+Cell[BoxData[{
+    \(\(rng = {3310, 3400};\)\), "\n", 
+    \(\(traj = 
+        ScatterPlot3D[Take[TakeColumns[a, 3], rng], AspectRatio \[Rule] 1, 
+          PlotJoined \[Rule] True, PlotRange \[Rule] All, 
+          AxesLabel \[Rule] \ {\*"\"\<Real(\!\(a\_2\))\>\"", \
+\*"\"\<Im(\!\(a\_2\))\>\"", \*"\"\<Real(\!\(a\_4\))\>\""}, 
+          DisplayFunction \[Rule] Identity];\)\), "\n", 
+    \(\(plt = 
+        ListDensityPlot[Take[v, rng], Mesh \[Rule] False, 
+          ColorFunction \[Rule] hby, AspectRatio \[Rule] 2, 
+          AxesLabel \[Rule] {"\<x\>", "\<t\>"}, 
+          MeshRange \[Rule] {{0, 2  \[Pi]*Ltilde}, rng}\ , 
+          ImageSize \[Rule] 400, 
+          DisplayFunction \[Rule] Identity];\)\), "\n", 
+    \(\(pla = 
+        Show[GraphicsArray[{traj, plt}], 
+          ImageSize \[Rule] \ 1000];\)\)}], "Input"],
+
+Cell[BoxData[
+    \(Clear[trajB]\)], "Input"],
+
+Cell[BoxData[{
+    \(\(rng = {3310, 3400};\)\), "\n", 
+    \(\(trajB = 
+        ScatterPlot3D[Take[TakeColumns[a, 3], rng], AspectRatio \[Rule] 1, 
+          PlotJoined \[Rule] True, PlotRange \[Rule] All, 
+          AxesLabel \[Rule] \ {\*"\"\<Real(\!\(a\_2\))\>\"", \
+\*"\"\<Im(\!\(a\_2\))\>\"", \*"\"\<Real(\!\(a\_4\))\>\""}, 
+          PlotStyle \[Rule] \ RGBColor[0, 0, 1], 
+          DisplayFunction \[Rule] Identity];\)\), "\n", 
+    \(\(plt = 
+        ListDensityPlot[Take[v, rng], Mesh \[Rule] False, 
+          ColorFunction \[Rule] hby, AspectRatio \[Rule] 2, 
+          AxesLabel \[Rule] {"\<x\>", "\<t\>"}, 
+          MeshRange \[Rule] {{0, 2  \[Pi]*Ltilde}, rng}\ , 
+          Ticks \[Rule] {Range[0, 2  \[Pi]*Ltilde], Range[rng]}, 
+          ImageSize \[Rule] 400, 
+          DisplayFunction \[Rule] Identity];\)\), "\n", 
+    \(\(pla = 
+        Show[GraphicsArray[{trajB, plt}], 
+          ImageSize \[Rule] \ 1000];\)\)}], "Input"],
+
+Cell[BoxData[
+    \(Show[traj, trajB, 
+      DisplayFunction \[Rule] \ $DisplayFunction]\)], "Input"],
+
+Cell[BoxData[{
+    \(\(rng = {4430, 4530};\)\), "\n", 
+    \(\(trajC2 = 
+        ScatterPlot3D[Take[TakeColumns[a, 3], rng], AspectRatio \[Rule] 1, 
+          PlotJoined \[Rule] True, PlotRange \[Rule] All, 
+          AxesLabel \[Rule] \ {\*"\"\<Real(\!\(a\_2\))\>\"", \
+\*"\"\<Im(\!\(a\_2\))\>\"", \*"\"\<Real(\!\(a\_4\))\>\""}, 
+          PlotStyle \[Rule] RGBColor[0, 1, 0], 
+          DisplayFunction \[Rule] Identity];\)\), "\n", 
+    \(\(plt = 
+        ListDensityPlot[Take[v, rng], Mesh \[Rule] False, 
+          ColorFunction \[Rule] hby, AspectRatio \[Rule] 2, 
+          MeshRange \[Rule] {{0, 2  \[Pi]*Ltilde}, rng}, \ 
+          AxesLabel \[Rule] {"\<x\>", "\<t\>"}, ImageSize \[Rule] 400, 
+          DisplayFunction \[Rule] Identity];\)\), "\n", 
+    \(\(pla = 
+        Show[GraphicsArray[{trajC2, plt}], 
+          ImageSize \[Rule] \ 1000];\)\)}], "Input"],
+
+Cell[BoxData[
+    \(cyc = 
+      Show[trajB, trajC, trajC2, 
+        DisplayFunction \[Rule] $DisplayFunction]\)], "Input"],
+
+Cell[BoxData[
+    \(\(Get["\<MathGL3d`OpenGLViewer`\>"];\)\)], "Input"],
+
+Cell[BoxData[
+    \(MVShow3D[cyc]\)], "Input"],
+
+Cell[BoxData[{
+    \(\(rng = {6640, 6662};\)\), "\n", 
+    \(\(traj = 
+        ScatterPlot3D[Take[TakeColumns[a, 3], rng], AspectRatio \[Rule] 1, 
+          PlotJoined \[Rule] True, PlotRange \[Rule] All, 
+          AxesLabel \[Rule] \ {\*"\"\<Real(\!\(a\_2\))\>\"", \
+\*"\"\<Im(\!\(a\_2\))\>\"", \*"\"\<Real(\!\(a\_4\))\>\""}, 
+          DisplayFunction \[Rule] Identity];\)\), "\n", 
+    \(\(plt = 
+        ListDensityPlot[Take[v, rng], Mesh \[Rule] False, 
+          ColorFunction \[Rule] hby, AspectRatio \[Rule] 2, 
+          MeshRange \[Rule] {{0, 2  \[Pi]*Ltilde}, rng}, \ 
+          AxesLabel \[Rule] {"\<x\>", "\<t\>"}, ImageSize \[Rule] 400, 
+          DisplayFunction \[Rule] Identity];\)\), "\n", 
+    \(\(pla = 
+        Show[GraphicsArray[{traj, plt}], 
+          ImageSize \[Rule] \ 1000];\)\)}], "Input"],
+
+Cell[BoxData[{
+    \(\(rng = {6700, 6750};\)\), "\n", 
+    \(\(trajB2 = 
+        ScatterPlot3D[Take[TakeColumns[a, 3], rng], AspectRatio \[Rule] 1, 
+          PlotJoined \[Rule] True, PlotRange \[Rule] All, 
+          AxesLabel \[Rule] \ {\*"\"\<Real(\!\(a\_2\))\>\"", \
+\*"\"\<Im(\!\(a\_2\))\>\"", \*"\"\<Real(\!\(a\_4\))\>\""}, 
+          PlotStyle \[Rule] RGBColor[0, 1, 0], 
+          DisplayFunction \[Rule] Identity];\)\), "\n", 
+    \(\(plt = 
+        ListDensityPlot[Take[v, rng], Mesh \[Rule] False, 
+          ColorFunction \[Rule] hby, AspectRatio \[Rule] 2, 
+          MeshRange \[Rule] {{0, 2  \[Pi]*Ltilde}, rng}, \ 
+          AxesLabel \[Rule] {"\<x\>", "\<t\>"}, ImageSize \[Rule] 400, 
+          DisplayFunction \[Rule] Identity];\)\), "\n", 
+    \(\(pla = 
+        Show[GraphicsArray[{trajB2, plt}], 
+          ImageSize \[Rule] \ 1000];\)\)}], "Input"],
+
+Cell[BoxData[
+    \(plTr = 
+      Show[traj, trajB, trajB2, 
+        DisplayFunction \[Rule] $DisplayFunction]\)], "Input"],
+
+Cell[BoxData[
+    \(MVShow3D[plTr]\)], "Input"],
+
+Cell[BoxData[
+    \(cycR = 
+      Show[trajB, trajB2, 
+        DisplayFunction \[Rule] $DisplayFunction]\)], "Input"],
+
+Cell[BoxData[
+    \(MVShow3D[cycR]\)], "Input"],
+
+Cell[BoxData[
+    \(\(a2 = TakeColumns[a, 2];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(a4 = TakeColumns[a, {3, 4}];\)\)], "Input"],
+
+Cell[BoxData[{
+    \(\(rng = {6700, 6750};\)\), "\n", 
+    \(\(pa1 = 
+        ListPlot[Take[a2, rng], 
+          AxesLabel \[Rule] \ {\*"\"\<Real(\!\(a\_2\))\>\"", \
+\*"\"\<Im(\!\(a\_2\))\>\""}, ImageSize \[Rule] 300, PlotJoined \[Rule] False, 
+          PlotRange \[Rule] All, 
+          DisplayFunction \[Rule] Identity];\)\), "\[IndentingNewLine]", 
+    \(\(plt = 
+        ListDensityPlot[Take[v, rng], Mesh \[Rule] False, 
+          ColorFunction \[Rule] hby, 
+          AspectRatio \[Rule] 
+            2,  (*\(MeshRange \[Rule] {{0, 2  \[Pi]*3}, {0, 1000}}\)\(,\)*) \ 
+          AxesLabel \[Rule] {"\<x\>", "\<t\>"}, ImageSize \[Rule] 400, 
+          DisplayFunction \[Rule] Identity];\)\), "\n", 
+    \(\(pla = 
+        Show[GraphicsArray[{pa1, plt}], 
+          ImageSize \[Rule] \ 1000];\)\)}], "Input"],
+
+Cell[BoxData[
+    \(ListPlot[Take[a4, rng], 
+      AxesLabel \[Rule] \ {\*"\"\<Real(\!\(a\_2\))\>\"", \
+\*"\"\<Im(\!\(a\_2\))\>\""}, ImageSize \[Rule] 300, PlotJoined \[Rule] False, 
+      PlotRange \[Rule] All]\)], "Input"],
+
+Cell[BoxData[
+    \(\(cmplx2 = 
+        Table[a2[\([i, 1]\)] + I\ a2[\([i, 2]\)], {i, 
+            1, \(Dimensions[a2]\)[\([1]\)]}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(polar2 = 
+        Table[{Abs[cmplx2[\([i]\)]], Arg[cmplx2[\([i]\)]]}, {i, 
+            1, \(Dimensions[a2]\)[\([1]\)]}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(ListPlot[TakeColumns[Take[polar2, rng], {2}] // Flatten, 
+        PlotRange \[Rule] All, PlotJoined \[Rule] True];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(ListPlot[TakeColumns[Take[polar2, rng], {1}] // Flatten, 
+        PlotRange \[Rule] All, PlotJoined \[Rule] True];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(ListPlot[TakeColumns[Take[polar2, {290, 300}], {1}] // Flatten, 
+        PlotRange \[Rule] All, PlotJoined \[Rule] True];\)\)], "Input"],
+
+Cell[BoxData[
+    \(polar2[\([50]\)]\)], "Input"],
+
+Cell[BoxData[
+    \(polar2[\([150]\)]\)], "Input"],
+
+Cell[BoxData[
+    \(Take[a2, {290, 300}]\)], "Input"],
+
+Cell[BoxData[
+    \(TakeColumns[Take[a2, {290, 300}], {2}]\)], "Input"],
+
+Cell[BoxData[
+    \(ListPlot[Take[a2, {290, 300}], PlotRange \[Rule] All, 
+      PlotJoined \[Rule] \ True]\)], "Input"],
+
+Cell[BoxData[
+    \(\(ListPlot[TakeColumns[Take[a2, rng], 1] // Flatten];\)\)], "Input"],
+
+Cell[BoxData[
+    \(rng\)], "Input"],
+
+Cell[BoxData[
+    \(\(ListPlot[TakeColumns[Take[a2, {290, 300}], {2}] // Flatten, 
+        PlotJoined \[Rule] True];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Export["\<Guess.eps\>", guess]\)], "Input"],
+
+Cell[BoxData[
+    \(\(guess = 
+        ListDensityPlot[v, Mesh \[Rule] False, ColorFunction \[Rule] Hue, 
+          AspectRatio \[Rule] 2, 
+          MeshRange \[Rule] {{0, 2  \[Pi]*3}, {0, 600}}, 
+          AxesLabel \[Rule] {"\<x\>", "\<t\>"}, 
+          ImageSize \[Rule] 400];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(Table[
+        ListPlot[v[\([i]\)], PlotJoined \[Rule] True, 
+          PlotRange \[Rule] {\(-2\), 2}, PlotLabel \[Rule] i], {i, 
+          1, \(Dimensions[v]\)[\([1]\)]}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(f300 = Fourier[v[\([300]\)]];\)\)], "Input"],
+
+Cell[BoxData[
+    \(ListPlot[v[\([300]\)]]\)], "Input"],
+
+Cell[BoxData[
+    \(\(f500 = Fourier[v[\([500]\)]];\)\)], "Input"],
+
+Cell[BoxData[
+    \(ListPlot[v[\([500]\)]]\)], "Input"]
+},
+FrontEndVersion->"5.2 for X",
+ScreenRectangle->{{0, 1280}, {0, 1024}},
+WindowSize->{1226, 950},
+WindowMargins->{{0, Automatic}, {Automatic, 0}}
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+Cell[1754, 51, 55, 1, 27, "Input"],
+Cell[1812, 54, 63, 1, 27, "Input"],
+Cell[1878, 57, 63, 1, 27, "Input"],
+Cell[1944, 60, 46, 1, 27, "Input"],
+Cell[1993, 63, 79, 1, 27, "Input"],
+Cell[2075, 66, 56, 1, 27, "Input"],
+Cell[2134, 69, 218, 5, 59, "Input"],
+Cell[2355, 76, 61, 1, 27, "Input"],
+Cell[2419, 79, 819, 16, 107, "Input"],
+Cell[3241, 97, 873, 17, 107, "Input"],
+Cell[4117, 116, 124, 2, 27, "Input"],
+Cell[4244, 120, 71, 1, 27, "Input"],
+Cell[4318, 123, 47, 1, 27, "Input"],
+Cell[4368, 126, 830, 17, 107, "Input"],
+Cell[5201, 145, 45, 1, 27, "Input"],
+Cell[5249, 148, 948, 19, 107, "Input"],
+Cell[6200, 169, 101, 2, 27, "Input"],
+Cell[6304, 173, 871, 17, 107, "Input"],
+Cell[7178, 192, 123, 3, 27, "Input"],
+Cell[7304, 197, 71, 1, 27, "Input"],
+Cell[7378, 200, 46, 1, 27, "Input"],
+Cell[7427, 203, 819, 16, 107, "Input"],
+Cell[8249, 221, 871, 17, 107, "Input"],
+Cell[9123, 240, 123, 3, 27, "Input"],
+Cell[9249, 245, 47, 1, 27, "Input"],
+Cell[9299, 248, 117, 3, 27, "Input"],
+Cell[9419, 253, 47, 1, 27, "Input"],
+Cell[9469, 256, 60, 1, 27, "Input"],
+Cell[9532, 259, 65, 1, 27, "Input"],
+Cell[9600, 262, 812, 17, 91, "Input"],
+Cell[10415, 281, 224, 4, 27, "Input"],
+Cell[10642, 287, 147, 3, 27, "Input"],
+Cell[10792, 292, 157, 3, 27, "Input"],
+Cell[10952, 297, 151, 2, 27, "Input"],
+Cell[11106, 301, 151, 2, 27, "Input"],
+Cell[11260, 305, 158, 2, 27, "Input"],
+Cell[11421, 309, 49, 1, 27, "Input"],
+Cell[11473, 312, 50, 1, 27, "Input"],
+Cell[11526, 315, 53, 1, 27, "Input"],
+Cell[11582, 318, 71, 1, 27, "Input"],
+Cell[11656, 321, 120, 2, 27, "Input"],
+Cell[11779, 325, 88, 1, 27, "Input"],
+Cell[11870, 328, 36, 1, 27, "Input"],
+Cell[11909, 331, 131, 2, 27, "Input"],
+Cell[12043, 335, 63, 1, 27, "Input"],
+Cell[12109, 338, 295, 6, 27, "Input"],
+Cell[12407, 346, 209, 4, 27, "Input"],
+Cell[12619, 352, 66, 1, 27, "Input"],
+Cell[12688, 355, 55, 1, 27, "Input"],
+Cell[12746, 358, 66, 1, 27, "Input"],
+Cell[12815, 361, 55, 1, 27, "Input"]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+
