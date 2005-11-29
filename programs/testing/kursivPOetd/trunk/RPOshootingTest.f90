@@ -1,23 +1,24 @@
-program RPOshootingTest
+program POshootingTest
 
 use nrtype
 use parameters
-use ifc_rpo
+use ifc_po
 use ifc_integr
 use la_precision, only: wp => dp
 use f95_lapack
+use ifc_util
 
 implicit none
 
 include "fftw3.f"
 
 
-real(dp), dimension(d/2+1) :: Lin, f0,f1,f2,f3,e,e2,diagk
+real(dp), dimension(d/2+1) :: Lin, f0,f1,f2,f3,e,e2
 real(dp), dimension(d) :: u,v
 integer(i4b) :: k,i, conv=0
-complex(dpc), dimension(d/2+1) :: ai,af,q
+complex(dpc), dimension(d/2+1) :: ai,af,q, adum
 integer(i8b) :: plan,invplan
-real(dp) ::  T , kappa
+real(dp) ::  T
 complex(dpc), dimension(d/2+1,d/2+1) ::  J
 
 interface
@@ -50,7 +51,7 @@ call etdrk4DiagPrefactors(Lin,h,R,M,f0,f1,f2,f3,e,e2)
 
 u=0.0_dp
 
-open(10,file='ic.dat')
+open(10,file='guess.dat')
 read(10,*) u
 close(10)
 
@@ -58,13 +59,11 @@ open(11,file='Tguess.dat')
 read(11,*) T
 close(11)
 
-open(12,file='Driftguess.dat')
-read(12,*) kappa
-close(12)
-
 q=(0.0,0.0)
 
-q(2)=(1.0,0.0)
+q(3)=(0.0,-1.0)
+
+J=UnitMatrix(d/2+1)
 
 call dfftw_plan_dft_r2c_1d(plan,d,u,ai,FFTW_ESTIMATE)
 call dfftw_execute(plan)
@@ -72,16 +71,15 @@ call dfftw_destroy_plan(plan)
 
 ai=ai/size(u)
 
-do k=1,d/2+1
-	diagk = ii*(k-1)/L
-end do
-
-call newtonPOetdrk4(ai,T,kappa,q,tol,maxIter,h,diagk,f0,f1,f2,f3,e,e2,SetLin_KS,SetNlin_KS,SetANdiag_KS,conv,J)
+call newtonPOetdrk4(ai,T,q,tol,maxIter,h,f0,f1,f2,f3,e,e2,SetLin_KS,SetNlin_KS,SetANdiag_KS,conv,J)
 
 open(9,file='ksu.dat')
+open(12,file='ksa.dat')
 do i=1,size(aSt,1)
 !	print *,aSt(i,2)
-        call dfftw_plan_dft_c2r_1d(invplan,d,aSt(i,:),v,FFTW_ESTIMATE)
+	write(12,'(4F15.10)') real(aSt(i,3)),imag(aSt(i,3)),real(aSt(i,5)),imag(aSt(i,5))
+	adum=aSt(i,:)
+        call dfftw_plan_dft_c2r_1d(invplan,d,adum,v,FFTW_ESTIMATE)
 	call dfftw_execute(invplan)
 	call dfftw_destroy_plan(invplan)
 !	print *,u

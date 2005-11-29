@@ -1,7 +1,6 @@
 # command line compiler options can be passed in CFLAGS
 
 # Choose compiler
-COMP=
 OBJECTS = RPOshootingTest.o parameters.o SetANdiag_KS.o SetLin_KS.o  SetNlin_KS.o 
 # Set the outputfile
 TARGET = ks 	
@@ -12,18 +11,20 @@ userModPATH = $(userLibPATH)/modules
 # Where to find shared libraries: 
 sharedLibPATH = /usr/lib64
 # Where to find lapack:
-lapackModPATH = /usr/pgi/linux86-64/5.2/lib/lapack95_modules
-lapackLibPATH = /usr/pgi/linux86-64/5.2/lib/
+lapackLibPATH = /usr/lib64/lapack95/$(COMP)
+lapackModPATH = $(lapackLibPATH)/lapack95_modules
 paramMod = parameters.mod
 nrLIB = nr
 integrLIB = integr
-shootingLIB = rpo 
-utilLIB = util
-lapackLIB = lapack95
-acmlLIB = acml
+shootingLIB = po 
+utilLIB = utils
+
+ifdef COMP
+include $(COMP).inc
+endif
 
 $(TARGET): $(OBJECTS)
-	$(COMP) -o $(TARGET) -I$(userModPATH) -I$(lapackModPATH)  -L$(lapackLibPATH) -L$(userLibPATH) $(CFLAGS) $(OBJECTS) $(sharedLibPATH)/libfftw3.so -l$(shootingLIB) -l$(lapackLIB) -l$(acmlLIB)  -l$(integrLIB) -l$(utilLIB) -l$(nrLIB) 
+	$(COMP) -o $(TARGET) -I$(userModPATH) -I$(lapackModPATH) -L$(laPATH) -L$(lapackLibPATH) -L$(userLibPATH) $(CFLAGS) $(OBJECTS) $(sharedLibPATH)/libfftw3.so -l$(shootingLIB) -l$(lapack95LIB) -l$(lapackLIB) -l$(blasLIB) -l$(integrLIB) -l$(utilLIB) -l$(nrLIB) 
 
 %.o: %.f90 $(paramMod)
 	$(COMP) -c -o $@ -I$(userModPATH) -I$(lapackModPATH) $(CFLAGS) $< 
