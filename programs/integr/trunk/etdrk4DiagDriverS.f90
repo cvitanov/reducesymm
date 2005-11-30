@@ -10,7 +10,7 @@ complex(dpc), dimension(:), intent(in):: ai ! Initial point
 real(dp), intent(in) :: ti,h,tf ! initial time, stepsize, final time
 real(dp), dimension(:),intent(in) :: f0,f1,f2,f3,e,e2 ! precomputed functions of the linear operator
 complex(dpc), dimension(:), intent(out) :: af ! Final point
-integer(i4b), intent(in) :: Nplt ! Number of intermediate points to be exported
+integer(i4b), intent(inout) :: Nplt ! Number of intermediate points to be exported
 interface
 	subroutine SetNlin(a,N_a)
 	use nrtype
@@ -33,8 +33,11 @@ d=2*(assert_eq(size(f3), size(a),'etdrk4Diag-a')-1)
 t=ti
 a=ai
 
-Nsteps=nint(tf/h)	! Calculate number of steps
+Nsteps=nint((tf-ti)/h)	! Calculate number of steps
+print *,"Nsteps",Nsteps
 plrt=ceiling(Real(NSteps,dp)/Real(Nplt,dp)) ! Calculate after how many steps taken we should export values
+print *,"plrt",plrt
+Nplt=min(Nplt,Nsteps)
 
 if (allocated(tSt)) deallocate(tSt) !Clear out old stored variables if necessary.
 if (allocated(aSt)) deallocate(aSt)

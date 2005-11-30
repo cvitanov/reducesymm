@@ -62,13 +62,13 @@ interface
 		real(dp), intent(in) :: ti,h,tf
 		real(dp), dimension(:),intent(in) :: f0,f1,f2,f3,e,e2
 		complex(dpc), dimension(:), intent(out) :: af
-		integer(i4b), intent(in) :: Nplt
+		integer(i4b), intent(inout) :: Nplt
 		interface
 			subroutine SetNlin(a,N_a)
 			use nrtype
 			implicit none
-			real(dpc),  dimension(:), intent(in) :: a
-			real(dpc),  dimension(:), intent(out) :: N_a
+			complex(dpc),  dimension(:), intent(in) :: a
+			complex(dpc),  dimension(:), intent(out) :: N_a
 			end subroutine
 		end interface
 	end subroutine
@@ -79,16 +79,16 @@ interface
 		use nrtype
 		implicit none
 		complex(dpc), dimension(:), intent(in):: ai
-		real(dp), intent(in) :: ti,h,tf
-		real(dp), dimension(:),intent(in) :: f0,f1,f2,f3,e,e2
+		complex(dp), intent(in) :: ti,h,tf
+		complex(dp), dimension(:),intent(in) :: f0,f1,f2,f3,e,e2
 		complex(dpc), dimension(:), intent(out) :: af
 		integer(i4b), intent(in) :: Nplt
 		interface
 			subroutine SetNlin(a,N_a)
 			use nrtype
 			implicit none
-			real(dpc),  dimension(:), intent(in) :: a
-			real(dpc),  dimension(:), intent(out) :: N_a
+			complex(dpc),  dimension(:), intent(in) :: a
+			complex(dpc),  dimension(:), intent(out) :: N_a
 			end subroutine
 		end interface
 	end subroutine

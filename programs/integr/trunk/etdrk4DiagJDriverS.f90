@@ -71,8 +71,10 @@ d=2*(assert_eq(size(f3), size(a),'etdrk4Diag-a')-1)
 t=ti
 a=ai
 
-Nsteps=nint(tf/h)	! Calculate number of steps
+Nsteps=nint((tf-ti)/h)	! Calculate number of steps
+print *,"Nsteps",Nsteps
 plrt=floor(Real(NSteps,dp)/Real(Nplt,dp)) ! Calculate after how many steps taken we should export values
+print *,"plrt",plrt
 
 if (allocated(tSt)) deallocate(tSt) !Clear out old stored variables if necessary.
 if (allocated(aSt)) deallocate(aSt)
