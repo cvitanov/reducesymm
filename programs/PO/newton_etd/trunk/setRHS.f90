@@ -10,7 +10,7 @@ complex(dpc),  dimension(:), intent(out) :: RHS
 !!
 integer(i4b) :: ndum
 
-ndum = assert_eq(size(diff)+2,size(RHS),'setRHS')
+ndum = assert_eq(size(diff)+1,size(RHS),'setRHS')
 
 RHS=0.0_dp
 

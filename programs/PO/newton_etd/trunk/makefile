@@ -2,17 +2,16 @@
 # by vasimos
 
 # Choose compiler:
-COMP = 
-TARGET = librpo
-OBJ = ifc_rpo.o newtonRPOetdrk4.o setLHM.o  setRHS.o
-srcMod = ifc_rpo.f90 
-targetMod = ifc_rpo.mod
+TARGET = libpo
+OBJ = ifc_po.o newtonPOetdrk4.o setLHM.o  setRHS.o
+srcMod = ifc_po.f90 
+targetMod = ifc_po.mod
 # Where to find user libraries:
 userLibPATH = /home/vasimos/lib-$(COMP)
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
-lapackModPATH = /usr/lib64/lapack95_modules
-lapackLibPATH = /usr/lib64/
+lapackModPATH = /usr/lib64/lapack95/$(COMP)/lapack95_modules
+lapackLibPATH = /usr/lib64/lapack95/$(COMP)
 # Names of user libraries
 nrLIB = nr
 utilLIB = util
