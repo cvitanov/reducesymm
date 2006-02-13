@@ -74,8 +74,8 @@ do j=1,Niter
 	print *,j
 	call etdrk4DiagDriverS_a(ti,ai,h,tf,af,f0,f1,f2,f3,e,e2,Nplt,SetNlin_KS)
 	do i=1,size(aSt,1)
-		if ((aimag(aSt(i,2)) > 0.06_dp) .and. (aimag(aSt(i+1,2)) <=  0.06_dp) ) then
-			write(8,*) aimag(aSt(i,2)), aimag(aSt(i,4)),aimag(aSt(i,7))
+		if ((aimag(aSt(i,2)) < 0.06_dp) .and. (aimag(aSt(i+1,2)) >=  0.06_dp) ) then
+			write(8,'(3F15.5)') aimag(aSt(i,2)), aimag(aSt(i,4)),aimag(aSt(i,7))  
 		!	print *, aSt(i,1)
 		end if
 	end do
@@ -84,9 +84,9 @@ end do
 
 close(8)
 
-open(14,file='a0.dat')
-write(14,frm_a) aimag(aSt(size(aSt,1),:))
-close(14)
+!open(14,file='a0.dat')
+!write(14,frm_a) aimag(aSt(size(aSt,1),:))
+!close(14)
 
 ! open(9,file='ksu.dat')
 ! do i=1,size(aSt,1),skip
