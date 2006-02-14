@@ -9,7 +9,7 @@ implicit none
 include "fftw3.f"
 
 
-real(dp), dimension(d/2+1) :: Lin, f0,f1,f2,f3,e,e2
+real(dp), dimension(d/2+1) :: Lin, f0,f1,f2,f3,e,e2, ia
 real(dp), dimension(d) :: u,v
 integer(i4b) :: k,i, skip=10, j
 complex(dpc), dimension(d/2+1) :: ai,af
@@ -67,19 +67,18 @@ open(9,file='a0.dat')
 read(9,*) ai
 close(9)
 
+print *,ai(4),ai(7)
+print *,ii
+ai=ii*ai
+
+print *,"ai", ai(4),ai(7)
+
+call etdrk4DiagDriverS_a(ti,ai,h,tf,af,f0,f1,f2,f3,e,e2,Nplt,SetNlin_KS)
 
 open(8,file='ksF.dat')
 
-do j=1,Niter
-	print *,j
-	call etdrk4DiagDriverS_a(ti,ai,h,tf,af,f0,f1,f2,f3,e,e2,Nplt,SetNlin_KS)
-	do i=1,size(aSt,1)
-		if ((aimag(aSt(i,2)) < 0.06_dp) .and. (aimag(aSt(i+1,2)) >=  0.06_dp) ) then
-			write(8,'(3F15.5)') aimag(aSt(i,2)), aimag(aSt(i,4)),aimag(aSt(i,7))  
-		!	print *, aSt(i,1)
-		end if
-	end do
-	ai=af
+do i=1, size(aSt,1)
+	write(8,'(2F15.5)') aimag(aSt(i,4)),aimag(aSt(i,7))  
 end do
 
 close(8)
