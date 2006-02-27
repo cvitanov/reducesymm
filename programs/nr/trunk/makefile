@@ -1,7 +1,6 @@
 # Makefile to produce a static library and modules from nr*.f90 modules.
 # by vasimos
 
-COMP =  
 OPTFULL = -O2
 TARGET = libnr
 OBJ = nrtype.o nr.o nrutil.o 
