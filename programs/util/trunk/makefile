@@ -2,7 +2,6 @@
 # by vasimos
 
 # Choose compiler:
-COMP = 
 OPTFULL = -O2
 TARGET = libutil
 OBJ = ifc_util.o UnitMatrix.o DiagMul.o
