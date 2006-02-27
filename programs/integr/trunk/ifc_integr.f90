@@ -79,8 +79,8 @@ interface
 		use nrtype
 		implicit none
 		complex(dpc), dimension(:), intent(in):: ai
-		complex(dp), intent(in) :: ti,h,tf
-		complex(dp), dimension(:),intent(in) :: f0,f1,f2,f3,e,e2
+		real(dp), intent(in) :: ti,h,tf
+		real(dp), dimension(:),intent(in) :: f0,f1,f2,f3,e,e2
 		complex(dpc), dimension(:), intent(out) :: af
 		integer(i4b), intent(in) :: Nplt
 		interface
@@ -124,8 +124,8 @@ interface
 end interface
 
 
-interface
-	subroutine etdrk4DiagJ(a,J,h,aout,Jout,f0,f1,f2,f3,e,e2,SetNlin,SetAndiag)
+interface etdrk4DiagJ
+	subroutine etdrk4DiagJ_g(a,J,h,aout,Jout,f0,f1,f2,f3,e,e2,SetNlin,SetAndiag)
 		use nrtype
 		implicit none
 		complex(dpc), dimension(:), intent(in):: a ! Initial point
@@ -150,12 +150,39 @@ interface
 			complex(dpc), dimension(:,:), intent(out) :: Andiag
 			end subroutine
 		end interface
-	end subroutine
+	end subroutine etdrk4DiagJ_g
+	subroutine etdrk4DiagJ_c0(a,J,h,aout,Jout,f0,f1,f2,f3,e,e2,SetNlin,SetAndiag,c0)
+		use nrtype
+		implicit none
+		complex(dpc), dimension(:), intent(in):: a ! Initial point
+		complex(dpc), dimension(:,:), intent(in):: J
+		real(dp), intent(in) :: h ! Step size
+		complex(dpc), dimension(:,:), intent(out):: Jout
+		real(dp), dimension(:),intent(in) :: f0,f1,f2,f3,e,e2 ! Functions of the linear operator
+		complex(dpc), dimension(:), intent(out):: aout ! Final point
+		integer(i4b), intent(in), optional:: c0
+		interface
+			subroutine SetNlin(a,N_a)
+			use nrtype
+			implicit none
+			complex(dpc), dimension(:), intent(in) :: a
+			complex(dpc), dimension(:), intent(out) :: N_a
+			end subroutine
+		end interface
+		interface
+			subroutine SetAndiag(a,Andiag)
+			use nrtype
+			implicit none
+			complex(dpc), dimension(:), intent(in) :: a
+			complex(dpc), dimension(:,:), intent(out) :: Andiag
+			end subroutine
+		end interface
+	end subroutine etdrk4DiagJ_c0
 end interface
 
 
-interface
-	subroutine etdrk4DiagJDriverS(ti,ai,Ji,h,tf,af,Jf,f0,f1,f2,f3,e,e2,Nplt,integrator,SetNlin,SetANdiag)
+interface etdrk4DiagJDriverS
+	subroutine etdrk4DiagJDriverS_g(ti,ai,Ji,h,tf,af,Jf,f0,f1,f2,f3,e,e2,Nplt,integrator,SetNlin,SetANdiag)
 		use nrtype
 		implicit none
 		complex(dpc), dimension(:), intent(in):: ai ! Initial point
@@ -209,7 +236,64 @@ interface
 				end interface
 			end subroutine
 		end interface
-	end subroutine
+	end subroutine etdrk4DiagJDriverS_g
+	subroutine etdrk4DiagJDriverS_c0(ti,ai,Ji,h,tf,af,Jf,f0,f1,f2,f3,e,e2,Nplt,integrator,SetNlin,SetANdiag,c0)
+		use nrtype
+		implicit none
+		complex(dpc), dimension(:), intent(in):: ai ! Initial point
+		complex(dpc), dimension(:,:), intent(in):: Ji 
+		real(dp), intent(in) :: ti,h,tf ! initial time, stepsize, final time
+		complex(dpc), dimension(:,:), intent(out):: Jf 
+		real(dp), dimension(:),intent(in) :: f0,f1,f2,f3,e,e2 ! precomputed functions of the linear operator
+		complex(dpc), dimension(:), intent(out) :: af ! Final point
+		integer(i4b), intent(in) :: Nplt ! Number of intermediate points to be exported
+		integer(i4b), intent(in), optional:: c0 !
+		interface
+			subroutine SetNlin(a,N_a)
+			use nrtype
+			implicit none
+			complex(dpc), dimension(:), intent(in) :: a
+			complex(dpc), dimension(:), intent(out) :: N_a
+			end subroutine
+		end interface
+		interface
+			subroutine SetANdiag(a,ANdiag)
+			use nrtype
+			implicit none
+			complex(dpc), dimension(:), intent(in) :: a
+			complex(dpc), dimension(:,:), intent(out) :: ANdiag
+			end subroutine
+		end interface
+		interface
+			subroutine integrator(a,J,h,aout,Jout,f0,f1,f2,f3,e,e2,SetNlin,SetAndiag,c0)
+				use nrtype
+				implicit none
+				complex(dpc), dimension(:), intent(in):: a ! Initial point
+				complex(dpc), dimension(:,:), intent(in):: J
+				real(dp), intent(in) :: h ! Step size
+				complex(dpc), dimension(:,:), intent(out):: Jout
+				real(dp), dimension(:),intent(in) :: f0,f1,f2,f3,e,e2 ! Functions of the linear operator
+				complex(dpc), dimension(:), intent(out):: aout ! Final point
+				integer(i4b), intent(in), optional:: c0 !
+				interface
+					subroutine SetNlin(a,N_a)
+					use nrtype
+					implicit none
+					complex(dpc), dimension(:), intent(in) :: a
+					complex(dpc), dimension(:), intent(out) :: N_a
+					end subroutine
+				end interface
+				interface
+					subroutine SetAndiag(a,Andiag)
+					use nrtype
+					implicit none
+					complex(dpc), dimension(:), intent(in) :: a
+					complex(dpc), dimension(:,:), intent(out) :: Andiag
+					end subroutine
+				end interface
+			end subroutine
+		end interface
+	end subroutine etdrk4DiagJDriverS_c0
 end interface
 
 interface
