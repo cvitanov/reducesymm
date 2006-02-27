@@ -2,14 +2,13 @@
 # by vasimos
 
 # Choose compiler:
-COMP = ifort 
 OPTFULL = -O2 
 TARGET = libnewton
 OBJ = newtonPO.o setLHM.o  setRHS.o
 srcMod = ifc_newton.f90 
 targetMod = ifc_newton.mod
 # Where to find user libraries:
-userLibPATH = /home/vasimos/lib
+userLibPATH = /home/vasimos/lib-$(COMP)
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 # Names of user libraries

@@ -10,27 +10,27 @@ targetMod = ifc_po.mod
 userLibPATH = /home/vasimos/lib-$(COMP)
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
-lapackModPATH = /usr/lib64/lapack95/$(COMP)/lapack95_modules
-lapackLibPATH = /usr/lib64/lapack95/$(COMP)
+lapackModPATH = /usr/lib/lapack95_modules-$(COMP)
+lapackLibPATH = /usr/lib/
 # Names of user libraries
 nrLIB = nr
 utilLIB = util
-lapackLIB = lapack95
+lapack95 = lapack95-$(COMP)
+lapack77 = lapack
+blast = blast
 acmlLIB = acml
 
-$(TARGET): uninstall $(OBJ) $(targetMod) 
+$(TARGET): uninstall $(OBJ) $(targetMod)
 	ar cr $(TARGET).a $(OBJ)
 	ranlib $(TARGET).a
 
-%.o: %.f90 
-	$(COMP) -c $(CFLAGS) -o $@ -I$(lapackModPATH)  -L$(lapackLibPATH) -I$(userModPATH) -L$(userLibPATH)  $< -l$(lapackLIB) -l$(acmlLIB) -l$(utilLIB) -l$(nrLIB)
+%.o: %.f90
+	$(COMP) -c $(CFLAGS) -o $@ -I$(lapackModPATH)  -L$(lapackLibPATH) -I$(userModPATH) -L$(userLibPATH)  $< -l$(lapack95) -l$(lapack77) -l-l$(blast) -l$(utilLIB) -l$(nrLIB)
 
 $(OBJ): $(targetMod)
 
 $(targetMod): $(srcMod)
-	$(COMP) -c $(CFLAGS) -I$(lapackModPATH) -I$(userModPATH) $(srcMod) -l$(lapackLIB) 
- 
-
+	$(COMP) -c $(CFLAGS) -I$(lapackModPATH) -I$(userModPATH) $(srcMod)
 
 install:
 	cp *.mod $(userModPATH)
