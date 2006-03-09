@@ -1,12 +1,11 @@
 # command line compiler options can be passed in CFLAGS
 
 # Choose compiler
-COMP = pgf90	
 OBJECTS = etdrk4Test.o parameters.o SetLin_KS.o  SetNlin_KS.o
 # Set the outputfile
 TARGET = ks 	
 # Where to find user libraries:
-userLibPATH = /home/vasimos/lib64
+userLibPATH = /home/vasimos/lib-$(COMP)
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 # Where to find shared libraries: 
@@ -26,10 +25,10 @@ $(paramMod): parameters.f90
 	$(COMP) -c -o parameters.o -I$(userModPATH) $(CFLAGS) parameters.f90 
 
 
-	
+
 clean:
 	rm -f *.o $(TARGET) 
-	
+
 cleanall:
 	rm -f *.o *.mod $(TARGET) 
 
@@ -38,7 +37,3 @@ cleandat:
 
 cleanedit: 
 	rm -f *~
-
-
-	
-	

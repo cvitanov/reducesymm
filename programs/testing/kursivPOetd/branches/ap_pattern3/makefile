@@ -1,7 +1,6 @@
 # command line compiler options can be passed in CFLAGS
 
 # Choose compiler
-COMP = 	
 OBJECTS = etdrk4Test.o parameters.o SetLin_KS.o  SetNlin_KS.o
 # Set the outputfile
 TARGET = ks 	
