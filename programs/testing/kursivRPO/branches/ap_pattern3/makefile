@@ -1,7 +1,6 @@
 # command line compiler options can be passed in CFLAGS
 
 # Choose compiler
-COMP = 	
 OBJECTS = etdrk4Test.o parameters.o SetLin_KS.o  SetNlin_KS.o
 # Set the outputfile
 TARGET = ks 	
@@ -14,10 +13,10 @@ sharedLibPATH = /usr/lib64
 paramMod = parameters.mod
 nrLIB = nr
 integrLIB =integr
-
+utilLIB=utils
 
 $(TARGET): $(OBJECTS)
-	$(COMP) -o $(TARGET) -I$(userModPATH) -L$(userLibPATH) $(CFLAGS) $(OBJECTS) $(sharedLibPATH)/libfftw3.so -l$(integrLIB) -l$(nrLIB)
+	$(COMP) -o $(TARGET) -I$(userModPATH) -L$(userLibPATH) $(CFLAGS) $(OBJECTS) $(sharedLibPATH)/libfftw3.so -l$(integrLIB) -l$(utilLIB) -l$(nrLIB)
 
 %.o: %.f90 $(paramMod)
 	$(COMP) -c -o $@ -I$(userModPATH) $(CFLAGS) $< 
