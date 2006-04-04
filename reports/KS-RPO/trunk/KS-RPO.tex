@@ -74,8 +74,7 @@
 
  From \refeq{eq:Fcoef} we notice that $\dot{a}_0=0$ and thus $a_0$ is an integral
  of the equations or, from \refeq{eq:Fourier}, the average of the solution $\int dx u(x,t)$
- is a constant, which we can set to zero without loss of generality since KSe is invariant 
- under Galilean transformations. Thus we only have to compute $a_k$'s with $k\geq 1$.
+ is a constant. Furthermore $a_0$ does not appear in the equations for $k \neq 0$. Thus, we may set $a_0=0$ without loss of generality and we only have to compute $a_k$'s with $k\geq 1$.
 
  Truncating the infinite tower of equations by setting $a_k=0$ for $k>d$ and splitting the
  resulting equations into real and imaginary part by setting $a_k=b_k+i c_k$, we have
@@ -159,9 +158,9 @@ Taylor expanding $f^{T}(a)$ around $a'$ to linear order in the small quantities
 $\Delta a=a-a'$ and $\Delta T$, we get
 \bea
 	f^{T}(a)& \simeq & f^{T}(a')+\J^T(a') \Delta a \label{eq:fTaylorl1} \\ 
-		& \simeq & f^{T'}(a') + v(a') \Delta T + \J^{T'}(a') \Delta a \label{eq:fTaylorl2} \,, 
+		& \simeq & f^{T'}(a') + v \Delta T + \J^{T'}(a') \Delta a \label{eq:fTaylorl2} \,, 
 \eea
-where $\J^t(x)$ is the Jacobian matrix, defined for a general flow through
+where $v$ is evaluated at $f^{T'}(a')$. Here $\J^t(x)$ is the Jacobian matrix, defined for a general flow through
 \beq
    	J^t_{ij}(x_o)=\left.\frac{\partial x_i(t)}{\partial x_j}\right|_{x=x_0}\,.
 \eeq
@@ -187,7 +186,7 @@ and dropped second order terms in the small quantities.
 On the other hand, we have
 \bea
 	R(\kappa'+\Delta\kappa) & = & R(\kappa')R(\Delta\kappa) \continue
-				& \simeq & R(\kappa')(1+iDiag[k]\Delta\kappa/\tildeL)
+				& \simeq & R(\kappa')(1+iDiag[k]\Delta\kappa/\tildeL)\,.
 	\label{eq:TaylorR}	
 \eea
 
@@ -195,14 +194,14 @@ Substituting \refeq{eq:fTaylorl2},\refeq{eq:TaylorR} into \refeq{eq:RPOcond} and
 order terms in the small quantities, we get
 \beq
 	a'+\Delta a \simeq R(\kappa')f^{T'}(a') + \frac{i}{\tildeL}R(\kappa')Diag[k]f^{T'}(a')\Delta\kappa 
-				+ R(\kappa')v(a') \Delta T + R(\kappa')\J^{T'}(a') \Delta a
+				+ R(\kappa')v \Delta T + R(\kappa')\J^{T'}(a') \Delta a\,,
 \eeq
 or
 \bea
-	\left(1-R(\kappa')\J^{T'}(a')\right) \Delta a - R(\kappa')v(a') \Delta T 
+	\left(1-R(\kappa')\J^{T'}(a')\right) \Delta a - R(\kappa')v \Delta T 
 							- \frac{i}{\tildeL}R(\kappa')Diag[k]f^{T'}(a')\Delta\kappa  
 					& \simeq & -\left(a'-R(\kappa')f^{T'}(a') \right) \continue
-					& \equiv & -F(a') 
+					& \equiv & -F(a') \,,
 	\label{eq:NewtonBasicCond}			
 \eea
 where $F(a')$ is the function which zero we want to find.
@@ -212,8 +211,8 @@ Taylor expanding $R(\kappa)f^{T}(a)$ in \refeq{eq:cond Rf(a)} around $a'$ we get
 	q \cdot \lefteqn{\left(R(\kappa')f^{T'}(a')-R(\kappa)f^{T}(a)\right) \simeq } \continue
 %	 & & \left[R(\kappa')f^{T'}(a')-R(\kappa')(1+\frac{i}{\tildeL}Diag[k]\Delta\kappa) 
 %			\left(f^{T'}(a') + v(a') \Delta T + \J^{T'}(a')\Delta a\right)\right] \cdot q \continue
-	 & & -q \cdot \left(R(\kappa')v(a')\Delta T +R(\kappa')\J^{T'}(a')\Delta a 
-	 			+\frac{i}{\tildeL}R(\kappa')Diag[k]f^{T'}(a')\Delta\kappa \right)  = 0 \continue
+	 & & -q \cdot \left(R(\kappa')v\Delta T +R(\kappa')\J^{T'}(a')\Delta a 
+	 			+\frac{i}{\tildeL}R(\kappa')Diag[k]f^{T'}(a')\Delta\kappa \right)  = 0 \,.
 	\label{eq:Taylor cond Rf(a)}
 \eea 
 
@@ -222,9 +221,8 @@ can be compactly represented in a single matrix equation:
 \beq
     \left( \begin{array}{ccc}
        1-R(\kappa')\mathbf{J}^{T'}(a') 	& -R(\kappa')v	  & - \frac{i}{\tildeL}R(\kappa')Diag[k]f^{T'}(a') \\
-       q^{\dagger} 			& 0 	& 0	\\
-       q^{\dagger}R(\kappa')\J^{T'}(a') & q^{\dagger}R(\kappa')v(a') & \frac{i}{\tildeL}q^{\dagger}R(\kappa')Diag[k]f^{T'}(a')
-       
+       q^{\dagger}R(\kappa')\J^{T'}(a') & q^{\dagger}R(\kappa')v & \frac{i}{\tildeL}q^{\dagger}R(\kappa')Diag[k]f^{T'}(a') \\
+       q^{\dagger} 			& 0 	& 0 
      \end{array}
      \right)
      \left(\begin{array}{c}
@@ -237,7 +235,7 @@ can be compactly represented in a single matrix equation:
        -F(a') \\
        0     \\
        0
-     \end{array}\right)\,,
+     \end{array}\right)\,.
      \label{eq:NewtonScheme}
 \eeq
 Solving this equation for the corrections $\Delta a,\ \Delta T$ and $\Delta\kappa$ yields 
