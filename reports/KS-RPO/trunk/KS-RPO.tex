@@ -169,7 +169,45 @@
 	\frac{\partial \dot{b}_k}{\partial c_{j}} = 2 \frac{k}{\tildeL} (b_{k+j}-b_{|k-j|}) \,.
  \eeq
 
-\subsection{Implementing Newton's method \label{sec:NewtonMethod}}
+\subsection{Implementing Newton's method for equilibria}
+
+ Our task is to find equilibrium solutions of \refeq{eq:KS}. Although one can easy see that this problem can be reduced to that of
+ finding periodic orbits of a two dimensional ODE, here we prefer to consider our system in phase space and search for solutions of
+ \beq
+	\dot{b}_k=\dot{c}_k=0\,,
+ \eeq
+ for every $k$. The reason to do this is just getting experience before pursuing the more difficult task of locating POs and RPOs. 
+ Expanding $\dot{b}_k(a)$ and $\dot{c}_k(a)$ around our initial guess $a_o$ and demanding that they satisfy the equilibrium 
+ condition, we get
+ \bea
+	\dot{b}_k(a) & = & \dot{b}_k(a_o)+\left.\frac{\partial \dot{b}_k}{\partial b_j}\right|_{a_o}\delta b_j + c\delta c_j = 0 \continue
+	\dot{c}_k(a) & = & \dot{c}_k(a_o)+\left.\frac{\partial \dot{c}_k}{\partial b_j}\right|_{a_o}\delta b_j + \left.\frac{\partial \dot{c}_k}{\partial c_j}\right|_{a_o}\delta c_j = 0
+ \eea
+ or in matrix form
+ \beq
+    \left( \begin{array}{cc}
+        \frac{\partial \dot{b}}{\partial b} & \frac{\partial \dot{b}}{\partial c} \\
+        \frac{\partial \dot{c}}{\partial b}	& \frac{\partial \dot{c}}{\partial c}
+     \end{array}
+     \right)_{a_o}
+     \left(\begin{array}{c}
+       \delta b  \\
+       \delta c
+     \end{array}\right)
+     =
+     \left(\begin{array}{c}
+       -\dot{b}(a_o) \\
+       -\dot{c}(a_o)
+     \end{array}\right)\,.
+     \label{eq:NewtonEquil}
+\eeq
+where $\partial{\dot{b}} / \partial{b}$ \etc are $d \times d$ submatrices. Solving this
+system of equations for the corrections $\delta b$ and  $\delta c$ and using the refined solution
+as an initial guess yields  an approximation to the solution of the system.
+ 
+
+
+\subsection{Implementing Newton's method \label{sec:NewtonMethod} for RPOs}
 
 The relative periodic condition
 \beq
@@ -182,7 +220,7 @@ translates in Fourier space into
 \eeq
 or
 \beq
-	e^{ik\kappa/\tildeL}a_k(t+T)=a_k(t) \,,\ \forall k \in \mathds{Z}\,.
+	e^{ik\kappa/\tildeL}a_k(t+T)=a_k(t) \,,\ \forall k \in \mathds{Z}\ \ \ \mathrm{(no\ summation)}.
 	\label{eq:RPOcondition}
 \eeq
 We see that a relative periodic orbit returns after time $T$ to a point in 
