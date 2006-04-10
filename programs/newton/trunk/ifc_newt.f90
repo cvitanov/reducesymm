@@ -1,4 +1,4 @@
-module ifc_newton
+module ifc_newt
 
 interface
 	SUBROUTINE mnewt_c(ntrial,x,tolx,tolf,usrfun)

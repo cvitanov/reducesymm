@@ -1,3 +1,4 @@
+arch=64
 TARGET = libnewt
 OBJ = ifc_newt.o mnewt_c.o 
 srcMod = ifc_newt.f90 
@@ -6,8 +7,8 @@ targetMod = ifc_newt.mod
 userLibPATH = /home/vasimos/lib-$(COMP)
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
-lapackModPATH = /usr/lib/lapack95_modules-$(COMP)
-lapackLibPATH = /usr/lib/
+lapackModPATH = /usr/lib$(arch)/lapack95/$(COMP)/lapack95_modules
+lapackLibPATH = /usr/lib$(arch)/
 # Names of user libraries
 nrLIB = nr
 lapack95 = lapack95-$(COMP)
@@ -20,7 +21,7 @@ $(TARGET): uninstall $(OBJ) $(targetMod)
 	ranlib $(TARGET).a
 
 %.o: %.f90
-	$(COMP) -c $(CFLAGS) -o $@ -I$(lapackModPATH)  -L$(lapackLibPATH) -I$(userModPATH) -L$(userLibPATH)  $< -l$(lapack95) -l$(lapack77) -l-l$(blast) -l$(nrLIB)
+	$(COMP) -c $(CFLAGS) -o $@ -I$(lapackModPATH)  -L$(lapackLibPATH) -I$(userModPATH) -L$(userLibPATH)  $< -l$(lapack95) -l$(lapack77) -l$(blast) -l$(nrLIB)
 
 $(OBJ): $(targetMod)
 
