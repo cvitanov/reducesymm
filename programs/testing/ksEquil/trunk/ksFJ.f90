@@ -63,7 +63,7 @@ do k=1,d/2
 		jcc(k,j)=jcc(k,j)+2*q(k)*aimag(a(j-k))
 	end do
 	do j=1,d/2-k
-		jcc(k,j)=jbb(k,j)+2*q(k)*aimag(a(k+j))
+		jcc(k,j)=jcc(k,j)+2*q(k)*aimag(a(k+j))
 	end do
 end do
 !! calculate d\dot{b}/db submatrix
@@ -88,7 +88,7 @@ do k=1,d/2
 		jbc(k,j)=-2*q(k)*real(a(j-k))
 	end do
 	do j=1,d/2-k
-		jbc(k,j)=jbb(k,j)+2*q(k)*real(a(k+j))
+		jbc(k,j)=jbc(k,j)+2*q(k)*real(a(k+j))
 	end do
 end do
 !! calculate d\dot{c}/db submatrix
@@ -97,7 +97,7 @@ do k=1,size(fvec)
 		jcb(k,j)= 2*q(k)*real(a(k-j))
 	end do
 	do j=k+1,d/2
-		jbc(k,j)= 0
+		jcb(k,j)= 0
 	end do
 end do
 
