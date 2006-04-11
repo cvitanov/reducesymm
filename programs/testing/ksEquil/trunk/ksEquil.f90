@@ -10,7 +10,7 @@ include "fftw3.f"
 
 real(dp), dimension(d) :: v
 complex(dpc), dimension(d/2+1) :: a
-complex(dpc), dimension(d) :: bc
+real(dp), dimension(d) :: bc
 integer(i8b) :: invplan, plan ! needed by fftw3
 integer(i4b) :: k,i
 !!!!
@@ -18,10 +18,9 @@ interface
 	subroutine ksFJ(bc,fvec,fjac)
 		USE nrtype
 		implicit none
-		include "fftw3.f"
-		complex(dpc), DIMENSION(:), INTENT(IN) :: a
-		complex(dpc), DIMENSION(:), INTENT(OUT) :: fvec
-		complex(dpc), DIMENSION(:,:), INTENT(OUT) :: fjac
+		real(dp), DIMENSION(:), INTENT(IN) :: bc
+		real(dp), DIMENSION(:), INTENT(OUT) :: fvec
+		real(dp), DIMENSION(:,:), INTENT(OUT) :: fjac
 	end subroutine
 end interface
 

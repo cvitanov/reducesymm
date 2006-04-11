@@ -16,6 +16,7 @@ complex(dpc), dimension(size(bc)/2+1) :: adum
 complex(dpc), dimension(size(bc)/2) :: N_a
 complex(dpc), dimension(size(bc)/2+1) :: N_adum
 complex(dpc), dimension(size(bc)/2) :: fvec_c
+real(dpc), dimension(d/2,d/2):: jcc, jbb, jbc, jcb
 integer(i4b):: ndum,k ,j
 real(dp), dimension(size(bc)) :: v 
 integer(i8b) :: invplan, plan ! needed by fftw3
@@ -26,7 +27,7 @@ ndum=assert_eq(ndum,size(fjac,1),size(fjac,2),'SetNlin2')
 
 ! a does not include the a_0 coefficient
 a=(0,0)
-a=(bc(1:size(bc)/2),bc(size(bc)/2+1:size(bc)))
+a=bc(1:size(bc)/2)+ ii*bc(size(bc)/2+1:size(bc))
 
 adum=(0,0)
 adum(2:size(a))=a
@@ -48,31 +49,34 @@ do k=1,d/2
 	fvec_c(k) = lin(k)*a(k) + ii*q(k)*N_a(k) 
 end do
 
+fvec(1:d/2)=real(fvec_c)
+fvec(d/2+1:d)=aimag(fvec_c)
+
 ! Calculate Matrix of Variations(Jacobian)
 !! calculate d\dot{c}/dc submatrix
 do k=1,d/2
 	jcc(k,k) = lin(k)
 	do j=1,k-1
-		jcc(k,j)=jcc(k,j)-2*q(k)*imag(a(k-j))
+		jcc(k,j)=jcc(k,j)-2*q(k)*aimag(a(k-j))
 	end do
 	do j=k+1,d/2
-		jcc(k,j)=jcc(k,j)+2*q(k)*imag(a(j-k))
+		jcc(k,j)=jcc(k,j)+2*q(k)*aimag(a(j-k))
 	end do
 	do j=1,d/2-k
-		jcc(k,j)=jbb(k,j)+2*q(k)*imag(a(k+j))
+		jcc(k,j)=jbb(k,j)+2*q(k)*aimag(a(k+j))
 	end do
 end do
 !! calculate d\dot{b}/db submatrix
 do k=1,d/2
 	jbb(k,k) = lin(k)
 	do j=1,k-1
-		jbb(k,j)=jbb(k,j)-2*q(k)*imag(a(k-j))
+		jbb(k,j)=jbb(k,j)-2*q(k)*aimag(a(k-j))
 	end do
 	do j=k+1,d/2
-		jbb(k,j)=jbb(k,j)+2*q(k)*imag(a(j-k))
+		jbb(k,j)=jbb(k,j)+2*q(k)*aimag(a(j-k))
 	end do
 	do j=1,d/2-k
-		jbb(k,j)=jbb(k,j)-2*q(k)*imag(a(k+j))
+		jbb(k,j)=jbb(k,j)-2*q(k)*aimag(a(k+j))
 	end do
 end do
 !! calculate d\dot{b}/dc submatrix
