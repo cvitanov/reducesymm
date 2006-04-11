@@ -10,11 +10,12 @@ include "fftw3.f"
 
 real(dp), dimension(d) :: v
 complex(dpc), dimension(d/2+1) :: a
+complex(dpc), dimension(d) :: bc
 integer(i8b) :: invplan, plan ! needed by fftw3
 integer(i4b) :: k,i
 !!!!
 interface
-	subroutine ksFJ(a,fvec,fjac)
+	subroutine ksFJ(bc,fvec,fjac)
 		USE nrtype
 		implicit none
 		include "fftw3.f"
@@ -47,7 +48,12 @@ a=a/size(v)
 
 !print *,"!!!",a(3)
 
-call mnewt_c(ntrial,a(2:size(a)),tola,tolf,ksFJ)
+print *, "a",size(a), "bc", size(bc)
+
+bc(1:d/2)=real(a(2:size(a)))
+bc(d/2+1:d)= imag(a(2:size(a)))
+
+call mnewt(ntrial,bc,tolbc,tolf,ksFJ)
 
 print *, "converged?"
 
