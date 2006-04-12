@@ -52,6 +52,12 @@ end do
 fvec(1:d/2)=real(fvec_c)
 fvec(d/2+1:d)=aimag(fvec_c)
 
+jcc=0.0_dp
+jbb=0.0_dp
+jbc=0.0_dp
+jcb=0.0_dp
+fjac=0.0_dp
+
 ! Calculate Matrix of Variations(Jacobian)
 !! calculate d\dot{c}/dc submatrix
 do k=1,d/2

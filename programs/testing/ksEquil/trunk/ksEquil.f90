@@ -27,10 +27,10 @@ end interface
 !!!!
 
 
-! open(19,file='guess.dat')
-! 
+! open(19,file='guess2.dat')
+ 
 ! 	read(19,*) v
-! 
+ 
 ! close(19)
 
 do i=1,d
