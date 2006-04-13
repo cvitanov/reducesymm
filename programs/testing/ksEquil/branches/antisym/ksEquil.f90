@@ -27,16 +27,16 @@ end interface
 !!!!
 
 
-!open(19,file='guess.dat')
+open(19,file='guessA.dat')
 
-!read(19,*) v
+read(19,*) v
 
-!close(19)
+close(19)
 
-do i=1,d
-	!print *,2*PI_D*Real(i)/Real(d),0.1*sin(2*PI_D*Real(i)/Real(d))
-	v(i)=0.1*sin(2*PI*Real(i-1)/Real(d)) !+ 0.2*cos(2*PI*i/d) 
-end do
+! do i=1,d
+! 	!print *,2*PI_D*Real(i)/Real(d),0.1*sin(2*PI_D*Real(i)/Real(d))
+! 	v(i)=0.1*sin(2*PI*Real(i-1)/Real(d)) !+ 0.2*cos(2*PI*i/d) 
+! end do
 
 !print *,v
 
@@ -59,6 +59,12 @@ call mnewt(ntrial,aim,tola,tolf,ksFJ)
 
 print *, "converged?"
 
+a=(0,0)
+a(2:size(a))=ii*aim
+call dfftw_plan_dft_c2r_1d(invplan,d,a,v,FFTW_ESTIMATE)
+call dfftw_execute(invplan)
+call dfftw_destroy_plan(invplan)
+
 open(23,file='equil.dat')
 
 do k=1,size(aim)
@@ -67,5 +73,12 @@ end do
 
 close(23)
 
+open(24,file='Uequil.dat')
+
+do k=1,size(v)
+	write(24,*) v(k)
+end do
+
+close(24)
 
 end program

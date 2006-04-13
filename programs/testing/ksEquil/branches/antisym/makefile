@@ -11,7 +11,7 @@ userModPATH = $(userLibPATH)/modules
 # Where to find shared libraries: 
 sharedLibPATH = /usr/lib64
 # Where to find lapack:
-lapackLibPATH = /usr/lib64/
+lapackLibPATH = /usr/lib64
 lapackModPATH = $(lapackLibPATH)/lapack95_modules
 paramMod = parameters.mod
 nrLIB = nr
