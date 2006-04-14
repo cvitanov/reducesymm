@@ -10,11 +10,19 @@ include "fftw3.f"
 real(dp), DIMENSION(:), INTENT(IN) :: aim
 real(dp), DIMENSION(:), INTENT(OUT) :: fvec
 real(dp), DIMENSION(:,:), INTENT(OUT) :: fjac
+interface
+	subroutine SetNlin_KS(a,N_a)
+		use nrtype
+		implicit none
+		complex(dpc), dimension(:), intent(in) :: a
+		complex(dpc), dimension(:), intent(out) :: N_a
+	end subroutine
+end interface
 !!!!
-!complex(dpc), dimension(size(aim)) :: a
+complex(dpc), dimension(size(aim)) :: a
 complex(dpc), dimension(size(aim)+1) :: adum 
 complex(dpc), dimension(size(aim)) :: N_a
-complex(dpc), dimension(size(aim)+1) :: N_adum
+complex(dpc), dimension(size(aim)+1) :: N_adum,N_af
 complex(dpc), dimension(size(aim)) :: fvec_c
 integer(i4b):: ndum,k ,j,m
 real(dp), dimension(d) :: v 
@@ -25,50 +33,28 @@ ndum=assert_eq(d,size(aim)*2,size(fvec)*2,'SetNlin1')
 ndum=assert_eq(ndum,size(fjac,1)*2,size(fjac,2)*2,'SetNlin2')
 
 ! a does not include the a_0 coefficient
-!a=(0,0)
-!a=ii*aim
+a=(0,0)
+a=ii*aim
 
-! ! ! ! adum=(0,0)
-! ! ! ! adum(2:size(adum))=ii*aim
-! ! ! ! call dfftw_plan_dft_c2r_1d(invplan,d,adum,v,FFTW_ESTIMATE)
-! ! ! ! call dfftw_execute(invplan)
-! ! ! ! call dfftw_destroy_plan(invplan)
-! ! ! ! v=v**2
-! ! ! ! call dfftw_plan_dft_r2c_1d(plan,d,v,N_adum,FFTW_ESTIMATE)
-! ! ! ! call dfftw_execute(plan)
-! ! ! ! call dfftw_destroy_plan(plan)
-! ! ! ! N_a=N_adum(2:size(N_adum))/size(N_adum)
+adum=(0,0)
+adum(2:size(adum))=ii*aim
 
-! ! ! ! do k=1,d/2
-! ! ! ! 	q(k)=k/L
-! ! ! ! 	lin(k) = (1-(q(k))**2)*(q(k))**2
-! ! ! ! end do
-! ! ! ! 
-! ! ! ! do k=1,d/2 
-! ! ! ! 	fvec_c(k) = lin(k)*ii*aim(k) + ii*q(k)*N_a(k) 
-! ! ! ! end do
-! ! ! ! 
-! ! ! ! fvec=aimag(fvec_c)
+call SetNlin_KS(adum,N_adum)
 
 do k=1,d/2
 	q(k)=k/L
 	lin(k) = (1-(q(k))**2)*(q(k))**2
-	fvec(k)= lin(k)*aim(k)
-	print *,'fvecl',fvec(k)
-	do m=1,k-1
-		fvec(k)=fvec(k)-q(k)*aim(m)*aim(k-m)
-	enddo
-	do m=1,d/2-k
-		fvec(k)=fvec(k)+2*q(k)*aim(m)*aim(k+m)
-	enddo
-	print *,fvec(k)
 end do
+
+do k=1,d/2 
+	fvec_c(k) =  lin(k)*ii*aim(k) + N_adum(k+1) 
+end do
+
+fvec=aimag(fvec_c)
 
 print *,"fvec",sum(abs(fvec))
 
 fjac=0.0_dp
-
-print *,"aim(1)",aim(1)
 
 ! Calculate Matrix of Variations(Jacobian)
 !! calculate d\dot{c}/dc submatrix
