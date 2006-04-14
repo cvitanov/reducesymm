@@ -10,14 +10,22 @@ include "fftw3.f"
 real(dp), DIMENSION(:), INTENT(IN) :: bc
 real(dp), DIMENSION(:), INTENT(OUT) :: fvec
 real(dp), DIMENSION(:,:), INTENT(OUT) :: fjac
+interface
+	subroutine SetNlin_KS(a,N_a)
+		use nrtype
+		implicit none
+		complex(dpc), dimension(:), intent(in) :: a
+		complex(dpc), dimension(:), intent(out) :: N_a
+	end subroutine
+end interface
 !!!!
 complex(dpc), dimension(size(bc)/2) :: a
 complex(dpc), dimension(size(bc)/2+1) :: adum 
 complex(dpc), dimension(size(bc)/2) :: N_a
 complex(dpc), dimension(size(bc)/2+1) :: N_adum
-complex(dpc), dimension(size(bc)/2) :: fvec_c
+complex(dpc), dimension(size(bc)/2) :: fvec_c, fvecA
 real(dpc), dimension(d/2,d/2):: jcc, jbb, jbc, jcb
-integer(i4b):: ndum,k ,j
+integer(i4b):: ndum,k ,j,m
 real(dp), dimension(size(bc)) :: v 
 integer(i8b) :: invplan, plan ! needed by fftw3
 real(dp), dimension(size(bc)/2) :: q,lin
@@ -27,30 +35,50 @@ ndum=assert_eq(ndum,size(fjac,1),size(fjac,2),'SetNlin2')
 
 ! a does not include the a_0 coefficient
 a=(0,0)
-a=bc(1:size(bc)/2)+ ii*bc(size(bc)/2+1:size(bc))
+a=bc(1:d/2)+ ii*bc(d/2+1:d)
+! 
 
 adum=(0,0)
-adum(2:size(a))=a
-call dfftw_plan_dft_c2r_1d(invplan,d,adum,v,FFTW_ESTIMATE)
-call dfftw_execute(invplan)
-call dfftw_destroy_plan(invplan)
-v=v**2
-call dfftw_plan_dft_r2c_1d(plan,d,v,N_adum,FFTW_ESTIMATE)
-call dfftw_execute(plan)
-call dfftw_destroy_plan(plan)
-N_a=N_adum(2:size(N_adum))/size(N_adum)
+adum(2:size(adum))=a
+call SetNlin_KS(adum,N_adum)
 
 do k=1,d/2
 	q(k)=k/L
 	lin(k) = (1-(q(k))**2)*(q(k))**2
+        fvec_c(k) = lin(k)*a(k) + N_adum(k+1)
 end do
 
+
 do k=1,d/2 
-	fvec_c(k) = lin(k)*a(k) + ii*q(k)*N_a(k) 
+	q(k)=k/L
+	lin(k) = (1-(q(k))**2)*(q(k))**2
+	!real part of derivative
+	fvecA(k) = lin(k)*real(a(k))
+	do m=1,k-1
+		fvecA(k)=fvecA(k)-q(k)*(aimag(a(m))*real(a(k-m))+real(a(m))*aimag(a(k-m)))
+	enddo
+	do m=1,d/2-k
+		fvecA(k)=fvecA(k)-2*q(k)*(-aimag(a(m))*real(a(k+m))+real(a(m))*aimag(a(k+m)))
+	enddo
+	!imaginary part of derivative
+	fvecA(k) = fvecA(k)+ii*lin(k)*aimag(a(k))
+	do m=1,k-1
+		fvecA(k)=fvecA(k)-ii*q(k)*(aimag(a(m))*aimag(a(k-m))-real(a(m))*real(a(k-m)))
+	enddo
+	do m=1,d/2-k
+		fvecA(k)=fvecA(k)+ii*2*q(k)*(aimag(a(m))*aimag(a(k+m))+real(a(m))*real(a(k+m)))
+	enddo
 end do
+
+!do k=1,d/2
+!	print *,"diff",k,fvecA(k),fvec_c(k)
+!end do
 
 fvec(1:d/2)=real(fvec_c)
 fvec(d/2+1:d)=aimag(fvec_c)
+
+print *,"fvec", sum(abs(fvec))
+
 
 jcc=0.0_dp
 jbb=0.0_dp
@@ -98,12 +126,15 @@ do k=1,d/2
 	end do
 end do
 !! calculate d\dot{c}/db submatrix
-do k=1,size(fvec)
+do k=1,d/2
 	do j=1,k-1
-		jcb(k,j)= 2*q(k)*real(a(k-j))
+		jcb(k,j)=2*q(k)*real(a(k-j))
 	end do
 	do j=k+1,d/2
-		jcb(k,j)= 0
+		jcb(k,j)=jcb(k,j)+2*q(k)*real(a(j-k))
+	end do
+	do j=1,d/2-k
+		jcb(k,j)=jcb(k,j)+2*q(k)*real(a(k+j))
 	end do
 end do
 
