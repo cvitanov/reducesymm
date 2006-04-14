@@ -54,12 +54,14 @@ do k=1,d/2
 	q(k)=k/L
 	lin(k) = (1-(q(k))**2)*(q(k))**2
 	fvec(k)= lin(k)*aim(k)
+	print *,'fvecl',fvec(k)
 	do m=1,k-1
 		fvec(k)=fvec(k)-q(k)*aim(m)*aim(k-m)
 	enddo
 	do m=1,d/2-k
 		fvec(k)=fvec(k)+2*q(k)*aim(m)*aim(k+m)
 	enddo
+	print *,fvec(k)
 end do
 
 print *,"fvec",sum(abs(fvec))
