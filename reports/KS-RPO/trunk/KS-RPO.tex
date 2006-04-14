@@ -92,7 +92,7 @@
    \dot{c}_k & = & \left(\frac{k}{\tildeL}\right)^2\left(1- \left(k/\tildeL\right)^2 \right)c_k  \continue
 	& & - \frac{k}{\tildeL}\left( \sum_{m=1}^{k-1}c_m c_{k-m}-\sum_{m=k+1}^{N}c_m c_{m-k}
                     -\sum_{m=1}^{N-k}c_m c_{k+m} \right)	\continue
-	& & - \frac{k}{\tildeL} \left(-\sum_{m=1}^{k-1}b_m b_{k-m}-\sum_{m=k+1}^{N}b_m b_{m-k}
+	& & + \frac{k}{\tildeL} \left(\sum_{m=1}^{k-1}b_m b_{k-m}+\sum_{m=k+1}^{N}b_m b_{m-k}
                     +\sum_{m=1}^{N-k}b_m b_{k+m} \right)
    \label{eq:tmp:c-Trunc}
  \eea
@@ -110,7 +110,7 @@
  \bea
    \dot{c}_k & = & \left(\frac{k}{\tildeL}\right)^2\left(1- \left(k/\tildeL\right)^2 \right)c_k  \continue
 	& & - \frac{k}{\tildeL}\left( \sum_{m=1}^{k-1}c_m c_{k-m}-2\sum_{m=1}^{N-k}c_m c_{k+m} \right)	\continue
-	& &  +\frac{k}{\tildeL} \sum_{m=1}^{k-1}b_m b_{k-m}
+	& &  +\frac{k}{\tildeL}\left( \sum_{m=1}^{k-1}b_m b_{k-m}+2\sum_{m=1}^{N-k}b_m b_{k+m} \right)\,.
    \label{eq:c-Trunc}
  \eea
 
@@ -156,11 +156,7 @@
 
  For the case of the full space we need to consider the four matrices $\frac{\partial \dot{b}_k}{\partial b_j},\frac{\partial \dot{b}_k}{\partial c_j},\frac{\partial \dot{c}_k}{\partial b_j},\frac{\partial \dot{c}_k}{\partial c_j}$. Following the above procedure
  \beq
-	\frac{\partial \dot{c}_k}{\partial b_{j}} = \left\{ 		\begin{array}{ll}
-									0\,, 			&  k \leq j \\
-									2 \frac{k}{\tildeL} b_{k-j}\,, 	&  k>j	\,,						
-								\end{array}
-							\right.
+	\frac{\partial \dot{c}_k}{\partial b_{j}} =  2 \frac{k}{\tildeL} ( b_{k+j}+b_{k-j} )\,,
  \eeq
  \beq
 	\frac{\partial \dot{b}_k}{\partial b_{j}} =  \left(\frac{k}{\tildeL}\right)^2\left(1- \left(k/\tildeL\right)^2 \right) - 2 \frac{k}{\tildeL} (c_{k+j} + c_{k-j}) \,,
@@ -198,7 +194,7 @@
      \left(\begin{array}{c}
        -\dot{b}(a_o) \\
        -\dot{c}(a_o)
-     \end{array}\right)\,.
+     \end{array}\right)\,,
      \label{eq:NewtonEquil}
 \eeq
 where $\partial{\dot{b}} / \partial{b}$ \etc are $d \times d$ submatrices. Solving this
