@@ -21,9 +21,8 @@ end interface
 !!!!
 complex(dpc), dimension(size(bc)/2) :: a
 complex(dpc), dimension(size(bc)/2+1) :: adum 
-complex(dpc), dimension(size(bc)/2) :: N_a
 complex(dpc), dimension(size(bc)/2+1) :: N_adum
-complex(dpc), dimension(size(bc)/2) :: fvec_c, fvecA
+complex(dpc), dimension(size(bc)/2) :: fvec_c, !fvecA
 real(dpc), dimension(d/2,d/2):: jcc, jbb, jbc, jcb
 integer(i4b):: ndum,k ,j,m
 real(dp), dimension(size(bc)) :: v 
@@ -49,30 +48,27 @@ do k=1,d/2
 end do
 
 
-do k=1,d/2 
-	q(k)=k/L
-	lin(k) = (1-(q(k))**2)*(q(k))**2
-	!real part of derivative
-	fvecA(k) = lin(k)*real(a(k))
-	do m=1,k-1
-		fvecA(k)=fvecA(k)-q(k)*(aimag(a(m))*real(a(k-m))+real(a(m))*aimag(a(k-m)))
-	enddo
-	do m=1,d/2-k
-		fvecA(k)=fvecA(k)-2*q(k)*(-aimag(a(m))*real(a(k+m))+real(a(m))*aimag(a(k+m)))
-	enddo
-	!imaginary part of derivative
-	fvecA(k) = fvecA(k)+ii*lin(k)*aimag(a(k))
-	do m=1,k-1
-		fvecA(k)=fvecA(k)-ii*q(k)*(aimag(a(m))*aimag(a(k-m))-real(a(m))*real(a(k-m)))
-	enddo
-	do m=1,d/2-k
-		fvecA(k)=fvecA(k)+ii*2*q(k)*(aimag(a(m))*aimag(a(k+m))+real(a(m))*real(a(k+m)))
-	enddo
-end do
+! do k=1,d/2 
+! 	q(k)=k/L
+! 	lin(k) = (1-(q(k))**2)*(q(k))**2
+! 	!real part of derivative
+! 	fvecA(k) = lin(k)*real(a(k))
+! 	do m=1,k-1
+! 		fvecA(k)=fvecA(k)-q(k)*(aimag(a(m))*real(a(k-m))+real(a(m))*aimag(a(k-m)))
+! 	enddo
+! 	do m=1,d/2-k
+! 		fvecA(k)=fvecA(k)-2*q(k)*(-aimag(a(m))*real(a(k+m))+real(a(m))*aimag(a(k+m)))
+! 	enddo
+! 	!imaginary part of derivative
+! 	fvecA(k) = fvecA(k)+ii*lin(k)*aimag(a(k))
+! 	do m=1,k-1
+! 		fvecA(k)=fvecA(k)-ii*q(k)*(aimag(a(m))*aimag(a(k-m))-real(a(m))*real(a(k-m)))
+! 	enddo
+! 	do m=1,d/2-k
+! 		fvecA(k)=fvecA(k)+ii*2*q(k)*(aimag(a(m))*aimag(a(k+m))+real(a(m))*real(a(k+m)))
+! 	enddo
+! end do
 
-!do k=1,d/2
-!	print *,"diff",k,fvecA(k),fvec_c(k)
-!end do
 
 fvec(1:d/2)=real(fvec_c)
 fvec(d/2+1:d)=aimag(fvec_c)
