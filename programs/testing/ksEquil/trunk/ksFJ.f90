@@ -22,7 +22,7 @@ end interface
 complex(dpc), dimension(size(bc)/2) :: a
 complex(dpc), dimension(size(bc)/2+1) :: adum 
 complex(dpc), dimension(size(bc)/2+1) :: N_adum
-complex(dpc), dimension(size(bc)/2) :: fvec_c, !fvecA
+complex(dpc), dimension(size(bc)/2) :: fvec_c !, fvecA
 real(dpc), dimension(d/2,d/2):: jcc, jbb, jbc, jcb
 integer(i4b):: ndum,k ,j,m
 real(dp), dimension(size(bc)) :: v 

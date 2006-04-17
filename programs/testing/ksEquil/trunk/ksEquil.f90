@@ -23,11 +23,20 @@ interface
 		real(dp), DIMENSION(:,:), INTENT(OUT) :: fjac
 	end subroutine
 end interface
+interface
+	Function INTtoCHAR(X,length)
+		USE nrtype
+		IMPLICIT NONE	
+		INTEGER(I4B), INTENT(IN) :: X
+		INTEGER(I4B), INTENT(IN) :: length
+		CHARACTER(len=length) :: INTtoCHAR
+	end function 
+end interface
 
 !!!!
 
 
-open(19,file='guessS.dat')
+open(19,file='guessA.dat')
  
 	read(19,*) v
  
@@ -39,6 +48,9 @@ close(19)
 ! end do
 
 !print *,v
+
+v = cshift(v,shift=80)
+
 
 call dfftw_plan_dft_r2c_1d(plan,d,v,a,FFTW_ESTIMATE)
 call dfftw_execute(plan)
