@@ -4,8 +4,8 @@ use nrtype
 use parameters
 use ifc_po
 use ifc_integr
-use la_precision, only: wp => dp
-use f95_lapack
+!use la_precision, only: wp => dp
+!use f95_lapack
 use ifc_util
 
 implicit none
@@ -15,11 +15,12 @@ include "fftw3.f"
 
 real(dp), dimension(d/2+1) :: Lin, f0,f1,f2,f3,e,e2
 real(dp), dimension(d) :: u,v
-integer(i4b) :: k,i, conv=0
-complex(dpc), dimension(d/2+1) :: ai,af,q, adum
+integer(i4b) :: k,i, conv=0, c0
+complex(dpc), dimension(d/2+1) :: ai,af,adum
+complex(dpc), dimension(d+2) :: q
 integer(i8b) :: plan,invplan
 real(dp) ::  T
-complex(dpc), dimension(d/2+1,d/2+1) ::  J
+complex(dpc), dimension(d/2,d/2) ::  J
 
 interface
 	subroutine SetLin_KS(Lin)
@@ -61,7 +62,8 @@ close(11)
 
 q=(0.0,0.0)
 
-q(3)=(0.0,-1.0)
+q(2)=(1.0,0.0)
+q(d/2+1+2+2)=-(1.0,0.0)
 
 J=UnitMatrix(d/2+1)
 
@@ -71,7 +73,7 @@ call dfftw_destroy_plan(plan)
 
 ai=ai/size(u)
 
-call newtonPOetdrk4(ai,T,q,tol,maxIter,h,f0,f1,f2,f3,e,e2,SetLin_KS,SetNlin_KS,SetANdiag_KS,conv,J)
+call newtonPOetdrk4(ai,T,q,tol,maxIter,h,f0,f1,f2,f3,e,e2,SetLin_KS,SetNlin_KS,SetANdiag_KS,conv,J,c0=1)
 
 open(9,file='ksu.dat')
 open(12,file='ksa.dat')

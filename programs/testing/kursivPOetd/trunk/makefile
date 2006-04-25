@@ -1,7 +1,7 @@
 # command line compiler options can be passed in CFLAGS
 
 # Choose compiler
-OBJECTS = RPOshootingTest.o parameters.o SetANdiag_KS.o SetLin_KS.o  SetNlin_KS.o 
+OBJECTS = POshootingTest.o parameters.o SetANdiag_KS.o SetLin_KS.o  SetNlin_KS.o 
 # Set the outputfile
 TARGET = ks 	
 # Where to find user libraries:
