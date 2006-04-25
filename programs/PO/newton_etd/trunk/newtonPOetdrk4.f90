@@ -45,17 +45,17 @@ end interface
 !
 !
 complex(dpc), dimension(size(ai)) :: af,diff, v
-complex(dpc), dimension(size(ai)+1) :: RHS 
+complex(dpc), dimension(2*(size(ai)+1)) :: RHS 
 real(dp) :: ddum, ti, mx 
 integer(i4b) :: i, ndum, Nplt=1, k,m
-complex(dpc), dimension(size(ai)+1,size(ai)+1) :: LHM, LHMdum
+complex(dpc), dimension(2*(size(ai)+1),2*(size(ai)+1)) :: LHM, LHMdum
 real(dp), dimension(size(ai)) :: Lin
-complex(dpc), dimension(size(ai)) :: N_a, R
+complex(dpc), dimension(size(ai)) :: N_a
 complex(dpc), dimension(size(J,1),size(J,2)):: Jdum
 complex(dpc), dimension(size(J,1)):: Jeig
 complex(dpc), dimension(size(J,1)+1):: LHMeig
 
-ndum=assert_eq(size(ai),size(q),size(J,1),size(J,2),'NewtonPO')
+ndum=assert_eq(size(ai),size(q)/2-1,size(J,1),size(J,2),'NewtonPO')
 
 ti=0.0_dp
 
@@ -65,30 +65,11 @@ do i=1,maxIter
 	print *,i
 	J = UnitMatrix(size(J,1))
 	call etdrk4DiagJDriverS(ti,ai,J,h,T,af,J,f0,f1,f2,f3,e,e2,Nplt,etdrk4DiagJ_g,SetNlin,SetANdiag)
-!  	print *,"*********************J1"
-!  	print *,J(1,:)
-!  	print *,"*********************"
-!  	print *,"*********************J2"
-!  	print *,J(:,1)
-!  	print *,"*********************"
-!	open(23,file='J.dat')
-!	do m=1,size(J,1)
-!		do  k=1,size(J,1)
-!			write (23,*) J(m,k) 
-!		end do	
-!	end do
-!	close(23)
  	Jdum=J
-! 	call la_geev(Jdum(2:size(J,1),2:size(J,1)),Jeig(2:size(Jeig)))
 	call la_geev(Jdum,Jeig)
  	print *,"*********************Jeig"
  	print *,Jeig
  	print *,"*********************"
-! 	Jdum=UnitMatrix(size(J,1))-J
-! 	call la_geev(Jdum,Jeig)
-! 	print *,"*********************1-Jeig"
-! 	print *,Jeig
-! 	print *,"*********************"
 	diff = af-ai
 	mx=maxval(Abs(diff))
 	print *,"Max",mx
@@ -101,24 +82,10 @@ do i=1,maxIter
 	call setNlin(af,N_a)
 	v = Lin*af+N_a
 	call setLHM(af,J,v,q,LHM)
-! 	LHMdum=LHM
-! 	call la_geev(LHMdum,LHMeig)
-! 	print *,"*********************LHMeig"
-! 	print *,LHMeig
-! 	print *,"*********************"
-!  	print *,"*********************LHM1"
-!  	print *,LHM(size(LHM,1),:)
-!  	print *,"*********************"
-!  	print *,"*********************LHM2"
-!  	print *,LHM(:,size(LHM,2))
-!  	print *,"*********************"
 	call setRHS(diff,RHS)
-!  	print *,"*********************RHS"
-!  	print *,RHS
-!  	print *,"*********************"
-	call la_gesv(LHM(2:size(LHM,1),2:size(LHM,2)),RHS(2:size(RHS)))
+	call la_gesv(LHM,RHS)
 	ai = ai + RHS(1:size(ai)) ! update y, T
-	T = T + RHS(size(ai)+1)
+	T = T - RHS(size(ai)+1)
 end do
 
 end subroutine newtonPOetdrk4_g
@@ -173,17 +140,17 @@ end interface
 !
 !
 complex(dpc), dimension(size(ai)) :: af,diff, v
-complex(dpc), dimension(size(J,1)+1) :: RHS 
+complex(dpc), dimension(2*(size(J,1)+1)) :: RHS 
 real(dp) :: ddum, ti, mx 
 integer(i4b) :: i, ndum, Nplt=1, k,m
-complex(dpc), dimension(size(J,1)+1,size(J,2)+1) :: LHM, LHMdum
+complex(dpc), dimension(2*(size(J,1)+1),2*(size(J,2)+1)) :: LHM, LHMdum
 real(dp), dimension(size(ai)) :: Lin
-complex(dpc), dimension(size(ai)) :: N_a, R
+complex(dpc), dimension(size(ai)) :: N_a
 complex(dpc), dimension(size(J,1),size(J,2)):: Jdum
 complex(dpc), dimension(size(J,1)):: Jeig
 complex(dpc), dimension(size(J,1)+1):: LHMeig
 
-ndum=assert_eq(size(ai),size(q)+1,size(J,1)+1,size(J,2)+1,'NewtonPO')
+ndum=assert_eq(size(ai),size(q)/2,size(J,1)+1,size(J,2)+1,'NewtonPO')
 
 ti=0.0_dp
 
@@ -194,30 +161,11 @@ do i=1,maxIter
 	J = UnitMatrix(size(J,1))
 	call etdrk4DiagJDriverS(ti,ai,J,h,T,af,J,f0,f1,f2,f3,e,e2,Nplt,etdrk4DiagJ_c0,SetNlin,SetANdiag,c0=1)
 print *,"after"
-!  	print *,"*********************J1"
-!  	print *,J(1,:)
-!  	print *,"*********************"
-!  	print *,"*********************J2"
-!  	print *,J(:,1)
-!  	print *,"*********************"
-!	open(23,file='J.dat')
-!	do m=1,size(J,1)
-!		do  k=1,size(J,1)
-!			write (23,*) J(m,k) 
-!		end do	
-!	end do
-!	close(23)
  	Jdum=J
-! 	call la_geev(Jdum(2:size(J,1),2:size(J,1)),Jeig(2:size(Jeig)))
 	call la_geev(Jdum,Jeig)
  	print *,"*********************Jeig"
  	print *,Jeig
  	print *,"*********************"
-! 	Jdum=UnitMatrix(size(J,1))-J
-! 	call la_geev(Jdum,Jeig)
-! 	print *,"*********************1-Jeig"
-! 	print *,Jeig
-! 	print *,"*********************"
 	diff = af-ai
 	mx=maxval(Abs(diff))
 	print *,"Max",mx
@@ -230,26 +178,13 @@ print *,"after"
 	call setNlin(af,N_a)
 	v = Lin*af+N_a
 	call setLHM(af(2:size(af)),J,v(2:size(af)),q,LHM)
-! 	LHMdum=LHM
-! 	call la_geev(LHMdum,LHMeig)
-! 	print *,"*********************LHMeig"
-! 	print *,LHMeig
-! 	print *,"*********************"
-!  	print *,"*********************LHM1"
-!  	print *,LHM(size(LHM,1),:)
-!  	print *,"*********************"
-!  	print *,"*********************LHM2"
-!  	print *,LHM(:,size(LHM,2))
-!  	print *,"*********************"
 	call setRHS(diff(2:size(af)),RHS)
-!  	print *,"*********************RHS"
-!  	print *,RHS
-!  	print *,"*********************"
 	call la_gesv(LHM,RHS)
 	print *,"dP",RHS(2)
 	ai(2:size(ai))= ai(2:size(ai)) + RHS(1:size(J,1)) ! update y, T
 	print *,"deltaT",RHS(size(RHS))
-	T = T - imag(RHS(size(RHS)))
+	print *,"deltaa2",RHS(2)
+	T = T - RHS(size(RHS))
 	print *,"T",T
 end do
 
