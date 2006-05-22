@@ -16,7 +16,6 @@
 		END SUBROUTINE usrfun
 	END INTERFACE
 	INTEGER(I4B) :: i
-	INTEGER(I4B), DIMENSION(size(x)) :: indx
 	complex(dpc), DIMENSION(size(x)) :: fvec,p
 	complex(dpc), DIMENSION(size(x),size(x)) :: fjac
 	do  i=1,ntrial

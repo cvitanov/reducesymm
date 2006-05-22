@@ -16,7 +16,6 @@
 		END SUBROUTINE usrfun
 	END INTERFACE
 	INTEGER(I4B) :: i
-	INTEGER(I4B), DIMENSION(size(x)) :: indx
 	REAL(DP) :: d
 	REAL(DP), DIMENSION(size(x)) :: fvec,p
 	REAL(DP), DIMENSION(size(x),size(x)) :: fjac
