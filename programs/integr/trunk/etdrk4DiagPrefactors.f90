@@ -27,17 +27,17 @@ do i=1,M
 end do
 
 e=exp(h*Lin) ! No problem with these two guys, calculate directly.
-e2=exp(h*Lin/2)
+e2=exp(h*Lin/2.0_dp)
 
 do k=1,size(Lin) ! For each eigenvalue
 	do i=1,M ! add contribution of each point on the contour
 		fdum(i) = h*Lin(k)+R*rootsUnity(i)
 	end do
 	!and finally take mean values for each scalar function fi, to find fi(k) for eigenvalue Lin(k)
-	f0(k) = h*Real(sum( (exp(fdum/2.0_dp)-1)/fdum )/size(fdum) )
-	f1(k) = h*Real(sum( (-4-fdum+exp(fdum)*(4-3*fdum+fdum**2) )/fdum**3 )/size(fdum) )
-	f2(k) = h*Real(sum( 2*(2+fdum+exp(fdum)*(-2+fdum) )/fdum**3 )/size(fdum) )
-	f3(k) = h*Real(sum( (-4-3*fdum-fdum**2+exp(fdum)*(4-fdum) )/fdum**3 )/size(fdum) )
+	f0(k) = h*Real(sum( (exp(fdum/2.0_dp)-1.0_dp)/fdum )/size(fdum) )
+	f1(k) = h*Real(sum( (-4.0_dp-fdum+exp(fdum)*(4.0_dp-3.0_dp*fdum+fdum**2.0_dp) )/fdum**3.0_dp )/size(fdum) )
+	f2(k) = h*Real(sum( 2.0_dp*(2.0_dp+fdum+exp(fdum)*(-2.0_dp+fdum) )/fdum**3.0_dp )/size(fdum) )
+	f3(k) = h*Real(sum( (-4.0_dp-3.0_dp*fdum-fdum**2.0_dp+exp(fdum)*(4.0_dp-fdum) )/fdum**3.0_dp )/size(fdum) )
 end do
 
 end subroutine

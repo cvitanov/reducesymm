@@ -58,11 +58,11 @@ aout = e*a + f1*Nlin_a + f2*(Nlin_a1+Nlin_a2) + f3*Nlin_a3 ! Sum them up appropr
 call setAndiag(a,ANdiag)
 kJ1 = h*MatMul(ANdiag,J)
 call setAndiag(a1,ANdiag)
-kJ2 = h*MatMul(ANdiag,DiagMul(e2,J+kJ1/2,size(e2)) )
-kJ3 = h*MatMul(ANdiag,DiagMul(e2,J,size(e2))+kJ2/2 )
+kJ2 = h*MatMul(ANdiag,DiagMul(e2,J+kJ1/2.0_dp,size(e2)) )
+kJ3 = h*MatMul(ANdiag,DiagMul(e2,J,size(e2))+kJ2/2.0_dp )
 call setANdiag(aout,ANdiag)
 kJ4 = h*MatMul(ANdiag,DiagMul(e,J,size(e))+DiagMul(e2,kJ3,size(e2)))
 
-Jout = DiagMul(e,J,size(e)) + DiagMul(e,kJ1,size(e))/6 + DiagMul(e2,kJ2 + kJ3,size(e2))/3 + kJ4/6
+Jout = DiagMul(e,J,size(e)) + DiagMul(e,kJ1,size(e))/6.0_dp + DiagMul(e2,kJ2 + kJ3,size(e2))/3.0_dp + kJ4/6.0_dp
 
 end subroutine
