@@ -197,7 +197,7 @@ print *,"inside"
 
 do i=1,Nsteps
 	call integrator(a,Jf,h,a,Jf,f0,f1,f2,f3,e,e2,SetNlin,SetANdiag,c0=1)
-	t=t+h
+	t=ti+i*h
 	if (mod(i,plrt) == 0) then ! export some value
 		j=j+1
 		tSt(j)=t

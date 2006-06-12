@@ -55,14 +55,14 @@ interface
 end interface
 
 interface
-	subroutine etdrk4DiagDriverS(ti,ai,h,tf,af,f0,f1,f2,f3,e,e2,Nplt,SetNlin)
+	subroutine etdrk4DiagDriverS(ti,ai,Nsteps,tf,af,f0,f1,f2,f3,e,e2,Nplt,SetNlin)
 		use nrtype
 		implicit none
 		complex(dpc), dimension(:), intent(in):: ai
-		real(dp), intent(in) :: ti,h,tf
+		real(dp), intent(in) :: ti,tf
 		real(dp), dimension(:),intent(in) :: f0,f1,f2,f3,e,e2
 		complex(dpc), dimension(:), intent(out) :: af
-		integer(i4b), intent(in) :: Nplt
+		integer(i4b), intent(in) :: Nsteps,Nplt
 		interface
 			subroutine SetNlin(a,N_a)
 			use nrtype
@@ -461,7 +461,7 @@ end interface
 
 
 interface
-	subroutine rk4J_nr(x,y,dydx,h,yout,J,dJds,Jout,MatVar,derivs,derivsJ)
+	subroutine rk4J_nr(x,y,dydx,h,yout,J,dJds,Jout,derivs,derivsJ)
 		USE nrtype
 		IMPLICIT NONE
 		REAL(DP), DIMENSION(:), INTENT(IN) :: y,dydx

@@ -47,7 +47,7 @@ aSt(1,:)=ai
 
 do i=1,Nsteps
 	call etdrk4Diag(a,h,a,f0,f1,f2,f3,e,e2,SetNlin)
-	t=t+h
+	t=ti+i*h
  	do k=1,size(a) ! Restrict in the antisymmetric subspace
  		a(k)=ii*aimag(a(k))
  	end do
