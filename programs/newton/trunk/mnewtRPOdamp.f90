@@ -1,4 +1,4 @@
-	SUBROUTINE mnewtRPO(ntrial,x,tolx,tolf,T,kappa,q,usrfun)
+	SUBROUTINE mnewtRPOdamp(ntrial,x,tolx,tolf,T,kappa,q,damp,usrfun)
 	USE nrtype
 	use la_precision, only: wp => dp
 	use f95_lapack, only: LA_GESV
@@ -9,6 +9,7 @@
 	REAL(DP), DIMENSION(:), INTENT(INOUT) :: x
 	real(dp), intent(inout) :: T,kappa
 	real(dp), dimension(:), intent(in):: q
+	real(dp), intent(in):: damp
 	INTERFACE
 		SUBROUTINE usrfun(x,fvec,fjac,T,kappa,q)
 		USE nrtype
@@ -24,23 +25,25 @@
 	REAL(DP) :: ndum
 	REAL(DP), DIMENSION(size(x)+2) :: fvec,p
 	REAL(DP), DIMENSION(size(x)+2,size(x)+2) :: fjac
+	real(dp) :: alpha ,err
 
 	ndum=assert_eq(size(x),size(q),'mnewtRPO')
 
 	do  i=1,ntrial
 		print *,"Newton iteration #", i
 		call usrfun(x,fvec,fjac,T,kappa,q)
-		if (sum(abs(fvec)) <= tolf) then
+		err=sum(abs(fvec))
+		if (err <= tolf) then
 			RETURN
 		endif
 		p=-fvec
 		call la_gesv(fjac,p)
-		x=x+p(1:size(p)-2)
-		T=T+p(size(p)-1)
-		kappa=kappa+p(size(p))
-		print *,"DT",p(size(p)-1),p(size(p))
+		alpha=Exp(-damp*err)
+		x=x+alpha*p(1:size(p)-2)
+		T=T+alpha*p(size(p)-1)
+		kappa=kappa+alpha*p(size(p))
 		if (sum(abs(p)) <= tolx) then 
 			RETURN
 		end if
 	end do
-	END SUBROUTINE mnewtRPO
+	END SUBROUTINE mnewtRPOdamp

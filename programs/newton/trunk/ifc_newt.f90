@@ -66,6 +66,30 @@ interface
 end interface 
 
 interface
+	SUBROUTINE mnewtRPOdamp(ntrial,x,tolx,tolf,T,kappa,q,damp,usrfun)
+		USE nrtype
+		IMPLICIT NONE
+		INTEGER(I4B), INTENT(IN) :: ntrial
+		REAL(dp), INTENT(IN) :: tolx,tolf
+		real(dpc), DIMENSION(:), INTENT(INOUT) :: x
+		real(dp), intent(inout) :: T,kappa
+		real(dp), dimension(:), intent(in):: q
+		real(dp), intent(in):: damp
+		INTERFACE
+			SUBROUTINE usrfun(x,fvec,fjac,T,kappa,q)
+			USE nrtype
+			IMPLICIT NONE
+			real(dpc), DIMENSION(:), INTENT(IN) :: x
+			real(dpc), DIMENSION(:), INTENT(OUT) :: fvec
+			real(dpc), DIMENSION(:,:), INTENT(OUT) :: fjac
+			real(dp), intent(in) :: T,kappa
+			real(dp), dimension(:), intent(in) :: q
+			END SUBROUTINE usrfun
+		END INTERFACE
+	end subroutine
+end interface 
+
+interface
 	SUBROUTINE mnewt_c(ntrial,x,tolx,tolf,usrfun)
 		USE nrtype
 		IMPLICIT NONE
