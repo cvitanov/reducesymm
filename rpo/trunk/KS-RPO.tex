@@ -1,0 +1,353 @@
+% this style for submission, web version:
+%\documentclass[pre,twocolumn,groupedaddress,showpacs,showkeys]{revtex4}
+
+% this style while editing:
+\documentclass[pre,preprint]{revtex4}%,groupedaddress,showpacs,showkeys]
+
+\input colordvi
+
+\input defs         % all definitions in defs.tex
+                \begin{document}
+                \title{
+                   Relative periodic orbits in Kuramoto-Sivashinsky equation
+                 }
+%                 \author{
+%                             Evangelos Siminos
+%                         }
+%                 \email{gtg083n@mail.gatech.edu}
+% 
+% 
+%                 \affiliation{
+%         School of Physics\\
+%         Georgia Institute of Technology, Atlanta, GA 30332-0430, U.S.A}
+%                 \date{\today} % or edit manually:
+%                 %\date{November 11,:}
+% 
+% %                \begin{abstract}
+% 
+% %\end{abstract}
+% %\pacs{95.10.Fh, 02.70.Bf, 47.52.+j, 05.45.+a}
+% \keywords{
+% periodic orbits,
+% chaos, turbulence
+%     }
+%                    \maketitle
+% 
+% \noindent
+% {\bf Georgia Tech PHYS 4421:}\\
+% \underline{\bf PHYSICS OF CONTINUOUS MATTER }\\
+% {\bf course project, spring semester 2004} \\
+% \& {\bf  PHYS 8901:}\\
+% {\bf Special Problem, summer semester 2004}
+
+
+ {\bf Relative periodic orbits of Kuramoto-Sivashinsky equation}\\ \\
+
+
+ The Kuramoto-Sivashinsky equation (KSe) reads:
+ \beq
+  u_t=(u^2)_x-u_{xx}- u_{xxxx} \, ,
+  \label{eq:KS}
+ \eeq
+
+ We assume periodic boundary conditions on the $x\in [0,2\pi \tilde{L}]$
+ interval:
+ \beq
+   u(x+2\pi\tilde{L},t)=u(x,t) \, ,
+ \eeq
+ which allows a Fourier series expansion:
+ \beq
+  u(x,t)=\sum_{k=-\infty}^{+\infty} a_k (t) e^{ i k x / \tilde{L}} \, .
+  \label{eq:Fourier}
+ \eeq
+ Since $u(x,t)$ is real,
+ \beq
+  a_{k}=a^*_{-k} \, .
+  \label{eq:a*}
+ \eeq
+ Substituting \refeq{eq:Fourier} into \refeq{eq:KS} we get:
+ \beq
+  \dot{a}_k=(k/\tildeL)^2\left(1-(1/\tildeL)^2 k^2\right)a_k
+        + i (k/\tildeL)  \sum_{m=-\infty}^{+\infty}a_m a_{k-m} \, .
+  \label{eq:Fcoef}
+ \eeq
+
+ From \refeq{eq:Fcoef} we notice that $\dot{a}_0=0$ and thus $a_0$ is an integral
+ of the equations or, from \refeq{eq:Fourier}, the average of the solution $\int dx u(x,t)$
+ is a constant. Due to galilean invariance we may set $a_0=0$ without loss of generality 
+ and we only have to compute $a_k$'s with $k\geq 1$. % Explain this in detail somewhere.
+
+ Truncating the infinite tower of equations by setting $a_k=0$ for $k>d$, using the identity $a_{-k}=a^*_k$ and splitting the
+ resulting equations into real and imaginary part by setting $a_k=b_k+i c_k$, we have
+  
+ \bea
+  \dot{b}_k & = & \left(\frac{k}{\tildeL}\right)^2\left(1- \left(k/\tildeL\right)^2 \right)b_k  \continue
+	& & - \frac{k}{\tildeL} \left(\sum_{m=1}^{k-1}c_m b_{k-m}+\sum_{m=k+1}^{N}c_m b_{m-k}
+                    -\sum_{m=1}^{N-k}c_m b_{k+m} \right)  \continue
+	& & - \frac{k}{\tildeL} \left(\sum_{m=1}^{k-1}b_m c_{k-m}-\sum_{m=k+1}^{N}b_m c_{m-k}
+                    +\sum_{m=1}^{N-k}b_m c_{k+m} \right)		  
+  \label{eq:tmp:b-Trunc}
+ \eea
+ \bea
+   \dot{c}_k & = & \left(\frac{k}{\tildeL}\right)^2\left(1- \left(k/\tildeL\right)^2 \right)c_k  \continue
+	& & - \frac{k}{\tildeL}\left( \sum_{m=1}^{k-1}c_m c_{k-m}-\sum_{m=k+1}^{N}c_m c_{m-k}
+                    -\sum_{m=1}^{N-k}c_m c_{k+m} \right)	\continue
+	& & + \frac{k}{\tildeL} \left(\sum_{m=1}^{k-1}b_m b_{k-m}+\sum_{m=k+1}^{N}b_m b_{m-k}
+                    +\sum_{m=1}^{N-k}b_m b_{k+m} \right)
+   \label{eq:tmp:c-Trunc}
+ \eea
+ where now only terms $c_{k},b_{k}$ with $0<k<d$ appear. Observe
+ \beq
+	\sum_{m=1}^{N-k}c_m b_{k+m} = \sum_{m=k+1}^{N}b_m c_{m-k}\,,
+ \eeq
+ \etc and thus \refeq{eq:tmp:b-Trunc} and \refeq{eq:tmp:c-Trunc} simplify to
+  \bea
+  \dot{b}_k & = & \left(\frac{k}{\tildeL}\right)^2\left(1- \left(k/\tildeL\right)^2 \right)b_k  \continue
+	& & - \frac{k}{\tildeL} \left(\sum_{m=1}^{k-1}c_m b_{k-m}-2\sum_{m=1}^{N-k}c_m b_{k+m} \right)  \continue
+	& & - \frac{k}{\tildeL} \left(\sum_{m=1}^{k-1}b_m c_{k-m}+2\sum_{m=1}^{N-k}b_m c_{k+m} \right)		  
+  \label{eq:b-Trunc}
+ \eea
+ \bea
+   \dot{c}_k & = & \left(\frac{k}{\tildeL}\right)^2\left(1- \left(k/\tildeL\right)^2 \right)c_k  \continue
+	& & - \frac{k}{\tildeL}\left( \sum_{m=1}^{k-1}c_m c_{k-m}-2\sum_{m=1}^{N-k}c_m c_{k+m} \right)	\continue
+	& &  +\frac{k}{\tildeL}\left( \sum_{m=1}^{k-1}b_m b_{k-m}+2\sum_{m=1}^{N-k}b_m b_{k+m} \right)\,.
+   \label{eq:c-Trunc}
+ \eea
+
+ We begin by calculating the matrix of variations $A_{ij} \equiv \frac{\partial v_i(x)}{\partial x_j}$ for the antisymmetric
+ subspace for which $b_k=0, c_{-k}=-c_{k}$ and thus
+ \beq
+	   \dot{c}_k =  \left(\frac{k}{\tildeL}\right)^2\left(1- \left(k/\tildeL\right)^2 \right)c_k
+	 		- \frac{k}{\tildeL}\left( \sum_{m=1}^{k-1}c_m c_{k-m}
+                    		-2\sum_{m=1}^{N-k}c_m c_{k+m} \right)	\,.	
+ \eeq
+ 
+ Then
+ \bea
+	\frac{\partial \dot{c}_k}{\partial c_{j}}  =  
+		\left(\frac{k}{\tildeL}\right)^2\left(1- \left(k/\tildeL\right)^2 \right) 
+			- \frac{k}{\tildeL}\frac{\partial}{\partial c_j}\left( \sum_{m=1}^{k-1}c_m c_{k-m}-2\sum_{m=1}^{N-k}c_m c_{k+m} \right)	\,.	
+ \eea
+ Concider the second term:
+ \bea
+	- \frac{k}{\tildeL}\frac{\partial}{\partial c_j}\left( \sum_{m=1}^{k-1}c_m c_{k-m}-2\sum_{m=1}^{N-k}c_m c_{k+m} \right)	& = &
+		- \frac{k}{\tildeL} \sum_{m=1}^{k-1} \left(\delta_{m,j} c_{k-m}+c_m \delta_{k-m,j} \right) \continue
+						& & + 2 \frac{k}{\tildeL}\sum_{m=1}^{N-k} \left(\delta_{m,j} c_{k+m}+c_m \delta_{k+m,j}\right)
+ \eea
+ We need to consider two cases seperately:
+ \begin{itemize} 
+	\item $k\leq j$
+		\bea
+			 -\frac{k}{\tildeL}\frac{\partial}{\partial c_j}\left( \sum_{m=1}^{k-1}c_m c_{k-m}-2\sum_{m=1}^{N-k}c_m c_{k+m} \right)	& = &
+					-\frac{k}{\tildeL}( 0+0 ) + 2\frac{k}{\tildeL} (c_{k+j} + c_{j-k}) \continue
+				& = &   2 \frac{k}{\tildeL} (c_{k+j}-c_{k-j})
+		\eea
+	\item $k > j$
+		\bea
+			 -\frac{k}{\tildeL}\frac{\partial}{\partial c_j}\left( \sum_{m=1}^{k-1}c_m c_{k-m}-2\sum_{m=1}^{N-k}c_m c_{k+m} \right)	& = &
+					-\frac{k}{\tildeL}(c_{k-j} + c_{k-j} ) + 2\frac{k}{\tildeL} (c_{k+j}  + 0 ) \continue
+				& = &  2 \frac{k}{\tildeL} (c_{k+j}-c_{k-j})
+		\eea	
+ \end{itemize}
+ and thus
+ \beq
+	\frac{\partial \dot{c}_k}{\partial c_{j}} =  \left(\frac{k}{\tildeL}\right)^2\left(1- \left(k/\tildeL\right)^2 \right) + 2 \frac{k}{\tildeL} (c_{k+j}-c_{k-j})
+ \eeq
+
+ For the case of the full space we need to consider the four matrices $\frac{\partial \dot{b}_k}{\partial b_j},\frac{\partial \dot{b}_k}{\partial c_j},\frac{\partial \dot{c}_k}{\partial b_j},\frac{\partial \dot{c}_k}{\partial c_j}$. Following the above procedure
+ \beq
+	\frac{\partial \dot{c}_k}{\partial b_{j}} =  2 \frac{k}{\tildeL} ( b_{k+j}+b_{k-j} )\,,
+ \eeq
+ \beq
+	\frac{\partial \dot{b}_k}{\partial b_{j}} =  \left(\frac{k}{\tildeL}\right)^2\left(1- \left(k/\tildeL\right)^2 \right) - 2 \frac{k}{\tildeL} (c_{k+j} + c_{k-j}) \,,
+ \eeq
+ \beq
+	\frac{\partial \dot{b}_k}{\partial c_{j}} = 2 \frac{k}{\tildeL} (b_{k+j}-b_{k-j}) \,.
+ \eeq
+
+\subsection{Implementing Newton's method for equilibria}
+
+ Our task is to find equilibrium solutions of \refeq{eq:KS}. Although one can easilly see that this problem can be reduced to that of
+ finding periodic orbits of a two dimensional ODE, here we prefer to consider our system in phase space and search for solutions of
+ \beq
+	\dot{b}_k=\dot{c}_k=0\,,
+ \eeq
+ for every $k$. The reason to do this is just getting experience before pursuing the more difficult task of locating POs and RPOs. 
+ Expanding $\dot{b}_k(a)$ and $\dot{c}_k(a)$ around our initial guess $a_o$ and demanding that they satisfy the equilibrium 
+ condition, we get
+ \bea
+	\dot{b}_k(a) & = & \dot{b}_k(a_o)+\left.\frac{\partial \dot{b}_k}{\partial b_j}\right|_{a_o}\delta b_j + \left.\frac{\partial \dot{b}_k}{\partial c_j}\right|_{a_o}\delta c_j = 0 \continue
+	\dot{c}_k(a) & = & \dot{c}_k(a_o)+\left.\frac{\partial \dot{c}_k}{\partial b_j}\right|_{a_o}\delta b_j + \left.\frac{\partial \dot{c}_k}{\partial c_j}\right|_{a_o}\delta c_j = 0
+ \eea
+ or in matrix form
+ \beq
+    \left( \begin{array}{cc}
+        \frac{\partial \dot{b}}{\partial b} & \frac{\partial \dot{b}}{\partial c} \\
+        \frac{\partial \dot{c}}{\partial b}	& \frac{\partial \dot{c}}{\partial c}
+     \end{array}
+     \right)_{a_o}
+     \left(\begin{array}{c}
+       \delta b  \\
+       \delta c
+     \end{array}\right)
+     =
+     \left(\begin{array}{c}
+       -\dot{b}(a_o) \\
+       -\dot{c}(a_o)
+     \end{array}\right)\,,
+     \label{eq:NewtonEquil}
+\eeq
+where $\partial{\dot{b}} / \partial{b}$ \etc are $d \times d$ submatrices. Solving this
+system of equations for the corrections $\delta b$ and  $\delta c$ and using the refined solution
+as an initial guess yields  an approximation to the solution of the system.
+ 
+
+
+\subsection{Implementing Newton's method \label{sec:NewtonMethod} for RPOs}
+
+The relative periodic condition
+\beq
+	u(x+\kappa,t+T)=u(x,t) \,
+\eeq
+translates in Fourier space into
+\beq	
+	\sum_{k=-\infty}^{+\infty} a_k (t+T) e^{ i k (x+\kappa) / \tildeL} 
+		= \sum_{k=-\infty}^{+\infty} a_k (t) e^{ i k x / \tildeL} \,
+\eeq
+or
+\beq
+	e^{ik\kappa/\tildeL}a_k(t+T)=a_k(t) \,,\ \forall k \in \mathds{Z}\ \ \ \mathrm{(no\ summation)}.
+	\label{eq:RPOcondition}
+\eeq
+We see that a relative periodic orbit returns after time $T$ to a point in 
+phase space with components $a_k(t+T)$ rotated in the complex plane by an 
+angle $-k\kappa/\tildeL$ with respect to $a_k(t)$. In matrix notation, we write \refeq{eq:RPOcondition} as
+\beq
+	R(\kappa)a(t+T)=a(t)\,,
+	\label{eq:RPO}
+\eeq
+where we have defined
+\beq
+	R(\kappa) \equiv Diag[e^{ik\kappa/\tildeL}]\,.
+\eeq
+%We notice that $R(\kappa)$ is not a rotation operator..
+
+Consider an initial guess $a'$ for a point on a relative periodic orbit and assume that it lies on
+a \Poincare section $\mathcal{P}$ at $t=0$. Suppose that $\mathcal{P}$ is a hyperplane in
+$\mathds{R}^{2d}$. The flow $f^t$ defined by \refeq{eq:Fcoef} transports 
+this point after time $T'$ into $a'(T')=f^{T'}(a')$. Suppose that this point is such that $R(\kappa')f^{T'}(a')$
+is a point on $\mathcal{P}$. Consider next a point $a$ lying on $\mathcal{P}$ and in the neighborhood of $a'$,
+thus satisfying
+\beq
+	q \cdot (a'-a) = 0\,,
+	\label{eq:cond a}
+\eeq
+with $q$ a vector normal to $\mathcal{P}$. Point $a$ will be finally identified with the improved 
+approximation of a point on the periodic orbit.
+The flow transports $a$ to $f^{T'}(a)$, but now $R(\kappa')f^{T'}(a)$ is not in general on $\mathcal{P}$.
+Moreover we would like to have the freedom to adjust the guesses for $T'$ and $\kappa'$ into new values
+$T=T'+\Delta T$ and $\kappa=\kappa'+\Delta \kappa$ to improve their accuracy. 
+Let as consider such slightly different values $T$ and $\kappa$ such that $R(\kappa)f^{T}(a)$ lies on 
+$\mathcal{P}$. Then we have the condition
+\beq
+	q \cdot(R(\kappa')f^{T'}(a')-R(\kappa)f^{T}(a)) = 0\,.
+	\label{eq:cond Rf(a)}
+\eeq 
+
+ We now can require that $a$ is a point on a relative periodic orbit and thus satisfies \refeq{eq:RPO}
+\beq
+	a=R(\kappa)f^{T}(a)\,,
+	\label{eq:RPOcond}
+\eeq
+Taylor expanding $f^{T}(a)$ around $a'$ to linear order in the small quantities 
+$\Delta a=a-a'$ and $\Delta T$, we get
+\bea
+	f^{T}(a)& \simeq & f^{T}(a')+\J^T(a') \Delta a \label{eq:fTaylorl1} \\ 
+		& \simeq & f^{T'}(a') + v \Delta T + \J^{T'}(a') \Delta a \label{eq:fTaylorl2} \,, 
+\eea
+where $v$ is evaluated at $f^{T'}(a')$. Here $\J^t(x)$ is the Jacobian matrix, defined for a general flow through
+\beq
+   	J^t_{ij}(x_o)=\left.\frac{\partial x_i(t)}{\partial x_j}\right|_{x=x_0}\,.
+\eeq
+The Jacobian matrix is obtained by integrating the equation:
+\beq
+   	\dot{\mathbf{J}}^t=\mathbf{A J}^t \, ,
+	\label{eq:Adef}
+\eeq
+subject to the initial condition:
+\beq
+   	\mathbf{J}^0=\mathbf{1} \, ,
+\eeq
+Here $\mathbf{A}$ is the matrix of variations defined as:
+\beq
+	A_{kj}=\frac{\partial \dot{x}_k}{\partial x_j}\,.
+\eeq
+
+In passing from \refeq{eq:fTaylorl1} to \refeq{eq:fTaylorl2} we have used the multiplicative 
+structure of the Jacobian, $\mathbf{J}^{T'+\delta T}(a')=\mathbf{J}^{\delta T}(f^{T'}(a'))\mathbf{J}^{T'}(a')$, 
+noticed that $\mathbf{J}^{\delta T}(f^{T'}(a'))=e^{\mathbf{A}\delta T}=\mathbf{1}+\mathbf{A}\delta T+\ldots$ 
+and dropped second order terms in the small quantities.
+
+On the other hand, we have
+\bea
+	R(\kappa'+\Delta\kappa) & = & R(\kappa')R(\Delta\kappa) \continue
+				& \simeq & R(\kappa')(\mathbf{1}+iDiag[k]\Delta\kappa/\tildeL)\,.
+	\label{eq:TaylorR}	
+\eea
+
+Substituting \refeq{eq:fTaylorl2},\refeq{eq:TaylorR} into \refeq{eq:RPOcond} and keeping only first
+order terms in the small quantities, we get
+\beq
+	a'+\Delta a \simeq R(\kappa')f^{T'}(a') + \frac{i}{\tildeL}R(\kappa')Diag[k]f^{T'}(a')\Delta\kappa 
+				+ R(\kappa')v \Delta T + R(\kappa')\J^{T'}(a') \Delta a\,,
+\eeq
+or
+\bea
+	\left(1-R(\kappa')\J^{T'}(a')\right) \Delta a - R(\kappa')v \Delta T 
+							- \frac{i}{\tildeL}R(\kappa')Diag[k]f^{T'}(a')\Delta\kappa  
+					& \simeq & -\left(a'-R(\kappa')f^{T'}(a') \right) \continue
+					& \equiv & -F(a') \,,
+	\label{eq:NewtonBasicCond}			
+\eea
+where $F(a')$ is the function which zero we want to find.
+
+Taylor expanding $R(\kappa)f^{T}(a)$ in \refeq{eq:cond Rf(a)} around $a'$ we get
+\bea
+	q \cdot \lefteqn{\left(R(\kappa')f^{T'}(a')-R(\kappa)f^{T}(a)\right) \simeq } \continue
+%	 & & \left[R(\kappa')f^{T'}(a')-R(\kappa')(1+\frac{i}{\tildeL}Diag[k]\Delta\kappa) 
+%			\left(f^{T'}(a') + v(a') \Delta T + \J^{T'}(a')\Delta a\right)\right] \cdot q \continue
+	 & & -q \cdot \left(R(\kappa')v\Delta T +R(\kappa')\J^{T'}(a')\Delta a 
+	 			+\frac{i}{\tildeL}R(\kappa')Diag[k]f^{T'}(a')\Delta\kappa \right)  = 0 \,.
+	\label{eq:Taylor cond Rf(a)}
+\eea 
+
+Equations \refeq{eq:cond a}, \refeq{eq:NewtonBasicCond} and \refeq{eq:Taylor cond Rf(a)} 
+can be compactly represented in a single matrix equation:
+\beq
+    \left( \begin{array}{ccc}
+       1-R(\kappa')\mathbf{J}^{T'}(a') 	& -R(\kappa')v	  & - \frac{i}{\tildeL}R(\kappa')Diag[k]f^{T'}(a') \\
+       q^{\dagger}R(\kappa')\J^{T'}(a') & q^{\dagger}R(\kappa')v & \frac{i}{\tildeL}q^{\dagger}R(\kappa')Diag[k]f^{T'}(a') \\
+       q^{\dagger} 			& 0 	& 0 
+     \end{array}
+     \right)
+     \left(\begin{array}{c}
+       \Delta a \\
+       \Delta T \\
+       \Delta \kappa
+     \end{array}\right)
+     =
+     \left(\begin{array}{c}
+       -F(a') \\
+       0     \\
+       0
+     \end{array}\right)\,.
+     \label{eq:NewtonScheme}
+\eeq
+Solving this equation for the corrections $\Delta a,\ \Delta T$ and $\Delta\kappa$ yields 
+an improved approximation to (a point of) the relative periodic orbit.
+
+%The situation is similar to the one encountered when trying to identify 
+%periodic orbits with Newton's method.
+
+
+\end{document}
