@@ -19,8 +19,7 @@ interface
 	complex(dpc), dimension(:), intent(out) :: N_a
 	end subroutine
 end interface
-! Simple driver for etdrk4Diag. plrt points are written in file exprtFile,
-! specified in parameters.f90. The functions f0-1,e,e2 are precomputed
+! Simple driver for etdrk4Diag. The functions f0-3,e,e2 are precomputed
 ! in calling routine.
 
 

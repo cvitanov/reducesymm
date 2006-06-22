@@ -19,8 +19,8 @@ interface
 	complex(dpc), dimension(:), intent(out) :: N_a
 	end subroutine
 end interface
-! Simple driver for etdrk4Diag. plrt points are written in file exprtFile,
-! specified in parameters.f90. The functions f0-1,e,e2 are precomputed
+! Simple driver for etdrk4Diag, restricted in the antisymmetric
+! subspace. The functions f0-1,e,e2 are precomputed
 ! in calling routine. Restricts results in the antisymmetric subspace.
 
 
@@ -42,7 +42,7 @@ allocate(tSt(Nplt+1)) !Allocate storage for saved values.
 allocate(aSt(Nplt+1,size(ai)))
 
 j=1
-tSt(j)=ti
+tSt(1)=ti
 aSt(1,:)=ai
 
 do i=1,Nsteps
@@ -57,8 +57,6 @@ do i=1,Nsteps
 		aSt(j,:)=a  
 	end if
 end do
-
-close(10)
 
 af=a ! return final point if required
 

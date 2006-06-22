@@ -1,4 +1,4 @@
-Subroutine derivsJ(x,y,J,dJds,MatVar)
+Subroutine derivsJ(x,y,J,dJdx,MatVar)
 
 USE nrtype
 USE nrutil, ONLY : assert_eq
@@ -8,7 +8,7 @@ IMPLICIT NONE
 REAL(DP), DIMENSION(:), INTENT(IN) :: y
 REAL(DP), INTENT(IN) :: x
 REAL(DP), DIMENSION(:,:), INTENT(IN) :: J
-REAL(DP), DIMENSION(:,:), INTENT(OUT) ::dJds
+REAL(DP), DIMENSION(:,:), INTENT(OUT) ::dJdx
 interface
 	function MatVar(x,y)
 		USE nrtype
@@ -21,8 +21,8 @@ end interface
 
 integer(i4b) ndum
 
-ndum=assert_eq(size(y),size(J,1),size(dJds,1),'derivsJ')
+ndum=assert_eq(size(y),size(J,1),size(dJdx,1),'derivsJ')
 
-dJds = matmul(MatVar(x,y),J)
+dJdx = matmul(MatVar(x,y),J)
 
 end subroutine
