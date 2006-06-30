@@ -2,6 +2,7 @@ SUBROUTINE ksFJ(bc,fvec,fjac)
 USE nrtype
 use parameters
 use nrutil, only:assert_eq
+use f95_lapack, only: LA_GEES
 
 IMPLICIT NONE
 
@@ -28,9 +29,11 @@ integer(i4b):: ndum,k ,j,m
 real(dp), dimension(size(bc)) :: v 
 integer(i8b) :: invplan, plan ! needed by fftw3
 real(dp), dimension(size(bc)/2) :: q,lin
+real(dp), dimension(size(fjac,1)):: wR,wI
+real(dp), dimension(size(fjac,1),size(fjac,1))::fjacdum 
 
-ndum=assert_eq(d,size(bc),size(fvec),'SetNlin1')
-ndum=assert_eq(ndum,size(fjac,1),size(fjac,2),'SetNlin2')
+ndum=assert_eq(d,size(bc),size(fvec),'ksFJ1')
+ndum=assert_eq(ndum,size(fjac,1),size(fjac,2),'ksFJ2')
 
 ! a does not include the a_0 coefficient
 a=(0,0)
@@ -139,6 +142,9 @@ fjac(1:d/2,d/2+1:d)=jbc
 fjac(d/2+1:d,1:d/2)=jcb
 fjac(d/2+1:d,d/2+1:d)=jcc
 
+fjacdum=fjac
 
+call la_gees(fjacdum,wR,wI)
+print *,"min eig", minval(abs(wR+ii*wI))
 
 END SUBROUTINE
