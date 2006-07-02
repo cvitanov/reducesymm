@@ -8,6 +8,12 @@
 \subsection{Vaggelis gonne fishing for Davidchack's KS box {\rpo s}}
 
 Full space KS, $L=22$.
+\ES{
+The names of the \rpo\ figure files follow the convention
+ {\tt rpoL-T-d.eps}s, with suffixes {\tt cm}
+and {\tt u} indicating
+ co-moving frame  and $u$ representation respectively.
+   }
 
 \subsubsection{Equilibrium A (and its symmetric partner SA)}
 
@@ -17,18 +23,28 @@ $(\Lyap_i \pm \theta_i)
 =(
   0.13903973 \pm i 0.23842023,
  -0.08402656 \pm i 0.16019413,
- -0.11941393 \pm i 0.00000000,
+ -0.11941393, 
  -0.27112264 \pm i 0.35630716,
- -2.01303043 \pm i 0.00000000,
- -2.03775342 \pm i 0.00000000,
- -5.63649418 \pm i 0.00000000,
+ -2.01303043,
+ -2.03775342,
+ -5.63649418,
 \cdots
 )$
 
-\ES{I observe pairs of real eigenvalues, e.g. -58.3602685 and -58.3602681. As their absolute
-value increases they differ even less. I think it has to do with the linear part being the main
-contribution to $\Mvar$ for higher modes, as well as with treating real and imaginary components 
-as seperate variables, which means it will appear twice.}
+\ES{I observe pairs of real eigenvalues,
+e.g. -58.3602685 and -58.3602681. As their absolute
+value increases they differ even less.
+I think it has to do with the linear part being the main
+contribution to $\Mvar$ for higher modes, as well as 
+with treating real and imaginary components 
+as separate variables, which means it will appear twice.
+\\
+PC: I think such contracting eigenvalues as -58.3602685 have no meaning.
+Even if they are accurate eigenvalues of $\Mvar$,
+by the time you compute
+$\ExpaEig_{radial} =  e^{\Lyap T} = e^{26\cdot58} = e^{1510}$ you got
+computationally a serious underflow.
+}
 
 The equilibrium point is accurate to at least to $10^{-11}$. Since
 Lapack is also double precision accurate, the accuracy of the first
@@ -86,21 +102,42 @@ $T=55.6, d=5.25$
 Compared to $L/4 = 5.5$
 this is nice, but why not close to periodic after 2nd return? Why 4th return?
 
+
 This stuff is hard to visualize... for ordinary periodic orbits one
 plots the unstable plane of the equilibrium, shows where the periodic
 orbits sit.
 
-But here, each {\rpo} has its own co-moving frame - and within it, equilibria
+Better visualization is in co-moving frame, {\ie} 
+a reference frame that translates with with velocity $d/T$.
+In the co-moving frame a \rpo\ becomes
+a \po.
+Co-moving frmae visualization helps quite a bit. Put a black (green, respectively) dot
+twice thicknes of the line every time unit; it will enable you to see
+where the motion is slow and where it is fast
+% (a trick we used to understand plane Couette trajectories).
+Mark the inital point on both
+co-moving rpm and on equilibrium in co-moving frame with a fat triangle
+indicating the direction, so we can see how they both move. Probably at the
+opposite ends of the two curves - co-moving frame is the mean motion.
+
+Each {\rpo} has its own co-moving frame - and within it, equilibria
 move on circles (or worse - because in higher Fourier modes they do mmore
 complicted things), and it is important to know where the equlibrium is at
-a given instant...
+a given instant.
+
+The $u$ space time evolution \reffig{f:rpoNAMEITu} % rpo22-55-4-u.eps 
+is plotted with the same starting instant,
+so one can also track also the spatial profile $u$ in parallel with
+the Fourier space projections.
 
 So it is almost impossible to see \reffig{f:rpoNAMEIT}(b) %rpo22-55-4-cm.eps
 in \reffig{f:rpoNAMEIT}(a) % rpo22-55-4.eps.
 I can see 4 periods in \reffig{f:rpoNAMEIT}(a), %po22-55-4.eps,
-but not in\reffig{f:rpoNAMEIT}(b) %rpo22-55-4-cm.eps
-- has it retraced itself 4 times? It comes back in
-$T/4=55.6/4=13.9$? That would be OK - by symmetry the figure 8 connecting
+but not in \reffig{f:rpoNAMEIT}(b) %rpo22-55-4-cm.eps
+where it comes back only after full period $T=55.6$.
+
+It still seems that it could be made relative periodic (modul a reflection symmetry?)
+in $T/4=55.6/4=13.9$? That would be OK - by symmetry the figure 8 connecting
 2 symmetric equilibria could consist of 4 identical segments: from
 equilibrium A to midplane, then reflected version of the same to SA, and
 back again.
@@ -134,12 +171,20 @@ back again.
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+Green curve belongs to \reffig{f:rpoNAMEIT}(b) % rpo22-55-4-cm.eps
+rather than to  \reffig{f:rpoNAMEIT}(a), % rpoEq22-55-4.eps?
+
+It captures most of the co-moving frame {\rpo} shape, which follows the
+equlibrium for most of the time, except for a quick swing where it
+sidesteps by $d/4$, just as it does in \reffig{f:rpoNAMEIT}. 
+
+Eigenvalues of \rpo\ [NAME IT] $g\jMps$: are
+$ -57.17,  1.00009, 1.00001, -0.500, -0.012, \cdots$ .
+%
 %  Eigenvalues of the Jacobian without rotation
 %  84.15, -33.86 + 28.94 i, c.c. , 0.48, 0.00019
 % no good - missing marginal ones
 
-Eigenvalues of \rpo\ [NAME IT] $g\jMps$: are
-$ -57.17,  1.00009, 1.00001, -0.500, -0.012, \cdots$ .
 This all makes sense: The period is roughly double of the rotation period of
 the equilibrium point, as the trajectory makes a figure 8 around equilibrium A and
 its symmetric partner SA.
@@ -152,9 +197,16 @@ Lyapunov $\Lyap=0.07$ says that this neighborhood is much less repelling than
 the central equilibrium A, a better candidate for being embedded into the
 ergodic attractor.
 
+The \rpo\ initial condition is
+so accurate the orbit in \reffig{f:rpoNAMEIT}(b)
+start visibly deviating after retracing the loop 7 times - but that
+is not possible if the largest unstable multiplier is 
+$-57.17$ per period of the orbit - error would grow to $\approx 60^7
+= 2,800,000,000,000$.
+
 For the \rpo s the accuracy of Jacobian depends
 on the time step size, and long runs are needed to refine the results
-We check by redoing the caluclation with double 
+We check by redoing the calculation with double 
 number of Fourier modes, observe how many digits
 change. 
 Because of the strong contractionin KS we expect at most 10 eigenvalues to be
