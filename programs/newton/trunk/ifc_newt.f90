@@ -43,14 +43,13 @@ interface
 end interface 
 
 interface
-	SUBROUTINE mnewtRPO(ntrial,x,tolx,tolf,T,kappa,q,usrfun)
+	SUBROUTINE mnewtRPO(ntrial,x,tolx,tolf,T,kappa,usrfun)
 		USE nrtype
 		IMPLICIT NONE
 		INTEGER(I4B), INTENT(IN) :: ntrial
 		REAL(dp), INTENT(IN) :: tolx,tolf
 		real(dpc), DIMENSION(:), INTENT(INOUT) :: x
 		real(dp), intent(inout) :: T,kappa
-		real(dp), dimension(:), intent(in):: q
 		INTERFACE
 			SUBROUTINE usrfun(x,fvec,fjac,T,kappa,q)
 			USE nrtype
@@ -75,6 +74,30 @@ interface
 		real(dp), intent(inout) :: T,kappa
 		real(dp), dimension(:), intent(in):: q
 		real(dp), intent(in):: damp
+		INTERFACE
+			SUBROUTINE usrfun(x,fvec,fjac,T,kappa,q)
+			USE nrtype
+			IMPLICIT NONE
+			real(dpc), DIMENSION(:), INTENT(IN) :: x
+			real(dpc), DIMENSION(:), INTENT(OUT) :: fvec
+			real(dpc), DIMENSION(:,:), INTENT(OUT) :: fjac
+			real(dp), intent(in) :: T,kappa
+			real(dp), dimension(:), intent(in) :: q
+			END SUBROUTINE usrfun
+		END INTERFACE
+	end subroutine
+end interface 
+
+interface
+	SUBROUTINE mnewtTW(ntrial,x,tolx,tolf,T,kappa,q,usrfun)
+		USE nrtype
+		IMPLICIT NONE
+		INTEGER(I4B), INTENT(IN) :: ntrial
+		REAL(dp), INTENT(IN) :: tolx,tolf
+		real(dpc), DIMENSION(:), INTENT(INOUT) :: x
+		real(dp), intent(in) :: T
+		real(dp), intent(inout) :: kappa
+		real(dp), dimension(:), intent(in):: q
 		INTERFACE
 			SUBROUTINE usrfun(x,fvec,fjac,T,kappa,q)
 			USE nrtype

@@ -1,6 +1,6 @@
 arch=64
 TARGET = libnewt
-OBJ = ifc_newt.o mnewt.o mnewtPO.o mnewtRPO.o mnewtRPOdamp.o mnewt_c.o 
+OBJ = ifc_newt.o mnewt.o mnewtPO.o mnewtRPO.o mnewtRPOdamp.o mnewtTW.o mnewt_c.o 
 srcMod = ifc_newt.f90 
 targetMod = ifc_newt.mod
 # Where to find user libraries:
