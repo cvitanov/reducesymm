@@ -17,3 +17,10 @@ submit to ?
 
 When submitting, remember to to double-space the document
 
+Fix these references:
+--------------------
+
+Warning--I didn't find a database entry for "McC7"
+Warning--I didn't find a database entry for "McC8"
+Warning--I didn't find a database entry for "McC"
+
