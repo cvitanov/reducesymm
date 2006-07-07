@@ -1,5 +1,9 @@
 module ifc_newt
 
+use nrtype
+
+integer(i4b) :: newton_condition_met=0
+
 interface
 	SUBROUTINE mnewt(ntrial,x,tolx,tolf,usrfun)
 		USE nrtype
@@ -51,14 +55,13 @@ interface
 		real(dpc), DIMENSION(:), INTENT(INOUT) :: x
 		real(dp), intent(inout) :: T,kappa
 		INTERFACE
-			SUBROUTINE usrfun(x,fvec,fjac,T,kappa,q)
+			SUBROUTINE usrfun(x,fvec,fjac,T,kappa)
 			USE nrtype
 			IMPLICIT NONE
 			real(dpc), DIMENSION(:), INTENT(IN) :: x
 			real(dpc), DIMENSION(:), INTENT(OUT) :: fvec
 			real(dpc), DIMENSION(:,:), INTENT(OUT) :: fjac
 			real(dp), intent(in) :: T,kappa
-			real(dp), dimension(:), intent(in) :: q
 			END SUBROUTINE usrfun
 		END INTERFACE
 	end subroutine
