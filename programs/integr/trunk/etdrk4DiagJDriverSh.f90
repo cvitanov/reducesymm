@@ -111,7 +111,7 @@ h2=h/2.0_dp
 
 do i=1,Nsteps
 	call integrator(a,h2,adum,f0dum,f1dum,f2dum,f3dum,edum,e2dum,SetNlin)
-	call integrator(adum,h2,ao,f0dum,f1dum,f2dum,f3dum,edum,e2dum,SetNlin)
+	call integrator(a,h,ao,f0,f1,f2,f3,e,e2,SetNlin)
 	call integratorJ(a,adum,ao,Jf,h,Jf,f0,f1,f2,f3,e,e2,SetNlin,SetANdiag)
 	t=ti+i*h
 	a=ao
