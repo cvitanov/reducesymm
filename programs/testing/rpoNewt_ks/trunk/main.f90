@@ -17,9 +17,9 @@ real(dp), dimension(:), allocatable :: aIn
 complex(dpc), dimension(:), allocatable :: ai,af
 integer(i8b) :: invplan, plan ! needed by fftw3
 integer(i4b) :: d, k,i
-real(dp) :: T,kappa, ti,tf
+real(dp) :: T,kappa, ti,tf, h, h2
 real(dp) :: tolbc,tolf,damp=13.0_dp
-character*10 :: wd
+character*64 :: wd
 integer(i4b) :: nargs
 
 nargs=iargc()
@@ -52,13 +52,16 @@ open(21,file=trim(wd)//'/parameters.dat')
 	read(21,*) R
 close(21)
 
-221 Format(<d>F21.16)
-222 Format(<d/2+1>F21.16)
-223 Format(<4>F21.16)
+220 Format(F30.18)
+221 Format(<d>F30.18)
+222 Format(<d/2+1>F30.18)
+223 Format(<4>F30.18)
 
 allocate(v(d),vdum(d),bc(d))
 allocate(a(d/2+1),adum(d/2+1),ai(d/2+1),af(d/2+1))
 allocate(aIn(d/2))
+allocate(lin(d/2+1),f0(d/2+1),f1(d/2+1),f2(d/2+1),f3(d/2+1),e(d/2+1),e2(d/2+1))
+allocate(f0dum(d/2+1),f1dum(d/2+1),f2dum(d/2+1),f3dum(d/2+1),edum(d/2+1),e2dum(d/2+1))
 
 aIn=0.0_dp
 
@@ -75,6 +78,8 @@ open(20,file=trim(wd)//'/periodsGuess.dat')
  
 close(20)
 
+ti=0.0_dp
+tf=T
 
 call dfftw_plan_dft_r2c_1d(plan,d,v,a,FFTW_ESTIMATE)
 call dfftw_execute(plan)
@@ -84,14 +89,46 @@ a=a/size(v)
 bc(1:d/2)=real(a(2:size(a)))
 bc(d/2+1:d)= aimag(a(2:size(a)))
 
+h=abs(tf-ti)/Nsteps
+
+h2=h/2.0_dp
+
+call SetLin_KS(lin)
+
+call etdrk4DiagPrefactors(lin,h,R,M,f0,f1,f2,f3,e,e2)
+call etdrk4DiagPrefactors(lin,h2,R,M,f0dum,f1dum,f2dum,f3dum,edum,e2dum)
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 call mnewtRPO(Ntrial,bc,tolbc,tolf,T,kappa,ksFJ)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 print *,"T",T,"kappa",kappa
 
 open(27,file=trim(wd)//'/periods.dat')
-	write (27,"(F20.15)") T
-	write (27,"(F20.15)") kappa
+	write (27,220) T
+	write (27,220) kappa
 close(27)
+
+if ( newton_condition_met .eq. 1) then
+	open(35,file=trim(wd)//'/J.dat')
+	do i=1,d
+		write(35,221) Jac(i,:) 
+	end do
+	close(35)
+else 
+	ti=0.0_dp
+	ai=(0.0_dp,0.0_dp)
+	ai(2:size(a))=bc(1:size(bc)/2)+ii*bc(size(bc)/2+1:size(bc))
+	af=(0.0_dp,0.0_dp)
+	Jac=UnitMatrix(d)
+	call etdrk4DiagJDriverSh(ti,ai,Jac,h,Nsteps,tf,af,Jac,f0,f1,f2,f3,e,e2,f0dum,f1dum,f2dum,f3dum,edum,e2dum,Nplt,etdrk4diag,etdrk4DiagJhr,SetNlin_KS,SetANdiag_KS)
+		open(35,file=trim(wd)//'/J.dat')
+	do i=1,d
+		write(35,221) Jac(i,:) 
+	end do
+	close(35)
+endif
 
 a=(0.0_dp,0.0_dp)
 a(2:size(a))=bc(1:size(bc)/2)+ii*bc(size(bc)/2+1:size(bc))
@@ -103,7 +140,7 @@ call dfftw_execute(invplan)
 call dfftw_destroy_plan(invplan)
 
 open(28,file=trim(wd)//'/rpo.dat')
-	write(28,222) v
+	write(28,221) v
 close(28)
 
 
