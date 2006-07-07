@@ -2,8 +2,11 @@ module ifc_rpo_ks
 
 use nrtype
 
+real(dp), dimension(:,:), allocatable :: Jac
+real(dp), dimension(:), allocatable :: lin,f0,f1,f2,f3,e,e2
+real(dp), dimension(:), allocatable :: f0dum,f1dum,f2dum,f3dum,edum,e2dum
 real(dp) :: R, L
-integer(i4b) :: M, Nsteps, Nplt
+integer(i4b) :: M, Nsteps, Nplt, Ntrial
 
 interface
 	SUBROUTINE ksFJ(bc,fvec,fjac,T,kappa)
@@ -29,10 +32,10 @@ end interface
 
 
 interface
-	subroutine SetLin_KS(Lin)
+	subroutine SetLin_KS(lnr)
 		use nrtype
 		implicit none
-		real(dp), dimension(:), intent(out) :: Lin
+		real(dp), dimension(:), intent(out) :: lnr
 	end subroutine
 end interface
 interface

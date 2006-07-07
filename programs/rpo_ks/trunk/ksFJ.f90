@@ -20,9 +20,7 @@ complex(dpc), dimension(size(bc)/2+1) :: ai,af,adum,Rai,Raf, R_cadum
 complex(dpc), dimension(size(bc)/2+1) :: N_adum
 complex(dpc), dimension(size(bc)/2+1) :: v_c,v_c_dum
 real(dp), dimension(size(bc)) :: v,vi
-real(dp), dimension(size(bc)/2+1) :: Lin,f0,f1,f2,f3,e,e2
-real(dp), dimension(size(bc)/2+1) :: f0dum,f1dum,f2dum,f3dum,edum,e2dum
-real(dp), dimension(size(bc),size(bc)):: Ji,Jf,Jdum
+real(dp), dimension(size(bc),size(bc)):: Jdum
 integer(i4b):: d,k,i
 real(dp) :: ti,tf,h,h2
 real(dp), dimension(size(fjac,1)):: wR,wI
@@ -37,6 +35,8 @@ real(dp), dimension(size(bc),size(bc)) :: R_r,Ri_r
 d=assert_eq(size(bc),size(fvec)-2,'ksFJ1')
 d=assert_eq(d,size(fjac,1)-2,size(fjac,2)-2,'ksFJ2')
 
+if ( .not. allocated(Jac)) allocate(Jac(d,d))
+
 fvec=0.0_dp
 ti=0.0_dp
 tf=T
@@ -50,43 +50,37 @@ af=(0.0_dp,0.0_dp)
 
 print *,"ai", sum(abs(ai))
 
-Ji=UnitMatrix(d)
-
-call SetLin_KS(lin)
+Jac=UnitMatrix(d)
 
 h=abs(tf-ti)/Nsteps
 
 h2=h/2.0_dp
 
-call etdrk4DiagPrefactors(lin,h,R,M,f0,f1,f2,f3,e,e2) !! Move this to a module to reduce computational effort.
+call etdrk4DiagJDriverSh(ti,ai,Jac,h,Nsteps,tf,af,Jac,f0,f1,f2,f3,e,e2,f0dum,f1dum,f2dum,f3dum,edum,e2dum,Nplt,etdrk4diag,etdrk4DiagJhr,SetNlin_KS,SetANdiag_KS)
 
-call etdrk4DiagPrefactors(lin,h2,R,M,f0dum,f1dum,f2dum,f3dum,edum,e2dum)
-
-call etdrk4DiagJDriverSh(ti,ai,Ji,h,Nsteps,tf,af,Jf,f0,f1,f2,f3,e,e2,f0dum,f1dum,f2dum,f3dum,edum,e2dum,Nplt,etdrk4diag,etdrk4DiagJhr,SetNlin_KS,SetANdiag_KS)
-
-open(17,file='a.dat')
-open(21,file='v.dat')
-open(27,file='aI.dat')
-open(28,file='aR.dat')
-	do k=1,size(aSt,1)	
-		write(17,223) real(aSt(k,3)),aimag(aSt(k,3)),real(aSt(k,5)),tSt(k)
-		write(27,222) aimag(aSt(k,:))
-		write(28,222) real(aSt(k,:))
-		adum=aSt(k,:)
-		call dfftw_plan_dft_c2r_1d(invplan,d,adum,v,FFTW_ESTIMATE)
-		call dfftw_execute(invplan)
-		call dfftw_destroy_plan(invplan)
-		write(21,221) v
-	end do
-!	write(17,'(4F15.10)') aimag(af(1))*L,aimag(af(2))*L,aimag(af(5))*L,tf/(L**2)	
-close(17)
-close(21)
-close(27)
-close(28)
+! open(17,file='a.dat')
+! open(21,file='v.dat')
+! open(27,file='aI.dat')
+! open(28,file='aR.dat')
+! 	do k=1,size(aSt,1)	
+! 		write(17,223) real(aSt(k,3)),aimag(aSt(k,3)),real(aSt(k,5)),tSt(k)
+! 		write(27,222) aimag(aSt(k,:))
+! 		write(28,222) real(aSt(k,:))
+! 		adum=aSt(k,:)
+! 		call dfftw_plan_dft_c2r_1d(invplan,d,adum,v,FFTW_ESTIMATE)
+! 		call dfftw_execute(invplan)
+! 		call dfftw_destroy_plan(invplan)
+! 		write(21,221) v
+! 	end do
+! !	write(17,'(4F15.10)') aimag(af(1))*L,aimag(af(2))*L,aimag(af(5))*L,tf/(L**2)	
+! close(17)
+! close(21)
+! close(27)
+! close(28)
 
 ! open(35,file='J.dat')
 ! 	do i=1,d
-! 		write(35,221) Jf(i,:) 
+! 		write(35,221) Jacf(i,:) 
 ! 	end do
 ! close(35)
 
@@ -148,7 +142,7 @@ DRRa= DR*(Raf)
 
 fjac=0.0_dp
 
-fjac(1:d,1:d)=UnitMatrix(d)-matmul(R_r,Jf)
+fjac(1:d,1:d)=UnitMatrix(d)-matmul(R_r,Jac)
 fjac(1:d,d+1)=-v
 fjac(1:d/2,d+2)=real(DRRa(2:d/2+1))
 fjac(d/2+1:d,d+2)=aimag(DRRa(2:d/2+1))
@@ -156,14 +150,14 @@ fjac(d+2,1:d/2)=real(DR(2:d/2+1)*ai(2:d/2+1))
 fjac(d+2,d/2+1:d)=aimag(DR(2:d/2+1)*ai(2:d/2+1))
 fjac(d+1,1:d)= vi
 
-Jdum=matmul(R_r,Jf)
+Jdum=matmul(R_r,Jac)
 ! Jdum=Jf
 
 
 wR=0.0_dp
 wI=0.0_dp
 call la_gees(Jdum,wR(1:d),wI(1:d))
-print *,"eig", wR(1:d)+ii*wI(1:d)
+print *,"eig", wR(1:d/8)+ii*wI(1:d/8)
 print *,"fvec", sum(abs(fvec))
 
 END SUBROUTINE

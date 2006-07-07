@@ -19,8 +19,7 @@ complex(dpc), dimension(size(bc)/2+1) :: ai,af,adum,aidum,afp,afm,Rai,Raf
 complex(dpc), dimension(size(bc)/2+1) :: N_adum
 complex(dpc), dimension(size(bc)/2+1) :: v_c,v_c_dum
 real(dp), dimension(size(bc)) :: v,vi,Rbc
-real(dp), dimension(size(bc)/2+1) :: Lin,f0,f1,f2,f3,e,e2
-real(dp), dimension(size(bc),size(bc)):: Ji,Jf,Jdum
+real(dp), dimension(size(bc),size(bc)):: Jdum
 integer(i4b):: d,k,i
 real(dp) :: ti,tf,h, tmp
 real(dp), dimension(size(fjac,1)):: wR,wI
@@ -36,6 +35,8 @@ real(dp) :: da=0.00000001_dp
 d=assert_eq(size(bc),size(fvec)-2,'ksFJ1')
 d=assert_eq(d,size(fjac,1)-2,size(fjac,2)-2,'ksFJ2')
 
+if ( .not. allocated(Jac) ) allocate(Jac(d,d))
+
 fvec=0.0_dp
 ti=0.0_dp
 tf=T
@@ -49,9 +50,7 @@ af=(0.0_dp,0.0_dp)
 
 print *,"ai", sum(abs(ai))
 
-Ji=UnitMatrix(d)
-
-call SetLin_KS(Lin)
+Jac=UnitMatrix(d)
 
 h=abs(tf-ti)/Nsteps
 
@@ -89,10 +88,10 @@ do i=2,d/2+1
 	aidum(i)=real(ai(i))-da + ii*aimag(ai(i))
 	call etdrk4DiagDriverS(ti,aidum,Nsteps,tf,afm,f0,f1,f2,f3,e,e2,Nplt,SetNlin_KS)
 	do k=2,d/2+1
-		Jf(k-1,i-1)=(real(afp(k))-real(afm(k)))/(2.0_dp*da)
+		Jac(k-1,i-1)=(real(afp(k))-real(afm(k)))/(2.0_dp*da)
 	end do
 	do k=2,d/2+1	
-		Jf(d/2+k-1,i-1)=(aimag(afp(k))-aimag(afm(k)))/(2.0_dp*da)
+		Jac(d/2+k-1,i-1)=(aimag(afp(k))-aimag(afm(k)))/(2.0_dp*da)
 	end do
 end do
 
@@ -106,18 +105,12 @@ do i=2,d/2+1
 	aidum(i)=real(ai(i))+ii*(aimag(ai(i))-da) 
 	call etdrk4DiagDriverS(ti,aidum,Nsteps,tf,afm,f0,f1,f2,f3,e,e2,Nplt,SetNlin_KS)
 	do k=2,d/2+1
-		Jf(k-1,d/2+i-1)=(real(afp(k))-real(afm(k)))/(2.0_dp*da)
+		Jac(k-1,d/2+i-1)=(real(afp(k))-real(afm(k)))/(2.0_dp*da)
 	end do
 	do k=2,d/2+1	
-		Jf(d/2+k-1,d/2+i-1)=(aimag(afp(k))-aimag(afm(k)))/(2.0_dp*da)
+		Jac(d/2+k-1,d/2+i-1)=(aimag(afp(k))-aimag(afm(k)))/(2.0_dp*da)
 	end do
 end do
-
-! open(35,file='J.dat')
-! 	do i=1,d
-! 		write(35,"(128F25.15)") Jf(i,:) 
-! 	end do
-! close(35)
 
 !print *,"ai-af",ai-af
 
@@ -180,7 +173,7 @@ DRRa= DR*(Raf)
 
 fjac=0.0_dp
 
-fjac(1:d,1:d)=UnitMatrix(d)-matmul(R_r,Jf)
+fjac(1:d,1:d)=UnitMatrix(d)-matmul(R_r,Jac)
 fjac(1:d,d+1)=-v
 fjac(1:d/2,d+2)=real(DRRa(2:d/2+1))
 fjac(d/2+1:d,d+2)=aimag(DRRa(2:d/2+1))
@@ -188,9 +181,7 @@ fjac(d+2,1:d/2)=real(DR(2:d/2+1)*ai(2:d/2+1))
 fjac(d+2,d/2+1:d)=aimag(DR(2:d/2+1)*ai(2:d/2+1))
 fjac(d+1,1:d)= vi
 
-Jdum=matmul(R_r,Jf)
-!Jdum=Jf
-
+Jdum=matmul(R_r,Jac)
 
 wR=0.0_dp
 wI=0.0_dp
