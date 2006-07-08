@@ -20,10 +20,10 @@ complex(dpc), dimension(size(bc)/2+1) :: ai,af,adum,Rai,Raf, R_cadum
 complex(dpc), dimension(size(bc)/2+1) :: N_adum
 complex(dpc), dimension(size(bc)/2+1) :: v_c,v_c_dum
 real(dp), dimension(size(bc)) :: v,vi
-real(dp), dimension(size(bc),size(bc)):: Jdum
+! real(dp), dimension(size(bc),size(bc)):: Jdum
 integer(i4b):: d,k,i
 real(dp) :: ti,tf,h,h2
-real(dp), dimension(size(fjac,1)):: wR,wI
+! real(dp), dimension(size(fjac,1)):: wR,wI
 integer(i8b) :: invplan, plan ! needed by fftw3
 complex(dpc), dimension(size(bc)/2+1) :: R_c, DR, DRRa
 real(dp), dimension(size(bc),size(bc)) :: R_r,Ri_r
@@ -150,14 +150,14 @@ fjac(d+2,1:d/2)=real(DR(2:d/2+1)*ai(2:d/2+1))
 fjac(d+2,d/2+1:d)=aimag(DR(2:d/2+1)*ai(2:d/2+1))
 fjac(d+1,1:d)= vi
 
-Jdum=matmul(R_r,Jac)
-! Jdum=Jf
+! Jdum=matmul(R_r,Jac)
+! ! Jdum=Jf
 
 
-wR=0.0_dp
-wI=0.0_dp
-call la_gees(Jdum,wR(1:d),wI(1:d))
-print *,"eig", wR(1:d/8)+ii*wI(1:d/8)
+! wR=0.0_dp
+! wI=0.0_dp
+! call la_gees(Jdum,wR(1:d),wI(1:d))
+! print *,"eig", wR(1:d/8)+ii*wI(1:d/8)
 print *,"fvec", sum(abs(fvec))
 
 END SUBROUTINE
