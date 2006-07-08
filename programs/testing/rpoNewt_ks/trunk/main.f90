@@ -3,7 +3,8 @@ program shootME
 use nrtype
 use ifc_newt
 use ifc_integr
-use f95_lapack, only: LA_GEES
+use f95_lapack, only: LA_GEESX
+use la_precision, only: wp => dp
 use ifc_util
 use ifc_rpo_ks
 
@@ -12,15 +13,17 @@ implicit none
 include "fftw3.f"
 
 real(dp), dimension(:), allocatable :: v,vdum, bc
+real(dp), dimension(:), allocatable :: wR,wI
 complex(dpc), dimension(:),allocatable :: a,adum
 real(dp), dimension(:), allocatable :: aIn
 complex(dpc), dimension(:), allocatable :: ai,af
 integer(i8b) :: invplan, plan ! needed by fftw3
-integer(i4b) :: d, k,i
+integer(i4b) :: d, k,i, sdim
 real(dp) :: T,kappa, ti,tf, h, h2
 real(dp) :: tolbc,tolf,damp=13.0_dp
 character*64 :: wd
 integer(i4b) :: nargs
+logical :: logicdum
 
 nargs=iargc()
 
@@ -62,6 +65,7 @@ allocate(a(d/2+1),adum(d/2+1),ai(d/2+1),af(d/2+1))
 allocate(aIn(d/2))
 allocate(lin(d/2+1),f0(d/2+1),f1(d/2+1),f2(d/2+1),f3(d/2+1),e(d/2+1),e2(d/2+1))
 allocate(f0dum(d/2+1),f1dum(d/2+1),f2dum(d/2+1),f3dum(d/2+1),edum(d/2+1),e2dum(d/2+1))
+allocate(wR(d),wI(d))
 
 aIn=0.0_dp
 
@@ -110,23 +114,24 @@ open(27,file=trim(wd)//'/periods.dat')
 	write (27,220) kappa
 close(27)
 
-if ( newton_condition_met .eq. 1) then
-	open(35,file=trim(wd)//'/J.dat')
-	do i=1,d
-		write(35,221) Jac(i,:) 
-	end do
-	close(35)
-else 
-	ti=0.0_dp
-	ai=(0.0_dp,0.0_dp)
-	ai(2:size(a))=bc(1:size(bc)/2)+ii*bc(size(bc)/2+1:size(bc))
-	af=(0.0_dp,0.0_dp)
-	Jac=UnitMatrix(d)
-	call etdrk4DiagJDriverSh(ti,ai,Jac,h,Nsteps,tf,af,Jac,f0,f1,f2,f3,e,e2,f0dum,f1dum,f2dum,f3dum,edum,e2dum,Nplt,etdrk4diag,etdrk4DiagJhr,SetNlin_KS,SetANdiag_KS)
-		open(35,file=trim(wd)//'/J.dat')
-	do i=1,d
-		write(35,221) Jac(i,:) 
-	end do
+if ( newton_condition_met .ne. 0) then
+	if ( newton_condition_met .eq. 2) then
+		ti=0.0_dp
+		ai=(0.0_dp,0.0_dp)
+		ai(2:size(a))=bc(1:size(bc)/2)+ii*bc(size(bc)/2+1:size(bc))
+		af=(0.0_dp,0.0_dp)
+		Jac=UnitMatrix(d)
+		call etdrk4DiagJDriverSh(ti,ai,Jac,h,Nsteps,tf,af,Jac,f0,f1,f2,f3,e,e2,f0dum,f1dum,f2dum,f3dum,edum,e2dum,Nplt,etdrk4diag,etdrk4DiagJhr,SetNlin_KS,SetANdiag_KS)
+	end if
+	wR=0.0_dp
+	wI=0.0_dp
+	Jac=matmul(Rr(kappa/L,d),Jac)
+	call la_geesx(Jac,wR(1:d),wI(1:d),select=SelectLargeEig,sdim=sdim)
+	print *,"eig", wR(1:sdim)+ii*wI(1:sdim)
+	open(35,file=trim(wd)//'/Jeig.dat')
+	do i=1,sdim
+		write(35,"(2F30.18)") wR(i)+ii*wI(i)
+	enddo
 	close(35)
 endif
 
