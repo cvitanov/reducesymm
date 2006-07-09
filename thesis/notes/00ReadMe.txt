@@ -23,5 +23,7 @@ The resulting figure is much smaller
 168 rpo22-55-4.eps
  40 rpo22-55-4-clean.eps
 
-but have to inspect it - fonts do look different
+but have to inspect it - fonts do look different. Also
+it destroys some pictures.  Use it with caution. The script is just one
+line but I have no idea what it exactly does!
 
