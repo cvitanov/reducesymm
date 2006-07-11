@@ -2,7 +2,7 @@
 # by vasimos
 
 TARGET = librpo_ks
-OBJ = ifc_rpo_ks.o ksFJ.o ksFJ_diff.o Rc.o Rr.o SetLin_KS.o SetNlin_KS.o SetAndiag_KS.o SetAndiag_KS_diff.o
+OBJ = ifc_rpo_ks.o ksFJ.o Rc.o Rr.o SetLin_KS.o SetNlin_KS.o SetAndiag_KS.o SetAndiag_KS_diff.o
 srcMod = ifc_rpo_ks.f90 
 targetMod = ifc_rpo_ks.mod
 # Where to find user libraries:

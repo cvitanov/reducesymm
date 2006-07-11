@@ -21,8 +21,8 @@ complex(dpc), dimension(size(bc)/2+1) :: ai,af,adum,Rai,Raf, R_cadum
 complex(dpc), dimension(size(bc)/2+1) :: N_adum
 complex(dpc), dimension(size(bc)/2+1) :: v_c,v_c_dum
 real(dp), dimension(size(bc)) :: v,vi
-real(dp), dimension(size(bc)/2+1) :: Lin,f0,f1,f2,f3,e,e2
-real(dp), dimension(size(bc)/2+1) :: f0dum,f1dum,f2dum,f3dum,edum,e2dum
+! ! ! real(dp), dimension(size(bc)/2+1) :: Lin,f0,f1,f2,f3,e,e2
+! ! ! real(dp), dimension(size(bc)/2+1) :: f0dum,f1dum,f2dum,f3dum,edum,e2dum
 real(dp), dimension(size(bc),size(bc)):: Ji,Jf,Jdum
 integer(i4b):: d,k,i
 real(dp) :: ti,tf,h,h2

@@ -4,6 +4,8 @@ use nrtype
 
 real(dp) :: R, L
 integer(i4b) :: M, Nsteps, Nplt, ntrial
+real(dp), dimension(:), allocatable :: lin,f0,f1,f2,f3,e,e2
+real(dp), dimension(:), allocatable :: f0dum,f1dum,f2dum,f3dum,edum,e2dum
 
 interface
 	SUBROUTINE ksFJ(bc,fvec,fjac,T,kappa)

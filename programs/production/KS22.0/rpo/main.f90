@@ -62,12 +62,9 @@ close(21)
 
 allocate(v(d),vdum(d),bc(d),q(d))
 allocate(a(d/2+1),adum(d/2+1),ai(d/2+1),af(d/2+1))
-!allocate(aIn(d/2))
-! ! ! allocate(lin(d/2+1),f0(d/2+1),f1(d/2+1),f2(d/2+1),f3(d/2+1),e(d/2+1),e2(d/2+1))
-! ! ! allocate(f0dum(d/2+1),f1dum(d/2+1),f2dum(d/2+1),f3dum(d/2+1),edum(d/2+1),e2dum(d/2+1))
+allocate(lin(d/2+1),f0(d/2+1),f1(d/2+1),f2(d/2+1),f3(d/2+1),e(d/2+1),e2(d/2+1))
+allocate(f0dum(d/2+1),f1dum(d/2+1),f2dum(d/2+1),f3dum(d/2+1),edum(d/2+1),e2dum(d/2+1))
 allocate(wR(d),wI(d))
-
-!aIn=0.0_dp
 
 open(19,file=trim(wd)//'/rpoGuess.dat')
  
