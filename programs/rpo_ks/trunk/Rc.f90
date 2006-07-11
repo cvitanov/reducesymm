@@ -15,6 +15,8 @@ integer(i4b):: k,dum
 
 dum=assert_eq(dmn,size(Rc_M),"Rc_M")
 
+Rc_M=(0.0_dp,0.0_dp)
+
 do k=1,dmn
 	Rc_M(k)=cdExp(ii*Real(k-1,dp)*w)
 end do
@@ -38,6 +40,8 @@ real(dpc), intent(in) :: w
 integer(i4b):: k,dum
 
 dum=assert_eq(dmn,size(Rc_a),size(a),"Rc_a")
+
+Rc_a=(0.0_dp,0.0_dp)
 
 do k=1,dmn
 	Rc_a(k)=cdExp(ii*Real(k-1,dp)*w)*a(k)
