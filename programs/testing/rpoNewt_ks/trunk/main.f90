@@ -15,7 +15,6 @@ include "fftw3.f"
 real(dp), dimension(:), allocatable :: v,vdum, bc
 real(dp), dimension(:), allocatable :: wR,wI
 complex(dpc), dimension(:),allocatable :: a,adum
-real(dp), dimension(:), allocatable :: aIn
 complex(dpc), dimension(:), allocatable :: ai,af
 integer(i8b) :: invplan, plan ! needed by fftw3
 integer(i4b) :: d, k,i, sdim
@@ -62,12 +61,9 @@ close(21)
 
 allocate(v(d),vdum(d),bc(d))
 allocate(a(d/2+1),adum(d/2+1),ai(d/2+1),af(d/2+1))
-allocate(aIn(d/2))
 allocate(lin(d/2+1),f0(d/2+1),f1(d/2+1),f2(d/2+1),f3(d/2+1),e(d/2+1),e2(d/2+1))
 allocate(f0dum(d/2+1),f1dum(d/2+1),f2dum(d/2+1),f3dum(d/2+1),edum(d/2+1),e2dum(d/2+1))
 allocate(wR(d),wI(d))
-
-aIn=0.0_dp
 
 open(19,file=trim(wd)//'/rpoGuess.dat')
  
@@ -82,9 +78,6 @@ open(20,file=trim(wd)//'/periodsGuess.dat')
  
 close(20)
 
-ti=0.0_dp
-tf=T
-
 call dfftw_plan_dft_r2c_1d(plan,d,v,a,FFTW_ESTIMATE)
 call dfftw_execute(plan)
 call dfftw_destroy_plan(plan)
@@ -92,16 +85,6 @@ a=a/size(v)
 
 bc(1:d/2)=real(a(2:size(a)))
 bc(d/2+1:d)= aimag(a(2:size(a)))
-
-h=abs(tf-ti)/Nsteps
-
-h2=h/2.0_dp
-
-call SetLin_KS(lin)
-
-call etdrk4DiagPrefactors(lin,h,R,M,f0,f1,f2,f3,e,e2)
-call etdrk4DiagPrefactors(lin,h2,R,M,f0dum,f1dum,f2dum,f3dum,edum,e2dum)
-
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 call mnewtRPO(Ntrial,bc,tolbc,tolf,T,kappa,ksFJ)
@@ -116,6 +99,13 @@ close(27)
 
 if ( newton_condition_met .ne. 0) then
 	if ( newton_condition_met .eq. 2) then
+		ti=0.0_dp
+		tf=T
+		h=abs(tf-ti)/Nsteps
+		h2=h/2.0_dp
+		call SetLin_KS(lin)
+		call etdrk4DiagPrefactors(lin,h,R,M,f0,f1,f2,f3,e,e2)
+		call etdrk4DiagPrefactors(lin,h2,R,M,f0dum,f1dum,f2dum,f3dum,edum,e2dum)
 		ti=0.0_dp
 		ai=(0.0_dp,0.0_dp)
 		ai(2:size(a))=bc(1:size(bc)/2)+ii*bc(size(bc)/2+1:size(bc))
