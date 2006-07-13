@@ -19,12 +19,24 @@
 	REAL(DP) :: d
 	REAL(DP), DIMENSION(size(x)) :: fvec,p
 	REAL(DP), DIMENSION(size(x),size(x)) :: fjac
+	real(dp) :: sumx,sumf
 	do  i=1,ntrial
 		call usrfun(x,fvec,fjac)
-		if (sum(abs(fvec)) <= tolf) RETURN
+		sumf=sum(abs(fvec))
+		if ( sumf <= tolf) then
+			print *,"Condition for fvec met, with fvec=",sumf
+			newton_condition_met=1
+			RETURN
+		endif
 		p=-fvec
 		call la_gesv(fjac,p)
 		x=x+p
-		if (sum(abs(p)) <= tolx) RETURN
+		sumx=sum(abs(p))
+		print *,"Delta x",sumx
+		if (sum(abs(p)) <= tolx) then 
+			print *,"Condition for tolx met, with tolx=",sumx
+			newton_condition_met=2
+			RETURN
+		end if
 	end do
 	END SUBROUTINE mnewt
