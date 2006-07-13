@@ -53,4 +53,12 @@ interface
 	end function
 end interface
 
+interface
+	logical function SelectSmallEig(wR_j,wI_j)
+		use nrtype
+		implicit none
+		real(dp), INTENT(IN) :: wR_j,wI_j
+	end function
+end interface
+
 END MODULE

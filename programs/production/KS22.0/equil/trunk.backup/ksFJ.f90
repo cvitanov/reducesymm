@@ -24,10 +24,14 @@ complex(dpc), dimension(size(bc)/2+1) :: adum
 complex(dpc), dimension(size(bc)/2+1) :: N_adum
 complex(dpc), dimension(size(bc)/2) :: fvec_c !, fvecA
 real(dpc), dimension(d/2,d/2):: jcc, jbb, jbc, jcb
-integer(i4b):: ndum,k ,j,m
+integer(i4b):: ndum,k,j,m
 real(dp), dimension(size(bc)) :: v 
 integer(i8b) :: invplan, plan ! needed by fftw3
 real(dp), dimension(size(bc)/2) :: q,lin
+real(dp), dimension(size(fjac,1)):: wR,wI
+complex(dpc), dimension(size(fjac,1)) :: W
+complex(dpc), dimension(size(fjac,1),size(fjac,1)) :: VL, VR
+integer(i4b) :: INFO
 
 ndum=assert_eq(d,size(bc),size(fvec),'SetNlin1')
 ndum=assert_eq(ndum,size(fjac,1),size(fjac,2),'SetNlin2')
@@ -46,28 +50,6 @@ do k=1,d/2
 	lin(k) = (1-(q(k))**2)*(q(k))**2
         fvec_c(k) = lin(k)*a(k) + N_adum(k+1)
 end do
-
-
-! do k=1,d/2 
-! 	q(k)=k/L
-! 	lin(k) = (1-(q(k))**2)*(q(k))**2
-! 	!real part of derivative
-! 	fvecA(k) = lin(k)*real(a(k))
-! 	do m=1,k-1
-! 		fvecA(k)=fvecA(k)-q(k)*(aimag(a(m))*real(a(k-m))+real(a(m))*aimag(a(k-m)))
-! 	enddo
-! 	do m=1,d/2-k
-! 		fvecA(k)=fvecA(k)-2*q(k)*(-aimag(a(m))*real(a(k+m))+real(a(m))*aimag(a(k+m)))
-! 	enddo
-! 	!imaginary part of derivative
-! 	fvecA(k) = fvecA(k)+ii*lin(k)*aimag(a(k))
-! 	do m=1,k-1
-! 		fvecA(k)=fvecA(k)-ii*q(k)*(aimag(a(m))*aimag(a(k-m))-real(a(m))*real(a(k-m)))
-! 	enddo
-! 	do m=1,d/2-k
-! 		fvecA(k)=fvecA(k)+ii*2*q(k)*(aimag(a(m))*aimag(a(k+m))+real(a(m))*real(a(k+m)))
-! 	enddo
-! end do
 
 
 fvec(1:d/2)=real(fvec_c)
@@ -138,7 +120,5 @@ fjac(1:d/2,1:d/2)=jbb
 fjac(1:d/2,d/2+1:d)=jbc
 fjac(d/2+1:d,1:d/2)=jcb
 fjac(d/2+1:d,d/2+1:d)=jcc
-
-
 
 END SUBROUTINE

@@ -1,5 +1,6 @@
 	SUBROUTINE mnewt(ntrial,x,tolx,tolf,usrfun)
 	USE nrtype
+	use ifc_newt
 	use la_precision, only: wp => dp
 	use f95_lapack, only: LA_GESV
 	IMPLICIT NONE

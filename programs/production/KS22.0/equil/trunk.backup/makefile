@@ -1,7 +1,7 @@
 # command line compiler options can be passed in CFLAGS
 
 # Choose compiler
-OBJECTS = parameters.o INTtoCHAR.o ksEquil.o ksFJ.o SetNlin_KS.o
+OBJECTS = parameters.o ksEquil.o ksFJ.o SetNlin_KS.o 
 # Set the outputfile
 TARGET = ks
 # Where to find user libraries:
