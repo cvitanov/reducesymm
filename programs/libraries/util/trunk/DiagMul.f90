@@ -4,8 +4,8 @@ use nrtype
 
 implicit none
 
-real(dp), dimension(N), intent(in) :: v
-complex(dpc), dimension(N,N), intent(in) :: M
+real(dp), dimension(:), intent(in) :: v
+complex(dpc), dimension(:,:), intent(in) :: M
 integer(i4b), intent(in) :: N
 complex(dpc), dimension(N,N) :: DiagMul_rc
 ! Performs matrix multiplication of a diagonal NxN real matrix whose
@@ -32,8 +32,8 @@ use nrtype
 
 implicit none
 
-complex(dpc), dimension(N), intent(in) :: v
-complex(dpc), dimension(N,N), intent(in) :: M
+complex(dpc), dimension(:), intent(in) :: v
+complex(dpc), dimension(:,:), intent(in) :: M
 integer(i4b), intent(in) :: N
 complex(dpc), dimension(N,N) :: DiagMul_cc
 ! Performs matrix multiplication of a diagonal NxN real matrix whose
@@ -51,3 +51,31 @@ do i=1,size(v)
 end do
 
 end function DiagMul_cc
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+function DiagMul_rr(v,M,N)
+
+use nrtype
+
+implicit none
+
+real(dp), dimension(:), intent(in) :: v
+real(dp), dimension(:,:), intent(in) :: M
+integer(i4b), intent(in) :: N
+real(dp), dimension(N,N) :: DiagMul_rr
+! Performs matrix multiplication of a diagonal NxN real matrix whose
+! diagonal is stored in vector v with matrix M. Thus the result
+! is diag(v).M .
+! v: real
+! M: real
+
+integer(i4b) :: i
+
+do i=1,size(v)
+	DiagMul_rr(i,:) = v(i)*M(i,:)
+end do
+
+end function DiagMul_rr
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

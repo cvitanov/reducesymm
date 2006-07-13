@@ -6,7 +6,7 @@ INTERFACE
 		IMPLICIT NONE
 		INTEGER(I4B) :: N
 		REAL(DP) :: UnitMatrix(N,N)
-	END FUNCTION
+	END FUNCTION UnitMatrix
 END INTERFACE
 
 
@@ -14,21 +14,43 @@ interface DiagMul
 	function DiagMul_rc(v,M,N)
 		use nrtype
 		implicit none
-		real(dp), dimension(N), intent(in) :: v
-		complex(dpc), dimension(N,N), intent(in) :: M
+		real(dp), dimension(:), intent(in) :: v
+		complex(dpc), dimension(:,:), intent(in) :: M
 		integer(i4b), intent(in) :: N
 		complex(dpc), dimension(N,N) :: DiagMul_rc
 	end function DiagMul_rc
 	function DiagMul_cc(v,M,N)
 		use nrtype
 		implicit none
-		complex(dpc), dimension(N), intent(in) :: v
-		complex(dpc), dimension(N,N), intent(in) :: M
+		complex(dpc), dimension(:), intent(in) :: v
+		complex(dpc), dimension(:,:), intent(in) :: M
 		integer(i4b), intent(in) :: N
 		complex(dpc), dimension(N,N) :: DiagMul_cc
 	end function DiagMul_cc
+	function DiagMul_rr(v,M,N)
+		use nrtype
+		implicit none
+		real(dp), dimension(:), intent(in) :: v
+		real(dp), dimension(:,:), intent(in) :: M
+		integer(i4b), intent(in) :: N
+		real(dp), dimension(N,N) :: DiagMul_rr
+	end function DiagMul_rr
 end interface 
 
+interface
+	subroutine donothing(tmp)
+		use nrtype
+		implicit none
+		real(dpc), intent(inout):: tmp
+	end subroutine
+end interface
 
+interface
+	logical function SelectLargeEig(wR_j,wI_j)
+		use nrtype
+		implicit none
+		real(dp), INTENT(IN) :: wR_j,wI_j
+	end function
+end interface
 
 END MODULE

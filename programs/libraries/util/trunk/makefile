@@ -1,10 +1,5 @@
-# Makefile to produce a static library and modules related to integration of ODE's.
-# by vasimos
-
-# Choose compiler:
-OPTFULL = -O2
-TARGET = libutil
-OBJ = ifc_util.o UnitMatrix.o DiagMul.o
+TARGET = libutils
+OBJ = ifc_util.o DiagMul.o DoNothing.o SelectLargeEig.o UnitMatrix.o
 srcMod = ifc_util.f90 
 targetMod = ifc_util.mod
 # Where to find user libraries:
@@ -13,19 +8,19 @@ userLibPATH = /home/vasimos/lib-$(COMP)
 userModPATH = $(userLibPATH)/modules
 # Names of user libraries
 nrLIB = nr
-utilLIB=util
+utilLIB=utils
 
 $(TARGET): $(OBJ) $(targetMod) uninstall
 	ar cr $(TARGET).a $(OBJ)
 	ranlib $(TARGET).a
 
 %.o: %.f90
-	$(COMP) -c $(OPTFULL) -o $@ -I$(userModPATH) $< 
+	$(COMP) -c $(CFLAGS) -o $@ -I$(userModPATH) $< 
 
 $(OBJ): $(targetMod)
 
 $(targetMod): $(srcMod)
-	$(COMP) -c $(OPTFULL) -I$(userModPATH) $(srcMod)  
+	$(COMP) -c $(CFLAGS) -I$(userModPATH) $(srcMod)  
 
 
 install:
