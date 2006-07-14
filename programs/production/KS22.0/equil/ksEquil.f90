@@ -1,7 +1,7 @@
 Program ksEquil
 
 use nrtype
-use parameters
+use ifc_equil_ks
 use ifc_newt
 use ifc_util
 use f95_lapack, only: LA_GEESX
@@ -19,17 +19,6 @@ real(dp), dimension(:,:),allocatable :: fjac
 real(dp), dimension(:),allocatable :: ar,ai
 integer(i8b) :: invplan, plan ! needed by fftw3
 integer(i4b) :: k,i,sdim
-!!!!
-interface
-	subroutine ksFJ(bc,fvec,fjac)
-		USE nrtype
-		implicit none
-		real(dp), DIMENSION(:), INTENT(IN) :: bc
-		real(dp), DIMENSION(:), INTENT(OUT) :: fvec
-		real(dp), DIMENSION(:,:), INTENT(OUT) :: fjac
-	end subroutine
-end interface
-!!!!
 character*64 :: wd
 integer(i4b) :: nargs
 logical :: logicdum
@@ -93,20 +82,11 @@ do i=1,sdim
 enddo
 close(35)
 
-open(23,file=trim(wd)//'/equilR.dat')
+open(23,file=trim(wd)//'/equilPS.dat')
 
-write(23,*) 0.0_dp
+write(23,"(2F30.18)") 0.0_dp+ii*0.0_dp
 do k=1,d/2
-	write(23,*) bc(k)
-end do
-
-close(23)
-
-open(25,file=trim(wd)//'/equilI.dat')
-
-write(25,*) 0.0_dp
-do k=d/2+1,d
-	write(25,*) bc(k)
+	write(23,"(2F30.18)") bc(k)+ii*bc(d/2+k)
 end do
 
 close(23)
@@ -120,7 +100,7 @@ call dfftw_plan_dft_c2r_1d(invplan,d,a,v,FFTW_ESTIMATE)
 call dfftw_execute(invplan)
 call dfftw_destroy_plan(invplan)
 
-open(24,file=trim(wd)//'/Uequil.dat')
+open(24,file=trim(wd)//'/equilU.dat')
 
 write(24,221) v
 
