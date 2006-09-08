@@ -5,15 +5,32 @@
 % $Author$ $Date$
 
 
-% \section{Newton's method for determining \reqva}
-% 
-%  Our task is to find \reqva\ solutions of \refeq{eq:KS}.
-% Although one can easilly see that this problem can be reduced to that of
-%  finding periodic orbits of a 4-dimensional ODE, here we prefer to consider our system in phase space and search for solutions of
-%  \beq
-% 	\dot{b}_k=\dot{c}_k=0\,,
-%  \eeq
-%  for every $k$. The reason to do this is just getting experience before pursuing the more difficult task of locating POs and RPOs. 
+\section{Numerical searches for \reqva\ and \rpo s}
+
+\subsection{Newton's method for determining \reqva}
+ 
+  Our first task is to determine all \eqva\
+and  \reqva\ of the \KS\ system for a given fixed domain size
+$L$.
+This problem is equivalent to
+finding periodic orbits of a 3-$d$ ODE system \refeq{eq:3dks} together
+with determining appropriate value of the integration constant $c$.
+It turns out that the  periodic solutions of  \refeq{eq:3dks} and
+often difficult to find by the Newton method. 
+In \refrefs{CvitLanCrete02,lanVar1,Lan:Thesis,LanCvi06} they are
+determined by a the variational {\descent} method.
+
+In the current investigation
+we prefer to search for \eqv\ solutions in
+the Fourier space
+\beq
+ 	\dot{b}_k=\dot{c}_k=0
+\,.
+\eeq
+This is inefficient comapred to the above 3-$d$ ODE methods, but
+it serves as a warmup for, and the first test of methods that we then use
+to locate \po s and \rpo s.
+
 %  Expanding $\dot{b}_k(a)$ and $\dot{c}_k(a)$ around our initial guess $a_o$ and demanding that they satisfy the equilibrium 
 %  condition, we get
 %  \bea
@@ -43,8 +60,37 @@
 % as an initial guess yields  an approximation to the solution of the system.
 %  
 
+%PC incorporated JFG Sep 7 2006 remark:
+Additional computational savings can be achieved
+for the \KS\ solutions that are restricted
+to the antisymmetric subspace of \refsect{s:AntisymmSubsp}.
+For the 3-$d$ ODE periodic solution this symmetry reduces
+the length of the loop by factor $1/2$. In the Fourier representation
+the continuous translation symmetry is eliminated by
+setting  the coefficients to purely imaginary values $i a_k$,
+thus reducing the dimensionality of the (truncated) phase space
+by factor 2. In fluid dynamics such savings are very significant, 
+and are enforced whenever possible; for small cell \KS\ systems
+studied here they are not so important, and we search for such
+\eqva\ in the full space, and use the size of the (symmetry violating)
+real Fourier coefficients as an
+additional test of the accuracy of our Newton searches.
+  
+% JFG Sep 7 2006: Do you then
+% enforce real-valuedness in your Newton-descent via the constraint
+% $a_{-k} = a^*{k}$ (the conjugates that then appear in the equations
+% are nondifferentiable which is a big pain) or do you let the solutions
+% go complex and then choose the real part at the end? 
+% The cost of that
+% is that the dimension of your search space is twice as big as it needs 
+% to be. That's an unacceptable cost in fluids; perhaps in \KS\ it's not. 
+% In any case, I think you should (1) either clarify that you're no 
+% longer working in the antisymmetric subspace or eliminate its mention 
+% earlier, and (2) explain how you ultimately arrive at real-valued 
+% solutions.
 
-\subsection{Implementing Newton's method  for RPOs}
+
+\subsection{Implementing Newton's method  for \rpo s}
 \label{sec:NewtRPOs}
 
 The relative periodic condition
@@ -70,7 +116,7 @@ angle $-k\, d /\tildeL$ with respect to $a_k(t)$. In matrix notation, we write \
 \eeq
 where we have defined
 \beq
-	\mathbf{g}(d) \equiv Diag[e^{ik\, d/\tildeL}]\,.
+	\mathbf{g}(d) \equiv \mbox{Diag}[e^{ik\, d/\tildeL}]\,.
 \eeq
 %We notice that $R(\kappa)$ is not a rotation operator..
 
@@ -134,7 +180,8 @@ $\delta a=a^*-a$, $\delta T=T^*-T$ and $\delta d=d^*-d$, we get
 % On the other hand, we have
 % \bea
 % 	R(\kappa'+\Delta\kappa) & = & R(\kappa')R(\Delta\kappa) \continue
-% 				& \simeq & R(\kappa')(\mathbf{1}+iDiag[k]\Delta\kappa/\tildeL)\,.
+% 				& \simeq & R(\kappa')
+			(\mathbf{1}+i\mbox{Diag}[k]\Delta\kappa/\tildeL)\,.
 % 	\label{eq:TaylorR}	
 % \eea
 % 
@@ -187,18 +234,3 @@ can be compactly represented in a single matrix equation:
 \eeq
 where $v^\dagger$ denotes the adjoint of $v$. 
 
-\JFG{Back around \ref{expan} in fourier.tex you mentioned you set the 
-coefficients to purely imaginary values $i a_k$ and fixed $a_{-k}= -
-a_k$ to assure real-valuedness and to isolate antisymmetric solutions. 
-This eliminates continuous translation symmetries. Presumably in this
-section, since you're looking for RPOs, this is relaxed. Do you then
-enforce real-valuedness in your Newton-descent via the constraint
-$a_{-k} = a^*{k}$ (the conjugates that then appear in the equations
-are nondifferentiable which is a big pain) or do you let the solutions
-go complex and then choose the real part at the end? The cost of that
-is that the dimension of your search space is twice as big as it needs 
-to be. That's an unacceptable cost in fluids; perhaps in KS it's not. 
-In any case, I think you should (1) either clarify that you're no 
-longer working in the antisymmetric subspace or eliminate its mention 
-earlier, and (2) explain how you ultimately arrive at real-valued 
-solutions.}
