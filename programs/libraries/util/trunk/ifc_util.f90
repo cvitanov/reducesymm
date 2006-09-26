@@ -61,4 +61,17 @@ interface
 	end function
 end interface
 
+interface sort_pick
+	SUBROUTINE sort_pick_r(arr)
+		USE nrtype
+		IMPLICIT NONE
+		REAL(DP), DIMENSION(:), INTENT(INOUT) :: arr
+	END SUBROUTINE sort_pick_r
+	SUBROUTINE sort_pick_Re(arr)
+		USE nrtype
+		IMPLICIT NONE
+		complex(dpc), DIMENSION(:), INTENT(INOUT) :: arr
+	END SUBROUTINE sort_pick_Re
+end interface
+
 END MODULE

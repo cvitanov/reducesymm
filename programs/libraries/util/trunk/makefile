@@ -1,5 +1,5 @@
 TARGET = libutils
-OBJ = ifc_util.o DiagMul.o DoNothing.o SelectLargeEig.o SelectSmallEig.o UnitMatrix.o
+OBJ = ifc_util.o DiagMul.o DoNothing.o SelectLargeEig.o SelectSmallEig.o sort_pick.o UnitMatrix.o
 srcMod = ifc_util.f90 
 targetMod = ifc_util.mod
 # Where to find user libraries:

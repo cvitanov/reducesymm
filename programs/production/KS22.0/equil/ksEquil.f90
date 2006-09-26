@@ -12,7 +12,7 @@ implicit none
 include "fftw3.f"
 
 real(dp), dimension(:),allocatable :: v
-complex(dpc), dimension(:),allocatable :: a,adum
+complex(dpc), dimension(:),allocatable :: a,adum,eig
 real(dp), dimension(:), allocatable :: wR,wI
 real(dp), dimension(:),allocatable :: bc,fvec
 real(dp), dimension(:,:),allocatable :: fjac
@@ -75,10 +75,13 @@ call ksFJ(bc,fvec,fjac)
 wR=0.0_dp
 wI=0.0_dp
 call la_geesx(fjac,wR,wI,select=SelectSmallEig,sdim=sdim)
-print *,"eig", wR(1:sdim)+ii*wI(1:sdim)
+allocate(eig(sdim))
+eig=wR(1:sdim)+ii*wI(1:sdim)
+call sort_pick(eig)
+print *,"eig", eig
 open(35,file=trim(wd)//'/Jeig.dat')
 do i=1,sdim
-	write(35,"(2F30.18)") wR(i)+ii*wI(i)
+	write(35,"(2F30.18)") eig(i)
 enddo
 close(35)
 
