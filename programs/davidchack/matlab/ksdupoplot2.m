@@ -2,7 +2,7 @@ function status = ksdupoplot2(t, a, flag);
 % 2 - with shift  
 
 global TT A F FT NFEVAL PHASE DD
-persistent hp1 hp2 hp3 hp4 hp5 nstp nitr x k Ap ddo
+persistent hp1 hp2 hp3 hp4 hp5 nstp nitr x k Ap ddo flg
 
   status = 0;
   if isempty(flag),
@@ -26,8 +26,11 @@ persistent hp1 hp2 hp3 hp4 hp5 nstp nitr x k Ap ddo
     disp(sprintf('%5d %5d %10.6f %10.6f %10.6f %15.6e %12.3e', nstp, ...
          NFEVAL, t, TT(end), PHASE, dd(end), dstp));  ddo = dd(end);
     if dd(end) > 1.2, status = 1; end
-    if nstp >= nitr, nitr = nitr + input('NITR = '); else, drawnow; end
-%    if nstp >= nitr | dstp < 0, status = 1; end
+    if nstp >= nitr | (flg == 1 & dstp < 0),
+      moreitr = input('NITR = ');
+      if moreitr < 0, nitr = nstp - moreitr;  flg = 1;
+      else, nitr = nstp + moreitr; flg = 0; end
+    else, drawnow; end
     if nstp >= nitr, status = 1; end
   else
     switch(flag),

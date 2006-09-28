@@ -196,8 +196,8 @@ end
 %% Locating steady states of ksfm using fsolve
   clear;  load ks22uss3a;  a0 = [a0; zeros(32,1)];
   
-  d = 22;  N = 64;  x = (1:N)'./N*d;  h = 0.25;  tpre = 10;  t0 = 50;
-%  a0 = zeros(N-2,1);  a0(5) = 1; %randn('seed',12340019);  a0(1:8) = 0.3*randn(8,1);
+  d = 22;  N = 32;  x = (1:N)'./N*d;  h = 0.25;  tpre = 10;  t0 = 50;
+  a0 = zeros(N-2,1);  a0(2) = 1; %randn('seed',12340019);  a0(1:8) = 0.3*randn(8,1);
   [tt,aa] = ksfmedt(d, tpre, a0, h, 1);
   nap = zeros(size(aa,2),1);
   for ii = 1:size(aa,2), nap(ii) = norm(ksfm(t0,aa(:,ii),d)); end,
@@ -243,7 +243,7 @@ end
   
 %%  Stability of the steady states and traveling wave
   clear; 
-  load ks22uss3b; c = 0;
+  load ks22uss2b; c = 0;
 %   load ks22uss3a; c = 0;
 %  c = -c;  a0(1:2:end) = -a0(1:2:end);
 %  a0 = [a0; zeros(32,1)];
@@ -425,68 +425,74 @@ end
       title(['Time: ' num2str(h*np*(ii-1))]); grid on; pause; end, end
 
 %% Locate UQOs of ksfmedt
-  clear;  d = 22;  N = 32;  h = 0.25;
+  clear;  d = 22;  N = 32;  h = 0.25;  
   switch 2,  %%% Switch for seed selection
   case 1,  %%% Find close returns with a shift
-    x = d.*(1:N)'./N;  np = 6;  tpre = 500;  tb = 10;  te = 150;
+    x = d.*(1:N)'./N;  np = 6;  tpre = 500;  tb = 180;  te = 200;  iav = 4;
     if 0,
-      a0 = zeros(N-2,1); randn('seed',12340002);  a0(1:8) = 0.2*randn(8,1);
+      a0 = zeros(N-2,1); randn('seed',22000004);  a0(1:8) = 0.2*randn(8,1);
     else
 %      a0 = 0.1*ones(N-2,1); end,
 %      load ks22utw1a; a0(1:2:end) = -a0(1:2:end);
-      load ks22uqo074a;
-%      load ks22seed47a;
+%      load ks22seed074c;
+      load ks22uqo008a;
+%      load ks50rpo070a;
+%      load ks22uss1a;
+%      load ks22seed2w3w; a0 = a1; clear a1;
     end
     [tt, aa, a0p, ap] = ksfmedt(d, tpre, a0, h, np);  na = size(aa,2);
     v = aa(1:2:end,:) + 1i*aa(2:2:end,:);
     v = [zeros(1,size(aa,2)); v; zeros(1,size(aa,2)); flipud(conj(v))];
-    u = real(fft(v)); 
+    u = real(fft(v));
     figure(1); set(gcf,'pos',[5 35 250 910]); clf; 
     pcolor(x,tt,u'); shading flat; tall(1.1); hold on;
-    hp1 = plot(x([1 end]),tt([1 1]),'k-');
+    hp1 = plot(x([1 end]),tt([1 1]),'k-');  
     figure(2); set(gcf,'pos',[835 525 560 420]); clf; 
     for ib = 0:1:200,
-      nb = min(round(tb/(h*np))+ib, length(tt));  
+      nb = min(round(tb/(h*np))+ib, length(tt));
       ne = min(round(te/(h*np))+nb+1, length(tt));
       set(hp1,'xdata',[x([1 end]);NaN;x([end 1])],'ydata',[tt([nb nb]) NaN tt([ne ne])]);
       a0 = aa(:,nb);  phase = (-0.5:0.01:0.49)'*d;
-      v = aa(1:2:end,nb:ne)+1i*aa(2:2:end,nb:ne);  k = (1:N/2-1)';
-      fac = exp((-2i*pi./d).*k*phase');  cr = zeros(size(fac,2),size(v,2));
-      for ii = 1:size(fac,2),
-        cr(ii,:) = sqrt(sum(abs(v.*repmat(fac(:,ii),1,size(v,2)) - ...
-          repmat(v(:,1),1,size(v,2))).^2)); end
+      v = aa(1:2:end,nb-iav:ne+iav)+1i*aa(2:2:end,nb-iav:ne+iav);  k = (1:N/2-1)';
+      fac = exp((-2i*pi./d).*k*phase');  cr = zeros(size(fac,2),size(v,2)-2*iav);
+      for ii = 1:size(fac,2), for iia = -iav:2:iav,
+        cr(ii,:) = cr(ii,:) + ...
+          sqrt(sum(abs(v(:,iia+iav+1:end+iia-iav).*repmat(fac(:,ii),1,size(v,2)-2*iav) - ...
+                       repmat(v(:,iia+iav+1),1,size(v,2)-2*iav)).^2))./(iav+1); end, end
       contourf(tt(nb:ne)-tt(nb),phase,cr,[0:.1:1]); shading flat;
-      [tend, ph, but] = ginput(1);  disp([ib but]); 
+      [tend, ph, but] = ginput(1);  hold on; 
+      plot(tend,ph,'k.','markersize',8); disp([ib but]); hold off;
       if but == 32, break; end, end
   case 2,  %%% Load seed from a file
-    load ks22seed115b;%  tend = 68;
-%    load ks22uqo108a;
+%    load ks50rpo026b; %tend = 167.8; %ph = 5.4988;
+%    load ks22uqo078c;
 %    load ks22uss0a;
+    load ks22seed153b;
   end;
-  switch 2, %%% Switch for method selection
+  switch 1, %%% Switch for method selection
   case 1,   %%% Find UQOs by associated flow
-    alpha = [1e3 1e3];
+    alpha = [1e0 1e0];
     for ic = 1:20,
-      switch 1,
+      switch 2,
       case 0,  C = eye(N-2);
-      case 1, 
-        [tt, aa, da] = ksfmjedt(d, tend, a0, h);
-        ek = exp((-2i*pi/d).*ph.*(1:N/2-1)');
-        ap = ek.*(aa(1:2:end,end)+1i*aa(2:2:end,end));
-        disp(norm(ap-(a0(1:2:end)+1i*a0(2:2:end))));
-        cda = repmat(ek,1,N-2).*(da(1:2:end,:)+1i*da(2:2:end,:));
-        da(1:2:end,:) = real(cda); da(2:2:end,:) = imag(cda); 
-        [u,C] = schur(da); disp(diag(C(1:6,1:6))');
-        [u,C,v] = svd(da-eye(N-2));  C = -v*u';
+      case 1, format short g;
+        C = eye(N); [g, jac] = ksfmf5(0,[a0;tend;ph],d,h,C,alpha);
+        disp(['|g|=' num2str(norm(g(1:end-2)))]);  de = eig(jac(1:end-2,1:end-2)+eye(N-2)); 
+        [se,ie]=sort(abs(de),'descend');  disp(de(ie(1:10)));
+        [u,C,v] = svd(jac(1:end-2,1:end-2)); C = blkdiag(-v*u',eye(2)); format short;
+      case 2, format short g;
+        C = eye(N); [g, jac] = ksfmf5(0,[a0;tend;ph],d,h,C,alpha);
+        disp(['|g|=' num2str(norm(g(1:end-2)))]);  de = eig(jac(1:end-2,1:end-2)+eye(N-2)); 
+        [se,ie]=sort(abs(de),'descend');  disp(de(ie(1:10)));
+        [u,C,v] = svd(jac);  C = -v*u';  format short;
       end,
-      options = odeset('abstol',1e-7,'reltol',1e-8,'outputfcn',@ksdupoplot2);
-      [s,y] = ode15s(@(t,a)ksfmf5new(t,a,d,h,C,alpha), [0 100000], ...
-                     [a0; tend; ph], options);
+      options = odeset('abstol',1e-9,'reltol',1e-10,'outputfcn',@ksdupoplot4);
+      [s,y] = ode15s(@(t,a)ksfmf5(t,a,d,h,C,alpha), [0 100000], [a0; tend; ph], options);
       a0 = y(end-1,1:end-2)'; tend = y(end-1,end-1), ph = y(end-1,end),
       but = input('Stop? ','s');  if but == 'y', return; end, end
   case 2,   %%% Find UQOs using fsolve
-    C = eye(N-2);  alpha = [1 1];  te = 0;
-    options = optimset('Display','off','outputfcn',@ksoutfun,'MaxIter',2000, ...
+    C = eye(N-2);  alpha = [1e0 1e0];  te = 0;
+    options = optimset('Display','off','outputfcn',@ksoutfun2,'MaxIter',5000, ...
               'MaxFunEvals',20000,'Jacobian','on','NonlEqnAlgorithm','lm','TolFun',1e-10);
     [upo,fval,eflag] = fsolve(@(a)ksfmf5new(te,a,d,h,C,alpha),[a0;tend;ph],options);
     a0 = upo(1:end-2); tend = upo(end-1), ph = upo(end),
@@ -499,7 +505,7 @@ end
 
 
 %% List all located UPOs and UQOs
-  clear;  lst = dir('ks22uqo10*.mat');  nst = length(lst);
+  clear;  lst = dir('ks22uqo078*.mat');  nst = length(lst);
   d = 22;  N = 32;  h = 0.25;  C = eye(N-2);  alpha = [1 1];
   for ist = 1:nst,
     load(lst(ist).name);  
@@ -511,14 +517,15 @@ end
 
 %% Plot all located UPOs and UQOs
   clear;  name = [
+  'ks22uqo008a.mat';%   7.889874   5.812044   9.647e-016  <-- RE ?
   'ks22uqo016a.mat';%  16.316170   2.863787   1.726e-014
   'ks22uqo020a.mat';%  20.506740   0.000000   1.844e-007
   'ks22uqo033b.mat';%  32.806180  10.956763   9.982e-014
   'ks22uqo034a.mat';%  33.501034   4.045869   2.419e-013
   'ks22uqo035a.mat';%  34.639120   9.599483   1.825e-014
-  'ks22uqo036a.mat';%  36.016825   3.911040   3.362e-011  <--
+  'ks22uqo036a.mat';%  36.016825   3.911040   3.362e-011
   
-  'ks22uqo036d.mat';%  36.205721   3.813489   1.018e-013  <-- same orbit?
+  'ks22uqo036d.mat';%  36.205721   3.813489   1.018e-013
   'ks22uqo040b.mat';%  39.770736  -1.610607   1.812e-008
   'ks22uqo042a.mat';%  41.507477   6.479327   2.200e-008
   'ks22uqo046b.mat';%  46.052353   7.624041   2.406e-013  
@@ -526,65 +533,87 @@ end
   'ks22uqo047a.mat';%  47.323866   0.339464   8.331e-012
   
   'ks22uqo048a.mat';%  47.639322   5.675918   5.407e-010
+  'ks22uqo054a.mat';%  53.866635  -2.328494   2.062e-013
   'ks22uqo056a.mat';%  55.599640  -5.247831   4.996e-014
+  'ks22uqo060b.mat';%  59.669128   3.979569   4.129e-013
   'ks22uqo060a.mat';%  59.892457  -5.442530   2.973e-012
   'ks22uqo066a.mat';%  65.612385   0.086473   1.671e-014  (33b x 2)
   'ks22uqo067a.mat';%  66.779323   0.000000   1.666e-006
-  'ks22uqo068a.mat';%  67.939003   5.566339   6.073e-014
   
+  'ks22uqo068a.mat';%  67.939003   5.566339   6.073e-014
   'ks22uqo068e.mat';%  68.223923   1.706300   2.994e-008
   'ks22uqo069a.mat';%  68.537305   4.925039   4.496e-014
   'ks22uqo069b.mat';%  69.065162  -9.700812   3.349e-013
   'ks22uqo072a.mat';%  71.678083   5.502827   1.717e-014
-  'ks22uqo074a.mat';%  73.980562   0.678530   8.188e-013
-  'ks22uqo074c.mat';%  74.380749   4.434083   6.562e-009
+  'ks22uqo072b.mat';%  72.411828  -7.626821   2.400e-012
   
+  'ks22uqo074a.mat';%  73.980562   0.678530   8.188e-013  
+  'ks22uqo074c.mat';%  74.380749   4.434083   6.562e-009
+  'ks22uqo075b.mat';%  75.327068  -3.583450   3.522e-013
   'ks22uqo075a.mat';%  75.483577  -6.235556   2.078e-009  
   'ks22uqo077a.mat';%  76.556365  -3.383947   3.993e-009  
-  'ks22uqo077b.mat';%  76.604510  -1.677120   5.781e-010
-  'ks22uqo078a.mat';%  78.194219   4.842480   3.825e-008
-  'ks22uqo079a.mat';%  79.508303   8.872265   4.198e-009
-  'ks22uqo080b.mat';%  80.000539   1.802967   4.775e-013
+  'ks22uqo077c.mat';%  76.604718  -1.677121   1.458e-014
   
+  'ks22uqo078c.mat';%  77.831846 -10.791235   4.383e-014
+  'ks22uqo078a.mat';%  78.194219   4.842480   3.825e-008
+  'ks22uqo079a.mat';%  79.508303   8.872265   4.198e-009  
+  'ks22uqo080b.mat';%  80.000539   1.802967   4.775e-013
   'ks22uqo080a.mat';%  80.253902  -8.305024   1.442e-013  
   'ks22uqo081b.mat';%  80.568032   3.753738   1.477e-013
   'ks22uqo081a.mat';%  80.868624   1.049921   8.927e-009
-  'ks22uqo084a.mat';%  84.086527 -10.061069   2.248e-013  
-  'ks22uqo084b.mat';%  84.439682  -5.512903   3.416e-013
-  'ks22uqo085a.mat';%  84.989461   4.275548   3.647e-010
   
+  'ks22uqo084a.mat';%  84.086527 -10.061069   2.248e-013
+  'ks22uqo084b.mat';%  84.439682  -5.512903   3.416e-013  
+  'ks22uqo085a.mat';%  84.989461   4.275548   3.647e-010
   'ks22uqo086a.mat';%  85.744395   4.680305   4.288e-013  
   'ks22uqo086c.mat';%  85.840717  -5.502822   9.167e-015
-  'ks22uqo086b.mat';%  86.230815 -10.642810   1.816e-008
-  'ks22uqo087a.mat';%  87.236323   0.000000   9.161e-007
+  'ks22uqo086d.mat';%  86.068044  -5.126499   2.367e-014
+  
+  'ks22uqo086b.mat';%  86.230820 -10.642809   6.009e-014
+  'ks22uqo087a.mat';%  87.236323   0.000001   5.367e-014
+  'ks22uqo089b.mat';%  89.397624  -0.472671   1.560e-012
   'ks22uqo089a.mat';%  89.419338  -0.788369   1.031e-007
   'ks22uqo091a.mat';%  91.354619   0.083919   1.993e-008
+  'ks22uqo094a.mat';%  94.045042  -6.395471   1.020e-010
   
   'ks22uqo095a.mat';%  95.252982  -0.000001   1.432e-013
   'ks22uqo096b.mat';%  96.053538  -3.774012   5.968e-013
-  'ks22uqo096a.mat';%  96.421035 -10.911410   9.371e-009  
+  'ks22uqo096a.mat';%  96.421035 -10.911410   9.371e-009
   'ks22uqo098a.mat';%  98.254857  10.847250   4.403e-012
   'ks22uqo098b.mat';%  98.446990  -1.814935   6.338e-012
+  'ks22uqo101a.mat';% 101.181669  -2.794991   8.380e-014
+  
   'ks22uqo102a.mat';% 102.789193  -9.206446   1.026e-008
-
   'ks22uqo103a.mat';% 103.013668   1.006582   3.270e-013
+  'ks22uqo107a.mat';% 107.269635  10.336297   3.588e-010
   'ks22uqo108a.mat';% 108.078928 -10.270938   1.988e-011
   'ks22uqo109b.mat';% 109.115133  -6.089034   4.053e-008
   'ks22uqo109d.mat';% 109.288714   0.184272   3.416e-010
-  'ks22uqo110a.mat';% 109.961306  -5.711897   1.547e-007  
+  
+  'ks22uqo110a.mat';% 109.961306  -5.711897   1.547e-007 
   'ks22uqo110b.mat';% 110.253208   0.790874   1.053e-009
-  
+  'ks22uqo111a.mat';% 111.256292   7.788527   7.935e-013
+  'ks22uqo113b.mat';% 112.684863  -2.182842   1.782e-013
   'ks22uqo113a.mat';% 113.664192  -9.847374   8.846e-014
-  'ks22uqo117a.mat';% 116.905523   6.640941   5.416e-009  
-  'ks22uqo118a.mat';% 117.895472  -7.474551   5.115e-009
-  'ks22uqo125a.mat';% 125.021554   9.062346   1.270e-009
-  'ks22uqo127a.mat';% 127.126195   7.157910   9.227e-013
-  'ks22uqo132b.mat';% 131.981245   1.342006   1.397e-012
+  'ks22uqo117a.mat';% 116.905523   6.640941   5.416e-009
   
+  'ks22uqo118a.mat';% 117.895472  -7.474551   5.115e-009
+  'ks22uqo120a.mat';% 119.556928   8.312556   4.791e-010
+  'ks22uqo125a.mat';% 125.021554   9.062346   1.270e-009  
+  'ks22uqo127a.mat';% 127.126195   7.157910   9.227e-013
+  'ks22uqo127b.mat';% 127.290946   2.031982   7.409e-012
+  'ks22uqo128a.mat';% 127.626882   0.662288   2.362e-012
+  
+  'ks22uqo132b.mat';% 131.981245   1.342006   1.397e-012
   'ks22uqo133a.mat';% 132.696432  -0.015114   7.568e-013
+  'ks22uqo136a.mat';% 135.614655 -10.092283   1.998e-012
   'ks22uqo139a.mat';% 139.219781   5.790933   4.777e-012  
   'ks22uqo140a.mat';% 140.031772   5.136071   5.650e-009
+  'ks22uqo142a.mat';% 142.178064  -3.341685   1.220e-009
+  
   'ks22uqo144a.mat';% 144.306458  -4.708727   2.288e-013  
+  'ks22uqo146a.mat';% 145.647372 -10.635471   6.209e-012
+  'ks22uqo158a.mat';% 158.062421   0.596793   2.928e-010
   'ks22uqo171a.mat';% 170.936876   6.562272   1.063e-009
  ];  save ks22names name;
   nst = size(name,1);
@@ -662,7 +691,6 @@ end
       disp(sprintf('(%15.10f,%9.5f)\n',[abs(edf(1:10)) angle(edf(1:10))]'));
     end
   end
-
 
 %% Plot FMs of RPOs in co-rotating frame
   clear;  d = 22;  N = 32;  x = d.*(-N:N)'./(2*N);  h = 0.25;
@@ -808,3 +836,212 @@ fig1 = figure('PaperPosition',[0.6345 6.345 20.3 15.23],...
   case 3,  [U,S,V] = svd(da-eye(na));  C = eye(na) - 2*U(:,1)*U(:,1)';
   end,
   es = eig(C*(da - eye(na)));  disp(es(1:6));
+  
+%% Stability of equilibria
+  load ks22uss1a;  [h, dh] = ksfm(0, ksfmshift(a0), d);  [vdh, edh] = eig(dh);  edh = diag(edh);
+  [sedh, ie] = sort(real(edh),1,'descend');  e1eig = edh(ie);  e1vec = vdh(:,ie);
+  load ks22uss2a;  [h, dh] = ksfm(0, ksfmshift(a0), d);  [vdh, edh] = eig(dh);  edh = diag(edh);
+  [sedh, ie] = sort(real(edh),1,'descend');  e2eig = edh(ie);  e2vec = vdh(:,ie);
+  load ks22uss3b;  [h, dh] = ksfm(0, ksfmshift(a0), d);  [vdh, edh] = eig(dh);  edh = diag(edh);
+  [sedh, ie] = sort(real(edh),1,'descend');  e3eig = edh(ie);  e3vec = vdh(:,ie);
+  disp(' 1-wave equilibrium  2-wave equilibrium  3-wave equilibrium');
+  disp([e1eig(1:10) e2eig(1:10) e3eig(1:10)]);
+%   disp('1-wave equilibrium');
+%   disp(sprintf(' (%9.5f,%9.5f)  (%7.3f,%7.3f,%7.3f,%7.3f,%7.3f,%7.3f, ... )',...
+%     [real(e1eig(1)); imag(e1eig(1)); real(e1vec(1:6,1))]));
+%   disp(sprintf(' (%9.5f,%9.5f)  (%7.3f,%7.3f,%7.3f,%7.3f,%7.3f,%7.3f, ... )',...
+%     [real(e1eig(2)); imag(e1eig(2)); imag(e1vec(1:6,1))]));
+%   disp(sprintf(' (%9.5f,%9.5f)  (%7.3f,%7.3f,%7.3f,%7.3f,%7.3f,%7.3f, ... )',...
+%     [real(e1eig(3)); imag(e1eig(3)); real(e1vec(1:6,3))]));
+%   disp(sprintf(' (%9.5f,%9.5f)  (%7.3f,%7.3f,%7.3f,%7.3f,%7.3f,%7.3f, ... )',...
+%     [real(e1eig(4)); imag(e1eig(4)); imag(e1vec(1:6,3))]));
+%   disp(sprintf(' (%9.5f,%9.5f)  (%7.3f,%7.3f,%7.3f,%7.3f,%7.3f,%7.3f, ... )',...
+%     [real(e1eig(5)); imag(e1eig(5)); real(e1vec(1:6,5))]));
+%   disp(sprintf(' (%9.5f,%9.5f)  (%7.3f,%7.3f,%7.3f,%7.3f,%7.3f,%7.3f, ... )',...
+%     [real(e1eig(6)); imag(e1eig(6)); real(e1vec(1:6,6))]));
+%   disp(sprintf(' (%9.5f,%9.5f)  (%7.3f,%7.3f,%7.3f,%7.3f,%7.3f,%7.3f, ... )',...
+%     [real(e1eig(7)); imag(e1eig(7)); imag(e1vec(1:6,6))]));
+%   disp(sprintf(' (%9.5f,%9.5f)  (%7.3f,%7.3f,%7.3f,%7.3f,%7.3f,%7.3f, ... )\n',...
+%     [real(e1eig(8:10)'); imag(e1eig(8:10)'); real(e1vec(1:6,8:10))]));
+  
+%% Stability of equilibria
+  load ks22uss1a;  [h, dh] = ksfm(0, a0, d);  [vdh, edh] = eig(dh);  edh = diag(edh);
+  [sedh, ie] = sort(real(edh),1,'descend');  e1eig = edh(ie);  e1vec = vdh(:,ie);
+  load ks22uss2a;  [h, dh] = ksfm(0, a0, d);  [vdh, edh] = eig(dh);  edh = diag(edh);
+  [sedh, ie] = sort(real(edh),1,'descend');  e2eig = edh(ie);  e2vec = vdh(:,ie);
+  load ks22uss3b;  [h, dh] = ksfm(0, a0, d);  [vdh, edh] = eig(dh);  edh = diag(edh);
+  [sedh, ie] = sort(real(edh),1,'descend');  e3eig = edh(ie);  e3vec = vdh(:,ie);
+  disp(' 1-wave equilibrium  2-wave equilibrium  3-wave equilibrium');
+  disp([e1eig(1:10) e2eig(1:10) e3eig(1:10)]);
+
+%% Evolution of orbits starting in the unstable manifolds of the equilibria
+  load ks22uss1a;  tend = 150;  np = 3;
+  a1 = a0 + 1e-3.*real(e1vec(:,1)); 
+  [tt, aa] = ksfmedt(d, tend, a1, h, np);  [x, uu] = ksfm2real(aa, d, 64);
+  figure(1); set(gcf,'pos',[100 500 800 400]); clf;
+  ax1 = axes('pos',[0.06 0.10 0.20 0.80]); pcolor(x,tt,uu'); caxis([-3 3]);
+    shading flat; title('1-wave, plane 1');
+
+  for angl = (0:.05:2)*pi,
+    a1 = a0 + 1e-3.*(cos(angl).*real(e1vec(:,1))+sin(angl).*imag(e1vec(:,1)));
+    [tt, aa] = ksfmedt(d, tend, a1, h, np);  [x, uu] = ksfm2real(aa, d, 64);
+    pcolor(x,tt,uu'); caxis([-3 3]); shading flat; title(['\alpha = ' num2str(angl)]);
+    pause; end,
+
+  a1 = a0 + 1e-3.*real(e1vec(:,3));
+  [tt, aa] = ksfmedt(d, tend, a1, h, np);  [x, uu] = ksfm2real(aa, d, 64);
+  ax2 = axes('pos',[0.30 0.10 0.20 0.80]); pcolor(x,tt,uu'); caxis([-3 3]);
+    shading flat; title('1-wave, plane 2');
+
+  for angl = (0:.05:2)*pi,
+    a1 = a0 + 1e-3.*(cos(angl).*real(e1vec(:,3))+sin(angl).*imag(e1vec(:,3)));
+    [tt, aa] = ksfmedt(d, tend, a1, h, np);  [x, uu] = ksfm2real(aa, d, 64);
+    pcolor(x,tt,uu'); caxis([-3 3]); shading flat; title(['\alpha = ' num2str(angl)]);
+    pause; end,
+
+  load ks22uss2a;  tend = 150;  np = 2;
+  a1 = a0 + 1e-3.*imag(e2vec(:,1)); 
+  [tt, aa] = ksfmedt(d, tend, a1, h, np);  [x, uu] = ksfm2real(aa, d, 64);
+  ax3 = axes('pos',[0.54 0.10 0.20 0.80]); pcolor(x,tt,uu'); caxis([-3 3]);
+    shading flat; title('2-wave equilibrium');
+
+  for angl = (0:.05:2)*pi,
+    a1 = a0 + 1e-3.*(cos(angl).*real(e2vec(:,1))+sin(angl).*imag(e2vec(:,1)));
+    [tt, aa] = ksfmedt(d, tend, a1, h, np);  [x, uu] = ksfm2real(aa, d, 64);
+    pcolor(x,tt,uu'); caxis([-3 3]); shading flat; title(['\alpha = ' num2str(angl)]);
+    pause; end,
+
+  load ks22uss3b;  tend = 150;  np = 2;
+  a1 = a0 + 1e-3.*e3vec(:,1);
+  [tt, aa] = ksfmedt(d, tend, a1, h, np);  [x, uu] = ksfm2real(aa, d, 64);
+  ax4 = axes('pos',[0.78 0.10 0.20 0.80]); pcolor(x,tt,uu'); caxis([-3 3]);
+    shading flat; title('3-wave equilibrium');
+    
+  for angl = (0:.05:2)*pi,
+    a1 = a0 + 1e-3.*(cos(angl).*e3vec(:,1)+sin(angl).*e3vec(:,2));
+    [tt, aa] = ksfmedt(d, tend, a1, h, np);  [x, uu] = ksfm2real(aa, d, 64);
+    pcolor(x,tt,uu'); caxis([-3 3]); shading flat; title(['\alpha = ' num2str(angl)]);
+    pause; end,
+
+%% Improve accuracy of equilibria and save results in kse22orbits
+% eq(k).a; eq(k).eig; eq(k).evec;
+% save kse22orbits eq tw rpo L h
+  clear;  load kse22orbits;
+  L = 22;  N = 32;  % number of modes (number of ODEs = 2*N-2)
+  names = {'ks22uss1a'; 'ks22uss2a'; 'ks22uss3a'};
+  for k = 1:length(names),
+    load(names{k});
+    if length(a0) < 2*N-2, n = 2*N-2-length(a0); end
+    ae = [ksfmshift(a0); zeros(n,1)];
+    options = optimset('Display','iter','Jacobian','on','TolX',1e-12,'TolFun',1e-15);
+    ae = fsolve(@(a)ksfm(0,a,L),ae,options);  ae = ksfmshift(ae);
+    fae = ksfm(0,ae,L);  disp(['|f(ae)| = ' num2str(norm(fae))]);
+%    [tt,aa] = ksfmedt(L, 500, ae, 0.1, 10); [x, uu] = ksfm2real(aa, L);
+%    figure(1); clf; pcolor(x,tt,uu'); tall(1.1); shading flat; caxis([-3 3]); pause; 
+    [hh, dh] = ksfm(0, ae, L);  [vdh, edh] = eig(dh);  edh = diag(edh);
+    [sedh, ie] = sort(real(edh),1,'descend');
+    eq(k).a = ae;  eq(k).eig = edh(ie);  eq(k).evec = vdh(:,ie);
+  end
+  save kse22orbits eq L
+
+%% Improve accuracy of relative equilibria and save results in kse22orbits
+% re(k).a;  re(k).c;  re(k).eig;  re(k).evec;
+  clear;  load kse22orbits;
+  L = 22;  N = 16;  % number of modes (number of ODEs = 2*N-2)
+  load ks22utw1a;
+  if length(a0) < 2*N-2, n = 2*N-2-length(a0); 
+    are = [ksfmshift(a0); zeros(n,1)];  
+  else are = ksfmshift(a0); end
+  are(1:2:end) = -are(1:2:end); c = -c;
+  options = optimset('Display','iter','Jacobian','on','TolX',1e-12,'TolFun',1e-15,'DerivativeCheck','on');
+  aa = fsolve(@(a)ksfmtr(a,L),[are; c],options);  
+%%
+  are = ksfmshift(aa(1:end-1)); cre = aa(end);
+  fare = ksfmtr([are;cre],L); disp(['|f(ae)| = ' num2str(norm(fare))]);
+  [tt,aa] = ksfmedt(L, 100, are, 0.1, 2); [x, uu] = ksfm2real(aa, L);
+  figure(1); clf; pcolor(x,tt,uu'); tall(1.1); shading flat; caxis([-3 3]); pause; 
+
+  
+%%
+  fae = ksfm(0,ae,L);  disp(['|f(ae)| = ' num2str(norm(fae))]);
+%    [tt,aa] = ksfmedt(L, 500, ae, 0.1, 10); [x, uu] = ksfm2real(aa, L);
+%    figure(1); clf; pcolor(x,tt,uu'); tall(1.1); shading flat; caxis([-3 3]); pause; 
+    [hh, dh] = ksfm(0, ae, L);  [vdh, edh] = eig(dh);  edh = diag(edh);
+    [sedh, ie] = sort(real(edh),1,'descend');
+    eq(k).a = ae;  eq(k).eig = edh(ie);  eq(k).evec = vdh(:,ie);
+  
+  
+  save kse22orbits re -append
+
+%% Improve accuracy of RPOs and save results in kse22orbits
+% rpo(k).a;  rpo(k).T;  rpo(k).ph;  rpo(k).eig;  rpo(k).evec;  
+  clear;  load kse22orbits;
+  L = 22;  N = 32;  % number of modes (number of ODEs = 2*N-2)
+  h = 0.1;          % integration stepsize for ksfmedt
+
+  save kse22orbits rpo h -append
+
+  
+%% Explore unstable manifolds of equilibria (3-wave)
+  clear;  load kse22orbits;  k = 3;  h = 0.1;  delta = 1e-4;  tend = 200;
+  v = gsorth([real(eq(k).evec(:,1)) imag(eq(k).evec(:,1)) eq(k).evec(:,4)]);
+  figure(1); clf;  figure(2); clf; 
+  for phi = 0.2532017200:0.0000000001:0.2532017208, %(0:0.1:6)*pi./3,
+    a0 = eq(k).a + delta.*(v(:,1).*cos(phi)+v(:,2).*sin(phi));
+    [tt, aa] = ksfmedt(L, tend, a0, h, 2);
+    [x, uu] = ksfm2real(aa, L, 64);  av = v'*aa;
+    figure(1);  pcolor(x,tt,uu'); caxis([-3 3]); shading flat;  hold on;
+    title(['\phi = ' sprintf('%13.10f',phi)]);
+    figure(2);  plot3(av(1,:),av(2,:),av(3,:),'-'); 
+    hold on; grid on; axis equal; view(0,90); pause;
+  end,
+
+%% Explore unstable manifolds of equilibria (2-wave)
+  clear;  load kse22orbits;  k = 2;  h = 0.1;  tend = 400;
+  ere = real(eq(k).eig(1));  eim = imag(eq(k).eig(1));
+  period = 2*pi/eim;  scale = exp(ere*period);
+  v = gsorth([real(eq(k).evec(:,1)) imag(eq(k).evec(:,1)) real(eq(k).evec(:,7))]);
+  figure(1); clf;  figure(2); clf; 
+  for delta = 0.2535144:.0000001:0.2535145, %0:0.1:ere*period,
+    a0 = eq(k).a + 1e-4.*exp(delta).*v(:,2);
+    [tt, aa] = ksfmedt(L, tend, a0, h, 5);
+    [x, uu] = ksfm2real(aa, L, 64);  av = v'*aa;
+    figure(1);  pcolor(x,tt,uu'); caxis([-3 3]); shading flat;  hold on;
+    title(['\delta = ' sprintf('%12.9f',delta)]);
+    figure(2);
+    plot3(av(1,:),av(2,:),av(3,:),'-'); hold on; grid on; axis equal; pause;
+ %   plot(av(1,:),av(2,:),'-'); hold on; grid on; axis equal; pause;
+ %   plot3(tt,av(1,:),av(2,:),'.-'); hold on; grid on; view(0,0); pause;
+  end,
+
+%% Explore unstable manifolds of equilibria (1-wave, plane 1,2: p = 1,3)
+  clear;  load kse22orbits;  k = 1;  p = 3;  h = 0.1;  tend = 200;
+  ere = real(eq(k).eig(p));  eim = imag(eq(k).eig(p));
+  period = 2*pi/eim;  scale = exp(ere*period);
+  v = gsorth([real(eq(k).evec(:,p)) imag(eq(k).evec(:,p)) real(eq(k).evec(:,6))]);
+  figure(1); clf;  figure(2); clf; 
+  for delta = 0:0.05:ere*period,
+    a0 = eq(k).a + 1e-4.*exp(delta).*v(:,2);
+    [tt, aa] = ksfmedt(L, tend-delta/ere, a0, h, 2);
+    [x, uu] = ksfm2real(aa, L, 64);  av = v'*aa;
+    figure(1);  pcolor(x,tt,uu'); caxis([-3 3]); shading flat;
+    title(['\delta = ' num2str(delta)]);
+    figure(2);
+    plot3(av(1,:),av(2,:),av(3,:),'-'); hold on; grid on; axis equal; view(-30,30); pause;
+ %   plot(av(1,:),av(2,:),'-'); hold on; grid on; axis equal; pause;
+  end,
+
+%% Plot equilibria and travelling waves in (u,u_x,u_xx) coordinates
+  clear;  load kse22orbits; colr = ['b';'r';'k'];
+  figure(1); set(gcf,'pos',[420 500 560 450]); clf;
+  ax1 = axes('Position',[0.05 0.0828 0.788 0.907]);
+  axis(ax1,[-2.597 2.597 -3.002 1.459 -2.804 2.804]);
+  xlabel(ax1,'u'); ylabel(ax1,'u_x'); zlabel(ax1,'u_{xx}','rotat',0);
+  view(ax1,[25 25]); grid(ax1,'on'); hold(ax1,'all');
+  for k = 1:3, [x,u,ux,uxx] = ksfm2real(eq(k).a,L,128);
+    plot3(u,ux,uxx,['.-' colr(k)]); hold on; end
+  grid on; axis equal; set(gca,'pos',[0.03 0.05 0.9 0.94]); view(25,25);
+  lg1 = legend(ax1,{'1-wave','2-wave','3-wave'});
+  set(lg1,'pos',[0.75 0.3 0.18 0.14]);  set(ax1,'pos',[0.02 0.0828 0.788 0.907]);
+  set(get(gca,'xlabel'),'pos',[17 -39 15.2]);  set(get(gca,'ylabel'),'pos',[20 -37 15.5]);
+  set(get(gca,'zlabel'),'pos',[-1.9 -5.8 1.6]);

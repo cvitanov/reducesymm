@@ -60,4 +60,5 @@ global TT A F FT NFEVAL PHASE DD
   
   g = [C; -alpha(1).*dtg'; -alpha(2).*ddg']*g; 
 %  g = [C*g; a(1); F(1).^2+F(2).^2];
+%  g(1:2) = 1e1.*g(1:2); if nargout > 1, jac(:,1:2) = 1e1.*jac(:,1:2); end,
 return;
