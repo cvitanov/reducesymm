@@ -4,7 +4,7 @@ use nrtype
 use ifc_equil_ks
 use ifc_newt
 use ifc_util
-use f95_lapack, only: LA_GEESX
+use f95_lapack, only: LA_GEEV
 USE LA_PRECISION, ONLY: WP => DP
 
 implicit none
@@ -12,13 +12,14 @@ implicit none
 include "fftw3.f"
 
 real(dp), dimension(:),allocatable :: v
-complex(dpc), dimension(:),allocatable :: a,adum,eig
-real(dp), dimension(:), allocatable :: wR,wI
+complex(dpc), dimension(:),allocatable :: a,adum
+complex(dp), dimension(:), allocatable :: w
 real(dp), dimension(:),allocatable :: bc,fvec
 real(dp), dimension(:,:),allocatable :: fjac
+complex(dp), dimension(:,:), allocatable :: fjacdum,vR
 real(dp), dimension(:),allocatable :: ar,ai
 integer(i8b) :: invplan, plan ! needed by fftw3
-integer(i4b) :: k,i,sdim
+integer(i4b) :: k,i,j,sdim=8
 character*64 :: wd
 integer(i4b) :: nargs
 logical :: logicdum
@@ -50,7 +51,7 @@ close(21)
 222 Format(<d/2+1>F21.16)
 ! 
 
-allocate(v(d),a(d/2+1),adum(d/2+1),bc(d),ar(d/2+1),ai(d/2+1),wR(d),wI(d),fvec(d),fjac(d,d))
+allocate(v(d),a(d/2+1),adum(d/2+1),bc(d),ar(d/2+1),ai(d/2+1),w(d),fvec(d),fjac(d,d),fjacdum(d,d), vR(d,d))
 
 open(19,file=trim(wd)//'/equilGuess.dat')
  
@@ -71,19 +72,25 @@ call mnewt(ntrial,bc,tolbc,tolf,ksFJ)
 
 call ksFJ(bc,fvec,fjac)
 
-
-wR=0.0_dp
-wI=0.0_dp
-call la_geesx(fjac,wR,wI,select=SelectSmallEig,sdim=sdim)
-allocate(eig(sdim))
-eig=wR(1:sdim)+ii*wI(1:sdim)
-call sort_pick(eig)
-print *,"eig", eig
-open(35,file=trim(wd)//'/Jeig.dat')
-do i=1,sdim
-	write(35,"(2F30.18)") eig(i)
+fjacdum=fjac
+w=0.0_dp
+vR=0.0_dp
+call la_geev(fjacdum,w,vR=vR) ! ,select=SelectSmallEig_c,sdim=sdim)
+call sort_pick(w,vR)
+print *,"eig", w(d-sdim:d)
+open(35,file=trim(wd)//'/Jdiag.dat')
+do i=d,d-sdim,-1
+	write(35,"(2F30.18)") w(i)
 enddo
 close(35)
+
+open(36,file=trim(wd)//'/Jev.dat')
+do j=d,d-sdim,-1
+	do i=1,d
+		write(36,"(2F30.18)") vR(i,j)
+	end do
+enddo
+close(36)
 
 open(23,file=trim(wd)//'/equilPS.dat')
 
