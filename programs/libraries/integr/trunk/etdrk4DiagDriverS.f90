@@ -53,7 +53,7 @@ do i=1,Nsteps
 		j=j+1
 		tSt(j)=t
 		aSt(j,:)=a
-!		print *,i,j,t
+!		print *,i,j,t,sum(abs(a))
 	end if
 end do
 

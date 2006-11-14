@@ -45,20 +45,34 @@ interface
 	end subroutine
 end interface
 
-interface
-	logical function SelectLargeEig(wR_j,wI_j)
+interface 
+	logical function SelectLargeEig_r(wR_j,wI_j)
 		use nrtype
 		implicit none
 		real(dp), INTENT(IN) :: wR_j,wI_j
-	end function
+	end function SelectLargeEig_r
 end interface
+interface
+	logical function SelectLargeEig_c(w_j)
+		use nrtype
+		implicit none
+		real(dp), INTENT(IN) :: w_j
+	end function SelectLargeEig_c
+end interface 
 
 interface
-	logical function SelectSmallEig(wR_j,wI_j)
+	logical function SelectSmallEig_r(wR_j,wI_j)
 		use nrtype
 		implicit none
 		real(dp), INTENT(IN) :: wR_j,wI_j
-	end function
+	end function SelectSmallEig_r
+end interface
+interface
+	logical function SelectSmallEig_c(w_j)
+		use nrtype
+		implicit none
+		complex(dpc), INTENT(IN) :: w_j
+	end function SelectSmallEig_c
 end interface
 
 interface sort_pick
@@ -72,6 +86,12 @@ interface sort_pick
 		IMPLICIT NONE
 		complex(dpc), DIMENSION(:), INTENT(INOUT) :: arr
 	END SUBROUTINE sort_pick_Re
+	SUBROUTINE sort_pick_2Re(arr,brr)
+		USE nrtype
+		IMPLICIT NONE
+		complex(dpc), DIMENSION(:), INTENT(INOUT) :: arr
+		complex(dpc), dimension(:,:), intent(inout) :: brr 
+	END SUBROUTINE sort_pick_2Re
 end interface
 
 END MODULE
