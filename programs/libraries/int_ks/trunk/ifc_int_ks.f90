@@ -5,7 +5,7 @@ use nrtype
 real(dp), dimension(:,:), allocatable :: jac
 real(dp), dimension(:), allocatable :: lin,f0,f1,f2,f3,e,e2
 real(dp), dimension(:), allocatable :: f0dum,f1dum,f2dum,f3dum,edum,e2dum
-real(dp) :: R, L
+real(dp) :: R,L
 integer(i4b) :: M, Nsteps, Nplt, Ntrial
 
 interface

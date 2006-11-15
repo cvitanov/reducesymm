@@ -1,7 +1,7 @@
 subroutine SetNlin_KS(a,N_a)
 
 use nrtype
-use ifc_rpo_ks
+use ifc_int_ks
 use nrutil, only:assert_eq
 
 
