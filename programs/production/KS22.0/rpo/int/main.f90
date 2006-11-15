@@ -1,7 +1,6 @@
-program shootME
+program integrRPO
 
 use nrtype
-use ifc_newt
 use ifc_integr
 use f95_lapack, only: LA_GEESX
 use la_precision, only: wp => dp
