@@ -2,9 +2,9 @@
 # by vasimos
 
 TARGET = libks
-OBJ = ifc_ks.o Rc.o Rr.o SetLin_KS.o SetNlin_KS.o SetAndiag_KS.o SetAndiag_KS_diff.o
-srcMod = ifc_ks.f90 
-targetMod = ifc_ks.mod
+OBJ = ks.o Rc.o Rr.o SetLin_KS.o SetNlin_KS.o SetAndiag_KS.o SetAndiag_KS_diff.o
+srcMod = ks.f90 
+targetMod = ks.mod
 # Where to find user libraries:
 userLibPATH = /home/vasimos/lib-$(COMP)
 # Where to find user modules:

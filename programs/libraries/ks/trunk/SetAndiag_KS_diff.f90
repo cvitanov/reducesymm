@@ -1,7 +1,7 @@
 subroutine SetANdiag_KS_diff(a,Andiag)
 
 use nrtype
-use ifc_ks
+use ks
 use nrutil, only:assert_eq
 
 implicit none

@@ -1,4 +1,4 @@
-module ifc_ks
+module ks
 
 use nrtype
 

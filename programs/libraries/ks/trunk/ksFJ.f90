@@ -1,6 +1,6 @@
 SUBROUTINE ksFJ_equil(bc,fvec,fjac)
 USE nrtype
-use ifc_ks
+use ks
 use nrutil, only:assert_eq
 
 IMPLICIT NONE

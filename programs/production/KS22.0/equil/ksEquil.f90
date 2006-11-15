@@ -1,7 +1,7 @@
 Program ksEquil
 
 use nrtype
-use ifc_ks
+use ks
 use ifc_newt
 !use ifc_integr
 use ifc_util
