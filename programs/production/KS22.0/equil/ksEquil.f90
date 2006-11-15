@@ -1,8 +1,9 @@
 Program ksEquil
 
 use nrtype
-use ifc_equil_ks
+use ifc_ks
 use ifc_newt
+!use ifc_integr
 use ifc_util
 use f95_lapack, only: LA_GEEV
 USE LA_PRECISION, ONLY: WP => DP
@@ -68,7 +69,9 @@ a=a/size(v)
 bc(1:d/2)=real(a(2:size(a)))
 bc(d/2+1:d)= aimag(a(2:size(a)))
 
-call mnewt(ntrial,bc,tolbc,tolf,ksFJ)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+call mnewt(ntrial,bc,tolbc,tolf,ksFJ_equil)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 call ksFJ(bc,fvec,fjac)
 

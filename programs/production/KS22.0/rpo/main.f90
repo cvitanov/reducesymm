@@ -6,7 +6,7 @@ use ifc_integr
 use f95_lapack, only: LA_GEESX
 use la_precision, only: wp => dp
 use ifc_util
-use ifc_rpo_ks
+use ifc_ks
 
 implicit none
 
@@ -17,9 +17,9 @@ real(dp), dimension(:), allocatable :: wR,wI
 complex(dpc), dimension(:),allocatable :: a,adum
 complex(dpc), dimension(:), allocatable :: ai,af
 integer(i8b) :: invplan, plan ! needed by fftw3
-integer(i4b) :: d, k,i, sdim, Nrep=3
+integer(i4b) :: k,i, sdim, Nrep=3
 real(dp) :: T,kappa, ti,tf, h, h2
-real(dp) :: tolbc,tolf,damp=13.0_dp
+real(dp) :: damp=13.0_dp
 character*64 :: wd
 integer(i4b) :: nargs
 logical :: logicdum
@@ -87,7 +87,7 @@ bc(1:d/2)=real(a(2:size(a)))
 bc(d/2+1:d)= aimag(a(2:size(a)))
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-call mnewtRPO(Ntrial,bc,tolbc,tolf,T,kappa,ksFJ)
+call mnewtRPO(Ntrial,bc,tolbc,tolf,T,kappa,ksFJ_rpo)
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 print *,"T",T,"kappa",kappa

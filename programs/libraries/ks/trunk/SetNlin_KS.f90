@@ -1,7 +1,7 @@
 subroutine SetNlin_KS(a,N_a)
 
 use nrtype
-use ifc_rpo_ks
+use ifc_ks
 use nrutil, only:assert_eq
 
 
@@ -13,13 +13,13 @@ complex(dpc), dimension(:), intent(in) :: a
 complex(dpc), dimension(:), intent(out) :: N_a
 ! Returns the nonlinear part N_a in the KSe. Notice it is
 ! equal to the nonlinear operator acting on a. 
-integer(i4b):: d,k 
+integer(i4b):: ndum,k 
 real(dp), dimension(2*(size(a)-1)) :: v 
 complex(dpc), dimension(size(a)) :: adum 
 integer(i8b) :: invplan, plan ! needed by fftw3
 
 
-d=assert_eq(2*(size(a)-1),2*(size(N_a)-1),'SetNlin')
+ndum=assert_eq(2*(size(a)-1),2*(size(N_a)-1),'SetNlin')
 
 N_a=(0.0_dp,0.0_dp)
 

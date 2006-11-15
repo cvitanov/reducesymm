@@ -1,7 +1,7 @@
 subroutine SetANdiag_KS(a,Andiag)
 
 use nrtype
-use ifc_rpo_ks
+use ifc_ks
 use nrutil, only:assert_eq
 
 implicit none
@@ -11,10 +11,10 @@ real(dp), dimension(:,:), intent(out) :: Andiag
 !
 !
 real(dp), dimension(size(a),size(a)):: Acc, Abb, Abc, Acb
-integer(i4b):: d,k,j
+integer(i4b):: ndum,k,j
 real(dp), dimension(size(a)) :: q
 
-d=assert_eq(2*size(a),size(Andiag,1),size(Andiag,2),'SetANdiag')
+ndum=assert_eq(2*size(a),size(Andiag,1),size(Andiag,2),'SetANdiag')
 
 Acc=0.0_dp
 Abb=0.0_dp

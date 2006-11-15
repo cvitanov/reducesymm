@@ -1,7 +1,7 @@
 subroutine SetLin_KS(lnr)
 
 use nrtype
-use ifc_rpo_ks
+use ifc_ks
 
 implicit none
 

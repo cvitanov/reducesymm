@@ -4,7 +4,7 @@ use nrutil, only:assert_eq
 use ifc_integr
 use ifc_util
 use f95_lapack, only: LA_GEES
-use ifc_rpo_ks
+use ifc_ks
 
 IMPLICIT NONE
 

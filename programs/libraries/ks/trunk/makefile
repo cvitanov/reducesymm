@@ -1,10 +1,10 @@
 # Makefile to produce a static library and modules for rpo shooting in KSe.
 # by vasimos
 
-TARGET = librpo_ks
-OBJ = ifc_rpo_ks.o ksFJ.o Rc.o Rr.o SetLin_KS.o SetNlin_KS.o SetAndiag_KS.o SetAndiag_KS_diff.o
-srcMod = ifc_rpo_ks.f90 
-targetMod = ifc_rpo_ks.mod
+TARGET = libks
+OBJ = ifc_ks.o Rc.o Rr.o SetLin_KS.o SetNlin_KS.o SetAndiag_KS.o SetAndiag_KS_diff.o
+srcMod = ifc_ks.f90 
+targetMod = ifc_ks.mod
 # Where to find user libraries:
 userLibPATH = /home/vasimos/lib-$(COMP)
 # Where to find user modules:

@@ -16,7 +16,7 @@ complex(dpc), dimension(size(bc)/2+1) :: adum
 complex(dpc), dimension(size(bc)/2+1) :: N_adum
 complex(dpc), dimension(size(bc)/2) :: fvec_c !, fvecA
 real(dpc), dimension(d/2,d/2):: jcc, jbb, jbc, jcb
-integer(i4b):: ndum,k,j,m
+integer(i4b):: ndum,k,j
 real(dp), dimension(size(bc)) :: v 
 integer(i8b) :: invplan, plan ! needed by fftw3
 real(dp), dimension(size(bc)/2) :: q,lin

@@ -1,7 +1,7 @@
 subroutine SetANdiag_KS_diff(a,Andiag)
 
 use nrtype
-use ifc_rpo_ks
+use ifc_ks
 use nrutil, only:assert_eq
 
 implicit none
@@ -12,11 +12,11 @@ real(dp), dimension(:,:), intent(out) :: Andiag
 !
 
 complex(dp), dimension(size(a)+1) :: adum,N_adum_p,N_adum_m
-integer(i4b):: k,j,d,i 
+integer(i4b):: k,j,ndum,i 
 real(dp) :: tmp,da=0.0000001_dp
 
 
-d=assert_eq(size(Andiag,1),size(Andiag,2),2*size(a),'SetANdiag')
+ndum=assert_eq(size(Andiag,1),size(Andiag,2),2*size(a),'SetANdiag')
 
 adum=(0.0_dp,0.0_dp)
 

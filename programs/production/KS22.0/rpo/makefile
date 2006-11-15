@@ -17,7 +17,7 @@ nrLIB = nr
 shootingLIB = newt
 utilLIB = utils
 integrLIB = integr
-rpoLIB= rpo_ks
+rpoLIB= ks
 
 # ifdef COMP
 # include $(COMP).inc
