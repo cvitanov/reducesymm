@@ -1,3 +1,4 @@
+# A simple execution time benchmark script. Thanks to Vasilis Christaras.
 use Benchmark;
 chomp($ARGV[0]);
 $start= new Benchmark;
