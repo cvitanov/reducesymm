@@ -3,7 +3,6 @@ Program ksEquil
 use nrtype
 use ks
 use ifc_newt
-!use ifc_integr
 use ifc_util
 use f95_lapack, only: LA_GEEV
 USE LA_PRECISION, ONLY: WP => DP
