@@ -1,4 +1,4 @@
-sys_utils = cpu_time.pl replace_all
+sys_utils = cpu_time.pl make_dir replace_all
 sys_utils_path = /home/$(USER)/sys_utils
 
 install: $(sys_utils)
