@@ -1,12 +1,11 @@
 # Choose compiler:
-COMP = ifort 
 OPTFULL = -O2
 TARGET = libfindRoot
 OBJ = ifc_findRoot.o rtbis.o zbrac.o zbracB.o
 srcMod = ifc_findRoot.f90 
 targetMod = ifc_findRoot.mod
 # Where to find user libraries:
-userLibPATH = /home/$(USER)/lib
+userLibPATH = /home/$(USER)/lib-$(COMP)
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 # Names of user libraries

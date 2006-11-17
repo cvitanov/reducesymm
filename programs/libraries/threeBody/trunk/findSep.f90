@@ -11,7 +11,7 @@ real(dp), intent(in) :: tol
 integer(i4b), intent(in) :: Npoints, MaxAttempts
 real(dp), intent(in) :: eps, h1, hmin
 real(dp), intent(in) :: ti, taui, tauf
-interface EOM_TBL
+interface 
 	subroutine EOM_TBL(tau,f,v)
 		use nrtype
 		implicit none
