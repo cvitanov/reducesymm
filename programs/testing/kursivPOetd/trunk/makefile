@@ -12,7 +12,7 @@ userModPATH = $(userLibPATH)/modules
 sharedLibPATH = /usr/lib64
 # Where to find lapack:
 lapackLibPATH = /usr/lib64/lapack95/$(COMP)
-lapackModPATH = $(lapackLibPATH)/lapack95_modules
+lapackModPATH = $(lapack95path)/lapack95_modules
 paramMod = parameters.mod
 nrLIB = nr
 integrLIB = integr
@@ -24,7 +24,7 @@ include $(COMP).inc
 endif
 
 $(TARGET): $(OBJECTS)
-	$(COMP) -o $(TARGET) -I$(userModPATH) -I$(lapackModPATH) -L$(laPATH) -L$(lapackLibPATH) -L$(userLibPATH) $(CFLAGS) $(OBJECTS) $(sharedLibPATH)/libfftw3.so -l$(shootingLIB) -l$(lapack95LIB) -l$(lapackLIB) -l$(blasLIB) -l$(integrLIB) -l$(utilLIB) -l$(nrLIB) 
+	$(COMP) -o $(TARGET) -I$(userModPATH) -I$(lapackModPATH) -L$(laPATH) -L$(lapack95path) -L$(lapackLibPATH) -L$(userLibPATH) $(CFLAGS) $(OBJECTS) $(sharedLibPATH)/libfftw3.so -l$(shootingLIB) -l$(lapack95LIB) -l$(lapackLIB) -l$(blasLIB) -l$(integrLIB) -l$(utilLIB) -l$(nrLIB) 
 
 %.o: %.f90 $(paramMod)
 	$(COMP) -c -o $@ -I$(userModPATH) -I$(lapackModPATH) $(CFLAGS) $< 

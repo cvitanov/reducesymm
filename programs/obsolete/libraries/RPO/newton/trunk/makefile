@@ -24,7 +24,7 @@ $(TARGET): uninstall $(OBJ) $(targetMod)
 	ranlib $(TARGET).a
 
 %.o: %.f90 
-	$(COMP) -c $(CFLAGS) -o $@ -I$(lapackModPATH)  -L$(lapackLibPATH) -I$(userModPATH) -L$(userLibPATH)  $< -l$(lapackLIB) -l$(acmlLIB) -l$(utilLIB) -l$(nrLIB)
+	$(COMP) -c $(CFLAGS) -o $@ -I$(lapackModPATH)  -L$(lapack95path) -L$(lapackLibPATH) -I$(userModPATH) -L$(userLibPATH)  $< -l$(lapackLIB) -l$(acmlLIB) -l$(utilLIB) -l$(nrLIB)
 
 $(OBJ): $(targetMod)
 

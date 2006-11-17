@@ -12,7 +12,7 @@ userModPATH = $(userLibPATH)/modules
 sharedLibPATH = /usr/lib64
 # Where to find lapack:
 lapackLibPATH = /usr/lib64
-lapackModPATH = $(lapackLibPATH)/lapack95_modules
+lapackModPATH = $(lapack95path)/lapack95_modules
 paramMod = parameters.mod
 nrLIB = nr
 shootingLIB = newt
@@ -23,7 +23,7 @@ utilLIB = utils
 # endif
 
 $(TARGET): $(OBJECTS)
-	$(COMP) -o $(TARGET) -I$(userModPATH) -I$(lapackModPATH) -L$(lapackLibPATH) -L$(userLibPATH) $(CFLAGS) $(OBJECTS) $(sharedLibPATH)/libfftw3.so -l$(shootingLIB) -llapack95 -llapack -lblas -l$(utilLIB) -l$(nrLIB) -lgfortranbegin -lgfortran
+	$(COMP) -o $(TARGET) -I$(userModPATH) -I$(lapackModPATH) -L$(lapack95path) -L$(lapackLibPATH) -L$(userLibPATH) $(CFLAGS) $(OBJECTS) $(sharedLibPATH)/libfftw3.so -l$(shootingLIB) -llapack95 -llapack -lblas -l$(utilLIB) -l$(nrLIB) -lgfortranbegin -lgfortran
 
 %.o: %.f90 $(paramMod)
 	$(COMP) -c -o $@ -I$(userModPATH) -I$(lapackModPATH) $(CFLAGS) $< 

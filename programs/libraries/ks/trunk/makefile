@@ -13,7 +13,7 @@ userModPATH = $(userLibPATH)/modules
 sharedLibPATH = /usr/lib64
 # Where to find lapack:
 lapackLibPATH = /usr/lib64
-lapackModPATH = $(lapackLibPATH)/lapack95_modules
+lapackModPATH = $(lapack95path)/lapack95_modules
 # Names of user libraries
 nrLIB = nr
 integrLIB= integr
