@@ -1,4 +1,4 @@
-local_arch=64
+##
 TARGET = libnewt
 OBJ = ifc_newt.o mnewt.o mnewtPO.o mnewtRPO.o mnewtRPOdamp.o mnewtTW.o mnewt_c.o 
 srcMod = ifc_newt.f90 
