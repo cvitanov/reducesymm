@@ -23,7 +23,7 @@ lapackLIB = lapack95
 acmlLIB = acml
 
 $(TARGET): $(OBJECTS)
-	$(COMP) -o $(TARGET) -I$(userModPATH) -I$(lapackModPATH)  -L$(lapack95path) -L$(lapackLibPATH) -L$(userLibPATH) $(CFLAGS) $(OBJECTS) $(sharedLibPATH)/libfftw3.so -l$(shootingLIB) -l$(lapackLIB) -l$(acmlLIB)  -l$(integrLIB) -l$(utilLIB) -l$(nrLIB) 
+	$(COMP) -o $(TARGET) -I$(userModPATH) -I$(lapackModPATH)  -L$(lapack95path)/$(COMP) -L$(lapackLibPATH) -L$(userLibPATH) $(CFLAGS) $(OBJECTS) $(sharedLibPATH)/libfftw3.so -l$(shootingLIB) -l$(lapackLIB) -l$(acmlLIB)  -l$(integrLIB) -l$(utilLIB) -l$(nrLIB) 
 
 %.o: %.f90 $(paramMod)
 	$(COMP) -c -o $@ -I$(userModPATH) -I$(lapackModPATH) $(CFLAGS) $< 

@@ -16,7 +16,7 @@ lapackLibPATH = /usr/lib/
 nrLIB = nr
 utilLIB = util
 lapack95 = lapack95-$(COMP)
-lapack77 = lapack
+lapack77 =lapack 
 blast = blast
 acmlLIB = acml
 
@@ -25,7 +25,7 @@ $(TARGET): uninstall $(OBJ) $(targetMod)
 	ranlib $(TARGET).a
 
 %.o: %.f90
-	$(COMP) -c $(CFLAGS) -o $@ -I$(lapackModPATH)  -L$(lapack95path) -L$(lapackLibPATH) -I$(userModPATH) -L$(userLibPATH)  $< -l$(lapack95) -l$(lapack77) -l-l$(blast) -l$(utilLIB) -l$(nrLIB)
+	$(COMP) -c $(CFLAGS) -o $@ -I$(lapackModPATH)  -L$(lapack95path)/$(COMP) -L$(lapackLibPATH) -I$(userModPATH) -L$(userLibPATH)  $< -l$(lapack95) -l$(lapack77) -l-l$(blast) -l$(utilLIB) -l$(nrLIB)
 
 $(OBJ): $(targetMod)
 

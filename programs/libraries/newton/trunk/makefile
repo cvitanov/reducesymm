@@ -1,4 +1,4 @@
-arch=64
+local_arch=64
 TARGET = libnewt
 OBJ = ifc_newt.o mnewt.o mnewtPO.o mnewtRPO.o mnewtRPOdamp.o mnewtTW.o mnewt_c.o 
 srcMod = ifc_newt.f90 
@@ -7,12 +7,12 @@ targetMod = ifc_newt.mod
 userLibPATH = /home/$(USER)/lib-$(COMP)
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
-lapackModPATH = /usr/lib$(arch)/lapack95/$(COMP)/lapack95_modules
-lapackLibPATH = /usr/lib$(arch)/
+lapackModPATH = $(lapack95path)/$(COMP)/lapack95_modules
+lapackLibPATH = /usr/lib$(local_arch)/
 # Names of user libraries
 nrLIB = nr
 lapack95 = lapack95-$(COMP)
-lapack77 = lapack
+lapack = lapack77
 blast = blast
 acmlLIB = acml
 
@@ -21,7 +21,7 @@ $(TARGET): uninstall $(OBJ) $(targetMod)
 	ranlib $(TARGET).a
 
 %.o: %.f90
-	$(COMP) -c $(CFLAGS) -o $@ -I$(lapackModPATH)  -L$(lapack95path) -L$(lapackLibPATH) -I$(userModPATH) -L$(userLibPATH)  $< -l$(lapack95) -l$(lapack77) -l$(blast) -l$(nrLIB)
+	$(COMP) -c $(CFLAGS) -o $@ -I$(lapackModPATH)  -L$(lapack95path)/$(COMP) -L$(lapackLibPATH) -I$(userModPATH) -L$(userLibPATH)  $< -l$(lapack95) -l$(lapack77) -l$(blast) -l$(nrLIB)
 
 $(OBJ): $(targetMod)
 
