@@ -6,7 +6,7 @@ OBJECTS = main.o  roesslerField.o
 # Set the outputfile
 TARGET = tr	
 # Where to find user libraries:
-userLibPATH = /home/vasimos/lib64
+userLibPATH = /home/$(USER)/lib64
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 nrLIB = nr

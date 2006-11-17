@@ -6,7 +6,7 @@ OBJECTS = etdrk4Test.o parameters.o SetLin_KS.o  SetNlin_KS.o
 # Set the outputfile
 TARGET = ks 	
 # Where to find user libraries:
-userLibPATH = /home/vasimos/lib
+userLibPATH = /home/$(USER)/lib
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 # Where to find shared libraries: 

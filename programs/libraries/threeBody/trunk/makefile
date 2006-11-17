@@ -1,4 +1,4 @@
-# by vasimos
+# by $(USER)
 
 # Choose compiler:
 COMP = ifort 
@@ -8,7 +8,7 @@ OBJ = CartToKSMcG_TBL.o findIC.o findSep.o ifc_threeBody.o KSMcGtoCart_TBL.o TBL
 srcMod = ifc_threeBody.f90 
 targetMod = ifc_threeBody.mod
 # Where to find user libraries:
-userLibPATH = /home/vasimos/lib
+userLibPATH = /home/$(USER)/lib
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 # Names of user libraries

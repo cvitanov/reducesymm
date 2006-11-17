@@ -5,7 +5,7 @@ OBJECTS = POshootingTest.o parameters.o SetANdiag_KS.o SetLin_KS.o  SetNlin_KS.o
 # Set the outputfile
 TARGET = ks 	
 # Where to find user libraries:
-userLibPATH = /home/vasimos/lib-$(COMP)
+userLibPATH = /home/$(USER)/lib-$(COMP)
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 # Where to find shared libraries: 

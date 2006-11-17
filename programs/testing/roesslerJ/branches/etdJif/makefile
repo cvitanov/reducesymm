@@ -6,7 +6,7 @@ OBJECTS = main.o parameters.o SetANdiag_roessler.o SetNlin_roessler.o SetLin_roe
 # Set the outputfile
 TARGET = j	
 # Where to find user libraries:
-userLibPATH = /home/vasimos/lib64
+userLibPATH = /home/$(USER)/lib64
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 ll95PATH = /usr/pgi/linux86-64/5.2/lib

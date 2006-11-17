@@ -6,7 +6,7 @@ OBJECTS = integr.o  KSfield.o
 # Set the outputfile
 TARGET = ks 	
 # Where to find user libraries:
-userLibPATH = /home/vasimos/lib64
+userLibPATH = /home/$(USER)/lib64
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 paramMod = parameters.mod

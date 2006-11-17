@@ -5,7 +5,7 @@ OBJ = ifc_integr.o derivsJ.o etdrk4Diag.o etdrk4DiagDriverS.o etdrk4DiagDriverS_
 srcMod = ifc_integr.f90 
 targetMod = ifc_integr.mod ode_path.mod
 # Where to find user libraries:
-userLibPATH = /home/vasimos/lib-$(COMP)
+userLibPATH = /home/$(USER)/lib-$(COMP)
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 # Names of user libraries

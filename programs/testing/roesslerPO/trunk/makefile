@@ -6,7 +6,7 @@ OBJECTS = main.o parameters.o roesslerField.o roesslerFieldP.o roesslerVar.o
 # Set the outputfile
 TARGET = newt	
 # Where to find user libraries:
-userLibPATH = /home/vasimos/lib64
+userLibPATH = /home/$(USER)/lib64
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 ll95PATH = /usr/pgi/linux86-64/5.2/lib

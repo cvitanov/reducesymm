@@ -3,7 +3,7 @@ OBJ = ifc_util.o DiagMul.o DoNothing.o SelectLargeEig.o SelectSmallEig.o sort_pi
 srcMod = ifc_util.f90 
 targetMod = ifc_util.mod
 # Where to find user libraries:
-userLibPATH = /home/vasimos/lib-$(COMP)
+userLibPATH = /home/$(USER)/lib-$(COMP)
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 # Names of user libraries

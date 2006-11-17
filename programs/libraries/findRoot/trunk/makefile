@@ -6,7 +6,7 @@ OBJ = ifc_findRoot.o rtbis.o zbrac.o zbracB.o
 srcMod = ifc_findRoot.f90 
 targetMod = ifc_findRoot.mod
 # Where to find user libraries:
-userLibPATH = /home/vasimos/lib
+userLibPATH = /home/$(USER)/lib
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 # Names of user libraries

@@ -1,5 +1,5 @@
 # Makefile to produce a static library and modules related to integration of ODE's.
-# by vasimos
+# by $(USER)
 
 # Choose compiler:
 OPTFULL = -O2
@@ -8,7 +8,7 @@ OBJ = lubksb.o ludcmp.o
 srcMod = ifc_lu.f90 
 targetMod = ifc_lu.mod
 # Where to find user libraries:
-userLibPATH = /home/vasimos/lib-$(COMP)
+userLibPATH = /home/$(USER)/lib-$(COMP)
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 # Names of user libraries

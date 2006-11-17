@@ -4,7 +4,7 @@ OBJ = ifc_newt.o mnewt.o mnewtPO.o mnewtRPO.o mnewtRPOdamp.o mnewtTW.o mnewt_c.o
 srcMod = ifc_newt.f90 
 targetMod = ifc_newt.mod
 # Where to find user libraries:
-userLibPATH = /home/vasimos/lib-$(COMP)
+userLibPATH = /home/$(USER)/lib-$(COMP)
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 lapackModPATH = /usr/lib$(arch)/lapack95/$(COMP)/lapack95_modules

@@ -1,5 +1,5 @@
 # Makefile to produce a static library and modules related to integration of ODE's.
-# by vasimos
+# by $(USER)
 
 # Choose compiler:
 TARGET = libpo
@@ -7,7 +7,7 @@ OBJ = ifc_po.o newtonPOetdrk4.o setLHM.o  setRHS.o
 srcMod = ifc_po.f90 
 targetMod = ifc_po.mod
 # Where to find user libraries:
-userLibPATH = /home/vasimos/lib-$(COMP)
+userLibPATH = /home/$(USER)/lib-$(COMP)
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 lapackModPATH = /usr/lib/lapack95_modules-$(COMP)
