@@ -1,2 +1,4 @@
+objects= SiminosUtils.m 
+
 install:
-	cp SiminosUtils.m ~/.Mathematica/Applications
+	cp $(objects) ~/.Mathematica/Applications

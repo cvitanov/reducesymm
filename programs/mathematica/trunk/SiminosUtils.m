@@ -20,3 +20,10 @@ Clear[wd];
 wd[]:=StringDrop[Directory[],
       Flatten[StringPosition[Directory[],
               ParentDirectory[Directory[]]] ][[2]]+1];
+
+uSpatial[u_,L_]:=Module[{ux,uxx,dx,d},d=Dimensions[u][[1]];
+    dx=L/(d-1);ux=Table[Null,{d}];
+    Do[ux[[i]]=(u[[Mod[i+1,d,1]]]-u[[Mod[i-1,d,1]]])/(2dx),{i,1,d}];
+    uxx=Table[Null,{d}];
+    Do[uxx[[i]]=(ux[[Mod[i+1,d,1]]]-ux[[Mod[i-1,d,1]]])/(2dx),{i,1,d}];
+    Table[{u[[i]],ux[[i]],uxx[[i]]},{i,1,d}]]
