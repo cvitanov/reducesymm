@@ -1,3 +1,4 @@
+#!/usr/bin/perl
 # A simple execution time benchmark script. Thanks to Vasilis Christaras.
 # Script does not handle directories correctly.
 use Benchmark;

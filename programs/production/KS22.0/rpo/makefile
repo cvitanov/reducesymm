@@ -9,9 +9,9 @@ userLibPATH = /home/$(USER)/lib-$(COMP)
 # Where to find user modules:
 userModPATH = $(userLibPATH)/modules
 # Where to find shared libraries: 
-sharedLibPATH = /usr/lib64
+sharedLibPATH = /usr/lib$(local_arch)
 # Where to find lapack:
-lapackLibPATH = /usr/lib64
+lapackLibPATH = /usr/lib$(local_arch)
 lapackModPATH = $(lapack95path)/$(COMP)/lapack95_modules
 nrLIB = nr
 shootingLIB = newt
