@@ -21,17 +21,17 @@ overwritten.
 
 
 
+
+
+
+
 Needs["LinearAlgebra`MatrixManipulation`"]
 
-v=Import["rpoU.dat"];
+v=Import["trajU.dat"];
 
 
 
 
-
-Clear[hby]
-hby[x_]:=Hue[0.7+x/2]/;0\[LessEqual]x\[LessEqual]0.5
-hby[x_]:=Hue[(x-0.5)/2.5]/;0.5<x\[LessEqual]1
 
 L=22.0;
 
@@ -39,20 +39,18 @@ L=22.0;
 
 
 
-tTot=200;
+tTot=200*0.4;
 
-vPlt=ListDensityPlot[v,Mesh\[Rule] False,ColorFunction\[Rule]hby,
+vPlt=ListDensityPlot[Take[v,400],Mesh\[Rule] False,ColorFunction\[Rule]hby,
       MeshRange\[Rule]{{0,L},{0.0,tTot}},FrameLabel\[Rule]{"x","t"},
       TextStyle\[Rule]{FontFamily\[Rule]Arial,FontSize\[Rule] 12},
       AspectRatio\[Rule]2];
 
 
 
+Export[wd[]<>"rpo.eps",vPlt];
 
-
-Export[wd[]<>"_req.eps",vPlt];
-
-Export["reqGuess.dat",v[[1000]]]
+Export["reqGuess.dat",v[[400]]];
 
 
 

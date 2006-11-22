@@ -1,4 +1,4 @@
-	SUBROUTINE mnewtTW(ntrial,x,tolx,tolf,T,kappa,q,usrfun)
+	SUBROUTINE mnewtTW(ntrial,x,tolx,tolf,T,kappa,usrfun)
 	USE nrtype
 	use la_precision, only: wp => dp
 	use f95_lapack, only: LA_GESV
@@ -9,16 +9,14 @@
 	REAL(DP), DIMENSION(:), INTENT(INOUT) :: x
 	real(dp), intent(in) :: T
 	real(dp), intent(inout) :: kappa
-	real(dp), dimension(:), intent(in):: q
 	INTERFACE
-		SUBROUTINE usrfun(x,fvec,fjac,T,kappa,q)
+		SUBROUTINE usrfun(x,fvec,fjac,kappa)
 		USE nrtype
 		IMPLICIT NONE
 		REAL(DP), DIMENSION(:), INTENT(IN) :: x
 		REAL(DP), DIMENSION(:), INTENT(OUT) :: fvec
 		REAL(DP), DIMENSION(:,:), INTENT(OUT) :: fjac
-		real(dp), intent(in) :: T, kappa
-		real(dp), dimension(:), intent(in):: q
+		real(dp), intent(in) :: kappa
 		END SUBROUTINE usrfun
 	END INTERFACE
 	INTEGER(I4B) :: i
@@ -26,11 +24,9 @@
 	REAL(DP), DIMENSION(size(x)+1) :: fvec,p
 	REAL(DP), DIMENSION(size(x)+1,size(x)+1) :: fjac
 
-	ndum=assert_eq(size(x),size(q),'mnewtRPO')
-
 	do  i=1,ntrial
 		print *,"Newton iteration #", i
-		call usrfun(x,fvec,fjac,T,kappa,q)
+		call usrfun(x,fvec,fjac,kappa)
 		if (sum(abs(fvec)) <= tolf) then
 			RETURN
 		endif
