@@ -1,5 +1,3 @@
-# Choose compiler:
-OPTFULL = -O2
 TARGET = libfindRoot
 OBJ = ifc_findRoot.o rtbis.o zbrac.o zbracB.o
 srcMod = ifc_findRoot.f90 
@@ -17,12 +15,12 @@ $(TARGET): uninstall $(OBJ) $(srcMod)
 	ranlib $(TARGET).a
 
 %.o: %.f90 
-	$(COMP) -c $(OPTFULL) -o $@ -I$(userModPATH)  $<
+	$(COMP) -c $(CFLAGS) -o $@ -I$(userModPATH)  $<
 
 $(OBJ): $(srcMod)
 
 $(targetMod): $(srcMod)
-	$(COMP) -c $(OPTFULL) -I$(userModPATH) $(srcMod)  
+	$(COMP) -c $(CFLAGS) -I$(userModPATH) $(srcMod)  
 
 
 install:

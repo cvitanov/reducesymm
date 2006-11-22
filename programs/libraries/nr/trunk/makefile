@@ -1,7 +1,5 @@
 # Makefile to produce a static library and modules from nr*.f90 modules.
-# by $(USER)
 
-OPTFULL = -O2
 TARGET = libnr
 OBJ = nrtype.o nr.o nrutil.o 
 srcMod =  nrtype.f90 nr.f90 nrutil.f90
@@ -16,12 +14,12 @@ $(TARGET): uninstall $(OBJ)
 	ranlib $(TARGET).a
 
 %.o: %.f90
-	$(COMP) -c $(OPTFULL) -o $@  $< 
+	$(COMP) -c $(CFLAGS) -o $@  $< 
 
 $(OBJ): nrtype.mod
 
 nrtype.mod: nrtype.f90
-	$(COMP) -c $(OPTFULL) -o nrtype.o  nrtype.f90 
+	$(COMP) -c $(CFLAGS) -o nrtype.o  nrtype.f90 
 
 install:
 	cp *.mod $(userModPATH)

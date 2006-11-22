@@ -1,4 +1,3 @@
-OPTFULL = -O2
 TARGET = libthreeBody
 OBJ = ifc_threeBody.o CartToKSMcG_TBL.o findIC.o findSep.o KSMcGtoCart_TBL.o TBLint.o TBLint_sep.o TBrkqs.o vectorize.o
 srcMod = ifc_threeBody.f90 
@@ -16,12 +15,12 @@ $(TARGET): uninstall $(OBJ) $(srcMod)
 	ranlib $(TARGET).a
 
 %.o: %.f90 
-	$(COMP) -c $(OPTFULL) -o $@ -I$(userModPATH)  $<
+	$(COMP) -c $(CFLAGS) -o $@ -I$(userModPATH)  $<
 
 $(OBJ): $(srcMod)
 
 $(targetMod): $(srcMod)
-	$(COMP) -c $(OPTFULL) -I$(userModPATH) $(srcMod)  
+	$(COMP) -c $(CFLAGS) -I$(userModPATH) $(srcMod)  
 
 
 install:

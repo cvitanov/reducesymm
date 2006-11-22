@@ -2,7 +2,6 @@
 # by $(USER)
 
 # Choose compiler:
-OPTFULL = -O2
 TARGET = liblu
 OBJ = lubksb.o ludcmp.o
 srcMod = ifc_lu.f90 
@@ -20,12 +19,12 @@ $(TARGET): $(OBJ) $(targetMod) uninstall
 	ranlib $(TARGET).a
 
 %.o: %.f90 
-	$(COMP) -c $(OPTFULL) -o $@ -I$(userModPATH) -L$(userLibPATH)  $< -l$(nrLIB)
+	$(COMP) -c $(CFLAGS) -o $@ -I$(userModPATH) -L$(userLibPATH)  $< -l$(nrLIB)
 
 $(OBJ): $(targetMod)
 
 $(targetMod): $(srcMod)
-	$(COMP) -c $(OPTFULL) -I$(userModPATH) $(srcMod)  
+	$(COMP) -c $(CFLAGS) -I$(userModPATH) $(srcMod)  
 
 
 install:
