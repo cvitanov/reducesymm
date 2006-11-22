@@ -6,7 +6,7 @@ use ifc_integr
 use f95_lapack, only: LA_GEESX
 use la_precision, only: wp => dp
 use ifc_util
-use ifc_rpo_ks
+use ks
 
 implicit none
 

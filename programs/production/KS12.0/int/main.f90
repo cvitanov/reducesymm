@@ -5,7 +5,7 @@ use ifc_integr
 use f95_lapack, only: LA_GEESX
 use la_precision, only: wp => dp
 use ifc_util
-use ifc_rpo_ks
+use ks
 
 implicit none
 
@@ -16,7 +16,7 @@ real(dp), dimension(:), allocatable :: wR,wI
 complex(dpc), dimension(:),allocatable :: a,adum
 complex(dpc), dimension(:), allocatable :: ai,af
 integer(i8b) :: invplan, plan ! needed by fftw3
-integer(i4b) :: d, k,i, sdim, Nrep=3
+integer(i4b) :: k,i, sdim, Nrep=3
 real(dp) :: T,kappa, ti=0.0_dp,tf=200.0_dp, h, h2
 real(dp) :: tolbc,tolf,damp=13.0_dp
 character*64 :: wd
@@ -36,14 +36,10 @@ open(21,file=trim(wd)//'/parameters.dat')
 	read(21,*)
 	read(21,*) d
 	read(21,*)
-	read(21,*) L 
+	read(21,*) L
 	read(21,*)
-	read(21,*) tolbc
+	read(21,*) h 
 	read(21,*)
-	read(21,*) tolf
-	read(21,*)
-	read(21,*) Ntrial
-	read(21,*) 
 	read(21,*) Nsteps
 	read(21,*) 
 	read(21,*) Nplt
@@ -64,7 +60,7 @@ allocate(lin(d/2+1),f0(d/2+1),f1(d/2+1),f2(d/2+1),f3(d/2+1),e(d/2+1),e2(d/2+1))
 allocate(f0dum(d/2+1),f1dum(d/2+1),f2dum(d/2+1),f3dum(d/2+1),edum(d/2+1),e2dum(d/2+1))
 allocate(wR(d),wI(d))
 
-open(19,file=trim(wd)//'/rpoUic.dat')
+open(19,file=trim(wd)//'/Uic.dat')
  
 	read(19,*) v(1:d)
  
@@ -84,10 +80,6 @@ ai(2:size(a))=bc(1:size(bc)/2)+ii*bc(size(bc)/2+1:size(bc))
 print *,sum(abs(ai))
 af=(0.0_dp,0.0_dp)
 
-open (33,file=trim(wd)//'/timestep.dat')
-read(33,220) h
-close(33)
-
 Nsteps=int(abs(tf-ti)/h,i4b)
 
 tf=Nsteps*h
@@ -97,7 +89,7 @@ print *,"int",h,Nsteps,h*Nsteps,sum(abs(ai))
 call SetLin_KS(lin)
 call etdrk4DiagPrefactors(lin,h,R,M,f0,f1,f2,f3,e,e2)
 call etdrk4DiagDriverS(ti,ai,Nsteps,tf,af,f0,f1,f2,f3,e,e2,Nplt,SetNlin_KS)
-open (29,file=trim(wd)//'/rpoU.dat')
+open (29,file=trim(wd)//'/trajU.dat')
 do i=1,size(aSt,1)
 	adum=aSt(i,:)
 !	print *,sum(abs(adum))
