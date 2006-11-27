@@ -93,6 +93,7 @@ call mnewtTW(Ntrial,bc,tolbc,tolf,kappa,ksFJ_req)
 print *,"T",Tw,"kappa",kappa
 
 open(27,file=trim(wd)//'/periods.dat')
+	write (27,220) Tw
 	write (27,220) kappa
 close(27)
 
@@ -142,7 +143,7 @@ close(33)
 call SetLin_KS(lin)
 call etdrk4DiagPrefactors(lin,h2,R,M,f0,f1,f2,f3,e,e2)
 call etdrk4DiagDriverS(ti,ai,2*Nrep*Nsteps,tf,af,f0,f1,f2,f3,e,e2,Nplt,SetNlin_KS)
-open (29,file=trim(wd)//'/rpoU.dat')
+open (29,file=trim(wd)//'/reqU.dat')
 do i=1,size(aSt,1)
 	adum=aSt(i,:)
 !	print *,sum(abs(adum))
@@ -162,7 +163,7 @@ call dfftw_plan_dft_c2r_1d(invplan,d,adum,v,FFTW_ESTIMATE)
 call dfftw_execute(invplan)
 call dfftw_destroy_plan(invplan)
 
-open(28,file=trim(wd)//'/rpoUic.dat')
+open(28,file=trim(wd)//'/reqUic.dat')
 	write(28,221) v
 close(28)
 
