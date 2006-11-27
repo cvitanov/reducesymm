@@ -17,7 +17,7 @@ complex(dpc), dimension(:),allocatable :: a,adum
 complex(dpc), dimension(:), allocatable :: ai,af
 integer(i8b) :: invplan, plan ! needed by fftw3
 integer(i4b) :: k,i, sdim, Nrep=3
-real(dp) :: T,kappa, ti=0.0_dp,tf=200.0_dp, h, h2
+real(dp) :: T,kappa, ti=0.0_dp,tf, h, h2
 real(dp) :: tolbc,tolf,damp=13.0_dp
 character*64 :: wd
 integer(i4b) :: nargs
@@ -37,6 +37,8 @@ open(21,file=trim(wd)//'/parameters.dat')
 	read(21,*) d
 	read(21,*)
 	read(21,*) L
+	read(21,*)
+	read(21,*) tf
 	read(21,*)
 	read(21,*) h 
 	read(21,*)
@@ -60,7 +62,7 @@ allocate(lin(d/2+1),f0(d/2+1),f1(d/2+1),f2(d/2+1),f3(d/2+1),e(d/2+1),e2(d/2+1))
 allocate(f0dum(d/2+1),f1dum(d/2+1),f2dum(d/2+1),f3dum(d/2+1),edum(d/2+1),e2dum(d/2+1))
 allocate(wR(d),wI(d))
 
-open(19,file=trim(wd)//'/Uic.dat')
+open(19,file=trim(wd)//'/reqGuess.dat')
  
 	read(19,*) v(1:d)
  

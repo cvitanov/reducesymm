@@ -41,7 +41,13 @@ L=22.0;
 
 tTot=200*0.4;
 
-vPlt=ListDensityPlot[Take[v,400],Mesh\[Rule] False,ColorFunction\[Rule]hby,
+
+
+
+
+
+
+vPlt=ListDensityPlot[Take[v,1000],Mesh\[Rule] False,ColorFunction\[Rule]hby,
       MeshRange\[Rule]{{0,L},{0.0,tTot}},FrameLabel\[Rule]{"x","t"},
       TextStyle\[Rule]{FontFamily\[Rule]Arial,FontSize\[Rule] 12},
       AspectRatio\[Rule]2];
@@ -50,8 +56,6 @@ vPlt=ListDensityPlot[Take[v,400],Mesh\[Rule] False,ColorFunction\[Rule]hby,
 
 Export[wd[]<>"rpo.eps",vPlt];
 
-Export["reqGuess.dat",v[[400]]];
-
-
+Export["reqGuess.dat",v[[1000]]];
 
 Exit[];

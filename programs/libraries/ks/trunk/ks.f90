@@ -408,8 +408,8 @@ real(dp), dimension(size(bc),size(bc)) :: R_r,Ri_r
 222 Format(<d/2+1>F21.16)
 223 Format(<4>F21.16)
 
-ndum=assert_eq(size(bc),size(fvec)-2,'ksFJ1')
-ndum=assert_eq(d,size(fjac,1)-2,size(fjac,2)-2,'ksFJ2')
+ndum=assert_eq(size(bc),size(fvec)-1,'ksFJ1')
+ndum=assert_eq(d,size(fjac,1)-1,size(fjac,2)-1,'ksFJ2')
 
 if ( .not. allocated(Jac)) allocate(Jac(d,d))
 if ( .not. allocated(lin)) allocate(lin(d/2+1))
@@ -449,7 +449,6 @@ Raf=R_c*af
 fvec(1:d/2)=real(ai(2:size(ai))-Raf(2:size(ai)))
 fvec(d/2+1:d)=aimag(ai(2:size(ai))-Raf(2:size(ai)))
 fvec(d+1)=0.0_dp
-fvec(d+2)=0.0_dp
 
 !print *,"af",sum(abs(af)),sum(abs(Raf))
 !print *,"fvec all", fvec
@@ -497,12 +496,11 @@ DRRa= DR*(Raf)
 fjac=0.0_dp
 
 fjac(1:d,1:d)=UnitMatrix(d)-matmul(R_r,Jac)
-fjac(1:d,d+1)=-v
-fjac(1:d/2,d+2)=real(DRRa(2:d/2+1))
-fjac(d/2+1:d,d+2)=aimag(DRRa(2:d/2+1))
-fjac(d+2,1:d/2)=real(DR(2:d/2+1)*ai(2:d/2+1))
-fjac(d+2,d/2+1:d)=aimag(DR(2:d/2+1)*ai(2:d/2+1))
-fjac(d+1,1:d)= vi
+fjac(1:d/2,d+1)=real(DRRa(2:d/2+1))
+fjac(d/2+1:d,d+1)=aimag(DRRa(2:d/2+1))
+fjac(d+1,1:d/2)=real(DR(2:d/2+1)*ai(2:d/2+1))
+fjac(d+1,d/2+1:d)=aimag(DR(2:d/2+1)*ai(2:d/2+1))
+
 
 print *,"fvec", sum(abs(fvec))
 

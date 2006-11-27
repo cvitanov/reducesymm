@@ -20,8 +20,8 @@
 	END INTERFACE
 	INTEGER(I4B) :: i
 	REAL(DP) :: ndum
-	REAL(DP), DIMENSION(size(x)+2) :: fvec,p
-	REAL(DP), DIMENSION(size(x)+2,size(x)+2) :: fjac
+	REAL(DP), DIMENSION(size(x)+1) :: fvec,p
+	REAL(DP), DIMENSION(size(x)+1,size(x)+1) :: fjac
 
 	do  i=1,ntrial
 		print *,"Newton iteration #", i
@@ -31,7 +31,7 @@
 		endif
 		p=-fvec
 		call la_gesv(fjac,p)
-		x=x+p(1:size(p)-2)
+		x=x+p(1:size(p)-1)
 		kappa=kappa+p(size(p))
 		print *,"Dkappa",p(size(p))
 		if (sum(abs(p)) <= tolx) then 

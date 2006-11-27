@@ -16,9 +16,9 @@ real(dp), dimension(:), allocatable :: wR,wI
 complex(dpc), dimension(:),allocatable :: a,adum
 complex(dpc), dimension(:), allocatable :: ai,af
 integer(i8b) :: invplan, plan ! needed by fftw3
-integer(i4b) :: d, k,i, sdim, Nrep=3
+integer(i4b) :: k,i, sdim, Nrep=3
 real(dp) :: T,kappa, ti=0.0_dp,tf=200.0_dp, h, h2
-real(dp) :: tolbc,tolf,damp=13.0_dp
+real(dp) :: damp=13.0_dp
 character*64 :: wd
 integer(i4b) :: nargs
 logical :: logicdum
@@ -77,6 +77,20 @@ a=a/size(v)
 
 bc(1:d/2)=real(a(2:size(a)))
 bc(d/2+1:d)= aimag(a(2:size(a)))
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+bc=0.0_dp
+
+open(21,file=trim(wd)//'tw.dat')
+	do i=1,15
+	read(21,*) bc(i)
+	read(21,*) bc(i+1)
+	end do
+close(21)
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
 
 ti=0.0_dp
 ai=(0.0_dp,0.0_dp)
