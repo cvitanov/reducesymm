@@ -78,20 +78,6 @@ a=a/size(v)
 bc(1:d/2)=real(a(2:size(a)))
 bc(d/2+1:d)= aimag(a(2:size(a)))
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-bc=0.0_dp
-
-open(21,file=trim(wd)//'tw.dat')
-	do i=1,15
-	read(21,*) bc(i)
-	read(21,*) bc(i+1)
-	end do
-close(21)
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
 ti=0.0_dp
 ai=(0.0_dp,0.0_dp)
 ai(2:size(a))=bc(1:size(bc)/2)+ii*bc(size(bc)/2+1:size(bc))
