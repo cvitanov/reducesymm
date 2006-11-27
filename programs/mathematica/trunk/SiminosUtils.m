@@ -28,6 +28,10 @@ uSpatial[u_,L_]:=Module[{ux,uxx,dx,d},d=Dimensions[u][[1]];
     Do[uxx[[i]]=(ux[[Mod[i+1,d,1]]]-ux[[Mod[i-1,d,1]]])/(2dx),{i,1,d}];
     Table[{u[[i]],ux[[i]],uxx[[i]]},{i,1,d}]]
 
+uAntiSym[u_]:=
+  Module[{uAnt,i,d},d=Dimensions[u][[1]];uAnt=Table[Null,{d}]; 
+    Do[uAnt[[i]]=-u[[d+1-i]],{i,1,d}]; uAnt]
+
 Clear[hby]
 hby[x_]:=Hue[0.7+x/2]/;0\[LessEqual]x\[LessEqual]0.5
 hby[x_]:=Hue[(x-0.5)/2.5]/;0.5<x\[LessEqual]1
