@@ -17,15 +17,24 @@ overwritten.
 
 <<SiminosUtils`
 
+<<Graphics`Graphics3D`
+
+
+
 
 
 v=Import["equilU.dat"]//Flatten;
 
-L=22.00;
+parameters=OpenRead["parameters.dat"];
+
+Read[parameters,{Record,Record,Record}];
+L=2\[Pi] Read[parameters];
+
+
+
+Close[parameters];
 
 d=Dimensions[v][[1]];
-
-Ltilde=L/(2\[Pi]);
 
 
 
@@ -37,6 +46,12 @@ vPlt=ListPlot[vx,PlotJoined\[Rule]True,
 
 Export[wd[]<>"Equil.eps",vPlt];
 
+vS=Transpose[Import["equilS.dat"]];
 
+
+
+\!\(\(Splot = ScatterPlot3D[vS, AxesLabel -> {"\<u\>", \*"\"\<\!\(u\_x\)\>\"", \*"\"\<\!\(u\_xxx\)\>\""}, PlotRange -> All, PlotJoined \[Rule] \ True];\)\)
+
+Export[wd[]<>"EquilS.eps",Splot];
 
 Exit[];

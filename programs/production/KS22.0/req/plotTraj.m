@@ -56,8 +56,6 @@ vPlt=ListDensityPlot[Take[v,1000],Mesh\[Rule] False,ColorFunction\[Rule]hby,
       TextStyle\[Rule]{FontFamily\[Rule]Arial,FontSize\[Rule] 12},
       AspectRatio\[Rule]2];
 
-
-
 Export[wd[]<>"req.eps",vPlt];
 
 Exit[];
