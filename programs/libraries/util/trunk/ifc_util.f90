@@ -94,4 +94,16 @@ interface sort_pick
 	END SUBROUTINE sort_pick_2Re
 end interface
 
+interface
+	subroutine FourierDif(v,vx,L,n)
+		use nrtype
+		implicit none
+		real(dp), dimension(:), intent(in) :: v
+		real(dp), dimension(:), intent(out) :: vx
+		real(dp), intent(in) :: L
+		integer(i4b), intent(in) :: n
+	end subroutine
+end interface
+
+
 END MODULE
