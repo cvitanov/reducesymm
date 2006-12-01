@@ -18,7 +18,6 @@ complex(dpc), dimension(:), allocatable :: ai,af
 integer(i8b) :: invplan, plan ! needed by fftw3
 integer(i4b) :: k,i, sdim, Nrep=3
 real(dp) :: T,kappa, ti=0.0_dp,tf, h, h2
-real(dp) :: tolbc,tolf,damp=13.0_dp
 character*64 :: wd
 integer(i4b) :: nargs
 logical :: logicdum

@@ -56,6 +56,4 @@ vPlt=ListDensityPlot[Take[v,1000],Mesh\[Rule] False,ColorFunction\[Rule]hby,
 
 Export[wd[]<>"rpo.eps",vPlt];
 
-Export["reqGuess.dat",v[[1000]]];
-
 Exit[];
