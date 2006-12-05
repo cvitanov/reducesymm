@@ -15,49 +15,8 @@ Mathematica front end.  Any changes you make to this file will be
 overwritten.
 ***********************************************************************)
 
-<<SiminosUtils`
+Needs["Graphics`Graphics3D`"];
 
+SetOptions[ListDensityPlot,DisplayFunction\[Rule]Identity];
 
-
-
-
-
-
-
-
-Needs["LinearAlgebra`MatrixManipulation`"]
-
-v=Import["reqU.dat"];
-
-
-
-
-
-Clear[hby]
-hby[x_]:=Hue[0.7+x/2]/;0\[LessEqual]x\[LessEqual]0.5
-hby[x_]:=Hue[(x-0.5)/2.5]/;0.5<x\[LessEqual]1
-
-pfile=OpenRead["periods.dat"];
-
-T=Read[pfile,{Number}][[1]];
-
-Close[pfile];
-
-L=22.0;
-
-
-
-
-
-tTot=200;
-
-vPlt=ListDensityPlot[Take[v,1000],Mesh\[Rule] False,ColorFunction\[Rule]hby,
-      MeshRange\[Rule]{{0,L},{0.0,tTot}},FrameLabel\[Rule]{"x","t"},
-      TextStyle\[Rule]{FontFamily\[Rule]Arial,FontSize\[Rule] 12},
-      AspectRatio\[Rule]2];
-
-
-
-Export[wd[]<>"req.eps",vPlt];
-
-Exit[];
+<<plotTraj`
