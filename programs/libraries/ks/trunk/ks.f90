@@ -116,12 +116,9 @@ CONTAINS
 
 SUBROUTINE ksFJ_equil(bc,fvec,fjac)
 USE nrtype
-!use ifc_ks
 use nrutil, only:assert_eq
 
 IMPLICIT NONE
-
-include "fftw3.f"
 
 real(dp), DIMENSION(:), INTENT(IN) :: bc
 real(dp), DIMENSION(:), INTENT(OUT) :: fvec
@@ -134,7 +131,6 @@ complex(dpc), dimension(size(bc)/2) :: fvec_c !, fvecA
 real(dpc), dimension(d/2,d/2):: jcc, jbb, jbc, jcb
 integer(i4b):: ndum,k,j
 real(dp), dimension(size(bc)) :: v 
-integer(i8b) :: invplan, plan ! needed by fftw3
 real(dp), dimension(size(bc)/2) :: q,linr
 real(dp), dimension(size(fjac,1)):: wR,wI
 complex(dpc), dimension(size(fjac,1)) :: W
@@ -240,13 +236,8 @@ USE nrtype
 use nrutil, only:assert_eq
 use ifc_integr
 use ifc_util
-use f95_lapack, only: LA_GEES
-USE LA_PRECISION, ONLY: WP => DP
-!use ifc_ks
 
 IMPLICIT NONE
-
-include "fftw3.f"
 
 real(dp), DIMENSION(:), INTENT(IN) :: bc
 real(dp), DIMENSION(:), INTENT(OUT) :: fvec
@@ -257,11 +248,8 @@ complex(dpc), dimension(size(bc)/2+1) :: ai,af,adum,Rai,Raf, R_cadum
 complex(dpc), dimension(size(bc)/2+1) :: N_adum
 complex(dpc), dimension(size(bc)/2+1) :: v_c,v_c_dum
 real(dp), dimension(size(bc)) :: v,vi
-! real(dp), dimension(size(bc),size(bc)):: Jdum
 integer(i4b):: k,i,ndum
 real(dp) :: ti,tf,h,h2
-! real(dp), dimension(size(fjac,1)):: wR,wI
-integer(i8b) :: invplan, plan ! needed by fftw3
 complex(dpc), dimension(size(bc)/2+1) :: R_c, DR, DRRa
 real(dp), dimension(size(bc),size(bc)) :: R_r,Ri_r
 
@@ -379,13 +367,8 @@ USE nrtype
 use nrutil, only:assert_eq
 use ifc_integr
 use ifc_util
-use f95_lapack, only: LA_GEES
-USE LA_PRECISION, ONLY: WP => DP
-!use ifc_ks
 
 IMPLICIT NONE
-
-include "fftw3.f"
 
 real(dp), DIMENSION(:), INTENT(IN) :: bc
 real(dp), DIMENSION(:), INTENT(OUT) :: fvec
@@ -396,11 +379,8 @@ complex(dpc), dimension(size(bc)/2+1) :: ai,af,adum,Rai,Raf, R_cadum
 complex(dpc), dimension(size(bc)/2+1) :: N_adum
 complex(dpc), dimension(size(bc)/2+1) :: v_c,v_c_dum
 real(dp), dimension(size(bc)) :: v,vi
-! real(dp), dimension(size(bc),size(bc)):: Jdum
 integer(i4b):: k,i,ndum
 real(dp) :: ti,tf,h,h2
-! real(dp), dimension(size(fjac,1)):: wR,wI
-integer(i8b) :: invplan, plan ! needed by fftw3
 complex(dpc), dimension(size(bc)/2+1) :: R_c, DR, DRRa
 real(dp), dimension(size(bc),size(bc)) :: R_r,Ri_r
 

@@ -25,6 +25,8 @@ overwritten.
 
 
 
+
+
 Needs["LinearAlgebra`MatrixManipulation`"]
 
 v=Import["trajU.dat"];
@@ -40,8 +42,6 @@ L=22.0;
 
 
 tTot=200*0.4;
-
-
 
 
 
