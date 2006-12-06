@@ -11,7 +11,7 @@ implicit none
 
 include "fftw3.f"
 
-real(dp), dimension(:),allocatable :: v
+real(dp), dimension(:),allocatable :: v,vx,vxx
 complex(dpc), dimension(:),allocatable :: a,adum
 complex(dp), dimension(:), allocatable :: w
 real(dp), dimension(:),allocatable :: bc,fvec
@@ -51,7 +51,8 @@ close(21)
 222 Format(<d/2+1>F21.16)
 ! 
 
-allocate(v(d),a(d/2+1),adum(d/2+1),bc(d),ar(d/2+1),ai(d/2+1),w(d),fvec(d),fjac(d,d),fjacdum(d,d), vR(d,d))
+allocate(v(d),vx(d),vxx(d),a(d/2+1),adum(d/2+1),bc(d),ar(d/2+1),ai(d/2+1),w(d))
+allocate( fvec(d),fjac(d,d),fjacdum(d,d), vR(d,d))
 
 open(19,file=trim(wd)//'/equilGuess.dat')
  
@@ -117,5 +118,20 @@ open(24,file=trim(wd)//'/equilU.dat')
 write(24,221) v
 
 close(24)
+
+call FourierDif(v,vx,L,1)
+call FourierDif(v,vxx,L,2)
+
+open(25,file=trim(wd)//'equilS.dat')
+
+	write(25,221) v(1:d)
+	write(25,221) vx(1:d)
+	write(25,221) vxx(1:d)
+
+close(25)
+
+open(26,file=trim(wd)//'steady_c.dat')
+	write(26,220) sum(v**2-vx-vxx)/d
+close(25)
 
 end program
