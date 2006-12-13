@@ -8,6 +8,7 @@ real(dp), dimension(:), allocatable :: f0dum,f1dum,f2dum,f3dum,edum,e2dum
 real(dp) :: R, L, Tw
 integer(i4b) :: d, M, Nsteps, Nplt, Ntrial
 real(dp) :: tolbc, tolf
+real(dp) :: c ! integration constant from steady state equation
 
 interface ksFJ
 	module procedure ksFJ_equil,ksFJ_rpo, ksFJ_req!(bc,fvec,fjac)
@@ -74,6 +75,17 @@ interface
 		REAL(DP), DIMENSION(size(y),size(y)) :: MatVar
 	end function MatVar
 end interface
+
+interface
+	SUBROUTINE Derivs_SteadyKS(x,y,dydx)
+		USE nrtype
+		IMPLICIT NONE
+		REAL(dp), INTENT(IN) :: x
+		REAL(dp), DIMENSION(:), INTENT(IN) :: y
+		REAL(dp), DIMENSION(:), INTENT(OUT) :: dydx
+	end subroutine
+end interface
+
 
 interface Rc
 	function Rc_M(w,dmn)
