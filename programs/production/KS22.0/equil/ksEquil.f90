@@ -11,7 +11,7 @@ implicit none
 
 include "fftw3.f"
 
-real(dp), dimension(:),allocatable :: v,vx,vxx
+real(dp), dimension(:),allocatable :: v,vx,vxx,vxxx
 complex(dpc), dimension(:),allocatable :: a,adum
 complex(dp), dimension(:), allocatable :: w
 real(dp), dimension(:),allocatable :: bc,fvec
@@ -46,12 +46,12 @@ open(21,file=trim(wd)//'/parameters.dat')
 	read(21,*) Ntrial
 close(21)
 
-220 Format(F30.18)
+220 Format(F21.16)
 221 Format(<d>F21.16)
 222 Format(<d/2+1>F21.16)
 ! 
 
-allocate(v(d),vx(d),vxx(d),a(d/2+1),adum(d/2+1),bc(d),ar(d/2+1),ai(d/2+1),w(d))
+allocate(v(d),vx(d),vxx(d),vxxx(d),a(d/2+1),adum(d/2+1),bc(d),ar(d/2+1),ai(d/2+1),w(d))
 allocate( fvec(d),fjac(d,d),fjacdum(d,d), vR(d,d))
 
 open(19,file=trim(wd)//'/equilGuess.dat')
@@ -116,11 +116,11 @@ call dfftw_destroy_plan(invplan)
 open(24,file=trim(wd)//'/equilU.dat')
 
 write(24,221) v
-
 close(24)
 
 call FourierDif(v,vx,L,1)
 call FourierDif(v,vxx,L,2)
+call FourierDif(v,vxxx,L,3)
 
 open(25,file=trim(wd)//'equilS.dat')
 
@@ -130,8 +130,12 @@ open(25,file=trim(wd)//'equilS.dat')
 
 close(25)
 
+print *,"vxxx", sum(v(1:d)),sum(v(1:d)**2), sum(vxxx(1:d)),sum(vxx(1:d)),sum(vx(1:d))
+print *,"c",v(1)**2-vx(1)-vxxx(1),v(1),vx(1),vxxx(1)
+
+
 open(26,file=trim(wd)//'steady_c.dat')
-	write(26,220) sum(v**2-vx-vxx)/d
+	write(26,220) sum(v**2-vx-vxxx)/d
 close(25)
 
 end program

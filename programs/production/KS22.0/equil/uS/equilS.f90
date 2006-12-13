@@ -31,7 +31,7 @@ open(21,file=trim(wd)//'/parameters.dat')
 	read(21,*) L 
 close(21)
 
-220 Format(F30.18)
+220 Format(F21.16)
 221 Format(<d>F21.16)
 222 Format(<d/2+1>F21.16)
 ! 

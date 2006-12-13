@@ -50,7 +50,7 @@ open(21,file=trim(wd)//'/parameters.dat')
 	read(21,*) R
 close(21)
 
-220 Format(F30.18)
+220 Format(F21.16)
 221 Format(<d>F30.18)
 222 Format(<d/2+1>F30.18)
 223 Format(<4>F30.18)
