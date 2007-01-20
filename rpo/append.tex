@@ -122,11 +122,6 @@ reads:
     \frac{\partial \dot{c}_k}{\partial c_{j}} =  \left(\frac{k}{\tildeL}\right)^2\left(1- \left(k/\tildeL\right)^2 \right)\delta_{kj} + 2 \frac{k}{\tildeL} (c_{k+j}-c_{k-j})
  \eeq
 
-% \JFG{This equation needs a $\delta_{kj}$ on the first term, doesn't it? I say
-% this on the basis of knowing what the answer should look like and by symmetry
-% with the $\partial \dot{b}_k / \partial b_j$ equation below, rather than by
-% deriving from the above.}
-
  For the case of the full space we need to consider the four matrices $\frac{\partial \dot{b}_k}{\partial b_j},\frac{\partial \dot{b}_k}{\partial c_j},\frac{\partial \dot{c}_k}{\partial b_j},\frac{\partial \dot{c}_k}{\partial c_j}$. Following the above procedure
  \beq
     \frac{\partial \dot{c}_k}{\partial b_{j}} =  2 \frac{k}{\tildeL} ( b_{k+j}+b_{k-j} )\,,
@@ -215,6 +210,103 @@ with index $k$ running from 0 to $N-1$.  I admit, the notations are
 a bit stretched here, but I find them convenient when coding this
 equation using FFT.
 
+\section{Tales from the Literature}
 
+\subsection{\KSe\ according to Kuramoto and Sivashinsky}
 
+The original form in which \KSe was derived (in $1-D$) was (up to scaling factors):
+\beq
+	y_t=-y_{xxxx}-y_{xx}-\frac{1}{2}y_x^2\,,
+	\label{eq:KSeOR}
+\eeq
+with periodic boundary conditions in the $(0,L)$ interval. The equation we are using
+differs in the nonlinear term:
+\beq 
+	u_t=-u_{xxxx}-u_{xx}-uu_x\,.
+	\label{eq:KSeAP}
+\eeq
+It can be obtained from \refeq{eq:KSeOR} by setting $u=y_x$. The two equations are used interchangeably
+and referred to as \KSe. The authors of \refref{TsveTri89} state that the solutions of the two equations
+differ considerably despite the simple way they are related. 
+
+\subsection{\KSe according to Greene and Kim}
+
+Greene and Kim \refref{ksgreene88} use the following form of \KSe:
+\beq
+	y_t=-4y_{xxxx}-\alpha\left(y_{xx}+\frac{1}{2}y_x^2-\frac{1}{4\pi}\int_0^{2\pi}y_x^2\ dx\right)\,,
+	\label{eq:KSeGreeneKim}
+\eeq
+where $\alpha$ the bifurcation parameter and periodic boundary conditions are assumed in the $(0,2\pi)$
+interval. To see its relation to our form of the equation, first take the derivative of \refeq{eq:KSeGreeneKim}
+with respect to $x$ and then make the substitution $y_x=u$ to obtain
+\beq
+	u_t=-4u_{xxxx}-\alpha\left(u_{xx}+uu_x\right)\,.
+\eeq
+Rescale according to
+\beq
+	\tilde{x}=\frac{\alpha^{1/2}}{2} x
+	\label{eq:GKxScale}
+\eeq
+\beq
+	\tilde{t}=\frac{\alpha^2}{4} t
+\eeq
+\beq
+	\tilde{u}=\frac{2}{a^{1/2}} u
+\eeq
+to obtain \refeq{eq:KSeAP}. From \refeq{eq:GKxScale} we see that our control parameter $\tilde{L}=L/2\pi$ is connected
+to $\alpha$ through $\frac{\alpha^{1/2}}{2}$. Thus our system size $L=22.0$ corresponds to $\alpha=49.0395$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[t]
+	% \vspace*{-5pt}
+\centering
+\includegraphics[width=0.5\textwidth]{figs/GreeneKimBifColor.eps}
+	% \vspace*{-5pt}
+\caption{
+	{\small
+The energy of steady states as a function of the bifurcation
+parameter a. The solid curves are N-cell solutions,
+dotted curves are for GLMRT, the dash-dotted curve is for the
+giant states, and dashed curves are for the propagating solutions.
+Open circles are for Hopf bifurcation. From \refref{ksgreene88}. Here
+we've color-coded the branches to reflect the number of unstable
+eigenvalues (or complex pairs). Red: 2 unstable eigenvalues, Blue: 1
+unstable eigenvalue, Green: stable. Regions that could not be
+resolved with the help of \refref{ksgreene88} or are of no interest
+to our present purposes have been left black.
+        } %end \small
+        }
+\label{fig:GreeneKim}
+	% \vspace*{-5pt}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Greene and Kim systematically study the steady states of \KSe\ and their bifurcations, extending the work of
+previous authors, \refrefs{Mks86,laquey74}. We review their bifurcation diagram, \reffig{fig:GreeneKim}, up to
+the system size that we use. They define the energy as
+\beq
+	E=\frac{1}{2\pi}\int_0^{2\pi}y_x^2\, dx\,.
+\eeq
+Since $u=y_x$ we have from \refeq{eq:stdks} that $c\sim E$. 
+
+For small $\alpha$ the only equilibrium state of the system is the trivial state, $y(x,t)=0$, which is
+stable for $\tilde{L}=(a/4)^{1/2}<1$. At $\tilde{L}=N$, with $N$ integer, the $N$'th harmonic becomes unstable and
+the trivial state bifurcates to the so called $N$-cell states. These states contain only the multiples of the $N$'th
+harmonic, i.e. only the components $a_N,a_{2N},...$ in our notation. 
+Moreover, the $N$-cell states are found to be symmetric (in our case, since $u=y_x$ they will be
+antisymmetric). In general Greene and Kim show that symmetric solutions are not traveling. 
+At point $A$ in \reffig{fig:GreeneKim} the $1$-cell state loses stability and bifurcates to a stable, 
+asymetric traveling wave solution, which later on becomes unstable through a Hopf bifurcation. 
+
+At $\tilde{L}=(a/4)^{1/2}=2$ the system has become large enough that a $2$-cell steady state appears. At point $B$
+in \reffig{fig:GreeneKim} the $1$-cell branch merges to the $2$-cell branch. In general each $N$-cell branch merges to the corresponding $2N$-cell branch.
+
+At point $C$ in \reffig{fig:GreeneKim} the $2$-cell state bifurcates to a type of equilibrium solution
+found by La Quey, Mahajan, Rutherford and Tang, \refref{laquey74} and generalized by Greene and Kim who refer to them as GLMRT equilibria. GLMRT solutions are symmetric (u(x) is antisymmetric) and can be roughly described as long-wave distorted $N$-cell states.
+
+The last type of solution identified in \refref{ksgreene88} appears at point $F$ in \reffig{fig:GreeneKim} and is termed
+giant state. because its amplitude grows as the system size increases.
+
+According to the bifurcation diagram \reffig{fig:GreeneKim}, at the point that corresponds to our system size $\tilde{L}=\frac{\alpha^{1/2}}{2}=3.501$ the steady states we should expect are the $2$- and $3$-cell states ($\EQV{2}$ and $\EQV{3}$ respectivelly), the GLMRT state that bifurcates from a $3$-cell state at point $I$ ($\EQV{1}$) and the traveling waves that belong to the branches starting at points $A$ ($\REQV{\pm}{1}$) and $M$ (not identified yet).
+ 
         }% end \PublicPrivate
