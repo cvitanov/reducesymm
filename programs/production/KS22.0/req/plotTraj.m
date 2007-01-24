@@ -21,10 +21,6 @@ overwritten.
 
 
 
-
-
-
-
 Needs["LinearAlgebra`MatrixManipulation`"]
 
 v=Import["reqU.dat"];
@@ -33,10 +29,6 @@ v=Import["reqU.dat"];
 
 
 
-Clear[hby]
-hby[x_]:=Hue[0.7+x/2]/;0\[LessEqual]x\[LessEqual]0.5
-hby[x_]:=Hue[(x-0.5)/2.5]/;0.5<x\[LessEqual]1
-
 pfile=OpenRead["periods.dat"];
 
 T=Read[pfile,{Number}][[1]];
@@ -44,8 +36,6 @@ T=Read[pfile,{Number}][[1]];
 Close[pfile];
 
 L=22.0;
-
-
 
 
 
