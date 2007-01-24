@@ -21,8 +21,6 @@ overwritten.
 
 
 
-
-
 v=Import["equilU.dat"]//Flatten;
 
 parameters=OpenRead["parameters.dat"];
@@ -43,6 +41,18 @@ vx=Table[{(i-1)*L/(d-1), v[[i]]},{i,1,d}];
 vPlt=ListPlot[vx,PlotJoined\[Rule]True,
       TextStyle\[Rule]{FontSize\[Rule]12,FontFamily\[Rule]Arial},
       AxesLabel\[Rule]{"x","u"},AspectRatio\[Rule]1];
+
+
+
+
+
+
+
+
+
+
+
+
 
 Export[wd[]<>"Equil.eps",vPlt];
 
