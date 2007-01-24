@@ -21,21 +21,13 @@ overwritten.
 
 
 
-
-
-
-
 Needs["LinearAlgebra`MatrixManipulation`"]
 
-v=Import["rpoU.dat"];
-
-
+v=Import["trajU.dat"];
 
 
 
 L=22.0;
-
-
 
 
 

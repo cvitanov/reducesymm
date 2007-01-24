@@ -61,7 +61,7 @@ allocate(lin(d/2+1),f0(d/2+1),f1(d/2+1),f2(d/2+1),f3(d/2+1),e(d/2+1),e2(d/2+1))
 allocate(f0dum(d/2+1),f1dum(d/2+1),f2dum(d/2+1),f3dum(d/2+1),edum(d/2+1),e2dum(d/2+1))
 allocate(wR(d),wI(d))
 
-open(19,file=trim(wd)//'/deltaGuess.dat')
+open(19,file=trim(wd)//'/ic.dat')
  
 	read(19,*) v(1:d)
  
@@ -90,7 +90,7 @@ print *,"int",h,Nsteps,h*Nsteps,sum(abs(ai))
 call SetLin_KS(lin)
 call etdrk4DiagPrefactors(lin,h,R,M,f0,f1,f2,f3,e,e2)
 call etdrk4DiagDriverS(ti,ai,Nsteps,tf,af,f0,f1,f2,f3,e,e2,Nplt,SetNlin_KS)
-open (29,file=trim(wd)//'/rpoU.dat')
+open (29,file=trim(wd)//'/trajU.dat')
 do i=1,size(aSt,1)
 	adum=aSt(i,:)
 !	print *,sum(abs(adum))
