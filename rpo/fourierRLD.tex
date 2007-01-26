@@ -1,0 +1,87 @@
+% fourierRLD.tex
+%
+% Predrag               jun 20 2006
+% $Author$ $Date$
+
+
+\section{\KS\ according to Ruslan}
+\label{sec:fourierRLD}
+
+\PC{move to siminos/thesis/chapters/ once rpo.tex is finalized}
+%
+The \KSe\ has a slightly different form:
+\begin{equation}
+  u_t=-{\textstyle\frac{1}{2}}(u^2)_x-u_{xx}- u_{xxxx} \, ,
+\end{equation}
+which can be reduced to Eq.~(\ref{eq:KS}) by the transformation $u
+\rightarrow -2u$.
+
+The \KSe\ in terms of Fourier modes:
+\begin{equation}
+  \hat{u}_k \equiv {\cal F}[u]_k = \frac{1}{L}\int_0^L u(x,t) e^{-ikx/\tildeL}dx\,,
+  \qquad u(x,t) \equiv {\cal F}^{-1}[\hat{u}] = \sum_{k\in{\mathbb Z}} \hat{u}_k e^{ikx/\tildeL}
+\end{equation}
+ is given by
+\begin{equation}
+  \dot{\hat{u}}_k =[(k/\tildeL)^2-(k/\tildeL)^4]\hat{u}_k -
+  \frac{ik}{2\tildeL}{\cal F}[({\cal F}^{-1}[\hat{u}])^2]_k\,.
+\end{equation}
+Since $u$ is real, the Fourier modes are related by $\hat{u}_{-k} =
+\hat{u}^\ast_k$.
+
+The above system is truncated as follows: The Fourier transform
+${\cal F}$ is replaced by its discrete equivalent
+\begin{equation}
+  a_k \equiv {\cal F}_N[u]_k = \sum_{n = 0}^{N-1} u(x_n)
+  e^{-ikx_n/\tildeL}\,,\qquad u(x_n) \equiv {\cal F}_N^{-1}[a]_n
+  = \frac{1}{N}\sum_{k = 0}^{N-1} a_k e^{ikx_n/\tildeL}\,,
+\end{equation}
+where $x_n = 2\pi\tildeL/N$ and $a_{N-k} = a^\ast_k$.  Since $a_0
+= 0$ due to galilean invariance and setting $a_{N/2} = 0$ (assuming
+$N$ is even), the number of independent variables in the truncated
+system is $N-2$.  The truncated system looks as follows:
+\begin{equation}
+  \dot{a}_k =[(k/\tildeL)^2-(k/\tildeL)^4]a_k -
+  \frac{ik}{2\tildeL}{\cal F}_N[({\cal F}_N^{-1}[a])^2]_k\,.
+\end{equation}
+with $k = 1,\ldots,N/2-1$, although in the Fourier transform we need
+to use $a_k$ over the full range of $k$ values from 0 to $N-1$.
+
+The discrete Fourier transform ${\cal F}_N$ can be computed by FFT.
+In Fortran and C, the routine {\tt REALFT} from Numerical Recipes
+can be used.  In Matlab, it is more convenient to use complex
+variables for $a_k$.  Note that Matlab function {\tt fft} is, in
+fact, the inverse Fourier Transform.
+
+To derive the equation for the matrix of variations, I use the fact
+that ${\cal F}_N$ is a linear operator.  Since we need to
+differentiate separately with respect to the real and imaginary
+components of $a_k$, I use the notation $a_k = b_{2k-1} + ib_{2k}$.
+\begin{equation}
+  \frac{\partial \dot{a}_k}{\partial b_j} =
+  [(k/\tildeL)^2-(k/\tildeL)^4]\delta_{kj} -
+  \frac{ik}{\tildeL}{\cal F}_N[{\cal F}_N^{-1}[a]\cdot{\cal
+  F}_N^{-1}[\delta_{kj}]]\,,\quad j = 1,\ldots,N-2
+\end{equation}
+where the dot indicates componentwise product, and the inverse
+Fourier transform is applied separately to each column of
+$\delta_{kj}$. Here, $\delta_{kj}$ is not a standard Kronecker
+delta, but a complex valued $N\times N-2$ matrix:
+\begin{equation}
+  \delta_{kj} = \left(
+  \begin{array}{ccccc}
+  0 &  0 & 0 &  0 &\cdots\\
+  1 &  i & 0 &  0 &\cdots\\
+  0 &  0 & 1 &  i &\cdots\\
+\multicolumn{5}{c}\dotfill \\
+  0 &  0 & 0 &  0 &\cdots\\
+\multicolumn{5}{c}\dotfill \\
+  0 &  0 & 1 & -i &\cdots\\
+  1 & -i & 0 &  0 &\cdots\\
+  \end{array}  \right),
+\end{equation}
+with index $k$ running from 0 to $N-1$.  I admit, the notations are
+a bit stretched here, but I find them convenient when coding this
+equation using FFT.
+
+
