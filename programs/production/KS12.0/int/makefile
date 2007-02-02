@@ -20,7 +20,7 @@ integrLIB = integr
 ksLIB= ks
 
 $(TARGET): $(OBJECTS)
-	$(COMP) -o $(TARGET) -I$(userModPATH) -I$(lapackModPATH) -L$(lapack95path)/$(COMP) -L$(lapackLibPATH) -L$(userLibPATH) $(CFLAGS) $(OBJECTS) $(sharedLibPATH)/libfftw3.so -l$(ksLIB) -l$(shootingLIB) -l$(integrLIB) -llapack95 -llapack -lblas -l$(utilLIB) -l$(nrLIB) /usr/lib/libgfortran.so.1
+	$(COMP) -o $(TARGET) -I$(userModPATH) -I$(lapackModPATH) -L$(lapack95path)/$(COMP) -L$(lapackLibPATH) -L$(userLibPATH) $(CFLAGS) $(OBJECTS) $(sharedLibPATH)/libfftw3.so -l$(ksLIB) -l$(shootingLIB) -l$(integrLIB) -llapack95 -llapack -lblas -l$(utilLIB) -l$(nrLIB) $(LIBFOR)
 
 %.o: %.f90 
 	$(COMP) -c -o $@ -I$(userModPATH) -I$(lapackModPATH) $(CFLAGS) $< 
