@@ -14,7 +14,7 @@ include "fftw3.f"
 real(dp), dimension(:),allocatable :: v,vx,vxx,vxxx
 complex(dpc), dimension(:),allocatable :: a,adum
 complex(dp), dimension(:), allocatable :: w
-real(dp), dimension(:),allocatable :: bc,fvec
+real(dp), dimension(:),allocatable :: bc,bc0,fvec
 real(dp), dimension(:,:),allocatable :: fjac
 complex(dp), dimension(:,:), allocatable :: fjacdum,vR
 real(dp), dimension(:),allocatable :: ar,ai
@@ -56,7 +56,7 @@ close(21)
 222 Format(<d/2+1>F21.16)
 ! 
 
-allocate(v(d),vx(d),vxx(d),vxxx(d),a(d/2+1),adum(d/2+1),bc(d),ar(d/2+1),ai(d/2+1)) 
+allocate(v(d),vx(d),vxx(d),vxxx(d),a(d/2+1),adum(d/2+1),bc(d),bc0(d),ar(d/2+1),ai(d/2+1)) 
 allocate( fvec(d),fjac(d,d),fjacdum(d,d), vR(d,d),w(d)) !Eliminate b_1
 
 open(19,file=trim(wd)//'/ic.dat')
@@ -94,7 +94,7 @@ do i=1,Nf
 	vR=0.0_dp
 	call la_geev(fjacdum,w,vR=vR) ! ,select=SelectSmallEig_c,sdim=sdim)
 	call sort_pick(w,vR)
-
+	
 	write(35,"(4F21.16)") real(w(d)),real(w(d-1)),real(w(d-2)),real(w(d-3))
 	print *,"Writing eigenvector for eigenvalue #",d-2+i,"lambda=",w(d-2+i),"dimension=",size(vR(:,d-2+i)),"d=",d
 	write(36,"(<2*d>F21.16)") vR(:,d-2+i) ! For specific case the second eigenvalue changes stability and then becomes 1st in the list (counting from the end)
@@ -125,8 +125,6 @@ close(24)
 
 !Export GLMRT guess
 
-bc=bc+0.3_dp*vR(:,d)
-
 a=(0,0)
 
 a(2:size(a))=bc(1:d/2)+ii*bc(d/2+1:d)
@@ -151,5 +149,13 @@ call dfftw_destroy_plan(invplan)
 open (27,file="UnEig.dat")
 write(27,221) v
 close(27)
+
+bc0=bc
+
+do i=-10,10
+	bc=bc0+i*0.1_dp*vR(:,d)
+	call ksFJ_equil(bc,fvec,fjac)
+	print *,i*0.1_dp,sum(abs(fvec))
+end do
 
 end program
