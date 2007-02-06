@@ -133,7 +133,7 @@ call dfftw_plan_dft_c2r_1d(invplan,d,a,v,FFTW_ESTIMATE)
 call dfftw_execute(invplan)
 call dfftw_destroy_plan(invplan)
 
-open (25,file="GLMRTguess.dat")
+open (25,file="2cTWguess.dat")
 write(25,221) v
 close(25)
 
@@ -149,13 +149,5 @@ call dfftw_destroy_plan(invplan)
 open (27,file="UnEig.dat")
 write(27,221) v
 close(27)
-
-bc0=bc
-
-do i=-10,10
-	bc=bc0+i*0.1_dp*vR(:,d)
-	call ksFJ_equil(bc,fvec,fjac)
-	print *,i*0.1_dp,sum(abs(fvec))
-end do
 
 end program

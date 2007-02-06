@@ -14,12 +14,12 @@ include "fftw3.f"
 real(dp), dimension(:),allocatable :: v,vx,vxx,vxxx
 complex(dpc), dimension(:),allocatable :: a,adum
 complex(dp), dimension(:), allocatable :: w
-real(dp), dimension(:),allocatable :: bc,bc0,fvec
+real(dp), dimension(:),allocatable :: bc,fvec
 real(dp), dimension(:,:),allocatable :: fjac
 complex(dp), dimension(:,:), allocatable :: fjacdum,vR
 real(dp), dimension(:),allocatable :: ar,ai
 integer(i8b) :: invplan, plan ! needed by fftw3
-integer(i4b) :: k,i,j,sdim=8, Nf, elim=1
+integer(i4b) :: k,i,j,sdim=8, Nf
 real(dp) :: dL
 character*64 :: wd
 integer(i4b) :: nargs
@@ -56,8 +56,8 @@ close(21)
 222 Format(<d/2+1>F21.16)
 ! 
 
-allocate(v(d),vx(d),vxx(d),vxxx(d),a(d/2+1),adum(d/2+1),bc(d),bc0(d),ar(d/2+1),ai(d/2+1)) 
-allocate( fvec(d),fjac(d,d),fjacdum(d,d), vR(d,d),w(d)) !Eliminate b_1
+allocate(v(d),vx(d),vxx(d),vxxx(d),a(d/2+1),adum(d/2+1),bc(d),ar(d/2+1),ai(d/2+1),w(d))
+allocate( fvec(d),fjac(d,d),fjacdum(d,d), vR(d,d))
 
 open(19,file=trim(wd)//'/ic.dat')
  
@@ -71,12 +71,10 @@ call dfftw_execute(plan)
 call dfftw_destroy_plan(plan)
 a=a/size(v)
 
-bc=0.0_dp
-bc(1:d/2)=real(a(2:size(a))) 
+bc(1:d/2)=real(a(2:size(a)))
 bc(d/2+1:d)= aimag(a(2:size(a)))
 
 open(35,file=trim(wd)//'/Jdiag.dat')
-open(36,file=trim(wd)//'/Jev.dat')
 open(24,file=trim(wd)//'/equilU.dat')
 open(26,file=trim(wd)//'/c_steady.dat')
 
@@ -84,23 +82,21 @@ do i=1,Nf
 
 	print *, "Point #",i
 	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	call mnewt_elim(ntrial,elim,bc,tolbc,tolf,ksFJ_equil_elim)
+	call mnewt(ntrial,bc,tolbc,tolf,ksFJ_equil)
 	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-	call ksFJ_equil(bc,fvec,fjac)
+	call ksFJ(bc,fvec,fjac)
 
 	fjacdum=fjac
 	w=0.0_dp
 	vR=0.0_dp
 	call la_geev(fjacdum,w,vR=vR) ! ,select=SelectSmallEig_c,sdim=sdim)
-	call sort_pick(w,vR)
-	
-	write(35,"(4F21.16)") real(w(d)),real(w(d-1)),real(w(d-2)),real(w(d-3))
-	print *,"Writing eigenvector for eigenvalue #",d-3+i,"lambda=",w(d-3+i)
-	write(36,"(<2*d>F21.16)") vR(:,d-3+i) ! For specific case the second eigenvalue changes stability and then becomes 1st in the list (counting from the end)
-	
+	call sort_pick(w)
+
+	write(35,"(4F28.16)") real(w(d)),real(w(d-1)),real(w(d-2)),real(w(d-3))
+
 	a=(0,0)
-	
+
 	a(2:size(a))=bc(1:d/2)+ii*bc(d/2+1:d)
 
 	call dfftw_plan_dft_c2r_1d(invplan,d,a,v,FFTW_ESTIMATE)
@@ -122,32 +118,5 @@ end do
 close(35)
 close(26)
 close(24)
-
-!Export GLMRT guess
-
-a=(0,0)
-
-a(2:size(a))=bc(1:d/2)+ii*bc(d/2+1:d)
-
-call dfftw_plan_dft_c2r_1d(invplan,d,a,v,FFTW_ESTIMATE)
-call dfftw_execute(invplan)
-call dfftw_destroy_plan(invplan)
-
-open (25,file="GLMRTguess.dat")
-write(25,221) v
-close(25)
-
-a=(0,0)
-
-a(2:size(a))=vR(1:d/2,d)+ii*vR(d/2+1:d,d)
-
-call dfftw_plan_dft_c2r_1d(invplan,d,a,v,FFTW_ESTIMATE)
-call dfftw_execute(invplan)
-call dfftw_destroy_plan(invplan)
-
-
-open (27,file="UnEig.dat")
-write(27,221) v
-close(27)
 
 end program
