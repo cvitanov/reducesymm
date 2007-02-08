@@ -13,8 +13,8 @@ include "fftw3.f"
 
 real(dp), dimension(:),allocatable :: v,vx,vxx,vxxx
 complex(dpc), dimension(:),allocatable :: a,adum
-complex(dp), dimension(:), allocatable :: w
-real(dp), dimension(:),allocatable :: bc,bc0,fvec
+complex(dp), dimension(:), allocatable :: w,DR
+real(dp), dimension(:),allocatable :: bc,bcR,fvec
 real(dp), dimension(:,:),allocatable :: fjac
 complex(dp), dimension(:,:), allocatable :: fjacdum,vR
 real(dp), dimension(:),allocatable :: ar,ai
@@ -52,11 +52,11 @@ open(21,file=trim(wd)//'/parameters.dat')
 close(21)
 
 220 Format(F21.16)
-221 Format(<d>F21.16)
+221 Format(<d>F26.16)
 222 Format(<d/2+1>F21.16)
 ! 
 
-allocate(v(d),vx(d),vxx(d),vxxx(d),a(d/2+1),adum(d/2+1),bc(d),bc0(d),ar(d/2+1),ai(d/2+1)) 
+allocate(v(d),vx(d),vxx(d),vxxx(d),a(d/2+1),adum(d/2+1),bc(d),bcR(d),DR(d/2+1),ar(d/2+1),ai(d/2+1)) 
 allocate( fvec(d),fjac(d,d),fjacdum(d,d), vR(d,d),w(d)) !Eliminate b_1
 
 open(19,file=trim(wd)//'/ic.dat')
@@ -123,23 +123,37 @@ close(35)
 close(26)
 close(24)
 
-!Export GLMRT guess
+open(37,file=trim(wd)//'/J.dat')
+do i=1,size(fjac,1)
+	write(37,221) fjac(i,:)
+end do
+close(37)
+
+! Export displacement eigenvector
 
 a=(0,0)
 
 a(2:size(a))=bc(1:d/2)+ii*bc(d/2+1:d)
 
+DR=(0,0)
+
+do k=1,d/2+1
+	DR(k)=ii*Real((k-1),dp)/L
+end do
+
+a= DR*a
+
 call dfftw_plan_dft_c2r_1d(invplan,d,a,v,FFTW_ESTIMATE)
 call dfftw_execute(invplan)
 call dfftw_destroy_plan(invplan)
 
-open (25,file="GLMRTguess.dat")
+open (25,file="Ra.dat")
 write(25,221) v
 close(25)
 
 a=(0,0)
 
-a(2:size(a))=vR(1:d/2,d)+ii*vR(d/2+1:d,d)
+a(2:size(a))=vR(1:d/2,d-1)+ii*vR(d/2+1:d,d-1)
 
 call dfftw_plan_dft_c2r_1d(invplan,d,a,v,FFTW_ESTIMATE)
 call dfftw_execute(invplan)
