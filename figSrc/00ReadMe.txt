@@ -1,12 +1,13 @@
-siminos/figSrc/mathematica/
+siminos/figSrc
 % $Author$ $Date$
 
 Siminos source programs for figures
 ===================================
 					Predrag Feb 10 2007
 
-ksBifDiag.m generates
-siminos/rpo_ks/figs/ksBifDiag.eps
+source for
+   siminos/rpo_ks/figs/ksBifDiag.eps
+is in programs/production/ksBif/
 
 Processing
 ----------
