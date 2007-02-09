@@ -41,9 +41,9 @@ Wolfram Research.
 
 (*NotebookFileLineBreakTest
 NotebookFileLineBreakTest*)
-(*NotebookOptionsPosition[      3647,        135]*)
-(*NotebookOutlinePosition[      4276,        157]*)
-(*  CellTagsIndexPosition[      4232,        153]*)
+(*NotebookOptionsPosition[      4517,        152]*)
+(*NotebookOutlinePosition[      5146,        174]*)
+(*  CellTagsIndexPosition[      5102,        170]*)
 (*WindowFrame->Normal*)
 
 
@@ -53,34 +53,51 @@ Cell[BoxData[
     \(<< LinearAlgebra`MatrixManipulation`\)], "Input"],
 
 Cell[BoxData[
-    \(\(v = Import["\<equilU.dat\>"];\)\)], "Input"],
+    \(\(E2cTWs1 = 
+        Import["\<./2cTW/branch/segment1/c_steady.dat\>"];\)\)], "Input"],
 
 Cell[BoxData[
-    \(Dimensions[v]\)], "Input"],
+    \(\(E2cTWs2 = 
+        Import["\<./2cTW/branch/segment2/c_steady.dat\>"];\)\)], "Input"],
 
 Cell[BoxData[
-    \(ListPlot[v[\([1]\)]]\)], "Input"],
+    \(\(p2cTWs1 = 
+        ListPlot[Take[E2cTWs1, {1, \(Dimensions[E2cTWs1]\)[\([1]\)], 5}], 
+          PlotJoined \[Rule] True, 
+          PlotStyle \[Rule] \ AbsoluteDashing[{10}]];\)\)], "Input"],
 
 Cell[BoxData[
-    \(ListPlot[v[\([2]\)]]\)], "Input"],
+    \(\(p2cTWs2 = 
+        ListPlot[Take[E2cTWs2, {1, \(Dimensions[E2cTWs2]\)[\([1]\)], 5}], 
+          PlotJoined \[Rule] True, 
+          PlotStyle \[Rule] \ AbsoluteDashing[{10}]];\)\)], "Input"],
 
 Cell[BoxData[
-    \(Do[ListPlot[v[\([i]\)]], {i, 1, 7}]\)], "Input"],
+    \(\(E2cGLMRT = Import["\<./2cGLMRT/c_steady.dat\>"];\)\)], "Input"],
 
 Cell[BoxData[
-    \(\(j = Import["\<UnEig.dat\>"] // Flatten;\)\)], "Input"],
+    \(\(p2cGLMRT = 
+        ListPlot[
+          Take[E2cGLMRT, {1, \(Dimensions[E2cGLMRT]\)[\([1]\)] - 6, 2}], 
+          PlotJoined \[Rule] False];\)\)], "Input"],
 
 Cell[BoxData[
-    \(\(ListPlot[j];\)\)], "Input"],
+    \(\(E2c = Import["\<./2c/stable/c_steady.dat\>"];\)\)], "Input"],
 
 Cell[BoxData[
-    \(ListPlot[v[\([2]\)] + 0.3  j]\)], "Input"],
+    \(\(p2c = 
+        ListPlot[Take[E2c, {1, \(Dimensions[E2c]\)[\([1]\)], 20}], 
+          PlotJoined \[Rule] True];\)\)], "Input"],
 
 Cell[BoxData[
-    \(Export["\<../intM/ic.dat\>", v[\([2]\)] + 0.3  j]\)], "Input"],
+    \(bifDiag = 
+      Show[p2cTWs1, p2cTWs2, p2cGLMRT, p2c, PlotRange \[Rule] All, 
+        AxesLabel \[Rule] \ {\*"\"\<\!\(\(L\&~\)\)\>\"", "\<E\>"}, 
+        TextStyle \[Rule] \ {FontSize \[Rule] \ 14, 
+            FontFamily \[Rule] Helvetica}, ImageSize \[Rule] 400]\)], "Input"],
 
 Cell[BoxData[
-    \(\(Lc = Import["\<c_steady.dat\>"];\)\)], "Input"],
+    \(Export["\<ksBifDiag.eps\>", bifDiag]\)], "Input"],
 
 Cell[BoxData[
     \(Sqrt[22.5]/2\)], "Input"],
@@ -157,30 +174,30 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[1754, 51, 69, 1, 27, "Input"],
-Cell[1826, 54, 66, 1, 27, "Input"],
-Cell[1895, 57, 46, 1, 27, "Input"],
-Cell[1944, 60, 53, 1, 27, "Input"],
-Cell[2000, 63, 53, 1, 27, "Input"],
-Cell[2056, 66, 68, 1, 27, "Input"],
-Cell[2127, 69, 76, 1, 27, "Input"],
-Cell[2206, 72, 49, 1, 27, "Input"],
-Cell[2258, 75, 62, 1, 27, "Input"],
-Cell[2323, 78, 82, 1, 27, "Input"],
-Cell[2408, 81, 69, 1, 27, "Input"],
-Cell[2480, 84, 45, 1, 27, "Input"],
-Cell[2528, 87, 69, 1, 27, "Input"],
-Cell[2600, 90, 50, 1, 27, "Input"],
-Cell[2653, 93, 68, 1, 27, "Input"],
-Cell[2724, 96, 62, 1, 27, "Input"],
-Cell[2789, 99, 63, 1, 27, "Input"],
-Cell[2855, 102, 41, 1, 27, "Input"],
-Cell[2899, 105, 52, 1, 27, "Input"],
-Cell[2954, 108, 130, 3, 27, "Input"],
-Cell[3087, 113, 59, 1, 27, "Input"],
-Cell[3149, 116, 102, 2, 27, "Input"],
-Cell[3254, 120, 52, 1, 29, "Input"],
-Cell[3309, 123, 37, 1, 27, "Input"],
-Cell[3349, 126, 294, 7, 27, "Input"]
+Cell[1826, 54, 106, 2, 27, "Input"],
+Cell[1935, 58, 106, 2, 27, "Input"],
+Cell[2044, 62, 212, 4, 27, "Input"],
+Cell[2259, 68, 212, 4, 27, "Input"],
+Cell[2474, 74, 85, 1, 27, "Input"],
+Cell[2562, 77, 177, 4, 27, "Input"],
+Cell[2742, 83, 82, 1, 27, "Input"],
+Cell[2827, 86, 147, 3, 27, "Input"],
+Cell[2977, 91, 298, 5, 32, "Input"],
+Cell[3278, 98, 69, 1, 27, "Input"],
+Cell[3350, 101, 45, 1, 27, "Input"],
+Cell[3398, 104, 69, 1, 27, "Input"],
+Cell[3470, 107, 50, 1, 27, "Input"],
+Cell[3523, 110, 68, 1, 27, "Input"],
+Cell[3594, 113, 62, 1, 27, "Input"],
+Cell[3659, 116, 63, 1, 27, "Input"],
+Cell[3725, 119, 41, 1, 27, "Input"],
+Cell[3769, 122, 52, 1, 27, "Input"],
+Cell[3824, 125, 130, 3, 27, "Input"],
+Cell[3957, 130, 59, 1, 27, "Input"],
+Cell[4019, 133, 102, 2, 27, "Input"],
+Cell[4124, 137, 52, 1, 29, "Input"],
+Cell[4179, 140, 37, 1, 27, "Input"],
+Cell[4219, 143, 294, 7, 27, "Input"]
 }
 ]
 *)

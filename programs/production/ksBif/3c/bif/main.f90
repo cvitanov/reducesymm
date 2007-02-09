@@ -14,7 +14,7 @@ include "fftw3.f"
 real(dp), dimension(:),allocatable :: v,vx,vxx,vxxx
 complex(dpc), dimension(:),allocatable :: a,adum
 complex(dp), dimension(:), allocatable :: w
-real(dp), dimension(:),allocatable :: bc,bc0,fvec
+real(dp), dimension(:),allocatable :: bc,fvec
 real(dp), dimension(:,:),allocatable :: fjac
 complex(dp), dimension(:,:), allocatable :: fjacdum,vR
 real(dp), dimension(:),allocatable :: ar,ai
@@ -56,7 +56,7 @@ close(21)
 222 Format(<d/2+1>F21.16)
 ! 
 
-allocate(v(d),vx(d),vxx(d),vxxx(d),a(d/2+1),adum(d/2+1),bc(d),bc0(d),ar(d/2+1),ai(d/2+1)) 
+allocate(v(d),vx(d),vxx(d),vxxx(d),a(d/2+1),adum(d/2+1),bc(d),ar(d/2+1),ai(d/2+1)) 
 allocate( fvec(d),fjac(d,d),fjacdum(d,d), vR(d,d),w(d)) !Eliminate b_1
 
 open(19,file=trim(wd)//'/ic.dat')
@@ -149,13 +149,5 @@ call dfftw_destroy_plan(invplan)
 open (27,file="UnEig.dat")
 write(27,221) v
 close(27)
-
-bc0=bc
-
-do i=-10,10
-	bc=bc0+i*0.1_dp*vR(:,d)
-	call ksFJ_equil(bc,fvec,fjac)
-	print *,i*0.1_dp,sum(abs(fvec))
-end do
 
 end program
