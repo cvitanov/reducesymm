@@ -84,7 +84,6 @@ open(20,file=trim(wd)//'/periodsGuess.dat')
 
 close(20)
 
- 
 call dfftw_plan_dft_r2c_1d(plan,d,v,a,FFTW_ESTIMATE)
 call dfftw_execute(plan)
 call dfftw_destroy_plan(plan)
@@ -102,7 +101,7 @@ print *, "T",Tw,"Nsteps",Nsteps,"Nplt",Nplt
 
 do i=1,Nf
 
-	print *, "Point #",i
+	print *, "Point #",i, "L=",L
 	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	call mnewtTW(ntrial,bc,tolbc,tolf,kappa,ksFJ_req)
 	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
