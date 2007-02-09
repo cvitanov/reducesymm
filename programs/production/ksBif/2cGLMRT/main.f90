@@ -19,7 +19,7 @@ real(dp), dimension(:,:),allocatable :: fjac
 complex(dp), dimension(:,:), allocatable :: fjacdum,vR
 real(dp), dimension(:),allocatable :: ar,ai
 integer(i8b) :: invplan, plan ! needed by fftw3
-integer(i4b) :: k,i,j,sdim=8, Nf
+integer(i4b) :: k,i,j,sdim=8, Nf, elim
 real(dp) :: dL
 character*64 :: wd
 integer(i4b) :: nargs
@@ -82,7 +82,7 @@ do i=1,Nf
 
 	print *, "Point #",i
 	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	call mnewt(ntrial,bc,tolbc,tolf,ksFJ_equil)
+	call mnewt_elim(ntrial,elim,bc,tolbc,tolf,ksFJ_equil_elim)
 	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	call ksFJ(bc,fvec,fjac)
