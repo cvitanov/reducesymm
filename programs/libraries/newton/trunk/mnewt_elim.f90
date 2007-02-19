@@ -26,6 +26,8 @@
 	REAL(DP), DIMENSION(size(x)-1) :: fvec,p ! eliminate one variable
 	REAL(DP), DIMENSION(size(x)-1,size(x)-1) :: fjac ! eliminate one variable
 	real(dp) :: sumx,sumf
+	
+	newton_condition_met=0
 
 	do  i=1,ntrial
 		call usrfun(x,elim,fvec,fjac)

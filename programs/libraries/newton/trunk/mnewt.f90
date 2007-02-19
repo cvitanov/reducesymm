@@ -21,6 +21,9 @@
 	REAL(DP), DIMENSION(size(x)) :: fvec,p
 	REAL(DP), DIMENSION(size(x),size(x)) :: fjac
 	real(dp) :: sumx,sumf
+
+	newton_condition_met=0
+
 	do  i=1,ntrial
 		call usrfun(x,fvec,fjac)
 		sumf=sum(abs(fvec))

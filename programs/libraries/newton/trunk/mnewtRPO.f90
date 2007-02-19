@@ -24,7 +24,9 @@
 	REAL(DP), DIMENSION(size(x)+2) :: fvec,p
 	REAL(DP), DIMENSION(size(x)+2,size(x)+2) :: fjac
 	real(dp) :: sumx,sumf
-
+	
+	newton_condition_met=0
+	
 	do  i=1,ntrial
 		print *,"Newton iteration #", i
 		call usrfun(x,fvec,fjac,T,kappa)
