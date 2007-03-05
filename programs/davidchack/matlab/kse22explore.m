@@ -1,4 +1,4 @@
-%% Exploring the property of full KSE with L = 22
+%% Exploring the full KSE with L = 22
 
 %% Kuramoto-Sivashinsky Equation (KSE)
 % $$ u_t = -uu_x - u_{xx} - u_{xxxx},  \quad x \in [-L/2, L/2]$$
@@ -219,8 +219,7 @@
     a0 = eq(k).a + 1e-4.*exp(delta).*v(:,2);
     [tt, aa] = ksfmedt(L, tend, a0, h, 2); av = [av; v'*aa];
     if delta == 0.8, aa1 = aa; end
-    if delta == 0.098, aa2 = aa; end
-  end,
+    if delta == 0.098, aa2 = aa; end, end,
   figure(1); set(gcf,'pos',[100 200 800 700]); clf;
   ax1 = axes('pos',[0.2 0.46 0.63 0.52]);
     plot3(av(1:3:end-8,:)',av(2:3:end-7,:)',av(3:3:end-6,:)','k-');
@@ -341,6 +340,34 @@
 % the other one (blue).  But the blue one does occur in the heteroclinic
 % networks 1,2-wave -> 3-wave -> L/4-shifted 2-wave shown above in the 1- and
 % 2-wave unstable manifold plot.
+
+%% Properties of Traveling Waves (TW)
+% There are two TWs at L = 22.  One with speed c = 0.737 (TW1) and the
+% other with speed c = 0.350 (TW2).  Because of the reflection symmetry,
+% there are exist also two TWs with speeds -c.
+  load ks22utw1b;  [x, u1] = ksfm2real(ksfmshift(a0), d, 64);
+  figure(1); clf; set(1,'position',[100 200 600 700]);
+  ax1 = axes('pos',[0.08 0.61 0.40 0.34]);  plot(x,u1);  set(gca,'xlim',x([1 end]));
+  title(['TW1: c = ' num2str(c)]);  ylabel('u','rotat',0);
+  tend = 50;  np = 2;
+  [tt, aa] = ksfmedt(d, tend, ksfmshift(a0), h, np);  [x, uu] = ksfm2real(aa, d, 64);
+  ax3 = axes('pos',[0.08 0.10 0.40 0.46]); pcolor(x,tt,uu'); caxis([-3 3]); shading flat;
+  xlabel('x'); ylabel('t','rotat',0);
+  load ks22utw2a;  [x, u2] = ksfm2real(ksfmshift(a0), d, 64);
+  ax2 = axes('pos',[0.54 0.61 0.40 0.34]);  plot(x,u2);  set(gca,'xlim',x([1 end]));
+  title(['TW2: c = ' num2str(c)]);
+  [tt, aa] = ksfmedt(d, tend, ksfmshift(a0), h, np);  [x, uu] = ksfm2real(aa, d, 64);
+  ax2 = axes('pos',[0.54 0.10 0.40 0.46]); pcolor(x,tt,uu'); caxis([-3 3]); shading flat;
+  xlabel('x');
+
+%%  
+% The stability of TWs is determined by the eigenvalues:
+  load ks22utw1b;  [h, dh] = ksfmtr([a0; c], d);  [vdh, edh] = eig(dh(1:end-1,1:end-1));  edh = diag(edh);
+  [sedh, ie] = sort(real(edh),1,'descend');  e1eig = edh(ie);  e1vec = vdh(:,ie);
+  load ks22utw2a;  [h, dh] = ksfmtr([a0; c], d);  [vdh, edh] = eig(dh(1:end-1,1:end-1));  edh = diag(edh);
+  [sedh, ie] = sort(real(edh),1,'descend');  e2eig = edh(ie);  e2vec = vdh(:,ie);
+  disp('          TW1               TW2');
+  disp([e1eig(1:8) e2eig(1:8)]);
 
 %% Other representations for equilibria and orbits
 % *8 Sep 2006, Predrag Cvitanovic wrote:*
