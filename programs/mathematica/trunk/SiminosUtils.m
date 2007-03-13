@@ -21,6 +21,8 @@ wd[]:=StringDrop[Directory[],
       Flatten[StringPosition[Directory[],
               ParentDirectory[Directory[]]] ][[2]]+1];
 
+fp=FourierParameters\[Rule]{-1,1};
+
 uSpatial[u_,L_]:=Module[{ux,uxx,dx,d},d=Dimensions[u][[1]];
     dx=L/(d-1);ux=Table[Null,{d}];
     Do[ux[[i]]=(u[[Mod[i+1,d,1]]]-u[[Mod[i-1,d,1]]])/(2dx),{i,1,d}];
@@ -29,8 +31,17 @@ uSpatial[u_,L_]:=Module[{ux,uxx,dx,d},d=Dimensions[u][[1]];
     Table[{u[[i]],ux[[i]],uxx[[i]]},{i,1,d}]]
 
 uAntiSym[u_]:=
-  Module[{uAnt,i,d},d=Dimensions[u][[1]];uAnt=Table[Null,{d}]; 
-    Do[uAnt[[i]]=-u[[d+1-i]],{i,1,d}]; uAnt]
+  Module[{uAnt,i,d},d=Dimensions[u][[1]];uAnt=Table[0,{d}];uAnt[[1]]=-u[[1]];
+    Do[uAnt[[i+1]]=-u[[d+1-i]],{i,1,d-1}];uAnt]
+
+uAntiFlip[u_]:=
+  Module[{i,d},d=Dimensions[u][[1]];Table[-u[[Mod[d/2+1-k+1,d,1]]],{k,1,d}]]
+
+uAntiShift[u_]:=Module[{uShift,i,d},d=Dimensions[u][[1]];uShift=Table[0,{d}];
+    Do[uShift[[i]]=-u[[Mod[d/2+i,d,1]]],{i,1,d}];uShift]
+
+uShift[u_,s_]:=Module[{uShift,i,d},d=Dimensions[u][[1]];uShift=Table[0,{d}];
+    Do[uShift[[i]]=u[[Mod[s+i,d,1]]],{i,1,d}];uShift]
 
 Clear[hby]
 hby[x_]:=Hue[0.7+x/2]/;0\[LessEqual]x\[LessEqual]0.5
