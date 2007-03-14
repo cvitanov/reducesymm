@@ -34,10 +34,11 @@ uAntiSym[u_]:=
   Module[{uAnt,i,d},d=Dimensions[u][[1]];uAnt=Table[0,{d}];uAnt[[1]]=-u[[1]];
     Do[uAnt[[i+1]]=-u[[d+1-i]],{i,1,d-1}];uAnt]
 
-uAntiFlip[u_]:=
+uAntiImag[u_]:=
   Module[{i,d},d=Dimensions[u][[1]];Table[-u[[Mod[d/2+1-k+1,d,1]]],{k,1,d}]]
 
-uAntiShift[u_]:=Module[{uShift,i,d},d=Dimensions[u][[1]];uShift=Table[0,{d}];
+uAntiShiftHalf[u_]:=
+  Module[{uShift,i,d},d=Dimensions[u][[1]];uShift=Table[0,{d}];
     Do[uShift[[i]]=-u[[Mod[d/2+i,d,1]]],{i,1,d}];uShift]
 
 uShift[u_,s_]:=Module[{uShift,i,d},d=Dimensions[u][[1]];uShift=Table[0,{d}];
