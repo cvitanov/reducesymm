@@ -1,0 +1,395 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 5.2'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[      7532,        291]*)
+(*NotebookOutlinePosition[      8182,        314]*)
+(*  CellTagsIndexPosition[      8138,        310]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+Cell[BoxData[
+    \(<< SiminosUtils`\)], "Input"],
+
+Cell[BoxData[
+    \(<< Graphics`Graphics3D`\)], "Input"],
+
+Cell[BoxData[
+    \(\(J = Import["\<JevU.dat\>"];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[J]\)], "Input"],
+
+Cell[BoxData[
+    \(\(d = \(Dimensions[J]\)[\([2]\)];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(w2 = Import["\<equilU.dat\>"] // Flatten;\)\)], "Input"],
+
+Cell[BoxData[
+    \(ListPlot[w2 + J[\([13]\)]]\)], "Input"],
+
+Cell[BoxData[
+    \(Fourier[w2 + J[\([16]\)]\ ] . Fourier[v + J[\([3]\)]]\)], "Input"],
+
+Cell[BoxData[
+    \(\(Aw2 = Import["\<../A2w/equilU.dat\>"] // Flatten;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(w3 = Import["\<../3w/equilU.dat\>"] // Flatten;\)\)], "Input"],
+
+Cell[BoxData[
+    \(ListPlot[Aw2 - w2]\)], "Input"],
+
+Cell[BoxData[
+    \(Max[Abs[Aw2 - w2 - uAntiSym[Aw2 - w2]]]\)], "Input"],
+
+Cell[BoxData[
+    \(Max[Abs[Aw2 - w2 - uAntiImag[Aw2 - w2]]]\)], "Input"],
+
+Cell[BoxData[
+    \(\(e1 = Aw2 - w2;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(w1 = Import["\<../1w/equilU.dat\>"] // Flatten;\)\)], "Input"],
+
+Cell[BoxData[
+    \(ListPlot[w1 - uShift[w1, 64]]\)], "Input"],
+
+Cell[BoxData[
+    \(\(e2 = w1 - uShift[w1, 64];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Fourier[e1] . Fourier[e2]\)], "Input"],
+
+Cell[BoxData[
+    \(ListPlot[uShift[w1, 32] - uShift[w1, 96]]\)], "Input"],
+
+Cell[BoxData[
+    \(\(e3 = uShift[w1, 32] - uShift[w1, 96];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Max[Abs[e3 - uAntiImag[e3]]]\)], "Input"],
+
+Cell[BoxData[
+    \(Fourier[e3] . Fourier[e2]\)], "Input"],
+
+Cell[BoxData[
+    \(Fourier[e3] . Fourier[e1]\)], "Input"],
+
+Cell[BoxData[
+    \(Fourier[e1, fp] . Fourier[e1, fp]\)], "Input"],
+
+Cell[BoxData[
+    \(Fourier[e1, fp] // Chop\)], "Input"],
+
+Cell[BoxData[
+    \(\(b1 = 
+        Chop[Fourier[e1, fp]/Norm[Fourier[e1, fp]], 10^\(-5\)];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Norm[b1]\)], "Input"],
+
+Cell[BoxData[
+    \(\(b2 = 
+        Chop[Fourier[e2, fp]/Norm[Fourier[e2, fp]], 10^\(-5\)];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Norm[b2]\)], "Input"],
+
+Cell[BoxData[
+    \(Conjugate[b2] . b2\)], "Input"],
+
+Cell[BoxData[
+    \(\(b3 = 
+        Chop[Fourier[e3, fp]/Norm[Fourier[e3, fp]], 10^\(-5\)];\)\)], "Input"],
+
+Cell[BoxData[
+    \(b3 . b3\)], "Input"],
+
+Cell[BoxData[
+    \(cInner[a_, b_] := Conjugate[a] . b\)], "Input"],
+
+Cell[BoxData[
+    \(cInner[b1, b1]\)], "Input"],
+
+Cell[BoxData[
+    \(cInner[b1, b2]\)], "Input"],
+
+Cell[BoxData[
+    \(cInner[b2, b3]\)], "Input"],
+
+Cell[BoxData[
+    \(cInner[b1, b3]\)], "Input"],
+
+Cell[BoxData[
+    \(\(a2 = Fourier[w2, fp];\)\)], "Input"],
+
+Cell[BoxData[
+    \(cInner[a2, b1]\)], "Input"],
+
+Cell[BoxData[
+    \(\(b = {b1, b2, b3};\)\)], "Input"],
+
+Cell[BoxData[
+    \(coords[a_, 
+        b_] := {cInner[a, b[\([1]\)]], cInner[a, b[\([2]\)]], 
+          cInner[a, b[\([3]\)]]} // Chop\)], "Input"],
+
+Cell[BoxData[
+    \(coords[a2, b]\)], "Input"],
+
+Cell[BoxData[
+    \(\(Aa2 = Fourier[uShift[w2, d/4], fp];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(a1 = Fourier[w1, fp];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(Aa1 = Fourier[uShift[w1, d/4], fp];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(A2a1 = Fourier[uShift[w1, d/2], fp];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(A3a1 = Fourier[uShift[w1, 3  d/4], fp];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(a3 = Fourier[w3, fp];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(Aa3 = Fourier[uShift[w3, d/4], fp];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(A2a3 = Fourier[uShift[w3, d/2], fp];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(A3a3 = Fourier[uShift[w3, 3  d/4], fp];\)\)], "Input"],
+
+Cell[BoxData[
+    \(coords[Aa2, b]\)], "Input"],
+
+Cell[BoxData[
+    \(coords[a1, b]\)], "Input"],
+
+Cell[BoxData[
+    \(coords[Aa1, b]\)], "Input"],
+
+Cell[BoxData[
+    \(coords[A2a1, b]\)], "Input"],
+
+Cell[BoxData[
+    \(coords[A3a1, b]\)], "Input"],
+
+Cell[BoxData[
+    \(coords[a3, b]\)], "Input"],
+
+Cell[BoxData[
+    \(coords[Aa3, b]\)], "Input"],
+
+Cell[BoxData[
+    \(coords[A2a3, b]\)], "Input"],
+
+Cell[BoxData[
+    \(coords[A3a3, b]\)], "Input"],
+
+Cell[BoxData[
+    \(\(ps = 0.03;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(p1 = 
+        ScatterPlot3D[{coords[a1, b], coords[Aa1, b], coords[A2a1, b], 
+            coords[A3a1, b]}, 
+          PlotStyle \[Rule] {\ RGBColor[0.8, 0, 0], PointSize[ps]}, 
+          DisplayFunction \[Rule] \ Identity];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(p2 = 
+        ScatterPlot3D[{coords[a2, b], coords[Aa2, b]}, 
+          PlotStyle \[Rule] {\ RGBColor[0, 0.8, 0], PointSize[ps]}, 
+          DisplayFunction \[Rule] \ Identity];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(p3 = 
+        ScatterPlot3D[{coords[a3, b], coords[Aa3, b], coords[A2a3, b], 
+            coords[A3a3, b]}, 
+          PlotStyle \[Rule] {\ RGBColor[0, 0, 0.8], PointSize[ps]}, 
+          DisplayFunction \[Rule] \ Identity];\)\)], "Input"],
+
+Cell[BoxData[
+    \(polyR1 = 
+      Graphics3D[\ 
+        Polygon[{{\(-0.4\), \(-0.4\), 0}, {0.4, \(-0.4\), 0}, {0.4, 0.4, 
+              0}, {\(-0.4\), 0.4, 0}}]\ ]\)], "Input"],
+
+Cell[BoxData[
+    \(polyL = 
+      Graphics3D[\ 
+        Polygon[{{\(-0.4\), 0, \(-0.4\)}, {0.4, 0, \(-0.4\)}, {0.4, 0, 
+              0.4}, {\(-0.4\), 0, 0.4}}]\ ]\)], "Input"],
+
+Cell[BoxData[
+    \(\(Show[p1, p2, p3, polyR1, polyL, 
+        DisplayFunction \[Rule] $DisplayFunction, 
+        AxesLabel \[Rule] {"\<b1\>", "\<b2\>", "\<b3\>"}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(<< RealTime3D`\)], "Input"],
+
+Cell[BoxData[
+    \(<< Default3D`\)], "Input"],
+
+Cell[BoxData[
+    \(\(Table[
+        Show[p1, p2, p3, polyR1, polyL, 
+          DisplayFunction \[Rule] $DisplayFunction, 
+          AxesLabel \[Rule] {"\<b1\>", "\<b2\>", "\<b3\>"}, 
+          ViewPoint \[Rule] \ {3  Cos[\ i\ \[Pi]/3] Sin[\ \[Pi]/3], 
+              3  Sin[i\ \[Pi]/3] Sin[\ \[Pi]/3], 3  Cos[\ \[Pi]/3]}], {i, 1, 
+          3.5, 0.1}];\)\)], "Input"]
+},
+FrontEndVersion->"5.2 for X",
+ScreenRectangle->{{0, 1280}, {0, 1024}},
+WindowSize->{1280, 963},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+ShowSelection->True
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+Cell[1754, 51, 49, 1, 27, "Input"],
+Cell[1806, 54, 56, 1, 27, "Input"],
+Cell[1865, 57, 64, 1, 27, "Input"],
+Cell[1932, 60, 46, 1, 27, "Input"],
+Cell[1981, 63, 68, 1, 27, "Input"],
+Cell[2052, 66, 78, 1, 27, "Input"],
+Cell[2133, 69, 59, 1, 27, "Input"],
+Cell[2195, 72, 86, 1, 27, "Input"],
+Cell[2284, 75, 86, 1, 27, "Input"],
+Cell[2373, 78, 84, 1, 27, "Input"],
+Cell[2460, 81, 51, 1, 27, "Input"],
+Cell[2514, 84, 72, 1, 27, "Input"],
+Cell[2589, 87, 73, 1, 27, "Input"],
+Cell[2665, 90, 51, 1, 27, "Input"],
+Cell[2719, 93, 84, 1, 27, "Input"],
+Cell[2806, 96, 62, 1, 27, "Input"],
+Cell[2871, 99, 62, 1, 27, "Input"],
+Cell[2936, 102, 58, 1, 27, "Input"],
+Cell[2997, 105, 74, 1, 27, "Input"],
+Cell[3074, 108, 74, 1, 27, "Input"],
+Cell[3151, 111, 61, 1, 27, "Input"],
+Cell[3215, 114, 58, 1, 27, "Input"],
+Cell[3276, 117, 58, 1, 27, "Input"],
+Cell[3337, 120, 66, 1, 27, "Input"],
+Cell[3406, 123, 56, 1, 27, "Input"],
+Cell[3465, 126, 106, 2, 27, "Input"],
+Cell[3574, 130, 41, 1, 27, "Input"],
+Cell[3618, 133, 106, 2, 27, "Input"],
+Cell[3727, 137, 41, 1, 27, "Input"],
+Cell[3771, 140, 51, 1, 27, "Input"],
+Cell[3825, 143, 106, 2, 27, "Input"],
+Cell[3934, 147, 40, 1, 27, "Input"],
+Cell[3977, 150, 67, 1, 27, "Input"],
+Cell[4047, 153, 47, 1, 27, "Input"],
+Cell[4097, 156, 47, 1, 27, "Input"],
+Cell[4147, 159, 47, 1, 27, "Input"],
+Cell[4197, 162, 47, 1, 27, "Input"],
+Cell[4247, 165, 58, 1, 27, "Input"],
+Cell[4308, 168, 47, 1, 27, "Input"],
+Cell[4358, 171, 54, 1, 27, "Input"],
+Cell[4415, 174, 148, 3, 27, "Input"],
+Cell[4566, 179, 46, 1, 27, "Input"],
+Cell[4615, 182, 72, 1, 27, "Input"],
+Cell[4690, 185, 58, 1, 27, "Input"],
+Cell[4751, 188, 72, 1, 27, "Input"],
+Cell[4826, 191, 73, 1, 27, "Input"],
+Cell[4902, 194, 76, 1, 27, "Input"],
+Cell[4981, 197, 58, 1, 27, "Input"],
+Cell[5042, 200, 72, 1, 27, "Input"],
+Cell[5117, 203, 73, 1, 27, "Input"],
+Cell[5193, 206, 76, 1, 27, "Input"],
+Cell[5272, 209, 47, 1, 27, "Input"],
+Cell[5322, 212, 46, 1, 27, "Input"],
+Cell[5371, 215, 47, 1, 27, "Input"],
+Cell[5421, 218, 48, 1, 27, "Input"],
+Cell[5472, 221, 48, 1, 27, "Input"],
+Cell[5523, 224, 46, 1, 27, "Input"],
+Cell[5572, 227, 47, 1, 27, "Input"],
+Cell[5622, 230, 48, 1, 27, "Input"],
+Cell[5673, 233, 48, 1, 27, "Input"],
+Cell[5724, 236, 47, 1, 27, "Input"],
+Cell[5774, 239, 261, 5, 27, "Input"],
+Cell[6038, 246, 214, 4, 27, "Input"],
+Cell[6255, 252, 261, 5, 27, "Input"],
+Cell[6519, 259, 178, 4, 27, "Input"],
+Cell[6700, 265, 177, 4, 27, "Input"],
+Cell[6880, 271, 179, 3, 27, "Input"],
+Cell[7062, 276, 47, 1, 27, "Input"],
+Cell[7112, 279, 46, 1, 27, "Input"],
+Cell[7161, 282, 367, 7, 43, "Input"]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+

@@ -86,6 +86,8 @@ d=Dimensions[v][[1]];
 
 
 
+
+
 vx=Table[{(i-1)*L/(d-1), v[[i]]},{i,1,d}];
 
 vPlt=ListPlot[vx,PlotJoined\[Rule]True,
