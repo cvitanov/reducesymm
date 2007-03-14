@@ -21,6 +21,8 @@ overwritten.
 
 
 
+
+
 v=Import["equilU.dat"]//Flatten;
 
 parameters=OpenRead["parameters.dat"];
@@ -33,6 +35,54 @@ L=2\[Pi] Read[parameters];
 Close[parameters];
 
 d=Dimensions[v][[1]];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

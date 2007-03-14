@@ -19,9 +19,9 @@ real(dp), dimension(:,:),allocatable :: fjac
 complex(dp), dimension(:,:), allocatable :: fjacdum,vR
 real(dp), dimension(:),allocatable :: ar,ai
 integer(i8b) :: invplan, plan ! needed by fftw3
-integer(i4b) :: k,i,j,sdim=8
+integer(i4b) :: k,i,j, sdim=10
 character*64 :: wd
-integer(i4b) :: nargs
+integer(i4b) :: nargs, elim=1
 logical :: logicdum
 
 nargs=iargc()
@@ -49,7 +49,8 @@ close(21)
 220 Format(F21.16)
 221 Format(<d>F21.16)
 222 Format(<d/2+1>F21.16)
-! 
+
+
 
 allocate(v(d),vx(d),vxx(d),vxxx(d),a(d/2+1),adum(d/2+1),bc(d),ar(d/2+1),ai(d/2+1),w(d))
 allocate( fvec(d),fjac(d,d),fjacdum(d,d), vR(d,d))
@@ -70,7 +71,7 @@ bc(1:d/2)=real(a(2:size(a)))
 bc(d/2+1:d)= aimag(a(2:size(a)))
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-call mnewt(ntrial,bc,tolbc,tolf,ksFJ_equil)
+call mnewt_elim(ntrial,elim,bc,tolbc,tolf,ksFJ_equil_elim)
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 call ksFJ(bc,fvec,fjac)
@@ -88,12 +89,41 @@ enddo
 close(35)
 
 open(36,file=trim(wd)//'/Jev.dat')
+open(37,file=trim(wd)//'/JevU.dat')
 do j=d,d-sdim,-1
 	do i=1,d
 		write(36,"(2F30.18)") vR(i,j)
 	end do
+	call bc2u(real(vR(:,j)),v)
+	write(37,221) v
+	call bc2u(aimag(vR(:,j)),v)
+	write(37,221) v
 enddo
 close(36)
+close(37)
+
+
+adum=(0.0,0.0)
+adum(2:size(a))=vR(1:d/2,d)+ii*vR(d/2+1:d,d)
+
+call dfftw_plan_dft_c2r_1d(invplan,d,adum,v,FFTW_ESTIMATE)
+call dfftw_execute(invplan)
+call dfftw_destroy_plan(invplan)
+
+open(29,file=trim(wd)//'/ev1.dat')
+write(29,221) v
+close(29)
+
+adum=(0.0,0.0)
+adum(2:size(a))=vR(1:d/2,d-1)+ii*vR(d/2+1:d,d-1)
+
+call dfftw_plan_dft_c2r_1d(invplan,d,adum,v,FFTW_ESTIMATE)
+call dfftw_execute(invplan)
+call dfftw_destroy_plan(invplan)
+
+open(29,file=trim(wd)//'/ev2.dat')
+write(29,221) v
+close(29)
 
 open(23,file=trim(wd)//'/equilPS.dat')
 
