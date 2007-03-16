@@ -1,0 +1,458 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 5.0'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[      9715,        340]*)
+(*NotebookOutlinePosition[     10377,        363]*)
+(*  CellTagsIndexPosition[     10333,        359]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+Cell[BoxData[
+    \(<< SiminosUtils`\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \($HistoryLength = 5\)], "Input"],
+
+Cell[BoxData[
+    \(\(Ec1 = Import["\<1w/steady_c.dat\>"] // Flatten;\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(Ec2 = Import["\<2w/steady_c.dat\>"] // Flatten;\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(Ec3 = Import["\<3w/steady_c.dat\>"] // Flatten;\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(EcTW1 = 
+        Import["\<../req/w-1R/steady_c.dat\>"] // Flatten;\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(EcTW1\)], "Input"],
+
+Cell[BoxData[
+    \(\(EcTW2 = 
+        Import["\<../req/w-2R/steady_c.dat\>"] // Flatten;\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(EcTW2\)], "Input"],
+
+Cell[BoxData[
+    \(\(pt = 0.02;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(p1 = 
+        ListPlot[{{Ec1[\([2]\)], Ec1[\([3]\)]}}, 
+          PlotStyle \[Rule] {RGBColor[0.8, 0, 0], PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(p2 = 
+        ListPlot[{{Ec2[\([2]\)], Ec2[\([3]\)]}}, 
+          PlotStyle \[Rule] {RGBColor[0, 0.8, 0], PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(p3 = 
+        ListPlot[{{Ec3[\([2]\)], Ec3[\([3]\)]}}, 
+          PlotStyle \[Rule] {RGBColor[0, 0, 0.8], PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(pTW1 = 
+        ListPlot[{{EcTW1[\([2]\)], EcTW1[\([3]\)]}}, 
+          PlotStyle \[Rule] {RGBColor[0.5, 0.5, 0], PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(pTW2 = 
+        ListPlot[{{EcTW2[\([2]\)], EcTW2[\([3]\)]}}, 
+          PlotStyle \[Rule] {RGBColor[0.5, 0, 0.5], PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(v = Import["\<../int/random/trajU.dat\>"];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(L = 22.0;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(vx = Map[uDer[#, 1, L] &, v, {1}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(Nk = 8000;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(vx = Take[vx, \(-Nk\)];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(vxx = Map[uDer[#, 2, L] &, v, {1}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(vxx = Take[vxx, \(-Nk\)];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(vx2 = 
+        Apply[Plus, vx^2, {1}]/\(Dimensions[vx]\)[\([2]\)];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(vxx2 = 
+        Apply[Plus, vxx^2, {1}]/\(Dimensions[vxx]\)[\([2]\)];\)\)], "Input"],
+
+Cell[BoxData[
+    \(mvx2 = Plus @@ vx2/\(Dimensions[vx2]\)[\([1]\)]\)], "Input"],
+
+Cell[BoxData[
+    \(mvxx2 = Plus @@ vxx2/\(Dimensions[vxx2]\)[\([1]\)]\)], "Input"],
+
+Cell[BoxData[
+    \(\(pm = 
+        ListPlot[{{mvx2, mvxx2}}, 
+          PlotStyle \[Rule] {RGBColor[1, 1, 1], PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(rnd = 
+        Table[{vx2[\([i]\)], vxx2[\([i]\)]}, {i, 
+            1, \(Dimensions[vx2]\)[\([1]\)]}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(prnd = ListPlot[rnd, PlotJoined \[Rule] True];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(\(\[IndentingNewLine]\)\( (*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *) \
+\)\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(v = 
+        Import["\</home/vasimos/articles/siminos/programs/production/KS22.0/\
+rpo/T19.0d0/rpoU.dat\>"];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[v]\)], "Input"],
+
+Cell[BoxData[
+    \(ListDensityPlot[Take[v, 110], Mesh \[Rule] False]\)], "Input"],
+
+Cell[BoxData[
+    \(smin = 90; smax = 120;\)], "Input"],
+
+Cell[BoxData[
+    \(\(mtab = 
+        Table[Max[Abs[v[\([1]\)]] - Abs[v[\([i]\)]]], {i, smin, 
+            smax}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(mn = Min[mtab];\)\)], "Input"],
+
+Cell[BoxData[
+    \(pmn = \(Position[mtab, mn]\)[\([1, 1]\)]\)], "Input"],
+
+Cell[BoxData[
+    \(\(v = Take[v, smin + pmn - 2];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[v]\)], "Input"],
+
+Cell[BoxData[
+    \(\(vx = Map[uDer[#, 1, L] &, v, {1}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(vxx = Map[uDer[#, 2, L] &, v, {1}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(vx2 = 
+        Apply[Plus, vx^2, {1}]/\(Dimensions[vx]\)[\([2]\)];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(vxx2 = 
+        Apply[Plus, vxx^2, {1}]/\(Dimensions[vxx]\)[\([2]\)];\)\)], "Input"],
+
+Cell[BoxData[
+    \(mvx2 = Plus @@ vx2/\(Dimensions[vx2]\)[\([1]\)]\)], "Input"],
+
+Cell[BoxData[
+    \(mvxx2 = Plus @@ vxx2/\(Dimensions[vxx2]\)[\([1]\)]\)], "Input"],
+
+Cell[BoxData[
+    \(\(pmT19 = 
+        ListPlot[{{mvx2, mvxx2}}, 
+          PlotStyle \[Rule] {Hue[ .17], PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(T19 = 
+        Table[{vx2[\([i]\)], vxx2[\([i]\)]}, {i, 
+            1, \(Dimensions[vx2]\)[\([1]\)]}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(pT19 = 
+        ListPlot[T19, PlotJoined \[Rule] True, 
+          PlotStyle \[Rule] {Hue[ .17]}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(\(\[IndentingNewLine]\)\( (*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *) \
+\)\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(v = 
+        Import["\</home/vasimos/articles/siminos/programs/production/KS22.0/\
+rpo/T32.80d10.96/rpoU.dat\>"];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[v]\)], "Input"],
+
+Cell[BoxData[
+    \(ListDensityPlot[Take[v, 510], Mesh \[Rule] False]\)], "Input"],
+
+Cell[BoxData[
+    \(smin = 300; smax = 400;\)], "Input"],
+
+Cell[BoxData[
+    \(ds = Round[128*10.96/22]\)], "Input"],
+
+Cell[BoxData[
+    \(\(mtab = 
+        Table[Max[Abs[v[\([1]\)]] - RotateLeft[Abs[v[\([i]\)]], ds]], {i, 
+            smin, smax}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(mn = Min[mtab]\)], "Input"],
+
+Cell[BoxData[
+    \(pmn = \(Position[mtab, mn]\)[\([1, 1]\)]\)], "Input"],
+
+Cell[BoxData[
+    \(\(v = Take[v, smin + pmn - 2];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[v]\)], "Input"],
+
+Cell[BoxData[
+    \(\(vx = Map[uDer[#, 1, L] &, v, {1}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(vxx = Map[uDer[#, 2, L] &, v, {1}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(vx2 = 
+        Apply[Plus, vx^2, {1}]/\(Dimensions[vx]\)[\([2]\)];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(vxx2 = 
+        Apply[Plus, vxx^2, {1}]/\(Dimensions[vxx]\)[\([2]\)];\)\)], "Input"],
+
+Cell[BoxData[
+    \(mvx2 = Plus @@ vx2/\(Dimensions[vx2]\)[\([1]\)]\)], "Input"],
+
+Cell[BoxData[
+    \(mvxx2 = Plus @@ vxx2/\(Dimensions[vxx2]\)[\([1]\)]\)], "Input"],
+
+Cell[BoxData[
+    \(\(pmT32 = 
+        ListPlot[{{mvx2, mvxx2}}, 
+          PlotStyle \[Rule] {Hue[ .1], PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(T32 = 
+        Table[{vx2[\([i]\)], vxx2[\([i]\)]}, {i, 
+            1, \(Dimensions[vx2]\)[\([1]\)]}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(pT32 = 
+        ListPlot[T32, PlotJoined \[Rule] True, 
+          PlotStyle \[Rule] {Hue[ .1]}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(\(\[IndentingNewLine]\)\( (*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *) \
+\)\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(pAll = 
+        Show[prnd, 
+          Graphics[{RGBColor[0.5, 0.5, 0.7], Thickness[0.005], \ 
+              Line[{{0, 0}, {0.65, 0.65}}]}], pT19, pT32, pmT19, pmT32, p1, 
+          p2, p3, pTW1, pTW2, pm, 
+          FrameLabel \[Rule] \ {\*"\"\<<(\!\(u\_x\)\!\(\()\^2\)\)>\>\"", \
+\*"\"\<<(\!\(u\_xx\)\!\(\()\^2\)\)>\>\""}, Frame \[Rule] True, Axes -> False, 
+          RotateLabel \[Rule] False, 
+          TextStyle \[Rule] {FontSize -> 11, FontFamily \[Rule] Courier}, 
+          DisplayFunction \[Rule] $DisplayFunction, ImageSize \[Rule] 600, 
+          AspectRatio \[Rule] 1, PlotRange \[Rule] All];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(Export["\<energyPlot.eps\>", pAll]\)], "Input",
+  InitializationCell->True]
+},
+FrontEndVersion->"5.0 for X",
+ScreenRectangle->{{0, 1280}, {0, 1024}},
+AutoGeneratedPackage->Automatic,
+WindowSize->{887, 852},
+WindowMargins->{{26, Automatic}, {Automatic, 0}}
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+Cell[1754, 51, 77, 2, 27, "Input",
+  InitializationCell->True],
+Cell[1834, 55, 51, 1, 27, "Input"],
+Cell[1888, 58, 112, 2, 27, "Input",
+  InitializationCell->True],
+Cell[2003, 62, 112, 2, 27, "Input",
+  InitializationCell->True],
+Cell[2118, 66, 112, 2, 27, "Input",
+  InitializationCell->True],
+Cell[2233, 70, 132, 3, 27, "Input",
+  InitializationCell->True],
+Cell[2368, 75, 38, 1, 27, "Input"],
+Cell[2409, 78, 132, 3, 27, "Input",
+  InitializationCell->True],
+Cell[2544, 83, 38, 1, 27, "Input"],
+Cell[2585, 86, 47, 1, 27, "Input"],
+Cell[2635, 89, 232, 5, 43, "Input",
+  InitializationCell->True],
+Cell[2870, 96, 232, 5, 43, "Input",
+  InitializationCell->True],
+Cell[3105, 103, 232, 5, 43, "Input",
+  InitializationCell->True],
+Cell[3340, 110, 240, 5, 43, "Input",
+  InitializationCell->True],
+Cell[3583, 117, 240, 5, 43, "Input",
+  InitializationCell->True],
+Cell[3826, 124, 79, 1, 27, "Input"],
+Cell[3908, 127, 46, 1, 27, "Input"],
+Cell[3957, 130, 71, 1, 27, "Input"],
+Cell[4031, 133, 47, 1, 27, "Input"],
+Cell[4081, 136, 60, 1, 27, "Input"],
+Cell[4144, 139, 72, 1, 27, "Input"],
+Cell[4219, 142, 62, 1, 27, "Input"],
+Cell[4284, 145, 103, 2, 27, "Input"],
+Cell[4390, 149, 106, 2, 27, "Input"],
+Cell[4499, 153, 80, 1, 27, "Input"],
+Cell[4582, 156, 83, 1, 27, "Input"],
+Cell[4668, 159, 187, 4, 27, "Input"],
+Cell[4858, 165, 140, 3, 27, "Input"],
+Cell[5001, 170, 83, 1, 27, "Input"],
+Cell[5087, 173, 112, 2, 43, "Input"],
+Cell[5202, 177, 145, 3, 27, "Input"],
+Cell[5350, 182, 46, 1, 27, "Input"],
+Cell[5399, 185, 82, 1, 27, "Input"],
+Cell[5484, 188, 55, 1, 27, "Input"],
+Cell[5542, 191, 129, 3, 27, "Input"],
+Cell[5674, 196, 52, 1, 27, "Input"],
+Cell[5729, 199, 73, 1, 27, "Input"],
+Cell[5805, 202, 65, 1, 27, "Input"],
+Cell[5873, 205, 46, 1, 27, "Input"],
+Cell[5922, 208, 71, 1, 27, "Input"],
+Cell[5996, 211, 72, 1, 27, "Input"],
+Cell[6071, 214, 103, 2, 27, "Input"],
+Cell[6177, 218, 106, 2, 27, "Input"],
+Cell[6286, 222, 80, 1, 27, "Input"],
+Cell[6369, 225, 83, 1, 27, "Input"],
+Cell[6455, 228, 182, 4, 27, "Input"],
+Cell[6640, 234, 140, 3, 27, "Input"],
+Cell[6783, 239, 134, 3, 27, "Input"],
+Cell[6920, 244, 112, 2, 43, "Input"],
+Cell[7035, 248, 150, 3, 27, "Input"],
+Cell[7188, 253, 46, 1, 27, "Input"],
+Cell[7237, 256, 82, 1, 27, "Input"],
+Cell[7322, 259, 56, 1, 27, "Input"],
+Cell[7381, 262, 57, 1, 27, "Input"],
+Cell[7441, 265, 145, 3, 27, "Input"],
+Cell[7589, 270, 47, 1, 27, "Input"],
+Cell[7639, 273, 73, 1, 27, "Input"],
+Cell[7715, 276, 65, 1, 27, "Input"],
+Cell[7783, 279, 46, 1, 27, "Input"],
+Cell[7832, 282, 71, 1, 27, "Input"],
+Cell[7906, 285, 72, 1, 27, "Input"],
+Cell[7981, 288, 103, 2, 27, "Input"],
+Cell[8087, 292, 106, 2, 27, "Input"],
+Cell[8196, 296, 80, 1, 27, "Input"],
+Cell[8279, 299, 83, 1, 27, "Input"],
+Cell[8365, 302, 181, 4, 27, "Input"],
+Cell[8549, 308, 140, 3, 27, "Input"],
+Cell[8692, 313, 133, 3, 27, "Input"],
+Cell[8828, 318, 112, 2, 43, "Input"],
+Cell[8943, 322, 670, 12, 85, "Input",
+  InitializationCell->True],
+Cell[9616, 336, 95, 2, 27, "Input",
+  InitializationCell->True]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+

@@ -166,6 +166,8 @@ print *,"c",v(1)**2-vx(1)-vxxx(1),v(1),vx(1),vxxx(1)
 
 open(26,file=trim(wd)//'steady_c.dat')
 	write(26,220) sum(v**2-vx-vxxx)/d
+	write(26,220) sum(vx**2)/d
+	write(26,220) sum(vxx**2)/d
 close(25)
 
 end program
