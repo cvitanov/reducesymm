@@ -33,6 +33,29 @@ $x$ and $t$. In what follows we use interchangeably the ``dimensionless''
 system size $\tildeL$, or the periodic domain size $L= 2\pi \tildeL$,
 as the system parameter.
 
+Equation \refeq{ks} can be written in ``potential'' form
+\beq
+    u_t=E_x
+		\,,\qquad
+    E(x,t)=u^2-u_{x}- u_{xxx}
+    \,.
+\ee{ksPotent}
+Even though KS is a phenomenological
+small-amplitude model equation, the quantity
+\beq
+    \expct{E}=\frac{1}{L}\int_0^{L} E(x,t) \, dx
+    =\frac{1}{L}\int_0^{L}u^2\, dx
+\label{ksEnergy}
+\eeq
+\PC{this is missing a prefactor 1/2. Check if someone in literature 
+- other than Greene and Kim - defines it right.
+   }
+has a physical interpretation\rf{ksgreene88}
+as the mean ``elastic energy'' density of the flame front.
+This analogy to the corresponding definition of the
+mean kinetic energy density for
+the Navier-Stokes will be useful in what follows.
+
 Spatial periodic boundary condition $u(x,t)=u(x+L,t)$
 makes it convenient to work in the Fourier space, 
 \beq
@@ -41,12 +64,12 @@ makes it convenient to work in the Fourier space,
 % \label{fseries}
 \ee{eq:ksexp}
 %where $\tildeL=L/2\pi$. Thus, 
-with the $1D$ PDE \refeq{ks}
+with the $1$-dimensional PDE \refeq{ks}
 replaced by an infinite set of 
 ODEs for the Fourier coefficients:
 \beq
 \dot{a}_k= ( (k/\tildeL)^2 - ( k/\tildeL)^4 )\, a_k 
-    + \frac{i k}{\tildeL} \sum_{m=-\infty}^{+\infty} a_m a_{k-m}
+    + i \frac{k}{\tildeL} \sum_{m=-\infty}^{+\infty} a_m a_{k-m}
 \,.
 \ee{expan}
 Since $u(x,t)$ is real,
@@ -59,9 +82,30 @@ sum over $k \geq 0$.
 
 \PC{please generate and insert here a space-time plot of a
     typical large \tildeL\ turbulent solution, with $\sqrt{2}$
-    basic wavelength in \tildeL units indicated.
+    basic wavelength in \tildeL units indicated, as in my seminar
+    presentations.
    }
 
+If we define the product of two functions on $L$ interval by
+the integral
+\beq
+        (g,h) = \frac{1}{L}\int_0^{L} d\pSpace\, 
+		g(\pSpace) h(\pSpace)
+        \,,
+        \label{rpo:innerProd}
+\eeq
+in the Fourier space representation of $(u,u)$
+the energy \refeq{ksEnergy}
+is also the quadratic norm
+\beq
+\expct{E} = (u,u) = \sum_{k=1}^{\infty} E_k
+\,,\qquad 
+E_k = % a_{-k} a_k =
+	|a_k|^2
+\,.
+\ee{EFourier}
+
+\PC{this text to be moved to a more appropriate place}
 Robustness of the Fourier mode representation of KS as
 a function of the number of modes kept in truncations 
 of \refeq{expan} is
@@ -107,6 +151,20 @@ the connections between them form the
 coarsest geometrical framework for organizing
 \statesp\ orbits. %\rf{ksgreene88}.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[t] \label{f:eqvSpatial}
+\begin{center} 
+\includegraphics[width=0.4\textwidth]{figs/equilSpatial.eps}
+\end{center}
+\caption{
+$(u,u_x,u_{xx})$ representation
+of (blue) \EQV{1}, (red) \EQV{2},  (black) \EQV{3} \eqva,
+ and (purple) \REQV{+}{1}, (orange) \REQV{-}{1} \reqva\ for
+system size $L=22$. %, $N=64$ complex modes truncation.
+        }
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 The \eqv\ condition $u_t=0$ for the {\KSe} PDE \refeq{ks} 
 is the ODE
 \beq
@@ -116,20 +174,13 @@ is the ODE
 which can be analyzed as a dynamical system in its own right.
 Integrating once we get
 \beq
-u^2-u_x- u_{xxx}=E
+u^2-u_x- u_{xxx}=\expct{E}
 \,,
 \label{eq:stdks}
 \eeq
-where the integration constant $E$
-can be interpreted as the mean ``elastic energy'' of the flame front:
-\PC{this is missing a prefactor 1/2. Check if someone in literature 
-- other than Greene and Kim - defines it right.
-   }
-\beq
-    E=\frac{1}{L}\int_0^{L}u^2\, dx
-    \,.
-\label{ksEnergy}
-\eeq
+where the integration constant
+$\expct{E}$
+is the mean energy \refeq{ksEnergy}.
 Written as a 3-dimensional dynamical system
 with spatial coordinate $x$ playing the role of ``time'',
 %\refeq{eq:stdks} 
@@ -137,7 +188,7 @@ this is a volume preserving flow
 \beq
 u_x = v \,,\qquad
 v_x = w \,,\qquad
-w_x = u^2-v-E \,,
+w_x = u^2-v-\expct{E} \,,
   \label{eq:3dks}
 \eeq
 with the ``time'' reversal symmetry, 
@@ -146,27 +197,27 @@ x \to -x,\quad u \to -u, \quad v \to v, \quad w \to -w \,.
 \]
  From \refeq{eq:3dks} we see that
 \[
-(u+w)_x=u^2-E \,.
+(u+w)_x=u^2-\expct{E} \,.
 \]
-If $E<0$, $u+w$ increases without bound with $x \to \infty$,
+If $\expct{E}<0$, $u+w$ increases without bound with $x \to \infty$,
 and every solution escapes to infinity.
-If $E=0$, the origin $(0,0,0)$ is the
+If $\expct{E}=0$, the origin $(0,0,0)$ is the
 only bounded  solution, a marginally stable center with
 eigenvalues $(0, i,-i)$.
 
-For $E>0$ there is rich
-$E$-dependent dynamics, with
+For $\expct{E}>0$ there is rich
+$\expct{E}$-dependent dynamics, with
 fractal sets of bounded solutions.
 The solutions of the {\eqv}  condition 
 \refeq{eq:3dks} are themselves in turn  in turn organized by the  
 ``{\eqva}  of the {\eqv}''  condition, and 
 the connections between them\rf{Mks86}.
-    For $E>0$ the {\eqv}  points of \refeq{eq:3dks} are
-$c_{+}=(\sqrt{E},0,0)$ and $c_{-}=(-\sqrt{E},0,0)$.
+    For $\expct{E}>0$ the {\eqv}  points of \refeq{eq:3dks} are
+$c_{+}=(\sqrt{\expct{E}},0,0)$ and $c_{-}=(-\sqrt{\expct{E}},0,0)$.
 Linearization of the flow around
 $c_{+}$ yields the cubic equation
   \beq
-\eigExp(1+\eigExp^2) = 2E
+\eigExp(1+\eigExp^2) = 2\expct{E}
   \ee{KSeqvCubic}
 for the 
 stability eigenvalues 
@@ -182,7 +233,7 @@ roots  (all useless in practice), such as
 \,,\qquad
 \eigIm=\cosh \phi \, ,
 \ee{eqvEqvEigV}
-with $\phi$ fixed by $\sinh 3\phi=3\sqrt{3E}$. 
+with $\phi$ fixed by $\sinh 3\phi=3\sqrt{3\expct{E}}$. 
 Hence $c_{+}$ has a {1\dmn}
 unstable manifold and a 2\dmn\ stable manifold 
 along which solutions spiral in. 
@@ -197,12 +248,219 @@ developed in \refrefs{lanVar1,CvitLanCrete02}
 appears more robust than
 the earlier approaches.
 
-    \PublicPrivate{%
-        }{% switch to Private:
-\newpage
-\input energy
-\newpage
-    } %end \PublicPrivate{%
+\subsection{Energy budget} % of the \KSe}
+\label{sec:energy}
+
+% Predrag                   mar 13 2007
+\PC{
+%   As nobody else deigns to do it, I picked the low fruit that I have 
+%been talking about past month: defined the 
+Power input and energy 
+dissipation rates for Kuramoto-Sivashinsky: I cannot believe that it is 
+not in the literature, it is standard energy balance exercise vor Navier 
+Stokes case. 
+This should show the isolated equilibria far from the 
+chaotic measures, and the important rpos well embedded in it. More 
+importantly, 
+If Loss gives us Sobolev bounds on energy, we might be able 
+to bound the number of equilibria as function of systems size L, and thus 
+be sure we have them all.
+   }
+%
+The {space average} of a function $\obser = \obser(\pSpace,t)$ defined on
+the interval $L$ is given by the integral
+\beq
+	\expct{\obser} = \frac{1}{L}\int_0^{L} d\pSpace\, \obser(\pSpace,t)
+	\,.
+	\label{rpo:spac_ave}
+\eeq
+$\expct{\obser}$ is in general time dependent. We denote
+its mean expectation value by the {time average} 
+\beq
+\timeAver{\obser}
+	= 
+\lim_{t\rightarrow \infty} {1\over t} \int_0^t \; d\tau \, \expct{\obser}
+	=
+\lim_{t\rightarrow \infty} {1\over t} \int_0^t d\tau \,
+	\frac{1}{L}\int_0^{L} d\pSpace\, \obser(\pSpace,\tau) 
+	\,.
+\label{rpo:tim_ave}
+\eeq
+
+The expectation value
+$\timeAver{\obser}$ takes a particularly simple form when
+$\obser$ is a function of an
+\eqv\ or {\reqv} $u_q(\pSpace,t)$
+\beq
+         \obser_q = \expct{\obser}_q
+\,,
+\label{rpo:u-eqv}
+\eeq
+The expectation value of a function of a
+\po\ or \rpo\ $u_p(\pSpace,t)$ is as simple:
+\beq
+         \obser_p = \frac{1}{\period{p}} \int_0^{\period{p}}d\tau \,
+	\expct{\obser}
+\,.
+\label{rpo:u-cyc}
+\eeq
+where $\period{p}$ is the period.
+$\obser_p$ is a loop integral 
+along a single parcourse of a prime cycle $p$, so it is an intrinsic
+property of the periodic solution.
+Evaluation of the infinite time average \refeq{rpo:tim_ave}
+here requires only a single traversal of the periodic solution.
+
+Take time derivative of the mean energy density \refeq{ksEnergy},
+substitute \refeq{ks} and integrate by parts. Total derivatives vanish
+by the spatial periodicity on the $L$ domain:
+\bea
+   \frac{1}{2}\dot{\expct{E}} &=&
+	 \expct{u \, u_t}
+	% \frac{1}{L}\int_0^{L}u \, u_t\, dx
+	 = \expct{u (u^2 - u \, u_{x} - u \, u_{xxx})_x}
+	\continue
+	&=&
+\expct{ - u_x \, u^2 + (u_{x})^2 - u_x \, u_{xxx}}
+    \,.
+\label{rpo:ksErate}
+\eea
+For an equilibrium it follows from \refeq{KSeqvCond}
+that $\expct{E}$ is constant, as it should be:
+\[
+   \frac{1}{2}\dot{\expct{E}} = 
+\expct{ u_x \,(-u^2 + u_{x} - u_{xxx})}
+	= - \expct{ u_x }\expct{E} =0
+    \,.
+\]
+The first term in \refeq{rpo:ksErate} vanishes by
+integration by parts,
+\beq
+0= \expct{(u^3)_x} = 3 \expct{ u_x \, u^2}
+\,,
+\ee{EnNonl0}
+and integrating by parts yet again the third term we get
+that the energy variation\rf{ksgreene88}
+% \PC{this is ``power", nicht war?}
+\beq
+   \frac{1}{2}\dot{\expct{E}} = 
+	  \expct{(u_{x})^2} - \expct{(u_{xx})^2}
+\ee{EnRate}
+balances the power pumped in by the anti-diffusion
+$u_{xx}$ 
+against energy dissipated by the hypervicosity $u_{xxxx}$,
+see KS equation \refeq{ks}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[t] \label{f:drivedrag}
+\begin{center}
+	\includegraphics[width=\textwidth]{figs/energyBalancePlot.eps}
+\end{center}
+\caption{
+Power input $\expct{(u_{x})^2}$ vs. 
+dissipation $\expct{(u_{xx})^2}$ for all $L=22$ \eqva\
+and \reqva\ \PCedit{determined so far}, several 
+\ESedit{(two, more in the way!)}
+\po s and \rpo s, and for a typical ``turbulent"
+evolution. Note that $\timeAver{(u_{p,x})^2}$
+of the
+$(\period{p},d_p) =(32.\cdots,11)$ 
+ {\rpo} which appears well embedded 
+of the \eqva\ is close to the exact ``turbulent"
+expectation $\timeAver{(u_x)^2}$
+\PCedit{(temporary Japanese heresy)}.
+        }
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\PC{this is special to the $L=22$ system; eventually move to
+    the appropriate section}
+In \reffig{f:drivedrag}
+we plot the power input $\expct{(u_{x})^2}$ vs. 
+dissipation $\expct{(u_{xx})^2}$ for all $L=22$ \eqva\ and 
+\reqva\ \PCedit{determined so far},
+several \po s and \rpo s, and for a typical ``turbulent"
+evolution.s
+% Notice that the single \rpo\ with $T\simeq32$ captures a large
+% part of the turbulent dynamics 
+% \ES{Momentarilly adopting Japanese philosophy,
+% before putting there the rest of the short orbits.}.
+\PC{Re \reffig{f:drivedrag}: 
+	(0) replace $y$-axis by 
+	$\expct{(u_{xx})^2}-\expct{(u_{x})^2}$, so all \po s lie
+	on the $x$-axis and on can see more clearly the turbulent and 
+	periodic trajectory, instead having them scrunched into the
+	diagonal. (a) Replace by side views of
+    3-$d$ $(\expct{u^2},\expct{(u_{x})^2},\expct{(u_{xx})^2}
+	   -\expct{(u_{x})^2})$,
+    two figures; (b) current type figure, with chaotic trajectory,
+    all \eqva, $(32.\cdots,11)$ as example of well embedded, and
+    a typical \po\ {\em not} embedded into the ``turbulent" attractor.
+    (c) a separate figure with more \po s, no ``turbulent" attractor.
+    (d) prepare a mathematica macro that automatically uses
+	fonts at least twice the size you use currently. (e) replace
+	gray window with a white background, black font. (f) in the
+	publication version replace colored dots with symbols of varying
+	shapes, fine black border, can be filled in with colors.
+    }
+\PC{In \reffig{f:drivedrag}: 
+	do also try plotting the heteroclinic connections - they are
+	presumably off the diagonal
+   }
+\PC{believe it or not, we are now set to compute 
+    $\timeAver{u^2}$ and $\timeAver{(u_x)^2}$
+    using cycle expansions
+    }
+
+The time average $\timeAver{E}$
+computed on arbitrary orbit goes to a constant, so
+the expectation values \refeq{rpo:EtimAve} of drive and dissipation
+exactly balance each out:
+\beq
+	0= \timeAver{\dot{E}}  = 
+	\lim_{t\rightarrow \infty}
+		{1\over t} \int_0^t d\tau \, \dot{\expct{E}}
+=
+	  \timeAver{(u_{x})^2} - \timeAver{(u_{xx})^2}
+	\,.
+\ee{rpo:EtimAve}
+In particular, the \eqva\
+and \reqva\ sit on the diagonal in \reffig{f:drivedrag},
+and so do time averages computed on \po s and \rpo s:
+\bea
+\timeAver{E}_p &=& 
+{1\over \period{p}} \int_0^\period{p}d\tau \, \expct{E}(\tau)
+	\continue
+\timeAver{(u_{x})^2}_p &=& 
+{1\over \period{p}} \int_0^\period{p} d\tau \, \expct{(u_{x})^2} 
+	=
+	  \timeAver{(u_{xx})^2}_p
+	\,.
+\label{poE}
+\eea
+
+In the Fourier basis \refeq{EFourier} the conservation of energy on average
+takes form
+\beq
+0 = \sum_{k=1}^{+\infty} ( (k/\tildeL)^2 - ( k/\tildeL)^4 )\, 
+	\timeAver{E_k}
+\,,\qquad 
+E_k =  |a_k|^2
+\,.
+\ee{EFourier1}
+The large $k$ convergence of this series is insensitivie to the
+system size \tildeL; $\timeAver{E_k}$ have to decrease much faster than 
+$1/( k/\tildeL)^4$.
+\PC{determine the decay rate, presumably exponential in $k$}
+Deviation of $E_k$ from this bound for small $k$ determins the active modes.
+This should be particularly useful to bound the number of equilibria, with
+the upper bound given by possible zeros of a small number 
+of long wavelength modes.
+%
+\PC{Next: Michael Loss will teach us how to bound $E$ by
+    Sobolev bounds}
+\PC{Next for fluid guys: Read Lieb and Ruelle to learn
+    how to bound $E$ for plane Couette by Sobolev bounds}
 
 \subsection{\Eqva\ on a periodic domain}
 
@@ -242,27 +500,13 @@ the number of {\eqva} is small,
 mostly
 concentrated on the low wave-number end of the Fourier spectrum.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}[t] \label{f:eqvSpatial}
-\begin{center} 
-\includegraphics[width=0.4\textwidth]{figs/equilSpatial.eps}
-\end{center}
-\caption{
-$(u,u_x,u_{xx})$ representation
-of (blue) \EQV{1}, (red) \EQV{2},  (black) \EQV{3} \eqva,
- and (purple) \REQV{+}{1}, (orange) \REQV{-}{1} \reqva\ for
-system size $L=22$. %, $N=64$ complex modes truncation.
-        }
-\end{figure}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 In a periodic box of size $L$
 both \eqva\ and \reqva\ are  periodic solutions 
 embedded in 3-$d$ space \refeq{eq:3dks}, 
 conveniently represented as loops in 
-$(u,v,w)$ space whose topology is controlled by
+$(u,v,w)$ space whose topology is controlled by the
 ``\eqva\ of \eqva'' stable-unstable manifold structure of
-\refeq{eqvEqvEigV}; see for example \reffig{f:eqvSpatial}.
+\refeq{eqvEqvEigV}, see \reffig{f:eqvSpatial}.
 In this representation the continuous translation symmetry
 is automatic - a rotation in the $[0,L]$ periodic domain only
 moves the points along the loop. For an \eqv\ the points
@@ -451,8 +695,10 @@ a_{2m} \to a_{2m}\,, a_{2m+1} \to -a_{2m+1}
 The antisymmetric condition amounts to imposing
 $u(0,2\pi L)=0$ boundary condition, with
 the size of the system reduced to
-the $[0, \pi L]$ interval \ES{Greene and Kim show that steady states (non-traveling) 
-have to be antisymmetric and our findings verify it. Thus when discussing equilibria this conversion is not
+the $[0, \pi L]$ interval 
+\ES{Greene and Kim show that steady states (non-traveling) 
+have to be antisymmetric and our findings verify it. 
+Thus when discussing equilibria this conversion is not
 meaningfull.}.
 
 In this paper we study the full \KS\ system invariant
