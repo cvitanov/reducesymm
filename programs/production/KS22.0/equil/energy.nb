@@ -41,9 +41,9 @@ Wolfram Research.
 
 (*NotebookFileLineBreakTest
 NotebookFileLineBreakTest*)
-(*NotebookOptionsPosition[     12167,        403]*)
-(*NotebookOutlinePosition[     12829,        426]*)
-(*  CellTagsIndexPosition[     12785,        422]*)
+(*NotebookOptionsPosition[     16103,        533]*)
+(*NotebookOutlinePosition[     16765,        556]*)
+(*  CellTagsIndexPosition[     16721,        552]*)
 (*WindowFrame->Normal*)
 
 
@@ -55,6 +55,12 @@ Cell[BoxData[
 
 Cell[BoxData[
     \(<< Graphics`Legend`\)], "Input"],
+
+Cell[BoxData[
+    \(<< Graphics`Graphics3D`\)], "Input"],
+
+Cell[BoxData[
+    \(<< LinearAlgebra`MatrixManipulation`\)], "Input"],
 
 Cell[BoxData[
     \($HistoryLength = 5\)], "Input"],
@@ -110,6 +116,11 @@ Cell[BoxData[
   InitializationCell->True],
 
 Cell[BoxData[
+    \(\(p1e = 
+        ScatterPlot3D[{Ec1}, PlotStyle \[Rule] {c1, PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input"],
+
+Cell[BoxData[
     \(\(p2 = 
         ListPlot[{{Ec2[\([2]\)], Ec2[\([3]\)]}}, 
           PlotStyle \[Rule] {c2, PointSize[pt]}, 
@@ -117,11 +128,21 @@ Cell[BoxData[
   InitializationCell->True],
 
 Cell[BoxData[
+    \(\(p2e = 
+        ScatterPlot3D[{Ec2}, PlotStyle \[Rule] {c2, PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input"],
+
+Cell[BoxData[
     \(\(p3 = 
         ListPlot[{{Ec3[\([2]\)], Ec3[\([3]\)]}}, 
           PlotStyle \[Rule] {c3, PointSize[pt]}, 
           DisplayFunction \[Rule] Identity];\)\)], "Input",
   InitializationCell->True],
+
+Cell[BoxData[
+    \(\(p3e = 
+        ScatterPlot3D[{Ec3}, PlotStyle \[Rule] {c3, PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input"],
 
 Cell[BoxData[
     \(\(cTW1 = RGBColor[0.5, 0.5, 0];\)\)], "Input"],
@@ -134,6 +155,11 @@ Cell[BoxData[
   InitializationCell->True],
 
 Cell[BoxData[
+    \(\(pTW1e = 
+        ScatterPlot3D[{EcTW1}, PlotStyle \[Rule] {cTW1, PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input"],
+
+Cell[BoxData[
     \(\(cTW2 = RGBColor[0.5, 0, 0.5];\)\)], "Input"],
 
 Cell[BoxData[
@@ -144,25 +170,32 @@ Cell[BoxData[
   InitializationCell->True],
 
 Cell[BoxData[
+    \(\(pTW2e = 
+        ScatterPlot3D[{EcTW2}, PlotStyle \[Rule] {cTW2, PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input"],
+
+Cell[BoxData[
     \(\(v = Import["\<../int/random/trajU.dat\>"];\)\)], "Input"],
 
 Cell[BoxData[
     \(\(L = 22.0;\)\)], "Input"],
 
 Cell[BoxData[
-    \(\(vx = Map[uDer[#, 1, L] &, v, {1}];\)\)], "Input"],
-
-Cell[BoxData[
     \(\(Nk = 8000;\)\)], "Input"],
 
 Cell[BoxData[
-    \(\(vx = Take[vx, \(-Nk\)];\)\)], "Input"],
+    \(\(v = Take[v, \(-Nk\)];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(vx = Map[uDer[#, 1, L] &, v, {1}];\)\)], "Input"],
 
 Cell[BoxData[
     \(\(vxx = Map[uDer[#, 2, L] &, v, {1}];\)\)], "Input"],
 
 Cell[BoxData[
-    \(\(vxx = Take[vxx, \(-Nk\)];\)\)], "Input"],
+    \(\(Ec = 
+        Apply[Plus, 
+            v^2, {1}]/\(Dimensions[v]\)[\([\)\(2\)\(]\)];\)\)], "Input"],
 
 Cell[BoxData[
     \(\(vx2 = 
@@ -171,6 +204,9 @@ Cell[BoxData[
 Cell[BoxData[
     \(\(vxx2 = 
         Apply[Plus, vxx^2, {1}]/\(Dimensions[vxx]\)[\([2]\)];\)\)], "Input"],
+
+Cell[BoxData[
+    \(mEc = Plus @@ Ec/\(Dimensions[Ec]\)[\([1]\)]\)], "Input"],
 
 Cell[BoxData[
     \(mvx2 = Plus @@ vx2/\(Dimensions[vx2]\)[\([1]\)]\)], "Input"],
@@ -188,12 +224,38 @@ Cell[BoxData[
           DisplayFunction \[Rule] Identity];\)\)], "Input"],
 
 Cell[BoxData[
-    \(\(rnd = 
+    \(\(pmE = 
+        ScatterPlot3D[{{mEc, mvx2, mvxx2}}, 
+          PlotStyle \[Rule] {RGBColor[1, 1, 1], PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(Turb = 
         Table[{vx2[\([i]\)], vxx2[\([i]\)]}, {i, 
             1, \(Dimensions[vx2]\)[\([1]\)]}];\)\)], "Input"],
 
 Cell[BoxData[
-    \(\(prnd = ListPlot[rnd, PlotJoined \[Rule] True];\)\)], "Input"],
+    \(\(TurbE = 
+        Table[{Ec[\([i]\)], vx2[\([i]\)], vxx2[\([i]\)]}, {i, 
+            1, \(Dimensions[vx2]\)[\([1]\)]}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(pTurb = ListPlot[Turb, PlotJoined \[Rule] True];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[Ec]\)], "Input"],
+
+Cell[BoxData[
+    \(ListPlot[Ec, PlotRange \[Rule] All, PlotJoined \[Rule] \ True, 
+      Axes \[Rule] False]\)], "Input"],
+
+Cell[BoxData[
+    \(Position[Ec, Max[Ec]]\)], "Input"],
+
+Cell[BoxData[
+    \(\(pTurbE = 
+        ScatterPlot3D[TurbE, PlotJoined \[Rule] True, 
+          PlotRange \[Rule] All];\)\)], "Input"],
 
 Cell[BoxData[
     \(\(\(\[IndentingNewLine]\)\( (*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *) \
@@ -237,12 +299,20 @@ Cell[BoxData[
     \(\(vxx = Map[uDer[#, 2, L] &, v, {1}];\)\)], "Input"],
 
 Cell[BoxData[
+    \(\(Ec = 
+        Apply[Plus, 
+            v^2, {1}]/\(Dimensions[v]\)[\([\)\(2\)\(]\)];\)\)], "Input"],
+
+Cell[BoxData[
     \(\(vx2 = 
         Apply[Plus, vx^2, {1}]/\(Dimensions[vx]\)[\([2]\)];\)\)], "Input"],
 
 Cell[BoxData[
     \(\(vxx2 = 
         Apply[Plus, vxx^2, {1}]/\(Dimensions[vxx]\)[\([2]\)];\)\)], "Input"],
+
+Cell[BoxData[
+    \(mEc = Plus @@ Ec/\(Dimensions[Ec]\)[\([1]\)]\)], "Input"],
 
 Cell[BoxData[
     \(mvx2 = Plus @@ vx2/\(Dimensions[vx2]\)[\([1]\)]\)], "Input"],
@@ -259,13 +329,29 @@ Cell[BoxData[
           DisplayFunction \[Rule] Identity];\)\)], "Input"],
 
 Cell[BoxData[
+    \(\(pmT19e = 
+        ScatterPlot3D[{{mEc, mvx2, mvxx2}}, 
+          PlotStyle \[Rule] {cT19, PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input"],
+
+Cell[BoxData[
     \(\(T19 = 
         Table[{vx2[\([i]\)], vxx2[\([i]\)]}, {i, 
             1, \(Dimensions[vx2]\)[\([1]\)]}];\)\)], "Input"],
 
 Cell[BoxData[
+    \(\(T19e = 
+        Table[{Ec[\([i]\)], vx2[\([i]\)], vxx2[\([i]\)]}, {i, 
+            1, \(Dimensions[vx2]\)[\([1]\)]}];\)\)], "Input"],
+
+Cell[BoxData[
     \(\(pT19 = 
         ListPlot[T19, PlotJoined \[Rule] True, 
+          PlotStyle \[Rule] {cT19, Thickness[thck]}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(pT19e = 
+        ScatterPlot3D[T19e, PlotJoined \[Rule] True, 
           PlotStyle \[Rule] {cT19, Thickness[thck]}];\)\)], "Input"],
 
 Cell[BoxData[
@@ -313,12 +399,20 @@ Cell[BoxData[
     \(\(vxx = Map[uDer[#, 2, L] &, v, {1}];\)\)], "Input"],
 
 Cell[BoxData[
+    \(\(Ec = 
+        Apply[Plus, 
+            v^2, {1}]/\(Dimensions[v]\)[\([\)\(2\)\(]\)];\)\)], "Input"],
+
+Cell[BoxData[
     \(\(vx2 = 
         Apply[Plus, vx^2, {1}]/\(Dimensions[vx]\)[\([2]\)];\)\)], "Input"],
 
 Cell[BoxData[
     \(\(vxx2 = 
         Apply[Plus, vxx^2, {1}]/\(Dimensions[vxx]\)[\([2]\)];\)\)], "Input"],
+
+Cell[BoxData[
+    \(mEc = Plus @@ Ec/\(Dimensions[Ec]\)[\([1]\)]\)], "Input"],
 
 Cell[BoxData[
     \(mvx2 = Plus @@ vx2/\(Dimensions[vx2]\)[\([1]\)]\)], "Input"],
@@ -335,13 +429,29 @@ Cell[BoxData[
           DisplayFunction \[Rule] Identity];\)\)], "Input"],
 
 Cell[BoxData[
+    \(\(pmT32e = 
+        ScatterPlot3D[{{mEc, mvx2, mvxx2}}, 
+          PlotStyle \[Rule] {cT32, PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input"],
+
+Cell[BoxData[
     \(\(T32 = 
         Table[{vx2[\([i]\)], vxx2[\([i]\)]}, {i, 
             1, \(Dimensions[vx2]\)[\([1]\)]}];\)\)], "Input"],
 
 Cell[BoxData[
+    \(\(T32e = 
+        Table[{Ec[\([i]\)], vx2[\([i]\)], vxx2[\([i]\)]}, {i, 
+            1, \(Dimensions[vx2]\)[\([1]\)]}];\)\)], "Input"],
+
+Cell[BoxData[
     \(\(pT32 = 
         ListPlot[T32, PlotJoined \[Rule] True, 
+          PlotStyle \[Rule] {cT32, Thickness[thck]}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(pT32e = 
+        ScatterPlot3D[T32e, PlotJoined \[Rule] True, 
           PlotStyle \[Rule] {cT32, Thickness[thck]}];\)\)], "Input"],
 
 Cell[BoxData[
@@ -357,7 +467,7 @@ Cell[BoxData[
           FrameLabel \[Rule] \ {\*"\"\<<(\!\(u\_x\)\!\(\()\^2\)\)>\>\"", \
 \*"\"\<<(\!\(u\_xx\)\!\(\()\^2\)\)>\>\""}, Frame \[Rule] True, Axes -> False, 
           RotateLabel \[Rule] False, 
-          TextStyle \[Rule] {FontSize -> 11, FontFamily \[Rule] Courier}, 
+          TextStyle \[Rule] {FontSize -> 10, FontFamily \[Rule] Times}, 
           DisplayFunction \[Rule] $DisplayFunction, ImageSize \[Rule] 600, 
           AspectRatio \[Rule] 1, PlotRange \[Rule] All];\)\)], "Input",
   InitializationCell->True],
@@ -398,6 +508,26 @@ Cell[BoxData[
             LegendBackground \[Rule] \ GrayLevel[0.5]}];\)\)], "Input"],
 
 Cell[BoxData[
+    \(\(pAll3D = 
+        Show[pTurbE, pT19e, pT32e, pmT19e, pmT32e, p1e, p2e, p3e, pTW1e, 
+          pTW2e, pmE, 
+          AxesLabel \[Rule] \ {"\<<E>\>", \
+\*"\"\<<(\!\(u\_x\)\!\(\()\^2\)\)>\>\"", \
+\*"\"\<<(\!\(u\_xx\)\!\(\()\^2\)\)>\>\""}, Axes \[Rule] True, 
+          TextStyle \[Rule] {FontSize -> 10, FontFamily \[Rule] Times}, 
+          DisplayFunction \[Rule] $DisplayFunction, ImageSize \[Rule] 600, 
+          AspectRatio \[Rule] 1, PlotRange \[Rule] All];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[""], "Input"],
+
+Cell[BoxData[
+    \(\(Get["\<MathGL3d`OpenGLViewer`\>"];\)\)], "Input"],
+
+Cell[BoxData[
+    \(MVShow3D[pAll3D, MVNewScene \[Rule] True]\)], "Input"],
+
+Cell[BoxData[
     \(Export["\<energyBalancePlot.eps\>", energyLegendPlot]\)], "Input",
   InitializationCell->True]
 },
@@ -428,97 +558,126 @@ Notebook[{
 Cell[1754, 51, 77, 2, 27, "Input",
   InitializationCell->True],
 Cell[1834, 55, 52, 1, 27, "Input"],
-Cell[1889, 58, 51, 1, 27, "Input"],
-Cell[1943, 61, 50, 1, 27, "Input"],
-Cell[1996, 64, 112, 2, 27, "Input",
+Cell[1889, 58, 56, 1, 27, "Input"],
+Cell[1948, 61, 69, 1, 27, "Input"],
+Cell[2020, 64, 51, 1, 27, "Input"],
+Cell[2074, 67, 50, 1, 27, "Input"],
+Cell[2127, 70, 112, 2, 27, "Input",
   InitializationCell->True],
-Cell[2111, 68, 112, 2, 27, "Input",
+Cell[2242, 74, 112, 2, 27, "Input",
   InitializationCell->True],
-Cell[2226, 72, 112, 2, 27, "Input",
+Cell[2357, 78, 112, 2, 27, "Input",
   InitializationCell->True],
-Cell[2341, 76, 132, 3, 27, "Input",
+Cell[2472, 82, 132, 3, 27, "Input",
   InitializationCell->True],
-Cell[2476, 81, 38, 1, 27, "Input"],
-Cell[2517, 84, 132, 3, 27, "Input",
+Cell[2607, 87, 38, 1, 27, "Input"],
+Cell[2648, 90, 132, 3, 27, "Input",
   InitializationCell->True],
-Cell[2652, 89, 38, 1, 27, "Input"],
-Cell[2693, 92, 47, 1, 27, "Input"],
-Cell[2743, 95, 62, 1, 27, "Input"],
-Cell[2808, 98, 62, 1, 27, "Input"],
-Cell[2873, 101, 62, 1, 27, "Input"],
-Cell[2938, 104, 215, 5, 27, "Input",
+Cell[2783, 95, 38, 1, 27, "Input"],
+Cell[2824, 98, 47, 1, 27, "Input"],
+Cell[2874, 101, 62, 1, 27, "Input"],
+Cell[2939, 104, 62, 1, 27, "Input"],
+Cell[3004, 107, 62, 1, 27, "Input"],
+Cell[3069, 110, 215, 5, 27, "Input",
   InitializationCell->True],
-Cell[3156, 111, 215, 5, 27, "Input",
+Cell[3287, 117, 157, 3, 27, "Input"],
+Cell[3447, 122, 215, 5, 27, "Input",
   InitializationCell->True],
-Cell[3374, 118, 215, 5, 27, "Input",
+Cell[3665, 129, 157, 3, 27, "Input"],
+Cell[3825, 134, 215, 5, 27, "Input",
   InitializationCell->True],
-Cell[3592, 125, 66, 1, 27, "Input"],
-Cell[3661, 128, 223, 5, 27, "Input",
+Cell[4043, 141, 157, 3, 27, "Input"],
+Cell[4203, 146, 66, 1, 27, "Input"],
+Cell[4272, 149, 223, 5, 27, "Input",
   InitializationCell->True],
-Cell[3887, 135, 66, 1, 27, "Input"],
-Cell[3956, 138, 223, 5, 27, "Input",
+Cell[4498, 156, 163, 3, 27, "Input"],
+Cell[4664, 161, 66, 1, 27, "Input"],
+Cell[4733, 164, 223, 5, 27, "Input",
   InitializationCell->True],
-Cell[4182, 145, 79, 1, 27, "Input"],
-Cell[4264, 148, 46, 1, 27, "Input"],
-Cell[4313, 151, 71, 1, 27, "Input"],
-Cell[4387, 154, 47, 1, 27, "Input"],
-Cell[4437, 157, 60, 1, 27, "Input"],
-Cell[4500, 160, 72, 1, 27, "Input"],
-Cell[4575, 163, 62, 1, 27, "Input"],
-Cell[4640, 166, 103, 2, 27, "Input"],
-Cell[4746, 170, 106, 2, 27, "Input"],
-Cell[4855, 174, 80, 1, 27, "Input"],
-Cell[4938, 177, 83, 1, 27, "Input"],
-Cell[5024, 180, 63, 1, 27, "Input"],
-Cell[5090, 183, 187, 4, 27, "Input"],
-Cell[5280, 189, 140, 3, 27, "Input"],
-Cell[5423, 194, 83, 1, 27, "Input"],
-Cell[5509, 197, 112, 2, 43, "Input"],
-Cell[5624, 201, 145, 3, 27, "Input"],
-Cell[5772, 206, 46, 1, 27, "Input"],
-Cell[5821, 209, 82, 1, 27, "Input"],
-Cell[5906, 212, 55, 1, 27, "Input"],
-Cell[5964, 215, 129, 3, 27, "Input"],
-Cell[6096, 220, 52, 1, 27, "Input"],
-Cell[6151, 223, 73, 1, 27, "Input"],
-Cell[6227, 226, 65, 1, 27, "Input"],
-Cell[6295, 229, 46, 1, 27, "Input"],
-Cell[6344, 232, 71, 1, 27, "Input"],
-Cell[6418, 235, 72, 1, 27, "Input"],
-Cell[6493, 238, 103, 2, 27, "Input"],
-Cell[6599, 242, 106, 2, 27, "Input"],
-Cell[6708, 246, 80, 1, 27, "Input"],
-Cell[6791, 249, 83, 1, 27, "Input"],
-Cell[6877, 252, 54, 1, 27, "Input"],
-Cell[6934, 255, 166, 3, 27, "Input"],
-Cell[7103, 260, 140, 3, 27, "Input"],
-Cell[7246, 265, 146, 3, 27, "Input"],
-Cell[7395, 270, 112, 2, 43, "Input"],
-Cell[7510, 274, 150, 3, 27, "Input"],
-Cell[7663, 279, 46, 1, 27, "Input"],
-Cell[7712, 282, 82, 1, 27, "Input"],
-Cell[7797, 285, 56, 1, 27, "Input"],
-Cell[7856, 288, 57, 1, 27, "Input"],
-Cell[7916, 291, 145, 3, 27, "Input"],
-Cell[8064, 296, 47, 1, 27, "Input"],
-Cell[8114, 299, 73, 1, 27, "Input"],
-Cell[8190, 302, 65, 1, 27, "Input"],
-Cell[8258, 305, 46, 1, 27, "Input"],
-Cell[8307, 308, 71, 1, 27, "Input"],
-Cell[8381, 311, 72, 1, 27, "Input"],
-Cell[8456, 314, 103, 2, 27, "Input"],
-Cell[8562, 318, 106, 2, 27, "Input"],
-Cell[8671, 322, 80, 1, 27, "Input"],
-Cell[8754, 325, 83, 1, 27, "Input"],
-Cell[8840, 328, 53, 1, 27, "Input"],
-Cell[8896, 331, 166, 3, 27, "Input"],
-Cell[9065, 336, 140, 3, 27, "Input"],
-Cell[9208, 341, 146, 3, 27, "Input"],
-Cell[9357, 346, 112, 2, 43, "Input"],
-Cell[9472, 350, 669, 12, 85, "Input",
+Cell[4959, 171, 163, 3, 27, "Input"],
+Cell[5125, 176, 79, 1, 27, "Input"],
+Cell[5207, 179, 46, 1, 27, "Input"],
+Cell[5256, 182, 47, 1, 27, "Input"],
+Cell[5306, 185, 58, 1, 27, "Input"],
+Cell[5367, 188, 71, 1, 27, "Input"],
+Cell[5441, 191, 72, 1, 27, "Input"],
+Cell[5516, 194, 121, 3, 27, "Input"],
+Cell[5640, 199, 103, 2, 27, "Input"],
+Cell[5746, 203, 106, 2, 27, "Input"],
+Cell[5855, 207, 77, 1, 27, "Input"],
+Cell[5935, 210, 80, 1, 27, "Input"],
+Cell[6018, 213, 83, 1, 27, "Input"],
+Cell[6104, 216, 63, 1, 27, "Input"],
+Cell[6170, 219, 187, 4, 27, "Input"],
+Cell[6360, 225, 198, 4, 43, "Input"],
+Cell[6561, 231, 141, 3, 27, "Input"],
+Cell[6705, 236, 155, 3, 27, "Input"],
+Cell[6863, 241, 85, 1, 27, "Input"],
+Cell[6951, 244, 47, 1, 27, "Input"],
+Cell[7001, 247, 122, 2, 27, "Input"],
+Cell[7126, 251, 54, 1, 27, "Input"],
+Cell[7183, 254, 135, 3, 27, "Input"],
+Cell[7321, 259, 112, 2, 43, "Input"],
+Cell[7436, 263, 145, 3, 27, "Input"],
+Cell[7584, 268, 46, 1, 27, "Input"],
+Cell[7633, 271, 82, 1, 27, "Input"],
+Cell[7718, 274, 55, 1, 27, "Input"],
+Cell[7776, 277, 129, 3, 27, "Input"],
+Cell[7908, 282, 52, 1, 27, "Input"],
+Cell[7963, 285, 73, 1, 27, "Input"],
+Cell[8039, 288, 65, 1, 27, "Input"],
+Cell[8107, 291, 46, 1, 27, "Input"],
+Cell[8156, 294, 71, 1, 27, "Input"],
+Cell[8230, 297, 72, 1, 27, "Input"],
+Cell[8305, 300, 121, 3, 27, "Input"],
+Cell[8429, 305, 103, 2, 27, "Input"],
+Cell[8535, 309, 106, 2, 27, "Input"],
+Cell[8644, 313, 77, 1, 27, "Input"],
+Cell[8724, 316, 80, 1, 27, "Input"],
+Cell[8807, 319, 83, 1, 27, "Input"],
+Cell[8893, 322, 54, 1, 27, "Input"],
+Cell[8950, 325, 166, 3, 27, "Input"],
+Cell[9119, 330, 188, 4, 27, "Input"],
+Cell[9310, 336, 140, 3, 27, "Input"],
+Cell[9453, 341, 154, 3, 27, "Input"],
+Cell[9610, 346, 146, 3, 27, "Input"],
+Cell[9759, 351, 153, 3, 27, "Input"],
+Cell[9915, 356, 112, 2, 43, "Input"],
+Cell[10030, 360, 150, 3, 27, "Input"],
+Cell[10183, 365, 46, 1, 27, "Input"],
+Cell[10232, 368, 82, 1, 27, "Input"],
+Cell[10317, 371, 56, 1, 27, "Input"],
+Cell[10376, 374, 57, 1, 27, "Input"],
+Cell[10436, 377, 145, 3, 27, "Input"],
+Cell[10584, 382, 47, 1, 27, "Input"],
+Cell[10634, 385, 73, 1, 27, "Input"],
+Cell[10710, 388, 65, 1, 27, "Input"],
+Cell[10778, 391, 46, 1, 27, "Input"],
+Cell[10827, 394, 71, 1, 27, "Input"],
+Cell[10901, 397, 72, 1, 27, "Input"],
+Cell[10976, 400, 121, 3, 27, "Input"],
+Cell[11100, 405, 103, 2, 27, "Input"],
+Cell[11206, 409, 106, 2, 27, "Input"],
+Cell[11315, 413, 77, 1, 27, "Input"],
+Cell[11395, 416, 80, 1, 27, "Input"],
+Cell[11478, 419, 83, 1, 27, "Input"],
+Cell[11564, 422, 53, 1, 27, "Input"],
+Cell[11620, 425, 166, 3, 27, "Input"],
+Cell[11789, 430, 188, 4, 27, "Input"],
+Cell[11980, 436, 140, 3, 27, "Input"],
+Cell[12123, 441, 154, 3, 27, "Input"],
+Cell[12280, 446, 146, 3, 27, "Input"],
+Cell[12429, 451, 153, 3, 27, "Input"],
+Cell[12585, 456, 112, 2, 43, "Input"],
+Cell[12700, 460, 667, 12, 85, "Input",
   InitializationCell->True],
-Cell[10144, 364, 1902, 33, 267, "Input"],
-Cell[12049, 399, 114, 2, 27, "Input",
+Cell[13370, 474, 1902, 33, 267, "Input"],
+Cell[15275, 509, 527, 10, 68, "Input",
+  InitializationCell->True],
+Cell[15805, 521, 26, 0, 27, "Input"],
+Cell[15834, 523, 71, 1, 27, "Input"],
+Cell[15908, 526, 74, 1, 27, "Input"],
+Cell[15985, 529, 114, 2, 27, "Input",
   InitializationCell->True]
 }
 ]
