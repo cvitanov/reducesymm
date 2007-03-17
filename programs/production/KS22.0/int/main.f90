@@ -45,7 +45,7 @@ open(21,file=trim(wd)//'/parameters.dat')
 	read(21,*) 
 	read(21,*) Nplt
 	read(21,*)
-	read(21,*) M
+	read(21,*) Mi
 	read(21,*)
 	read(21,*) R
 close(21)
@@ -88,7 +88,7 @@ tf=Nsteps*h
 print *,"int",h,Nsteps,h*Nsteps,sum(abs(ai))
 
 call SetLin_KS(lin)
-call etdrk4DiagPrefactors(lin,h,R,M,f0,f1,f2,f3,e,e2)
+call etdrk4DiagPrefactors(lin,h,R,Mi,f0,f1,f2,f3,e,e2)
 call etdrk4DiagDriverS(ti,ai,Nsteps,tf,af,f0,f1,f2,f3,e,e2,Nplt,SetNlin_KS)
 open (29,file=trim(wd)//'/trajU.dat')
 do i=1,size(aSt,1)

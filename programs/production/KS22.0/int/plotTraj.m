@@ -31,15 +31,45 @@ L=22.0;
 
 
 
-tTot=200*0.4;
+tTot=500;
 
-vPlt=ListDensityPlot[Take[v,400],Mesh\[Rule] False,ColorFunction\[Rule]hby,
+vPlt=ListDensityPlot[v,Mesh\[Rule] False,ColorFunction\[Rule]hby,
       MeshRange\[Rule]{{0,L},{0.0,tTot}},FrameLabel\[Rule]{"x","t"},
       TextStyle\[Rule]{FontFamily\[Rule]Arial,FontSize\[Rule] 12},
       AspectRatio\[Rule]2];
 
 
 
-Export[wd[]<>"rpo.eps",vPlt];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Exit[];
