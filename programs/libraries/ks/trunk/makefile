@@ -2,7 +2,7 @@
 # by $(USER)
 
 TARGET = libks
-OBJ = ks.o Derivs_SteadyKS.o Rc.o Rr.o SetLin_KS.o SetNlin_KS.o SetAndiag_KS.o SetAndiag_KS_diff.o
+OBJ = ks.o Derivs_SteadyKS.o Rc.o Rr.o SetLin_KS.o SetNlin_KS.o SetAndiag_KS.o SetAndiag_KS_diff.o jacobn_ks_galerkin.o derivs_ks_galerkin.o
 srcMod = ks.f90 
 targetMod = ks.mod
 # Where to find user libraries:

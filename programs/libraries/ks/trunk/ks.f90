@@ -6,39 +6,21 @@ real(dp), dimension(:,:), allocatable :: Jac
 real(dp), dimension(:), allocatable :: lin,f0,f1,f2,f3,e,e2
 real(dp), dimension(:), allocatable :: f0dum,f1dum,f2dum,f3dum,edum,e2dum
 real(dp) :: R, L, Tw
-integer(i4b) :: d, M, Nsteps, Nplt, Ntrial
+integer(i4b) :: d, Mi, Nsteps, Nplt, Ntrial
 real(dp) :: tolbc, tolf
-real(dp) :: c ! integration constant from steady state equation
+real(dp) :: Ec ! integration constant from steady state equation
 
 interface ksFJ
 	module procedure ksFJ_equil, ksFJ_equil_elim,ksFJ_rpo, ksFJ_req!(bc,fvec,fjac)
-! 		use nrtype
-! 		implicit none
-! 		real(dp), DIMENSION(:), INTENT(IN) :: bc
-! 		real(dp), DIMENSION(:), INTENT(OUT) :: fvec
-! 		real(dp), DIMENSION(:,:), INTENT(OUT) :: fjac
-! 	end subroutine
-	!module subroutine ksFJ_rpo(bc,fvec,fjac,T,kappa)
-! 		use nrtype
-! 		implicit none
-! 		real(dp), DIMENSION(:), INTENT(IN) :: bc
-! 		real(dp), DIMENSION(:), INTENT(OUT) :: fvec
-! 		real(dp), DIMENSION(:,:), INTENT(OUT) :: fjac
-! 		real(dp), intent(in) :: T,kappa
-! 	end subroutine
 end interface ksFJ
 
-! interface
-! 	SUBROUTINE ksFJ_diff(bc,fvec,fjac,T,kappa)
-! 		USE nrtype
-! 		IMPLICIT NONE
-! 		real(dp), DIMENSION(:), INTENT(IN) :: bc
-! 		real(dp), DIMENSION(:), INTENT(OUT) :: fvec
-! 		real(dp), DIMENSION(:,:), INTENT(OUT) :: fjac
-! 		real(dp), intent(in) :: T,kappa
-! 	end subroutine
-! end interface
+interface bc2U
+	module procedure bc2U
+end interface bc2U
 
+interface bc2a
+	module procedure bc2a
+end interface bc2a
 
 interface
 	subroutine SetLin_KS(lnr)
@@ -124,7 +106,79 @@ interface
 	end subroutine
 end interface
 
+interface
+	subroutine derivs_ks_galerkin(t,y,dydt)
+		USE nrtype
+		IMPLICIT NONE
+		REAL(DP), INTENT(IN) :: t
+		REAL(DP), DIMENSION(:), INTENT(IN) :: y
+		REAL(DP), DIMENSION(:), INTENT(OUT) :: dydt
+	end subroutine
+end interface 
+
+interface
+	subroutine jacobn_ks_galerkin(t,y,dfdt,dfdy)
+		USE nrtype
+		IMPLICIT NONE
+		REAL(dp), INTENT(IN) :: t
+		REAL(dp), DIMENSION(:), INTENT(IN) :: y
+		REAL(dp), DIMENSION(:), INTENT(OUT) :: dfdt
+		REAL(dp), DIMENSION(:,:), INTENT(OUT) :: dfdy
+	end subroutine
+end interface 
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 CONTAINS
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+
+subroutine bc2a(bc,a)
+use nrtype
+use nrutil, only:assert_eq
+
+implicit none
+
+real(dp), dimension(:), intent(in) :: bc
+complex(dpc), dimension(:), intent(out) :: a
+!
+integer(i4b) :: d
+
+d=assert_eq(size(bc),2*(size(a)-1),'SetNlin1')
+
+a=(0.0,0.0)
+a(2:d/2+1)=bc(1:d/2)+ii*bc(d/2+1:d)
+
+end subroutine bc2a
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+
+subroutine bc2u(bc,u)
+use nrtype
+use nrutil, only:assert_eq
+
+implicit none
+
+include "fftw3.f"
+
+real(dp), dimension(:), intent(in) :: bc
+real(dp), dimension(:), intent(out) :: u
+!
+complex(dpc), dimension(size(bc)/2+1) :: a
+integer(i4b) :: d
+integer(i8b) :: invplan
+
+d=assert_eq(size(bc),size(U),'SetNlin1')
+
+a=(0.0,0.0)
+a(2:d/2+1)=bc(1:d/2)+ii*bc(d/2+1:d)
+
+call dfftw_plan_dft_c2r_1d(invplan,d,a,u,FFTW_ESTIMATE)
+call dfftw_execute(invplan)
+call dfftw_destroy_plan(invplan)
+
+end subroutine bc2u
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 
 SUBROUTINE ksFJ_equil(bc,fvec,fjac)
 USE nrtype
@@ -412,8 +466,8 @@ h=abs(tf-ti)/Nsteps
 h2=h/2.0_dp
 
 call SetLin_KS(lin)
-call etdrk4DiagPrefactors(lin,h,R,M,f0,f1,f2,f3,e,e2)
-call etdrk4DiagPrefactors(lin,h2,R,M,f0dum,f1dum,f2dum,f3dum,edum,e2dum)
+call etdrk4DiagPrefactors(lin,h,R,Mi,f0,f1,f2,f3,e,e2)
+call etdrk4DiagPrefactors(lin,h2,R,Mi,f0dum,f1dum,f2dum,f3dum,edum,e2dum)
 
 
 call etdrk4DiagJDriverSh(ti,ai,Jac,h,Nsteps,tf,af,Jac,f0,f1,f2,f3,e,e2,f0dum,f1dum,f2dum,f3dum,edum,e2dum,Nplt,etdrk4diag,etdrk4DiagJhr,SetNlin_KS,SetANdiag_KS)
@@ -543,8 +597,8 @@ h=abs(tf-ti)/Nsteps
 h2=h/2.0_dp
 
 call SetLin_KS(lin)
-call etdrk4DiagPrefactors(lin,h,R,M,f0,f1,f2,f3,e,e2)
-call etdrk4DiagPrefactors(lin,h2,R,M,f0dum,f1dum,f2dum,f3dum,edum,e2dum)
+call etdrk4DiagPrefactors(lin,h,R,Mi,f0,f1,f2,f3,e,e2)
+call etdrk4DiagPrefactors(lin,h2,R,Mi,f0dum,f1dum,f2dum,f3dum,edum,e2dum)
 
 
 call etdrk4DiagJDriverSh(ti,ai,Jac,h,Nsteps,tf,af,Jac,f0,f1,f2,f3,e,e2,f0dum,f1dum,f2dum,f3dum,edum,e2dum,Nplt,etdrk4diag,etdrk4DiagJhr,SetNlin_KS,SetANdiag_KS)
