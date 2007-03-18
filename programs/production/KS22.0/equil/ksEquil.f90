@@ -160,14 +160,10 @@ open(25,file=trim(wd)//'equilS.dat')
 
 close(25)
 
-print *,"vxxx", sum(v(1:d)),sum(v(1:d)**2), sum(vxxx(1:d)),sum(vxx(1:d)),sum(vx(1:d))
-print *,"c",v(1)**2-vx(1)-vxxx(1),v(1),vx(1),vxxx(1)
-
-
 open(26,file=trim(wd)//'steady_c.dat')
 	write(26,220) sum(v**2-vx-vxxx)/d
 	write(26,220) sum(vx**2)/d
 	write(26,220) sum(vxx**2)/d
-close(25)
+close(26)
 
 end program

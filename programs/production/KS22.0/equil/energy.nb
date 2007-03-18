@@ -1,5 +1,5 @@
 (************** Content-type: application/mathematica **************
-                     CreatedBy='Mathematica 5.0'
+                     CreatedBy='Mathematica 5.2'
 
                     Mathematica-Compatible Notebook
 
@@ -41,9 +41,9 @@ Wolfram Research.
 
 (*NotebookFileLineBreakTest
 NotebookFileLineBreakTest*)
-(*NotebookOptionsPosition[     16103,        533]*)
-(*NotebookOutlinePosition[     16765,        556]*)
-(*  CellTagsIndexPosition[     16721,        552]*)
+(*NotebookOptionsPosition[     15257,        503]*)
+(*NotebookOutlinePosition[     15919,        526]*)
+(*  CellTagsIndexPosition[     15875,        522]*)
 (*WindowFrame->Normal*)
 
 
@@ -175,7 +175,13 @@ Cell[BoxData[
           DisplayFunction \[Rule] Identity];\)\)], "Input"],
 
 Cell[BoxData[
-    \(\(v = Import["\<../int/random/trajU.dat\>"];\)\)], "Input"],
+    \(\(Etab = Import["\<../int/random/energy.dat\>"];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Ec[\([10]\)]\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[Ec]\)], "Input"],
 
 Cell[BoxData[
     \(\(L = 22.0;\)\)], "Input"],
@@ -184,35 +190,16 @@ Cell[BoxData[
     \(\(Nk = 8000;\)\)], "Input"],
 
 Cell[BoxData[
-    \(\(v = Take[v, \(-Nk\)];\)\)], "Input"],
+    \(\(Etab = Take[Etab, \(-Nk\)];\)\)], "Input"],
 
 Cell[BoxData[
-    \(\(vx = Map[uDer[#, 1, L] &, v, {1}];\)\)], "Input"],
+    \(mEc = Sum[Etab[\([i, 1]\)], {i, 1, Nk}]/Nk\)], "Input"],
 
 Cell[BoxData[
-    \(\(vxx = Map[uDer[#, 2, L] &, v, {1}];\)\)], "Input"],
+    \(mvx2 = Sum[Etab[\([i, 2]\)], {i, 1, Nk}]/Nk\)], "Input"],
 
 Cell[BoxData[
-    \(\(Ec = 
-        Apply[Plus, 
-            v^2, {1}]/\(Dimensions[v]\)[\([\)\(2\)\(]\)];\)\)], "Input"],
-
-Cell[BoxData[
-    \(\(vx2 = 
-        Apply[Plus, vx^2, {1}]/\(Dimensions[vx]\)[\([2]\)];\)\)], "Input"],
-
-Cell[BoxData[
-    \(\(vxx2 = 
-        Apply[Plus, vxx^2, {1}]/\(Dimensions[vxx]\)[\([2]\)];\)\)], "Input"],
-
-Cell[BoxData[
-    \(mEc = Plus @@ Ec/\(Dimensions[Ec]\)[\([1]\)]\)], "Input"],
-
-Cell[BoxData[
-    \(mvx2 = Plus @@ vx2/\(Dimensions[vx2]\)[\([1]\)]\)], "Input"],
-
-Cell[BoxData[
-    \(mvxx2 = Plus @@ vxx2/\(Dimensions[vxx2]\)[\([1]\)]\)], "Input"],
+    \(mvxx2 = Sum[Etab[\([i, 3]\)], {i, 1, Nk}]/Nk\)], "Input"],
 
 Cell[BoxData[
     \(\(cTurb = RGBColor[1, 1, 1];\)\)], "Input"],
@@ -230,31 +217,16 @@ Cell[BoxData[
           DisplayFunction \[Rule] Identity];\)\)], "Input"],
 
 Cell[BoxData[
-    \(\(Turb = 
-        Table[{vx2[\([i]\)], vxx2[\([i]\)]}, {i, 
-            1, \(Dimensions[vx2]\)[\([1]\)]}];\)\)], "Input"],
-
-Cell[BoxData[
-    \(\(TurbE = 
-        Table[{Ec[\([i]\)], vx2[\([i]\)], vxx2[\([i]\)]}, {i, 
-            1, \(Dimensions[vx2]\)[\([1]\)]}];\)\)], "Input"],
-
-Cell[BoxData[
-    \(\(pTurb = ListPlot[Turb, PlotJoined \[Rule] True];\)\)], "Input"],
+    \(\(pTurb = 
+        ListPlot[TakeColumns[Etab, {2, 3}], 
+          PlotJoined \[Rule] True];\)\)], "Input"],
 
 Cell[BoxData[
     \(Dimensions[Ec]\)], "Input"],
 
 Cell[BoxData[
-    \(ListPlot[Ec, PlotRange \[Rule] All, PlotJoined \[Rule] \ True, 
-      Axes \[Rule] False]\)], "Input"],
-
-Cell[BoxData[
-    \(Position[Ec, Max[Ec]]\)], "Input"],
-
-Cell[BoxData[
     \(\(pTurbE = 
-        ScatterPlot3D[TurbE, PlotJoined \[Rule] True, 
+        ScatterPlot3D[Etab, PlotJoined \[Rule] True, 
           PlotRange \[Rule] All];\)\)], "Input"],
 
 Cell[BoxData[
@@ -299,9 +271,7 @@ Cell[BoxData[
     \(\(vxx = Map[uDer[#, 2, L] &, v, {1}];\)\)], "Input"],
 
 Cell[BoxData[
-    \(\(Ec = 
-        Apply[Plus, 
-            v^2, {1}]/\(Dimensions[v]\)[\([\)\(2\)\(]\)];\)\)], "Input"],
+    \(\(Ec = Apply[Plus, v^2, {1}]/\(Dimensions[v]\)[\([2]\)];\)\)], "Input"],
 
 Cell[BoxData[
     \(\(vx2 = 
@@ -399,9 +369,7 @@ Cell[BoxData[
     \(\(vxx = Map[uDer[#, 2, L] &, v, {1}];\)\)], "Input"],
 
 Cell[BoxData[
-    \(\(Ec = 
-        Apply[Plus, 
-            v^2, {1}]/\(Dimensions[v]\)[\([\)\(2\)\(]\)];\)\)], "Input"],
+    \(\(Ec = Apply[Plus, v^2, {1}]/\(Dimensions[v]\)[\([2]\)];\)\)], "Input"],
 
 Cell[BoxData[
     \(\(vx2 = 
@@ -455,12 +423,15 @@ Cell[BoxData[
           PlotStyle \[Rule] {cT32, Thickness[thck]}];\)\)], "Input"],
 
 Cell[BoxData[
+    \(\[IndentingNewLine]\)], "Input"],
+
+Cell[BoxData[
     \(\(\(\[IndentingNewLine]\)\( (*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *) \
 \)\)\)], "Input"],
 
 Cell[BoxData[
     \(\(pAll = 
-        Show[prnd, 
+        Show[pTurb, 
           Graphics[{RGBColor[0.5, 0.5, 0.7], Thickness[thck], \ 
               Line[{{0, 0}, {0.65, 0.65}}]}], pT19, pT32, pmT19, pmT32, p1, 
           p2, p3, pTW1, pTW2, pm, 
@@ -516,10 +487,9 @@ Cell[BoxData[
 \*"\"\<<(\!\(u\_xx\)\!\(\()\^2\)\)>\>\""}, Axes \[Rule] True, 
           TextStyle \[Rule] {FontSize -> 10, FontFamily \[Rule] Times}, 
           DisplayFunction \[Rule] $DisplayFunction, ImageSize \[Rule] 600, 
-          AspectRatio \[Rule] 1, PlotRange \[Rule] All];\)\)], "Input",
+          BoxRatios \[Rule] {0.8, 0.6, 0.6}, 
+          PlotRange \[Rule] All];\)\)], "Input",
   InitializationCell->True],
-
-Cell[BoxData[""], "Input"],
 
 Cell[BoxData[
     \(\(Get["\<MathGL3d`OpenGLViewer`\>"];\)\)], "Input"],
@@ -531,11 +501,11 @@ Cell[BoxData[
     \(Export["\<energyBalancePlot.eps\>", energyLegendPlot]\)], "Input",
   InitializationCell->True]
 },
-FrontEndVersion->"5.0 for X",
+FrontEndVersion->"5.2 for X",
 ScreenRectangle->{{0, 1280}, {0, 1024}},
 AutoGeneratedPackage->Automatic,
-WindowSize->{887, 852},
-WindowMargins->{{26, Automatic}, {Automatic, 0}}
+WindowSize->{987, 718},
+WindowMargins->{{42, Automatic}, {Automatic, 0}}
 ]
 
 (*******************************************************************
@@ -595,89 +565,82 @@ Cell[4664, 161, 66, 1, 27, "Input"],
 Cell[4733, 164, 223, 5, 27, "Input",
   InitializationCell->True],
 Cell[4959, 171, 163, 3, 27, "Input"],
-Cell[5125, 176, 79, 1, 27, "Input"],
-Cell[5207, 179, 46, 1, 27, "Input"],
-Cell[5256, 182, 47, 1, 27, "Input"],
-Cell[5306, 185, 58, 1, 27, "Input"],
-Cell[5367, 188, 71, 1, 27, "Input"],
-Cell[5441, 191, 72, 1, 27, "Input"],
-Cell[5516, 194, 121, 3, 27, "Input"],
-Cell[5640, 199, 103, 2, 27, "Input"],
-Cell[5746, 203, 106, 2, 27, "Input"],
-Cell[5855, 207, 77, 1, 27, "Input"],
-Cell[5935, 210, 80, 1, 27, "Input"],
-Cell[6018, 213, 83, 1, 27, "Input"],
-Cell[6104, 216, 63, 1, 27, "Input"],
-Cell[6170, 219, 187, 4, 27, "Input"],
-Cell[6360, 225, 198, 4, 43, "Input"],
-Cell[6561, 231, 141, 3, 27, "Input"],
-Cell[6705, 236, 155, 3, 27, "Input"],
-Cell[6863, 241, 85, 1, 27, "Input"],
-Cell[6951, 244, 47, 1, 27, "Input"],
-Cell[7001, 247, 122, 2, 27, "Input"],
-Cell[7126, 251, 54, 1, 27, "Input"],
-Cell[7183, 254, 135, 3, 27, "Input"],
-Cell[7321, 259, 112, 2, 43, "Input"],
-Cell[7436, 263, 145, 3, 27, "Input"],
-Cell[7584, 268, 46, 1, 27, "Input"],
-Cell[7633, 271, 82, 1, 27, "Input"],
-Cell[7718, 274, 55, 1, 27, "Input"],
-Cell[7776, 277, 129, 3, 27, "Input"],
-Cell[7908, 282, 52, 1, 27, "Input"],
-Cell[7963, 285, 73, 1, 27, "Input"],
-Cell[8039, 288, 65, 1, 27, "Input"],
-Cell[8107, 291, 46, 1, 27, "Input"],
-Cell[8156, 294, 71, 1, 27, "Input"],
-Cell[8230, 297, 72, 1, 27, "Input"],
-Cell[8305, 300, 121, 3, 27, "Input"],
-Cell[8429, 305, 103, 2, 27, "Input"],
-Cell[8535, 309, 106, 2, 27, "Input"],
-Cell[8644, 313, 77, 1, 27, "Input"],
-Cell[8724, 316, 80, 1, 27, "Input"],
-Cell[8807, 319, 83, 1, 27, "Input"],
-Cell[8893, 322, 54, 1, 27, "Input"],
-Cell[8950, 325, 166, 3, 27, "Input"],
-Cell[9119, 330, 188, 4, 27, "Input"],
-Cell[9310, 336, 140, 3, 27, "Input"],
-Cell[9453, 341, 154, 3, 27, "Input"],
-Cell[9610, 346, 146, 3, 27, "Input"],
-Cell[9759, 351, 153, 3, 27, "Input"],
-Cell[9915, 356, 112, 2, 43, "Input"],
-Cell[10030, 360, 150, 3, 27, "Input"],
-Cell[10183, 365, 46, 1, 27, "Input"],
-Cell[10232, 368, 82, 1, 27, "Input"],
-Cell[10317, 371, 56, 1, 27, "Input"],
-Cell[10376, 374, 57, 1, 27, "Input"],
-Cell[10436, 377, 145, 3, 27, "Input"],
-Cell[10584, 382, 47, 1, 27, "Input"],
-Cell[10634, 385, 73, 1, 27, "Input"],
-Cell[10710, 388, 65, 1, 27, "Input"],
-Cell[10778, 391, 46, 1, 27, "Input"],
-Cell[10827, 394, 71, 1, 27, "Input"],
-Cell[10901, 397, 72, 1, 27, "Input"],
-Cell[10976, 400, 121, 3, 27, "Input"],
-Cell[11100, 405, 103, 2, 27, "Input"],
-Cell[11206, 409, 106, 2, 27, "Input"],
-Cell[11315, 413, 77, 1, 27, "Input"],
-Cell[11395, 416, 80, 1, 27, "Input"],
-Cell[11478, 419, 83, 1, 27, "Input"],
-Cell[11564, 422, 53, 1, 27, "Input"],
-Cell[11620, 425, 166, 3, 27, "Input"],
-Cell[11789, 430, 188, 4, 27, "Input"],
-Cell[11980, 436, 140, 3, 27, "Input"],
-Cell[12123, 441, 154, 3, 27, "Input"],
-Cell[12280, 446, 146, 3, 27, "Input"],
-Cell[12429, 451, 153, 3, 27, "Input"],
-Cell[12585, 456, 112, 2, 43, "Input"],
-Cell[12700, 460, 667, 12, 85, "Input",
+Cell[5125, 176, 83, 1, 27, "Input"],
+Cell[5211, 179, 45, 1, 27, "Input"],
+Cell[5259, 182, 47, 1, 27, "Input"],
+Cell[5309, 185, 46, 1, 27, "Input"],
+Cell[5358, 188, 47, 1, 27, "Input"],
+Cell[5408, 191, 64, 1, 27, "Input"],
+Cell[5475, 194, 75, 1, 27, "Input"],
+Cell[5553, 197, 76, 1, 27, "Input"],
+Cell[5632, 200, 77, 1, 27, "Input"],
+Cell[5712, 203, 63, 1, 27, "Input"],
+Cell[5778, 206, 187, 4, 27, "Input"],
+Cell[5968, 212, 198, 4, 27, "Input"],
+Cell[6169, 218, 126, 3, 27, "Input"],
+Cell[6298, 223, 47, 1, 27, "Input"],
+Cell[6348, 226, 134, 3, 27, "Input"],
+Cell[6485, 231, 112, 2, 43, "Input"],
+Cell[6600, 235, 145, 3, 27, "Input"],
+Cell[6748, 240, 46, 1, 27, "Input"],
+Cell[6797, 243, 82, 1, 27, "Input"],
+Cell[6882, 246, 55, 1, 27, "Input"],
+Cell[6940, 249, 129, 3, 27, "Input"],
+Cell[7072, 254, 52, 1, 27, "Input"],
+Cell[7127, 257, 73, 1, 27, "Input"],
+Cell[7203, 260, 65, 1, 27, "Input"],
+Cell[7271, 263, 46, 1, 27, "Input"],
+Cell[7320, 266, 71, 1, 27, "Input"],
+Cell[7394, 269, 72, 1, 27, "Input"],
+Cell[7469, 272, 91, 1, 27, "Input"],
+Cell[7563, 275, 103, 2, 27, "Input"],
+Cell[7669, 279, 106, 2, 27, "Input"],
+Cell[7778, 283, 77, 1, 27, "Input"],
+Cell[7858, 286, 80, 1, 27, "Input"],
+Cell[7941, 289, 83, 1, 27, "Input"],
+Cell[8027, 292, 54, 1, 27, "Input"],
+Cell[8084, 295, 166, 3, 27, "Input"],
+Cell[8253, 300, 188, 4, 27, "Input"],
+Cell[8444, 306, 140, 3, 27, "Input"],
+Cell[8587, 311, 154, 3, 27, "Input"],
+Cell[8744, 316, 146, 3, 27, "Input"],
+Cell[8893, 321, 153, 3, 27, "Input"],
+Cell[9049, 326, 112, 2, 43, "Input"],
+Cell[9164, 330, 150, 3, 27, "Input"],
+Cell[9317, 335, 46, 1, 27, "Input"],
+Cell[9366, 338, 82, 1, 27, "Input"],
+Cell[9451, 341, 56, 1, 27, "Input"],
+Cell[9510, 344, 57, 1, 27, "Input"],
+Cell[9570, 347, 145, 3, 27, "Input"],
+Cell[9718, 352, 47, 1, 27, "Input"],
+Cell[9768, 355, 73, 1, 27, "Input"],
+Cell[9844, 358, 65, 1, 27, "Input"],
+Cell[9912, 361, 46, 1, 27, "Input"],
+Cell[9961, 364, 71, 1, 27, "Input"],
+Cell[10035, 367, 72, 1, 27, "Input"],
+Cell[10110, 370, 91, 1, 27, "Input"],
+Cell[10204, 373, 103, 2, 27, "Input"],
+Cell[10310, 377, 106, 2, 27, "Input"],
+Cell[10419, 381, 77, 1, 27, "Input"],
+Cell[10499, 384, 80, 1, 27, "Input"],
+Cell[10582, 387, 83, 1, 27, "Input"],
+Cell[10668, 390, 53, 1, 27, "Input"],
+Cell[10724, 393, 166, 3, 27, "Input"],
+Cell[10893, 398, 188, 4, 27, "Input"],
+Cell[11084, 404, 140, 3, 27, "Input"],
+Cell[11227, 409, 154, 3, 27, "Input"],
+Cell[11384, 414, 146, 3, 27, "Input"],
+Cell[11533, 419, 153, 3, 27, "Input"],
+Cell[11689, 424, 52, 1, 43, "Input"],
+Cell[11744, 427, 112, 2, 43, "Input"],
+Cell[11859, 431, 668, 12, 85, "Input",
   InitializationCell->True],
-Cell[13370, 474, 1902, 33, 267, "Input"],
-Cell[15275, 509, 527, 10, 68, "Input",
+Cell[12530, 445, 1902, 33, 235, "Input"],
+Cell[14435, 480, 550, 11, 67, "Input",
   InitializationCell->True],
-Cell[15805, 521, 26, 0, 27, "Input"],
-Cell[15834, 523, 71, 1, 27, "Input"],
-Cell[15908, 526, 74, 1, 27, "Input"],
-Cell[15985, 529, 114, 2, 27, "Input",
+Cell[14988, 493, 71, 1, 27, "Input"],
+Cell[15062, 496, 74, 1, 27, "Input"],
+Cell[15139, 499, 114, 2, 27, "Input",
   InitializationCell->True]
 }
 ]
