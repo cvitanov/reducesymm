@@ -11,13 +11,13 @@ implicit none
 
 include "fftw3.f"
 
-real(dp), dimension(:), allocatable :: v,vdum, bc
+real(dp), dimension(:), allocatable :: v,vx,vxx,vdum, bc
 real(dp), dimension(:), allocatable :: wR,wI
 complex(dpc), dimension(:),allocatable :: a,adum
 complex(dpc), dimension(:), allocatable :: ai,af
 integer(i8b) :: invplan, plan ! needed by fftw3
-integer(i4b) :: k,i, sdim, Nrep=3
-real(dp) :: T,kappa, ti=0.0_dp,tf=200.0_dp, h, h2
+integer(i4b) :: k,i, sdim
+real(dp) :: T,kappa, ti=0.0_dp,tf, h, h2
 character*64 :: wd
 integer(i4b) :: nargs
 logical :: logicdum
@@ -47,7 +47,7 @@ open(21,file=trim(wd)//'/parameters.dat')
 	read(21,*) 
 	read(21,*) Nplt
 	read(21,*)
-	read(21,*) M
+	read(21,*) Mi
 	read(21,*)
 	read(21,*) R
 close(21)
@@ -57,7 +57,7 @@ close(21)
 222 Format(<d/2+1>F30.18)
 223 Format(<4>F30.18)
 
-allocate(v(d),vdum(d),bc(d))
+allocate(v(d),vx(d),vxx(d),vdum(d),bc(d))
 allocate(a(d/2+1),adum(d/2+1),ai(d/2+1),af(d/2+1))
 allocate(lin(d/2+1),f0(d/2+1),f1(d/2+1),f2(d/2+1),f3(d/2+1),e(d/2+1),e2(d/2+1))
 allocate(f0dum(d/2+1),f1dum(d/2+1),f2dum(d/2+1),f3dum(d/2+1),edum(d/2+1),e2dum(d/2+1))
@@ -87,6 +87,10 @@ open (33,file=trim(wd)//'/timestep.dat')
 read(33,220) h
 close(33)
 
+open (34,file=trim(wd)//'/periods.dat')
+read(34,220) tf
+close(34)
+
 Nsteps=int(abs(tf-ti)/h,i4b)
 
 tf=Nsteps*h
@@ -94,8 +98,11 @@ tf=Nsteps*h
 print *,"int",h,Nsteps,h*Nsteps,sum(abs(ai))
 
 call SetLin_KS(lin)
-call etdrk4DiagPrefactors(lin,h,R,M,f0,f1,f2,f3,e,e2)
+call etdrk4DiagPrefactors(lin,h,R,Mi,f0,f1,f2,f3,e,e2)
 call etdrk4DiagDriverS(ti,ai,Nsteps,tf,af,f0,f1,f2,f3,e,e2,Nplt,SetNlin_KS)
+
+print *,"Finished integration. Start output."
+open(26,file=trim(wd)//'energy.dat')
 open (29,file=trim(wd)//'/rpoU.dat')
 do i=1,size(aSt,1)
 	adum=aSt(i,:)
@@ -104,8 +111,12 @@ do i=1,size(aSt,1)
 	call dfftw_execute(invplan)
 	call dfftw_destroy_plan(invplan)
 	write(29,221) v		
+	call FourierDif(v,vx,L,1)
+	call FourierDif(v,vxx,L,2)
+	write(26,"(3F21.16)") sum(v**2)/d, sum(vx**2)/d, sum(vxx**2)/d
 end do
-close(29)
 
+close(26)
+close(29)
 
 end program

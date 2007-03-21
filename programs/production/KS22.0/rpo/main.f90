@@ -124,7 +124,7 @@ if ( newton_condition_met .ne. 0) then
 	enddo
 	close(35)
 else
-	stop "Newton Condition didn't met."
+	stop "Newton Condition didn't meet."
 endif
 
 ti=0.0_dp
