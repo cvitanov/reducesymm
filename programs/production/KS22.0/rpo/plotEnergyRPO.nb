@@ -1,0 +1,441 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 5.2'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[     10544,        322]*)
+(*NotebookOutlinePosition[     11228,        346]*)
+(*  CellTagsIndexPosition[     11184,        342]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+Cell[BoxData[
+    \(<< LinearAlgebra`MatrixManipulation`\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(<< Graphics`Graphics3D`\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(<< Graphics`Legend`\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(<< SiminosUtils`\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(filelist = 
+        FileNames["\<ks22rpo*\>", \
+"\<../../../../rpo_ks/davidchack/orbits\>"];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(Nplt = 27;\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(MaxPer = ToPeriod[filelist[\([Nplt]\)]];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(LastShift = ToShift[filelist[\([Nplt]\)]];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(thck = 0.001;\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(pt = 0.02;\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(pm = \(pme = \(plt = \(plte = 
+              Table[Null, {i, 1, Nplt}]\)\)\);\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(Do[\[IndentingNewLine]Etab = 
+        Import[ToDir[
+              filelist[\([i]\)]] <> "\</energy.dat\>"]; \
+\[IndentingNewLine]color = 
+        Hue[\((ToPeriod[filelist[\([i]\)]]/MaxPer + 
+              0.1  ToShift[filelist[\([i]\)]]/
+                  LastShift)\)]; \[IndentingNewLine]d = \(Dimensions[
+            Etab]\)[\([2]\)]; \nNp = \(Dimensions[Etab]\)[\([1]\)]; \n
+      mE = Sum[Etab[\([i, 1]\)], {i, 1, Np}]/Np; \n
+      mvx2 = Sum[Etab[\([i, 2]\)], {i, 1, Np}]/Np; \n
+      mvxx2 = Sum[Etab[\([i, 3]\)], {i, 1, Np}]/Np; \n
+      pm[\([i]\)] = 
+        ListPlot[{{mvx2, mvxx2}}, PlotStyle \[Rule] {color, PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity]; \n
+      pme[\([i]\)] = 
+        ScatterPlot3D[{{mE, mvx2, mvxx2}}, 
+          PlotStyle \[Rule] {color, PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity]; \n
+      plt[\([i]\)] = 
+        ListPlot[TakeColumns[Etab, {2, 3}], PlotJoined \[Rule] True, 
+          PlotRange \[Rule] All, AspectRatio \[Rule] 1, 
+          PlotStyle \[Rule] {color, Thickness[thck]}, 
+          DisplayFunction \[Rule] Identity]; \n
+      plte[\([i]\)] = 
+        ScatterPlot3D[Etab, PlotJoined \[Rule] True, PlotRange \[Rule] All, 
+          PlotStyle \[Rule] {color, Thickness[thck]}, 
+          DisplayFunction \[Rule] Identity]\[IndentingNewLine], {i, 1, 
+        Nplt}]\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[{
+    \(\(EtabTurb = 
+        Import["\<../int/random/energy.dat\>"];\)\), "\[IndentingNewLine]", 
+    \(\(Nk = 8000;\)\), "\[IndentingNewLine]", 
+    \(\(EtabTurb = Take[EtabTurb, \(-Nk\)];\)\), "\n", 
+    \(mEturb = 
+      Sum[EtabTurb[\([i, 1]\)], {i, 1, Nk}]/Nk\), "\[IndentingNewLine]", 
+    \(mvx2 = 
+      Sum[EtabTurb[\([i, 2]\)], {i, 1, Nk}]/Nk\), "\[IndentingNewLine]", 
+    \(mvxx2 = 
+      Sum[EtabTurb[\([i, 3]\)], {i, 1, Nk}]/Nk\), "\[IndentingNewLine]", 
+    \(\(cTurb = RGBColor[1, 1, 1];\)\), "\[IndentingNewLine]", 
+    \(\(pmTurb = 
+        ListPlot[{{mvx2, mvxx2}}, 
+          PlotStyle \[Rule] {RGBColor[1, 1, 1], PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\), "\[IndentingNewLine]", 
+    \(\(pmeTurb = 
+        ScatterPlot3D[{{mEc, mvx2, mvxx2}}, 
+          PlotStyle \[Rule] {RGBColor[1, 1, 1], PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\), "\[IndentingNewLine]", 
+    \(\(pTurb = 
+        ListPlot[TakeColumns[EtabTurb, {2, 3}], 
+          PlotJoined \[Rule] True];\)\), "\[IndentingNewLine]", 
+    \(\(pTurbE = 
+        ScatterPlot3D[EtabTurb, PlotJoined \[Rule] True, 
+          PlotRange \[Rule] All];\)\)}], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(Show[pTurbE, plte]\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(Show[pTurb, plt]\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(Ec1 = Import["\<../equil/1w/steady_c.dat\>"] // Flatten;\)\)], "Input",\
+
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(Ec2 = Import["\<../equil/2w/steady_c.dat\>"] // Flatten;\)\)], "Input",\
+
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(Ec3 = Import["\<../equil/3w/steady_c.dat\>"] // Flatten;\)\)], "Input",\
+
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(EcTW1 = 
+        Import["\<../req/w-1R/steady_c.dat\>"] // Flatten;\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(EcTW1\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(EcTW2 = 
+        Import["\<../req/w-2R/steady_c.dat\>"] // Flatten;\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(EcTW2\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(c1 = RGBColor[0.8, 0, 0];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(c2 = RGBColor[0, 0.8, 0];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(c3 = RGBColor[0, 0, 0.8];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(p1 = 
+        ListPlot[{{Ec1[\([2]\)], Ec1[\([3]\)]}}, 
+          PlotStyle \[Rule] {c1, PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(p1e = 
+        ScatterPlot3D[{Ec1}, PlotStyle \[Rule] {c1, PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(p2 = 
+        ListPlot[{{Ec2[\([2]\)], Ec2[\([3]\)]}}, 
+          PlotStyle \[Rule] {c2, PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(p2e = 
+        ScatterPlot3D[{Ec2}, PlotStyle \[Rule] {c2, PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(p3 = 
+        ListPlot[{{Ec3[\([2]\)], Ec3[\([3]\)]}}, 
+          PlotStyle \[Rule] {c3, PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(p3e = 
+        ScatterPlot3D[{Ec3}, PlotStyle \[Rule] {c3, PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(cTW1 = RGBColor[0.5, 0.5, 0];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(pTW1 = 
+        ListPlot[{{EcTW1[\([2]\)], EcTW1[\([3]\)]}}, 
+          PlotStyle \[Rule] {cTW1, PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(pTW1e = 
+        ScatterPlot3D[{EcTW1}, PlotStyle \[Rule] {cTW1, PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(cTW2 = RGBColor[0.5, 0, 0.5];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(pTW2 = 
+        ListPlot[{{EcTW2[\([2]\)], EcTW2[\([3]\)]}}, 
+          PlotStyle \[Rule] {cTW2, PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(pTW2e = 
+        ScatterPlot3D[{EcTW2}, PlotStyle \[Rule] {cTW2, PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(pAll = 
+        Show[pTurb, 
+          Graphics[{RGBColor[0.5, 0.5, 0.7], Thickness[thck], \ 
+              Line[{{0, 0}, {0.65, 0.65}}]}], plt, pm, p1, p2, p3, pTW1, 
+          pTW2, pmTurb, 
+          FrameLabel \[Rule] \ {\*"\"\<<(\!\(u\_x\)\!\(\()\^2\)\)>\>\"", \
+\*"\"\<<(\!\(u\_xx\)\!\(\()\^2\)\)>\>\""}, Frame \[Rule] True, Axes -> False, 
+          RotateLabel \[Rule] False, 
+          TextStyle \[Rule] {FontSize -> 10, FontFamily \[Rule] Times}, 
+          DisplayFunction \[Rule] $DisplayFunction, ImageSize \[Rule] 600, 
+          AspectRatio \[Rule] 1, PlotRange \[Rule] All];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(pAll3D = 
+        Show[pTurbE, plte, pme, p1e, p2e, p3e, pTW1e, pTW2e, 
+          AxesLabel \[Rule] \ {"\<<E>\>", \
+\*"\"\<<(\!\(u\_x\)\!\(\()\^2\)\)>\>\"", \
+\*"\"\<<(\!\(u\_xx\)\!\(\()\^2\)\)>\>\""}, Axes \[Rule] True, 
+          TextStyle \[Rule] {FontSize -> 10, FontFamily \[Rule] Times}, 
+          DisplayFunction \[Rule] $DisplayFunction, ImageSize \[Rule] 600, 
+          BoxRatios \[Rule] {0.8, 0.6, 0.6}, 
+          PlotRange \[Rule] All];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(Get["\<MathGL3d`OpenGLViewer`\>"];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(MVShow3D[pAll3D, MVNewScene \[Rule] True, MVLineTubeSize \[Rule] 2.0, 
+        MVPointSphereSize \[Rule] \ 0.01];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(MVWritePOVRay["\<energy3D.pov\>"];\)\)], "Input",
+  InitializationCell->True]
+},
+FrontEndVersion->"5.2 for X",
+ScreenRectangle->{{0, 1280}, {0, 1024}},
+AutoGeneratedPackage->Automatic,
+WindowSize->{713, 813},
+WindowMargins->{{Automatic, 38}, {Automatic, 70}},
+ShowSelection->True
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+Cell[1754, 51, 97, 2, 27, "Input",
+  InitializationCell->True],
+Cell[1854, 55, 84, 2, 27, "Input",
+  InitializationCell->True],
+Cell[1941, 59, 80, 2, 27, "Input",
+  InitializationCell->True],
+Cell[2024, 63, 77, 2, 27, "Input",
+  InitializationCell->True],
+Cell[2104, 67, 157, 4, 27, "Input",
+  InitializationCell->True],
+Cell[2264, 73, 75, 2, 27, "Input",
+  InitializationCell->True],
+Cell[2342, 77, 105, 2, 27, "Input",
+  InitializationCell->True],
+Cell[2450, 81, 107, 2, 27, "Input",
+  InitializationCell->True],
+Cell[2560, 85, 78, 2, 27, "Input",
+  InitializationCell->True],
+Cell[2641, 89, 75, 2, 27, "Input",
+  InitializationCell->True],
+Cell[2719, 93, 142, 3, 27, "Input",
+  InitializationCell->True],
+Cell[2864, 98, 1407, 29, 299, "Input",
+  InitializationCell->True],
+Cell[4274, 129, 1226, 26, 219, "Input",
+  InitializationCell->True],
+Cell[5503, 157, 79, 2, 27, "Input",
+  InitializationCell->True],
+Cell[5585, 161, 77, 2, 27, "Input",
+  InitializationCell->True],
+Cell[5665, 165, 123, 3, 27, "Input",
+  InitializationCell->True],
+Cell[5791, 170, 123, 3, 27, "Input",
+  InitializationCell->True],
+Cell[5917, 175, 123, 3, 27, "Input",
+  InitializationCell->True],
+Cell[6043, 180, 132, 3, 27, "Input",
+  InitializationCell->True],
+Cell[6178, 185, 66, 2, 27, "Input",
+  InitializationCell->True],
+Cell[6247, 189, 132, 3, 27, "Input",
+  InitializationCell->True],
+Cell[6382, 194, 66, 2, 27, "Input",
+  InitializationCell->True],
+Cell[6451, 198, 90, 2, 27, "Input",
+  InitializationCell->True],
+Cell[6544, 202, 90, 2, 27, "Input",
+  InitializationCell->True],
+Cell[6637, 206, 90, 2, 27, "Input",
+  InitializationCell->True],
+Cell[6730, 210, 215, 5, 43, "Input",
+  InitializationCell->True],
+Cell[6948, 217, 185, 4, 27, "Input",
+  InitializationCell->True],
+Cell[7136, 223, 215, 5, 43, "Input",
+  InitializationCell->True],
+Cell[7354, 230, 185, 4, 27, "Input",
+  InitializationCell->True],
+Cell[7542, 236, 215, 5, 43, "Input",
+  InitializationCell->True],
+Cell[7760, 243, 185, 4, 27, "Input",
+  InitializationCell->True],
+Cell[7948, 249, 94, 2, 27, "Input",
+  InitializationCell->True],
+Cell[8045, 253, 223, 5, 43, "Input",
+  InitializationCell->True],
+Cell[8271, 260, 191, 4, 43, "Input",
+  InitializationCell->True],
+Cell[8465, 266, 94, 2, 27, "Input",
+  InitializationCell->True],
+Cell[8562, 270, 223, 5, 43, "Input",
+  InitializationCell->True],
+Cell[8788, 277, 191, 4, 43, "Input",
+  InitializationCell->True],
+Cell[8982, 283, 655, 12, 119, "Input",
+  InitializationCell->True],
+Cell[9640, 297, 515, 10, 85, "Input",
+  InitializationCell->True],
+Cell[10158, 309, 99, 2, 27, "Input",
+  InitializationCell->True],
+Cell[10260, 313, 178, 3, 27, "Input",
+  InitializationCell->True],
+Cell[10441, 318, 99, 2, 27, "Input",
+  InitializationCell->True]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+

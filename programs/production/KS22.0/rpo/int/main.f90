@@ -91,7 +91,7 @@ open (34,file=trim(wd)//'/periods.dat')
 read(34,220) tf
 close(34)
 
-Nsteps=int(abs(tf-ti)/h,i4b)
+Nsteps=nint(abs(tf-ti)/h,i4b)
 
 tf=Nsteps*h
 
