@@ -49,3 +49,31 @@ uShift[u_,s_]:=Module[{uShift,i,d},d=Dimensions[u][[1]];uShift=Table[0,{d}];
 Clear[hby]
 hby[x_]:=Hue[0.7+x/2]/;0\[LessEqual]x\[LessEqual]0.5
 hby[x_]:=Hue[(x-0.5)/2.5]/;0.5<x\[LessEqual]1
+
+plotEnergy[dir_,color_]:=Module[{d,Np,mE,mvx2,mvxx2,Etab,label},
+    <<Graphics`Graphics3D`;
+    Etab=Import[dir<>"/energy.dat"];
+    d=Dimensions[Etab][[2]];
+    Np=Dimensions[Etab][[1]];
+    mE=Sum[Etab[[i,1]],{i,1,Np}]/Np;
+    mvx2=Sum[Etab[[i,2]],{i,1,Np}]/Np;
+    mvxx2=Sum[Etab[[i,3]],{i,1,Np}]/Np;
+    label=StringDrop[dir,Flatten[StringPosition[dir,"/"]][[-1]]];
+    pm[label]=
+      ListPlot[{{mvx2,mvxx2}},PlotStyle\[Rule]{color,PointSize[pt]},
+        DisplayFunction\[Rule]Identity];
+    pme[label]=
+      ScatterPlot3D[{{mE,mvx2,mvxx2}},PlotStyle\[Rule]{color,PointSize[pt]},
+        DisplayFunction\[Rule]Identity];
+    plt[label]=
+      ListPlot[TakeColumns[Etab,{2,3}],PlotJoined\[Rule]True,
+        PlotRange\[Rule]All,AspectRatio\[Rule]1,
+        PlotStyle\[Rule]{color,Thickness[thck]}];
+    plte[label]=
+      ScatterPlot3D[Etab,PlotJoined\[Rule]True,
+        PlotStyle\[Rule]{color,Thickness[thck]}]]
+
+ToDir[file_]:=
+    StringDrop[StringDrop[file,Flatten[StringPosition[file,"/"]][[-1]]],-4];
+ToPeriod[file_]:=ToExpression[StringDrop[StringDrop[ToDir[file],7],-7]];
+ToShift[file_]:=ToExpression[StringDrop[ToDir[file],14]];
