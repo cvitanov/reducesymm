@@ -7,7 +7,7 @@ do
 	echo "$i"
 	let j=j+1
 	echo "$j"
-	if [ "$j" -ge "$jmin" ]; then
+	if [ "$j" -le "$jmin" ]; then
         	nice ./ks "../$i/" 
 	fi
 done

@@ -91,7 +91,7 @@ bc(1:d/2)=real(a(2:size(a)))
 bc(d/2+1:d)= aimag(a(2:size(a)))
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-call mnewtRPO(Ntrial,bc,tolbc,tolf,T,kappa,ksFJ_rpo)
+call mnewtPO(Ntrial,bc,tolbc,tolf,T,ksFJ_po)
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 print *,"T",T,"kappa",kappa

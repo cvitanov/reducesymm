@@ -110,10 +110,10 @@ do i=1,size(aSt,1)
 	call dfftw_plan_dft_c2r_1d(invplan,d,adum,v,FFTW_ESTIMATE)
 	call dfftw_execute(invplan)
 	call dfftw_destroy_plan(invplan)
-	write(29,221) v		
+	write(29,"(<d>F17.8)") v		
 	call FourierDif(v,vx,L,1)
 	call FourierDif(v,vxx,L,2)
-	write(26,"(3F21.16)") sum(v**2)/d, sum(vx**2)/d, sum(vxx**2)/d
+	write(26,"(3F17.8)") sum(v**2)/d, sum(vx**2)/d, sum(vxx**2)/d
 end do
 
 close(26)
