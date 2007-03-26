@@ -41,9 +41,9 @@ Wolfram Research.
 
 (*NotebookFileLineBreakTest
 NotebookFileLineBreakTest*)
-(*NotebookOptionsPosition[     10544,        322]*)
-(*NotebookOutlinePosition[     11228,        346]*)
-(*  CellTagsIndexPosition[     11184,        342]*)
+(*NotebookOptionsPosition[     19960,        550]*)
+(*NotebookOutlinePosition[     20643,        574]*)
+(*  CellTagsIndexPosition[     20599,        570]*)
 (*WindowFrame->Normal*)
 
 
@@ -72,7 +72,7 @@ Cell[BoxData[
   InitializationCell->True],
 
 Cell[BoxData[
-    \(\(Nplt = 27;\)\)], "Input",
+    \(\(Nplt = 33;\)\)], "Input",
   InitializationCell->True],
 
 Cell[BoxData[
@@ -92,9 +92,18 @@ Cell[BoxData[
   InitializationCell->True],
 
 Cell[BoxData[
-    \(\(pm = \(pme = \(plt = \(plte = 
-              Table[Null, {i, 1, Nplt}]\)\)\);\)\)], "Input",
+    \(\(Nd = 128;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(pm = \(pme = \(pme1 = \(pme2 = \(plt = \(plte = \(plte1 = \(plte2 = \
+\(mE = \(mvx2 = \(mvxx2 = \(plPoincE = \(plrPoincE = \(plrPoinc1 = \(plLor23 \
+= \(plrLor2 = Table[Null, {i, 1, 
+                                        Nplt}]\)\)\)\)\)\)\)\)\)\)\)\)\)\)\);\
+\)\)], "Input",
   InitializationCell->True],
+
+Cell[BoxData[
+    \(Close[vfile]\)], "Input"],
 
 Cell[BoxData[
     \(Do[\[IndentingNewLine]Etab = 
@@ -102,30 +111,181 @@ Cell[BoxData[
               filelist[\([i]\)]] <> "\</energy.dat\>"]; \
 \[IndentingNewLine]color = 
         Hue[\((ToPeriod[filelist[\([i]\)]]/MaxPer + 
-              0.1  ToShift[filelist[\([i]\)]]/
+              0.2  ToShift[filelist[\([i]\)]]/
                   LastShift)\)]; \[IndentingNewLine]d = \(Dimensions[
             Etab]\)[\([2]\)]; \nNp = \(Dimensions[Etab]\)[\([1]\)]; \n
-      mE = Sum[Etab[\([i, 1]\)], {i, 1, Np}]/Np; \n
-      mvx2 = Sum[Etab[\([i, 2]\)], {i, 1, Np}]/Np; \n
-      mvxx2 = Sum[Etab[\([i, 3]\)], {i, 1, Np}]/Np; \n
+      mE[\([i]\)] = Sum[Etab[\([i, 1]\)], {i, 1, Np}]/Np; \n
+      mvx2[\([i]\)] = Sum[Etab[\([i, 2]\)], {i, 1, Np}]/Np; \n
+      mvxx2[\([i]\)] = Sum[Etab[\([i, 3]\)], {i, 1, Np}]/Np; \n
       pm[\([i]\)] = 
-        ListPlot[{{mvx2, mvxx2}}, PlotStyle \[Rule] {color, PointSize[pt]}, 
-          DisplayFunction \[Rule] Identity]; \n
+        ListPlot[{{mvx2[\([i]\)], mvxx2[\([i]\)] - mvx2[\([i]\)]}}, 
+          PlotStyle \[Rule] {color, PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity, AspectRatio \[Rule] 1]; \n
       pme[\([i]\)] = 
-        ScatterPlot3D[{{mE, mvx2, mvxx2}}, 
+        ScatterPlot3D[{{mE[\([\)\(i\)\(]\)], mvx2[\([\)\(i\)\(]\)], 
+              mvxx2[\([\)\(i\)\(]\)] - mvx2[\([\)\(i\)\(]\)]}}, 
+          PlotStyle \[Rule] {color, PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity, AspectRatio \[Rule] 1]; \n
+      pme1[\([i]\)] = 
+        ListPlot[{{mE[\([\)\(i\)\(]\)], mvx2[\([i]\)]}}, 
+          PlotStyle \[Rule] {color, PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity, 
+          AspectRatio \[Rule] 1]; \[IndentingNewLine]pme2[\([i]\)] = 
+        ListPlot[{{mE[\([\)\(i\)\(]\)], 
+              mvxx2[\([\)\(i\)\(]\)] - mvx2[\([\)\(i\)\(]\)]}}, 
+          PlotStyle \[Rule] {color, PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity, 
+          AspectRatio \[Rule] 1]; \[IndentingNewLine]plt[\([i]\)] = 
+        ListPlot[
+          AppendRows[
+            TakeColumns[
+              Etab, {2}], \((TakeColumns[Etab, {3}] - 
+                TakeColumns[Etab, {2}])\)], PlotJoined \[Rule] True, 
+          PlotRange \[Rule] All, PlotStyle \[Rule] {color, Thickness[thck]}, 
+          DisplayFunction \[Rule] Identity, AspectRatio \[Rule] 1]; \n
+      plte[\([i]\)] = 
+        ScatterPlot3D[
+          AppendRows[TakeColumns[Etab, {1}], TakeColumns[Etab, {2}], 
+            TakeColumns[Etab, {3}] - TakeColumns[Etab, {2}]], 
+          PlotJoined \[Rule] True, PlotRange \[Rule] All, 
+          PlotStyle \[Rule] {color, Thickness[thck]}, 
+          DisplayFunction \[Rule] 
+            Identity]; \[IndentingNewLine]plte1[\([i]\)] = 
+        ListPlot[AppendRows[TakeColumns[Etab, {1}], TakeColumns[Etab, {2}]], 
+          PlotJoined \[Rule] True, PlotRange \[Rule] All, 
+          PlotStyle \[Rule] {color, Thickness[thck]}, 
+          DisplayFunction \[Rule] 
+            Identity]; \[IndentingNewLine]plte2[\([i]\)] = 
+        ListPlot[
+          AppendRows[TakeColumns[Etab, {1}], 
+            TakeColumns[Etab, {3}] - TakeColumns[Etab, {2}]], 
+          PlotJoined \[Rule] True, PlotRange \[Rule] All, 
+          PlotStyle \[Rule] {color, Thickness[thck]}, 
+          DisplayFunction \[Rule] Identity]; \[IndentingNewLine]coord = 
+        Etab[\([\)\(All, 2\)\(]\)] - Etab[\([\)\(All, 3\)\(]\)]; \n
+      cros = {Null}; \n
+      Do[If[\ \((coord[\([\)\(i - 1\)\(]\)] > 
+                0)\)\  && \ \((coord[\([\)\(i\)\(]\)] \[LessEqual] \ 0)\), 
+          cros = Append[cros, {i}]], {i, 
+          2, \(Dimensions[coord]\)[\([\)\(1\)\(]\)]}]; \n
+      cros = Drop[cros, 1]; \[IndentingNewLine]vLor = 
+        Table[0, {\(Dimensions[
+                cros]\)[\([1]\)]\ }]; \[IndentingNewLine]vfile = 
+        OpenRead[
+          ToDir[filelist[\([i]\)]] <> "\</rpoU.dat\>"]; \
+\[IndentingNewLine]Do[\[IndentingNewLine]Skip[vfile, Table[Number, {Nd}], 
+          cros[\([j, 1]\)] - 
+            If[j - 1\  == \ 0, 0, cros[\([j - 1, 1]\)], {i, 1, 1}] - 
+            2]; \[IndentingNewLine]vLor[\([j]\)] = \((Read[vfile, 
+                  Table[Number, {Nd}]] + Read[vfile, Table[Number, {Nd}]])\)/
+            2\[IndentingNewLine], {j, 
+          1, \(Dimensions[
+              cros]\)[\([1]\)]}\[IndentingNewLine]]; \[IndentingNewLine]Close[
+        vfile]; \[IndentingNewLine]aLor = 
+        Map[Fourier[#, fp] &, 
+          vLor, {1}]; \[IndentingNewLine]plLor23[\([i]\)] = 
+        ListPlot[Im[aLor[\([All, {2, 3}]\)]], PlotRange \[Rule] All, 
+          PlotStyle \[Rule] {color, PointSize[pt]}, 
+          DisplayFunction \[Rule] 
+            Identity]; \[IndentingNewLine]plrLor2[\([i]\)] = 
+        ListPlot[
+          Im[Table[{aLor[\([i, 2]\)], aLor[\([i + 1, 2]\)]}, {i, 
+                1, \(Dimensions[aLor]\)[\([1]\)] - 1}]], 
+          PlotRange \[Rule] All, PlotStyle \[Rule] {color, PointSize[pt]}, 
+          DisplayFunction \[Rule] 
+            Identity]; \[IndentingNewLine]poincE = \((Extract[
+                Etab[\([All, {1, 2}]\)], cros] + 
+              Extract[Etab[\([All, {1, 2}]\)], cros - 1])\)/2; \n
+      rPoincE = 
+        Table[{poincE[\([i, 1]\)], poincE[\([i + 1, 1]\)]}, {i, 
+            1, \(Dimensions[poincE]\)[\([1]\)] - 
+              1}]; \[IndentingNewLine]rPoinc1 = 
+        Table[{poincE[\([i, 2]\)], poincE[\([i + 1, 2]\)]}, {i, 
+            1, \(Dimensions[poincE]\)[\([1]\)] - 
+              1}]; \[IndentingNewLine]plPoincE[\([i]\)] = 
+        ListPlot[poincE, PlotRange \[Rule] All, 
           PlotStyle \[Rule] {color, PointSize[pt]}, 
           DisplayFunction \[Rule] Identity]; \n
-      plt[\([i]\)] = 
-        ListPlot[TakeColumns[Etab, {2, 3}], PlotJoined \[Rule] True, 
-          PlotRange \[Rule] All, AspectRatio \[Rule] 1, 
-          PlotStyle \[Rule] {color, Thickness[thck]}, 
-          DisplayFunction \[Rule] Identity]; \n
-      plte[\([i]\)] = 
-        ScatterPlot3D[Etab, PlotJoined \[Rule] True, PlotRange \[Rule] All, 
-          PlotStyle \[Rule] {color, Thickness[thck]}, 
+      plrPoincE[\([i]\)] = 
+        ListPlot[rPoincE, PlotRange \[Rule] All, 
+          PlotStyle \[Rule] {color, PointSize[pt]}, 
+          DisplayFunction \[Rule] 
+            Identity]; \[IndentingNewLine]plrPoinc1[\([i]\)] = 
+        ListPlot[rPoinc1, PlotRange \[Rule] All, 
+          PlotStyle \[Rule] {color, PointSize[pt]}, 
           DisplayFunction \[Rule] Identity]\[IndentingNewLine], {i, 1, 
         Nplt}]\)], "Input",
   InitializationCell->True],
+
+Cell[BoxData[
+    \(Show[Take[plrLor2, All], DisplayFunction \[Rule] $DisplayFunction, 
+      AspectRatio \[Rule] Automatic]\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[plPoincE]\)], "Input"],
+
+Cell[BoxData[
+    \(Show[Take[plPoincE, All], 
+      DisplayFunction \[Rule] $DisplayFunction]\)], "Input"],
+
+Cell[BoxData[
+    \(Show[Take[plLor23, All], 
+      DisplayFunction \[Rule] $DisplayFunction]\)], "Input"],
+
+Cell[BoxData[
+    \(Show[Take[plrPoincE, All], 
+      DisplayFunction \[Rule] $DisplayFunction]\)], "Input"],
+
+Cell[BoxData[
+    \(Show[Take[plrLor2, All], 
+      DisplayFunction \[Rule] $DisplayFunction]\)], "Input"],
+
+Cell[BoxData[
+    \(Show[Take[plt, {20}], Take[pm, 4], 
+      DisplayFunction \[Rule] $DisplayFunction]\)], "Input"],
+
+Cell[BoxData[
+    \(Show[Take[plte1, {20}], pme1, 
+      DisplayFunction \[Rule] $DisplayFunction]\)], "Input"],
+
+Cell[BoxData[
+    \(Show[Take[plte2, {20}], pme2, 
+      DisplayFunction \[Rule] $DisplayFunction]\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[Etab]\)], "Input"],
+
+Cell[BoxData[
+    \(Etab[\([1]\)]\)], "Input"],
+
+Cell[BoxData[
+    \(\(ListPlot[Etab[\([All, 2]\)] - Etab[\([All, 3]\)]\ \ ];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(coord = Etab[\([All, 2]\)] - Etab[\([All, 3]\)];\)\)], "Input"],
+
+Cell[BoxData[
+    \(cros = {Null}\)], "Input"],
+
+Cell[BoxData[
+    \(Do[If[\ \((coord[\([i - 1]\)] > 
+              0)\)\  && \ \((coord[\([i]\)] \[LessEqual] \ 0)\), 
+        cros = Append[cros, {i}]], {i, 
+        2, \(Dimensions[coord]\)[\([1]\)]}]\)], "Input"],
+
+Cell[BoxData[
+    \(cros = Drop[cros, 1]\)], "Input"],
+
+Cell[BoxData[
+    \(\(\(ret\)\(=\)\(Extract[Etab[\([All, 1]\)], cros]\)\(\ \)\)\)], "Input"],
+
+Cell[BoxData[
+    \(nPoinc = 
+      Table[{ret[\([i]\)], ret[\([i + 1]\)]}, {i, 
+          1, \(Dimensions[ret]\)[\([1]\)] - 1}]\)], "Input"],
+
+Cell[BoxData[
+    \(ListPlot[nPoinc]\)], "Input"],
 
 Cell[BoxData[{
     \(\(EtabTurb = 
@@ -134,53 +294,121 @@ Cell[BoxData[{
     \(\(EtabTurb = Take[EtabTurb, \(-Nk\)];\)\), "\n", 
     \(mEturb = 
       Sum[EtabTurb[\([i, 1]\)], {i, 1, Nk}]/Nk\), "\[IndentingNewLine]", 
-    \(mvx2 = 
+    \(mvx2turb = 
       Sum[EtabTurb[\([i, 2]\)], {i, 1, Nk}]/Nk\), "\[IndentingNewLine]", 
-    \(mvxx2 = 
+    \(mvxx2turb = 
       Sum[EtabTurb[\([i, 3]\)], {i, 1, Nk}]/Nk\), "\[IndentingNewLine]", 
     \(\(cTurb = RGBColor[1, 1, 1];\)\), "\[IndentingNewLine]", 
     \(\(pmTurb = 
-        ListPlot[{{mvx2, mvxx2}}, 
+        ListPlot[{{mvx2turb, mvxx2turb - mvx2turb}}, 
           PlotStyle \[Rule] {RGBColor[1, 1, 1], PointSize[pt]}, 
-          DisplayFunction \[Rule] Identity];\)\), "\[IndentingNewLine]", 
+          DisplayFunction \[Rule] Identity, 
+          AspectRatio \[Rule] Automatic];\)\), "\[IndentingNewLine]", 
     \(\(pmeTurb = 
-        ScatterPlot3D[{{mEc, mvx2, mvxx2}}, 
+        ScatterPlot3D[{{mEc, mvx2turb, mvxx2turb - mvx2turb}}, 
           PlotStyle \[Rule] {RGBColor[1, 1, 1], PointSize[pt]}, 
-          DisplayFunction \[Rule] Identity];\)\), "\[IndentingNewLine]", 
+          DisplayFunction \[Rule] Identity, 
+          AspectRatio \[Rule] Automatic];\)\), "\[IndentingNewLine]", 
     \(\(pTurb = 
-        ListPlot[TakeColumns[EtabTurb, {2, 3}], 
-          PlotJoined \[Rule] True];\)\), "\[IndentingNewLine]", 
+        ListPlot[
+          AppendRows[TakeColumns[EtabTurb, {2}], 
+            TakeColumns[EtabTurb, {3}] - TakeColumns[EtabTurb, {2}]], 
+          PlotJoined \[Rule] True, 
+          AspectRatio \[Rule] Automatic];\)\), "\[IndentingNewLine]", 
     \(\(pTurbE = 
-        ScatterPlot3D[EtabTurb, PlotJoined \[Rule] True, 
-          PlotRange \[Rule] All];\)\)}], "Input",
+        ScatterPlot3D[
+          AppendRows[TakeColumns[EtabTurb, {1}], TakeColumns[EtabTurb, {2}], 
+            TakeColumns[EtabTurb, {3}] - TakeColumns[EtabTurb, {2}]], 
+          PlotJoined \[Rule] True, PlotRange \[Rule] All, 
+          AspectRatio \[Rule] Automatic];\)\), "\[IndentingNewLine]", 
+    \(\(pTurbE1 = 
+        ListPlot[
+          AppendRows[TakeColumns[EtabTurb, {1}], TakeColumns[EtabTurb, {2}]], 
+          PlotJoined \[Rule] True, PlotRange \[Rule] All, 
+          AspectRatio \[Rule] Automatic];\)\), "\[IndentingNewLine]", 
+    \(\(pTurbE2 = 
+        ListPlot[
+          AppendRows[TakeColumns[EtabTurb, {1}], 
+            TakeColumns[EtabTurb, {3}] - TakeColumns[EtabTurb, {2}]], 
+          PlotJoined \[Rule] True, PlotRange \[Rule] All, 
+          AspectRatio \[Rule] Automatic];\)\), "\[IndentingNewLine]", 
+    \(\(coord = EtabTurb[\([All, 2]\)] - EtabTurb[\([All, 3]\)];\)\), "\n", 
+    \(\(cros = {Null};\)\), "\n", 
+    \(\(Do[
+        If[\ \((coord[\([\)\(i - 1\)\(]\)] > 
+                0)\)\  && \ \((coord[\([\)\(i\)\(]\)] \[LessEqual] \ 0)\), 
+          cros = Append[cros, {i}]], {i, 
+          2, \(Dimensions[coord]\)[\([\)\(1\)\(]\)]}];\)\), "\n", 
+    \(\(cros = Drop[cros, 1];\)\), "\n", 
+    \(\(poinc = \((Extract[EtabTurb[\([All, {1, 2}]\)], cros] + 
+              Extract[EtabTurb[\([All, {1, 2}]\)], cros - 1])\)/
+          2;\)\), "\n", 
+    \(\(plPoincTurb = ListPlot[poinc];\)\), "\[IndentingNewLine]", 
+    \(\(rPoincE = 
+        Table[{poinc[\([i, 1]\)], poinc[\([i + 1, 1]\)]}, {i, 
+            1, \(Dimensions[poinc]\)[\([\)\(1\)\(]\)] - 1}];\)\), "\n", 
+    \(\(rPoinc1 = 
+        Table[{poinc[\([i, 2]\)], poinc[\([i + 1, 2]\)]}, {i, 
+            1, \(Dimensions[poinc]\)[\([\)\(1\)\(]\)] - 
+              1}];\)\), "\[IndentingNewLine]", 
+    \(\(plrPoincETurb = 
+        ListPlot[rPoincE, PlotRange \[Rule] All, 
+          PlotStyle \[Rule] {PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity, 
+          AspectRatio \[Rule] Automatic];\)\), "\[IndentingNewLine]", 
+    \(\(plrPoinc1Turb = 
+        ListPlot[rPoinc1, PlotRange \[Rule] All, 
+          PlotStyle \[Rule] {PointSize[pt]}, 
+          DisplayFunction \[Rule] Identity, 
+          AspectRatio \[Rule] Automatic];\)\)}], "Input",
   InitializationCell->True],
+
+Cell[BoxData[
+    \(Dimensions[poinc]\)], "Input"],
+
+Cell[BoxData[
+    \(Show[plPoincE, plPoincTurb, 
+      DisplayFunction \[Rule] $DisplayFunction]\)], "Input"],
+
+Cell[BoxData[
+    \(Show[Take[plPoincE, 10], 
+      DisplayFunction \[Rule] $DisplayFunction]\)], "Input"],
+
+Cell[BoxData[
+    \(Show[plrPoinc1Turb, plrPoinc1, 
+      DisplayFunction \[Rule] \ $DisplayFunction]\)], "Input"],
+
+Cell[BoxData[
+    \(Show[plrPoincETurb, plrPoincE, 
+      DisplayFunction \[Rule] \ $DisplayFunction]\)], "Input"],
 
 Cell[BoxData[
     \(Show[pTurbE, plte]\)], "Input",
   InitializationCell->True],
 
 Cell[BoxData[
-    \(Show[pTurb, plt]\)], "Input",
+    \(Show[pTurb, plt]\)], "Input"],
+
+Cell[BoxData[
+    \(Show[pTurbE1, plte1]\)], "Input"],
+
+Cell[BoxData[
+    \(Show[pTurbE2, plte2]\)], "Input"],
+
+Cell[BoxData[
+    \(Ec1 = Import["\<../equil/1w/steady_c.dat\>"] // Flatten\)], "Input",
   InitializationCell->True],
 
 Cell[BoxData[
-    \(\(Ec1 = Import["\<../equil/1w/steady_c.dat\>"] // Flatten;\)\)], "Input",\
-
+    \(Ec2 = Import["\<../equil/2w/steady_c.dat\>"] // Flatten\)], "Input",
   InitializationCell->True],
 
 Cell[BoxData[
-    \(\(Ec2 = Import["\<../equil/2w/steady_c.dat\>"] // Flatten;\)\)], "Input",\
-
+    \(Ec3 = Import["\<../equil/3w/steady_c.dat\>"] // Flatten\)], "Input",
   InitializationCell->True],
 
 Cell[BoxData[
-    \(\(Ec3 = Import["\<../equil/3w/steady_c.dat\>"] // Flatten;\)\)], "Input",\
-
-  InitializationCell->True],
-
-Cell[BoxData[
-    \(\(EcTW1 = 
-        Import["\<../req/w-1R/steady_c.dat\>"] // Flatten;\)\)], "Input",
+    \(EcTW1 = Import["\<../req/w-1R/steady_c.dat\>"] // Flatten\)], "Input",
   InitializationCell->True],
 
 Cell[BoxData[
@@ -323,8 +551,8 @@ Cell[BoxData[
 FrontEndVersion->"5.2 for X",
 ScreenRectangle->{{0, 1280}, {0, 1024}},
 AutoGeneratedPackage->Automatic,
-WindowSize->{713, 813},
-WindowMargins->{{Automatic, 38}, {Automatic, 70}},
+WindowSize->{1280, 963},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
 ShowSelection->True
 ]
 
@@ -365,69 +593,96 @@ Cell[2560, 85, 78, 2, 27, "Input",
   InitializationCell->True],
 Cell[2641, 89, 75, 2, 27, "Input",
   InitializationCell->True],
-Cell[2719, 93, 142, 3, 27, "Input",
+Cell[2719, 93, 46, 1, 27, "Input"],
+Cell[2768, 96, 327, 6, 27, "Input",
   InitializationCell->True],
-Cell[2864, 98, 1407, 29, 299, "Input",
+Cell[3098, 104, 45, 1, 27, "Input"],
+Cell[3146, 107, 5692, 110, 699, "Input",
   InitializationCell->True],
-Cell[4274, 129, 1226, 26, 219, "Input",
+Cell[8841, 219, 137, 2, 27, "Input"],
+Cell[8981, 223, 53, 1, 27, "Input"],
+Cell[9037, 226, 107, 2, 27, "Input"],
+Cell[9147, 230, 106, 2, 27, "Input"],
+Cell[9256, 234, 108, 2, 27, "Input"],
+Cell[9367, 238, 106, 2, 27, "Input"],
+Cell[9476, 242, 116, 2, 27, "Input"],
+Cell[9595, 246, 111, 2, 27, "Input"],
+Cell[9709, 250, 111, 2, 27, "Input"],
+Cell[9823, 254, 49, 1, 27, "Input"],
+Cell[9875, 257, 46, 1, 27, "Input"],
+Cell[9924, 260, 91, 1, 27, "Input"],
+Cell[10018, 263, 85, 1, 27, "Input"],
+Cell[10106, 266, 46, 1, 27, "Input"],
+Cell[10155, 269, 215, 4, 27, "Input"],
+Cell[10373, 275, 53, 1, 27, "Input"],
+Cell[10429, 278, 92, 1, 27, "Input"],
+Cell[10524, 281, 141, 3, 27, "Input"],
+Cell[10668, 286, 49, 1, 27, "Input"],
+Cell[10720, 289, 3639, 74, 411, "Input",
   InitializationCell->True],
-Cell[5503, 157, 79, 2, 27, "Input",
+Cell[14362, 365, 50, 1, 27, "Input"],
+Cell[14415, 368, 109, 2, 27, "Input"],
+Cell[14527, 372, 106, 2, 27, "Input"],
+Cell[14636, 376, 114, 2, 27, "Input"],
+Cell[14753, 380, 114, 2, 27, "Input"],
+Cell[14870, 384, 79, 2, 27, "Input",
   InitializationCell->True],
-Cell[5585, 161, 77, 2, 27, "Input",
+Cell[14952, 388, 49, 1, 27, "Input"],
+Cell[15004, 391, 53, 1, 27, "Input"],
+Cell[15060, 394, 53, 1, 27, "Input"],
+Cell[15116, 397, 116, 2, 27, "Input",
   InitializationCell->True],
-Cell[5665, 165, 123, 3, 27, "Input",
+Cell[15235, 401, 116, 2, 27, "Input",
   InitializationCell->True],
-Cell[5791, 170, 123, 3, 27, "Input",
+Cell[15354, 405, 116, 2, 27, "Input",
   InitializationCell->True],
-Cell[5917, 175, 123, 3, 27, "Input",
+Cell[15473, 409, 118, 2, 27, "Input",
   InitializationCell->True],
-Cell[6043, 180, 132, 3, 27, "Input",
+Cell[15594, 413, 66, 2, 27, "Input",
   InitializationCell->True],
-Cell[6178, 185, 66, 2, 27, "Input",
+Cell[15663, 417, 132, 3, 27, "Input",
   InitializationCell->True],
-Cell[6247, 189, 132, 3, 27, "Input",
+Cell[15798, 422, 66, 2, 27, "Input",
   InitializationCell->True],
-Cell[6382, 194, 66, 2, 27, "Input",
+Cell[15867, 426, 90, 2, 27, "Input",
   InitializationCell->True],
-Cell[6451, 198, 90, 2, 27, "Input",
+Cell[15960, 430, 90, 2, 27, "Input",
   InitializationCell->True],
-Cell[6544, 202, 90, 2, 27, "Input",
+Cell[16053, 434, 90, 2, 27, "Input",
   InitializationCell->True],
-Cell[6637, 206, 90, 2, 27, "Input",
+Cell[16146, 438, 215, 5, 27, "Input",
   InitializationCell->True],
-Cell[6730, 210, 215, 5, 43, "Input",
+Cell[16364, 445, 185, 4, 27, "Input",
   InitializationCell->True],
-Cell[6948, 217, 185, 4, 27, "Input",
+Cell[16552, 451, 215, 5, 27, "Input",
   InitializationCell->True],
-Cell[7136, 223, 215, 5, 43, "Input",
+Cell[16770, 458, 185, 4, 27, "Input",
   InitializationCell->True],
-Cell[7354, 230, 185, 4, 27, "Input",
+Cell[16958, 464, 215, 5, 27, "Input",
   InitializationCell->True],
-Cell[7542, 236, 215, 5, 43, "Input",
+Cell[17176, 471, 185, 4, 27, "Input",
   InitializationCell->True],
-Cell[7760, 243, 185, 4, 27, "Input",
+Cell[17364, 477, 94, 2, 27, "Input",
   InitializationCell->True],
-Cell[7948, 249, 94, 2, 27, "Input",
+Cell[17461, 481, 223, 5, 27, "Input",
   InitializationCell->True],
-Cell[8045, 253, 223, 5, 43, "Input",
+Cell[17687, 488, 191, 4, 27, "Input",
   InitializationCell->True],
-Cell[8271, 260, 191, 4, 43, "Input",
+Cell[17881, 494, 94, 2, 27, "Input",
   InitializationCell->True],
-Cell[8465, 266, 94, 2, 27, "Input",
+Cell[17978, 498, 223, 5, 27, "Input",
   InitializationCell->True],
-Cell[8562, 270, 223, 5, 43, "Input",
+Cell[18204, 505, 191, 4, 27, "Input",
   InitializationCell->True],
-Cell[8788, 277, 191, 4, 43, "Input",
+Cell[18398, 511, 655, 12, 68, "Input",
   InitializationCell->True],
-Cell[8982, 283, 655, 12, 119, "Input",
+Cell[19056, 525, 515, 10, 50, "Input",
   InitializationCell->True],
-Cell[9640, 297, 515, 10, 85, "Input",
+Cell[19574, 537, 99, 2, 27, "Input",
   InitializationCell->True],
-Cell[10158, 309, 99, 2, 27, "Input",
+Cell[19676, 541, 178, 3, 27, "Input",
   InitializationCell->True],
-Cell[10260, 313, 178, 3, 27, "Input",
-  InitializationCell->True],
-Cell[10441, 318, 99, 2, 27, "Input",
+Cell[19857, 546, 99, 2, 27, "Input",
   InitializationCell->True]
 }
 ]

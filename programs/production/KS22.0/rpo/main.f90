@@ -45,11 +45,9 @@ open(21,file=trim(wd)//'/parameters.dat')
 	read(21,*)
 	read(21,*) Ntrial
 	read(21,*) 
-	read(21,*) Nsteps
-	read(21,*) 
-	read(21,*) Nplt
+	read(21,*) h 
 	read(21,*)
-	read(21,*) M
+	read(21,*) Mi
 	read(21,*)
 	read(21,*) R
 close(21)
@@ -78,6 +76,12 @@ open(20,file=trim(wd)//'/periodsGuess.dat')
  
 close(20)
 
+Nsteps=int(T/h)
+
+print *,"Nsteps,h,T", Nsteps,h,T
+
+Nplt=Nsteps
+
 call dfftw_plan_dft_r2c_1d(plan,d,v,a,FFTW_ESTIMATE)
 call dfftw_execute(plan)
 call dfftw_destroy_plan(plan)
@@ -104,8 +108,8 @@ if ( newton_condition_met .ne. 0) then
 		h=abs(tf-ti)/Nsteps
 		h2=h/2.0_dp
 		call SetLin_KS(lin)
-		call etdrk4DiagPrefactors(lin,h,R,M,f0,f1,f2,f3,e,e2)
-		call etdrk4DiagPrefactors(lin,h2,R,M,f0dum,f1dum,f2dum,f3dum,edum,e2dum)
+		call etdrk4DiagPrefactors(lin,h,R,Mi,f0,f1,f2,f3,e,e2)
+		call etdrk4DiagPrefactors(lin,h2,R,Mi,f0dum,f1dum,f2dum,f3dum,edum,e2dum)
 		ti=0.0_dp
 		ai=(0.0_dp,0.0_dp)
 		ai(2:size(a))=bc(1:size(bc)/2)+ii*bc(size(bc)/2+1:size(bc))
@@ -141,7 +145,7 @@ write (33,220) h2
 close(33)
 
 call SetLin_KS(lin)
-call etdrk4DiagPrefactors(lin,h2,R,M,f0,f1,f2,f3,e,e2)
+call etdrk4DiagPrefactors(lin,h2,R,Mi,f0,f1,f2,f3,e,e2)
 call etdrk4DiagDriverS(ti,ai,2*Nrep*Nsteps,tf,af,f0,f1,f2,f3,e,e2,Nplt,SetNlin_KS)
 open (29,file=trim(wd)//'/rpoU.dat')
 do i=1,size(aSt,1)

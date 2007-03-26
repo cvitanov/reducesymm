@@ -43,9 +43,7 @@ open(21,file=trim(wd)//'/parameters.dat')
 	read(21,*)
 	read(21,*) Ntrial
 	read(21,*) 
-	read(21,*) Nsteps
-	read(21,*) 
-	read(21,*) Nplt
+	read(21,*) h
 	read(21,*)
 	read(21,*) Mi
 	read(21,*)
@@ -93,6 +91,8 @@ close(34)
 
 Nsteps=nint(abs(tf-ti)/h,i4b)
 
+Nplt=Nsteps
+
 tf=Nsteps*h
 
 print *,"int",h,Nsteps,h*Nsteps,sum(abs(ai))
@@ -102,7 +102,7 @@ call etdrk4DiagPrefactors(lin,h,R,Mi,f0,f1,f2,f3,e,e2)
 call etdrk4DiagDriverS(ti,ai,Nsteps,tf,af,f0,f1,f2,f3,e,e2,Nplt,SetNlin_KS)
 
 print *,"Finished integration. Start output."
-open(26,file=trim(wd)//'energy.dat')
+open(26,file=trim(wd)//'/energy.dat')
 open (29,file=trim(wd)//'/rpoU.dat')
 do i=1,size(aSt,1)
 	adum=aSt(i,:)
