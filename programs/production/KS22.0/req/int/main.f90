@@ -2,8 +2,8 @@ program integrRPO
 
 use nrtype
 use ifc_integr
-use f95_lapack, only: LA_GEESX
-use la_precision, only: wp => dp
+!use f95_lapack, only: LA_GEESX
+!use la_precision, only: wp => dp
 use ifc_util
 use ks
 

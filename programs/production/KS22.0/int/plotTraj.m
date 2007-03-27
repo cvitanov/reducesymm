@@ -15,13 +15,13 @@ Mathematica front end.  Any changes you make to this file will be
 overwritten.
 ***********************************************************************)
 
+
+
 <<SiminosUtils`
 
 
 
 
-
-Needs["LinearAlgebra`MatrixManipulation`"]
 
 v=Import["trajU.dat"];
 
@@ -31,12 +31,14 @@ L=22.0;
 
 
 
-tTot=500;
+tTot=Import["periods.dat"][[1]];
 
 vPlt=ListDensityPlot[v,Mesh\[Rule] False,ColorFunction\[Rule]hby,
       MeshRange\[Rule]{{0,L},{0.0,tTot}},FrameLabel\[Rule]{"x","t"},
       TextStyle\[Rule]{FontFamily\[Rule]Arial,FontSize\[Rule] 12},
       AspectRatio\[Rule]2];
+
+Export["ks22rpo"<>wd[]<>.eps,vPlt]
 
 
 

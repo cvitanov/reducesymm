@@ -44,7 +44,10 @@ open(21,file=trim(wd)//'/parameters.dat')
 	read(21,*) Ntrial
 	read(21,*) 
 	read(21,*) h
-	read(21,*)
+!	read(21,*) Nsteps
+!	read(21,*)
+!        read(21,*) Nplt
+        read(21,*)
 	read(21,*) Mi
 	read(21,*)
 	read(21,*) R
@@ -67,6 +70,11 @@ open(19,file=trim(wd)//'/rpoUic.dat')
  
 close(19)
 
+open (33,file=trim(wd)//'/timestep.dat')
+	read(33,220) h
+close(33)
+
+
 call dfftw_plan_dft_r2c_1d(plan,d,v,a,FFTW_ESTIMATE)
 call dfftw_execute(plan)
 call dfftw_destroy_plan(plan)
@@ -81,9 +89,7 @@ ai(2:size(a))=bc(1:size(bc)/2)+ii*bc(size(bc)/2+1:size(bc))
 print *,sum(abs(ai))
 af=(0.0_dp,0.0_dp)
 
-open (33,file=trim(wd)//'/timestep.dat')
-read(33,220) h
-close(33)
+h=2*h
 
 open (34,file=trim(wd)//'/periods.dat')
 read(34,220) tf
