@@ -1,0 +1,334 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 5.0'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[      7188,        247]*)
+(*NotebookOutlinePosition[      7850,        270]*)
+(*  CellTagsIndexPosition[      7806,        266]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+Cell[BoxData[
+    \(<< SiminosUtils`\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(<< Graphics`Graphics3D`\)], "Input"],
+
+Cell[BoxData[
+    \(Print[Directory[]]\)], "Input"],
+
+Cell[BoxData[
+    \(wd[]\)], "Input"],
+
+Cell[BoxData[
+    \(Needs["\<LinearAlgebra`MatrixManipulation`\>"]\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(v = Import["\<trajU.dat\>"];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(Dimensions[v]\)], "Input"],
+
+Cell[BoxData[
+    \(\(L = 13.8;\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(Dimensions[v]\)], "Input"],
+
+Cell[BoxData[
+    \(\(tTot = 200;\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(vPlt = 
+        ListDensityPlot[Take[v], Mesh \[Rule] \ False, 
+          ColorFunction \[Rule] hby, MeshRange \[Rule] {{0, L}, {0.0, tTot}}, 
+          FrameLabel \[Rule] {"\<x\>", "\<t\>"}, 
+          TextStyle \[Rule] {FontFamily \[Rule] Arial, 
+              FontSize \[Rule] \ 12}, AspectRatio \[Rule] 2];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(ListPlot[v[\([1]\)]]\)], "Input"],
+
+Cell[BoxData[
+    \(ListPlot[v[\([700]\)]]\)], "Input"],
+
+Cell[BoxData[
+    \(\(a = 
+        Table[Fourier[v[\([i]\)], fp], {i, 
+            1, \(Dimensions[v]\)[\([1]\)]}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[a]\)], "Input"],
+
+Cell[BoxData[
+    \(p1 = 2; p2 = 3; p3 = 5;\)], "Input"],
+
+Cell[BoxData[
+    \(\(aP1 = 
+        AppendRows[Re[TakeColumns[a, {p1}]], Im[TakeColumns[a, {p1}]], 
+          Im[TakeColumns[a, {p2}]]];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[aP1]\)], "Input"],
+
+Cell[BoxData[
+    \(\(pla = 
+        ScatterPlot3D[Take[aP1, 1000], PlotRange \[Rule] All, 
+          PlotJoined \[Rule] False, 
+          PlotStyle \[Rule] RGBColor[0, 0, 1]];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(rtab = 
+        Table[ListPlot[Re[TakeColumns[a, {i}] // Flatten], 
+            PlotRange \[Rule] All, 
+            TextStyle \[Rule] \(FontFamily \[Rule] Arial\), 
+            PlotLabel \[Rule] \ i - 1, DisplayFunction \[Rule] Identity], {i, 
+            1, 5}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(itab = 
+        Table[ListPlot[Im[TakeColumns[a, {i}] // Flatten], 
+            PlotRange \[Rule] All, 
+            TextStyle \[Rule] \(FontFamily \[Rule] Arial\), 
+            PlotLabel \[Rule] \ i - 1, DisplayFunction \[Rule] Identity], {i, 
+            1, 5}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Show[GraphicsArray[rtab], DisplayFunction \[Rule] $DisplayFunction, 
+      Imagsize \[Rule] \ 500]\)], "Input"],
+
+Cell[BoxData[
+    \(aexp = Fourier[v[\([700]\)], fp]\)], "Input"],
+
+Cell[BoxData[
+    \(aexp[\([2]\)] = 0; 
+    aexp[\([\(Dimensions[aexp]\)[\([1]\)]]\)] = 0\)], "Input"],
+
+Cell[BoxData[
+    \(vexp = InverseFourier[Chop[aexp, 10^\(-2\)], fp]\)], "Input"],
+
+Cell[BoxData[
+    \(ListPlot[vexp]\)], "Input"],
+
+Cell[BoxData[
+    \(\(Export["\<../../equil/A2w/equilGuess.dat\>", vexp];\)\)], "Input"],
+
+Cell[BoxData[
+    \(ListPlot[v[\([700]\)]]\)], "Input"],
+
+Cell[BoxData[
+    \(\(u = Import["\<../A2w/trajU.dat\>"];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(uPlt = 
+        ListDensityPlot[u, Mesh \[Rule] \ False, ColorFunction \[Rule] hby, 
+          MeshRange \[Rule] {{0, L}, {0.0, tTot}}, 
+          FrameLabel \[Rule] {"\<x\>", "\<t\>"}, 
+          TextStyle \[Rule] {FontFamily \[Rule] Arial, 
+              FontSize \[Rule] \ 12}, AspectRatio \[Rule] 2];\)\)], "Input"],
+
+Cell[BoxData[
+    \(ListPlot[u[\([1]\)]]\)], "Input"],
+
+Cell[BoxData[
+    \(ListPlot[u[\([1000]\)]]\)], "Input"],
+
+Cell[BoxData[
+    \(\(b = 
+        Table[Fourier[u[\([i]\)], fp], {i, 
+            1, \(Dimensions[u]\)[\([1]\)]}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[b]\)], "Input"],
+
+Cell[BoxData[
+    \(\(bP1 = 
+        AppendRows[Re[TakeColumns[b, {p1}]], Im[TakeColumns[b, {p1}]], 
+          Im[TakeColumns[b, {p2}]]];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(plb = 
+        ScatterPlot3D[Take[bP1, 1000], PlotRange \[Rule] All, 
+          PlotJoined \[Rule] False, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(rbtab = 
+        Table[ListPlot[Re[TakeColumns[b, {i}] // Flatten], 
+            PlotRange \[Rule] All, 
+            TextStyle \[Rule] \(FontFamily \[Rule] Arial\), 
+            PlotLabel \[Rule] \ i - 1, DisplayFunction \[Rule] Identity], {i, 
+            1, 5}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(ibtab = 
+        Table[ListPlot[Im[TakeColumns[b, {i}] // Flatten], 
+            PlotRange \[Rule] All, 
+            TextStyle \[Rule] \(FontFamily \[Rule] Arial\), 
+            PlotLabel \[Rule] \ i - 1, DisplayFunction \[Rule] Identity], {i, 
+            1, 5}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Show[GraphicsArray[ibtab], DisplayFunction \[Rule] $DisplayFunction, 
+      Imagsize \[Rule] \ 500]\)], "Input"],
+
+Cell[BoxData[
+    \(<< RealTime3D`\)], "Input"],
+
+Cell[BoxData[
+    \(Show[pla, plb, ImageSize \[Rule] \ 300, AspectRatio \[Rule] 1, 
+      DisplayFunction \[Rule] $DisplayFunction, 
+      PlotRange \[Rule] All]\)], "Input"],
+
+Cell[BoxData[
+    \(<< Default3D`\)], "Input"],
+
+Cell[BoxData[
+    \(\(v1 = Import["\<ev1.dat\>"] // Flatten;\)\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[v1]\)], "Input"],
+
+Cell[BoxData[
+    \(\(u1 = Import["\<../A2w/ev1.dat\>"] // Flatten;\)\)], "Input"],
+
+Cell[BoxData[
+    \(Fourier[v1] . Fourier[u1]\)], "Input"],
+
+Cell[BoxData[
+    \(Plus @@ \((v1\ u1)\)\)], "Input"]
+},
+FrontEndVersion->"5.0 for X",
+ScreenRectangle->{{0, 1280}, {0, 1024}},
+AutoGeneratedPackage->Automatic,
+WindowSize->{1272, 950},
+WindowMargins->{{0, Automatic}, {Automatic, 0}}
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+Cell[1754, 51, 77, 2, 27, "Input",
+  InitializationCell->True],
+Cell[1834, 55, 56, 1, 27, "Input"],
+Cell[1893, 58, 51, 1, 27, "Input"],
+Cell[1947, 61, 37, 1, 27, "Input"],
+Cell[1987, 64, 107, 2, 27, "Input",
+  InitializationCell->True],
+Cell[2097, 68, 93, 2, 27, "Input",
+  InitializationCell->True],
+Cell[2193, 72, 46, 1, 27, "Input"],
+Cell[2242, 75, 74, 2, 27, "Input",
+  InitializationCell->True],
+Cell[2319, 79, 46, 1, 27, "Input"],
+Cell[2368, 82, 76, 2, 27, "Input",
+  InitializationCell->True],
+Cell[2447, 86, 375, 7, 43, "Input",
+  InitializationCell->True],
+Cell[2825, 95, 53, 1, 27, "Input"],
+Cell[2881, 98, 55, 1, 27, "Input"],
+Cell[2939, 101, 130, 3, 27, "Input"],
+Cell[3072, 106, 46, 1, 27, "Input"],
+Cell[3121, 109, 56, 1, 27, "Input"],
+Cell[3180, 112, 152, 3, 27, "Input"],
+Cell[3335, 117, 48, 1, 27, "Input"],
+Cell[3386, 120, 191, 4, 27, "Input"],
+Cell[3580, 126, 300, 6, 27, "Input"],
+Cell[3883, 134, 300, 6, 27, "Input"],
+Cell[4186, 142, 131, 2, 27, "Input"],
+Cell[4320, 146, 65, 1, 27, "Input"],
+Cell[4388, 149, 102, 2, 27, "Input"],
+Cell[4493, 153, 81, 1, 27, "Input"],
+Cell[4577, 156, 47, 1, 27, "Input"],
+Cell[4627, 159, 88, 1, 27, "Input"],
+Cell[4718, 162, 55, 1, 27, "Input"],
+Cell[4776, 165, 72, 1, 27, "Input"],
+Cell[4851, 168, 341, 6, 43, "Input"],
+Cell[5195, 176, 53, 1, 27, "Input"],
+Cell[5251, 179, 56, 1, 27, "Input"],
+Cell[5310, 182, 130, 3, 27, "Input"],
+Cell[5443, 187, 46, 1, 27, "Input"],
+Cell[5492, 190, 152, 3, 27, "Input"],
+Cell[5647, 195, 188, 4, 27, "Input"],
+Cell[5838, 201, 301, 6, 27, "Input"],
+Cell[6142, 209, 301, 6, 27, "Input"],
+Cell[6446, 217, 132, 2, 27, "Input"],
+Cell[6581, 221, 47, 1, 27, "Input"],
+Cell[6631, 224, 174, 3, 27, "Input"],
+Cell[6808, 229, 46, 1, 27, "Input"],
+Cell[6857, 232, 75, 1, 27, "Input"],
+Cell[6935, 235, 47, 1, 27, "Input"],
+Cell[6985, 238, 82, 1, 27, "Input"],
+Cell[7070, 241, 58, 1, 27, "Input"],
+Cell[7131, 244, 53, 1, 27, "Input"]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+
