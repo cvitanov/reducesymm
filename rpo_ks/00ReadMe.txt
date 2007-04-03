@@ -36,9 +36,5 @@ When submitting, remember to
 Fix these references:
 --------------------
 
-Warning--I didn't find a database entry for "McC7"
-Warning--I didn't find a database entry for "McC8"
-Warning--I didn't find a database entry for "McC"
-
 previous titles:
   "Relative periodic orbits in Kuramoto-Sivashinsky equation"
