@@ -12,19 +12,26 @@
 
 % \PC{incorporate missing refs from chapter/refsPDEs.tex}
 
-The \KS\ [KS] system\rf{ku,siv}, which
-arises in the description of stability of
-flame fronts, reaction-diffusion systems and many other physical settings,
-is one of the simplest nonlinear PDEs that
-exhibit spatiotemporally chaotic behavior.
-In the formulation adopted here, the time evolution of the 
-``flame front velocity'' $u=u(x,t)$ on a periodic domain
-$u(x,t) = u(x+L,t)$
-is given by
-\PC{Ruslan, we need to finalize the convention here - what authorative
-    reference uses $(u^2)_x/2$? I agree it's more aesthetic,
-    but best to use standard convention. I forget who we follow.
-   }
+The \KS\ [KS] system\rf{ku,siv}, which arises in the description of
+stability of flame fronts, reaction-diffusion systems and many other
+physical settings, is one of the simplest nonlinear PDEs that
+exhibit spatiotemporally chaotic behavior. In the formulation
+adopted here, the time evolution of the ``flame front velocity''
+$u=u(x,t)$ on a periodic domain $u(x,t) = u(x+L,t)$ is given by
+\PC{Ruslan, we need to finalize the convention here - what
+authoritative reference uses $(u^2)_x/2$? I agree it's more
+aesthetic, but best to use standard convention. I forget who we
+follow.} \RLD{I've used the same convention as Kassam and Trefethen.
+As far as I could track it, this convention comes from Cross and
+Hohenberg's 1993 Rev. Mod. Phys. (vol. 65, p. 851). If you google
+'Kuramoto-Sivashinsky',
+http://mathworld.wolfram.com/Kuramoto-SivashinskyEquation.html is
+the first in the search list and it uses the same convention
+(actually, their $u$ is actually a $w$ such that $w_x$ is my $u$.)
+The site refers to a 1986 Physica D paper by Michelson and a
+"Handbook of differential equations" by Zwillinger, but I haven't
+seen either of these.}
+
 \beq
     u_t=(u^2)_x-u_{xx}- u_{xxxx}
     \,,\qquad   x \in [0,L]
@@ -38,19 +45,19 @@ system size'' $\tildeL$, or the periodic domain size $L= 2\pi \tildeL$,
 as the system parameter.
 
 Spatial periodic boundary condition $u(x,t)=u(x+L,t)$
-makes it convenient to work in the Fourier space, 
+makes it convenient to work in the Fourier space,
 \beq
   u(x,t)=\sum_{k=-\infty}^{+\infty} a_k (t) e^{ i k x /\tildeL }
 \,,
 % \label{fseries}
 \ee{eq:ksexp}
-%where $\tildeL=L/2\pi$. Thus, 
+%where $\tildeL=L/2\pi$. Thus,
 with the $1$-dimensional PDE \refeq{ks}
-replaced by an infinite set of 
+replaced by an infinite set of
 ODEs for the Fourier coefficients:
 \beq
 \dot{a}_k= \pVeloc_k(a)
-	 = ( (k/\tildeL)^2 - ( k/\tildeL)^4 )\, a_k 
+     = ( (k/\tildeL)^2 - ( k/\tildeL)^4 )\, a_k
     + i \frac{k}{\tildeL} \sum_{m=-\infty}^{+\infty} a_m a_{k-m}
 \,.
 \ee{expan}
@@ -69,31 +76,31 @@ $a_k$ drop off fast\PC{how fast?} with $k$, and truncations
 of \refeq{expan} to $N$ terms, $16 \leq N \leq 128$, yield
 highly accurate solutions for system sizes considered here.
 Robustness of the Fourier representation of KS as
-a function of the number of modes kept in truncations 
+a function of the number of modes kept in truncations
 of \refeq{expan} is, however, a subtle issue.
-Adding an extra mode to a truncation of the system 
+Adding an extra mode to a truncation of the system
 introduces a small
-perturbation. However, this can (and often will) 
-throw the dynamics into a different asymptotic state. 
+perturbation. However, this can (and often will)
+throw the dynamics into a different asymptotic state.
 A  chaotic attractor for $N=15$ can collapse into
-an attractive period-3 
-cycle for $N=16$, and so on. 
+an attractive period-3
+cycle for $N=16$, and so on.
 If we compute, for example, the Lyapunov exponent
-$\Lyap(\tildeL,N)$ for a strange attractor of the 
-system \refeq{expan}, there is no reason to 
-expect $\Lyap(\tildeL,N)$ to smoothly converge to a limit  
+$\Lyap(\tildeL,N)$ for a strange attractor of the
+system \refeq{expan}, there is no reason to
+expect $\Lyap(\tildeL,N)$ to smoothly converge to a limit
 value $\Lyap(\tildeL,\infty)$ as $N \rightarrow \infty$,
 because of the lack of structural stability both
 as a function of truncation $N$, and the system size \tildeL.
-The topology is more robust for \tildeL\ windows of transient turbulence, 
-where the system can be structurally stable, 
-and it makes sense to compute 
- Lyapunov exponents, escape rates, etc., for the 
-{repeller}, \ie, the closure of the set of all 
-{unstable} periodic orbits. 
+The topology is more robust for \tildeL\ windows of transient turbulence,
+where the system can be structurally stable,
+and it makes sense to compute
+ Lyapunov exponents, escape rates, etc., for the
+{repeller}, \ie, the closure of the set of all
+{unstable} periodic orbits.
 
 The objects explored in this paper: \eqva\ and short \po s,
-are robust both under mode truncations and small 
+are robust both under mode truncations and small
 system parameter $\tildeL$ changes.
 
 \PC{please generate and insert here a space-time plot of a
@@ -102,10 +109,20 @@ system parameter $\tildeL$ changes.
     presentations.
    }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[t] \label{f:ks_largeL}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{figs/ks_largeL.eps}
+\end{center}
+\caption{An example of turbulent solution of \KS\ equation.  The $x$
+coordinate is scaled with the basic wavelength $2\pi\sqrt{2}$. }
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 Equation \refeq{ks} can be written as % in ``potential'' form
 \beq
     u_t=E_x
-		\,,\qquad
+        \,,\qquad
     E(x,t)=u^2-u_{x}- u_{xxx}
     \,.
 \ee{ksPotent}
@@ -116,7 +133,7 @@ small-amplitude model equation, the time-dependent quantity
     =\frac{1}{L}\int_0^{L}u^2\, dx
 \label{ksEnergy}
 \eeq
-\PC{this is missing a prefactor 1/2. Check if someone in literature 
+\PC{this is missing a prefactor 1/2. Check if someone in literature
 - other than Greene and Kim - defines it right.
    }
 has a physical interpretation\rf{ksgreene88}
@@ -130,8 +147,8 @@ the Navier-Stokes will be useful in what follows.
 If we define the product of two functions on the
 periodic interval $L$ by the integral
 \beq
-        (g,h) = \frac{1}{L}\int_0^{L} d\pSpace\, 
-		g(\pSpace) h(\pSpace)
+        (g,h) = \frac{1}{L}\int_0^{L} d\pSpace\,
+        g(\pSpace) h(\pSpace)
         \,,
         \label{rpo:innerProd}
 \eeq
@@ -139,9 +156,9 @@ then $(u,u)$, the energy \refeq{ksEnergy},
 is also the quadratic norm in the Fourier space,
 \beq
 \expctE = (u,u) = \sum_{k=1}^{\infty} E_k
-\,,\qquad 
+\,,\qquad
 E_k = % a_{-k} a_k =
-	|a_k|^2
+    |a_k|^2
 \,.
 \ee{EFourier}
 
@@ -158,14 +175,14 @@ E_k = % a_{-k} a_k =
 
 \Eqva\  (or the steady solutions)
 are the simplest invariant sets in
-the \statesp. They,  and 
+the \statesp. They,  and
 the connections between them form the
 coarsest geometrical framework for organizing
 \statesp\ orbits. %\rf{ksgreene88}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[t] \label{f:eqvSpatial}
-\begin{center} 
+\begin{center}
 \includegraphics[width=0.4\textwidth]{figs/equilSpatial.eps}
 \end{center}
 \caption{
@@ -177,10 +194,10 @@ system size $L=22$. %, $N=64$ complex modes truncation.
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The \eqv\ condition $u_t=0$ for the {\KSe} PDE \refeq{ks} 
+The \eqv\ condition $u_t=0$ for the {\KSe} PDE \refeq{ks}
 is the ODE
 \beq
-(u^2)_x-u_{xx}- u_{xxxx}=0 
+(u^2)_x-u_{xx}- u_{xxxx}=0
 % \,.
 \ee{KSeqvCond}
 which can be analyzed as a dynamical system in its own right.
@@ -198,7 +215,7 @@ $u=h_x$, so \expctE\ can be interpreted as
 the mean energy density \refeq{ksEnergy}.
 Written as a 3-dimen\-si\-on\-al dynamical system
 with spatial coordinate $x$ playing the role of ``time'',
-%\refeq{eq:stdks} 
+%\refeq{eq:stdks}
 this is a volume preserving flow
 \beq
 u_x = v \,,\qquad
@@ -206,14 +223,14 @@ v_x = w \,,\qquad
 w_x = u^2-v-\expctE \,,
   \label{eq:3dks}
 \eeq
-with the ``time'' reversal symmetry, 
+with the ``time'' reversal symmetry,
 \[
 x \to -x,\quad u \to -u, \quad v \to v, \quad w \to -w \,.
 \]
  Rewriting \refeq{eq:3dks} as
 \[
-(u+w)_x=u^2-\expctE 
-	=(u-\expctE^{1\over 2}) (u+\expctE^{1\over 2}) 
+(u+w)_x=u^2-\expctE
+    =(u-\expctE^{1\over 2}) (u+\expctE^{1\over 2})
 \]
 we see that
 for $\expctE<0$, $u+w$ increases without bound with $x \to \infty$,
@@ -225,10 +242,10 @@ eigenvalues $(0, i,-i)$.
 For $\expctE>0$ there is rich
 $\expctE$-dependent dynamics, with
 fractal sets of bounded solutions\rf{Mks86}.
-The solutions of the {\eqv}  condition 
-\refeq{eq:3dks} are themselves in turn  in turn organized by the  
+The solutions of the {\eqv}  condition
+\refeq{eq:3dks} are themselves in turn  in turn organized by the
 ``{\eqva}  of {\eqva}''  condition
-\( u_x= v_x= w_x= 0 \), and 
+\( u_x= v_x= w_x= 0 \), and
 the connections between them\rf{Mks86}.
     For $\expctE>0$ the {\eqv}  points of \refeq{eq:3dks} are
 $c_{+}=(\expctE^{1/2},0,0)$ and $c_{-}=(-\expctE^{1/2},0,0)$.
@@ -237,10 +254,10 @@ $c_{+}$ yields the cubic equation
   \beq
 \eigExp(1+\eigExp^2) = 2\expctE
   \ee{KSeqvCubic}
-for the 
-stability eigenvalues 
+for the
+stability eigenvalues
 $\eigExp[j] = \eigRe[j] \pm i \eigIm[j]$.
-% of \refeq{KSeqvStab}. 
+% of \refeq{KSeqvStab}.
 They can
 be given in any of the standard analytical forms for cubic
 roots  (all useless in practice), such as
@@ -251,15 +268,15 @@ roots  (all useless in practice), such as
 \,,\qquad
 \eigIm=\cosh \phi \, ,
 \ee{eqvEqvEigV}
-with $\phi$ fixed by $\sinh 3\phi=3\sqrt{3\expctE}$. 
+with $\phi$ fixed by $\sinh 3\phi=3\sqrt{3\expctE}$.
 Hence $c_{+}$ has a {1\dmn}
-unstable manifold and a 2\dmn\ stable manifold 
-along which solutions spiral in. 
-By the $x \to -x$ ``time reversal'' symmetry, the 
-invariant manifolds of $c_{-}$ 
+unstable manifold and a 2\dmn\ stable manifold
+along which solutions spiral in.
+By the $x \to -x$ ``time reversal'' symmetry, the
+invariant manifolds of $c_{-}$
 have reversed stability properties.
 Most orbits escape quickly even if initiated close to \eqva, and that
-renders the numerical calculations 
+renders the numerical calculations
 difficult\rf{ksham95,kshooper88,pimyk,pimsimp}.
 In this context the variational method
 developed in \refrefs{lanVar1,CvitLanCrete02}
@@ -267,11 +284,11 @@ appears more robust than
 the earlier approaches.
 
 \subsection{\Reqva}
-% Predrag moved here from L22eqv.tex	Apr 2 2007
+% Predrag moved here from L22eqv.tex    Apr 2 2007
 %
 
-% In addition to the \eqva, 
-Due to the translational symmetry, 
+% In addition to the \eqva,
+Due to the translational symmetry,
 the KS system has \reqv\ solutions
 (traveling waves, rotating waves),
 characterized by a fixed profile $u$
@@ -291,12 +308,12 @@ In the Fourier space the \reqva\ are defined by the condition
 Differentiating this condition with respect to time, we obtain
 the \reqv\ condition on Fourier components,
 \beq
- f_k(a) - i q_k c a_k = 0 
+ f_k(a) - i q_k c a_k = 0
 \,,
 \ee{reqvCondF}
 which needs to be solved for (time independent) $a_k$ and $c$.
 
-\subsubsection{When is an \eqv\ important? a bit of speculation} 
+\subsubsection{When is an \eqv\ important? a bit of speculation}
 
 There are two kinds of roles
 {\eqva} play:
@@ -318,37 +335,37 @@ only a few unstable eigendirections.
 
 % Predrag                   mar 13 2007
 \PC{
-%   As nobody else deigns to do it, I picked the low fruit that I have 
-%been talking about past month: defined the 
-Power input and energy 
-dissipation rates for Kuramoto-Sivashinsky: I cannot believe that it is 
-not in the literature, it is standard energy balance exercise vor Navier 
-Stokes case. 
-This should show the isolated equilibria far from the 
-chaotic measures, and the important rpos well embedded in it. More 
-importantly, 
-If Loss gives us Sobolev bounds on energy, we might be able 
-to bound the number of equilibria as function of systems size L, and thus 
+%   As nobody else deigns to do it, I picked the low fruit that I have
+%been talking about past month: defined the
+Power input and energy
+dissipation rates for Kuramoto-Sivashinsky: I cannot believe that it is
+not in the literature, it is standard energy balance exercise vor Navier
+Stokes case.
+This should show the isolated equilibria far from the
+chaotic measures, and the important rpos well embedded in it. More
+importantly,
+If Loss gives us Sobolev bounds on energy, we might be able
+to bound the number of equilibria as function of systems size L, and thus
 be sure we have them all.
    }
 %
 The {space average} of a function $\obser = \obser(\pSpace,t)$ defined on
 the interval $L$ is given by the integral
 \beq
-	\expct{\obser} = \frac{1}{L}\int_0^{L} d\pSpace\, \obser(\pSpace,t)
-	\,.
-	\label{rpo:spac_ave}
+    \expct{\obser} = \frac{1}{L}\int_0^{L} d\pSpace\, \obser(\pSpace,t)
+    \,.
+    \label{rpo:spac_ave}
 \eeq
 $\expct{\obser}$ is in general time dependent. We denote
-its mean value by the {time average} 
+its mean value by the {time average}
 \beq
 \timeAver{\obser}
-	= 
+    =
 \lim_{t\rightarrow \infty} {1\over t} \int_0^t \! d\tau \, \expct{\obser}
-	=
+    =
 \lim_{t\rightarrow \infty} {1\over t L} \int_0^t \!d\tau \,
-	\int_0^{L} \! d\pSpace\, \obser(\pSpace,\tau) 
-	\,.
+    \int_0^{L} \! d\pSpace\, \obser(\pSpace,\tau)
+    \,.
 \label{rpo:tim_ave}
 \eeq
 The mean value
@@ -361,16 +378,16 @@ evaluated on an
 \label{rpo:u-eqv}
 \eeq
 Evaluation of the infinite time average \refeq{rpo:tim_ave}
-on a function of a \po\ or \rpo\ $u_p(\pSpace,t)$ 
+on a function of a \po\ or \rpo\ $u_p(\pSpace,t)$
  requires only a single traversal of the periodic solution,
 \beq
-       \obser_p = \frac{1}{\period{p}} 
-	\int_0^{\period{p}} \! d\tau \, \expct{\obser}
+       \obser_p = \frac{1}{\period{p}}
+    \int_0^{\period{p}} \! d\tau \, \expct{\obser}
 \,,
 \label{rpo:u-cyc}
 \eeq
 where $\period{p}$ is the period.
-$\obser_p$ is a loop integral 
+$\obser_p$ is a loop integral
 along a single parcourse of a prime cycle $p$.
 %  so it is an intrinsic property of the periodic solution.
 
@@ -379,11 +396,11 @@ substitute \refeq{ks} and integrate by parts. Total derivatives vanish
 by the spatial periodicity on the $L$ domain:
 \bea
    \frac{1}{2}\dot{\expctE} &=&
-	 \expct{u \, u_t}
-	% \frac{1}{L}\int_0^{L}u \, u_t\, dx
-	 = \expct{u (u^2 - u \, u_{x} - u \, u_{xxx})_x}
-	\continue
-	&=&
+     \expct{u \, u_t}
+    % \frac{1}{L}\int_0^{L}u \, u_t\, dx
+     = \expct{u (u^2 - u \, u_{x} - u \, u_{xxx})_x}
+    \continue
+    &=&
 \expct{ - u_x \, u^2 + (u_{x})^2 + u_x \, u_{xxx}}
     \,.
 \label{rpo:ksErate}
@@ -391,9 +408,9 @@ by the spatial periodicity on the $L$ domain:
 For an equilibrium it follows from \refeq{KSeqvCond}
 that $\expctE$ is constant, as it should be:
 \[
-   \frac{1}{2}\dot{\expctE} = 
+   \frac{1}{2}\dot{\expctE} =
 \expct{ (-u^2 + u_{x} + u_{xxx}) \,u_x}
-	= - \expctE \expct{ u_x }=0
+    = - \expctE \expct{ u_x }=0
     \,.
 \]
 The first term in \refeq{rpo:ksErate} vanishes by
@@ -406,29 +423,29 @@ and integrating the third term by parts yet again we get
 that the energy variation\rf{ksgreene88}
 % \PC{this is ``power", nicht war?}
 \beq
-   \frac{1}{2}\dot{\expctE} = 
-	  \expct{(u_{x})^2} - \expct{(u_{xx})^2}
+   \frac{1}{2}\dot{\expctE} =
+      \expct{(u_{x})^2} - \expct{(u_{xx})^2}
 \ee{EnRate}
 balances the power pumped in by the anti-diffusion
-$u_{xx}$ 
+$u_{xx}$
 against energy dissipated by the hypervicosity $u_{xxxx}$
 in the KS equation \refeq{ks}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[t] \label{f:drivedrag}
 \begin{center}
-	\includegraphics[width=\textwidth]{figs/energyBalancePlot.eps}
+    \includegraphics[width=\textwidth]{figs/energyBalancePlot.eps}
 \end{center}
 \caption{
-Power input $\expct{(u_{x})^2}$ vs. 
+Power input $\expct{(u_{x})^2}$ vs.
 dissipation $\expct{(u_{xx})^2}$ for all $L=22$ \eqva\
-and \reqva\ \PCedit{determined so far}, several 
+and \reqva\ \PCedit{determined so far}, several
 \ESedit{(two, more in the way!)}
 \po s and \rpo s, and for a typical ``turbulent"
 evolution. Note that $\timeAver{(u_{p,x})^2}$
 of the
-$(\period{p},d_p) =(32.\cdots,11)$ 
- {\rpo} which appears well embedded 
+$(\period{p},d_p) =(32.\cdots,11)$
+ {\rpo} which appears well embedded
 of the \eqva\ is close to the exact ``turbulent"
 expectation $\timeAver{(u_x)^2}$
 \PCedit{(temporary Japanese heresy)}.
@@ -439,11 +456,11 @@ expectation $\timeAver{(u_x)^2}$
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[t] \label{f:drivedragConn}
 \begin{center}
-	\includegraphics[width=0.8\textwidth]{figs/ks22TurbConn_xfig.eps}
+    \includegraphics[width=0.8\textwidth]{figs/ks22TurbConn_xfig.eps}
 \end{center}
 \caption{
-\EQV{1} (red), \EQV{2} (green), \EQV{3} (blue), connections from \EQV{1} to $A(L/4)\EQV{1}$ (green), 
-from $A(L/4)\EQV{1}$ to \EQV{1} (yellow-green) and from \EQV{3} to $A(L/4)\EQV{1}$ (blue), along 
+\EQV{1} (red), \EQV{2} (green), \EQV{3} (blue), connections from \EQV{1} to $A(L/4)\EQV{1}$ (green),
+from $A(L/4)\EQV{1}$ to \EQV{1} (yellow-green) and from \EQV{3} to $A(L/4)\EQV{1}$ (blue), along
 with a typical ``turbulent" evolution (grey) for $L=22$. Three different projections of the $(E,\, \expct{(u_{x})^2},\, \expct{(u_{xx})^2})-\expct{(u_{x})^2})$
 representation are shown.
         }
@@ -452,41 +469,41 @@ representation are shown.
 
 \PC{this is special to the $L=22$ system; eventually move to
     the appropriate section}
-\PC{ks22TurbConn2\_xfig.eps for \reffig{f:drivedragConn} 
+\PC{ks22TurbConn2\_xfig.eps for \reffig{f:drivedragConn}
     not checked in?}
 In \reffig{f:drivedrag}
-we plot the power input $\expct{(u_{x})^2}$ vs. 
-dissipation $\expct{(u_{xx})^2}$ for all $L=22$ \eqva\ and 
+we plot the power input $\expct{(u_{x})^2}$ vs.
+dissipation $\expct{(u_{xx})^2}$ for all $L=22$ \eqva\ and
 \reqva\ \PCedit{determined so far},
 several \po s and \rpo s, and for a typical ``turbulent"
 evolution.s
 % Notice that the single \rpo\ with $T\simeq32$ captures a large
-% part of the turbulent dynamics 
+% part of the turbulent dynamics
 % \ES{Momentarilly adopting Japanese philosophy,
 % before putting there the rest of the short orbits.}.
-\PC{Re \reffig{f:drivedrag}: 
-	(0) replace $y$-axis by 
-	$\expct{(u_{xx})^2}-\expct{(u_{x})^2}$, so all \po s lie
-	on the $x$-axis and on can see more clearly the turbulent and 
-	periodic trajectory, instead having them scrunched into the
-	diagonal. (a) Replace by side views of
+\PC{Re \reffig{f:drivedrag}:
+    (0) replace $y$-axis by
+    $\expct{(u_{xx})^2}-\expct{(u_{x})^2}$, so all \po s lie
+    on the $x$-axis and on can see more clearly the turbulent and
+    periodic trajectory, instead having them scrunched into the
+    diagonal. (a) Replace by side views of
     3-$d$ $(\expct{u^2},\expct{(u_{x})^2},\expct{(u_{xx})^2}
-	   -\expct{(u_{x})^2})$,
+       -\expct{(u_{x})^2})$,
     two figures; (b) current type figure, with chaotic trajectory,
     all \eqva, $(32.\cdots,11)$ as example of well embedded, and
     a typical \po\ {\em not} embedded into the ``turbulent" attractor.
     (c) a separate figure with more \po s, no ``turbulent" attractor.
     (d) prepare a mathematica macro that automatically uses
-	fonts at least twice the size you use currently. (e) replace
-	gray window with a white background, black font. (f) in the
-	publication version replace colored dots with symbols of varying
-	shapes, fine black border, can be filled in with colors.
+    fonts at least twice the size you use currently. (e) replace
+    gray window with a white background, black font. (f) in the
+    publication version replace colored dots with symbols of varying
+    shapes, fine black border, can be filled in with colors.
     }
-\PC{In \reffig{f:drivedrag}: 
-	do also try plotting the heteroclinic connections - they are
-	presumably off the diagonal
+\PC{In \reffig{f:drivedrag}:
+    do also try plotting the heteroclinic connections - they are
+    presumably off the diagonal
    }
-\PC{believe it or not, we are now set to compute 
+\PC{believe it or not, we are now set to compute
     $\timeAver{u^2}$ and $\timeAver{(u_x)^2}$
     using cycle expansions
     }
@@ -494,14 +511,14 @@ evolution.s
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[t] \label{f:drivedragPoinc}
 \begin{center}
-	\includegraphics[width=0.8\textwidth]{figs/energyPoinc.eps}
+    \includegraphics[width=0.8\textwidth]{figs/energyPoinc.eps}
 \end{center}
-\caption{ 
+\caption{
 Shown on Poincar\'{e} surface of section $\expct{(u_{xx})^2} = \expct{(u_{x})^2}$:
-\EQV{1}, \EQV{2} and \EQV{3} in red, green and blue solid points respectivelly, 
-connections from \EQV{1} to $A(L/4)\EQV{1}$, 
+\EQV{1}, \EQV{2} and \EQV{3} in red, green and blue solid points respectivelly,
+connections from \EQV{1} to $A(L/4)\EQV{1}$,
 from $A(L/4)\EQV{1}$ to \EQV{1} and from \EQV{3} to $A(L/4)\EQV{1}$ in green, yellow-green and blue circles respectivelly,
-a typical ``turbulent" evolution (black) and all \po's and \rpo's determined so far for $L=22$. 
+a typical ``turbulent" evolution (black) and all \po's and \rpo's determined so far for $L=22$.
         }
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -512,45 +529,45 @@ computed on a typical orbit goes to a constant, so
 the expectation values \refeq{rpo:EtimAve} of drive and dissipation
 exactly balance each out:
 \beq
-	\timeAver{\dot{E}}  = 
-	\lim_{t\rightarrow \infty}
-		{1\over t} \int_0^t d\tau \, \dot{\expctE}
+    \timeAver{\dot{E}}  =
+    \lim_{t\rightarrow \infty}
+        {1\over t} \int_0^t d\tau \, \dot{\expctE}
 =
-	  \timeAver{(u_{x})^2} - \timeAver{(u_{xx})^2}
-= 0 
-	\,.
+      \timeAver{(u_{x})^2} - \timeAver{(u_{xx})^2}
+= 0
+    \,.
 \ee{rpo:EtimAve}
 In particular, the \eqva\
 and \reqva\ sit on the diagonal in \reffig{f:drivedrag},
 and so do time averages computed on \po s and \rpo s:
 \bea
-\timeAver{E}_p &=& 
+\timeAver{E}_p &=&
 {1\over \period{p}} \int_0^\period{p}d\tau \, \expctE(\tau)
-	\continue
-\timeAver{(u_{x})^2}_p &=& 
-{1\over \period{p}} \int_0^\period{p} d\tau \, \expct{(u_{x})^2} 
-	=
-	  \timeAver{(u_{xx})^2}_p
-	\,.
+    \continue
+\timeAver{(u_{x})^2}_p &=&
+{1\over \period{p}} \int_0^\period{p} d\tau \, \expct{(u_{x})^2}
+    =
+      \timeAver{(u_{xx})^2}_p
+    \,.
 \label{poE}
 \eea
 
 In the Fourier basis \refeq{EFourier} the conservation of energy on average
 takes form
 \beq
-0 = \sum_{k=1}^{+\infty} ( (k/\tildeL)^2 - ( k/\tildeL)^4 )\, 
-	\timeAver{E_k}
-\,,\qquad 
+0 = \sum_{k=1}^{+\infty} ( (k/\tildeL)^2 - ( k/\tildeL)^4 )\,
+    \timeAver{E_k}
+\,,\qquad
 E_k(t) =  |a_k(t)|^2
 \,.
 \ee{EFourier1}
 The large $k$ convergence of this series is insensitivie to the
-system size \tildeL; $\timeAver{E_k}$ have to decrease much faster than 
+system size \tildeL; $\timeAver{E_k}$ have to decrease much faster than
 $1/( k/\tildeL)^4$.
 \PC{determine the decay rate, presumably exponential in $k$}
 Deviation of $E_k$ from this bound for small $k$ determins the active modes.
 This should be particularly useful to bound the number of equilibria, with
-the upper bound given by zeros of a small number 
+the upper bound given by zeros of a small number
 of long wavelength modes.
 %
 \PC{Next: Michael Loss will teach us how to bound $E$ by
@@ -560,23 +577,23 @@ of long wavelength modes.
 
 \subsection{\Eqva\ on a periodic domain}
 
-For a periodic boundary cell of size 
+For a periodic boundary cell of size
 $L$ the only {\eqva}  are
 solutions of \refeq{eq:3dks} of spatial periodicity $L$.
-In the Fourier representation they satisfy 
+In the Fourier representation they satisfy
 the \eqv\ condition for \refeq{expan}
 % \PC{\rf{ksgreene88} to remarks}
 \beq
-( (k/\tildeL)^2 - ( k/\tildeL)^4 )\, a_k 
+( (k/\tildeL)^2 - ( k/\tildeL)^4 )\, a_k
     +  \frac{i k}{\tildeL} \sum_{m=-\infty}^{+\infty} a_m a_{k-m}
   = 0
 \,.
 \label{eq:stfks}
-\eeq 
+\eeq
 Periods of spatially periodic {\eqva} are multiples of $L$.
 Every time the system size crosses  $\tildeL=n$,
 $n$-cell states
-are generated through pitchfork bifurcations. 
+are generated through pitchfork bifurcations.
 Due to the translational invariance of {\KSe},
 they form invariant circles
 in the full \statesp.
@@ -589,17 +606,17 @@ in the full \statesp.
 % where $b_{kn} \in \mathbb{R}$.
 % % By rescaling $u,x$ and $\nu$, the $n$-cell states transform to each other.
 
-For any fixed period $L$ the number 
+For any fixed period $L$ the number
 of spatially periodic solutions is finite up to a spatial translation.
-For a sufficiently small $L$ 
+For a sufficiently small $L$
 the number of {\eqva} is small,
 mostly
 concentrated on the low wave-number end of the Fourier spectrum.
 
 In a periodic box of size $L$
-both \eqva\ and \reqva\ are  periodic solutions 
-embedded in 3-$d$ space \refeq{eq:3dks}, 
-conveniently represented as loops in 
+both \eqva\ and \reqva\ are  periodic solutions
+embedded in 3-$d$ space \refeq{eq:3dks},
+conveniently represented as loops in
 $(u,v,w)$ space whose topology is controlled by the
 ``\eqva\ of \eqva'' stable-unstable manifold structure of
 \refeq{eqvEqvEigV}, see \reffig{f:eqvSpatial}.
@@ -608,9 +625,9 @@ is automatic - a rotation in the $[0,L]$ periodic domain only
 moves the points along the loop. For an \eqv\ the points
 are stationary in time; for \reqv\ they move in time, but in
 either case, the loop remains invariant.
-So we do not have the problem that we encounter in the Fourier 
+So we do not have the problem that we encounter in the Fourier
 represenation, where from the frame of one of the \eqva\
-the rest trace out circles under the action of continuous symmetry 
+the rest trace out circles under the action of continuous symmetry
 translations.
 
 
@@ -622,9 +639,9 @@ translations.
 % Predrag extracted from newton.tex         jul  3 2006
 
 The  KS equation is
-Galilean invariant: if $u(x,t)$ is a solution, then 
-$v+u(x+2vt,t)$, with $v$ an arbitrary constant velocity, is also a solution. 
-Without loss of generality, in our calculations we shall set 
+Galilean invariant: if $u(x,t)$ is a solution, then
+$v+u(x+2vt,t)$, with $v$ an arbitrary constant velocity, is also a solution.
+Without loss of generality, in our calculations we shall set
 the mean velocity of the  front to zero,
 % \index{Galilean invariance}
 % \index{invariance!Galilean}
@@ -632,11 +649,11 @@ the mean velocity of the  front to zero,
 \int dx \, u = 0
 \,.
 \ee{GalInv}
-As  $\dot{a_0}=0$ in \refeq{expan}, 
+As  $\dot{a_0}=0$ in \refeq{expan},
 $a_0$ is a conserved quantity, in our calculations
 fixed to $a_0=0$ by the Galilean invariance condition \refeq{GalInv}.
 The KS equation  \refeq{ks} is time translationally invariant,
-and 
+and
 space translationally invariant
 under the 1-$d$ Lie group of $O(2)$ rotations: if
 $u(x,t)$ is a solution, then $u(x+d,t)$ is an equivalent
@@ -646,10 +663,10 @@ reflection (``parity'' or ``inversion'') operation
 \beq
 \Refl u(x) = -u(-x)
 \ee{KSparity}
-and the shift symmetry operation 
+and the shift symmetry operation
 \beq
 \Shift u(x)=u(x+L/2)
-\,. 
+\,.
 \ee{KSshift}
 In the Fourier modes decomposition  this
 symmetry corresponds to invariance under
@@ -679,14 +696,14 @@ according to \refref{KNSks90}, to four invariant subspaces
  \item[$S_1$:] The space of L/2 periodic functions,
  \item[$R_1 S_1$:] The intersection of the above two,
  \item[$L$:] The space of functions invariant under $x\mapsto L/2-x,\ u\mapsto -u$.
- 
+
 \end{romannum} %itemize}
 %\ES{Using notation of \rf{KNSks90} here, not sure if it exists elsewere.}
 The dynamics within the $R_1$ space of antisymmetric functions
 was studied in \refref{Christiansen:97,Lan:Thesis,LanCvi07}.
 
 
-\subsection{Antisymmetric subspace} 
+\subsection{Antisymmetric subspace}
 \label{s:AntisymmSubsp}
 
 Fix the  Poincar\'e section to be the hyperplane
@@ -716,14 +733,14 @@ $\Theta$ describes the transition from down to up (or up to down) state,
 the map $\Theta^2$ describes the transition  up-down-up, that is
 $\Theta^2=P$.
 
-Now, with the help of the 
+Now, with the help of the
 reflection \Refl\ and shift symmetry {\Shift}
 operations
 \refeq{KSparity},
 \refeq{KSshift}
 the  attractor ${\cal A}_{tot}$ can be decomposed into four pieces:
  ${\cal A}_{tot}={\cal A} \cup S {\cal A}  \cup \Theta {\cal A}
-  \cup \Theta S {\cal A} $. 
+  \cup \Theta S {\cal A} $.
 
 A decomposition
 of the attractor into four disjoint sets
@@ -738,55 +755,55 @@ $S$ and $\Theta$ mappings.
 
 
 % The Fourier coefficients $a_k$ are in general complex numbers.
-% % of time $t$.  
+% % of time $t$.
 % We can
 % isolate the antisymmetric subspace of the system \refeq{ks-L} by
 % considering the case of $a_k$ pure imaginary, $a_k= i a_k$, where
 % $a_k$ are real, with the evolution equations
 % \beq
 % % \dot{a}_k=(k^2- k^4)a_k - k \sum_{m=-\infty}^{\infty} a_m a_{k-m}
-% \dot{a}_k = (k/L)^2\left( 1 - (k/L)^2  \right)a_k 
+% \dot{a}_k = (k/L)^2\left( 1 - (k/L)^2  \right)a_k
 %    - (k/L) \sum_{m=-\infty}^{+\infty} a_m a_{k-m}
 % \,.
 % \ee{expan-symm}
 
 Since \KSe\ preserves
 antisymmetric solutions, one can isolate the antisymmetric
-subspace 
+subspace
 $u(x,t)=-u(-x,t)$, or in terms of Fourier coefficients,
-$a_{-k}= - a_k$. 
+$a_{-k}= - a_k$.
 For Fourier coefficients which respect the $x \to -x$ symmetry of
 \KSe, see discussion in \refref{Christiansen:97},
 and references therein.
-In \refrefs{Christiansen:97,Lan:Thesis} 
+In \refrefs{Christiansen:97,Lan:Thesis}
 this option was used to eliminate
 the continuous translational symmetry.
 
-In the antisymmetric subspace the translational 
+In the antisymmetric subspace the translational
 invariance of the full system reduces
 to the invariance under discrete
 translation by half a spatial period $2\pi L$.
-In the Fourier representation \refeq{expan}, 
-this corresponds to invariance under 
+In the Fourier representation \refeq{expan},
+this corresponds to invariance under
 \beq
 a_{2m} \to a_{2m}\,, a_{2m+1} \to -a_{2m+1}
 \,, m \in \mathbb{Z}
 \,.
-\ee{FModInvSymm} 
+\ee{FModInvSymm}
 The antisymmetric condition amounts to imposing
 $u(0,2\pi L)=0$ boundary condition, with
 the size of the system reduced to
-the $[0, \pi L]$ interval 
-\ES{Greene and Kim show that steady states (non-traveling) 
-have to be antisymmetric and our findings verify it. 
+the $[0, \pi L]$ interval
+\ES{Greene and Kim show that steady states (non-traveling)
+have to be antisymmetric and our findings verify it.
 Thus when discussing equilibria this conversion is not
 meaningfull.}.
 
 In this paper we study the full \KS\ system invariant
 under continuous translations. Due to the lack of self-adjointness
-(non-normality) of the linearized \KS\ flow, 
+(non-normality) of the linearized \KS\ flow,
 the antisymmetric subspace
-is unstable under small perturbations and generic solution of 
+is unstable under small perturbations and generic solution of
 \KSe\ belongs to the full, periodic space. Nevertheless, some of
 the \eqva\ and of the shortest periodic orbits lie in this subspace
 and can play important role for the topology of the flow - examples
@@ -806,7 +823,7 @@ ${\bf \Mvar}={\bf \Mvar}(a_\stagn)$
 % in \refeq{die}
 % local expansion rate
 is constant in time,
-and  
+and
 the {\jacobianM}
 of the \eqv\ solution is
 \[
@@ -824,20 +841,20 @@ follows from \refeq{expan}
 =((k/\tildeL)^2- (k/\tildeL)^4)\delta_{kj} - 2(k/\tildeL) a_{k-j}
 \,.
 \ee{expanMvar}
-For the \KSe\ the constant solution $u(x,t)= E^{1/2}$ is an 
+For the \KSe\ the constant solution $u(x,t)= E^{1/2}$ is an
 \eqv\ point of \refeq{ks} which we shall henceforth refer to as
 \EQV{0}. For this ``laminar'' \eqv\ the {\stabmat}
-is diagonal, and 
+is diagonal, and
 so is the {\jacobianM}
 $
 \jMps^t_{kj}(0) = \delta_{kj} e^{((k/\tildeL)^2- (k/\tildeL)^4)t}
 \,.
 $
 
-The $|k|<\tildeL$ 
+The $|k|<\tildeL$
 long wavelength perturbations of the flat-front {\eqv}
-are linearly unstable, while all 
-$|k|> \tildeL$ short wavelength perturbations are strongly contractive.  
+are linearly unstable, while all
+$|k|> \tildeL$ short wavelength perturbations are strongly contractive.
 The high $k$ eigenvalues, corresponding to rapid variations of
 the flame front, decay so fast that the corresponding eigendirections
 are physically irrelevant.
@@ -847,15 +864,15 @@ we plot  in [MAYBE INCLUDE] % \reffig{f:eigenvalues}
 the eigenvalues of the \eqv\ in the unstable regime,
 for relatively small system size, % low viscosity $\nu$,
 and compare them with the
-stability eigenvalues of the least unstable cycle for the same 
+stability eigenvalues of the least unstable cycle for the same
 system size.
 The ``laminar'' \EQV{0}~\eqv\ is very unstable,
-with many unstable eigendirections. 
+with many unstable eigendirections.
 
 
 From \refeq{expan} we see that the origin $u(x,t) = 0$
 has Fourier modes as the  linear
-stability eigenvectors. 
+stability eigenvectors.
 For $0 \leq |k| \leq \tildeL$, these Fourier modes are
 unstable.
 The most unstable mode, nearest to $|k|=\tildeL/\sqrt{2}$,
@@ -880,17 +897,17 @@ measured in the system size \tildeL..
 % % \rf{KNS90,GEP}
 % in truncations of
 % \refeq{expan}.
-% 
-% 
+%
+%
 % Hence, while one may truncate the high modes in the expansion
 % \refeq{expan}, care has to be exercised to ensure that no modes
-% essential to the dynamics are chopped away. 
+% essential to the dynamics are chopped away.
 
 Even though our starting point
 \refeq{ks}
 is an infinite-dimensional dynamical system, the asymptotic dynamics
 unfolds on a finite-dimensional attracting manifold, and so we are back on
-the familiar territory of 
+the familiar territory of
 %\refsect{SecDynFlows}:
 the theory of a finite number of ODEs applies to this
 infinite-dimensional PDE as well.
@@ -917,9 +934,9 @@ the \rpo s.
 
 
 % What is the non-dimensional ``Rayleigh'' number for the
-% \KS\ system? 
-%  Scaling out the ``viscosity'' $\nu$ 
-% \[ 
+% \KS\ system?
+%  Scaling out the ``viscosity'' $\nu$
+% \[
 % x \to x \nu^{\frac{1}{2}}
 % \,,\quad
 % t \to t \nu
@@ -931,7 +948,7 @@ the \rpo s.
 % to a non-dimensional form
 % \beq
 % u_t=(u^2)_x-u_{xx}- u_{xxxx}
-% \,,\qquad 
+% \,,\qquad
 %   x \in  [0,L\nu^{-\frac{1}{2}}] = [0,2\pi\tildeL]
 % \,.
 % \ee{ks-L}
@@ -957,46 +974,46 @@ Here we use
 $L$ as the system parameter, with the ``hyper-viscosity" $\nu$ fixed to $1$.
 Other authors vary  $\nu$, with $L$ fixed to either $1$ or $2\pi$.
 To minimize confusion,
-in what follows we shall state results of all 
+in what follows we shall state results of all
 calculations either in units of the dimensionless system size $\tildeL$,
 or the systems size $L = 2 \pi \tildeL$. The parameter $\alpha$
 of \refrefs{KNSks90,ksgreene88} is in this convention is
 $\tildeL=\sqrt{\alpha/4}$.
-	\PC{extend \reffig{fig:ksBifDiag} to $\tildeL=4$}
+    \PC{extend \reffig{fig:ksBifDiag} to $\tildeL=4$}
 
 
-For small $\tildeL$ the only \eqv\ of the system is the 
+For small $\tildeL$ the only \eqv\ of the system is the
 constant solution $y(x,t)=0$,
-globally attracting 
-for $\tildeL<1$. At $\tildeL=N$, $N=1,2,3, \dots$, 
+globally attracting
+for $\tildeL<1$. At $\tildeL=N$, $N=1,2,3, \dots$,
 the $N$th harmonic becomes unstable and the constant solution
 undergoes a pitchfork bifurcation into
-the antisymmetric ``$N$-cell'' states\rf{ksgreene88}. 
+the antisymmetric ``$N$-cell'' states\rf{ksgreene88}.
 These states contain only the multiples of the $N$th
 harmonic, {\ie}, only non-vanishing Fourier coefficients
 are $(a_N,a_{2N},\dots)$.
-Greene and Kim show that symmetric solutions are \eqva, not \reqva. 
-	\PC{mark point $A$ in \reffig{fig:ksBifDiag}}
+Greene and Kim show that symmetric solutions are \eqva, not \reqva.
+    \PC{mark point $A$ in \reffig{fig:ksBifDiag}}
 % At point $A$ in \reffig{fig:GreeneKim}
 At point $A$ in \reffig{fig:ksBifDiag}
 the $1$-cell state loses stability
-and bifurcates to a stable, 
+and bifurcates to a stable,
 asymmetric \reqv, which in turn becomes unstable
-through a Hopf bifurcation at point $Z$. 
+through a Hopf bifurcation at point $Z$.
         \PC{mark point $Z$ in \reffig{fig:ksBifDiag}}
 
 
-At $\tildeL=2$ a $2$-cell \eqv\ bifurcates off the \EQV{0} \eqv. 
+At $\tildeL=2$ a $2$-cell \eqv\ bifurcates off the \EQV{0} \eqv.
 % At point $B$ in \reffig{fig:GreeneKim}
 At point $B$ in \reffig{fig:ksBifDiag}
-the $1$-cell branch merges to the $2$-cell branch. 
+the $1$-cell branch merges to the $2$-cell branch.
 In general each $N$-cell branch merges to the corresponding $2N$-cell branch.
 
 % At point $C$ in \reffig{fig:GreeneKim}
 At point $C$ in \reffig{fig:ksBifDiag}
-the $2$-cell state bifurcates to a type of 
+the $2$-cell state bifurcates to a type of
 \eqv\ solution
-found by La Quey, Mahajan, Rutherford and Tang\rf{laquey74} and generalized by Greene and Kim who refer to them as GLMRT \eqva. 
+found by La Quey, Mahajan, Rutherford and Tang\rf{laquey74} and generalized by Greene and Kim who refer to them as GLMRT \eqva.
 For a GLMRT solution $u(x)$ is antisymmetric,
 a long wavelength distorted $N$-cell state.
 
@@ -1006,10 +1023,10 @@ a long wavelength distorted $N$-cell state.
  ``giant" state because its amplitude grows as the system size increases.
    }
 
-According to the bifurcation diagram 
-% \reffig{fig:GreeneKim}, 
+According to the bifurcation diagram
+% \reffig{fig:GreeneKim},
 \reffig{fig:ksBifDiag}
-and our numerical results, 
+and our numerical results,
 at the system size $\tildeL=22/2\pi = 3.5014\dots$
 studied here,
 the {\eqva} are the $2$- and $3$-cell states \EQV{2} and \EQV{3},
@@ -1022,8 +1039,8 @@ and the ``$M$ branch"  \reqva\ \REQV{\pm}{2}.
         \PC{mark points in \reffig{fig:ksBifDiag}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}[t]		\label{fig:ksBifDiag}
-\begin{center} 
+\begin{figure}[t]       \label{fig:ksBifDiag}
+\begin{center}
 \includegraphics[width=0.5\textwidth]{figs/ksBifDiag.eps}
 \end{center}
 \caption{
@@ -1034,14 +1051,14 @@ $\tildeL \approx 3.5$ studied here.
 Solid curves denote $N$-cell solutions,
 dotted curves GLMRT, the dash-dotted curve the
 giant states, and dashed curves the propagating solutions.
-Open circles indicate Hopf bifurcations. 
+Open circles indicate Hopf bifurcations.
 The color of a branch indicates the number of unstable
 eigenvalues: (red) 2 unstable eigenvalues, (blue) 1
-unstable eigenvalue, (green) stable. 
+unstable eigenvalue, (green) stable.
 \ESedit{
-ES: Shown is the 2c to GLMRT bifurcation and the GLMRT to \REQV{\pm}{2} bifurcation, 
+ES: Shown is the 2c to GLMRT bifurcation and the GLMRT to \REQV{\pm}{2} bifurcation,
 points C and M in \rf{ksgreene88} respectively.
-       } 
+       }
         }
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1051,8 +1068,8 @@ points C and M in \rf{ksgreene88} respectively.
 
 \subsection{Back in the saddle again}
 
-Kevrekidis, Nicolaenko and Scovel~\rf{KNSks90} 
-prove that the bifurcation of the trivial state $y=0$ to an $N$-cell state is a pitchfork. 
+Kevrekidis, Nicolaenko and Scovel~\rf{KNSks90}
+prove that the bifurcation of the trivial state $y=0$ to an $N$-cell state is a pitchfork.
 They observe that when the $1$-cell state losses stability at point $A$ the
 eigenvector corresponding to the zero eigenvalue of the stability matrix aligns itself with the direction of uniform translation of the
 system which, due to the translational invariance of \KSe\, also corresponds to a zero eigenvalue. Thus the algebraic multiplicity of the zero eigenvalue is $2$ while its geometric multiplicity is $1$. Using this fact and a local, $O(2)$-equivariant, approximation to the center manifold they prove that this type of bifurcation creates traveling waves.
@@ -1063,7 +1080,7 @@ system which, due to the translational invariance of \KSe\, also corresponds to 
 % Predrag created file              jul 3 2006
 
 The KS equation  \refeq{ks} is time translationally invariant,
-and 
+and
 space translationally invariant
 under the 1-$d$ Lie group of $O(2)$ rotations: if
 $u(x,t)$ is a solution, then $u(x+d,t)$ is an equivalent
@@ -1079,16 +1096,16 @@ where $\period{}$ is the period.
 \ES{Is this obvious to everybody? I cannot really see why it is so.}
 
 
-{\Rpo s} were introduced by Poincar\'e in his study of 
+{\Rpo s} were introduced by Poincar\'e in his study of
 the 3-body problem\rf{ChencinerLink,rtb}.
 \Reqva\ of this problem
 are known as the Lagrange points. They are stationary in
 the co-rotating frame, but
 in the inertial frame they execute circular motions.
 Similarly, in appropriate co-rotating frame
-{\rpo s} are periodic orbits, 
+{\rpo s} are periodic orbits,
 but in the inertial frame their trajectories
-are quasiperiodic. 
+are quasiperiodic.
 They arise in dynamics of many physical systems
 with continuous symmetries, such as motions of rigid bodies, gravitational
 $N$-body problems, molecules and nonlinear waves.
@@ -1096,10 +1113,9 @@ $N$-body problems, molecules and nonlinear waves.
 Viswanath\rf{ViswanathPC06} % arXiv.org/physics/0604062
 found both \reqva\ and \rpo s in the plane Couette problem.
 
-Here we determine 
-several \eqva\ and many \rpo s for 
+Here we determine
+several \eqva\ and many \rpo s for
 KS in a periodic cell of size $L=22$.
 Initial searches for \rpo s in KS system were
 inspired by Vanessa L{\'o}pez\rf{lop05rel} investigation
 of {\Rpo s} of the Complex Ginzburg-Landau equation.
-
