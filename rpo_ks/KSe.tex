@@ -18,10 +18,13 @@ physical settings, is one of the simplest nonlinear PDEs that
 exhibit spatiotemporally chaotic behavior. In the formulation
 adopted here, the time evolution of the ``flame front velocity''
 $u=u(x,t)$ on a periodic domain $u(x,t) = u(x+L,t)$ is given by
-\PC{Ruslan, we need to finalize the convention here - what
+\PC{
+    Ruslan, we need to finalize the convention here - what
 authoritative reference uses $(u^2)_x/2$? I agree it's more
 aesthetic, but best to use standard convention. I forget who we
-follow.} \RLD{I've used the same convention as Kassam and Trefethen.
+follow.
+   } 
+\RLD{I've used the same convention as Kassam and Trefethen.
 As far as I could track it, this convention comes from Cross and
 Hohenberg's 1993 Rev. Mod. Phys. (vol. 65, p. 851). If you google
 'Kuramoto-Sivashinsky',
@@ -30,7 +33,8 @@ the first in the search list and it uses the same convention
 (actually, their $u$ is actually a $w$ such that $w_x$ is my $u$.)
 The site refers to a 1986 Physica D paper by Michelson and a
 "Handbook of differential equations" by Zwillinger, but I haven't
-seen either of these.}
+seen either of these.
+    }
 
 \beq
     u_t=(u^2)_x-u_{xx}- u_{xxxx}
@@ -54,7 +58,7 @@ makes it convenient to work in the Fourier space,
 %where $\tildeL=L/2\pi$. Thus,
 with the $1$-dimensional PDE \refeq{ks}
 replaced by an infinite set of
-ODEs for the Fourier coefficients:
+ODEs for the complex Fourier coefficients $a_k(t)$:
 \beq
 \dot{a}_k= \pVeloc_k(a)
      = ( (k/\tildeL)^2 - ( k/\tildeL)^4 )\, a_k
@@ -308,17 +312,17 @@ In the Fourier space the \reqva\ are defined by the condition
 Differentiating this condition with respect to time, we obtain
 the \reqv\ condition on Fourier components,
 \beq
- f_k(a) - i q_k c a_k = 0
+ \pVeloc_k(a) - i \frac{k c}{\tildeL} a_k = 0
 \,,
 \ee{reqvCondF}
 which needs to be solved for (time independent) $a_k$ and $c$.
 
-\subsubsection{When is an \eqv\ important? a bit of speculation}
-
+\noindent {\bf When is an \eqv\ important? a bit of speculation}
+%
 There are two kinds of roles
 {\eqva} play:
 (1)
-{\em ``Hole'' in the natural measure}.
+a {\em ``hole'' in the natural measure}.
 The more unstable eigendirections an \eqv\ has (for example, the
 $u=$const \eqv~\EQV{0}), the more unlikely it is  that
 an orbit will recur in its neighborhood.
@@ -327,7 +331,7 @@ an orbit will recur in its neighborhood.
 Empirically, asymptotic dynamics tends to spend
 a large fraction of time in
 neighborhoods of a few  {\eqva} with
-only a few unstable eigendirections.
+a least number of unstable eigendirections.
 
 
 \subsection{Energy budget} % of the \KSe}
@@ -356,15 +360,15 @@ the interval $L$ is given by the integral
     \,.
     \label{rpo:spac_ave}
 \eeq
-$\expct{\obser}$ is in general time dependent. We denote
-its mean value by the {time average}
+$\expct{\obser}$ is in general time dependent. 
+Its mean value is given by the {time average}
 \beq
 \timeAver{\obser}
     =
 \lim_{t\rightarrow \infty} {1\over t} \int_0^t \! d\tau \, \expct{\obser}
     =
-\lim_{t\rightarrow \infty} {1\over t L} \int_0^t \!d\tau \,
-    \int_0^{L} \! d\pSpace\, \obser(\pSpace,\tau)
+\lim_{t\rightarrow \infty} {1\over t L} \int_0^t \! 
+    \int_0^{L} \! d\tau \, d\pSpace\, \obser(\pSpace,\tau)
     \,.
 \label{rpo:tim_ave}
 \eeq
@@ -426,10 +430,9 @@ that the energy variation\rf{ksgreene88}
    \frac{1}{2}\dot{\expctE} =
       \expct{(u_{x})^2} - \expct{(u_{xx})^2}
 \ee{EnRate}
-balances the power pumped in by the anti-diffusion
+balances the KS equation \refeq{ks} power pumped in by the anti-diffusion
 $u_{xx}$
-against energy dissipated by the hypervicosity $u_{xxxx}$
-in the KS equation \refeq{ks}.
+against energy dissipated by the hypervicosity $u_{xxxx}$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[t] \label{f:drivedrag}
@@ -482,27 +485,29 @@ evolution.s
 % \ES{Momentarilly adopting Japanese philosophy,
 % before putting there the rest of the short orbits.}.
 \PC{Re \reffig{f:drivedrag}:
-    (0) replace $y$-axis by
-    $\expct{(u_{xx})^2}-\expct{(u_{x})^2}$, so all \po s lie
-    on the $x$-axis and on can see more clearly the turbulent and
-    periodic trajectory, instead having them scrunched into the
-    diagonal. (a) Replace by side views of
-    3-$d$ $(\expct{u^2},\expct{(u_{x})^2},\expct{(u_{xx})^2}
-       -\expct{(u_{x})^2})$,
-    two figures; (b) current type figure, with chaotic trajectory,
+%    (0) replace $y$-axis by
+%    $\expct{(u_{xx})^2}-\expct{(u_{x})^2}$, so all \po s lie
+%    on the $x$-axis and on can see more clearly the turbulent and
+%    periodic trajectory, instead having them scrunched into the
+%    diagonal. (a) Replace by side views of
+%    3-$d$ $(\expct{u^2},\expct{(u_{x})^2},\expct{(u_{xx})^2}
+%       -\expct{(u_{x})^2})$,
+%    two figures; 
+    (b) current type figure, with chaotic trajectory,
     all \eqva, $(32.\cdots,11)$ as example of well embedded, and
     a typical \po\ {\em not} embedded into the ``turbulent" attractor.
     (c) a separate figure with more \po s, no ``turbulent" attractor.
-    (d) prepare a mathematica macro that automatically uses
-    fonts at least twice the size you use currently. (e) replace
+%    (d) prepare a mathematica macro that automatically uses
+%    fonts at least twice the size you use currently. 
+    (e) replace
     gray window with a white background, black font. (f) in the
     publication version replace colored dots with symbols of varying
     shapes, fine black border, can be filled in with colors.
     }
-\PC{In \reffig{f:drivedrag}:
-    do also try plotting the heteroclinic connections - they are
-    presumably off the diagonal
-   }
+%\PC{In \reffig{f:drivedrag}:
+%    do also try plotting the heteroclinic connections - they are
+%    presumably off the diagonal
+%   }
 \PC{believe it or not, we are now set to compute
     $\timeAver{u^2}$ and $\timeAver{(u_x)^2}$
     using cycle expansions
@@ -561,7 +566,7 @@ takes form
 E_k(t) =  |a_k(t)|^2
 \,.
 \ee{EFourier1}
-The large $k$ convergence of this series is insensitivie to the
+The large $k$ convergence of this series is insensitive to the
 system size \tildeL; $\timeAver{E_k}$ have to decrease much faster than
 $1/( k/\tildeL)^4$.
 \PC{determine the decay rate, presumably exponential in $k$}
@@ -609,8 +614,7 @@ in the full \statesp.
 For any fixed period $L$ the number
 of spatially periodic solutions is finite up to a spatial translation.
 For a sufficiently small $L$
-the number of {\eqva} is small,
-mostly
+the number of {\eqva} is small and
 concentrated on the low wave-number end of the Fourier spectrum.
 
 In a periodic box of size $L$
@@ -706,34 +710,7 @@ was studied in \refref{Christiansen:97,Lan:Thesis,LanCvi07}.
 \subsection{Antisymmetric subspace}
 \label{s:AntisymmSubsp}
 
-Fix the  Poincar\'e section to be the hyperplane
-$\Re a_1=0$. We integrate \refeq{expan} with the initial
- conditions
-$\Re a_1=0$, and arbitrary values of the coordinates  $a_2, \ldots, a_N$, where
-$N$ is the truncation order.  When $\Re a_1$ becomes
-$0$ the next time,  the coordinates  $a_2, \ldots, a_N$ are mapped
-into $(a_2', \ldots a_N')=P(a_2, \ldots, a_N)$, where $P$ is the  Poincar\'e
-map. $P$ defines a mapping of a $N-1$ dimensional hyperplane into itself.
-Under successive iterations of  $P$, any trajectory
-approaches the attractor ${\cal A}$, which itself is an invariant
-set under $P$.
-
-A trajectory of
- (\ref{expan}) can cross the plane $a_1=0$ in two possible ways:
- either when
-$\dot{a_1}>0$ (``up'' intersection)
-or when  $\dot{a_1}<0$ (``down'' intersection),
- with the ``down'' and ``up'' crossings
-alternating.
-It then makes sense to define the  Poincar\'e map $P$ as a transition between,
-say, ``up'' and ``up'' crossing.
-With  Poincar\'e section defined as the ``up-up'' transition,
-it is natural to define a ``down-up'' transition map $\Theta$. Since
-$\Theta$ describes the transition from down to up (or up to down) state,
-the map $\Theta^2$ describes the transition  up-down-up, that is
-$\Theta^2=P$.
-
-Now, with the help of the
+With the help of the
 reflection \Refl\ and shift symmetry {\Shift}
 operations
 \refeq{KSparity},
@@ -832,7 +809,7 @@ of the \eqv\ solution is
  {\bf \Mvar}={\bf \Mvar}(a_\stagn)
 \,.
 \]
-The matrix of variations
+The {\stabmat}
 % \refeq{DerMatrix}
 follows from \refeq{expan}
 % \index{Kuramoto-Sivashinsky system}
