@@ -8,28 +8,57 @@
 
 % Predrag                   mar 13 2007
 \PC{
-%   As nobody else deigns to do it, I picked the low fruit that I have
-%been talking about past month: defined the
-Power input {\em vs.} energy
-dissipation rates for Kuramoto-Sivashinsky: I cannot believe that it is
-not in the literature, it is standard energy balance exercise for Navier
-Stokes case.
-This should show the isolated equilibria far from the
-chaotic measures, and the important rpos well embedded in it. More
-importantly,
-If Loss gives us Sobolev bounds on energy, we might be able
-to bound the number of equilibria as function of systems size L, and thus
+from bounds on energy, we might be able
+to bound the number of equilibria as function of systems size $L$, and thus
 be sure we have them all.
    }
 %
-The {space average} of a function $\obser = \obser(\pSpace,t)$ defined on
-the interval $L$ is given by the integral
+Equation \refeq{ks} can be written as % in ``potential'' form
+\beq
+    u_t=- V_x
+        \,,\qquad
+    V(x,t)={\textstyle\frac{1}{2}}u^2+u_{x} + u_{xxx}
+    \,.
+\ee{ksPotent}
+$u$ is related to the ``flame-front height'' $h(x,t)$ by
+$u=h_x$, so \expctE\ can be interpreted as
+the mean energy density \refeq{ksEnergy}.
+
+Even though KS is a phenomenological
+small-amplitude model equation, the time-dependent quantity
+\beq
+    \expctE=\frac{1}{L}\int_0^{L} \!dx \, V(x,t)
+    =\frac{1}{L}\int_0^{L}\! dx \, \frac{u^2}{2}
+\label{ksEnergy}
+\eeq
+% \PC{this is missing a prefactor 1/2. Check if someone in literature
+% - other than Greene and Kim - defines it right. }
+has a physical interpretation\rf{ksgreene88}
+as the average ``energy'' density of the flame front.
+This analogy to the corresponding definition of the
+mean kinetic energy density for
+the Navier-Stokes will be useful in what follows.
+\PC{bit weird: can use Galilean invariance to
+    set $\expctE=0$ for any given $u(x,t)$?}
+
+The energy \refeq{ksEnergy}
+is also the quadratic norm in the Fourier space,
+\beq
+\expctE = (u,u) = \sum_{k=1}^{\infty} E_k
+\,,\qquad
+E_k = % a_{-k} a_k =
+    {\textstyle\frac{1}{2}}|a_k|^2
+\,.
+\ee{EFourier}
+
+The {space average} of a function $\obser = \obser(\pSpace,t)$  on
+the interval $L$,
 \beq
     \expct{\obser} = \frac{1}{L}\int_0^{L} d\pSpace\, \obser(\pSpace,t)
-    \,.
+    \,,
     \label{rpo:spac_ave}
 \eeq
-$\expct{\obser}$ is in general time dependent. 
+is in general time dependent. 
 Its mean value is given by the {time average}
 \beq
 \timeAver{\obser}
@@ -42,27 +71,23 @@ Its mean value is given by the {time average}
 \label{rpo:tim_ave}
 \eeq
 The mean value
-$\timeAver{\obser}$ takes a particularly simple form when
-evaluated on an
-\eqv\ or {\reqv} $u(\pSpace,t) = u_q(\pSpace-ct)$
+$\timeAver{\obser}$ evaluated on an
+\eqv\ or {\reqv} $u(\pSpace,t) = u_q(\pSpace-ct)$ is
 \beq
          \obser_q = \expct{\obser}_q
-\,,
+\,.
 \label{rpo:u-eqv}
 \eeq
 Evaluation of the infinite time average \refeq{rpo:tim_ave}
-on a function of a \po\ or \rpo\ $u_p(\pSpace,t)$
+on a function of a period $\period{p}$
+\po\ or \rpo\ $u_p(\pSpace,t)$
  requires only a single traversal of the periodic solution,
 \beq
        \obser_p = \frac{1}{\period{p}}
     \int_0^{\period{p}} \! d\tau \, \expct{\obser}
-\,,
+\,.
 \label{rpo:u-cyc}
 \eeq
-where $\period{p}$ is the period.
-$\obser_p$ is a loop integral
-along a single parcourse of a prime cycle $p$.
-%  so it is an intrinsic property of the periodic solution.
 
 Take time derivative of the energy density \refeq{ksEnergy},
 substitute \refeq{ks} and integrate by parts. Total derivatives vanish
@@ -71,19 +96,19 @@ by the spatial periodicity on the $L$ domain:
    \frac{1}{2}\dot{\expctE} &=&
      \expct{u \, u_t}
     % \frac{1}{L}\int_0^{L}u \, u_t\, dx
-     = \expct{u (u^2 - u \, u_{x} - u \, u_{xxx})_x}
+     = - \expct{u ({\textstyle\frac{1}{2}}u^2 + u \, u_{x} + u \, u_{xxx})_x}
     \continue
     &=&
-\expct{ - u_x \, u^2 + (u_{x})^2 + u_x \, u_{xxx}}
+\expct{+ u_x \, \frac{u^2}{2} + (u_{x})^2 + u_x \, u_{xxx}}
     \,.
 \label{rpo:ksErate}
 \eea
-For an equilibrium it follows from \refeq{KSeqvCond}
-that $\expctE$ is constant, as it should be:
+For an \eqv\ substitution by \refeq{KSeqvCond}
+verifies that $\expctE$ is constant:
 \[
    \frac{1}{2}\dot{\expctE} =
-\expct{ (-u^2 + u_{x} + u_{xxx}) \,u_x}
-    = - \expctE \expct{ u_x }=0
+\expct{ (\frac{u^2}{2} + u_{x} + u_{xxx}) \,u_x}
+    = \expctE \expct{ u_x }=0
     \,.
 \]
 The first term in \refeq{rpo:ksErate} vanishes by
@@ -96,7 +121,7 @@ and integrating the third term by parts yet again we get
 that the energy variation\rf{ksgreene88}
 % \PC{this is ``power", nicht war?}
 \beq
-   \frac{1}{2}\dot{\expctE} =
+   \dot{\expctE} =
       \expct{(u_{x})^2} - \expct{(u_{xx})^2}
 \ee{EnRate}
 balances the KS equation \refeq{ks} power pumped in by the anti-diffusion
@@ -104,7 +129,7 @@ $u_{xx}$
 against energy dissipated by the hypervicosity $u_{xxxx}$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}[t] \label{f:drivedrag}
+\begin{figure}[t] 
 \begin{center}
     \includegraphics[width=\textwidth]{figs/energyBalancePlot.eps}
 \end{center}
@@ -122,11 +147,12 @@ within the turbulent state, is close to the turbulent
 expectation $\timeAver{(u_x)^2}$
 \PCedit{[temporary Japanese heresy]}.
         }
+\label{f:drivedrag}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}[t] \label{f:drivedragConn}
+\begin{figure}[t] 
 \begin{center}
     \includegraphics[width=0.8\textwidth]{figs/ks22TurbConn_xfig.eps}
 \end{center}
@@ -136,6 +162,7 @@ from $A(L/4)\EQV{1}$ to \EQV{1} (yellow-green) and from \EQV{3} to $A(L/4)\EQV{1
 with a typical ``turbulent" evolution (grey) for $L=22$. Three different projections of the $(E,\, \expct{(u_{x})^2},\, \expct{(u_{xx})^2})-\expct{(u_{x})^2})$
 representation are shown.
         }
+\label{f:drivedragConn}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -148,7 +175,7 @@ we plot the power input $\expct{(u_{x})^2}$ vs.
 dissipation $\expct{(u_{xx})^2}$ for all $L=22$ \eqva\ and
 \reqva\ \PCedit{determined so far},
 several \po s and \rpo s, and for a typical ``turbulent"
-evolution.s
+evolution.
 % Notice that the single \rpo\ with $T\simeq32$ captures a large
 % part of the turbulent dynamics
 % \ES{Momentarilly adopting Japanese philosophy,
@@ -189,10 +216,12 @@ evolution.s
 \end{center}
 \caption{
 Shown on Poincar\'{e} surface of section $\expct{(u_{xx})^2} = \expct{(u_{x})^2}$:
-\EQV{1}, \EQV{2} and \EQV{3} in red, green and blue solid points respectivelly,
+\EQV{1}, \EQV{2} and \EQV{3} in red, green and blue solid points respectively,
 connections from \EQV{1} to $A(L/4)\EQV{1}$,
-from $A(L/4)\EQV{1}$ to \EQV{1} and from \EQV{3} to $A(L/4)\EQV{1}$ in green, yellow-green and blue circles respectivelly,
-a typical ``turbulent" evolution (black) and all \po's and \rpo's determined so far for $L=22$.
+from $A(L/4)\EQV{1}$ to \EQV{1} and from \EQV{3} to $A(L/4)\EQV{1}$ in green, 
+yellow-green and blue circles respectively,
+a typical ``turbulent" evolution (black) and all \po s and \rpo s 
+determined so far for $L=22$.
         }
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -236,16 +265,18 @@ E_k(t) =  |a_k(t)|^2
 \,.
 \ee{EFourier1}
 The large $k$ convergence of this series is insensitive to the
-system size \tildeL; $\timeAver{E_k}$ have to decrease much faster than
+system size $L$; $\timeAver{E_k}$ have to decrease much faster than
 $1/( k/\tildeL)^4$.
 \PC{determine the decay rate, presumably exponential in $k$}
 Deviation of $E_k$ from this bound for small $k$ determines the active modes.
-This should be particularly useful to bound the number of equilibria, with
+This may be useful to bound the number of equilibria, with
 the upper bound given by zeros of a small number
-of long wavelength modes.
+of long wavelength modes. Currently the best bound on 
 %
-\PC{Past: Michael Loss has not taught us how to bound $E$ by
-    Sobolev bounds. Neither has Spiegel. Next: But Constantin says that the answer is in
+\PC{
+ % Past: Michael Loss has not taught us how to bound $E$ by
+ %  Sobolev bounds. Neither has Spiegel. Next: But 
+  Constantin says that the answer is in
     \refrefs{temam85ks}. For steady solutions there is $L$-independent bound
     in \refref{Mks86}. Eckmann: the  best bound is by Otto\cite{GiacoOtto05}; the
     only bound close to k=0, better in essential way. See also \refref{bronski-2005}.

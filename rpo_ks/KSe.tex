@@ -18,26 +18,11 @@ physical settings, is one of the simplest nonlinear PDEs that
 exhibit spatiotemporally chaotic behavior. In the formulation
 adopted here, the time evolution of the ``flame front velocity''
 $u=u(x,t)$ on a periodic domain $u(x,t) = u(x+L,t)$ is given by
-\PC{
-    Ruslan, we need to finalize the convention here - what
-authoritative reference uses $(u^2)_x/2$? I agree it's more
-aesthetic, but best to use standard convention. I forget who we
-follow.
-   } 
-\RLD{I've used the same convention as Kassam and Trefethen.
-As far as I could track it, this convention comes from Cross and
-Hohenberg's 1993 Rev. Mod. Phys. (vol. 65, p. 851). If you google
-'Kuramoto-Sivashinsky',
-http://mathworld.wolfram.com/Kuramoto-SivashinskyEquation.html is
-the first in the search list and it uses the same convention
-(actually, their $u$ is actually a $w$ such that $w_x$ is my $u$.)
-The site refers to a 1986 Physica D paper by Michelson and a
-"Handbook of differential equations" by Zwillinger, but I haven't
-seen either of these.
-    }
-
 \beq
-    u_t=(u^2)_x-u_{xx}- u_{xxxx}
+\PCedit{
+  u_t+{\textstyle\frac{1}{2}}(u^2)_x+u_{xx}+ u_{xxxx}=0
+       }
+% abandoned the CCP convention: u_t=(u^2)_x-u_{xx}- u_{xxxx}
     \,,\qquad   x \in [0,L]
     \,.
 \ee{ks}
@@ -62,7 +47,9 @@ ODEs for the complex Fourier coefficients $a_k(t)$:
 \beq
 \dot{a}_k= \pVeloc_k(a)
      = ( (k/\tildeL)^2 - ( k/\tildeL)^4 )\, a_k
-    + i \frac{k}{\tildeL} \sum_{m=-\infty}^{+\infty} a_m a_{k-m}
+\PCedit{
+    - i \frac{k}{2\tildeL} \sum_{m=-\infty}^{+\infty} a_m a_{k-m}
+       }
 \,.
 \ee{expan}
 Since $u(x,t)$ is real,
@@ -108,7 +95,10 @@ PDEs (such as the 3$d$
 snapshots of velocity and vorticity fields in Navier-Stokes)
 offer little insight into detailed dynamics of low-$Re$ flows.
 Much more illuminating are the \statesp\ representations.
-\PC{expand this visualization section}
+\PC{expand this into a visualization subsection: how we use
+    $d$-dimensional vectors (stability eigenvectors, etc) to project
+    from $d$-dimensions to 2 or 3 dimensions. \underline{Not}
+    Fourier modes as coordinates!}
 
 The objects explored in this paper: \eqva\ and short \po s,
 are robust both under mode truncations and small
@@ -135,51 +125,8 @@ which is approximately also the mean wavelength of the turbulent flow.
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Equation \refeq{ks} can be written as % in ``potential'' form
-\beq
-    u_t=E_x
-        \,,\qquad
-    E(x,t)=u^2-u_{x}- u_{xxx}
-    \,.
-\ee{ksPotent}
-Even though KS is a phenomenological
-small-amplitude model equation, the time-dependent quantity
-\beq
-    \expctE=\frac{1}{L}\int_0^{L} E(x,t) \, dx
-    =\frac{1}{L}\int_0^{L}u^2\, dx
-\label{ksEnergy}
-\eeq
-\PC{this is missing a prefactor 1/2. Check if someone in literature
-- other than Greene and Kim - defines it right.
-   }
-has a physical interpretation\rf{ksgreene88}
-as the average ``energy'' density of the flame front.
-This analogy to the corresponding definition of the
-mean kinetic energy density for
-the Navier-Stokes will be useful in what follows.
-\PC{bit wierd: can use Galilean invariance to
-    set $\expctE=0$ for any given $u(x,t)$}
 
-If we define the product of two functions on the
-periodic interval $L$ by the integral
-\beq
-        (g,h) = \frac{1}{L}\int_0^{L} d\pSpace\,
-        g(\pSpace) h(\pSpace)
-        \,,
-        \label{rpo:innerProd}
-\eeq
-then $(u,u)$, the energy \refeq{ksEnergy},
-is also the quadratic norm in the Fourier space,
-\beq
-\expctE = (u,u) = \sum_{k=1}^{\infty} E_k
-\,,\qquad
-E_k = % a_{-k} a_k =
-    |a_k|^2
-\,.
-\ee{EFourier}
-
-
-\subsection{\Eqva} % of the \KSe}
+\subsection{\Eqva\ and \reqva} % of the \KSe}
 \label{sec:stks}
 % former equilibria.tex
 
@@ -191,10 +138,42 @@ E_k = % a_{-k} a_k =
 
 \Eqva\  (or the steady solutions)
 are the simplest invariant sets in
-the \statesp. They,  and
+the \statesp. 
+\beq
+ u(x,t) = u(x) %\,,\quad t \in \mathbb{R}
+\,.
+\ee{eqva}
+More generally, due to the translational symmetry,
+the KS system allows for \reqv\ solutions
+(traveling waves, rotating waves),
+characterized by a fixed profile $u_q$
+moving with constant speed $c$, {\ie}
+\beq
+ u(x,t) =  u(x-ct) %\,,\quad t \in \mathbb{R}
+\,.
+\ee{reqva}
+Because of the reflection symmetry (see \refsect{sec:KSeSymm}),
+the \reqva\ come in pairs,
+related by: $u(x) \to -u(-x)$, $c \to -c$.
+\Eqva,  and
 the connections between them form the
 coarsest geometrical framework for organizing
 \statesp\ orbits. %\rf{ksgreene88}.
+
+
+In the Fourier space the \reqva\ are defined by the condition
+\beq
+ a_k(t) e^{-itc k/\tildeL} = a_k(0)
+\,.
+\ee{reqvaF}
+Differentiating this condition with respect to time, we obtain
+the \reqv\ condition,
+\beq
+ \pVeloc_k(a) - i \frac{k c}{\tildeL} a_k = 0
+\,,
+\ee{reqvCondF}
+which needs to be solved for (time independent) $a_k$ and $c$.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[t] \label{f:eqvSpatial}
@@ -213,22 +192,20 @@ system size $L=22$. %, $N=64$ complex modes truncation.
 The \eqv\ condition $u_t=0$ for the {\KSe} PDE \refeq{ks}
 is the ODE
 \beq
-(u^2)_x-u_{xx}- u_{xxxx}=0
+{\textstyle\frac{1}{2}}(u^2)_x+u_{xx}+ u_{xxxx}=c \, u_x
 % \,.
 \ee{KSeqvCond}
 which can be analyzed as a dynamical system in its own right.
 Integrating once we get
 \beq
-u^2-u_x- u_{xxx}=\expctE
-\,,
+{\textstyle\frac{1}{2}}(u-c)^2+u_x+u_{xxx}=\expctE
+\,.
 \label{eq:stdks}
 \eeq
-where \expctE\ is the integration constant.
+The integration constant \expctE\ can be interpreted as `energy',
+see \refsect{sec:energy}.
 Integrate over $L$, and $u_x$, $u_{xx}$ drop put by the
 $L$ periodicity.
-$u$ is related to the ``flame-front height'' $h(x,t)$ by
-$u=h_x$, so \expctE\ can be interpreted as
-the mean energy density \refeq{ksEnergy}.
 Written as a 3-dimen\-si\-on\-al dynamical system
 with spatial coordinate $x$ playing the role of ``time'',
 %\refeq{eq:stdks}
@@ -236,7 +213,7 @@ this is a volume preserving flow
 \beq
 u_x = v \,,\qquad
 v_x = w \,,\qquad
-w_x = u^2-v-\expctE \,,
+w_x = - {\textstyle\frac{1}{2}}u^2-v+\expctE \,,
   \label{eq:3dks}
 \eeq
 with the ``time'' reversal symmetry,
@@ -244,10 +221,10 @@ with the ``time'' reversal symmetry,
 x \to -x,\quad u \to -u, \quad v \to v, \quad w \to -w \,.
 \]
  Rewriting \refeq{eq:3dks} as
-\[
-(u+w)_x=u^2-\expctE
-    =(u-\expctE^{1\over 2}) (u+\expctE^{1\over 2})
-\]
+\beq
+(u+w)_x=-{\textstyle\frac{1}{2}}u^2+\expctE
+    =-{\textstyle\frac{1}{2}}(u-\sqrt{2\expctE}) (u+\sqrt{2\expctE})
+\ee{eqvOfEqv}
 we see that
 for $\expctE<0$, $u+w$ increases without bound with $x \to \infty$,
 and every solution escapes to infinity.
@@ -269,7 +246,7 @@ $c_{+}=(\expctE^{1/2},0,0)$ and $c_{-}=(-\expctE^{1/2},0,0)$.
 Linearization of the flow around
 $c_{+}$ yields the cubic equation
   \beq
-\eigExp(1+\eigExp^2) = 2\expctE
+\eigExp(1+\eigExp^2) = 4 \expctE
   \ee{KSeqvCubic}
 for the
 stability eigenvalues
@@ -300,36 +277,6 @@ developed in \refrefs{lanVar1,CvitLanCrete02}
 appears more robust than
 the earlier approaches.
 
-\subsection{\Reqva}
-% Predrag moved here from L22eqv.tex    Apr 2 2007
-%
-
-% In addition to the \eqva,
-Due to the translational symmetry,
-the KS system has \reqv\ solutions
-(traveling waves, rotating waves),
-characterized by a fixed profile $u$
-moving with constant speed $c$, {\ie}
-\beq
- u(x-ct,t) = u(x, 0) = u(x) %\,,\quad t \in \mathbb{R}
-\,.
-\ee{reqva}
-Because of the reflection symmetry (see \refsect{sec:KSeSymm}),
-the \reqva\ come in pairs,
-related by: $u(x) \to -u(-x)$, $c \to -c$.
-In the Fourier space the \reqva\ are defined by the condition
-\beq
- a_k(t) e^{-itc k/\tildeL} = a_k(0)
-\,.
-\ee{reqvaF}
-Differentiating this condition with respect to time, we obtain
-the \reqv\ condition,
-\beq
- \pVeloc_k(a) - i \frac{k c}{\tildeL} a_k = 0
-\,,
-\ee{reqvCondF}
-which needs to be solved for (time independent) $a_k$ and $c$.
-
 \noindent {\bf When is an \eqv\ important? a bit of speculation}
 %
 There are two kinds of roles
@@ -349,6 +296,7 @@ a least number of unstable eigendirections.
 
 \subsection{\Eqva\ on a periodic domain}
 
+\PC{get rid of this as a subsection}
 For a periodic boundary cell of size
 $L$ the only {\eqva}  are
 solutions of \refeq{eq:3dks} of spatial periodicity $L$.
@@ -357,7 +305,9 @@ the \eqv\ condition for \refeq{expan}
 % \PC{\rf{ksgreene88} to remarks}
 \beq
 ( (k/\tildeL)^2 - ( k/\tildeL)^4 )\, a_k
-    +  \frac{i k}{\tildeL} \sum_{m=-\infty}^{+\infty} a_m a_{k-m}
+    \PCedit{
+    -  \frac{i k}{2\tildeL} \sum_{m=-\infty}^{+\infty} a_m a_{k-m}
+            }
   = 0
 \,.
 \label{eq:stfks}
@@ -411,7 +361,8 @@ translations.
 
 The  KS equation is
 Galilean invariant: if $u(x,t)$ is a solution, then
-$v+u(x+2vt,t)$, with $v$ an arbitrary constant velocity, is also a solution.
+$u(x \PCedit{-ct,t) -c} $, with $c$ an arbitrary constant velocity, 
+is also a solution.
 Without loss of generality, in our calculations we shall set
 the mean velocity of the  front to zero,
 % \index{Galilean invariance}
@@ -714,6 +665,16 @@ In the literature \refeq{ks} is sometimes written as
     \,,
 \ee{ksVisc}
 or in any number of other variants, all equivalent.
+The \KSe\ in  form \refeq{ks} is used by
+\cite{cross93,Mks86,ks04com}, for axample.
+% \RLD{I've used the same convention as Kassam and Trefethen.
+% If you google 'Kuramoto-Sivashinsky',
+% http://mathworld.wolfram.com/Kuramoto-SivashinskyEquation.html is
+% the first in the search list and it uses the same convention
+% (actually, their $u$ is actually a $w$ such that $w_x$ is my $u$.)
+% The site refers to a 1986 Physica D paper by Michelson and a
+% "Handbook of differential equations" by Zwillinger, but I haven't
+% seen either of these.  }
 Here we use
 $L$ as the system parameter, with the ``hyper-viscosity" $\nu$ fixed to $1$.
 Other authors vary  $\nu$, with $L$ fixed to either $1$ or $2\pi$.
