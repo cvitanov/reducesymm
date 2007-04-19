@@ -13,6 +13,44 @@ to bound the number of equilibria as function of systems size $L$, and thus
 be sure we have them all.
    }
 %
+The {space average} of a function $\obser = \obser(\pSpace,t)$  on
+the interval $L$,
+\beq
+    \expct{\obser} = \frac{1}{L}\int_0^{L} d\pSpace\, \obser(\pSpace,t)
+    \,,
+    \label{rpo:spac_ave}
+\eeq
+is in general time dependent. 
+Its mean value is given by the {time average}
+\beq
+\timeAver{\obser}
+    =
+\lim_{t\rightarrow \infty} {1\over t} \int_0^t \! d\tau \, \expct{\obser}
+    =
+\lim_{t\rightarrow \infty} {1\over t L} \int_0^t \! 
+    \int_0^{L} \!\! d\tau  d\pSpace\, \obser(\pSpace,\tau)
+    \,.
+\label{rpo:tim_ave}
+\eeq
+The mean value
+$\timeAver{\obser}$, $\obser = \obser(u)$ evaluated on an
+\eqv\ or {\reqv} $u(\pSpace,t) = u_q(\pSpace-ct)$ is
+\beq
+         \obser_q = \expct{\obser}_q
+\,.
+\label{rpo:u-eqv}
+\eeq
+Evaluation of the infinite time average \refeq{rpo:tim_ave}
+on a function of a period $\period{p}$
+\po\ or \rpo\ $u_p(\pSpace,t)$
+ requires only a single traversal of the periodic solution,
+\beq
+       \obser_p = \frac{1}{\period{p}}
+    \int_0^{\period{p}} \! d\tau \, \expct{\obser}
+\,.
+\label{rpo:u-cyc}
+\eeq
+
 Equation \refeq{ks} can be written as % in ``potential'' form
 \beq
     u_t=- V_x
@@ -44,81 +82,44 @@ the Navier-Stokes will be useful in what follows.
 The energy \refeq{ksEnergy}
 is also the quadratic norm in the Fourier space,
 \beq
-\expctE = (u,u) = \sum_{k=1}^{\infty} E_k
+\expctE   % = (u,u) 
+          = \sum_{k=1}^{\infty} E_k
 \,,\qquad
 E_k = % a_{-k} a_k =
     {\textstyle\frac{1}{2}}|a_k|^2
 \,.
 \ee{EFourier}
 
-The {space average} of a function $\obser = \obser(\pSpace,t)$  on
-the interval $L$,
-\beq
-    \expct{\obser} = \frac{1}{L}\int_0^{L} d\pSpace\, \obser(\pSpace,t)
-    \,,
-    \label{rpo:spac_ave}
-\eeq
-is in general time dependent. 
-Its mean value is given by the {time average}
-\beq
-\timeAver{\obser}
-    =
-\lim_{t\rightarrow \infty} {1\over t} \int_0^t \! d\tau \, \expct{\obser}
-    =
-\lim_{t\rightarrow \infty} {1\over t L} \int_0^t \! 
-    \int_0^{L} \! d\tau \, d\pSpace\, \obser(\pSpace,\tau)
-    \,.
-\label{rpo:tim_ave}
-\eeq
-The mean value
-$\timeAver{\obser}$ evaluated on an
-\eqv\ or {\reqv} $u(\pSpace,t) = u_q(\pSpace-ct)$ is
-\beq
-         \obser_q = \expct{\obser}_q
-\,.
-\label{rpo:u-eqv}
-\eeq
-Evaluation of the infinite time average \refeq{rpo:tim_ave}
-on a function of a period $\period{p}$
-\po\ or \rpo\ $u_p(\pSpace,t)$
- requires only a single traversal of the periodic solution,
-\beq
-       \obser_p = \frac{1}{\period{p}}
-    \int_0^{\period{p}} \! d\tau \, \expct{\obser}
-\,.
-\label{rpo:u-cyc}
-\eeq
-
 Take time derivative of the energy density \refeq{ksEnergy},
 substitute \refeq{ks} and integrate by parts. Total derivatives vanish
 by the spatial periodicity on the $L$ domain:
 \bea
-   \frac{1}{2}\dot{\expctE} &=&
-     \expct{u \, u_t}
+   \dot{\expctE} &=&
+     \expct{u_t \, u}
     % \frac{1}{L}\int_0^{L}u \, u_t\, dx
-     = - \expct{u ({\textstyle\frac{1}{2}}u^2 + u \, u_{x} + u \, u_{xxx})_x}
+     = - \expct{(\frac{u^2}{2} + u \, u_{x} + u \, u_{xxx})_x u }
     \continue
     &=&
 \expct{+ u_x \, \frac{u^2}{2} + (u_{x})^2 + u_x \, u_{xxx}}
     \,.
 \label{rpo:ksErate}
 \eea
-For an \eqv\ substitution by \refeq{KSeqvCond}
-verifies that $\expctE$ is constant:
+Substitution by \refeq{KSeqvCond}
+verifies that for an \eqv\ $\expctE$ is constant:
 \[
-   \frac{1}{2}\dot{\expctE} =
-\expct{ (\frac{u^2}{2} + u_{x} + u_{xxx}) \,u_x}
+   \dot{\expctE} =
+\expct{ \left(\frac{u^2}{2} + u_{x} + u_{xxx} \right) \,u_x}
     = \expctE \expct{ u_x }=0
     \,.
 \]
 The first term in \refeq{rpo:ksErate} vanishes by
 integration by parts,
-\beq
+\(
  \expct{(u^3)_x} = 3 \expct{ u_x \, u^2}=0
 \,,
-\ee{EnNonl0}
+\) % {EnNonl0}
 and integrating the third term by parts yet again we get
-that the energy variation\rf{ksgreene88}
+that the energy variation
 % \PC{this is ``power", nicht war?}
 \beq
    \dot{\expctE} =
@@ -126,7 +127,7 @@ that the energy variation\rf{ksgreene88}
 \ee{EnRate}
 balances the KS equation \refeq{ks} power pumped in by the anti-diffusion
 $u_{xx}$
-against energy dissipated by the hypervicosity $u_{xxxx}$.
+against energy dissipated by the hypervicosity $u_{xxxx}$ \rf{ksgreene88}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[t] 
@@ -157,17 +158,21 @@ expectation $\timeAver{(u_x)^2}$
     \includegraphics[width=0.8\textwidth]{figs/ks22TurbConn_xfig.eps}
 \end{center}
 \caption{
-\EQV{1} (red), \EQV{2} (green), \EQV{3} (blue), connections from \EQV{1} to $A(L/4)\EQV{1}$ (green),
-from $A(L/4)\EQV{1}$ to \EQV{1} (yellow-green) and from \EQV{3} to $A(L/4)\EQV{1}$ (blue), along
-with a typical ``turbulent" evolution (grey) for $L=22$. Three different projections of the $(E,\, \expct{(u_{x})^2},\, \expct{(u_{xx})^2})-\expct{(u_{x})^2})$
+\EQV{1} (red), \EQV{2} (green), \EQV{3} (blue), 
+connections from \EQV{1} to $A(L/4)\EQV{1}$ (green),
+from $A(L/4)\EQV{1}$ to \EQV{1} (yellow-green) 
+and from \EQV{3} to $A(L/4)\EQV{1}$ (blue), along
+with a generic long-time ``turbulent" evolution (grey) for $L=22$. 
+Three different projections of the 
+$(E,\, \expct{(u_{x})^2},\, \expct{(u_{xx})^2})-\expct{(u_{x})^2})$
 representation are shown.
         }
 \label{f:drivedragConn}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\PC{this is special to the $L=22$ system; eventually move to
-    the appropriate section}
+% \PC{this is special to the $L=22$ system; eventually move to
+%    the appropriate section}
 \PC{ks22TurbConn2\_xfig.eps for \reffig{f:drivedragConn}
     not checked in?}
 In \reffig{f:drivedrag}
@@ -271,14 +276,19 @@ $1/( k/\tildeL)^4$.
 Deviation of $E_k$ from this bound for small $k$ determines the active modes.
 This may be useful to bound the number of equilibria, with
 the upper bound given by zeros of a small number
-of long wavelength modes. Currently the best bound on 
+of long wavelength modes.
+For \eqva\ the $L$-independent bound
+    on $E$ is given by Michaelson\rf{Mks86}. 
+The best current bound\cite{GiacoOtto05,bronski-2005} on thge long-time limit
+of $E$
+as a function of the system size $L$ scales as 
+$E \propto L^{3/2}$.
 %
 \PC{
  % Past: Michael Loss has not taught us how to bound $E$ by
  %  Sobolev bounds. Neither has Spiegel. Next: But 
   Constantin says that the answer is in
-    \refrefs{temam85ks}. For steady solutions there is $L$-independent bound
-    in \refref{Mks86}. Eckmann: the  best bound is by Otto\cite{GiacoOtto05}; the
+    \refrefs{temam85ks}. . Eckmann: the  best bound is by Otto\cite{GiacoOtto05}; the
     only bound close to k=0, better in essential way. See also \refref{bronski-2005}.
     Eckmann had $L^{8/5}$, but conceptually Otto is the best.
     When the solution is big, how long can it stay big? They found it cannot stay big for
