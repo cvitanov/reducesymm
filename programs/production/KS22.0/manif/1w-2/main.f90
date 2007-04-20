@@ -77,7 +77,7 @@ close(19)
 tf=real(Nrep,dp)*T
 ti=0.0_dp
 h=abs(tf-ti)/Nsteps
-print "timestep", h
+print *,"timestep", h
 
 call dfftw_plan_dft_r2c_1d(plan,d,v,a,FFTW_ESTIMATE)
 call dfftw_execute(plan)
@@ -114,7 +114,7 @@ print *,"dot",dot_product(VR2(:,120),VR(:,127))
 print *,"dot",dot_product(VR2(:,125),VR(:,123))
 
 stbl_dir=122
-unst_dir=127
+unst_dir=126
 
 open(15,file=trim(wd)//'eigvalues-2w.dat')
 	do i=1,d
@@ -140,7 +140,7 @@ print *,"distance",dst0,dst
 
 do i=1,Np
 	print *,"ic",i
-	bc(:)=bc0+dst0*Exp(3.66343*(i-1)/Np)*real(vR(:,unst_dir))  !+aimag(vR(:,unst_dir)))
+	bc(:)=bc0+dst0*Exp(real(w(unst_dir))*(TWOPI_D/aimag(w(unst_dir)) )*(i-1)/Np)*real(vR(:,unst_dir))  !+aimag(vR(:,unst_dir)))
 !       bc(:)=bc0+dst0*( cos(2*PI*(i-1)/Np)*real(vR(:,unst_dir)) + sin(2*PI*(i-1)/Np)*aimag(vR(:,unst_dir)) )
 	
 	ai(2:size(a))=bc(1:d/2)+ii*bc(d/2+1:d)

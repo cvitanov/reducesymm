@@ -2,7 +2,7 @@ program integrRPO
 
 use nrtype
 use ifc_integr
-use f95_lapack, only: LA_GEESX
+use f95_lapack, only: LA_GEEV
 use la_precision, only: wp => dp
 use ifc_util
 use ks
@@ -11,21 +11,24 @@ implicit none
 
 include "fftw3.f"
 
-real(dp), dimension(:), allocatable :: v,vx,vxx,vdum, bc
-real(dp), dimension(:), allocatable :: wR,wI
+real(dp), dimension(:), allocatable :: v,vx,vxx,vdum, fvec, bc
+complex(dpc), dimension(:), allocatable :: w
+complex(dpc), dimension(:,:), allocatable :: vR
+real(dp), dimension(:,:), allocatable :: fjac
+complex(dpc), dimension(:,:), allocatable :: jacdum
 complex(dpc), dimension(:),allocatable :: a,adum
 complex(dpc), dimension(:), allocatable :: ai,af
 integer(i8b) :: invplan, plan ! needed by fftw3
-integer(i4b) :: k,i, sdim, Nrep=3
-real(dp) :: T,kappa, tf, ti=0.0_dp, h, h2
+integer(i4b) :: k,i, sdim
+real(dp) :: T,kappa, tf, ti=0.0_dp, h, h2, dist1, dist2
 character*64 :: wd
-integer(i4b) :: nargs
+integer(i4b) :: nargs, unDir
 logical :: logicdum
 
 nargs=iargc()
 
 if (nargs .ne. 1) then
-	print *,"Program must be called with exactly one argument indicating the data directory."
+	print *,"Program must be called with exactly 1 argument indicating the data directory."
 	call exit
 end if
 
@@ -48,6 +51,12 @@ open(21,file=trim(wd)//'/parameters.dat')
 	read(21,*) Mi
 	read(21,*)
 	read(21,*) R
+	read(21,*) 
+	read(21,*) unDir
+	read(21,*)
+	read(21,*) dist1
+	read(21,*)
+	read(21,*) dist2
 close(21)
 
 220 Format(F21.16)
@@ -59,9 +68,9 @@ allocate(v(d),vx(d),vxx(d),vdum(d),bc(d))
 allocate(a(d/2+1),adum(d/2+1),ai(d/2+1),af(d/2+1))
 allocate(lin(d/2+1),f0(d/2+1),f1(d/2+1),f2(d/2+1),f3(d/2+1),e(d/2+1),e2(d/2+1))
 allocate(f0dum(d/2+1),f1dum(d/2+1),f2dum(d/2+1),f3dum(d/2+1),edum(d/2+1),e2dum(d/2+1))
-allocate(wR(d),wI(d))
+allocate(w(d),vR(d,d),fjac(d,d),jacdum(d,d),fvec(d))
 
-open(19,file=trim(wd)//'/ic.dat')
+open(19,file=trim(wd)//'/equilU.dat')
  
 	read(19,*) v(1:d)
  
@@ -75,8 +84,20 @@ a=a/size(v)
 bc(1:d/2)=real(a(2:size(a)))
 bc(d/2+1:d)= aimag(a(2:size(a)))
 
+call ksFJ(bc,fvec,fjac)
+
+jacdum=fjac
+
+call la_geev(jacdum,w,VR=VR)
+
+call sort_pick_2Re(w,VR)
+
+print *,"w",w(120:128)
+
+bc=bc+dist1*real(VR(:,unDir))+dist2*aimag(VR(:,unDir))
+
 ti=0.0_dp
-ai=(0.0_dp,0.0_dp)
+ai=(0.0_dp,0.10_dp)
 ai(2:size(a))=bc(1:size(bc)/2)+ii*bc(size(bc)/2+1:size(bc))
 print *,sum(abs(ai))
 af=(0.0_dp,0.0_dp)
