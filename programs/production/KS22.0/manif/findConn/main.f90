@@ -113,7 +113,7 @@ print *,"dot",dot_product(VR2(:,120),VR(:,127))
 print *,"dot",dot_product(VR2(:,125),VR(:,123))
 
 stbl_dir=122
-unst_dir=127
+unst_dir=126
 
 tf=real(Nrep,dp)*TWOPI_D/aimag(w(unst_dir))
 ti=0.0_dp
@@ -126,35 +126,44 @@ call etdrk4DiagPrefactors(Lin,h,R,Mi,f0,f1,f2,f3,e,e2)
 
 print *,"distance",dst0,dst
 
-open(17,file=trim(wd)//'aP.dat')
-open(18,file=trim(wd)//'a123.dat')
-open(19,file=trim(wd)//'v.dat')
-do i=No,Nf
-	print *,"ic",i,real(w(unst_dir))*(TWOPI_D/abs(aimag(w(unst_dir))) )*(i-1)/Ndiv
-	bc(:)=bc0+dst0*Exp(real(w(unst_dir))*(TWOPI_D/abs(aimag(w(unst_dir))) )*(i-1)/Ndiv)*real(vR(:,unst_dir))
-!	bc(:)=bc0+dst0*Exp(3.66343*(i-1)/Np)*real(vR(:,unst_dir))  !+aimag(vR(:,unst_dir)))
-!       bc(:)=bc0+dst0*( cos(2*PI*(i-1)/Np)*real(vR(:,unst_dir)) + sin(2*PI*(i-1)/Np)*aimag(vR(:,unst_dir)) )
+do idum=1,100
+	open(17,file=trim(wd)//'aP.dat')
+	open(18,file=trim(wd)//'a123.dat')
+	open(19,file=trim(wd)//'v.dat')
+	do i=No,Nf
+		print *,"No=",No,"Nf=",Nf,"Ndiv=",Ndiv
+		print *,"ic",i,real(w(unst_dir))*(TWOPI_D/abs(aimag(w(unst_dir))) )*(i-1)/Ndiv
+		bc(:)=bc0+dst0*Exp(real(w(unst_dir))*(TWOPI_D/abs(aimag(w(unst_dir))) )*(i-1)/Ndiv)*real(vR(:,unst_dir))
+	!	bc(:)=bc0+dst0*Exp(3.66343*(i-1)/Np)*real(vR(:,unst_dir))  !+aimag(vR(:,unst_dir)))
+	!       bc(:)=bc0+dst0*( cos(2*PI*(i-1)/Np)*real(vR(:,unst_dir)) + sin(2*PI*(i-1)/Np)*aimag(vR(:,unst_dir)) )
+		
+		ai(2:size(a))=bc(1:d/2)+ii*bc(d/2+1:d)
 	
-	ai(2:size(a))=bc(1:d/2)+ii*bc(d/2+1:d)
-
-	call etdrk4DiagDriverS(ti,ai,Nsteps,tf,af,f0,f1,f2,f3,e,e2,Nplt,SetNlin_KS)
-	do k=1,size(aSt,1)
-		q=8
-		write(18,230) real(aSt(k,2)),aimag(aSt(k,2)),real(aSt(k,3)),aimag(aSt(k,3)),real(aSt(k,4)),aimag(aSt(k,4)),real(aSt(k,5)),aimag(aSt(k,5))
-		bcdum(1:d/2)=real(aSt(k,2:size(a)))
-		bcdum(d/2+1:d)= aimag(aSt(k,2:size(a)))
-		q=3
-		write(17,230)  dot_product(real(VR(:,unst_dir)),bcdum),dot_product(aimag(VR(:,unst_dir)),bcdum),dot_product(real(VR(:,stbl_dir)),bcdum)
-		adum=aSt(k,:)
-		call dfftw_plan_dft_c2r_1d(invplan,d,adum,v,FFTW_ESTIMATE)
-		call dfftw_execute(invplan)
-		call dfftw_destroy_plan(invplan)
-		write(19,"(<d>F20.16)") v
+		call etdrk4DiagDriverS(ti,ai,Nsteps,tf,af,f0,f1,f2,f3,e,e2,Nplt,SetNlin_KS)
+		do k=1,size(aSt,1)
+			q=8
+			write(18,230) real(aSt(k,2)),aimag(aSt(k,2)),real(aSt(k,3)),aimag(aSt(k,3)),real(aSt(k,4)),aimag(aSt(k,4)),real(aSt(k,5)),aimag(aSt(k,5))
+			bcdum(1:d/2)=real(aSt(k,2:size(a)))
+			bcdum(d/2+1:d)= aimag(aSt(k,2:size(a)))
+			q=3
+			write(17,230)  dot_product(real(VR(:,unst_dir)),bcdum),dot_product(aimag(VR(:,unst_dir)),bcdum),dot_product(real(VR(:,stbl_dir)),bcdum)
+			adum=aSt(k,:)
+			call dfftw_plan_dft_c2r_1d(invplan,d,adum,v,FFTW_ESTIMATE)
+			call dfftw_execute(invplan)
+			call dfftw_destroy_plan(invplan)
+			write(19,"(<d>F20.16)") v
+		end do
 	end do
+	close(17)
+	close(18)
+	close(19)
+	print *,"Direction (0,1)?"
+	read(*,*) direct
+	Ndiv=2*Ndiv
+	No=No+direct
+	No=2*No-1
+	Nf=No+2
 end do
-close(17)
-close(18)
-close(19)
 
 
 
