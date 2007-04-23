@@ -52,7 +52,7 @@ open(21,file=trim(wd)//'/parameters.dat')
 	read(21,*)
 	read(21,*) Nplt
 	read(21,*)
-	read(21,*) M
+	read(21,*) Mi
 	read(21,*)
 	read(21,*) R
 	read(21,*)

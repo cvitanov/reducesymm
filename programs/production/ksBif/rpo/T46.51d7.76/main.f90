@@ -134,7 +134,7 @@ do i=1,Nf
 		wI=0.0_dp
 		Jac=matmul(Rr(kappa/L,d),Jac)
 		call la_geesx(Jac,wR(1:d),wI(1:d),select=SelectLargeEig_r,sdim=sdim)
-		write(35,"(<2*sdim>F20.10)") abs(wR(1:sdim)+ii*wI(1:sdim))
+		write(35,"(<sdim>F20.10)") abs(wR(1:sdim)+ii*wI(1:sdim))
 	else
 		stop "Newton Condition didn't meet."
 	endif
