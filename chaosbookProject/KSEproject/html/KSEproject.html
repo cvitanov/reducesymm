@@ -1,0 +1,184 @@
+<html xmlns:mwsh="http://www.mathworks.com/namespace/mcode/v1/syntaxhighlight.dtd">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>Regular and turbulent (chaotic) dynamics of Kuramoto-Sivashinsky equation</title>
+      <meta name="generator" content="MATLAB 7.2">
+      <meta name="date" content="2007-04-24">
+      <meta name="m-file" content="KSEproject"><style>
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows.  On Gecko-based browsers, the shrink-to-fit doesn't work. */ 
+p,h1,h2,div.content div {
+  /* for MATLAB's browser */
+  width: 600px;
+  /* for Mozilla, but the "width" tag overrides it anyway */
+  max-width: 600px;
+  /* for IE */
+  width:expression(document.body.clientWidth > 620 ? "600px": "auto" );
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head>
+   <body>
+      <div class="content">
+         <h1>Regular and turbulent (chaotic) dynamics of Kuramoto-Sivashinsky equation</h1>
+         <introduction></introduction>
+         <h2>Contents</h2>
+         <div>
+            <ul>
+               <li><a href="#4">Sensitive dependence on initial condition</a></li>
+               <li><a href="#5">Dependence of KS solutions on L</a></li>
+            </ul>
+         </div>
+         <p><img vspace="5" hspace="5" src="KSEproject_eq88110.png"> </p>
+         <p>with periodic boundary condition:</p>
+         <p><img vspace="5" hspace="5" src="KSEproject_eq6654.png"> </p>
+         <p>The solutions depend on the parameter <i>L</i>.
+         </p>
+         <p>Matlab function <tt>ksfmstp.m</tt> can be used to find numerical solution of the Kuramoto-Sivashinsky equation using Exponential Time Difference Runge-Kutta
+            4th order method (ETDRK4):
+         </p><pre class="codeinput">  N = 64;  L = 22;  h = 0.25;  nstp = 1000;
+  a0 = zeros(N-2,1);  a0(1:4) = 0.6; <span class="comment">% just some initial condition</span>
+  [tt, at] = ksfmstp(a0, L, h, nstp, 1);
+  fig1 = figure(<span class="string">'pos'</span>,[5 550 600 400],<span class="string">'color'</span>,<span class="string">'w'</span>); plot(tt,at,<span class="string">'.-'</span>);
+  title(<span class="string">'Solution of Kuramoto-Sivashinsky equation with L = 22: Fourier modes'</span>);
+  xlabel(<span class="string">'Time'</span>); ylabel(<span class="string">'Fourier modes'</span>);
+</pre><img vspace="5" hspace="5" src="KSEproject_01.png"> <p>The same solution can be viewed in real space by transforming the solution using function <tt>ksfm2real.m</tt>:
+         </p><pre class="codeinput">  [x, ut] = ksfm2real(at, L);
+  fig2 = figure(<span class="string">'pos'</span>,[5 270 600 200],<span class="string">'color'</span>,<span class="string">'w'</span>); pcolor(tt,x,ut); shading <span class="string">interp</span>;
+  title(<span class="string">'Solution of Kuramoto-Sivashinsky equation with L = 22: Real space'</span>);
+  xlabel(<span class="string">'Time'</span>); ylabel(<span class="string">'x'</span>,<span class="string">'rotat'</span>,0);
+</pre><img vspace="5" hspace="5" src="KSEproject_02.png"> <p>The solution can be also viewed in the 'state subspace', spanned by selected eigenvectors of one of the equilibrium points</p><pre class="codeinput">  load(<span class="string">'ks22statespace'</span>,<span class="string">'v'</span>);  <span class="comment">% v - subspace orthonormal vectors</span>
+  av = v'*at;  <span class="comment">% projection of solution onto the subspace</span>
+  fig3 = figure(<span class="string">'pos'</span>,[610 450 500 500],<span class="string">'color'</span>,<span class="string">'w'</span>);
+  plot3(av(1,:),av(2,:),av(3,:),<span class="string">'b.-'</span>); grid <span class="string">on</span>;
+  xlabel(<span class="string">'v_1'</span>); ylabel(<span class="string">'v_2'</span>); zlabel(<span class="string">'v_3'</span>,<span class="string">'rotat'</span>,0); view(-75,15);
+</pre><img vspace="5" hspace="5" src="KSEproject_03.png"> <h2>Sensitive dependence on initial condition<a name="4"></a></h2>
+         <p>Start another solution with the nearby initial condition and see how it diverges from the first one.</p><pre class="codeinput">  a1 = a0;  a1(1) = a1(1) + 1e-3;
+  [tt, at1] = ksfmstp(a1, L, h, nstp, 1);  av1 = v'*at1;
+  figure(fig3); hold <span class="string">on</span>;
+  plot3(av1(1,:),av1(2,:),av1(3,:),<span class="string">'r.-'</span>);
+</pre><img vspace="5" hspace="5" src="KSEproject_04.png"> <h2>Dependence of KS solutions on L<a name="5"></a></h2><pre class="codeinput">  LL = [10 12 16 22 24];
+  fig4 = figure(<span class="string">'pos'</span>,[500 100 600 800],<span class="string">'color'</span>,<span class="string">'w'</span>);
+  <span class="keyword">for</span> ii = 1:length(LL);
+    [tt, at] = ksfmstp(a0, LL(ii), h, nstp, 1);
+    [x, ut] = ksfm2real(at, L);
+    subplot(length(LL),1,ii);
+    pcolor(tt,x,ut); shading <span class="string">interp</span>;
+    title([<span class="string">'L = '</span> num2str(LL(ii))]);
+  <span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="KSEproject_05.png"> <p class="footer"><br>
+            Published with MATLAB&reg; 7.2<br></p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% Regular and turbulent (chaotic) dynamics of Kuramoto-Sivashinsky equation
+
+%% 
+% $$ u_t = -uu_x - u_{xx} - u_{xxxx},  \quad x \in [-L/2, L/2]$$
+%
+% with periodic boundary condition: 
+%
+% $$ u(x+L,t) = u(x,t). $$
+% 
+% The solutions depend on the parameter _L_.
+%
+% Matlab function |ksfmstp.m| can be used to find numerical solution of
+% the Kuramoto-Sivashinsky equation using Exponential Time Difference
+% Runge-Kutta 4th order method (ETDRK4):
+  N = 64;  L = 22;  h = 0.25;  nstp = 1000;
+  a0 = zeros(N-2,1);  a0(1:4) = 0.6; % just some initial condition
+  [tt, at] = ksfmstp(a0, L, h, nstp, 1);
+  fig1 = figure('pos',[5 550 600 400],'color','w'); plot(tt,at,'.-');  
+  title('Solution of Kuramoto-Sivashinsky equation with L = 22: Fourier modes');
+  xlabel('Time'); ylabel('Fourier modes');
+%%
+% The same solution can be viewed in real space by transforming the
+% solution using function |ksfm2real.m|:
+  [x, ut] = ksfm2real(at, L);
+  fig2 = figure('pos',[5 270 600 200],'color','w'); pcolor(tt,x,ut); shading interp;
+  title('Solution of Kuramoto-Sivashinsky equation with L = 22: Real space');
+  xlabel('Time'); ylabel('x','rotat',0);
+  
+%%
+% The solution can be also viewed in the 'state subspace', spanned 
+% by selected eigenvectors of one of the equilibrium points
+  load('ks22statespace','v');  % v - subspace orthonormal vectors
+  av = v'*at;  % projection of solution onto the subspace
+  fig3 = figure('pos',[610 450 500 500],'color','w');
+  plot3(av(1,:),av(2,:),av(3,:),'b.-'); grid on;
+  xlabel('v_1'); ylabel('v_2'); zlabel('v_3','rotat',0); view(-75,15);
+  
+%% Sensitive dependence on initial condition
+% Start another solution with the nearby initial condition 
+% and see how it diverges from the first one.
+  a1 = a0;  a1(1) = a1(1) + 1e-3;
+  [tt, at1] = ksfmstp(a1, L, h, nstp, 1);  av1 = v'*at1;
+  figure(fig3); hold on;
+  plot3(av1(1,:),av1(2,:),av1(3,:),'r.-');
+  
+%% Dependence of KS solutions on L
+  LL = [10 12 16 22 24];
+  fig4 = figure('pos',[500 100 600 800],'color','w');
+  for ii = 1:length(LL);
+    [tt, at] = ksfmstp(a0, LL(ii), h, nstp, 1);
+    [x, ut] = ksfm2real(at, L);
+    subplot(length(LL),1,ii);
+    pcolor(tt,x,ut); shading interp;
+    title(['L = ' num2str(LL(ii))]);
+  end
+    
+##### SOURCE END #####
+-->
+   </body>
+</html>
