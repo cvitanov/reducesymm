@@ -78,6 +78,8 @@ p.footer {
             <ul>
                <li><a href="#4">Sensitive dependence on initial condition</a></li>
                <li><a href="#5">Dependence of KS solutions on L</a></li>
+               <li><a href="#6">The equilibria and travelling waves of KS equation with L = 22</a></li>
+               <li><a href="#8">Plotting unstable manifolds of equilibria</a></li>
             </ul>
          </div>
          <p><img vspace="5" hspace="5" src="KSEproject_eq88110.png"> </p>
@@ -95,7 +97,8 @@ p.footer {
   xlabel(<span class="string">'Time'</span>); ylabel(<span class="string">'Fourier modes'</span>);
 </pre><img vspace="5" hspace="5" src="KSEproject_01.png"> <p>The same solution can be viewed in real space by transforming the solution using function <tt>ksfm2real.m</tt>:
          </p><pre class="codeinput">  [x, ut] = ksfm2real(at, L);
-  fig2 = figure(<span class="string">'pos'</span>,[5 270 600 200],<span class="string">'color'</span>,<span class="string">'w'</span>); pcolor(tt,x,ut); shading <span class="string">interp</span>;
+  fig2 = figure(<span class="string">'pos'</span>,[5 270 600 200],<span class="string">'color'</span>,<span class="string">'w'</span>);
+  pcolor(tt,x,ut); shading <span class="string">interp</span>; caxis([-3 3]);
   title(<span class="string">'Solution of Kuramoto-Sivashinsky equation with L = 22: Real space'</span>);
   xlabel(<span class="string">'Time'</span>); ylabel(<span class="string">'x'</span>,<span class="string">'rotat'</span>,0);
 </pre><img vspace="5" hspace="5" src="KSEproject_02.png"> <p>The solution can be also viewed in the 'state subspace', spanned by selected eigenvectors of one of the equilibrium points</p><pre class="codeinput">  load(<span class="string">'ks22statespace'</span>,<span class="string">'v'</span>);  <span class="comment">% v - subspace orthonormal vectors</span>
@@ -112,12 +115,86 @@ p.footer {
   fig4 = figure(<span class="string">'pos'</span>,[500 100 600 800],<span class="string">'color'</span>,<span class="string">'w'</span>);
   <span class="keyword">for</span> ii = 1:length(LL);
     [tt, at] = ksfmstp(a0, LL(ii), h, nstp, 1);
-    [x, ut] = ksfm2real(at, L);
+    [x, ut] = ksfm2real(at, LL(ii));
     subplot(length(LL),1,ii);
-    pcolor(tt,x,ut); shading <span class="string">interp</span>;
+    pcolor(tt,x,ut); shading <span class="string">interp</span>; caxis([-3 3]);
     title([<span class="string">'L = '</span> num2str(LL(ii))]);
   <span class="keyword">end</span>
-</pre><img vspace="5" hspace="5" src="KSEproject_05.png"> <p class="footer"><br>
+</pre><img vspace="5" hspace="5" src="KSEproject_05.png"> <h2>The equilibria and travelling waves of KS equation with L = 22<a name="6"></a></h2>
+         <p>File <tt>ks22equilibria</tt> contains information about equilibria and travelling waves of KS equation with L = 22.  The data are organized as arrays
+            of structures: <tt>eq</tt> for equilibria and <tt>tw</tt> for travelling waves:
+         </p>
+         <p><tt>eq(k).a</tt> - coordinates of equilibria in Fourier space, <tt>k = 1,2,3</tt> (there are three equilibria).
+         </p>
+         <p><tt>eq(k).eig</tt> - eigenvalues of the Jacobian of the flow at equilibria
+         </p>
+         <p><tt>eq(k).evec</tt> - corresponding eigenvectors
+         </p>
+         <p><tt>tw(k).a</tt> - coordinates of travelling waves in Fourier space, k = 1,2
+         </p>
+         <p><tt>tw(k).c</tt> - speeds of the travelling waves
+         </p>
+         <p><tt>tw(k).eig</tt> and <tt>tw(k).evec</tt> - as for equilibria, except that the Jacobian is calculated in the frame travelling with the wave (with speed <tt>c</tt>).
+         </p>
+         <p>Here we plot evolution of solutions starting at equilibria.  Since the equilibria are unstable and the initial conditions
+            contain round-off errors, the solutions eventually move away from the equilibria.
+         </p><pre class="codeinput">  load <span class="string">ks22equilibria</span>;  h = 0.25; nstp = 2000;
+  fig5 = figure(<span class="string">'pos'</span>,[700 200 600 600],<span class="string">'color'</span>,<span class="string">'w'</span>);
+  <span class="keyword">for</span> k = 1:3,  a0 = eq(k).a;
+    [tt, at] = ksfmstp(a0, L, h, nstp, 2); [x, ut] = ksfm2real(at, L);
+    subplot(3,1,k);
+    pcolor(tt,x,ut); shading <span class="string">interp</span>; caxis([-3 3]);
+    title([<span class="string">'Equilibrium '</span> num2str(k)]);
+  <span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="KSEproject_06.png"> <p>Solutions starting from the travelling waves can be plotted in a similar way.</p><pre class="codeinput">  nstp = 400;
+  fig5 = figure(<span class="string">'pos'</span>,[700 200 600 400],<span class="string">'color'</span>,<span class="string">'w'</span>);
+  <span class="keyword">for</span> k = 1:2,  a0 = tw(k).a;
+    [tt, at] = ksfmstp(a0, L, h, nstp, 1);  [x, ut] = ksfm2real(at, L);
+    subplot(2,1,k);
+    pcolor(tt,x,ut); shading <span class="string">interp</span>; caxis([-3 3]);
+    title([<span class="string">'Travelling wave '</span> num2str(k)]);
+  <span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="KSEproject_07.png"> <h2>Plotting unstable manifolds of equilibria<a name="8"></a></h2>
+         <p>Here's an example of how to visualize the unstable manifold of Equilibrium 2 in the state subspace spanned by selected eigenvectors.</p>
+         <p>Equilibrum 2 has a pair of complex conjugate eigenvalues:</p>
+         <p><img vspace="5" hspace="5" src="KSEproject_eq88535.png"> </p>
+         <p>An orbit starting close to the equilibrium will spiral out with a period</p>
+         <p><img vspace="5" hspace="5" src="KSEproject_eq5530.png"> </p>
+         <p>In order to trace out the unstable manifold, we start with a set of initial conditions</p>
+         <p><img vspace="5" hspace="5" src="KSEproject_eq190282.png"> </p>
+         <p>where v_1 is a unit vector parallel to the real part of the unstable eigenvector.</p>
+         <p>Coordinate axes (v_1,v_2,v_3) are constructed by Gram-Schmidt orhonormalization of (Re e_1, Im e_1, Re e_7), where e_j are
+            the eigenvectors of the 2-wave equilibrium.
+         </p><pre class="codeinput">  clear; load <span class="string">ks22equilibria</span>;  k = 2;  h = 0.1;  tend = 150;  av = [];
+  ere = real(eq(k).eig(1));  period = 2*pi/imag(eq(k).eig(1));
+  v = gsorth([real(eq(k).evec(:,1)) imag(eq(k).evec(:,1)) real(eq(k).evec(:,7))]);
+  <span class="keyword">for</span> delta = [0:0.1:ere*period 2.7 0.24 0.254],
+    a0 = eq(k).a + 1e-4.*exp(delta).*v(:,2);
+    [tt, at] = ksfmstp(a0, L, h, tend/h, 2); av = [av; v'*at];
+    <span class="keyword">if</span> delta == 2.7, at1 = at; <span class="keyword">end</span>
+    <span class="keyword">if</span> delta == 0.24, at2 = at; <span class="keyword">end</span>
+  <span class="keyword">end</span>,
+  fig7 = figure(<span class="string">'pos'</span>,[100 200 700 700],<span class="string">'color'</span>,<span class="string">'w'</span>);
+  ax1 = axes(<span class="string">'pos'</span>,[0.2 0.46 0.63 0.52]);
+    plot3(av(1:3:end-8,:)',av(2:3:end-7,:)',av(3:3:end-6,:)',<span class="string">'k-'</span>);
+    hold <span class="string">on</span>; grid <span class="string">on</span>; axis <span class="string">equal</span>; view(10,20);
+    plot3(av(end-8,:)',av(end-7,:)',av(end-6,:)',<span class="string">'b.-'</span>);
+    plot3(av(end-5,:)',av(end-4,:)',av(end-3,:)',<span class="string">'r.-'</span>);
+    plot3(av(end-2,:)',av(end-1,:)',av(end,:)',<span class="string">'.-'</span>,<span class="string">'color'</span>,[0 .8 0]);
+    xlabel(<span class="string">'v_1'</span>); ylabel(<span class="string">'v_2'</span>); zlabel(<span class="string">'v_3'</span>,<span class="string">'rotat'</span>,0);
+  ax2 = axes(<span class="string">'pos'</span>,[0.10 0.06 0.20 0.30]);
+    [x, uu] = ksfm2real(at1, L); pcolor(x,tt,uu'); caxis([-3 3]);
+    shading <span class="string">flat</span>; xlabel(<span class="string">'x'</span>); ylabel(<span class="string">'t'</span>,<span class="string">'rotat'</span>,0);
+    ht = title(<span class="string">'Blue orbit'</span>);  set(ht,<span class="string">'color'</span>,<span class="string">'b'</span>,<span class="string">'fontsize'</span>,15);
+  ax3 = axes(<span class="string">'pos'</span>,[0.40 0.06 0.20 0.30]);
+    [x, uu] = ksfm2real(at2, L); pcolor(x,tt,uu'); caxis([-3 3]);
+    shading <span class="string">flat</span>; xlabel(<span class="string">'x'</span>); ylabel(<span class="string">'t'</span>,<span class="string">'rotat'</span>,0);
+    ht = title(<span class="string">'Red orbit'</span>);  set(ht,<span class="string">'color'</span>,<span class="string">'r'</span>,<span class="string">'fontsize'</span>,15);
+  ax4 = axes(<span class="string">'pos'</span>,[0.70 0.06 0.20 0.30]);
+    [x, uu] = ksfm2real(at, L);  pcolor(x,tt,uu'); caxis([-3 3]);
+    shading <span class="string">flat</span>; xlabel(<span class="string">'x'</span>); ylabel(<span class="string">'t'</span>,<span class="string">'rotat'</span>,0);
+    ht = title(<span class="string">'Green orbit'</span>);  set(ht,<span class="string">'color'</span>,[0 .8 0],<span class="string">'fontsize'</span>,15);
+</pre><img vspace="5" hspace="5" src="KSEproject_08.png"> <p class="footer"><br>
             Published with MATLAB&reg; 7.2<br></p>
       </div>
       <!--
@@ -146,7 +223,8 @@ p.footer {
 % The same solution can be viewed in real space by transforming the
 % solution using function |ksfm2real.m|:
   [x, ut] = ksfm2real(at, L);
-  fig2 = figure('pos',[5 270 600 200],'color','w'); pcolor(tt,x,ut); shading interp;
+  fig2 = figure('pos',[5 270 600 200],'color','w');
+  pcolor(tt,x,ut); shading interp; caxis([-3 3]);
   title('Solution of Kuramoto-Sivashinsky equation with L = 22: Real space');
   xlabel('Time'); ylabel('x','rotat',0);
   
@@ -172,12 +250,110 @@ p.footer {
   fig4 = figure('pos',[500 100 600 800],'color','w');
   for ii = 1:length(LL);
     [tt, at] = ksfmstp(a0, LL(ii), h, nstp, 1);
-    [x, ut] = ksfm2real(at, L);
+    [x, ut] = ksfm2real(at, LL(ii));
     subplot(length(LL),1,ii);
-    pcolor(tt,x,ut); shading interp;
+    pcolor(tt,x,ut); shading interp; caxis([-3 3]);
     title(['L = ' num2str(LL(ii))]);
   end
-    
+
+%% The equilibria and travelling waves of KS equation with L = 22
+% File |ks22equilibria| contains information about equilibria and
+% travelling waves of KS equation with L = 22.  The data are organized as
+% arrays of structures: |eq| for equilibria and |tw| for travelling waves:
+%  
+% |eq(k).a| - coordinates of equilibria in Fourier space, 
+% |k = 1,2,3| (there are three equilibria).
+%
+% |eq(k).eig| - eigenvalues of the Jacobian of the flow at equilibria
+%
+% |eq(k).evec| - corresponding eigenvectors 
+%
+% |tw(k).a| - coordinates of travelling waves in Fourier space, k = 1,2
+%
+% |tw(k).c| - speeds of the travelling waves
+% 
+% |tw(k).eig| and |tw(k).evec| - as for equilibria, except that the Jacobian 
+% is calculated in the frame travelling with the wave (with speed |c|).
+%
+% Here we plot evolution of solutions starting at equilibria.  Since the
+% equilibria are unstable and the initial conditions contain round-off
+% errors, the solutions eventually move away from the equilibria.
+  load ks22equilibria;  h = 0.25; nstp = 2000; 
+  fig5 = figure('pos',[700 200 600 600],'color','w');
+  for k = 1:3,  a0 = eq(k).a;
+    [tt, at] = ksfmstp(a0, L, h, nstp, 2); [x, ut] = ksfm2real(at, L);
+    subplot(3,1,k); 
+    pcolor(tt,x,ut); shading interp; caxis([-3 3]);
+    title(['Equilibrium ' num2str(k)]);
+  end
+%%
+% Solutions starting from the travelling waves can be plotted in a similar
+% way.
+  nstp = 400;
+  fig5 = figure('pos',[700 200 600 400],'color','w');
+  for k = 1:2,  a0 = tw(k).a;
+    [tt, at] = ksfmstp(a0, L, h, nstp, 1);  [x, ut] = ksfm2real(at, L);
+    subplot(2,1,k); 
+    pcolor(tt,x,ut); shading interp; caxis([-3 3]);
+    title(['Travelling wave ' num2str(k)]);
+  end
+
+%% Plotting unstable manifolds of equilibria
+% Here's an example of how to visualize the unstable manifold of
+% Equilibrium 2 in the state subspace spanned by selected 
+% eigenvectors.
+%
+% Equilibrum 2 has a pair of complex conjugate eigenvalues:
+%
+% $$ \lambda = \sigma \pm \mathrm{i}\omega, \quad \sigma > 0. $$
+%
+% An orbit starting close to the equilibrium will spiral out with a period
+%
+% $$ T = 2\pi/\omega. $$
+%
+% In order to trace out the unstable manifold, we start with a set of
+% initial conditions
+%
+% $$a = a_{E_2} + 10^{-4}\mathrm{e}^\delta v_1, \quad
+%   \delta \in [0, \sigma T],$$
+%
+% where v_1 is a unit vector parallel to the real part of the unstable
+% eigenvector.
+%
+% Coordinate axes (v_1,v_2,v_3) are constructed by Gram-Schmidt
+% orhonormalization of (Re e_1, Im e_1, Re e_7), where e_j are the
+% eigenvectors of the 2-wave equilibrium.
+  clear; load ks22equilibria;  k = 2;  h = 0.1;  tend = 150;  av = [];
+  ere = real(eq(k).eig(1));  period = 2*pi/imag(eq(k).eig(1));
+  v = gsorth([real(eq(k).evec(:,1)) imag(eq(k).evec(:,1)) real(eq(k).evec(:,7))]);
+  for delta = [0:0.1:ere*period 2.7 0.24 0.254],
+    a0 = eq(k).a + 1e-4.*exp(delta).*v(:,2);
+    [tt, at] = ksfmstp(a0, L, h, tend/h, 2); av = [av; v'*at];
+    if delta == 2.7, at1 = at; end
+    if delta == 0.24, at2 = at; end
+  end,
+  fig7 = figure('pos',[100 200 700 700],'color','w');
+  ax1 = axes('pos',[0.2 0.46 0.63 0.52]);
+    plot3(av(1:3:end-8,:)',av(2:3:end-7,:)',av(3:3:end-6,:)','k-');
+    hold on; grid on; axis equal; view(10,20);
+    plot3(av(end-8,:)',av(end-7,:)',av(end-6,:)','b.-');
+    plot3(av(end-5,:)',av(end-4,:)',av(end-3,:)','r.-');
+    plot3(av(end-2,:)',av(end-1,:)',av(end,:)','.-','color',[0 .8 0]);
+    xlabel('v_1'); ylabel('v_2'); zlabel('v_3','rotat',0);
+  ax2 = axes('pos',[0.10 0.06 0.20 0.30]);
+    [x, uu] = ksfm2real(at1, L); pcolor(x,tt,uu'); caxis([-3 3]);
+    shading flat; xlabel('x'); ylabel('t','rotat',0);
+    ht = title('Blue orbit');  set(ht,'color','b','fontsize',15);
+  ax3 = axes('pos',[0.40 0.06 0.20 0.30]);
+    [x, uu] = ksfm2real(at2, L); pcolor(x,tt,uu'); caxis([-3 3]);
+    shading flat; xlabel('x'); ylabel('t','rotat',0);
+    ht = title('Red orbit');  set(ht,'color','r','fontsize',15);
+  ax4 = axes('pos',[0.70 0.06 0.20 0.30]);
+    [x, uu] = ksfm2real(at, L);  pcolor(x,tt,uu'); caxis([-3 3]);
+    shading flat; xlabel('x'); ylabel('t','rotat',0);
+    ht = title('Green orbit');  set(ht,'color',[0 .8 0],'fontsize',15);
+
+
 ##### SOURCE END #####
 -->
    </body>
