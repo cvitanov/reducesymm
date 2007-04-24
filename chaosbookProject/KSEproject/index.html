@@ -82,9 +82,9 @@ p.footer {
                <li><a href="#8">Plotting unstable manifolds of equilibria</a></li>
             </ul>
          </div>
-         <p><img vspace="5" hspace="5" src="KSEproject_eq88110.png"> </p>
+         <p><img vspace="5" hspace="5" src="figs/KSEproject_eq88110.png"> </p>
          <p>with periodic boundary condition:</p>
-         <p><img vspace="5" hspace="5" src="KSEproject_eq6654.png"> </p>
+         <p><img vspace="5" hspace="5" src="figs/KSEproject_eq6654.png"> </p>
          <p>The solutions depend on the parameter <i>L</i>.
          </p>
          <p>Matlab function <tt>ksfmstp.m</tt> can be used to find numerical solution of the Kuramoto-Sivashinsky equation using Exponential Time Difference Runge-Kutta
@@ -95,23 +95,23 @@ p.footer {
   fig1 = figure(<span class="string">'pos'</span>,[5 550 600 400],<span class="string">'color'</span>,<span class="string">'w'</span>); plot(tt,at,<span class="string">'.-'</span>);
   title(<span class="string">'Solution of Kuramoto-Sivashinsky equation with L = 22: Fourier modes'</span>);
   xlabel(<span class="string">'Time'</span>); ylabel(<span class="string">'Fourier modes'</span>);
-</pre><img vspace="5" hspace="5" src="KSEproject_01.png"> <p>The same solution can be viewed in real space by transforming the solution using function <tt>ksfm2real.m</tt>:
+</pre><img vspace="5" hspace="5" src="figs/KSEproject_01.png"> <p>The same solution can be viewed in real space by transforming the solution using function <tt>ksfm2real.m</tt>:
          </p><pre class="codeinput">  [x, ut] = ksfm2real(at, L);
   fig2 = figure(<span class="string">'pos'</span>,[5 270 600 200],<span class="string">'color'</span>,<span class="string">'w'</span>);
   pcolor(tt,x,ut); shading <span class="string">interp</span>; caxis([-3 3]);
   title(<span class="string">'Solution of Kuramoto-Sivashinsky equation with L = 22: Real space'</span>);
   xlabel(<span class="string">'Time'</span>); ylabel(<span class="string">'x'</span>,<span class="string">'rotat'</span>,0);
-</pre><img vspace="5" hspace="5" src="KSEproject_02.png"> <p>The solution can be also viewed in the 'state subspace', spanned by selected eigenvectors of one of the equilibrium points</p><pre class="codeinput">  load(<span class="string">'ks22statespace'</span>,<span class="string">'v'</span>);  <span class="comment">% v - subspace orthonormal vectors</span>
+</pre><img vspace="5" hspace="5" src="figs/KSEproject_02.png"> <p>The solution can be also viewed in the 'state subspace', spanned by selected eigenvectors of one of the equilibrium points</p><pre class="codeinput">  load(<span class="string">'ks22statespace'</span>,<span class="string">'v'</span>);  <span class="comment">% v - subspace orthonormal vectors</span>
   av = v'*at;  <span class="comment">% projection of solution onto the subspace</span>
   fig3 = figure(<span class="string">'pos'</span>,[610 450 500 500],<span class="string">'color'</span>,<span class="string">'w'</span>);
   plot3(av(1,:),av(2,:),av(3,:),<span class="string">'b.-'</span>); grid <span class="string">on</span>;
   xlabel(<span class="string">'v_1'</span>); ylabel(<span class="string">'v_2'</span>); zlabel(<span class="string">'v_3'</span>,<span class="string">'rotat'</span>,0); view(-75,15);
-</pre><img vspace="5" hspace="5" src="KSEproject_03.png"> <h2>Sensitive dependence on initial condition<a name="4"></a></h2>
+</pre><img vspace="5" hspace="5" src="figs/KSEproject_03.png"> <h2>Sensitive dependence on initial condition<a name="4"></a></h2>
          <p>Start another solution with the nearby initial condition and see how it diverges from the first one.</p><pre class="codeinput">  a1 = a0;  a1(1) = a1(1) + 1e-3;
   [tt, at1] = ksfmstp(a1, L, h, nstp, 1);  av1 = v'*at1;
   figure(fig3); hold <span class="string">on</span>;
   plot3(av1(1,:),av1(2,:),av1(3,:),<span class="string">'r.-'</span>);
-</pre><img vspace="5" hspace="5" src="KSEproject_04.png"> <h2>Dependence of KS solutions on L<a name="5"></a></h2><pre class="codeinput">  LL = [10 12 16 22 24];
+</pre><img vspace="5" hspace="5" src="figs/KSEproject_04.png"> <h2>Dependence of KS solutions on L<a name="5"></a></h2><pre class="codeinput">  LL = [10 12 16 22 24];
   fig4 = figure(<span class="string">'pos'</span>,[500 100 600 800],<span class="string">'color'</span>,<span class="string">'w'</span>);
   <span class="keyword">for</span> ii = 1:length(LL);
     [tt, at] = ksfmstp(a0, LL(ii), h, nstp, 1);
@@ -120,7 +120,7 @@ p.footer {
     pcolor(tt,x,ut); shading <span class="string">interp</span>; caxis([-3 3]);
     title([<span class="string">'L = '</span> num2str(LL(ii))]);
   <span class="keyword">end</span>
-</pre><img vspace="5" hspace="5" src="KSEproject_05.png"> <h2>The equilibria and travelling waves of KS equation with L = 22<a name="6"></a></h2>
+</pre><img vspace="5" hspace="5" src="figs/KSEproject_05.png"> <h2>The equilibria and travelling waves of KS equation with L = 22<a name="6"></a></h2>
          <p>File <tt>ks22equilibria</tt> contains information about equilibria and travelling waves of KS equation with L = 22.  The data are organized as arrays
             of structures: <tt>eq</tt> for equilibria and <tt>tw</tt> for travelling waves:
          </p>
@@ -146,7 +146,7 @@ p.footer {
     pcolor(tt,x,ut); shading <span class="string">interp</span>; caxis([-3 3]);
     title([<span class="string">'Equilibrium '</span> num2str(k)]);
   <span class="keyword">end</span>
-</pre><img vspace="5" hspace="5" src="KSEproject_06.png"> <p>Solutions starting from the travelling waves can be plotted in a similar way.</p><pre class="codeinput">  nstp = 400;
+</pre><img vspace="5" hspace="5" src="figs/KSEproject_06.png"> <p>Solutions starting from the travelling waves can be plotted in a similar way.</p><pre class="codeinput">  nstp = 400;
   fig5 = figure(<span class="string">'pos'</span>,[700 200 600 400],<span class="string">'color'</span>,<span class="string">'w'</span>);
   <span class="keyword">for</span> k = 1:2,  a0 = tw(k).a;
     [tt, at] = ksfmstp(a0, L, h, nstp, 1);  [x, ut] = ksfm2real(at, L);
@@ -154,14 +154,14 @@ p.footer {
     pcolor(tt,x,ut); shading <span class="string">interp</span>; caxis([-3 3]);
     title([<span class="string">'Travelling wave '</span> num2str(k)]);
   <span class="keyword">end</span>
-</pre><img vspace="5" hspace="5" src="KSEproject_07.png"> <h2>Plotting unstable manifolds of equilibria<a name="8"></a></h2>
+</pre><img vspace="5" hspace="5" src="figs/KSEproject_07.png"> <h2>Plotting unstable manifolds of equilibria<a name="8"></a></h2>
          <p>Here's an example of how to visualize the unstable manifold of Equilibrium 2 in the state subspace spanned by selected eigenvectors.</p>
          <p>Equilibrum 2 has a pair of complex conjugate eigenvalues:</p>
-         <p><img vspace="5" hspace="5" src="KSEproject_eq88535.png"> </p>
+         <p><img vspace="5" hspace="5" src="figs/KSEproject_eq88535.png"> </p>
          <p>An orbit starting close to the equilibrium will spiral out with a period</p>
-         <p><img vspace="5" hspace="5" src="KSEproject_eq5530.png"> </p>
+         <p><img vspace="5" hspace="5" src="figs/KSEproject_eq5530.png"> </p>
          <p>In order to trace out the unstable manifold, we start with a set of initial conditions</p>
-         <p><img vspace="5" hspace="5" src="KSEproject_eq190282.png"> </p>
+         <p><img vspace="5" hspace="5" src="figs/KSEproject_eq190282.png"> </p>
          <p>where v_1 is a unit vector parallel to the real part of the unstable eigenvector.</p>
          <p>Coordinate axes (v_1,v_2,v_3) are constructed by Gram-Schmidt orhonormalization of (Re e_1, Im e_1, Re e_7), where e_j are
             the eigenvectors of the 2-wave equilibrium.
@@ -194,7 +194,7 @@ p.footer {
     [x, uu] = ksfm2real(at, L);  pcolor(x,tt,uu'); caxis([-3 3]);
     shading <span class="string">flat</span>; xlabel(<span class="string">'x'</span>); ylabel(<span class="string">'t'</span>,<span class="string">'rotat'</span>,0);
     ht = title(<span class="string">'Green orbit'</span>);  set(ht,<span class="string">'color'</span>,[0 .8 0],<span class="string">'fontsize'</span>,15);
-</pre><img vspace="5" hspace="5" src="KSEproject_08.png"> <p class="footer"><br>
+</pre><img vspace="5" hspace="5" src="figs/KSEproject_08.png"> <p class="footer"><br>
             Published with MATLAB&reg; 7.2<br></p>
       </div>
       <!--
