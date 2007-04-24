@@ -32,6 +32,8 @@ uSpatial[u_,L_]:=Module[{ux,uxx,dx,d},d=Dimensions[u][[1]];
 
 \!\(uDer[u_, n_, L_] := Module[{a, d}, \[IndentingNewLine]d = \(Dimensions[u]\)[\([1]\)]; a = Fourier[u, fp]; Do[a[\([k + 1]\)] = \(\((\(-2\) \[Pi]\ I\ k/L)\)\^n\) a[\([k + 1]\)], {k, 0, d/2}]; Do[a[\([d + 1 - k]\)] = Conjugate[a[\([1 + k]\)]], {k, 1, d/2 - 1}]\ ; \ Chop[InverseFourier[a, fp], 10^\(-10\)]]\)
 
+uClose[u_]:=Append[u,u[[1]] ]
+
 uAntiSym[u_]:=
   Module[{uAnt,i,d},d=Dimensions[u][[1]];uAnt=Table[0,{d}];uAnt[[1]]=-u[[1]];
     Do[uAnt[[i+1]]=-u[[d+1-i]],{i,1,d-1}];uAnt]
