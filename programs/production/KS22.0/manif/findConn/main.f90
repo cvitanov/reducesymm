@@ -113,7 +113,7 @@ print *,"dot",dot_product(VR2(:,120),VR(:,127))
 print *,"dot",dot_product(VR2(:,125),VR(:,123))
 
 stbl_dir=122
-unst_dir=126
+unst_dir=127
 
 tf=real(Nrep,dp)*TWOPI_D/aimag(w(unst_dir))
 ti=0.0_dp
