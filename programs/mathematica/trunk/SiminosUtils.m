@@ -32,6 +32,13 @@ uSpatial[u_,L_]:=Module[{ux,uxx,dx,d},d=Dimensions[u][[1]];
 
 \!\(uDer[u_, n_, L_] := Module[{a, d}, \[IndentingNewLine]d = \(Dimensions[u]\)[\([1]\)]; a = Fourier[u, fp]; Do[a[\([k + 1]\)] = \(\((\(-2\) \[Pi]\ I\ k/L)\)\^n\) a[\([k + 1]\)], {k, 0, d/2}]; Do[a[\([d + 1 - k]\)] = Conjugate[a[\([1 + k]\)]], {k, 1, d/2 - 1}]\ ; \ Chop[InverseFourier[a, fp], 10^\(-10\)]]\)
 
+uShiftF[u_,sh_,L_]:=Module[{a,d},d=Dimensions[u][[1]];a=Fourier[u,fp];
+    Do[a[[k+1]]=Exp[-2 \[Pi] sh I k/L]a[[k+1]],{k,1,d/2+1}];
+    Do[a[[d+1-k]]=Conjugate[a[[1+k]]],{k,1,d/2-1}];
+    Chop[InverseFourier[a,fp],10^-10]]
+
+uShiftFTraj[traj_,sh_,L_]:=Map[uShiftF[#,sh,L]&,traj,{1}];
+
 uClose[u_]:=Append[u,u[[1]] ]
 
 uAntiSym[u_]:=
@@ -87,3 +94,8 @@ coords[a_,b_]:={cInner[a,b[[1]]],cInner[a,b[[2]]],cInner[a,b[[3]]]}//Chop
 fourTraj[traj_]:=Map[Fourier[#,fp]&,traj,{1}];
 
 coordsTraj[traj_,b_]:=Map[coords[#,b]&,traj,{1}];
+
+UnsortedUnion[x_List]:=
+  Module[{len=Length[x],tmp},
+    tmp=Split[Sort[Transpose[{x,Range[len]}]],(#1[[1]]===#2[[1]]&)][[All,1]];
+    Sort[Transpose[RotateLeft[Transpose[tmp]]]][[All,2]]]

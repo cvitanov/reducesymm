@@ -41,9 +41,9 @@ Wolfram Research.
 
 (*NotebookFileLineBreakTest
 NotebookFileLineBreakTest*)
-(*NotebookOptionsPosition[      7415,        203]*)
-(*NotebookOutlinePosition[      8077,        226]*)
-(*  CellTagsIndexPosition[      8033,        222]*)
+(*NotebookOptionsPosition[      8404,        230]*)
+(*NotebookOutlinePosition[      9066,        253]*)
+(*  CellTagsIndexPosition[      9022,        249]*)
 (*WindowFrame->Normal*)
 
 
@@ -91,6 +91,22 @@ Cell[BoxData[
         Do[a[\([d + 1 - k]\)] = Conjugate[a[\([1 + k]\)]], {k, 1, 
             d/2 - 1}]\ ; \ 
         Chop[InverseFourier[a, fp], 10^\(-10\)]]\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(uShiftF[u_, sh_, L_] := 
+      Module[{a, d}, d = \(Dimensions[u]\)[\([1]\)]; 
+        a = Fourier[u, fp]; \[IndentingNewLine]Do[
+          a[\([k + 1]\)] = Exp[\(-2\)\ \[Pi]\ sh\ I\ k/L] a[\([k + 1]\)], {k, 
+            1, d/2 + 1}]; \[IndentingNewLine]Do[
+          a[\([d + 1 - k]\)] = Conjugate[a[\([1 + k]\)]], {k, 1, 
+            d/2 - 1}]; \[IndentingNewLine]Chop[InverseFourier[a, fp], 
+          10^\(-10\)]]\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(uShiftFTraj[traj_, sh_, L_] := 
+        Map[uShiftF[#, sh, L] &, traj, {1}];\)\)], "Input",
   InitializationCell->True],
 
 Cell[BoxData[
@@ -199,6 +215,17 @@ Cell[BoxData[
 Cell[BoxData[
     \(\(coordsTraj[traj_, b_] := Map[coords[#, b] &, traj, {1}];\)\)], "Input",\
 
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(UnsortedUnion[x_List] := 
+      Module[{len = Length[x], tmp}, 
+        tmp = \(Split[
+              Sort[Transpose[{x, 
+                    Range[len]}]], \((#1[\([1]\)] === #2[\([1]\)] \
+&)\)]\)[\([All, 1]\)]; \(Sort[
+            Transpose[RotateLeft[Transpose[tmp]]]]\)[\([All, 
+            2]\)]]\)], "Input",
   InitializationCell->True]
 },
 FrontEndVersion->"5.0 for X",
@@ -235,29 +262,35 @@ Cell[2199, 68, 711, 14, 123, "Input",
   InitializationCell->True],
 Cell[2913, 84, 435, 9, 91, "Input",
   InitializationCell->True],
-Cell[3351, 95, 98, 2, 27, "Input",
+Cell[3351, 95, 478, 9, 91, "Input",
   InitializationCell->True],
-Cell[3452, 99, 318, 7, 59, "Input",
+Cell[3832, 106, 141, 3, 27, "Input",
   InitializationCell->True],
-Cell[3773, 108, 213, 5, 43, "Input",
+Cell[3976, 111, 98, 2, 27, "Input",
   InitializationCell->True],
-Cell[3989, 115, 291, 6, 59, "Input",
+Cell[4077, 115, 318, 7, 59, "Input",
   InitializationCell->True],
-Cell[4283, 123, 280, 6, 59, "Input",
+Cell[4398, 124, 213, 5, 43, "Input",
   InitializationCell->True],
-Cell[4566, 131, 237, 6, 59, "Input",
+Cell[4614, 131, 291, 6, 59, "Input",
   InitializationCell->True],
-Cell[4806, 139, 1612, 29, 299, "Input",
+Cell[4908, 139, 280, 6, 59, "Input",
   InitializationCell->True],
-Cell[6421, 170, 462, 12, 75, "Input",
+Cell[5191, 147, 237, 6, 59, "Input",
   InitializationCell->True],
-Cell[6886, 184, 100, 2, 27, "Input",
+Cell[5431, 155, 1612, 29, 299, "Input",
   InitializationCell->True],
-Cell[6989, 188, 176, 4, 43, "Input",
+Cell[7046, 186, 462, 12, 75, "Input",
   InitializationCell->True],
-Cell[7168, 194, 117, 2, 27, "Input",
+Cell[7511, 200, 100, 2, 27, "Input",
   InitializationCell->True],
-Cell[7288, 198, 123, 3, 27, "Input",
+Cell[7614, 204, 176, 4, 43, "Input",
+  InitializationCell->True],
+Cell[7793, 210, 117, 2, 27, "Input",
+  InitializationCell->True],
+Cell[7913, 214, 123, 3, 27, "Input",
+  InitializationCell->True],
+Cell[8039, 219, 361, 9, 75, "Input",
   InitializationCell->True]
 }
 ]
