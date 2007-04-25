@@ -12,11 +12,16 @@ is in
 source for
 	rpo_ks/figs/ks22TurbConn_xfig.eps
 is in	
-	programs/production/ks22.0/rpo/
+	programs/production/KS22.0/rpo/
 	use plotEnergyRPO.nb and convert to .fig with:
 	pstoedit -f xfig -usebbfrominput -adt ks22TurbConn.eps ks22TurbConn.fig
 	Edited in xfig and exported in .eps format.
-	
+source for
+	rpo_ks/figs/*wKS22equil.eps
+is in
+	programs/production/KS22.0/equil/
+	file: plotProfile.nb
+	use pstoedit to convert to .fig and then export to .eps	
 
 Processing
 ----------
