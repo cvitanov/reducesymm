@@ -8,8 +8,8 @@
 % Spatial grid and initial condition:
   N = 128;
   x = 32*pi*(1:N)'/N;
-  u = cos(x/16).*(1+sin(x/16));
-%  u = 0.1*randn(size(x));  % or a random initial condition - RLD
+%  u = cos(x/16).*(1+sin(x/16));
+  u = 0.1*randn(size(x));  % or a random initial condition - RLD
   v = fft(u);
   
 % Precompute various ETDRK4 scalar quantities:

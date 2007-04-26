@@ -6,11 +6,13 @@
 % AK Kassam and LN Trefethen, July 2002
 
 % Spatial grid and initial condition:
-  N = 64;  d = 50;
+  N = 128;  d = 71;
   x = d*(1:N)'/N;
 %  u = cos(x/16).*(1+sin(x/16));
-  u = 0.1*randn(N,1);  % or a random initial condition - RLD
-  v = fft(u);
+%  u = 0.1*randn(N,1);  % or a random initial condition - RLD
+%  v = fft(u); v(1) = 0; v(N/2+1) = 0;
+  a0 = zeros(N-2,1); randn('seed',22000000);  a0(1:10) = 0.2*randn(10,1);
+  v = [0; a0(1:2:end-1)+1i*a0(2:2:end); 0; a0(end-1:-2:1)-1i*a0(end:-2:2)];
   
 % Precompute various ETDRK4 scalar quantities:
   h = 1/4;                            % time step
@@ -28,7 +30,7 @@
 % Main time-stepping loop:
   uu = u; tt = 0;
   tmax = 300; nmax = round(tmax/h); nplt = floor((tmax/100)/h);
-  g = -0.5i*k;
+  g = 0.5i*k;
   for n = 1:nmax,
     t = n*h;
     Nv = g.*fft(real(ifft(v)).^2);
