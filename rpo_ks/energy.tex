@@ -6,17 +6,24 @@
 \subsection{Energy budget} % of the \KSe}
 \label{sec:energy}
 
-% Predrag                   mar 13 2007
-\PC{
-from bounds on energy, we might be able
-to bound the number of equilibria as function of systems size $L$, and thus
-be sure we have them all.
-   }
-%
+In physical settings where the observation times are much longer
+than the dynamical ``turnover" and Lyapunov times (statistical mechanics,
+quantum physics, turbulence) nonlinear dynamics provides 
+\cite{DasBuch} highly accurate predictions of measurable
+long-time averages such as the turbulent drag\cite{GHCW07}.
+
+Physical predictions have to be independent of the choice of
+basis in which the PDE is represented as an infinite tower of
+ODEs - and - most importanly - of any symmetry of the problem.
+In this section we discuss and compute
+a set of such physical observables for
+the  1$D$ KS invariant under reflections and translations.
+
 The {space average} of a function $\obser = \obser(\pSpace,t)$  on
 the interval $L$,
 \beq
-    \expct{\obser} = \frac{1}{L}\int_0^{L} d\pSpace\, \obser(\pSpace,t)
+    \expct{\obser} = \Lint{\pSpace}\, \obser(\pSpace,t)
+    % \expct{\obser} = \frac{1}{L}\int_0^{L} d\pSpace\, \obser(\pSpace,t)
     \,,
     \label{rpo:spac_ave}
 \eeq
@@ -79,16 +86,22 @@ the Navier-Stokes will be useful in what follows.
 \PC{bit weird: can use Galilean invariance to
     set $\expctE=0$ for any given $u(x,t)$?}
 
-The energy \refeq{ksEnergy}
-is also the quadratic norm in the Fourier space,
+The energy \refeq{ksEnergy} is intrinsic to
+the flow, independent of the particular ODE basis set 
+chosen to represent the PDE. However, as the Fourier
+amplitudes are eigenvectors of the translation operator,
+in the Fourier space the energy is a diagonalized
+quadratic norm,
 \beq
 \expctE   % = (u,u) 
           = \sum_{k=1}^{\infty} E_k
 \,,\qquad
 E_k = % a_{-k} a_k =
     {\textstyle\frac{1}{2}}|a_k|^2
-\,.
+\,,
 \ee{EFourier}
+and explicitely invariant term by term 
+under translations \refeq{eq:RPO}.
 
 Take time derivative of the energy density \refeq{ksEnergy},
 substitute \refeq{ks} and integrate by parts. Total derivatives vanish
@@ -122,32 +135,29 @@ and integrating the third term by parts yet again we get
 that the energy variation
 % \PC{this is ``power", nicht war?}
 \beq
-   \dot{\expctE} =
-      \expct{(u_{x})^2} - \expct{(u_{xx})^2}
+   \dot{\expctE} = P - D
+		\,,\qquad
+      P =  \expct{(u_{x})^2}
+		\,,\quad
+      D =  \expct{(u_{xx})^2}
 \ee{EnRate}
-balances the KS equation \refeq{ks} power pumped in by the anti-diffusion
-$u_{xx}$
-against energy dissipated by the hypervicosity $u_{xxxx}$ \rf{ksgreene88}.
+balances the KS equation \refeq{ks} power $P$
+pumped in by the anti-diffusion $u_{xx}$
+against energy dissipation rate $D$
+by the hypervicosity $u_{xxxx}$ \rf{ksgreene88}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[t] 
 \begin{center}
-    \includegraphics[width=\textwidth]{figs/energyBalancePlot.eps}
+    \includegraphics[width=0.8\textwidth]{figs/energyBalancePlot.eps}
 \end{center}
 \caption{
-Power input $\expct{(u_{x})^2}$ vs.
-dissipation $\expct{(u_{xx})^2}$ for $L=22$ \eqva\
+Power input $P$ vs.
+dissipation rate $D$ for $L=22$ \eqva\
 and \reqva, for several
 % \ESedit{(two, more in the way!)}
 \po s and \rpo s, and for a typical ``turbulent"
-state. Note that $\timeAver{(u_{p,x})^2}$
-of the
-$(\period{p},\shift_p) =(32.8,10.96)$
- {\rpo}, \reffig{f:ks22rposShort}(c), which appears well embedded
-within the turbulent state, is close to the turbulent
-expectation $\timeAver{(u_x)^2}$
-\PCedit{[temporary Japanese heresy]}.
-        }
+state.
 \label{f:drivedrag}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -164,8 +174,8 @@ from $A(L/4)\EQV{1}$ to \EQV{1} (yellow-green)
 and from \EQV{3} to $A(L/4)\EQV{1}$ (blue), along
 with a generic long-time ``turbulent" evolution (grey) for $L=22$. 
 Three different projections of the 
-$(E,\, \expct{(u_{x})^2},\, \expct{(u_{xx})^2})-\expct{(u_{x})^2})$
-representation are shown.
+$(E,P,D-P)$
+representation.
         }
 \label{f:drivedragConn}
 \end{figure}
@@ -174,12 +184,18 @@ representation are shown.
 \PC{
  Implementing Ruslan: all axes in \reffig{f:drivedragConn} changed by a factor
 of 4?
+	\\
+Implementing Predrag: 
+label axes in \reffig{f:drivedrag}, \reffig{f:drivedragConn}
+by $(E,P,D)$
     }
 \PC{ks22TurbConn2\_xfig.eps for \reffig{f:drivedragConn}
-    not checked in?}
+    not checked in?
+   }
 In \reffig{f:drivedrag}
-we plot the power input $\expct{(u_{x})^2}$ vs.
-dissipation $\expct{(u_{xx})^2}$ for all $L=22$ \eqva\ and
+we plot the power input $P$ {\em vs.} %$\expct{(u_{x})^2}$ vs.
+dissipation rate $D$ %$\expct{(u_{xx})^2}$
+for all $L=22$ \eqva\ and
 \reqva\ \PCedit{determined so far},
 several \po s and \rpo s, and for a typical ``turbulent"
 evolution.
@@ -212,7 +228,7 @@ evolution.
 %    presumably off the diagonal
 %   }
 \PC{believe it or not, we are now set to compute
-    $\timeAver{u^2}$ and $\timeAver{(u_x)^2}$
+    $\timeAver{E}$ and $\timeAver{P}$
     using cycle expansions
     }
 The time averaged energy density  $\timeAver{E}$
@@ -224,24 +240,29 @@ exactly balance each out:
     \lim_{t\rightarrow \infty}
         {1\over t} \int_0^t d\tau \, \dot{\expctE}
 =
-      \timeAver{(u_{x})^2} - \timeAver{(u_{xx})^2}
+      \timeAver{P} - \timeAver{D}
+%       \timeAver{(u_{x})^2} - \timeAver{(u_{xx})^2}
 = 0
     \,.
 \ee{rpo:EtimAve}
 In particular, the \eqva\
 and \reqva\ sit on the diagonal in \reffig{f:drivedrag},
 and so do time averages computed on \po s and \rpo s:
-\bea
-\timeAver{E}_p &=&
-{1\over \period{p}} \int_0^\period{p}d\tau \, \expctE(\tau)
-    \continue
-\timeAver{(u_{x})^2}_p &=&
-{1\over \period{p}} \int_0^\period{p} d\tau \, \expct{(u_{x})^2}
+\beq
+\timeAver{E}_p =
+{1\over \period{p}} \int_0^\period{p}d\tau \, E(\tau)
+    \,,\qquad
+\timeAver{P}_p =
+{1\over \period{p}} \int_0^\period{p} d\tau \, P(\tau)
     =
-      \timeAver{(u_{xx})^2}_p
+      \timeAver{D}_p
+% \timeAver{(u_{x})^2}_p =
+% {1\over \period{p}} \int_0^\period{p} d\tau \, \expct{(u_{x})^2}
+%     =
+%       \timeAver{(u_{xx})^2}_p
     \,.
 \label{poE}
-\eea
+\eeq
 
 In the Fourier basis \refeq{EFourier} the conservation of energy on average
 takes form
@@ -278,6 +299,12 @@ $E \propto L^{3/2}$.
     When the solution is big, how long can it stay big? They found it cannot stay big for
     long. 
        }
+\PC{
+from bounds on energy, we might be able
+to bound the number of equilibria as function of systems size $L$, and thus
+be sure we have them all.
+   }
+%
 \PC{Next for fluid guys: read Lieb and Ruelle to learn
     how to bound $E$ for plane Couette by Sobolev bounds}
 
@@ -287,13 +314,38 @@ Worked out with Bridges a number of other identities for moments of
 \reqv\ $u$, such as
 \[
 \expct{u_{x} u_t} 
-    \to \qquad
-c= \expct{u(u_{x})^2}/\expct{(u_{x})^2}
+    \qquad \to \qquad
+c= \expct{u(u_{x})^2}/P % \expct{(u_{x})^2}
 \]
 \[
 \expct{u_{xx} u_t} 
-    \to \qquad
-0= - \expct{(u_{x})^3}/2  + \expct{(u_{x})^2} - \expct{(u_{xxx})^2}
+    \qquad \to \qquad
+0= - \expct{(u_{x})^3}/2  + P - \expct{(u_{xxx})^2}
 \]
     } %end \PublicPrivate{%
 
+Projections 
+\reffigs{f:drivedrag}{f:drivedragConn}
+from $\infty$-dimensional \statesp\ to 3-dimensional
+$(E,P,D)$ representation of the flow can be a bit misleading
+For example, the mean value of $\timeAver{P_p}$
+evaluated on the
+$(\period{p},\shift_p) =(32.8,10.96)$
+ {\rpo}, \reffig{f:ks22rposShort}(c), which appears well embedded
+within the turbulent state, is quite close to the turbulent
+expectation $\timeAver{P}$.
+Similarly close prediction of mean dissipation rate in the
+\pCf\ from a single-period \po\ computed by
+Kawahara and Kida~\cite{KawKida01} has lead to 
+optimistic hopes that ``turbulence" is different from
+low-dimensional chaos, and that one \po\ suffices for long-time
+predicitions. Regrettably, not true - here too one needs a hierarchy
+of \po s of increasing length to obtain accurate
+predictions \cite{DasBuch}.
+\PC{\PCedit{ the Japanese heresy disposed off}}
+
+The most one can say is that if points are clearly separated in an
+$(E,P,D)$ plot (for example, in \reffig{f:ks22rposShort}
+$\EQV{1}$ is not part of the recurrent set), they are also separated
+in the full \statesp. Converse is not true - states of 
+very different topology can have similar energies.
