@@ -1,20 +1,22 @@
 % energy.tex
 % $Author$ $Date$
 
-% Predrag                   Apr 12 2007
 
-\subsection{Energy budget} % of the \KSe}
-\label{sec:energy}
+% \subsection{Energy budget} % of the \KSe}
+% \label{sec:energy}
+% Predrag                   Apr 12 2007
 
 In physical settings where the observation times are much longer
 than the dynamical ``turnover" and Lyapunov times (statistical mechanics,
-quantum physics, turbulence) nonlinear dynamics provides 
-\cite{DasBuch} highly accurate predictions of measurable
-long-time averages such as the turbulent drag\cite{GHCW07}.
-
-Physical predictions have to be independent of the choice of
-basis in which the PDE is represented as an infinite tower of
-ODEs - and - most importanly - of any symmetry of the problem.
+quantum physics, turbulence) 
+periodic orbit theory\rf{DasBuch}
+provides highly accurate predictions of measurable
+long-time averages such as the turbulent drag\rf{GHCW07}.
+Physical predictions have to be independent of a
+particular choice of ODE representation of 
+the PDE under consideration
+and, most importantly, 
+invariant under all symmetries of the dynamics.
 In this section we discuss and compute
 a set of such physical observables for
 the  1$D$ KS invariant under reflections and translations.
@@ -34,23 +36,25 @@ Its mean value is given by the {time average}
     =
 \lim_{t\rightarrow \infty} {1\over t} \int_0^t \! d\tau \, \expct{\obser}
     =
-\lim_{t\rightarrow \infty} {1\over t L} \int_0^t \! 
-    \int_0^{L} \!\! d\tau  d\pSpace\, \obser(\pSpace,\tau)
+\lim_{t\rightarrow \infty} {1\over t} \int_0^t \! 
+    \Lint{\tau}  d\pSpace\, \obser(\pSpace,\tau)
     \,.
 \label{rpo:tim_ave}
 \eeq
 The mean value
-$\timeAver{\obser}$, $\obser = \obser(u)$ evaluated on an
-\eqv\ or {\reqv} $u(\pSpace,t) = u_q(\pSpace-ct)$ is
+% $\timeAver{\obser}$,
+of $\obser = \obser(u_q)$ evaluated on
+$q$ \eqv\ or {\reqv} $u(\pSpace,t) = u_q(\pSpace-ct)$ is
 \beq
-         \obser_q = \expct{\obser}_q
+         \obser_q = \timeAver{\obser}_q = \expct{\obser}_q
 \,.
 \label{rpo:u-eqv}
 \eeq
 Evaluation of the infinite time average \refeq{rpo:tim_ave}
-on a function of a period $\period{p}$
-\po\ or \rpo\ $u_p(\pSpace,t)$
- requires only a single traversal of the periodic solution,
+on a function of a 
+\po\ or \rpo\ $u_p(\pSpace,t)=u_p(\pSpace,t+\period{p})$
+ requires only a single $\period{p}$ 
+traversal,
 \beq
        \obser_p = \frac{1}{\period{p}}
     \int_0^{\period{p}} \! d\tau \, \expct{\obser}
@@ -67,7 +71,8 @@ Equation \refeq{ks} can be written as % in ``potential'' form
 \ee{ksPotent}
 $u$ is related to the ``flame-front height'' $h(x,t)$ by
 $u=h_x$, so \expctE\ can be interpreted as
-the mean energy density \refeq{ksEnergy}.
+the mean energy density.
+% \refeq{ksEnergy}.
 %
 So, even though KS is a phenomenological
 small-amplitude equation, the time-dependent quantity
@@ -82,7 +87,7 @@ has a physical interpretation\rf{ksgreene88}
 as the average ``energy'' density of the flame front.
 This analogy to the corresponding definition of the
 mean kinetic energy density for
-the Navier-Stokes will be useful in what follows.
+the Navier-Stokes motivates what follows.
 \PC{bit weird: can use Galilean invariance to
     set $\expctE=0$ for any given $u(x,t)$?}
 
@@ -131,9 +136,8 @@ integration by parts,
  \expct{(u^3)_x} = 3 \expct{ u_x \, u^2}=0
 \,,
 \) % {EnNonl0}
-and integrating the third term by parts yet again we get
-that the energy variation
-% \PC{this is ``power", nicht war?}
+and integrating the third term by parts yet again 
+one gets\rf{ksgreene88} that the energy variation
 \beq
    \dot{\expctE} = P - D
                 \,,\qquad
@@ -141,10 +145,33 @@ that the energy variation
                 \,,\quad
       D =  \expct{(u_{xx})^2}
 \ee{EnRate}
-balances the KS equation \refeq{ks} power $P$
-pumped in by the anti-diffusion $u_{xx}$
-against energy dissipation rate $D$
-by the hypervicosity $u_{xxxx}$ \rf{ksgreene88}.
+balances the power $P$ pumped in by anti-diffusion $u_{xx}$
+against the energy dissipation rate $D$
+by hypervicosity $u_{xxxx}$
+in the KS equation \refeq{ks}.
+
+    \PublicPrivate{%
+        }{% switch to Private:
+% PC worked out with Bridges 
+An infinite number of identities for moments of
+\reqva\ follow\rf{Bridges_priv}. For example,
+integrating by parts $\expct{u_{x} u_t}$
+and
+$\expct{u_{xx} u_t}$,
+respectively, one obtains
+\PC{please rederive these two}
+\beq
+% \expct{u_{x} u_t} 
+%     \qquad \to \qquad
+c= \frac{1}{P} \expct{u \, (u_{x})^2}
+\ee{Bridges1}
+\beq
+% \expct{u_{xx} u_t} 
+%     \qquad \to \qquad
+{\textstyle\frac{1}{2}}\expct{(u_{x})^3}
+	= P - \expct{(u_{xxx})^2}
+\ee{Bridges2}
+    } %end \PublicPrivate{%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[t] 
@@ -246,7 +273,7 @@ exactly balance each out:
     \,.
 \ee{rpo:EtimAve}
 In particular, the \eqva\
-and \reqva\ sit on the diagonal in \reffig{f:drivedrag},
+and \reqva\ fall onto the diagonal in \reffig{f:drivedrag},
 and so do time averages computed on \po s and \rpo s:
 \beq
 \timeAver{E}_p =
@@ -263,7 +290,6 @@ and so do time averages computed on \po s and \rpo s:
     \,.
 \label{poE}
 \eeq
-
 In the Fourier basis \refeq{EFourier} the conservation of energy on average
 takes form
 \beq
@@ -275,7 +301,7 @@ E_k(t) =  |a_k(t)|^2
 \ee{EFourier1}
 The large $k$ convergence of this series is insensitive to the
 system size $L$; $\timeAver{E_k}$ have to decrease much faster than
-$1/( k/\tildeL)^4$.
+$(k/\tildeL)^{-4}$.
 \PC{determine the decay rate, presumably exponential in $k$}
 Deviation of $E_k$ from this bound for small $k$ determines the active modes.
 This may be useful to bound the number of equilibria, with
@@ -283,7 +309,7 @@ the upper bound given by zeros of a small number
 of long wavelength modes.
 For \eqva\ the $L$-independent bound
     on $E$ is given by Michaelson\rf{Mks86}. 
-The best current bound\cite{GiacoOtto05,bronski-2005} on the long-time limit
+The best current bound\rf{GiacoOtto05,bronski-2005} on the long-time limit
 of $E$
 as a function of the system size $L$ scales as 
 $E \propto L^{3/2}$.
@@ -292,7 +318,7 @@ $E \propto L^{3/2}$.
  % Past: Michael Loss has not taught us how to bound $E$ by
  %  Sobolev bounds. Neither has Spiegel. Next: But 
   Constantin says that the answer is in
-    \refrefs{temam85ks}. Eckmann says: the  best bound is by Otto\cite{GiacoOtto05}; the
+    \refrefs{temam85ks}. Eckmann says: the  best bound is by Otto\rf{GiacoOtto05}; the
     only bound close to k=0, better in essential way. See also \refref{bronski-2005}.
     Eckmann had $L^{8/5}$, but conceptually Otto is the best. Recheck whether it is
     $|u|$ or $E \propto L^{3/2}$.
@@ -308,41 +334,29 @@ be sure we have them all.
 \PC{Next for fluid guys: read Lieb and Ruelle to learn
     how to bound $E$ for plane Couette by Sobolev bounds}
 
-    \PublicPrivate{%
-        }{% switch to Private:
-Worked out with Bridges a number of other identities for moments of
-\reqv\ $u$, such as
-\[
-\expct{u_{x} u_t} 
-    \qquad \to \qquad
-c= \expct{u(u_{x})^2}/P % \expct{(u_{x})^2}
-\]
-\[
-\expct{u_{xx} u_t} 
-    \qquad \to \qquad
-0= - \expct{(u_{x})^3}/2  + P - \expct{(u_{xxx})^2}
-\]
-    } %end \PublicPrivate{%
-
 Projections 
-\reffigs{f:drivedrag}{f:drivedragConn}
-from $\infty$-dimensional \statesp\ to 3-dimensional
-$(E,P,D)$ representation of the flow can be a bit misleading
-For example, the mean value of $\timeAver{P_p}$
-evaluated on the
-$(\period{p},\shift_p) =(32.8,10.96)$
- {\rpo}, \reffig{f:ks22rposShort}(c), which appears well embedded
-within the turbulent state, is quite close to the turbulent
-expectation $\timeAver{P}$.
+from the $\infty$-dimensional \statesp\ onto 
+the 3-dimensional
+$(E,P,D)$ representation of the flow, such as
+\reffigs{f:drivedrag}{f:drivedragConn},
+can be misleading.
+For example, \rpo\ $(\period{p},\shift_p) =(32.8,10.96)$
+appears well embedded within the turbulent flow,
+and the mean value of $\timeAver{P_p}$
+evaluated on it,
+\reffig{f:ks22rposShort}(c),
+is quite close to the long-time turbulent
+time average $\timeAver{P}$.
 Similarly close prediction of mean dissipation rate in the
 \pCf\ from a single-period \po\ computed by
-Kawahara and Kida~\cite{KawKida01} has lead to 
+Kawahara and Kida\rf{KawKida01} has lead to 
 optimistic hopes that ``turbulence" is different from
-low-dimensional chaos, and that one \po\ suffices for long-time
-predicitions. Regrettably, not true - here too one needs a hierarchy
+low-dimensional chaos, insofar that the determination of one 
+magic \po\ could yield all long-time predicitions.
+Regrettably, not true - as always, here too one needs a hierarchy
 of \po s of increasing length to obtain accurate
-predictions \cite{DasBuch}.
-\PC{\PCedit{ the Japanese heresy disposed off}}
+predictions\rf{DasBuch}.
+% \PC{\PCedit{ the Japanese heresy disposed off}}
 
 The most one can say is that if points are clearly separated in an
 $(E,P,D)$ plot (for example, in \reffig{f:ks22rposShort}
