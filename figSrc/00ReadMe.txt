@@ -21,7 +21,14 @@ source for
 is in
 	programs/production/KS22.0/equil/
 	file: plotProfile.nb
-	use pstoedit to convert to .fig and then export to .eps	
+	use pstoedit to convert to .fig and then export to .eps
+source for
+	rpo_ks/figs/L22-eqvaEigenvalues.eps  
+is in
+	programs/production/KS22.0/equil
+	program plotEigenvalues.nb
+	Converted to .fig with pstoedit
+	
 
 Processing
 ----------
