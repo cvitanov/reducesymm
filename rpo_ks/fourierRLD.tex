@@ -12,78 +12,232 @@
 %
 The \KSe\ has a slightly different form:
 \PC{adopted this form as the official Apr 17 2007}
-\begin{equation}
+\beq
   u_t=-{\textstyle\frac{1}{2}}(u^2)_x-u_{xx}- u_{xxxx} \, ,
-\end{equation}
+\eeq
 which can be reduced to Eq.~(\ref{eq:KS}) by the transformation $u
 \rightarrow -2u$.
 
 The \KSe\ in terms of Fourier modes:
-\begin{equation}
-  \hat{u}_k \equiv {\cal F}[u]_k = \frac{1}{L}\int_0^L u(x,t) e^{-ikx/\tildeL}dx\,,
-  \qquad u(x,t) \equiv {\cal F}^{-1}[\hat{u}] = \sum_{k\in{\mathbb Z}} \hat{u}_k e^{ikx/\tildeL}
-\end{equation}
+\beq
+  \hat{u}_k = {\cal F}[u]_k = \frac{1}{L}\int_0^L u(x,t) e^{-ikx/\tildeL}dx\,,
+  \qquad u(x,t) = {\cal F}^{-1}[\hat{u}] = \sum_{k\in{\mathbb Z}} \hat{u}_k e^{ikx/\tildeL}
+\eeq
  is given by
-\begin{equation}
-  \dot{\hat{u}}_k =[(k/\tildeL)^2-(k/\tildeL)^4]\hat{u}_k -
+\beq
+  \dot{\hat{u}}_k = [(k/\tildeL)^2-(k/\tildeL)^4]\hat{u}_k -
   \frac{ik}{2\tildeL}{\cal F}[({\cal F}^{-1}[\hat{u}])^2]_k\,.
-\end{equation}
+\eeq
 Since $u$ is real, the Fourier modes are related by $\hat{u}_{-k} =
 \hat{u}^\ast_k$.
 
 The above system is truncated as follows: The Fourier transform
 ${\cal F}$ is replaced by its discrete equivalent
-\begin{equation}
-  a_k \equiv {\cal F}_N[u]_k = \sum_{n = 0}^{N-1} u(x_n)
-  e^{-ikx_n/\tildeL}\,,\qquad u(x_n) \equiv {\cal F}_N^{-1}[a]_n
+\beq
+  a_k = {\cal F}_N[u]_k = \sum_{n = 0}^{N-1} u(x_n)
+  e^{-ikx_n/\tildeL}\,,\qquad u(x_n) = {\cal F}_N^{-1}[a]_n
   = \frac{1}{N}\sum_{k = 0}^{N-1} a_k e^{ikx_n/\tildeL}\,,
-\end{equation}
+\eeq
 where $x_n = 2\pi\tildeL/N$ and $a_{N-k} = a^\ast_k$.  Since $a_0
 = 0$ due to galilean invariance and setting $a_{N/2} = 0$ (assuming
 $N$ is even), the number of independent variables in the truncated
 system is $N-2$.  The truncated system looks as follows:
-\begin{equation}
-  \dot{a}_k =[(k/\tildeL)^2-(k/\tildeL)^4]a_k -
+\beq
+  \dot{a}_k = \pVeloc_k(a) = [(k/\tildeL)^2-(k/\tildeL)^4]a_k -
   \frac{ik}{2\tildeL}{\cal F}_N[({\cal F}_N^{-1}[a])^2]_k\,.
-\end{equation}
-with $k = 1,\ldots,N/2-1$, although in the Fourier transform we need
-to use $a_k$ over the full range of $k$ values from 0 to $N-1$.
-
+\ee{eq:KS}
+where $k = 1,\ldots,N/2-1$.
+%, although in the Fourier transform we need
+%to use $a_k$ over the full range of $k$ values from 0 to $N-1$.
 The discrete Fourier transform ${\cal F}_N$ can be computed by FFT.
 In Fortran and C, the routine {\tt REALFT} from Numerical Recipes
-can be used.  In Matlab, it is more convenient to use complex
-variables for $a_k$.  Note that Matlab function {\tt fft} is, in
-fact, the inverse Fourier Transform.
+can be used.  
+% In Matlab, it is more convenient to use complex
+% variables for $a_k$.  Note that Matlab function {\tt fft} is, in
+% fact, the inverse Fourier Transform.
 
-To derive the equation for the matrix of variations, I use the fact
-that ${\cal F}_N$ is a linear operator.  Since we need to
-differentiate separately with respect to the real and imaginary
-components of $a_k$, I use the notation $a_k = b_{2k-1} + ib_{2k}$.
-\begin{equation}
-  \frac{\partial \dot{a}_k}{\partial b_j} =
-  [(k/\tildeL)^2-(k/\tildeL)^4]\delta_{kj} -
-  \frac{ik}{\tildeL}{\cal F}_N[{\cal F}_N^{-1}[a]\cdot{\cal
-  F}_N^{-1}[\delta_{kj}]]\,,\quad j = 1,\ldots,N-2
-\end{equation}
-where the dot indicates componentwise product, and the inverse
-Fourier transform is applied separately to each column of
-$\delta_{kj}$. Here, $\delta_{kj}$ is not a standard Kronecker
-delta, but a complex valued $N\times N-2$ matrix:
-\begin{equation}
-  \delta_{kj} = \left(
-  \begin{array}{ccccc}
-  0 &  0 & 0 &  0 &\cdots\\
-  1 &  i & 0 &  0 &\cdots\\
-  0 &  0 & 1 &  i &\cdots\\
-\multicolumn{5}{c}\dotfill \\
-  0 &  0 & 0 &  0 &\cdots\\
-\multicolumn{5}{c}\dotfill \\
-  0 &  0 & 1 & -i &\cdots\\
-  1 & -i & 0 &  0 &\cdots\\
-  \end{array}  \right),
-\end{equation}
-with index $k$ running from 0 to $N-1$.  I admit, the notations are
-a bit stretched here, but I find them convenient when coding this
-equation using FFT.
+In order to find the Jacobian of the solution, or compute
+Lyapunov exponents of the \KSe , one needs to solve the equation 
+for a displacement vector $\delta$ in the tangent space:
+\beq
+  \dot{\delta} = \frac{\partial \pVeloc(a)}{\partial a} \delta\,.
+\eeq
+Since ${\cal F}_N$ is a linear operator, it is easy to show that
+\beq
+  \dot{\delta_k} = [(k/\tildeL)^2-(k/\tildeL)^4]\delta_k -
+  \frac{ik}{\tildeL}{\cal F}_N[{\cal F}_N^{-1}[a]\cdot
+  {\cal F}_N^{-1}[\delta]]\,,
+\ee{eq:KStan}
+where the dot indicates componentwise product of two vectors.  This
+equation needs to be solved simultaneously with \refeq{eq:KS}.
 
+%% To derive the equation for the matrix of variations, I use the fact
+%% that ${\cal F}_N$ is a linear operator.  Since we need to
+%% differentiate separately with respect to the real and imaginary
+%% components of $a_k$, I use the notation $a_k = b_{2k-1} + ib_{2k}$.
+%% \beq
+%%   \frac{\partial \dot{a}_k}{\partial b_j} =
+%%   [(k/\tildeL)^2-(k/\tildeL)^4]\delta_{kj} -
+%%   \frac{ik}{\tildeL}{\cal F}_N[{\cal F}_N^{-1}[a]\cdot{\cal
+%%   F}_N^{-1}[\delta_{kj}]]\,,\quad j = 1,\ldots,N-2
+%% \eeq
+%% where the dot indicates componentwise product, and the inverse
+%% Fourier transform is applied separately to each column of
+%% $\delta_{kj}$. Here, $\delta_{kj}$ is not a standard Kronecker
+%% delta, but a complex valued $N\times N-2$ matrix:
+%% \beq
+%%   \delta_{kj} = \left(
+%%   \begin{array}{ccccc}
+%%   0 &  0 & 0 &  0 &\cdots\\
+%%   1 &  i & 0 &  0 &\cdots\\
+%%   0 &  0 & 1 &  i &\cdots\\
+%% \multicolumn{5}{c}\dotfill \\
+%%   0 &  0 & 0 &  0 &\cdots\\
+%% \multicolumn{5}{c}\dotfill \\
+%%   0 &  0 & 1 & -i &\cdots\\
+%%   1 & -i & 0 &  0 &\cdots\\
+%%   \end{array}  \right),
+%% \eeq
+%% with index $k$ running from 0 to $N-1$.  I admit, the notations are
+%% a bit stretched here, but I find them convenient when coding this
+%% equation using FFT.
 
+\section{Finding \rpo s using multiple shooting and
+         Levenberg--Marquardt algorithm}
+\label{sec:lmderRLD}
+
+To find periodic and \rpo s of the \KSe , we use multiple shooting and
+the Levenberg--Marquardt algorithm implemented in {\tt lmder} from
+the MINPACK software package or function {\tt fsolve} in Matlab.
+
+Note that the LM algorithm is able to solve underdetermined systems of
+equations.  Therefore, there is no need to augment the system with
+additional equations.  For example, since Lopez \etal\ used 
+{\tt lmder} to find \rpo s in CGLE, they did not need to augment 
+their system with three additional equations.  In fact, we have found
+that, with additional equations, the solver takes many more steps to
+converge from the same seed, or fails to converge at all.
+Even thought both {\tt lmder} and {\tt fsolve} solvers 
+require that the number of variables does not exceed the number 
+of equations, the additional equations can be set identically to 
+zero. \RLD{This trick was discovered by my PhD student Jonathan 
+Crofts on 30 April 2007.}
+
+We need to solve the system of $N-2$ equations
+\beq
+  {\bf g}(d)f^T(a) - a = 0\,, 
+\ee{eq:system}
+with $N$ unknowns $(a, d, T)$, where $f^t$ is the flow map of the 
+\KSe , i.e. $f^t(a) = a(t)$ is the solution of 
+$\dot{a} = \pVeloc(a)$ with initial condition $a(0) = a$.
+
+We have tried two different implementations of the multiple shooting.
+The emphasis was on the simplicity of the implementations, so, even 
+though both implementations worked equally well, each of them had 
+its own minor drawbacks.  It is not difficult to design more 
+sophisticated implementations where these drawbacks would be 
+eliminated.
+
+In the first implementation, we fix the total number of steps within 
+each shooting stage and change the numerical integrator step size $h$
+in order to adjust the total integration time to a desired value $T$.
+
+Let $(a_0, d_0, T_0)$ be the starting guess for a \rpo\ obtained 
+through a close return within a chaotic attractor.  We require
+that the initial step does not exceed $h_0$, so we set
+the number of integration steps to $n = \lceil T_0/h_0\rceil$.
+
+The integration step size is equal to $h = T/n$. With the number of 
+shooting stages equal to $m$, the system in \refeq{eq:system} is 
+rewritten as follows
+\bea
+ F^{(1)}&\!=\!& f^\tau(a^{(1)}) - a^{(2)} = 0\,,\nonumber\\
+ F^{(2)}&\!=\!& f^\tau(a^{(2)}) - a^{(3)} = 0\,,\nonumber\\
+ && \cdots \\
+ F^{(m-1)}&\!=\!& f^\tau(a^{(m-1)}) - a^{(m)} = 0\,,\nonumber\\
+ F^{(m)}&\!=\!& {\bf g}(d)f^{\tau'}(a^{(m)}) - a^{(1)} = 0\,,\nonumber
+\label{eq:MultShoot} \eea
+where $\tau = \lfloor n/m \rfloor h$, $\tau' = nh - (m-1)\tau$, and
+$a^{(j)} = f^{(j-1)\tau}(a)$, $j = 1, \ldots , m$.
+
+With the Jacobian of this system given by 
+\beq
+  J = \left(\begin{array}{ccc}\!\!
+   \displaystyle \frac{\partial F^{(j)}}{\partial a^{(k)}} & 
+   \displaystyle \frac{\partial F^{(j)}}{\partial T} &
+   \displaystyle \frac{\partial F^{(j)}}{\partial d}\!\!
+  \end{array}\right),\quad j,k = 1,\ldots,m\,,
+\eeq
+the partial derivatives with respect to $a^{(k)}$ can be calculated 
+using the solution of \refeq{eq:KStan}.  The partial derivatives
+with respect to $T$ are given by 
+\beq
+  \frac{\partial F^{(j)}}{\partial T} = 
+  \left\{\begin{array}{ll}
+    \frac{\partial f^\tau(a^{(j)})}{\partial \tau}
+    \frac{\partial \tau}{\partial T} = v(f^\tau(a^{(j)}))
+    \lfloor n/m \rfloor/n\,, & j = 1,\ldots, m-1\\[.5ex]
+    {\bf g}(d) v(f^{\tau'}(a^{(j)}))
+    (1 - \frac{m-1}{n} \lfloor n/m \rfloor ), & j = m\,.
+  \end{array}\right.
+\eeq 
+Note that, even though $\partial f^t(a) /\partial t = v(f^t(a))$, 
+it should not be evaluated using equation for the vector field.  
+The reason is that, since the flow $f^t$ is approximated by a 
+numerical solution, the derivative of the numerical solution with
+respect to the step size $h$ may differ from the vector field $v$, 
+especially for larger step sizes.  We evaluate the derivative by
+a forward difference using numerical integration with step sizes
+$h$ and $h + \delta$:
+\beq
+  \frac{\partial f^{jh}(a)}{\partial t} = \frac{1}{j\delta}
+  \left[f^{j(h+\delta)}(a) - f^{jh}(a)\right],\quad j \in 
+  {\mathbb Z}^{+}
+\eeq
+with $t = jh$ and $\delta = 10^{-7}$ for double precision calculations.
+Partial derivatives $\partial F^{(j)}/\partial d$ are all equal to
+zero except for $j = m$, where it is given by
+\beq
+  \frac{\partial F^{(m)}}{\partial d} = \frac{d{\bf g}}{dd}
+  f^{\tau'}(a^{(m)})\,.
+\eeq
+
+This Jacobian is supplied to the routine {\tt lmder} or {\tt fsolve}
+augmented with two rows of zeros corresponding to the two identical
+zeros augmenting \refeq{eq:MultShoot} in order to make the number of
+equations formally equal to the number of variables, 
+as discussed above.
+\RLD{The drawback of this scheme is that the \KSe\ is integrated with 
+different step sizes, so different \rpo s cannot be readily compared,
+since they have been approximated using different step sizes.}
+
+In the second implementation, we keep $h$ and $\tau$ fixed and vary
+only $\tau' = T - (m-1)\tau$.  In this case, we need to be able
+to determine the numerical solution of \KSe\ not only at times 
+$t_j = jh, j = 1, 2, \ldots$, but at any intermediate time as well.
+We do this by a cubic polynomial interpolation through points
+$f^{t_j}(a)$ and $f^{t_{j+1}}(a)$ with slopes $v(f^{t_j}(a))$ and
+$v(f^{t_{j+1}}(a))$.  The difference from the first implementation
+is in that partial derivatives $\partial F^{(j)}/\partial T$ are
+zero for all $j = 1,\ldots,m-1$, except for
+\beq
+  \frac{\partial F^{(m)}}{\partial T} = 
+  {\bf g}(d)v(f^{\tau'}(a^{(m)}))\,.
+\eeq
+which, for consistency, needs to be evaluated from the cubic 
+polynomial, not from the flow equation evaluated 
+at $f^{\tau'}(a^{(m)})$.
+\RLD{The drawback of this implementation is that the numerical 
+solution of the flow is only once differentiable, so the solvers 
+{\tt lmder} and {\tt fsolve} tend to sometimes slow the convergence 
+down when the number of steps for integrating to $\tau'$ changes.
+But the effect is rather marginal.}
+
+We found the second implementation more convenient.
+
+For detecting periodic and \rpo s of the \KSe\ with $L = 22$, we used
+$N = 32$, $h = 0.25$ (or $h_0 = 0.25$ within the first implementation),
+and the number of shooting stages such that $\tau \approx 6.0$.
+Once an \rpo\ is found, its existence in the \KS\ PDE is verified 
+and numerical approximation improved by increasing the number of
+Fourier modes ($N = 64$) and reducing the step size ($h = 0.1$).  
