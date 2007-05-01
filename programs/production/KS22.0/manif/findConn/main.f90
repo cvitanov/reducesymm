@@ -59,6 +59,8 @@ open(21,file=trim(wd)//'/parameters.dat')
 	read(21,*) Mi
 	read(21,*)
 	read(21,*) R
+	read(21,*)
+	read(21,*) unst_dir
 close(21)
 
 212 Format(<d>F30.18)
@@ -113,7 +115,6 @@ print *,"dot",dot_product(VR2(:,120),VR(:,127))
 print *,"dot",dot_product(VR2(:,125),VR(:,123))
 
 stbl_dir=122
-unst_dir=127
 
 tf=real(Nrep,dp)*TWOPI_D/aimag(w(unst_dir))
 ti=0.0_dp
