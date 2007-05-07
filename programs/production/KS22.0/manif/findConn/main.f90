@@ -16,7 +16,8 @@ complex(dpc), dimension(:),allocatable :: a,adum,w
 complex(dpc), dimension(:), allocatable :: ai,af
 complex(dpc), dimension(:,:), allocatable :: jacdum, VR, VR2
 integer(i8b) :: invplan, plan ! needed by fftw3
-integer(i4b) :: k,i,j,idum,q,sdim,Nrep, No, Nf, Ndiv 
+integer(i4b) :: k,j,idum,q,sdim,Nrep 
+integer(i8b) :: i,No, Nf, Ndiv 
 real(dp) :: T,h,ti,tf,dst,dst0
 character*64 :: wd
 integer(i4b) :: nargs
