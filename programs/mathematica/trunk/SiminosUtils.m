@@ -105,3 +105,18 @@ gsorth[x_]:=Module[{y,Nv,d,sm},Nv=Dimensions[x][[1]];d=Dimensions[x][[2]];
     y=Table[Null,{Nv}];y[[1]]=x[[1]]/Norm[x[[1]]];
     Do[sm=Sum[Conjugate[y[[j-k]]].x[[j]]y[[j-k]],{k,1,j-1}];
       y[[j]]=(x[[j]]-sm)/Norm[x[[j]]-sm],{j,2,Nv}];y]
+
+
+d1[x_List,t_]:=D[#,t]&/@x;
+
+d2[x_List,t_]:=D[#,t,t]&/@x;
+
+norm[x_List]:=x/Sqrt[x.x];
+
+FrenetFrame[x_List,t_,phi_,r_]:=
+    Module[{xp,xpp,tangent,binormal,normal},xp=d1[x,t];
+      xpp=d2[x,t];
+      tangent=norm[xp];
+      binormal=norm[Cross[xp,xpp]];
+      normal=Cross[binormal,tangent];
+      x+normal*r*Cos[phi]+r*binormal*Sin[phi]];
