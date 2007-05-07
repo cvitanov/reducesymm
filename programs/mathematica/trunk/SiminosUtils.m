@@ -35,7 +35,7 @@ uSpatial[u_,L_]:=Module[{ux,uxx,dx,d},d=Dimensions[u][[1]];
 uShiftF[u_,sh_,L_]:=Module[{a,d},d=Dimensions[u][[1]];a=Fourier[u,fp];
     Do[a[[k+1]]=Exp[-2 \[Pi] sh I k/L]a[[k+1]],{k,1,d/2+1}];
     Do[a[[d+1-k]]=Conjugate[a[[1+k]]],{k,1,d/2-1}];
-    Chop[InverseFourier[a,fp],10^-10]]
+    Chop[InverseFourier[a,fp],10^-9]]
 
 uShiftFTraj[traj_,sh_,L_]:=Map[uShiftF[#,sh,L]&,traj,{1}];
 
@@ -89,13 +89,19 @@ ToShift[file_]:=ToExpression[StringDrop[ToDir[file],14]];
 
 cInner[a_,b_]:=Conjugate[a].b;
 
-coords[a_,b_]:={cInner[a,b[[1]]],cInner[a,b[[2]]],cInner[a,b[[3]]]}//Chop
+coords[a_,b_,
+    ao_]:={cInner[a-ao,b[[1]]],cInner[a-ao,b[[2]]],cInner[a-ao,b[[3]]]}//Chop
 
 fourTraj[traj_]:=Map[Fourier[#,fp]&,traj,{1}];
 
-coordsTraj[traj_,b_]:=Map[coords[#,b]&,traj,{1}];
+coordsTraj[traj_,b_,ao_]:=Map[coords[#,b,ao]&,traj,{1}];
 
 UnsortedUnion[x_List]:=
   Module[{len=Length[x],tmp},
     tmp=Split[Sort[Transpose[{x,Range[len]}]],(#1[[1]]===#2[[1]]&)][[All,1]];
     Sort[Transpose[RotateLeft[Transpose[tmp]]]][[All,2]]]
+
+gsorth[x_]:=Module[{y,Nv,d,sm},Nv=Dimensions[x][[1]];d=Dimensions[x][[2]];
+    y=Table[Null,{Nv}];y[[1]]=x[[1]]/Norm[x[[1]]];
+    Do[sm=Sum[Conjugate[y[[j-k]]].x[[j]]y[[j-k]],{k,1,j-1}];
+      y[[j]]=(x[[j]]-sm)/Norm[x[[j]]-sm],{j,2,Nv}];y]
