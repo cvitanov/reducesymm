@@ -1,0 +1,1412 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 5.2'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[     36742,       1147]*)
+(*NotebookOutlinePosition[     37391,       1170]*)
+(*  CellTagsIndexPosition[     37347,       1166]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+Cell[BoxData[
+    \(<< Graphics`Graphics3D`\)], "Input"],
+
+Cell[BoxData[
+    \(<< SiminosUtils`\)], "Input"],
+
+Cell[BoxData[
+    \(<< LinearAlgebra`MatrixManipulation`\)], "Input"],
+
+Cell[BoxData[
+    \(<< LinearAlgebra`Orthogonalization`\)], "Input"],
+
+Cell[BoxData[
+    \(\(J = Import["\<2w/JevU.dat\>"];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(J1 = Import["\<1w/JevU.dat\>"];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(J3 = Import["\<3w/JevU.dat\>"];\)\)], "Input"],
+
+Cell[BoxData[
+    \(J[\([1]\)] . J1[\([1]\)]\)], "Input"],
+
+Cell[BoxData[
+    \(J[\([2]\)] . J1[\([2]\)]\)], "Input"],
+
+Cell[BoxData[
+    \(cInner[J[\([7]\)], J1[\([7]\)]]\)], "Input"],
+
+Cell[BoxData[
+    \(cInner[J[\([2]\)], J1[\([2]\)]]\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[J]\)], "Input"],
+
+Cell[BoxData[
+    \(\(d = \(Dimensions[J]\)[\([2]\)];\)\)], "Input"],
+
+Cell[BoxData[
+    \(mvtube = 0.005; \ mvsphere = 0.5;\)], "Input"],
+
+Cell[BoxData[
+    \(ListPlot[J[\([1]\)]]\)], "Input"],
+
+Cell[BoxData[
+    \(ListPlot[J[\([2]\)]]\)], "Input"],
+
+Cell[BoxData[
+    \(\(L = 22.0;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(w2 = Import["\<2w/equilU.dat\>"] // Flatten;\)\)], "Input"],
+
+Cell[BoxData[
+    \(ListPlot[w2 + J[\([1]\)]]\)], "Input"],
+
+Cell[BoxData[
+    \(\(\( (*e1 = J[\([1]\)] + J[\([7]\)]*) \)\(;\)\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(e1 = J[\([1]\)] + J1[\([5]\)];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(f1 = Fourier[e1, fp];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(\( (*e2 = J[\([2]\)] + J[\([8]\)]*) \)\(;\)\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(e2 = J[\([2]\)] + J1[\([6]\)];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(f2 = Fourier[e2, fp];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(\( (*e3 = J[\([13]\)]*) \)\(;\)\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(e3 = J[\([13]\)] + J1[\([11]\)];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(f3 = Fourier[e3, fp];\)\)], "Input"],
+
+Cell[BoxData[
+    \(cInner[f1, f1]\)], "Input"],
+
+Cell[BoxData[
+    \(\(b = gsorth[{f1, f2, f3}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(cInner[b[\([1]\)], b[\([2]\)]]\)], "Input"],
+
+Cell[BoxData[
+    \(\(Aw2 = Import["\<A2w/equilU.dat\>"] // Flatten;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(w3 = Import["\<3w/equilU.dat\>"] // Flatten;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(w1 = Import["\<1w/equilU.dat\>"] // Flatten;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(a2 = Fourier[w2, fp];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Conjugate[b[\([3]\)]] . b[\([2]\)]\)], "Input"],
+
+Cell[BoxData[
+    \(\(Aa2 = Fourier[uShift[w2, d/4], fp];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(Aa2 = Fourier[Aw2, fp];\)\)], "Input"],
+
+Cell[BoxData[
+    \(coords[Aa2, b, a2]\)], "Input"],
+
+Cell[BoxData[
+    \(\(a1 = Fourier[w1, fp];\)\)], "Input"],
+
+Cell[BoxData[
+    \(coords[a1, b, a2]\)], "Input"],
+
+Cell[BoxData[
+    \(\(Aa1 = Fourier[uShift[w1, d/4], fp];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(A2a1 = Fourier[uShift[w1, d/2], fp];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(A3a1 = Fourier[uShift[w1, 3  d/4], fp];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(a3 = Fourier[w3, fp];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(Aa3 = Fourier[uShift[w3, d/4], fp];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(A2a3 = Fourier[uShift[w3, d/2], fp];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(A3a3 = Fourier[uShift[w3, 3  d/4], fp];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(ps = 0.03;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(p1 = 
+        ScatterPlot3D[{coords[a1, b, a2], coords[Aa1, b, a2], 
+            coords[A2a1, b, a2], coords[A3a1, b, a2]}, 
+          PlotStyle \[Rule] {\ RGBColor[0.8, 0, 0], PointSize[ps]}, 
+          DisplayFunction \[Rule] \ Identity];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(p2 = 
+        ScatterPlot3D[{coords[a2, b, a2], coords[Aa2, b, a2]}, 
+          PlotStyle \[Rule] {\ RGBColor[0, 0.8, 0], PointSize[ps]}, 
+          DisplayFunction \[Rule] \ Identity];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(p3 = 
+        ScatterPlot3D[{coords[a3, b, a2], coords[Aa3, b, a2], 
+            coords[A2a3, b, a2], coords[A3a3, b, a2]}, 
+          PlotStyle \[Rule] {\ RGBColor[0, 0, 0.8], PointSize[ps]}, 
+          DisplayFunction \[Rule] \ Identity];\)\)], "Input"],
+
+Cell[BoxData[
+    \({coords[a1, b, a2], coords[Aa1, b, a2], coords[A2a1, b, a2], 
+      coords[A3a1, b, a2]}\)], "Input"],
+
+Cell[BoxData[
+    \(\(pb = 0.7;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(vcn = Import["\<../conn/2wA2w/trajU.dat\>"];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(p2A2 = 
+        ScatterPlot3D[coordsTraj[fourTraj[vcn], b, a2], 
+          PlotStyle \[Rule] {\ RGBColor[0, 0, 0], PointSize[ps]}, 
+          PlotJoined \[Rule] True, PlotRange \[Rule] All, 
+          DisplayFunction \[Rule] \ Identity];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(pAll = 
+        Show[p1, p2, p3, PlotRange \[Rule] All, 
+          DisplayFunction \[Rule] $DisplayFunction, 
+          AxesLabel \[Rule] {"\<b1\>", "\<b2\>", "\<b3\>"}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(Get["\<MathGL3d`OpenGLViewer`\>"];\)\)], "Input"],
+
+Cell[BoxData[
+    \(MVShow3D[pAll, MVNewScene \[Rule] True, MVAlpha \[Rule] 1, 
+      MVGrayBackground \[Rule] True, MVReducePolygons \[Rule] 0.025, 
+      MVReturnValue \[Rule] None, MVSplitCubes \[Rule] True, 
+      MVLineTubeSize \[Rule] mvtube, 
+      MVPointSphereSize \[Rule] mvsphere]\)], "Input"],
+
+Cell[BoxData[
+    \(\(w1fam = Table[uShift[w1, i], {i, 1, d + 1}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(w2fam = Table[uShift[w2, i], {i, 1, d + 1}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(w3fam = Table[uShift[w3, i], {i, 1, d + 1}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(pw2fam = 
+        ScatterPlot3D[coordsTraj[fourTraj[w2fam], b, a2], 
+          PlotStyle \[Rule] {\ RGBColor[0, 0, 0], PointSize[ps]}, 
+          PlotJoined \[Rule] True, PlotRange \[Rule] All];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(pw3fam = 
+        ScatterPlot3D[coordsTraj[fourTraj[w3fam], b, a2], 
+          PlotStyle \[Rule] {\ RGBColor[0, 0, 0], PointSize[ps]}, 
+          PlotJoined \[Rule] True, PlotRange \[Rule] All];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(pw1fam = 
+        ScatterPlot3D[coordsTraj[fourTraj[w1fam], b, a2], 
+          PlotStyle \[Rule] {\ RGBColor[0, 0, 0], PointSize[ps]}, 
+          PlotJoined \[Rule] True, PlotRange \[Rule] All];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(vcn = Import["\<../conn/3wA2w/trajU.dat\>"];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[vcn]\)], "Input"],
+
+Cell[BoxData[
+    \(\(conn3wA2w = 
+        ScatterPlot3D[coordsTraj[fourTraj[vcn], b, a2], 
+          PlotStyle \[Rule] {\ RGBColor[0, 0, 0.5], PointSize[ps]}, 
+          PlotJoined \[Rule] True, 
+          DisplayFunction \[Rule] \ Identity];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[vcn]\)], "Input"],
+
+Cell[BoxData[
+    \(MVShow3D[Show[conn3wA2w, pw1fam, pw2fam, pw3fam], 
+      MVNewScene \[Rule] False, MVAlpha \[Rule] 1, 
+      MVGrayBackground \[Rule] True, MVReducePolygons \[Rule] 0.025, 
+      MVReturnValue \[Rule] None, MVSplitCubes \[Rule] True, 
+      MVLineTubeSize \[Rule] 0.005, MVPointSphereSize \[Rule] 0.5]\)], "Input"],
+
+Cell[BoxData[
+    \(\(conn3wA2wfamTab = 
+        Table[coordsTraj[
+            fourTraj[
+              Map[uShift[#, i] &, 
+                Take[vcn, {1, \(Dimensions[vcn]\)[\([1]\)], 5}], {1}]\ ], b, 
+            a2], {i, 1, d + 1}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[conn3wA2wfamTab]\)], "Input"],
+
+Cell[BoxData[
+    \(\(surP = 
+        ListSurfacePlot3D[conn3wA2wfamTab, PlotRange \[Rule] All, 
+          DisplayFunction \[Rule] \ Identity];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(conn3wA2wfamP = 
+        Show[Graphics3D[EdgeForm[]], 
+          Graphics3D[SurfaceColor[RGBColor[0, 0, 1]]], surP, 
+          PlotRange \[Rule] All, ImageSize \[Rule] 300, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input"],
+
+Cell[BoxData[
+    \(MVShow3D[conn3wA2wfamP, MVNewScene \[Rule] False, MVAlpha \[Rule] 0.1, 
+      MVGrayBackground \[Rule] True, MVReducePolygons \[Rule] 0.025, 
+      MVReturnValue \[Rule] None, MVSplitCubes \[Rule] True]\)], "Input"],
+
+Cell[BoxData[
+    \( (*\(conn3A2fam = 
+          Table[ScatterPlot3D[
+              coordsTraj[
+                fourTraj[
+                  Map[uShift[#, i] &, 
+                    Take[vcn, {1, \(Dimensions[vcn]\)[\([1]\)], 5}], {1}]\ ], 
+                b, a2], 
+              PlotStyle \[Rule] {\ RGBColor[0, 0, 0.5], PointSize[ps]}, 
+              PlotJoined \[Rule] True, 
+              DisplayFunction \[Rule] \ Identity], {i, 1, 
+              d}];\)*) \)], "Input"],
+
+Cell[BoxData[
+    \(\(vcn = Import["\<../conn/3wA2wMinus/trajU.dat\>"];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[vcn]\)], "Input"],
+
+Cell[BoxData[
+    \(\(conn3A2Minus = 
+        ScatterPlot3D[coordsTraj[fourTraj[vcn], b, a2], 
+          PlotStyle \[Rule] {\ RGBColor[0, 0, 0.5], PointSize[ps]}, 
+          PlotJoined \[Rule] True, 
+          DisplayFunction \[Rule] \ Identity];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(conn3A2MinusfamTab = 
+        Table[coordsTraj[
+            fourTraj[
+              Map[uShift[#, i] &, 
+                Take[vcn, {1, \(Dimensions[vcn]\)[\([1]\)], 5}], {1}]\ ], b, 
+            a2], {i, 1, d + 1}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(surP = 
+        ListSurfacePlot3D[conn3A2MinusfamTab, PlotRange \[Rule] All, 
+          DisplayFunction \[Rule] \ Identity];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(conn3A2MinusfamP = 
+        Show[Graphics3D[EdgeForm[]], 
+          Graphics3D[SurfaceColor[RGBColor[0, 0, 1]]], surP, 
+          PlotRange \[Rule] All, ImageSize \[Rule] 300, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input"],
+
+Cell[BoxData[
+    \(MVShow3D[conn3A2MinusfamP, MVNewScene \[Rule] False, MVAlpha \[Rule] 1, 
+      MVGrayBackground \[Rule] True, MVReducePolygons \[Rule] 0.025, 
+      MVReturnValue \[Rule] None, MVSplitCubes \[Rule] True]\)], "Input"],
+
+Cell[BoxData[
+    \( (*\(conn3A2Minusfam = 
+          Table[ScatterPlot3D[
+              coordsTraj[
+                fourTraj[
+                  Map[uShift[#, i] &, 
+                    Take[vcn, {1, \(Dimensions[vcn]\)[\([1]\)], 5}], {1}]\ ], 
+                b, a2], 
+              PlotStyle \[Rule] {\ RGBColor[0, 0, 0.5], PointSize[ps]}, 
+              PlotJoined \[Rule] True, 
+              DisplayFunction \[Rule] \ Identity], {i, 1, 
+              d}];\)*) \)], "Input"],
+
+Cell[BoxData[
+    \(\(Nplt = 501;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(Npt = 3;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(rSkip = 1;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(nd = 128;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(cd = 0.000000001;\)\)], "Input"],
+
+Cell[BoxData[{
+    \(\(vfile = OpenRead["\<../manif/2w/find2w3w/v.dat\>"];\)\), "\n", 
+    \(\(plc23 = Table[Null, {Npt}];\)\), "\n", 
+    \(\(plc2D23 = Table[Null, {Npt}];\)\), "\n", 
+    \(\(Do[
+        vi = ReadList[vfile, Number, nd*Nplt, 
+            RecordLists \[Rule] True]; \[IndentingNewLine]v = 
+          Take[vi, {1, \(Dimensions[vi]\)[\([1]\)], 
+              rSkip}]; \[IndentingNewLine]p = 
+          coordsTraj[\ fourTraj[v], b, 
+            a2]; \[IndentingNewLine]plc2D23[\([i]\)] = 
+          ListPlot[Take[p, All, 2], PlotJoined \[Rule] True, 
+            DisplayFunction \[Rule] Identity, 
+            PlotRange \[Rule] All]; \[IndentingNewLine]plc23[\([i]\)] = 
+          ScatterPlot3D[p, 
+            PlotStyle \[Rule] {\ RGBColor[0, 1, 0], PointSize[ps]}, 
+            PlotJoined \[Rule] True, 
+            DisplayFunction \[Rule] \ Identity]\[IndentingNewLine], {i, 1, 
+          Npt}\[IndentingNewLine]];\)\), "\n", 
+    \(\(Close[vfile];\)\), "\n", 
+    \(Show[plc2D23, 
+      ListPlot[{Take[coords[a3, b, a2], 2]}, 
+        PlotStyle \[Rule] {RGBColor[0, 0, 0.8], PointSize[\ 0.01]}, 
+        DisplayFunction \[Rule] Identity], 
+      DisplayFunction \[Rule] $DisplayFunction, 
+      PlotRange \[Rule] \ {{\(coords[a3, b, a2]\)[\([\)\(1\)\(]\)] - 
+              cd, \(coords[a3, b, a2]\)[\([\)\(1\)\(]\)] + 
+              cd}, {\(coords[a3, b, a2]\)[\([\)\(2\)\(]\)] - 
+              cd, \(coords[a3, b, a2]\)[\([\)\(2\)\(]\)] + cd}}]\)}], "Input"],
+
+Cell[BoxData[
+    \(\(Nplt = 501;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(Npt = 2;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(rSkip = 1;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(nd = 128;\)\)], "Input"],
+
+Cell[BoxData[{
+    \(\(vfile = OpenRead["\<../manif/2w/find2w3w/v.dat\>"];\)\), "\n", 
+    \(\(plc23 = Table[Null, {Npt}];\)\), "\n", 
+    \(\(plc2D23 = Table[Null, {Npt}];\)\), "\n", 
+    \(\(Do[
+        vi = ReadList[vfile, Number, nd*Nplt, 
+            RecordLists \[Rule] True]; \[IndentingNewLine]v = 
+          Take[vi, {1, \(Dimensions[vi]\)[\([1]\)], 
+              rSkip}]; \[IndentingNewLine]p = 
+          coordsTraj[\ fourTraj[v], b, 
+            a2]; \[IndentingNewLine]plc2D23[\([i]\)] = 
+          ListPlot[Take[p, All, 2], PlotJoined \[Rule] True, 
+            DisplayFunction \[Rule] Identity, 
+            PlotRange \[Rule] All]; \[IndentingNewLine]plc23[\([i]\)] = 
+          ScatterPlot3D[p, 
+            PlotStyle \[Rule] {\ RGBColor[0, 1, 0], PointSize[ps]}, 
+            PlotJoined \[Rule] True, 
+            DisplayFunction \[Rule] \ Identity]\[IndentingNewLine], {i, 1, 
+          Npt}\[IndentingNewLine]];\)\), "\n", 
+    \(\(Close[vfile];\)\), "\n", 
+    \(Show[plc2D23, DisplayFunction \[Rule] $DisplayFunction, 
+      PlotRange \[Rule] \ {{\(-0.01620\), \(-0.0158\)}, {0.3978, 
+            0.3980}}]\)}], "Input"],
+
+Cell[BoxData[
+    \(Show[plc2D23, 
+      ListPlot[{Take[coords[a3, b, a2], 2]}, 
+        PlotStyle \[Rule] {RGBColor[0, 0, 0.8], PointSize[\ 0.05]}, 
+        DisplayFunction \[Rule] Identity], 
+      DisplayFunction \[Rule] $DisplayFunction, 
+      PlotRange \[Rule] \ {{\(coords[a3, b, a2]\)[\([1]\)] - 
+              cd, \(coords[a3, b, a2]\)[\([1]\)] + 
+              cd}, {\(coords[a3, b, a2]\)[\([2]\)] - 
+              cd, \(coords[a3, b, a2]\)[\([2]\)] + cd}}]\)], "Input"],
+
+Cell[BoxData[
+    \(\(v2w3w = vi;\)\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[p]\)], "Input"],
+
+Cell[BoxData[
+    \(\(cut = 262;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(conn2D2w3w = 
+        ListPlot[Take[p, cut, 2], PlotJoined \[Rule] True, 
+          PlotStyle \[Rule] {\ 
+              RGBColor[0, 1, 
+                1]} (*\(,\)\(PlotRange \[Rule] \ {{\(-0.01610\), \
+\(-0.01608\)}, {0.39798, 0.397984}}\)*) ];\)\)], "Input"],
+
+Cell[BoxData[
+    \(conn2w3w = 
+      ScatterPlot3D[Take[p, cut], 
+        PlotStyle \[Rule] {\ RGBColor[0, 1, 1], PointSize[ps]}, 
+        PlotJoined \[Rule] True, 
+        DisplayFunction \[Rule] \ Identity]\)], "Input"],
+
+Cell[BoxData[
+    \(pLast = 
+      ListPlot[Take[coordsTraj[\ fourTraj[v], b, a2], {cut - 5, cut}, 2], 
+        PlotRange \[Rule] \ All, PlotJoined \[Rule] False, 
+        PlotStyle \[Rule] PointSize[0.05]]\)], "Input"],
+
+Cell[BoxData[
+    \(coords[a3, b, a2]\)], "Input"],
+
+Cell[BoxData[
+    \(Show[conn2D2w3w, pLast, 
+      ListPlot[{Take[coords[a3, b, a2], 2]}, 
+        PlotStyle \[Rule] {RGBColor[0, 0, 0.8], PointSize[\ 0.01]}, 
+        DisplayFunction \[Rule] Identity], PlotRange \[Rule] All]\)], "Input"],
+
+Cell[BoxData[
+    \(\(conn2w3wfam = 
+        Table[ScatterPlot3D[\ 
+            coordsTraj[
+              fourTraj[Map[uShift[#, i] &, Take[v, {1, cut, 5}], {1}]\ ], b, 
+              a2], PlotStyle \[Rule] {\ RGBColor[0, 0.5, 0], PointSize[ps]}, 
+            PlotJoined \[Rule] True, DisplayFunction \[Rule] \ Identity], {i, 
+            1, d}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(conn2w3wfamTab = 
+        Table[coordsTraj[
+            fourTraj[Map[uShift[#, i] &, Take[v, {1, cut}], {1}]\ ], b, 
+            a2], {i, 1, d + 1}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[conn2w3wfamTab]\)], "Input"],
+
+Cell[BoxData[
+    \(\(surP = 
+        ListSurfacePlot3D[conn2w3wfamTab, PlotRange \[Rule] All, 
+          DisplayFunction \[Rule] \ Identity];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(conn2w3wfamP = 
+        Show[Graphics3D[EdgeForm[]], 
+          Graphics3D[SurfaceColor[RGBColor[0, 1, 0]]], surP, 
+          PlotRange \[Rule] All, ImageSize \[Rule] 300, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input"],
+
+Cell[BoxData[
+    \(MVShow3D[conn2w3wfamP, MVNewScene \[Rule] False, MVAlpha \[Rule] 0.2, 
+      MVGrayBackground \[Rule] True, MVReducePolygons \[Rule] 0.025, 
+      MVReturnValue \[Rule] None, MVSplitCubes \[Rule] True]\)], "Input"],
+
+Cell[BoxData[
+    \(MVClose[]\)], "Input"],
+
+Cell[BoxData[
+    \(\(vfile = OpenRead["\<../manif/2w/manif/v.dat\>"];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(Nplt = 501;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(Npt = 100;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(rSkip = 1;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(nd = 128;\)\)], "Input"],
+
+Cell[BoxData[{
+    \(\(plP = Table[Null, {Npt}];\)\), "\[IndentingNewLine]", 
+    \(\(plP2D = Table[Null, {Npt}];\)\), "\[IndentingNewLine]", 
+    \(Do[vi = 
+        ReadList[vfile, Number, nd*Nplt, 
+          RecordLists \[Rule] True]; \[IndentingNewLine]v = 
+        Take[vi, {1, \(Dimensions[vi]\)[\([1]\)], 
+            rSkip}]; \[IndentingNewLine]p = 
+        coordsTraj[\ fourTraj[v], b, a2]; \[IndentingNewLine]plP2D[\([i]\)] = 
+        ListPlot[Take[p, All, 2], PlotJoined \[Rule] True, 
+          DisplayFunction \[Rule] Identity, 
+          PlotRange \[Rule] All]; \[IndentingNewLine]plP[\([i]\)] = 
+        ScatterPlot3D[p, 
+          PlotStyle \[Rule] {\ RGBColor[0, 1, 0], PointSize[ps]}, 
+          PlotJoined \[Rule] True, 
+          DisplayFunction \[Rule] \ Identity]\[IndentingNewLine], {i, 1, 
+        Npt}\[IndentingNewLine]]\)}], "Input"],
+
+Cell[BoxData[
+    \(Close[vfile]\)], "Input"],
+
+Cell[BoxData[
+    \(MemoryInUse[]\)], "Input"],
+
+Cell[BoxData[
+    \(Show[Take[plP2D, {10, 11}], 
+      DisplayFunction \[Rule] $DisplayFunction]\)], "Input"],
+
+Cell[BoxData[
+    \(Show[Take[plP2D, {60, 61}], 
+      DisplayFunction \[Rule] $DisplayFunction]\)], "Input"],
+
+Cell[BoxData[
+    \(m2a = 
+      Show[con2D2w3w, Take[plP2D, {11, 60}], 
+        DisplayFunction \[Rule] $DisplayFunction, PlotRange \[Rule] All, 
+        DefaultColor -> RGBColor[0, 0, 0]]\)], "Input"],
+
+Cell[BoxData[
+    \(m2b = 
+      Show[{Take[plP2D, {1, 10}], Take[plP2D, {61, 100}]}, 
+        DisplayFunction \[Rule] $DisplayFunction, 
+        DefaultColor -> RGBColor[0, 0, 0]]\)], "Input"],
+
+Cell[BoxData[
+    \(\(vfile = OpenRead["\<../manif/A2w/manif/v.dat\>"];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(Nplt = 501;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(Npt = 100;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(rSkip = 1;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(nd = 128;\)\)], "Input"],
+
+Cell[BoxData[{
+    \(\(plPA2 = Table[Null, {Npt}];\)\), "\[IndentingNewLine]", 
+    \(\(plPA22D = Table[Null, {Npt}];\)\), "\[IndentingNewLine]", 
+    \(Do[vi = 
+        ReadList[vfile, Number, nd*Nplt, 
+          RecordLists \[Rule] True]; \[IndentingNewLine]v = 
+        Take[vi, {1, \(Dimensions[vi]\)[\([1]\)], 
+            rSkip}]; \[IndentingNewLine]p = 
+        coordsTraj[\ fourTraj[v], b, 
+          a2]; \[IndentingNewLine]plPA22D[\([i]\)] = 
+        ListPlot[Take[p, All, {1, 3, 2}], PlotJoined \[Rule] True, 
+          DisplayFunction \[Rule] Identity, 
+          PlotRange \[Rule] All]; \[IndentingNewLine]plPA2[\([i]\)] = 
+        ScatterPlot3D[p, 
+          PlotStyle \[Rule] {\ RGBColor[0, 0, 0], PointSize[ps]}, 
+          PlotJoined \[Rule] True, 
+          DisplayFunction \[Rule] \ Identity]\[IndentingNewLine], {i, 1, 
+        Npt}\[IndentingNewLine]]\)}], "Input"],
+
+Cell[BoxData[
+    \(Close[vfile]\)], "Input"],
+
+Cell[BoxData[
+    \(p[\([5]\)]\)], "Input"],
+
+Cell[BoxData[
+    \(Show[plP2D, DisplayFunction \[Rule] $DisplayFunction]\)], "Input"],
+
+Cell[BoxData[
+    \(Show[plPA22D, DisplayFunction \[Rule] $DisplayFunction]\)], "Input"],
+
+Cell[BoxData[
+    \(MVShow3D[Show[plPA2, DisplayFunction \[Rule] Identity], 
+      MVNewScene \[Rule] False, MVAlpha \[Rule] 0.5, 
+      MVGrayBackground \[Rule] True, MVReducePolygons \[Rule] 0.025, 
+      MVReturnValue \[Rule] None, MVSplitCubes \[Rule] True, 
+      MVLineTubeSize \[Rule] mvtube, 
+      MVPointSphereSize \[Rule] mvsphere]\)], "Input"],
+
+Cell[BoxData[
+    \(MVClose[]\)], "Input"],
+
+Cell[BoxData[
+    \(\(vfile = OpenRead["\<../manif/3w/1/v.dat\>"];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(Nplt = 501;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(Npt = 100;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(rSkip = 1;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(nd = 128;\)\)], "Input"],
+
+Cell[BoxData[{
+    \(\(plP3 = Table[Null, {Npt}];\)\), "\[IndentingNewLine]", 
+    \(Do[vi = 
+        ReadList[vfile, Number, nd*Nplt, 
+          RecordLists \[Rule] True]; \[IndentingNewLine]v = 
+        Take[vi, {1, \(Dimensions[vi]\)[\([1]\)], 
+            rSkip}]; \[IndentingNewLine]p = 
+        coordsTraj[\ fourTraj[v], b, a2]; \[IndentingNewLine]plP3[\([i]\)] = 
+        ScatterPlot3D[p, 
+          PlotStyle \[Rule] {\ RGBColor[0, 0, 1], PointSize[ps]}, 
+          PlotJoined \[Rule] True, 
+          DisplayFunction \[Rule] \ Identity]\[IndentingNewLine], {i, 1, 
+        Npt}\[IndentingNewLine]]\)}], "Input"],
+
+Cell[BoxData[
+    \(Close[vfile]\)], "Input"],
+
+Cell[BoxData[
+    \(\(vfile = OpenRead["\<../manif/1w/1w-2/v.dat\>"];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(Nplt = 501;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(Npt = 100;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(rSkip = 1;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(nd = 128;\)\)], "Input"],
+
+Cell[BoxData[{
+    \(\(plP1 = Table[Null, {Npt}];\)\), "\[IndentingNewLine]", 
+    \(Do[vi = 
+        ReadList[vfile, Number, nd*Nplt, 
+          RecordLists \[Rule] True]; \[IndentingNewLine]v = 
+        Take[vi, {1, \(Dimensions[vi]\)[\([1]\)], 
+            rSkip}]; \[IndentingNewLine]p = 
+        coordsTraj[\ fourTraj[v], b, a2]; \[IndentingNewLine]plP1[\([i]\)] = 
+        ScatterPlot3D[p, 
+          PlotStyle \[Rule] {\ RGBColor[1, 0, 0], PointSize[ps]}, 
+          PlotJoined \[Rule] True, 
+          DisplayFunction \[Rule] \ Identity]\[IndentingNewLine], {i, 1, 
+        Npt}\[IndentingNewLine]]\)}], "Input"],
+
+Cell[BoxData[
+    \(Close[vfile]\)], "Input"],
+
+Cell[BoxData[
+    \(\(Nplt = 501;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(Npt = 2;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(rSkip = 1;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(nd = 128;\)\)], "Input"],
+
+Cell[BoxData[{
+    \(\(vfile = 
+        OpenRead["\<../manif/1w/find1w3w/v.dat\>"];\)\), \
+"\[IndentingNewLine]", 
+    \(\(plf1 = Table[Null, {Npt}];\)\), "\n", 
+    \(\(plf12D = Table[Null, {Npt}];\)\), "\n", 
+    \(\(Do[
+        vi = ReadList[vfile, Number, nd*Nplt, 
+            RecordLists \[Rule] True]; \[IndentingNewLine]v = 
+          Take[vi, {1, \(Dimensions[vi]\)[\([1]\)], 
+              rSkip}]; \[IndentingNewLine]p = 
+          coordsTraj[\ fourTraj[v], b, 
+            a2]; \[IndentingNewLine]plf12D[\([i]\)] = 
+          ListPlot[Take[p, All, 2], PlotJoined \[Rule] True, 
+            DisplayFunction \[Rule] Identity, 
+            PlotRange \[Rule] All]; \[IndentingNewLine]plf1[\([i]\)] = 
+          ScatterPlot3D[p, 
+            PlotStyle \[Rule] {\ RGBColor[0.7, 0.2, 0], PointSize[ps]}, 
+            PlotJoined \[Rule] True, 
+            DisplayFunction \[Rule] \ Identity]\[IndentingNewLine], {i, 1, 
+          Npt}\[IndentingNewLine]];\)\), "\n", 
+    \(\(Close[vfile];\)\), "\[IndentingNewLine]", 
+    \(\(Show[plf12D, DisplayFunction \[Rule] \ $DisplayFunction, 
+        PlotRange \[Rule] \ {{\(-0.018\), \(-0.01\)}, {0.39, 
+              0.4}}];\)\)}], "Input"],
+
+Cell[BoxData[
+    \(\(v1w3w = vi;\)\)], "Input"],
+
+Cell[BoxData[
+    \(conn2D1w3w = 
+      ListPlot[Take[p, All, 2], PlotJoined \[Rule] True, 
+        PlotStyle \[Rule] {\ RGBColor[0.7, 0.2, 0]}, 
+        PlotRange \[Rule] All]\)], "Input"],
+
+Cell[BoxData[
+    \(conn1w3w = 
+      ScatterPlot3D[p, 
+        PlotStyle \[Rule] {\ \ RGBColor[0.7, 0.2, 0], PointSize[ps]}, 
+        PlotJoined \[Rule] True, 
+        DisplayFunction \[Rule] \ Identity]\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[v2w3w]\)], "Input"],
+
+Cell[BoxData[
+    \(\(f2w3w = fourTraj[v2w3w];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[f2w3w]\)], "Input"],
+
+Cell[BoxData[
+    \(\(f1w3w = fourTraj[v1w3w];\)\)], "Input"],
+
+Cell[BoxData[
+    \(ListPlot[Take[coordsTraj[\ fourTraj[v], b, a2], \(-5\), 2], 
+      PlotRange \[Rule] \ All, PlotJoined \[Rule] False]\)], "Input"],
+
+Cell[BoxData[
+    \(\(dif2w3w = 
+        Normalize[f2w3w[\([cut]\)] - f2w3w[\([cut - 5]\)]];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(dif1w3w = 
+        Normalize[f1w3w[\([\(-1\)]\)] - f1w3w[\([\(-10\)]\)]];\)\)], "Input"],
+
+Cell[BoxData[
+    \(f1w3w[\([\(-1\)]\)] - f1w3w[\([\(-10\)]\)] // Chop\)], "Input"],
+
+Cell[BoxData[
+    \(cInner[dif2w3w, dif1w3w]\)], "Input"],
+
+Cell[BoxData[
+    \(\(fJ3 = 
+        Chop[Map[If[Norm[#] > 10^\(-10\), Normalize[#], #] &, 
+            Map[Fourier[#, fp] &, J3, {1}], {1}], 10^\(-10\)];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Table[
+        cInner[fJ3[\([i]\)], dif1w3w], {i, 1, \(Dimensions[fJ3]\)[\([1]\)]}] // 
+      Chop\)], "Input"],
+
+Cell[BoxData[
+    \(fJ3[\([7]\)]\)], "Input"],
+
+Cell[BoxData[
+    \(dif1w3w // Chop\)], "Input"],
+
+Cell[BoxData[
+    \(Chop[
+      Table[cInner[fJ3[\([i]\)], dif2w3w], {i, 
+          1, \(Dimensions[fJ3]\)[\([1]\)]}], 10^\(-7\)]\)], "Input"],
+
+Cell[BoxData[
+    \(Show[conn2w3w, conn1w3w, DisplayFunction \[Rule] \ $DisplayFunction, 
+      PlotRange \[Rule] \ {{0.3, 0.38}, {0.26, 0.31}, {0.1, 0.16}}, \ 
+      AxesLabel \[Rule] {"\<1\>", "\<2\>", "\<3\>"}]\)], "Input"],
+
+Cell[BoxData[
+    \(Show[plP, plP1, conn2w3w, conn1w3w, 
+      DisplayFunction \[Rule] \ $DisplayFunction, 
+      PlotRange \[Rule] \ {{0.2, 0.38}, {0.2, 0.41}, {0.05, 0.26}}, \ 
+      AxesLabel \[Rule] {"\<1\>", "\<2\>", "\<3\>"}]\)], "Input"],
+
+Cell[BoxData[
+    \(MVClose[]\)], "Input"],
+
+Cell[BoxData[
+    \(<< Default3D`\)], "Input"],
+
+Cell[BoxData[
+    \(coords[Fourier[w3, fp], b, a2]\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[v]\)], "Input"],
+
+Cell[BoxData[
+    \(Clear[conn1w3wfam]\)], "Input"],
+
+Cell[BoxData[
+    \(\(conn1w3wfamTab = 
+        Table[coordsTraj[
+            fourTraj[
+              Map[uShift[#, i] &, 
+                Take[v, {1, \(Dimensions[v]\)[\([1]\)]}], {1}]\ ], b, 
+            a2], {i, 1, d + 1}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[conn1w3wfamTab]\)], "Input"],
+
+Cell[BoxData[
+    \(\(surP = 
+        ListSurfacePlot3D[conn1w3wfamTab, PlotRange \[Rule] All, 
+          DisplayFunction \[Rule] \ Identity];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(conn1w3wfamP = 
+        Show[Graphics3D[EdgeForm[]], 
+          Graphics3D[SurfaceColor[RGBColor[1, 0, 0]]], surP, 
+          PlotRange \[Rule] All, ImageSize \[Rule] 300, 
+          DisplayFunction \[Rule] Identity];\)\)], "Input"],
+
+Cell[BoxData[
+    \(MVShow3D[conn1w3wfamP, MVNewScene \[Rule] False, MVAlpha \[Rule] 0.3, 
+      MVGrayBackground \[Rule] True, MVReducePolygons \[Rule] 0.025, 
+      MVReturnValue \[Rule] None, MVSplitCubes \[Rule] True]\)], "Input"],
+
+Cell[BoxData[
+    \(\(conn1w3wfam = 
+        Table[ScatterPlot3D[
+            coordsTraj[
+              fourTraj[
+                Map[uShift[#, i] &, 
+                  Take[v, {1, \(Dimensions[v]\)[\([1]\)], 5}], {1}]\ ], b, 
+              a2], PlotStyle \[Rule] {\ RGBColor[0.5, 0, 0], PointSize[ps]}, 
+            PlotJoined \[Rule] True, DisplayFunction \[Rule] \ Identity], {i, 
+            1, d}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(MVShow3D[
+      Show[pw1fam, pw3fam, Take[conn1w3wfam, d/4], Take[conn2w3wfam, d/4], 
+        DisplayFunction \[Rule] Identity], MVNewScene \[Rule] False, 
+      MVLineTubeSize \[Rule] 0.001, MVPointSphereSize \[Rule] 0.5]\)], "Input"],
+
+Cell[BoxData[
+    \(MVShow3D[Show[polyR1, polyL, DisplayFunction \[Rule] Identity], 
+      MVNewScene \[Rule] True, MVAlpha \[Rule] 0.2, 
+      MVGrayBackground \[Rule] True, MVReducePolygons \[Rule] 0.025, 
+      MVReturnValue \[Rule] None, MVSplitCubes \[Rule] True, 
+      MVLineTubeSize \[Rule] 0.002, MVPointSphereSize \[Rule] 0.5]\)], "Input"],
+
+Cell[BoxData[
+    \(MVShow3D[
+      Show[conn2w3w, conn1w3w\ , plP, \ plP1, 
+        DisplayFunction \[Rule] Identity], MVNewScene \[Rule] False, 
+      MVAlpha \[Rule] 0.5, MVGrayBackground \[Rule] True, 
+      MVReducePolygons \[Rule] 0.025, MVReturnValue \[Rule] None, 
+      MVSplitCubes \[Rule] True, MVLineTubeSize \[Rule] 0.002, 
+      MVPointSphereSize \[Rule] 0.5]\)], "Input"],
+
+Cell[BoxData[""], "Input"],
+
+Cell[BoxData[
+    \(MVClose[]\)], "Input"],
+
+Cell[BoxData[
+    \(MVShow3D[
+      Show[conn3wA2w, conn3wA2wMinus, DisplayFunction \[Rule] Identity], 
+      MVNewScene \[Rule] False, MVGrayBackground \[Rule] True, 
+      MVReducePolygons \[Rule] 0.025, MVReturnValue \[Rule] None, 
+      MVSplitCubes \[Rule] True, MVLineTubeSize \[Rule] 0.002, 
+      MVPointSphereSize \[Rule] 0.5]\)], "Input"],
+
+Cell[BoxData[
+    \(MVShow3D[Show[plPA2, DisplayFunction \[Rule] Identity], 
+      MVNewScene \[Rule] False, MVAlpha \[Rule] 0.3, 
+      MVGrayBackground \[Rule] True, MVReducePolygons \[Rule] 0.025, 
+      MVReturnValue \[Rule] None, MVSplitCubes \[Rule] True, 
+      MVLineTubeSize \[Rule] 0.002, MVPointSphereSize \[Rule] 0.5]\)], "Input"],
+
+Cell[BoxData[
+    \(conn1w3w = 
+      ScatterPlot3D[p, 
+        PlotStyle \[Rule] {\ RGBColor[0.7, 0.2, 0], PointSize[ps]}, 
+        PlotJoined \[Rule] True, 
+        DisplayFunction \[Rule] \ Identity]\)], "Input"],
+
+Cell[BoxData[
+    \(MemoryInUse[]\)], "Input"],
+
+Cell[BoxData[
+    \(ByteCount[vi]\)], "Input"],
+
+Cell[BoxData[
+    \(\(vrpo = 
+        Import["\<../rpo/ks22rpo047.64_05.676/rpoU.dat\>"];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[vrpo]\)], "Input"],
+
+Cell[BoxData[
+    \(ListPlot[vrpo[\([1]\)]]\)], "Input"],
+
+Cell[BoxData[
+    \(Table[{i, 
+        Plus @@ Abs[Re[Fourier[RotateLeft[vrpo[\([1]\)], i], fp\ ]]]}, {i, 1, 
+        20}]\)], "Input"],
+
+Cell[BoxData[
+    \(\(vrpo = Map[RotateLeft[#, 9] &, vrpo, {1}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(rpo47 = 
+        ScatterPlot3D[coordsTraj[fourTraj[vrpo], b, a2], 
+          PlotStyle \[Rule] {\ CMYKColor[0, 0, 0.5, 0], PointSize[ps]}, 
+          PlotJoined \[Rule] True, 
+          DisplayFunction \[Rule] \ Identity];\)\)], "Input"],
+
+Cell[BoxData[
+    \(sh = \(Import["\<../rpo/ks22rpo047.64_05.676/periods.dat\>"]\)[\([2, 
+          1]\)]\)], "Input"],
+
+Cell[BoxData[
+    \(\(ListDensityPlot[
+        AppendColumns[vrpo, uShiftFTraj[vrpo, sh, L], 
+          uShiftFTraj[vrpo, 2  sh, L], uShiftFTraj[vrpo, 3  sh, L], 
+          uShiftFTraj[vrpo, 4  sh, L]], Mesh -> False];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(rpo47s = 
+        ScatterPlot3D[
+          coordsTraj[fourTraj[uShiftFTraj[vrpo, sh, L]], b, 
+            a2], \[IndentingNewLine]PlotStyle \[Rule] {\ 
+              CMYKColor[0, 0.5, 0.5, 0], PointSize[ps]}, 
+          PlotJoined \[Rule] True, 
+          DisplayFunction \[Rule] \ Identity];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(rpo47ss = 
+        ScatterPlot3D[
+          coordsTraj[fourTraj[AppendColumns[vrpo, uShiftFTraj[vrpo, sh, L]]], 
+                b, a2] PlotStyle \[Rule] {\ CMYKColor[0, 0.5, 0.5, 0], 
+              PointSize[ps]}, PlotJoined \[Rule] True, 
+          DisplayFunction \[Rule] \ Identity];\)\)], "Input"],
+
+Cell[BoxData[
+    RowBox[{"pAll", "=", 
+      RowBox[{"Show", "[", 
+        RowBox[{
+        "p1", ",", "p2", ",", "p3", " ", ",", "pw1fam", ",", "pw3fam", ",", 
+          "polyR1", ",", "polyL", " ", ",", "con2w3w", ",", "conn1w3w", " ", 
+          ",", 
+          RowBox[{
+            FormBox[\(\(plP\)\(,\)\),
+              "InputForm"], " ", "conn3A2"}], ",", "conn3A2Minus", ",", 
+          "conn3A2fam", ",", "conn3A2Minusfam", ",", "conn1w3wfam", ",", 
+          " ", \(DisplayFunction \[Rule] $DisplayFunction\), 
+          ",", \(PlotRange \[Rule] All\)}], " ", "]"}]}]], "Input"],
+
+Cell[BoxData[
+    \(pAll = Show[p1, p2, p3, polyR1, polyL]\)], "Input"],
+
+Cell[BoxData[
+    \(pAll = 
+      Show[p1, p2, p3\ , pw1fam, pw3fam, polyR1, polyL, con2w3w, conn1w3w\ , 
+        plP1, plPA2, plP3, \ conn3wA2w, conn3A2Minus, conn1w3wfam, 
+        DisplayFunction \[Rule] $DisplayFunction, 
+        PlotRange \[Rule] All\ ]\)], "Input"],
+
+Cell[BoxData[
+    \(\(Get["\<MathGL3d`OpenGLViewer`\>"];\)\)], "Input"],
+
+Cell[BoxData[
+    \(MVShow3D[pAll, MVNewScene \[Rule] True, MVLineTubeSize \[Rule] 0.005, 
+      MVPointSphereSize \[Rule] 0.5, 
+      MVPlotRange \[Rule] {{\(-0.5\), \(-0.2\)}, {\(-0.1\), 0}, {\(-0.1\), 
+            0.1}}]\)], "Input"],
+
+Cell[BoxData[
+    \(MVClose[]\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[p]\)], "Input"],
+
+Cell[BoxData[
+    \(p[\([1, 1]\)]\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[p]\)], "Input"],
+
+Cell[BoxData[
+    \(\(vfile = OpenRead["\<../int/random/trajU.dat\>"];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(Ntot = 20000;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(rSkip = 5;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(nd = 128;\)\)], "Input"],
+
+Cell[BoxData[{
+    \(\(pTurb = Table[Null, {Ntot/rSkip}];\)\), "\n", 
+    \(Do[vi = 
+        ReadList[vfile, Number, nd*rSkip, 
+          RecordLists \[Rule] True]; \[IndentingNewLine]pTurb[\([i]\)] = 
+        coords[Fourier[vi[\([1]\)] // Flatten, fp], b, 
+          a2];\[IndentingNewLine], {i, 1, 
+        Ntot/rSkip}\[IndentingNewLine]]\)}], "Input"],
+
+Cell[BoxData[
+    \(Close[vfile]\)], "Input"],
+
+Cell[BoxData[
+    \(\(pTurb = Drop[pTurb, 500];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[pTurb]\)], "Input"],
+
+Cell[BoxData[
+    \(\(plTurb = 
+        ScatterPlot3D[pTurb, 
+          PlotStyle \[Rule] {\ RGBColor[0.5, 0.5, 0.5], PointSize[ps]}, 
+          PlotJoined \[Rule] True, 
+          DisplayFunction \[Rule] \ Identity];\)\)], "Input"],
+
+Cell[BoxData[
+    \(MVShow3D[plTurb, MVNewScene \[Rule] False, MVAlpha \[Rule] 0.1, 
+      MVGrayBackground \[Rule] True, MVReducePolygons \[Rule] 0.025, 
+      MVReturnValue \[Rule] None, MVSplitCubes \[Rule] True, 
+      MVLineTubeSize \[Rule] 0.001, MVPointSphereSize \[Rule] 0.5]\)], "Input"],
+
+Cell[BoxData[
+    \(MVClose[]\)], "Input"],
+
+Cell[BoxData[
+    \(pAll = 
+      Show[p1, p2, p3\ , polyR1, polyL, Take[plP, {1, Npt, 5}], plTurb, \ 
+        DisplayFunction \[Rule] $DisplayFunction, 
+        PlotRange \[Rule] 
+          All\  (*{{c0 - df, c0 + df}, {\(-df\), df}, {\(-df\), 
+              df}}*) ]\)], "Input"],
+
+Cell[BoxData[
+    \(MVShow3D[Show[pw2fam, p1, p2, p3], MVNewScene \[Rule] True, 
+      MVLineTubeSize \[Rule] 0.005, MVPointSphereSize \[Rule] 0.5, 
+      MVPlotRange \[Rule] {{\(-0.5\), \(-0.2\)}, {\(-0.1\), 0}, {\(-0.1\), 
+            0.1}}]\)], "Input"],
+
+Cell[BoxData[
+    \(\(Do[
+        ListDensityPlot[v[\([i]\)], Mesh \[Rule] False], {i, 1, 
+          Npt}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(Close[vfile];\)\)], "Input"],
+
+Cell[BoxData[
+    \(<< RealTime3D`\)], "Input"],
+
+Cell[BoxData[
+    \(<< Default3D`\)], "Input"],
+
+Cell[BoxData[
+    \(\(Table[
+        Show[p1, p2, p3, polyR1, polyL, p2A2, p32, pA22, 
+          PlotRange \[Rule] All, DisplayFunction \[Rule] $DisplayFunction, 
+          AxesLabel \[Rule] {"\<b1\>", "\<b2\>", "\<b3\>"}, 
+          ViewPoint \[Rule] \ {3  Cos[\ i\ \[Pi]/3] Sin[i\ \[Pi]/6], 
+              3  Sin[i\ \[Pi]/3] Sin[i\ \ \[Pi]/6], 
+              3  Cos[\ i\ \[Pi]/6]}], {i, 1, 3.5, 0.1}];\)\)], "Input"]
+},
+FrontEndVersion->"5.2 for X",
+ScreenRectangle->{{0, 1280}, {0, 1024}},
+WindowSize->{635, 950},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+ShowSelection->True
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+Cell[1754, 51, 56, 1, 27, "Input"],
+Cell[1813, 54, 49, 1, 27, "Input"],
+Cell[1865, 57, 69, 1, 27, "Input"],
+Cell[1937, 60, 68, 1, 27, "Input"],
+Cell[2008, 63, 67, 1, 27, "Input"],
+Cell[2078, 66, 68, 1, 27, "Input"],
+Cell[2149, 69, 68, 1, 27, "Input"],
+Cell[2220, 72, 57, 1, 27, "Input"],
+Cell[2280, 75, 57, 1, 27, "Input"],
+Cell[2340, 78, 64, 1, 27, "Input"],
+Cell[2407, 81, 64, 1, 27, "Input"],
+Cell[2474, 84, 46, 1, 27, "Input"],
+Cell[2523, 87, 68, 1, 27, "Input"],
+Cell[2594, 90, 66, 1, 27, "Input"],
+Cell[2663, 93, 53, 1, 27, "Input"],
+Cell[2719, 96, 53, 1, 27, "Input"],
+Cell[2775, 99, 46, 1, 27, "Input"],
+Cell[2824, 102, 81, 1, 27, "Input"],
+Cell[2908, 105, 58, 1, 27, "Input"],
+Cell[2969, 108, 80, 1, 27, "Input"],
+Cell[3052, 111, 67, 1, 27, "Input"],
+Cell[3122, 114, 58, 1, 27, "Input"],
+Cell[3183, 117, 80, 1, 27, "Input"],
+Cell[3266, 120, 67, 1, 27, "Input"],
+Cell[3336, 123, 58, 1, 27, "Input"],
+Cell[3397, 126, 68, 1, 27, "Input"],
+Cell[3468, 129, 69, 1, 27, "Input"],
+Cell[3540, 132, 58, 1, 27, "Input"],
+Cell[3601, 135, 47, 1, 27, "Input"],
+Cell[3651, 138, 62, 1, 27, "Input"],
+Cell[3716, 141, 63, 1, 27, "Input"],
+Cell[3782, 144, 83, 1, 27, "Input"],
+Cell[3868, 147, 81, 1, 27, "Input"],
+Cell[3952, 150, 81, 1, 27, "Input"],
+Cell[4036, 153, 58, 1, 27, "Input"],
+Cell[4097, 156, 67, 1, 27, "Input"],
+Cell[4167, 159, 72, 1, 27, "Input"],
+Cell[4242, 162, 60, 1, 27, "Input"],
+Cell[4305, 165, 51, 1, 27, "Input"],
+Cell[4359, 168, 58, 1, 27, "Input"],
+Cell[4420, 171, 50, 1, 27, "Input"],
+Cell[4473, 174, 72, 1, 27, "Input"],
+Cell[4548, 177, 73, 1, 27, "Input"],
+Cell[4624, 180, 76, 1, 27, "Input"],
+Cell[4703, 183, 58, 1, 27, "Input"],
+Cell[4764, 186, 72, 1, 27, "Input"],
+Cell[4839, 189, 73, 1, 27, "Input"],
+Cell[4915, 192, 76, 1, 27, "Input"],
+Cell[4994, 195, 47, 1, 27, "Input"],
+Cell[5044, 198, 277, 5, 75, "Input"],
+Cell[5324, 205, 222, 4, 59, "Input"],
+Cell[5549, 211, 277, 5, 75, "Input"],
+Cell[5829, 218, 121, 2, 43, "Input"],
+Cell[5953, 222, 46, 1, 27, "Input"],
+Cell[6002, 225, 81, 1, 27, "Input"],
+Cell[6086, 228, 274, 5, 59, "Input"],
+Cell[6363, 235, 207, 4, 43, "Input"],
+Cell[6573, 241, 71, 1, 27, "Input"],
+Cell[6647, 244, 304, 5, 59, "Input"],
+Cell[6954, 251, 81, 1, 27, "Input"],
+Cell[7038, 254, 81, 1, 27, "Input"],
+Cell[7122, 257, 81, 1, 27, "Input"],
+Cell[7206, 260, 231, 4, 59, "Input"],
+Cell[7440, 266, 231, 4, 59, "Input"],
+Cell[7674, 272, 231, 4, 59, "Input"],
+Cell[7908, 278, 81, 1, 27, "Input"],
+Cell[7992, 281, 48, 1, 27, "Input"],
+Cell[8043, 284, 258, 5, 59, "Input"],
+Cell[8304, 291, 48, 1, 27, "Input"],
+Cell[8355, 294, 334, 5, 75, "Input"],
+Cell[8692, 301, 249, 6, 91, "Input"],
+Cell[8944, 309, 60, 1, 27, "Input"],
+Cell[9007, 312, 158, 3, 43, "Input"],
+Cell[9168, 317, 255, 5, 59, "Input"],
+Cell[9426, 324, 235, 3, 59, "Input"],
+Cell[9664, 329, 473, 11, 107, "Input"],
+Cell[10140, 342, 86, 1, 27, "Input"],
+Cell[10229, 345, 48, 1, 27, "Input"],
+Cell[10280, 348, 261, 5, 59, "Input"],
+Cell[10544, 355, 252, 6, 91, "Input"],
+Cell[10799, 363, 161, 3, 43, "Input"],
+Cell[10963, 368, 258, 5, 59, "Input"],
+Cell[11224, 375, 236, 3, 59, "Input"],
+Cell[11463, 380, 478, 11, 107, "Input"],
+Cell[11944, 393, 48, 1, 27, "Input"],
+Cell[11995, 396, 45, 1, 27, "Input"],
+Cell[12043, 399, 47, 1, 27, "Input"],
+Cell[12093, 402, 46, 1, 27, "Input"],
+Cell[12142, 405, 54, 1, 27, "Input"],
+Cell[12199, 408, 1477, 28, 315, "Input"],
+Cell[13679, 438, 48, 1, 27, "Input"],
+Cell[13730, 441, 45, 1, 27, "Input"],
+Cell[13778, 444, 47, 1, 27, "Input"],
+Cell[13828, 447, 46, 1, 27, "Input"],
+Cell[13877, 450, 1142, 22, 267, "Input"],
+Cell[15022, 474, 480, 9, 91, "Input"],
+Cell[15505, 485, 48, 1, 27, "Input"],
+Cell[15556, 488, 46, 1, 27, "Input"],
+Cell[15605, 491, 47, 1, 27, "Input"],
+Cell[15655, 494, 282, 6, 59, "Input"],
+Cell[15940, 502, 222, 5, 59, "Input"],
+Cell[16165, 509, 219, 4, 43, "Input"],
+Cell[16387, 515, 50, 1, 27, "Input"],
+Cell[16440, 518, 238, 4, 75, "Input"],
+Cell[16681, 524, 361, 7, 91, "Input"],
+Cell[17045, 533, 186, 4, 59, "Input"],
+Cell[17234, 539, 59, 1, 27, "Input"],
+Cell[17296, 542, 157, 3, 43, "Input"],
+Cell[17456, 547, 254, 5, 59, "Input"],
+Cell[17713, 554, 234, 3, 59, "Input"],
+Cell[17950, 559, 42, 1, 27, "Input"],
+Cell[17995, 562, 85, 1, 27, "Input"],
+Cell[18083, 565, 48, 1, 27, "Input"],
+Cell[18134, 568, 47, 1, 27, "Input"],
+Cell[18184, 571, 47, 1, 27, "Input"],
+Cell[18234, 574, 46, 1, 27, "Input"],
+Cell[18283, 577, 859, 16, 187, "Input"],
+Cell[19145, 595, 45, 1, 27, "Input"],
+Cell[19193, 598, 46, 1, 27, "Input"],
+Cell[19242, 601, 109, 2, 27, "Input"],
+Cell[19354, 605, 109, 2, 27, "Input"],
+Cell[19466, 609, 202, 4, 59, "Input"],
+Cell[19671, 615, 193, 4, 43, "Input"],
+Cell[19867, 621, 86, 1, 27, "Input"],
+Cell[19956, 624, 48, 1, 27, "Input"],
+Cell[20007, 627, 47, 1, 27, "Input"],
+Cell[20057, 630, 47, 1, 27, "Input"],
+Cell[20107, 633, 46, 1, 27, "Input"],
+Cell[20156, 636, 886, 17, 203, "Input"],
+Cell[21045, 655, 45, 1, 27, "Input"],
+Cell[21093, 658, 43, 1, 27, "Input"],
+Cell[21139, 661, 86, 1, 27, "Input"],
+Cell[21228, 664, 88, 1, 27, "Input"],
+Cell[21319, 667, 355, 6, 75, "Input"],
+Cell[21677, 675, 42, 1, 27, "Input"],
+Cell[21722, 678, 81, 1, 27, "Input"],
+Cell[21806, 681, 48, 1, 27, "Input"],
+Cell[21857, 684, 47, 1, 27, "Input"],
+Cell[21907, 687, 47, 1, 27, "Input"],
+Cell[21957, 690, 46, 1, 27, "Input"],
+Cell[22006, 693, 620, 12, 155, "Input"],
+Cell[22629, 707, 45, 1, 27, "Input"],
+Cell[22677, 710, 84, 1, 27, "Input"],
+Cell[22764, 713, 48, 1, 27, "Input"],
+Cell[22815, 716, 47, 1, 27, "Input"],
+Cell[22865, 719, 47, 1, 27, "Input"],
+Cell[22915, 722, 46, 1, 27, "Input"],
+Cell[22964, 725, 620, 12, 155, "Input"],
+Cell[23587, 739, 45, 1, 27, "Input"],
+Cell[23635, 742, 48, 1, 27, "Input"],
+Cell[23686, 745, 45, 1, 27, "Input"],
+Cell[23734, 748, 47, 1, 27, "Input"],
+Cell[23784, 751, 46, 1, 27, "Input"],
+Cell[23833, 754, 1188, 24, 267, "Input"],
+Cell[25024, 780, 48, 1, 27, "Input"],
+Cell[25075, 783, 189, 4, 43, "Input"],
+Cell[25267, 789, 217, 5, 59, "Input"],
+Cell[25487, 796, 50, 1, 27, "Input"],
+Cell[25540, 799, 61, 1, 27, "Input"],
+Cell[25604, 802, 50, 1, 27, "Input"],
+Cell[25657, 805, 61, 1, 27, "Input"],
+Cell[25721, 808, 150, 2, 43, "Input"],
+Cell[25874, 812, 107, 2, 27, "Input"],
+Cell[25984, 816, 110, 2, 27, "Input"],
+Cell[26097, 820, 83, 1, 27, "Input"],
+Cell[26183, 823, 57, 1, 27, "Input"],
+Cell[26243, 826, 169, 3, 43, "Input"],
+Cell[26415, 831, 131, 3, 43, "Input"],
+Cell[26549, 836, 45, 1, 27, "Input"],
+Cell[26597, 839, 48, 1, 27, "Input"],
+Cell[26648, 842, 142, 3, 43, "Input"],
+Cell[26793, 847, 226, 3, 59, "Input"],
+Cell[27022, 852, 244, 4, 59, "Input"],
+Cell[27269, 858, 42, 1, 27, "Input"],
+Cell[27314, 861, 46, 1, 27, "Input"],
+Cell[27363, 864, 63, 1, 27, "Input"],
+Cell[27429, 867, 46, 1, 27, "Input"],
+Cell[27478, 870, 51, 1, 27, "Input"],
+Cell[27532, 873, 241, 6, 91, "Input"],
+Cell[27776, 881, 59, 1, 27, "Input"],
+Cell[27838, 884, 157, 3, 43, "Input"],
+Cell[27998, 889, 254, 5, 59, "Input"],
+Cell[28255, 896, 234, 3, 59, "Input"],
+Cell[28492, 901, 418, 9, 123, "Input"],
+Cell[28913, 912, 255, 4, 59, "Input"],
+Cell[29171, 918, 349, 5, 75, "Input"],
+Cell[29523, 925, 386, 7, 75, "Input"],
+Cell[29912, 934, 26, 0, 27, "Input"],
+Cell[29941, 936, 42, 1, 27, "Input"],
+Cell[29986, 939, 348, 6, 75, "Input"],
+Cell[30337, 947, 342, 5, 75, "Input"],
+Cell[30682, 954, 215, 5, 59, "Input"],
+Cell[30900, 961, 46, 1, 27, "Input"],
+Cell[30949, 964, 46, 1, 27, "Input"],
+Cell[30998, 967, 104, 2, 27, "Input"],
+Cell[31105, 971, 49, 1, 27, "Input"],
+Cell[31157, 974, 56, 1, 27, "Input"],
+Cell[31216, 977, 135, 3, 43, "Input"],
+Cell[31354, 982, 79, 1, 27, "Input"],
+Cell[31436, 985, 259, 5, 59, "Input"],
+Cell[31698, 992, 118, 2, 27, "Input"],
+Cell[31819, 996, 233, 4, 59, "Input"],
+Cell[32055, 1002, 329, 7, 75, "Input"],
+Cell[32387, 1011, 324, 6, 91, "Input"],
+Cell[32714, 1019, 589, 12, 59, "Input"],
+Cell[33306, 1033, 71, 1, 27, "Input"],
+Cell[33380, 1036, 270, 5, 59, "Input"],
+Cell[33653, 1043, 71, 1, 27, "Input"],
+Cell[33727, 1046, 236, 4, 59, "Input"],
+Cell[33966, 1052, 42, 1, 27, "Input"],
+Cell[34011, 1055, 46, 1, 27, "Input"],
+Cell[34060, 1058, 46, 1, 27, "Input"],
+Cell[34109, 1061, 46, 1, 27, "Input"],
+Cell[34158, 1064, 85, 1, 27, "Input"],
+Cell[34246, 1067, 50, 1, 27, "Input"],
+Cell[34299, 1070, 47, 1, 27, "Input"],
+Cell[34349, 1073, 46, 1, 27, "Input"],
+Cell[34398, 1076, 354, 7, 91, "Input"],
+Cell[34755, 1085, 45, 1, 27, "Input"],
+Cell[34803, 1088, 62, 1, 27, "Input"],
+Cell[34868, 1091, 50, 1, 27, "Input"],
+Cell[34921, 1094, 232, 5, 59, "Input"],
+Cell[35156, 1101, 296, 4, 59, "Input"],
+Cell[35455, 1107, 42, 1, 27, "Input"],
+Cell[35500, 1110, 281, 6, 59, "Input"],
+Cell[35784, 1118, 256, 4, 59, "Input"],
+Cell[36043, 1124, 122, 3, 27, "Input"],
+Cell[36168, 1129, 50, 1, 27, "Input"],
+Cell[36221, 1132, 47, 1, 27, "Input"],
+Cell[36271, 1135, 46, 1, 27, "Input"],
+Cell[36320, 1138, 418, 7, 75, "Input"]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+

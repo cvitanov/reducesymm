@@ -1,5 +1,5 @@
 (************** Content-type: application/mathematica **************
-                     CreatedBy='Mathematica 5.0'
+                     CreatedBy='Mathematica 5.2'
 
                     Mathematica-Compatible Notebook
 
@@ -41,9 +41,9 @@ Wolfram Research.
 
 (*NotebookFileLineBreakTest
 NotebookFileLineBreakTest*)
-(*NotebookOptionsPosition[      6775,        205]*)
-(*NotebookOutlinePosition[      7460,        229]*)
-(*  CellTagsIndexPosition[      7416,        225]*)
+(*NotebookOptionsPosition[      7131,        214]*)
+(*NotebookOutlinePosition[      7816,        238]*)
+(*  CellTagsIndexPosition[      7772,        234]*)
 (*WindowFrame->Normal*)
 
 
@@ -85,57 +85,69 @@ Cell[BoxData[
     \(\(c3 = RGBColor[0, 0, 0.7];\)\)], "Input"],
 
 Cell[BoxData[
-    \(\(rC = 0.02 \@ 3/4;\)\)], "Input"],
+    \(rB = 0.05\)], "Input"],
 
 Cell[BoxData[
-    \(\(sTr = 0.02;\)\)], "Input"],
+    \(\(rC = rB \@ 3/4;\)\)], "Input"],
 
 Cell[BoxData[
-    \(\(sSq = 0.02;\)\)], "Input"],
+    \(\(sTr = rB;\)\)], "Input"],
 
 Cell[BoxData[
-    \(\(thck = 0.01;\)\)], "Input"],
+    \(\(sSq = rB;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(thck = 3;\)\)], "Input"],
 
 Cell[BoxData[
     \(Dimensions[v1]\)], "Input"],
 
 Cell[BoxData[
+    \(\(sz = 72*8;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(hr = 1/GoldenRatio;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(hr = 2.65/\((0.44 + 0.37)\);\)\)], "Input"],
+
+Cell[BoxData[
     \(equiTriangle[c_, s_] := 
       Line[{{c[\([1]\)] - s/2, c[\([2]\)] - s \@ 3/6}, {c[\([1]\)] + s/2, 
             c[\([2]\)] - s \@ 3/6}, {c[\([1]\)], 
-            c[\([2]\)] + s \@ 3/3}, {c[\([\)\(1\)\(]\)] - s/2, 
-            c[\([\)\(2\)\(]\)] - s \@ 3/6}}]\)], "Input"],
+            c[\([2]\)] + s \@ 3/3}, {c[\([1]\)] - s/2, 
+            c[\([2]\)] - s \@ 3/6}}]\)], "Input"],
 
 Cell[BoxData[
     \(square[c_, s_] := 
-      Line[{{c[\([1]\)] - s/2, c[\([2]\)] - s/2}, {c[\([1]\)] + s/2, 
-            c[\([2]\)] - s/2}, {c[\([\)\(1\)\(]\)] + s/2, 
-            c[\([2]\)] + s/2}, {c[\([1]\)] - s/2, 
-            c[\([2]\)] + s/2}, {c[\([\)\(1\)\(]\)] - s/2, 
-            c[\([\)\(2\)\(]\)] - s/2}}]\)], "Input"],
+      Line[{{c[\([1]\)] - s/2, hr*\((c[\([2]\)] - s/2)\)}, {c[\([1]\)] + s/2, 
+            hr*\((c[\([2]\)] - s/2)\)}, {c[\([1]\)] + s/2, 
+            hr*\((c[\([2]\)] + s/2)\)}, {c[\([1]\)] - s/2, 
+            hr*\((c[\([2]\)] + s/2)\)}, {c[\([1]\)] - s/2, 
+            hr*\((c[\([2]\)] - s/2)\)}}]\)], "Input"],
 
 Cell[BoxData[
     \(asterisk[c_, 
-        r_] := {Line[{{c[\([1]\)], c[\([2]\)] + r/2}, {c[\([1]\)], 
-              c[\([2]\)] - r/2}}], 
-        Line[{{c[\([1]\)] + r/2, c[\([2]\)]}, {c[\([1]\)] - r/2, 
-              c[\([2]\)]}}], 
-        Line[{{c[\([\)\(1\)\(]\)] + \(\@2\) r/4, 
-              c[\([2]\)] + \(\@2\) r/4}, {c[\([\)\(1\)\(]\)] - \(\@2\) r/4, 
-              c[\([2]\)] - \(\@2\) r/4}}], 
+        r_] := {Line[{{c[\([1]\)], hr*\((c[\([2]\)] + r/2)\)}, {c[\([1]\)], 
+              hr*\((c[\([2]\)] - r/2)\)}}], 
+        Line[{{c[\([1]\)] + r/2, hr*c[\([2]\)]}, {c[\([1]\)] - r/2, 
+              hr*c[\([2]\)]}}], 
+        Line[{{c[\([1]\)] + \(\@2\) r/4, 
+              hr*\((c[\([2]\)] + \(\@2\) r/4)\)}, {c[\([1]\)] - \(\@2\) r/4, 
+              hr*\((c[\([2]\)] - \(\@2\) r/4)\)}}], 
         Line[{{c[\([1]\)] - \(\@2\) r/4, 
-              c[\([\)\(2\)\(]\)] + \(\@2\) r/4}, {c[\([1]\)] + \(\@2\) r/4, 
-              c[\([\)\(2\)\(]\)] - \(\@2\) r/4}}]}\)], "Input"],
+              hr*\((c[\([2]\)] + \(\@2\) r/4)\)}, {c[\([1]\)] + \(\@2\) r/4, 
+              hr*\((c[\([2]\)] - \(\@2\) r/4)\)}}]}\)], "Input"],
 
 Cell[BoxData[
     \(\(p0 = 
-        Show[Graphics[{AbsoluteThickness[thck], Map[Disk[#, rC] &, v0]}], 
+        Show[Graphics[{Map[Disk[#, {rC, hr*rC}] &, v0]}], 
           AspectRatio \[Rule] \ Automatic];\)\)], "Input"],
 
 Cell[BoxData[
     \(\(p1 = 
         Show[Graphics[{c1, AbsoluteThickness[thck], 
-              Map[Circle[#, rC] &, Take[v1, 10]]}], 
+              Map[Circle[#, {rC, rC*hr}] &, Take[v1, 10]]}], 
           AspectRatio \[Rule] \ Automatic];\)\)], "Input"],
 
 Cell[BoxData[
@@ -157,9 +169,6 @@ Cell[BoxData[
           AspectRatio \[Rule] \ Automatic];\)\)], "Input"],
 
 Cell[BoxData[
-    \(zero = Show[Graphics[{AbsolutePointSize[4], Point[{0, 0}]}]]\)], "Input"],
-
-Cell[BoxData[
     \(72*4\)], "Input"],
 
 Cell[BoxData[
@@ -167,43 +176,43 @@ Cell[BoxData[
         Show[p0, p1, p2, p3, PlotRange \[Rule] All, Frame \[Rule] True, 
           Axes \[Rule] True, AxesOrigin \[Rule] {0, 0}, 
           FrameLabel \[Rule] 
-            TraditionalForm /@ {"\<Re \[Lambda]\>", "\<Im \[Lambda]\>"}, \ 
-          RotateLabel \[Rule] False, 
+            TraditionalForm /@ {\*"\"\<\!\(\[Mu]\_i\)\>\"", \
+\*"\"\<\!\(\[Nu]\_i\)\>\""}, \ RotateLabel \[Rule] False, 
           TextStyle \[Rule] \ {FontFamily \[Rule] Helvetica, 
-              FontSize \[Rule] 10}, ImageSize \[Rule] 72*4, 
-          AspectRatio \[Rule] Automatic];\)\)], "Input"],
-
-Cell[BoxData[
-    \(\(?ShowLegend\)\)], "Input"],
+              FontSize \[Rule] 12}, ImageSize \[Rule] sz, 
+          AspectRatio \[Rule] 1/GoldenRatio];\)\)], "Input"],
 
 Cell[BoxData[
     \(\(eigLegendPlot = 
         ShowLegend[
-          eigenvaluePlot, {{{Show[Graphics[{c1, Circle[{0, 0}, rC]\ }], 
-                  AspectRatio \[Rule] Automatic, 
+          eigenvaluePlot, {{{Show[Graphics[{Disk[{0, 0}, {rC, rC*hr}]\ }], 
+                  AspectRatio \[Rule] hr, 
+                  DisplayFunction \[Rule] 
+                    Identity], \*"\"\<\!\(E\_0\)\>\""}, {Show[
+                  Graphics[{c1, Circle[{0, 0}, {rC, rC*hr}]\ }], 
+                  AspectRatio \[Rule] hr, 
                   DisplayFunction \[Rule] 
                     Identity], \*"\"\<\!\(E\_1\)\>\""}, {Show[
                   Graphics[{c2, asterisk[{0, 0}, rC]\ }], 
-                  AspectRatio \[Rule] Automatic, 
+                  AspectRatio \[Rule] hr, 
                   DisplayFunction \[Rule] 
                     Identity], \*"\"\<\!\(E\_2\)\>\""}, {Show[
-                  Graphics[{c1, Circle[{0, 0}, rC]}], 
-                  AspectRatio \[Rule] Automatic, 
+                  Graphics[{c3, AbsoluteThickness[thck], 
+                      square[{0, 0}, rC]}], 
                   DisplayFunction \[Rule] 
                     Identity], \*"\"\<\!\(E\_3\)\>\""}}, 
-            TextStyle \[Rule] \ {FontSize \[Rule] \ 10, 
+            TextStyle \[Rule] \ {FontSize \[Rule] \ 12, 
                 FontFamily \[Rule] Helvetica}, 
-            LegendPosition \[Rule] {\(-0.5\), 0.3}, 
-            LegendSize \[Rule] { .10,  .25}, LegendShadow \[Rule] {0, 0}}, 
-          AspectRatio \[Rule] Automatic];\)\)], "Input"],
+            LegendPosition \[Rule] {\(-0.1\), 0.3}, 
+            LegendSize \[Rule] { .15,  .3}, LegendShadow \[Rule] None}, 
+          ImageSize \[Rule] sz];\)\)], "Input"],
 
 Cell[BoxData[
-    \(Export["\<L22-eqvaEigenvalues.eps\>", eigLegendPlot, 
-      ImageSize \[Rule] \ 72*4]\)], "Input"],
-
-Cell[BoxData[""], "Input"]
+    \(Export["\<L22-eqvaEigenvalues.eps\>", eigLegendPlot, "\<EPS\>", 
+      ConversionOptions \[Rule] {"\<IncludeSpecialFonts\>" \[Rule] 
+            True, "\<ImageSize\>" \[Rule] sz}]\)], "Input"]
 },
-FrontEndVersion->"5.0 for X",
+FrontEndVersion->"5.2 for X",
 ScreenRectangle->{{0, 1280}, {0, 1024}},
 ScreenStyleEnvironment->"Working",
 WindowSize->{1272, 950},
@@ -239,26 +248,27 @@ Cell[2181, 72, 126, 3, 31, "Input"],
 Cell[2310, 77, 62, 1, 27, "Input"],
 Cell[2375, 80, 62, 1, 27, "Input"],
 Cell[2440, 83, 62, 1, 27, "Input"],
-Cell[2505, 86, 54, 1, 33, "Input"],
-Cell[2562, 89, 48, 1, 27, "Input"],
-Cell[2613, 92, 48, 1, 27, "Input"],
-Cell[2664, 95, 49, 1, 27, "Input"],
-Cell[2716, 98, 47, 1, 27, "Input"],
-Cell[2766, 101, 291, 5, 33, "Input"],
-Cell[3060, 108, 330, 6, 27, "Input"],
-Cell[3393, 116, 587, 11, 52, "Input"],
-Cell[3983, 129, 161, 3, 27, "Input"],
-Cell[4147, 134, 192, 4, 27, "Input"],
-Cell[4342, 140, 195, 4, 27, "Input"],
-Cell[4540, 146, 200, 4, 27, "Input"],
-Cell[4743, 152, 193, 4, 27, "Input"],
-Cell[4939, 158, 93, 1, 27, "Input"],
-Cell[5035, 161, 37, 1, 27, "Input"],
-Cell[5075, 164, 493, 9, 43, "Input"],
-Cell[5571, 175, 48, 1, 27, "Input"],
-Cell[5622, 178, 999, 19, 107, "Input"],
-Cell[6624, 199, 118, 2, 27, "Input"],
-Cell[6745, 203, 26, 0, 27, "Input"]
+Cell[2505, 86, 42, 1, 27, "Input"],
+Cell[2550, 89, 52, 1, 33, "Input"],
+Cell[2605, 92, 46, 1, 27, "Input"],
+Cell[2654, 95, 46, 1, 27, "Input"],
+Cell[2703, 98, 46, 1, 27, "Input"],
+Cell[2752, 101, 47, 1, 27, "Input"],
+Cell[2802, 104, 47, 1, 27, "Input"],
+Cell[2852, 107, 56, 1, 27, "Input"],
+Cell[2911, 110, 65, 1, 27, "Input"],
+Cell[2979, 113, 275, 5, 33, "Input"],
+Cell[3257, 120, 351, 6, 59, "Input"],
+Cell[3611, 128, 615, 11, 75, "Input"],
+Cell[4229, 141, 145, 3, 27, "Input"],
+Cell[4377, 146, 201, 4, 27, "Input"],
+Cell[4581, 152, 195, 4, 27, "Input"],
+Cell[4779, 158, 200, 4, 27, "Input"],
+Cell[4982, 164, 193, 4, 27, "Input"],
+Cell[5178, 170, 37, 1, 27, "Input"],
+Cell[5218, 173, 502, 9, 43, "Input"],
+Cell[5723, 184, 1189, 23, 123, "Input"],
+Cell[6915, 209, 212, 3, 27, "Input"]
 }
 ]
 *)
