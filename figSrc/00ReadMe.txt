@@ -26,8 +26,9 @@ source for
 	rpo_ks/figs/L22-eqvaEigenvalues.eps  
 is in
 	programs/production/KS22.0/equil
-	program plotEigenvalues.nb
-	Converted to .fig with pstoedit
+	1st version: 	mathematica notebook plotEigenvalues.nb
+			Converted to .fig with pstoedit
+	2nd version:	gnuplot script plotEigenvalues.gnuplot
 	
 
 Processing
