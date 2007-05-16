@@ -93,27 +93,3 @@ vx=Table[{(i-1)*L/(d-1), v[[i]]},{i,1,d}];
 vPlt=ListPlot[vx,PlotJoined\[Rule]True,
       TextStyle\[Rule]{FontSize\[Rule]12,FontFamily\[Rule]Arial},
       AxesLabel\[Rule]{"x","u"},AspectRatio\[Rule]1];
-
-
-
-
-
-
-
-
-
-
-
-
-
-Export[wd[]<>"Equil.eps",vPlt];
-
-vS=Transpose[Import["equilS.dat"]];
-
-
-
-\!\(\(Splot = ScatterPlot3D[vS, AxesLabel -> {"\<u\>", \*"\"\<\!\(u\_x\)\>\"", \*"\"\<\!\(u\_xxx\)\>\""}, PlotRange -> All, PlotJoined \[Rule] \ True];\)\)
-
-Export[wd[]<>"EquilS.eps",Splot];
-
-Exit[];
