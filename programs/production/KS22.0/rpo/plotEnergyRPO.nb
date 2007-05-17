@@ -1,5 +1,5 @@
 (************** Content-type: application/mathematica **************
-                     CreatedBy='Mathematica 5.2'
+                     CreatedBy='Mathematica 5.0'
 
                     Mathematica-Compatible Notebook
 
@@ -41,9 +41,9 @@ Wolfram Research.
 
 (*NotebookFileLineBreakTest
 NotebookFileLineBreakTest*)
-(*NotebookOptionsPosition[     49144,       1215]*)
-(*NotebookOutlinePosition[     49827,       1239]*)
-(*  CellTagsIndexPosition[     49783,       1235]*)
+(*NotebookOptionsPosition[     36522,        959]*)
+(*NotebookOutlinePosition[     37205,        983]*)
+(*  CellTagsIndexPosition[     37161,        979]*)
 (*WindowFrame->Normal*)
 
 
@@ -464,7 +464,7 @@ Cell[BoxData[
 Cell[BoxData[{
     \(\(EtabTurb = 
         Import["\<../int/random/energy.dat\>"];\)\), "\[IndentingNewLine]", 
-    \(\(Nk = 8000;\)\), "\[IndentingNewLine]", 
+    \(\(Nk = 80000;\)\), "\[IndentingNewLine]", 
     \(\(EtabTurb = Take[EtabTurb, \(-Nk\)];\)\), "\n", 
     \(mEturb = 
       Sum[EtabTurb[\([i, 1]\)], {i, 1, Nk}]/Nk\), "\[IndentingNewLine]", 
@@ -609,55 +609,59 @@ Cell[BoxData[
 Cell[BoxData[
     \(mind = 10^\(-3\)\)], "Input"],
 
+Cell[BoxData[
+    \(\(EtabConn2wA2w = Import["\<../conn/2wA2w/energy.dat\>"];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Nk\)], "Input"],
+
 Cell[BoxData[{
     \(\(EtabConn2wA2w = 
         Import["\<../conn/2wA2w/energy.dat\>"];\)\), "\[IndentingNewLine]", 
-    \(\(dif = 
+    \(\(Nk = \(Dimensions[
+            EtabConn2wA2w]\)[\([1]\)];\)\[IndentingNewLine] \
+(*\[IndentingNewLine]dif = 
         Map[Greater[#, mind] &, 
           Map[Norm, 
             EtabConn2wA2w - 
               Table[Ec2, {\(Dimensions[
-                      EtabConn2wA2w]\)[\([1]\)]}], {1}], {1}];\)\), "\
-\[IndentingNewLine]", 
-    \(\(EtabConn2wA2w = 
-        Pick[EtabConn2wA2w, dif];\)\), "\[IndentingNewLine]", 
-    \(\(Nk = \(Dimensions[
-            EtabConn2wA2w]\)[\([1]\)];\)\), "\[IndentingNewLine]", 
-    \(\(ds = 
+                      EtabConn2wA2w]\)[\([1]\)]}], {1}], {1}]; \
+\[IndentingNewLine]EtabConn2wA2w = 
+        Pick[EtabConn2wA2w, 
+          dif]; \[IndentingNewLine]Nk = \(Dimensions[
+            EtabConn2wA2w]\)[\([1]\)]; \[IndentingNewLine]ds = 
         Table[Norm[EtabConn2wA2w[\([i + 1]\)] - EtabConn2wA2w[\([i]\)]], {i, 
-            1, \(Dimensions[EtabConn2wA2w]\)[\([1]\)] - 1}];\)\), "\n", 
-    \(\(s = Table[Null, {\(Dimensions[ds]\)[\([1]\)] + 1}];\)\), "\n", 
-    \(\(s[\([1]\)] = 0;\)\), "\n", 
-    \(\(Do[
-        s[\([i + 1]\)] = s[\([i]\)] + ds[\([i]\)], {i, 
-          1, \(Dimensions[ds]\)[\([1]\)]}];\)\), "\n", 
-    \(\(dS = s[\([\(Dimensions[s]\)[\([1]\)]]\)]/Nk;\)\), "\n", 
-    \(\(adum = TakeColumns[EtabConn2wA2w, {1}] // Flatten;\)\), "\n", 
-    \(\(a1s = 
-        Union[Table[{s[\([i]\)], adum[\([i]\)]}, {i, 
-              1, \(Dimensions[s]\)[\([1]\)]}]];\)\), "\n", 
-    \(\(adum = TakeColumns[EtabConn2wA2w, {2}] // Flatten;\)\), "\n", 
-    \(\(a2s = 
-        Union[Table[{s[\([i]\)], adum[\([i]\)]}, {i, 
-              1, \(Dimensions[s]\)[\([1]\)]}]];\)\), "\n", 
-    \(\(adum = TakeColumns[EtabConn2wA2w, {3}] // Flatten;\)\), "\n", 
-    \(\(a3s = 
-        Union[Table[{s[\([i]\)], adum[\([i]\)]}, {i, 
-              1, \(Dimensions[s]\)[\([1]\)]}]];\)\), "\n", 
-    \(\(aS = {Interpolation[a1s], Interpolation[a2s], 
-          Interpolation[a3s]};\)\), "\n", 
-    \(\(EtabConn2wA2w = 
+            1, \(Dimensions[EtabConn2wA2w]\)[\([1]\)] - 1}]; \n
+      s = Table[Null, {\(Dimensions[ds]\)[\([1]\)] + 1}]; \ns[\([1]\)] = 0; \n
+      Do[s[\([i + 1]\)] = s[\([i]\)] + ds[\([i]\)], {i, 
+          1, \(Dimensions[ds]\)[\([1]\)]}]; \n
+      dS = s[\([\(Dimensions[s]\)[\([1]\)]]\)]/Nk; \n
+      adum = TakeColumns[EtabConn2wA2w, {1}] // Flatten; \n
+      a1s = Union[
+          Table[{s[\([i]\)], adum[\([i]\)]}, {i, 
+              1, \(Dimensions[s]\)[\([1]\)]}]]; \n
+      adum = TakeColumns[EtabConn2wA2w, {2}] // Flatten; \n
+      a2s = Union[
+          Table[{s[\([i]\)], adum[\([i]\)]}, {i, 
+              1, \(Dimensions[s]\)[\([1]\)]}]]; \n
+      adum = TakeColumns[EtabConn2wA2w, {3}] // Flatten; \n
+      a3s = Union[
+          Table[{s[\([i]\)], adum[\([i]\)]}, {i, 
+              1, \(Dimensions[s]\)[\([1]\)]}]]; \n
+      aS = {Interpolation[a1s], Interpolation[a2s], Interpolation[a3s]}; \n
+      EtabConn2wA2w = 
         Table[{\(aS[\([1]\)]\)[s*dS], \(aS[\([2]\)]\)[s*dS], \(aS[\([3]\)]\)[
-              s*dS]}, {s, 1, Nk}];\)\), "\[IndentingNewLine]", 
-    \(mEConn2wA2w = 
-      Sum[EtabConn2wA2w[\([i, 1]\)], {i, 1, Nk}]/
-        Nk\), "\[IndentingNewLine]", 
-    \(mvx2Conn2wA2w = 
-      Sum[EtabConn2wA2w[\([i, 2]\)], {i, 1, Nk}]/
-        Nk\), "\[IndentingNewLine]", 
-    \(mvxx2Conn2wA2w = 
-      Sum[EtabConn2wA2w[\([i, 3]\)], {i, 1, Nk}]/
-        Nk\), "\[IndentingNewLine]", 
+              s*dS]}, {s, 1, 
+            Nk}];\[IndentingNewLine]*) \), "\[IndentingNewLine]", 
+    \(\(mEConn2wA2w = 
+        Sum[EtabConn2wA2w[\([i, 1]\)], {i, 1, Nk}]/
+          Nk;\)\), "\[IndentingNewLine]", 
+    \(\(mvx2Conn2wA2w = 
+        Sum[EtabConn2wA2w[\([i, 2]\)], {i, 1, Nk}]/
+          Nk;\)\), "\[IndentingNewLine]", 
+    \(\(mvxx2Conn2wA2w = 
+        Sum[EtabConn2wA2w[\([i, 3]\)], {i, 1, Nk}]/
+          Nk;\)\), "\[IndentingNewLine]", 
     \(\(cConn2wA2w = RGBColor[0, 1, 0];\)\), "\[IndentingNewLine]", 
     \(\(pmConn2wA2w = 
         ListPlot[{{mvx2Conn2wA2w, mvxx2Conn2wA2w - mvx2Conn2wA2w}}, 
@@ -706,6 +710,7 @@ Cell[BoxData[{
               TakeColumns[EtabConn2wA2w, {2}]], 
           DisplayFunction \[Rule] Identity, PlotJoined \[Rule] True, 
           PlotRange \[Rule] All, AspectRatio \[Rule] Automatic, 
+          
           FrameLabel \[Rule] \ {\*"\"\<<(\!\(u\_x\)\!\(\()\^2\)\)>\>\"", \
 \*"\"\<<(\!\(u\_xx\)\!\(\()\^2\)\)>-<(\!\(u\_x\)\!\(\()\^2\)\)>\>\""}, 
           PlotStyle \[Rule] \ cConn2wA2w];\)\), "\[IndentingNewLine]", 
@@ -752,291 +757,28 @@ Cell[BoxData[
       DisplayFunction \[Rule] \ $DisplayFunction, ImageSize \[Rule] \ 400, 
       PlotRange \[Rule] All]\)], "Input"],
 
-Cell[BoxData[{
-    \(\(EtabConn3wA2w = 
-        Import["\<../conn/3wA2w/energy.dat\>"];\)\), "\[IndentingNewLine]", 
-    \(\(dif = 
-        Map[Greater[#, mind] &, 
-          Map[Norm, 
-            EtabConn3wA2w - 
-              Table[Ec2, {\(Dimensions[
-                      EtabConn3wA2w]\)[\([1]\)]}], {1}], {1}];\)\), "\n", 
-    \(\(EtabConn3wA2w = 
-        Pick[EtabConn3wA2w, dif];\)\), "\[IndentingNewLine]", 
-    \(\(Nk = \(Dimensions[
-            EtabConn3wA2w]\)[\([1]\)];\)\), "\[IndentingNewLine]", 
-    \(\(ds = 
-        Table[Norm[EtabConn3wA2w[\([i + 1]\)] - EtabConn3wA2w[\([i]\)]], {i, 
-            1, \(Dimensions[EtabConn3wA2w]\)[\([1]\)] - 1}];\)\), "\n", 
-    \(\(s = Table[Null, {\(Dimensions[ds]\)[\([1]\)] + 1}];\)\), "\n", 
-    \(\(s[\([1]\)] = 0;\)\), "\n", 
-    \(\(Do[
-        s[\([i + 1]\)] = s[\([i]\)] + ds[\([i]\)], {i, 
-          1, \(Dimensions[ds]\)[\([1]\)]}];\)\), "\n", 
-    \(\(dS = s[\([\(Dimensions[s]\)[\([1]\)]]\)]/Nk;\)\), "\n", 
-    \(\(adum = TakeColumns[EtabConn3wA2w, {1}] // Flatten;\)\), "\n", 
-    \(\(a1s = 
-        Union[Table[{s[\([i]\)], adum[\([i]\)]}, {i, 
-              1, \(Dimensions[s]\)[\([1]\)]}]];\)\), "\n", 
-    \(\(adum = TakeColumns[EtabConn3wA2w, {2}] // Flatten;\)\), "\n", 
-    \(\(a2s = 
-        Union[Table[{s[\([i]\)], adum[\([i]\)]}, {i, 
-              1, \(Dimensions[s]\)[\([1]\)]}]];\)\), "\n", 
-    \(\(adum = TakeColumns[EtabConn3wA2w, {3}] // Flatten;\)\), "\n", 
-    \(\(a3s = 
-        Union[Table[{s[\([i]\)], adum[\([i]\)]}, {i, 
-              1, \(Dimensions[s]\)[\([1]\)]}]];\)\), "\n", 
-    \(\(aS = {Interpolation[a1s], Interpolation[a2s], 
-          Interpolation[a3s]};\)\), "\n", 
-    \(\(EtabConn3wA2w = 
-        Table[{\(aS[\([1]\)]\)[s*dS], \(aS[\([2]\)]\)[s*dS], \(aS[\([3]\)]\)[
-              s*dS]}, {s, 1, Nk}];\)\), "\[IndentingNewLine]", 
-    \(mEConn3wA2w = 
-      Sum[EtabConn3wA2w[\([i, 1]\)], {i, 1, Nk}]/
-        Nk\), "\[IndentingNewLine]", 
-    \(mvx2Conn3wA2w = 
-      Sum[EtabConn3wA2w[\([i, 2]\)], {i, 1, Nk}]/
-        Nk\), "\[IndentingNewLine]", 
-    \(mvxx2Conn3wA2w = 
-      Sum[EtabConn3wA2w[\([i, 3]\)], {i, 1, Nk}]/
-        Nk\), "\[IndentingNewLine]", 
-    \(\(cConn3wA2w = RGBColor[0, 0, 1];\)\), "\[IndentingNewLine]", 
-    \(\(pmConn3wA2w = 
-        ListPlot[{{mvx2Conn3wA2w, mvxx2Conn3wA2w - mvx2Conn3wA2w}}, 
-          PlotStyle \[Rule] {cConn3wA2w, PointSize[pt]}, 
-          DisplayFunction \[Rule] Identity, 
-          AspectRatio \[Rule] Automatic];\)\), "\[IndentingNewLine]", 
-    \(\(pmeConn3wA2w = 
-        ScatterPlot3D[{{mEc, mvx2Conn3wA2w, mvxx2Conn3wA2w - mvx2Conn3wA2w}}, 
-          PlotStyle \[Rule] {cConn3wA2w, PointSize[pt]}, 
-          DisplayFunction \[Rule] Identity, 
-          AspectRatio \[Rule] Automatic];\)\), "\[IndentingNewLine]", 
-    \(\(pConn3wA2w = 
-        ListPlot[
-          AppendRows[TakeColumns[EtabConn3wA2w, {2}], 
-            TakeColumns[EtabConn3wA2w, {3}] - 
-              TakeColumns[EtabConn3wA2w, {2}]], 
-          DisplayFunction \[Rule] Identity, PlotJoined \[Rule] True, 
-          AspectRatio \[Rule] Automatic, PlotStyle \[Rule] \ cConn3wA2w, 
-          FrameLabel \[Rule] \ {\*"\"\<<(\!\(u\_x\)\!\(\()\^2\)\)>\>\"", \
-\*"\"\<<(\!\(u\_xx\)\!\(\()\^2\)\)>-<(\!\(u\_x\)\!\(\()\^2\)\)>\>\""}];\)\), \
-"\[IndentingNewLine]", 
-    \(\(pConn3wA2wE = 
-        ScatterPlot3D[
-          AppendRows[TakeColumns[EtabConn3wA2w, {1}], 
-            TakeColumns[EtabConn3wA2w, {2}], 
-            TakeColumns[EtabConn3wA2w, {3}] - 
-              TakeColumns[EtabConn3wA2w, {2}]], 
-          DisplayFunction \[Rule] Identity, PlotJoined \[Rule] True, 
-          PlotRange \[Rule] All, AspectRatio \[Rule] Automatic, 
-          FrameLabel -> \ {"\<<E>\>", \
-\*"\"\<<(\!\(u\_x\)\!\(\()\^2\)\)>\>\"", \
-\*"\"\<<(\!\(u\_xx\)\!\(\()\^2\)\)>\>\""}, 
-          PlotStyle \[Rule] \ {cConn3wA2w}];\)\), "\[IndentingNewLine]", 
-    \(\(pConn3wA2wE1 = 
-        ListPlot[
-          AppendRows[TakeColumns[EtabConn3wA2w, {1}], 
-            TakeColumns[EtabConn3wA2w, {2}]], 
-          DisplayFunction \[Rule] Identity, PlotJoined \[Rule] True, 
-          PlotRange \[Rule] All, AspectRatio \[Rule] Automatic, 
-          FrameLabel \[Rule] \ {"\<E\>", \*"\"\<<(\!\(u\_x\)\!\(\()\^2\)\)>\>\
-\""}, PlotStyle \[Rule] \ cConn3wA2w];\)\), "\[IndentingNewLine]", 
-    \(\(pConn3wA2wE2 = 
-        ListPlot[
-          AppendRows[TakeColumns[EtabConn3wA2w, {1}], 
-            TakeColumns[EtabConn3wA2w, {3}] - 
-              TakeColumns[EtabConn3wA2w, {2}]], 
-          DisplayFunction \[Rule] Identity, PlotJoined \[Rule] True, 
-          PlotRange \[Rule] All, AspectRatio \[Rule] Automatic, 
-          FrameLabel \[Rule] \ {\*"\"\<<(\!\(u\_x\)\!\(\()\^2\)\)>\>\"", \
-\*"\"\<<(\!\(u\_xx\)\!\(\()\^2\)\)>-<(\!\(u\_x\)\!\(\()\^2\)\)>\>\""}, 
-          PlotStyle \[Rule] \ cConn3wA2w];\)\), "\[IndentingNewLine]", 
-    \(\(coord = 
-        EtabConn3wA2w[\([All, 2]\)] - 
-          EtabConn3wA2w[\([All, 3]\)];\)\), "\n", 
-    \(\(cros = {Null};\)\), "\n", 
-    \(\(Do[
-        If[\ \((coord[\([i - 1]\)] > 
-                0)\)\  && \ \((coord[\([i]\)] \[LessEqual] \ 0)\), 
-          cros = Append[cros, {i}]], {i, 
-          2, \(Dimensions[coord]\)[\([1]\)]}];\)\), "\n", 
-    \(\(cros = Drop[cros, 1];\)\), "\n", 
-    \(\(poinc = \((Extract[EtabConn3wA2w[\([All, {1, 2}]\)], cros] + 
-              Extract[EtabConn3wA2w[\([All, {1, 2}]\)], cros - 1])\)/
-          2;\)\n (*\(plPoincConn3wA2w = \([poinc, 
-            PlotStyle \[Rule] \ {cConn3wA2w, 
-                PointSize[3*pt]}]\);\)*) \), "\[IndentingNewLine]", 
-    \(\(plPoincConn3wA2w = 
-        Show[Graphics[{cConn3wA2w, Thickness[connPoincThck], 
-              Map[Circle[#, connR] &, poinc]}], 
-          AspectRatio \[Rule] Automatic];\)\), "\[IndentingNewLine]", 
-    \(\(rPoincE = 
-        Table[{poinc[\([i, 1]\)], poinc[\([i + 1, 1]\)]}, {i, 
-            1, \(Dimensions[poinc]\)[\([1]\)] - 1}];\)\), "\n", 
-    \(\(rPoinc1 = 
-        Table[{poinc[\([i, 2]\)], poinc[\([i + 1, 2]\)]}, {i, 
-            1, \(Dimensions[poinc]\)[\([1]\)] - 
-              1}];\)\), "\[IndentingNewLine]", 
-    \(\(plrPoincEConn3wA2w = 
-        ListPlot[rPoincE, PlotRange \[Rule] All, 
-          PlotStyle \[Rule] {PointSize[pt]}, 
-          DisplayFunction \[Rule] Identity, 
-          AspectRatio \[Rule] Automatic];\)\), "\[IndentingNewLine]", 
-    \(\(plrPoinc1Conn3wA2w = 
-        ListPlot[rPoinc1, PlotRange \[Rule] All, 
-          PlotStyle \[Rule] {PointSize[pt]}, 
-          DisplayFunction \[Rule] Identity, 
-          AspectRatio \[Rule] Automatic];\)\)}], "Input",
-  InitializationCell->True],
+Cell[BoxData[
+    \({pConn3wA2w, pConn3wA2wE, pConn3wA2wE1, pConn3wA2wE2} = 
+      plotEtab["\<../conn/3wA2w/energy.dat\>", RGBColor[0, 0, 1]]\)], "Input"],
 
-Cell[BoxData[{
-    \(\(EtabConnA2w2w = 
-        Import["\<../conn/A2w2w/energy.dat\>"];\)\), "\[IndentingNewLine]", 
-    \(\(dif = 
-        Map[Greater[#, mind] &, 
-          Map[Norm, 
-            EtabConnA2w2w - 
-              Table[Ec2, {\(Dimensions[
-                      EtabConnA2w2w]\)[\([1]\)]}], {1}], {1}];\)\), "\n", 
-    \(\(EtabConnA2w2w = 
-        Pick[EtabConnA2w2w, dif];\)\), "\[IndentingNewLine]", 
-    \(\(Nk = \(Dimensions[
-            EtabConnA2w2w]\)[\([1]\)];\)\), "\[IndentingNewLine]", 
-    \(\(ds = 
-        Table[Norm[EtabConnA2w2w[\([i + 1]\)] - EtabConnA2w2w[\([i]\)]], {i, 
-            1, \(Dimensions[EtabConnA2w2w]\)[\([1]\)] - 1}];\)\), "\n", 
-    \(\(s = Table[Null, {\(Dimensions[ds]\)[\([1]\)] + 1}];\)\), "\n", 
-    \(\(s[\([1]\)] = 0;\)\), "\n", 
-    \(\(Do[
-        s[\([i + 1]\)] = s[\([i]\)] + ds[\([i]\)], {i, 
-          1, \(Dimensions[ds]\)[\([1]\)]}];\)\), "\n", 
-    \(\(dS = s[\([\(Dimensions[s]\)[\([1]\)]]\)]/Nk;\)\), "\n", 
-    \(\(adum = TakeColumns[EtabConnA2w2w, {1}] // Flatten;\)\), "\n", 
-    \(\(a1s = 
-        Union[Table[{s[\([i]\)], adum[\([i]\)]}, {i, 
-              1, \(Dimensions[s]\)[\([1]\)]}]];\)\), "\n", 
-    \(\(adum = TakeColumns[EtabConnA2w2w, {2}] // Flatten;\)\), "\n", 
-    \(\(a2s = 
-        Union[Table[{s[\([i]\)], adum[\([i]\)]}, {i, 
-              1, \(Dimensions[s]\)[\([1]\)]}]];\)\), "\n", 
-    \(\(adum = TakeColumns[EtabConnA2w2w, {3}] // Flatten;\)\), "\n", 
-    \(\(a3s = 
-        Union[Table[{s[\([i]\)], adum[\([i]\)]}, {i, 
-              1, \(Dimensions[s]\)[\([1]\)]}]];\)\), "\n", 
-    \(\(aS = {Interpolation[a1s], Interpolation[a2s], 
-          Interpolation[a3s]};\)\), "\n", 
-    \(\(EtabConnA2w2w = 
-        Table[{\(aS[\([1]\)]\)[s*dS], \(aS[\([2]\)]\)[s*dS], \(aS[\([3]\)]\)[
-              s*dS]}, {s, 1, Nk}];\)\), "\[IndentingNewLine]", 
-    \(mEConnA2w2w = 
-      Sum[EtabConnA2w2w[\([i, 1]\)], {i, 1, Nk}]/
-        Nk\), "\[IndentingNewLine]", 
-    \(mvx2ConnA2w2w = 
-      Sum[EtabConnA2w2w[\([i, 2]\)], {i, 1, Nk}]/
-        Nk\), "\[IndentingNewLine]", 
-    \(mvxx2ConnA2w2w = 
-      Sum[EtabConnA2w2w[\([i, 3]\)], {i, 1, Nk}]/
-        Nk\), "\[IndentingNewLine]", 
-    \(\(cConnA2w2w = RGBColor[0.6, 0.7, 0];\)\), "\[IndentingNewLine]", 
-    \(\(pmConnA2w2w = 
-        ListPlot[{{mvx2ConnA2w2w, mvxx2ConnA2w2w - mvx2ConnA2w2w}}, 
-          PlotStyle \[Rule] {cConnA2w2w, PointSize[pt]}, 
-          DisplayFunction \[Rule] Identity, 
-          AspectRatio \[Rule] Automatic];\)\), "\[IndentingNewLine]", 
-    \(\(pmeConnA2w2w = 
-        ScatterPlot3D[{{mEc, mvx2ConnA2w2w, mvxx2ConnA2w2w - mvx2ConnA2w2w}}, 
-          PlotStyle \[Rule] {cConnA2w2w, PointSize[pt]}, 
-          DisplayFunction \[Rule] Identity, 
-          AspectRatio \[Rule] Automatic];\)\), "\[IndentingNewLine]", 
-    \(\(pConnA2w2w = 
-        ListPlot[
-          AppendRows[TakeColumns[EtabConnA2w2w, {2}], 
-            TakeColumns[EtabConnA2w2w, {3}] - 
-              TakeColumns[EtabConnA2w2w, {2}]], 
-          DisplayFunction \[Rule] Identity, PlotJoined \[Rule] True, 
-          AspectRatio \[Rule] Automatic, 
-          PlotStyle \[Rule] {\ cConnA2w2w, Thickness[7\ thck]}, 
-          FrameLabel \[Rule] \ {\*"\"\<<(\!\(u\_x\)\!\(\()\^2\)\)>\>\"", \
-\*"\"\<<(\!\(u\_xx\)\!\(\()\^2\)\)>-<(\!\(u\_x\)\!\(\()\^2\)\)>\>\""}];\)\), \
-"\[IndentingNewLine]", 
-    \(\(pConnA2w2wE = 
-        ScatterPlot3D[
-          AppendRows[TakeColumns[EtabConnA2w2w, {1}], 
-            TakeColumns[EtabConnA2w2w, {2}], 
-            TakeColumns[EtabConnA2w2w, {3}] - 
-              TakeColumns[EtabConnA2w2w, {2}]], 
-          DisplayFunction \[Rule] Identity, PlotJoined \[Rule] True, 
-          PlotRange \[Rule] All, AspectRatio \[Rule] Automatic, 
-          FrameLabel -> \ {"\<<E>\>", \
-\*"\"\<<(\!\(u\_x\)\!\(\()\^2\)\)>\>\"", \
-\*"\"\<<(\!\(u\_xx\)\!\(\()\^2\)\)>\>\""}, 
-          PlotStyle \[Rule] {\ cConnA2w2w, 
-              Thickness[7\ thck]}];\)\), "\[IndentingNewLine]", 
-    \(\(pConnA2w2wE1 = 
-        ListPlot[
-          AppendRows[TakeColumns[EtabConnA2w2w, {1}], 
-            TakeColumns[EtabConnA2w2w, {2}]], 
-          DisplayFunction \[Rule] Identity, PlotJoined \[Rule] True, 
-          PlotRange \[Rule] All, AspectRatio \[Rule] Automatic, 
-          FrameLabel \[Rule] \ {"\<E\>", \*"\"\<<(\!\(u\_x\)\!\(\()\^2\)\)>\>\
-\""}, PlotStyle \[Rule] {\ cConnA2w2w, 
-              Thickness[7\ thck]}];\)\), "\[IndentingNewLine]", 
-    \(\(pConnA2w2wE2 = 
-        ListPlot[
-          AppendRows[TakeColumns[EtabConnA2w2w, {1}], 
-            TakeColumns[EtabConnA2w2w, {3}] - 
-              TakeColumns[EtabConnA2w2w, {2}]], 
-          DisplayFunction \[Rule] Identity, PlotJoined \[Rule] True, 
-          PlotRange \[Rule] All, AspectRatio \[Rule] Automatic, 
-          FrameLabel \[Rule] \ {\*"\"\<<(\!\(u\_x\)\!\(\()\^2\)\)>\>\"", \
-\*"\"\<<(\!\(u\_xx\)\!\(\()\^2\)\)>-<(\!\(u\_x\)\!\(\()\^2\)\)>\>\""}, 
-          PlotStyle \[Rule] {\ cConnA2w2w, 
-              Thickness[7\ thck]}];\)\), "\[IndentingNewLine]", 
-    \(\(coord = 
-        EtabConnA2w2w[\([All, 2]\)] - 
-          EtabConnA2w2w[\([All, 3]\)];\)\), "\n", 
-    \(\(cros = {Null};\)\), "\n", 
-    \(\(Do[
-        If[\ \((coord[\([i - 1]\)] > 
-                0)\)\  && \ \((coord[\([i]\)] \[LessEqual] \ 0)\), 
-          cros = Append[cros, {i}]], {i, 
-          2, \(Dimensions[coord]\)[\([1]\)]}];\)\), "\n", 
-    \(\(cros = Drop[cros, 1];\)\), "\n", 
-    \(\(poinc = \((Extract[EtabConnA2w2w[\([All, {1, 2}]\)], cros] + 
-              Extract[EtabConnA2w2w[\([All, {1, 2}]\)], cros - 1])\)/
-          2;\)\[IndentingNewLine] (*\(plPoincConnA2w2w = \([poinc, 
-            PlotStyle \[Rule] \ {cConnA2w2w, 
-                PointSize[3*pt]}]\);\)*) \), "\n", 
-    \(\(plPoincConnA2w2w = 
-        Show[Graphics[{cConnA2w2w, Thickness[connPoincThck], 
-              Map[Circle[#, connR] &, poinc]}], 
-          AspectRatio \[Rule] Automatic];\)\), "\[IndentingNewLine]", 
-    \(\(rPoincE = 
-        Table[{poinc[\([i, 1]\)], poinc[\([i + 1, 1]\)]}, {i, 
-            1, \(Dimensions[poinc]\)[\([1]\)] - 1}];\)\), "\n", 
-    \(\(rPoinc1 = 
-        Table[{poinc[\([i, 2]\)], poinc[\([i + 1, 2]\)]}, {i, 
-            1, \(Dimensions[poinc]\)[\([1]\)] - 
-              1}];\)\), "\[IndentingNewLine]", 
-    \(\(plrPoincEConnA2w2w = 
-        ListPlot[rPoincE, PlotRange \[Rule] All, 
-          PlotStyle \[Rule] {PointSize[pt]}, 
-          DisplayFunction \[Rule] Identity, 
-          AspectRatio \[Rule] Automatic];\)\), "\[IndentingNewLine]", 
-    \(\(plrPoinc1ConnA2w2w = 
-        ListPlot[rPoinc1, PlotRange \[Rule] All, 
-          PlotStyle \[Rule] {PointSize[pt]}, 
-          DisplayFunction \[Rule] Identity, 
-          AspectRatio \[Rule] Automatic];\)\)}], "Input",
-  InitializationCell->True],
+Cell[BoxData[
+    \({pConn3wA2wMinus, pConn3wA2wEMinus, pConn3wA2wE1Minus, 
+        pConn3wA2wE2Minus} = 
+      plotEtab["\<../conn/3wA2wMinus/energy.dat\>", 
+        RGBColor[0, 0, 1]]\)], "Input"],
+
+Cell[BoxData[
+    \({pConnA2w2w, pConnA2w2wE, pConnA2w2wE1, pConnA2w2wE2} = 
+      plotEtab["\<../conn/A2w2w/energy.dat\>", 
+        RGBColor[0.6, 0.7, 0]]\)], "Input"],
 
 Cell[BoxData[
     \(\(connExpSize = 72*5;\)\)], "Input"],
 
 Cell[BoxData[
     \(pTurbConn = 
-      Show[pTurb, pConnA2w2w, pConn2wA2w, pConn3wA2w, p1, p2, p3, 
-        DisplayFunction \[Rule] \ $DisplayFunction, 
+      Show[pTurb, pConnA2w2w, pConn2wA2w, pConn3wA2w, pConn3wA2wMinus, p1, 
+        p2, p3, DisplayFunction \[Rule] \ $DisplayFunction, 
         PlotRange \[Rule] {{0, 0.85}, All}, Axes \[Rule] False, 
         Frame \[Rule] True, 
         FrameLabel \[Rule] \ {\*"\"\<<(\!\(u\_x\)\!\(\()\^2\)\)>\>\"", \
@@ -1049,8 +791,9 @@ Cell[BoxData[
 
 Cell[BoxData[
     \(pTurbConnE1 = 
-      Show[pTurbE1, pConnA2w2wE1, pConn2wA2wE1, pConn3wA2wE1, p1E1, p2E1, 
-        p3E1, DisplayFunction \[Rule] \ $DisplayFunction, 
+      Show[pTurbE1, pConnA2w2wE1, pConn2wA2wE1, pConn3wA2wE1, 
+        pConn3wA2wE1Minus, p1E1, p2E1, p3E1, 
+        DisplayFunction \[Rule] \ $DisplayFunction, 
         ImageSize \[Rule] 1.8\ connExpSize, 
         PlotRange \[Rule] {{0, 0.85}, {0, 0.85}}, 
         FrameTicks \[Rule] {Range[0, 0.8, 0.2], Range[0, 0.8, 0.2], None, 
@@ -1061,8 +804,9 @@ Cell[BoxData[
 
 Cell[BoxData[
     \(pTurbConnE2 = 
-      Show[pTurbE2, pConnA2w2wE2, pConn2wA2wE2, pConn3wA2wE2, p1E2, p2E2, 
-        p3E2, DisplayFunction \[Rule] \ $DisplayFunction, 
+      Show[pTurbE2, pConnA2w2wE2, pConn2wA2wE2, pConn3wA2wE2, 
+        pConn3wA2wE2Minus, p1E2, p2E2, p3E2, 
+        DisplayFunction \[Rule] \ $DisplayFunction, 
         PlotRange \[Rule] {{0, 0.85}, All}, Axes \[Rule] False, 
         Frame \[Rule] True, 
         FrameLabel \[Rule] \ {"\<E\>", \*"\"\<<(\!\(u\_xx\)\!\(\()\^2\)\)>-<(\
@@ -1213,10 +957,10 @@ Cell[BoxData[
     \(\(MVWritePOVRay["\<energy3D.pov\>"];\)\)], "Input",
   InitializationCell->True]
 },
-FrontEndVersion->"5.2 for X",
+FrontEndVersion->"5.0 for X",
 ScreenRectangle->{{0, 1280}, {0, 1024}},
 AutoGeneratedPackage->Automatic,
-WindowSize->{1280, 963},
+WindowSize->{1272, 950},
 WindowMargins->{{0, Automatic}, {Automatic, 0}},
 ShowSelection->True
 ]
@@ -1336,67 +1080,68 @@ Cell[15718, 449, 92, 1, 27, "Input"],
 Cell[15813, 452, 141, 3, 27, "Input"],
 Cell[15957, 457, 49, 1, 27, "Input"],
 Cell[16009, 460, 53, 1, 27, "Input"],
-Cell[16065, 463, 3737, 77, 427, "Input",
+Cell[16065, 463, 3738, 77, 427, "Input",
   InitializationCell->True],
-Cell[19805, 542, 50, 1, 27, "Input"],
-Cell[19858, 545, 35, 1, 27, "Input"],
-Cell[19896, 548, 743, 13, 68, "Input"],
-Cell[20642, 563, 58, 1, 27, "Input"],
-Cell[20703, 566, 43, 1, 27, "Input"],
-Cell[20749, 569, 64, 1, 27, "Input"],
-Cell[20816, 572, 64, 1, 27, "Input"],
-Cell[20883, 575, 64, 1, 27, "Input"],
-Cell[20950, 578, 114, 2, 27, "Input"],
-Cell[21067, 582, 114, 2, 27, "Input"],
-Cell[21184, 586, 79, 2, 27, "Input",
+Cell[19806, 542, 50, 1, 27, "Input"],
+Cell[19859, 545, 35, 1, 27, "Input"],
+Cell[19897, 548, 743, 13, 68, "Input"],
+Cell[20643, 563, 58, 1, 27, "Input"],
+Cell[20704, 566, 43, 1, 27, "Input"],
+Cell[20750, 569, 64, 1, 27, "Input"],
+Cell[20817, 572, 64, 1, 27, "Input"],
+Cell[20884, 575, 64, 1, 27, "Input"],
+Cell[20951, 578, 114, 2, 27, "Input"],
+Cell[21068, 582, 114, 2, 27, "Input"],
+Cell[21185, 586, 79, 2, 27, "Input",
   InitializationCell->True],
-Cell[21266, 590, 49, 1, 27, "Input"],
-Cell[21318, 593, 53, 1, 27, "Input"],
-Cell[21374, 596, 53, 1, 27, "Input"],
-Cell[21430, 599, 51, 1, 27, "Input"],
-Cell[21484, 602, 59, 1, 27, "Input"],
-Cell[21546, 605, 58, 1, 27, "Input"],
-Cell[21607, 608, 49, 1, 27, "Input"],
-Cell[21659, 611, 6582, 136, 745, "Input",
+Cell[21267, 590, 49, 1, 27, "Input"],
+Cell[21319, 593, 53, 1, 27, "Input"],
+Cell[21375, 596, 53, 1, 27, "Input"],
+Cell[21431, 599, 51, 1, 27, "Input"],
+Cell[21485, 602, 59, 1, 27, "Input"],
+Cell[21547, 605, 58, 1, 27, "Input"],
+Cell[21608, 608, 49, 1, 27, "Input"],
+Cell[21660, 611, 92, 1, 27, "Input"],
+Cell[21755, 614, 35, 1, 27, "Input"],
+Cell[21793, 617, 6559, 135, 809, "Input",
   InitializationCell->True],
-Cell[28244, 749, 189, 3, 27, "Input"],
-Cell[28436, 754, 6592, 135, 745, "Input",
+Cell[28355, 754, 189, 3, 27, "Input"],
+Cell[28547, 759, 155, 2, 27, "Input"],
+Cell[28705, 763, 198, 4, 27, "Input"],
+Cell[28906, 769, 168, 3, 27, "Input"],
+Cell[29077, 774, 56, 1, 27, "Input"],
+Cell[29136, 777, 677, 12, 68, "Input"],
+Cell[29816, 791, 614, 11, 66, "Input"],
+Cell[30433, 804, 672, 13, 68, "Input"],
+Cell[31108, 819, 165, 3, 27, "Input"],
+Cell[31276, 824, 210, 3, 27, "Input"],
+Cell[31489, 829, 200, 4, 27, "Input"],
+Cell[31692, 835, 99, 2, 27, "Input",
   InitializationCell->True],
-Cell[35031, 891, 6738, 139, 764, "Input",
+Cell[31794, 839, 302, 6, 43, "Input",
   InitializationCell->True],
-Cell[41772, 1032, 56, 1, 27, "Input"],
-Cell[41831, 1035, 660, 12, 68, "Input"],
-Cell[42494, 1049, 586, 10, 66, "Input"],
-Cell[43083, 1061, 644, 12, 68, "Input"],
-Cell[43730, 1075, 165, 3, 27, "Input"],
-Cell[43898, 1080, 210, 3, 27, "Input"],
-Cell[44111, 1085, 200, 4, 27, "Input"],
-Cell[44314, 1091, 99, 2, 27, "Input",
+Cell[32099, 847, 161, 3, 27, "Input"],
+Cell[32263, 852, 70, 1, 27, "Input"],
+Cell[32336, 855, 489, 8, 49, "Input"],
+Cell[32828, 865, 737, 12, 85, "Input"],
+Cell[33568, 879, 205, 3, 27, "Input"],
+Cell[33776, 884, 542, 9, 50, "Input",
   InitializationCell->True],
-Cell[44416, 1095, 302, 6, 27, "Input",
+Cell[34321, 895, 449, 7, 50, "Input"],
+Cell[34773, 904, 126, 3, 27, "Input"],
+Cell[34902, 909, 53, 1, 27, "Input"],
+Cell[34958, 912, 50, 1, 27, "Input"],
+Cell[35011, 915, 47, 1, 27, "Input"],
+Cell[35061, 918, 52, 1, 27, "Input"],
+Cell[35116, 921, 364, 6, 43, "Input"],
+Cell[35483, 929, 515, 10, 50, "Input",
   InitializationCell->True],
-Cell[44721, 1103, 161, 3, 27, "Input"],
-Cell[44885, 1108, 70, 1, 27, "Input"],
-Cell[44958, 1111, 489, 8, 49, "Input"],
-Cell[45450, 1121, 737, 12, 85, "Input"],
-Cell[46190, 1135, 205, 3, 27, "Input"],
-Cell[46398, 1140, 542, 9, 50, "Input",
+Cell[36001, 941, 99, 2, 27, "Input",
   InitializationCell->True],
-Cell[46943, 1151, 449, 7, 50, "Input"],
-Cell[47395, 1160, 126, 3, 27, "Input"],
-Cell[47524, 1165, 53, 1, 27, "Input"],
-Cell[47580, 1168, 50, 1, 27, "Input"],
-Cell[47633, 1171, 47, 1, 27, "Input"],
-Cell[47683, 1174, 52, 1, 27, "Input"],
-Cell[47738, 1177, 364, 6, 43, "Input"],
-Cell[48105, 1185, 515, 10, 50, "Input",
+Cell[36103, 945, 132, 3, 27, "Input"],
+Cell[36238, 950, 178, 3, 27, "Input",
   InitializationCell->True],
-Cell[48623, 1197, 99, 2, 27, "Input",
-  InitializationCell->True],
-Cell[48725, 1201, 132, 3, 27, "Input"],
-Cell[48860, 1206, 178, 3, 27, "Input",
-  InitializationCell->True],
-Cell[49041, 1211, 99, 2, 27, "Input",
+Cell[36419, 955, 99, 2, 27, "Input",
   InitializationCell->True]
 }
 ]
