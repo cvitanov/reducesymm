@@ -120,3 +120,5 @@ FrenetFrame[x_List,t_,phi_,r_]:=
       binormal=norm[Cross[xp,xpp]];
       normal=Cross[binormal,tangent];
       x+normal*r*Cos[phi]+r*binormal*Sin[phi]];
+
+
