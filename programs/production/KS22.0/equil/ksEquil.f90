@@ -102,29 +102,6 @@ enddo
 close(36)
 close(37)
 
-
-adum=(0.0,0.0)
-adum(2:size(a))=vR(1:d/2,d)+ii*vR(d/2+1:d,d)
-
-call dfftw_plan_dft_c2r_1d(invplan,d,adum,v,FFTW_ESTIMATE)
-call dfftw_execute(invplan)
-call dfftw_destroy_plan(invplan)
-
-open(29,file=trim(wd)//'/ev1.dat')
-write(29,221) v
-close(29)
-
-adum=(0.0,0.0)
-adum(2:size(a))=vR(1:d/2,d-1)+ii*vR(d/2+1:d,d-1)
-
-call dfftw_plan_dft_c2r_1d(invplan,d,adum,v,FFTW_ESTIMATE)
-call dfftw_execute(invplan)
-call dfftw_destroy_plan(invplan)
-
-open(29,file=trim(wd)//'/ev2.dat')
-write(29,221) v
-close(29)
-
 open(23,file=trim(wd)//'/equilPS.dat')
 
 write(23,"(2F30.18)") 0.0_dp+ii*0.0_dp
