@@ -15,7 +15,14 @@ Processing
 Submission
 ----------
 
-submit to 
+1) submit arXiv
+
+=== before submission, remove all unused figures
+    [ ] check here when done, enter date: June ?. 2007
+
+
+
+2) submit to
     SIAM Journal on Applied Dynamical Systems
     www.siam.org/journals/siads.php
     epubs.siam.org/SIADS
@@ -25,16 +32,17 @@ reformatted using SIAM macros
     www.siam.org/journals/auth-info.php
 
 
-When submitting, remember to 
-    1) do not submit the {\tt .bib} file, submit the completed 
-       rpo.bbl file, having used siam.bst as the bibliographic 
+When submitting, remember to
+    1) do not submit the {\tt .bib} file, submit the completed
+       rpo.bbl file, having used siam.bst as the bibliographic
        style file.
     2) All PostScript figures should be sent in separate files.
-    3) PostScript figures should be generated with sufficient 
+    3) PostScript figures should be generated with sufficient
        line thickness.
 
-Fix these references:
---------------------
+Fix these:
+----------
+
 
 previous titles:
   "Relative periodic orbits in Kuramoto-Sivashinsky equation"
