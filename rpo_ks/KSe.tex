@@ -59,7 +59,7 @@ sum over $k > 0$.
 \PC{find better place for this text?}
 Due to the hyperviscous damping $u_{xxxx}$, long time solutions of
 \KSe\ are smooth, $a_k$ drop off fast\PC{how fast?} with $k$,
-and truncations of \refeq{expan} to $N$ terms, $16 \leq N \leq 128$,
+and truncations of \refeq{expan} to $d$ terms, $16 \leq d \leq 128$,
 yield highly accurate solutions for system sizes considered here.
 Robustness of the Fourier representation of KS as a function of the
 number of modes kept in truncations of \refeq{expan} is, however,
@@ -67,17 +67,17 @@ a subtle issue.  Adding an extra mode to a truncation of the system
 introduces a small perturbation.
 However, this can (and often will) throw the dynamics
 into a different asymptotic state.
-A chaotic attractor for $N=15$ can
-collapse into an attractive period-3 cycle for $N=16$, and so on.
+A chaotic attractor for $d=15$ can
+collapse into an attractive period-3 cycle for $d=16$, and so on.
 \PC{this example is taken from \rf{Christiansen:97}.
     do we have a better one from the current study?
    }
 If
-we compute, for example, the Lyapunov exponent $\Lyap(\tildeL,N)$ for
+we compute, for example, the Lyapunov exponent $\Lyap(\tildeL,d)$ for
 a strange attractor of the system \refeq{expan}, there is no reason to
-expect $\Lyap(\tildeL,N)$ to smoothly converge to a limit value
-$\Lyap(\tildeL,\infty)$ as $N \rightarrow \infty$, because of the lack
-of structural stability both as a function of truncation $N$, and the
+expect $\Lyap(\tildeL,d)$ to smoothly converge to a limit value
+$\Lyap(\tildeL,\infty)$ as $d \rightarrow \infty$, because of the lack
+of structural stability both as a function of truncation $d$, and the
 system size \tildeL.
 \PC{this text to be moved to a more appropriate place}
 The topology is more robust for \tildeL\ windows
@@ -160,15 +160,33 @@ reflection (`parity' or `inversion')
 and the shift
 \beq \Shift_{1/2} u(x)=u(x+L/2) \,.
 \ee{KSshift}
-
-This shift generates the 2-element discrete subgroup
-$\{1,\Shift_{1/2}\}$ of the above $O(2)$ group;
-%more generally, KS allows for solutions invariant under any rational
-%shift by $L/m$.
-%\PC{
-%    Is $L/m$ enough, or do $L j/m$, $j,m$ relative prime,
-%    label distinct solutions?
-%   }
+\PCedit{
+In the Fourier representation \refeq{expan}
+the \Refl\ reflection flips the odd modes,
+\beq
+a_{2m} \to a_{2m}
+    \,,\qquad
+a_{2m+1} \to -a_{2m+1}
+\,.
+\ee{FModInvSymm}
+Any rational shift $ \Shift_{1/m}u(x)=u(x+L/m)$
+generates a discrete dihedral $D_m$
+subgroup of $O(2)$ and is a symmetry of \KS.
+In the Fourier representation a solution invariant
+under $D_m$ has  only $a_{jm} \neq 0$, $j =1,2,\ldots$
+non-zero modes. This observation reduces the dimensionality
+of \statesp\ and aids computation of \eqva\ and \po s
+within it. However, linearized stability of these solutions has
+eigenvectors outside of this subspace, and needs to be
+computed in the full \statesp.
+    } % \PCedit{
+\PC{
+    \refeq{FModInvSymm} is probably correct only within the
+    the antisymmetric subspace, the complex 1/2-cell translation
+    \refeq{eq:RPOcondFouri}
+    multiplies modes by $i^k$. \PCedit{RECHECK}
+    }
+%
 % Any \rpo\ of period $\period{p}$ with such rational shift is
 % eventually periodic, of period $m\period{p}$. \Rpo s without a
 % discrete symmetry have irrational shifts $d$, and are not segments
@@ -176,66 +194,59 @@ $\{1,\Shift_{1/2}\}$ of the above $O(2)$ group;
 
 
 Relations $\Refl^2=\Shift_{1/2}^2=1$ induce a linear decomposition
-of the space of solutions into 4 invariant subspaces\rf{KNSks90} via
+of the space of solutions into 4 invariant subspaces\rf{KNSks90}
+    \PCedit{
+via four products $\Refl_{1,2} \Shift_{1,2}$ of the
 projection operators $\Refl_1=(\matId+\Refl)/2$,
+            }
+    \PC{this is not \refref{KNSks90}, I might be wrong}
 $\Refl_2=(\matId-\Refl)/2$, $\Shift_1=(\matId+\Shift_{1/2})/2$, and
 $\Shift_2=(\matId-\Shift_{1/2})/2$.  The nonlinear term $(u^2)_x$ in
 the KS equation mixes these subspaces, leading
-%, according to \refref{KNSks90},
 to four invariant subspaces (labeled by the
-corresponding projection operators):
+corresponding projection operators\rf{KNSks90}):
 \begin{romannum} % SIAM itemize}
  \item[$\Refl_1$:] The space of antisymmetric functions,
  \item[$\Shift_1$:] The space of $L/2$ periodic functions,
  \item[$\Refl_1 \Shift_1$:] The intersection of the above two,
- \item[$\mathbf{L}$:] The space of functions invariant under $x\mapsto L/2-x,\ u\mapsto -u$.
+ \item[$\mathbf{L}$:]
+The space of functions invariant under $x\mapsto L/2-x,\ u\mapsto -u$.
 \end{romannum} %itemize}
-%\ES{Using notation of \rf{KNSks90} here, not sure if it exists elsewere.}
-The dynamics within the $\Refl_1$ space of antisymmetric functions
-was studied in \refref{Christiansen:97,Lan:Thesis,LanCvi07}.
-
-In addition to the above invariant subspaces, the solutions
-symmetric under translation by any rational shift $L/m$,
-$\Shift_{1/m}$, also belong to invariant subspaces of the \KSe . In
-the Fourier representation, such solutions only have $mn$, $n =
-1,2,\ldots$, non-zero Fourier modes, the others are identically
-zero.
 
 %\subsection{Antisymmetric subspace}
 %\label{s:AntisymmSubsp}
-
-Since \KSe\ preserves antisymmetric solutions, one can isolate the
-antisymmetric subspace $u(x,t)=-u(-x,t)$.  In the Fourier
-representation, this amounts to having purely imaginary
-coefficients, since $a_{-k}= a^\ast_k = -a_k$. In the antisymmetric
+%
+\KSe\ preserves solutions $u(x,t)=-u(-x,t)$ within the
+antisymmetric subspace $\Refl_1$.
+With the continuous
+translational symmetry eliminated and no
+\reqva\ and \rpo s, one
+can focus on the \eqva\ and \po s only, as was done
+in \refref{Christiansen:97,Lan:Thesis,LanCvi07}.
+In the Fourier
+representation, the $u$ antisymmetry
+amounts to having purely imaginary
+coefficients, since $a_{-k}= a^\ast_k = -a_k$.
+The 1/2 cell-size shift $\Shift_{1/2}$
+generated 2-element discrete subgroup
+$\{1,\Shift_{1/2}\}$ is
+of particular interest in here,
+because in the antisymmetric
 subspace the translational invariance of the full system reduces to
 invariance under discrete translation \refeq{KSshift} by half a
-spatial period $L/2$. In the Fourier representation \refeq{expan}
-this symmetry corresponds to invariance under
-\beq
-a_{2m} \to a_{2m}
-    \,,\qquad
-a_{2m+1} \to -a_{2m+1}
-\,.
-\ee{FModInvSymm}
-The antisymmetric condition amounts to imposing
-$u(0,L)=0$ boundary condition, with the effective dynamical system
-size reduced to the $[0, L/2]$ interval.
+spatial period $L/2$.
 
-\refRefs{Christiansen:97,Lan:Thesis} concentrated on the dynamics in
-the antisymmetric subspace in order to eliminate the continuous
-translational symmetry, and focus on the unstable \po s only. In
+In
 this paper we study the full \KS\ system invariant under continuous
-translations. Due to the lack of self-adjointness (non-normality) of
-the linearized \KS\ flow, the antisymmetric subspace is unstable
+translations.
+% Due to the lack of self-adjointness (non-normality) of
+% the linearized \KS\ flow,
+The antisymmetric subspace is unstable
 under small perturbations and generic solutions of \KSe\ belong to
 the full space. Nevertheless, since, as will be discussed in
 \refsect{sec:L22}, the \eqva\ of the KS flow
-%and of the shortest periodic orbits
 lie in this subspace, it plays important role for the global
 geometry of the flow.
-% -- examples of such solutions will be discussed
-%in \refsect{sec:L22}.
 
 \subsection{\Eqva\ and \reqva} % of the \KSe}
 \label{sec:stks}
@@ -347,9 +358,9 @@ $C_{+}=(c+\sqrt{2\expctE},0,0)$ and $C_{-}=(c-\sqrt{2\expctE},0,0)$.
 Linearization of the flow around $C_{+}$ yields the cubic equation
   \beq
 \eigExp(1+\eigExp^2) = 4 \expctE
+\,,
   \ee{KSeqvCubic}
-and the linear
-stability eigenvalues
+with linear stability eigenvalues
 \beq
 \eigExp[1] = 2 \eigRe
     \,,\qquad
@@ -375,7 +386,7 @@ the earlier approaches.
 
 \RLD{This paragraph should probably be moved down after real-space
 equation for equilibria and traveling waves are discussed.}
-In the Fourier represenation the \reqva\ time
+In the Fourier representation the \reqva\ time
 dependence is
 \beq
  a_k(t) e^{-itc k/\tildeL} = a_k(0)
@@ -406,18 +417,13 @@ the \eqv\ condition for \refeq{expan}
 Periods of spatially periodic {\eqva} are multiples of $L$.
 Every time the system size crosses  $\tildeL=n$,
 $n$-cell states
-are generated through pitchfork bifurcations.
+are generated through pitchfork bifurcations off $u =0$
+equilibrium.
 Due to the translational invariance of {\KSe},
 they form invariant circles
 in the full \statesp.
 \PC{resurrect the commented text here}
 In the discrete symmetry subspace considered here, they correspond to two points,
-% half-period translates of each other of the form
-% \[
-% u(x,t)=-2\sum_k b_{kn}\sin (knx) \,,
-% \]
-% where $b_{kn} \in \mathbb{R}$.
-% % By rescaling $u,x$ and $\nu$, the $n$-cell states transform to each other.
 
 For any fixed period $L$ the number
 of spatially periodic solutions is finite up to a spatial translation.
@@ -441,23 +447,6 @@ So we do not have the problem that we encounter in the Fourier
 representation, where from the frame of one of the \eqva\
 the rest trace out circles under the action of continuous symmetry
 translations.
-
-\noindent {\bf When is an \eqv\ important? a bit of speculation}
-%
-There are two kinds of roles
-{\eqva} play:
-(1)
-a {\em `hole' in the natural measure}.
-The more unstable eigendirections an \eqv\ has (for example, the
-$u=$const \eqv~\EQV{0}), the more unlikely it is  that
-an orbit will recur in its neighborhood.
-(2)
-{\em Unstable manifolds of the `least unstable' {\eqva}}.
-Empirically, asymptotic dynamics tends to spend
-a large fraction of time in
-neighborhoods of a few  {\eqva} with
-a least number of unstable eigendirections.
-
 
 
 \subsection{Stability of \eqva}
@@ -572,8 +561,7 @@ Even though our starting point
 \refeq{ks}
 is an infinite-dimensional dynamical system, the asymptotic dynamics
 unfolds on a finite-dimensional attracting manifold, and so we are back on
-the familiar territory of
-%\refsect{SecDynFlows}:
+the familiar territory:
 the theory of a finite number of ODEs applies to this
 infinite-dimensional PDE as well.
 
@@ -581,9 +569,10 @@ infinite-dimensional PDE as well.
 \label{sec:KSlit}
 % Vaggelis               jan 20 2007
 
-Our study of the \eqva\ of
-\KSe\ is based on several classical papers in the field,
-in particular the bifurcation and symmetry analysis of
+The \eqva\ of \KSe\ used here are analyzed
+in the classical
+% bifurcation and symmetry is
+papers of
 Kevrekidis, Nicolaenko and Scovel\rf{KNSks90},
 and Greene and Kim\rf{ksgreene88}. What is new here is
 a detailed exploration of the \eqva\ stable/unstable manifolds
@@ -593,37 +582,6 @@ exploration of the relation between the
 observed spatiotemporal `turbulent' patterns and
 the \rpo s.
 
-
-% What is the non-dimensional `Rayleigh' number for the
-% \KS\ system?
-%  Scaling out the `viscosity' $\nu$
-% \[
-% x \to x \nu^{\frac{1}{2}}
-% \,,\quad
-% t \to t \nu
-% \,,\quad
-% u \to u \nu^{-\frac{1}{2}}
-% \,,
-% \]
-% brings the \KSe\ \refeq{ks}
-% to a non-dimensional form
-% \beq
-% u_t=(u^2)_x-u_{xx}- u_{xxxx}
-% \,,\qquad
-%   x \in  [0,L\nu^{-\frac{1}{2}}] = [0,2\pi\tildeL]
-% \,.
-% \ee{ks-L}
-% In this way the `viscosity' $\nu$
-% and the system size $L$ are trade in for a single
-% dimensionless system size parameter
-% \beq
-%   \tilde{L}={L}/{(2 \pi \sqrt{\nu})}
-% % \tilde{L}=\frac{L}{2 \pi \sqrt{\nu}}
-% % \,,
-% \ee{tildeL}
-% which plays the role of a `Reynolds number'
-% for the \KS\ system.
-
 In the literature \refeq{ks} is sometimes written as
 \beq
     u_t=(u^2)_x-u_{xx}- \nu \, u_{xxxx}
@@ -631,16 +589,8 @@ In the literature \refeq{ks} is sometimes written as
     \,,
 \ee{ksVisc}
 or in any number of other variants, all equivalent.
-The \KSe\ in  form \refeq{ks} is used by
-\cite{cross93,Mks86,ks04com}, for axample.
-% \RLD{I've used the same convention as Kassam and Trefethen.
-% If you google 'Kuramoto-Sivashinsky',
-% http://mathworld.wolfram.com/Kuramoto-SivashinskyEquation.html is
-% the first in the search list and it uses the same convention
-% (actually, their $u$ is actually a $w$ such that $w_x$ is my $u$.)
-% The site refers to a 1986 Physica D paper by Michelson and a
-% "Handbook of differential equations" by Zwillinger, but I haven't
-% seen either of these.  }
+The \KSe\ in  form \refeq{ks} is used, among others, by
+\cite{cross93,Mks86,ks04com}.
 Here we use $L$ as the system parameter, with the
 `hyper-viscosity' $\nu$ fixed to $1$.
 Other authors vary  $\nu$, with $L$ fixed to either $1$ or $2\pi$.
@@ -650,30 +600,30 @@ calculations either in units of the `dimensionless system size' $\tildeL$,
 or the system size $L = 2 \pi \tildeL$. The parameter $\alpha$
 of \refrefs{KNSks90,ksgreene88} is in this convention is
 $\tildeL=\sqrt{\alpha/4}$.
-    \PC{extend \reffig{fig:ksBifDiag} to $\tildeL=4$}
 
 
 For small $\tildeL$ the only \eqv\ of the system is the
-constant solution $y(x,t)=0$, globally attracting
-for $\tildeL<1$. At $\tildeL=N$, $N=1,2,3, \dots$,
-the $N$th harmonic becomes unstable and the constant solution
+constant solution $u(x,t)=0$, denoted $\EQV{0}$ here.
+$\EQV{0}$ is globally attracting
+for $\tildeL<1$. At $\tildeL=n$, $n=1,2,3, \dots$,
+the $n$-th harmonic becomes unstable and $\EQV{0}$
 undergoes a pitchfork bifurcation into
-the antisymmetric `$N$-cell' \eqv\rf{ksgreene88}.
+the antisymmetric `$n$-cell' \eqv, % $\EQV{n}$
+together with its $\shift{1/2}$ shift within the
+antisymmetric subspace.
 For these states the only non-vanishing Fourier coefficients
-are $(a_N,a_{2N},\dots)$.
-At point $A$ in \reffig{fig:ksBifDiag}
-the $1$-cell state loses stability
-and bifurcates to a stable,
-asymmetric \reqv, which in turn becomes unstable
-through a Hopf bifurcation at point $Z$.
-        \PC{mark point $Z$ in \reffig{fig:ksBifDiag}}
-
+are $(a_n,a_{2n},\dots)$.
+At the system size $\tildeL$ increases, a rich sequence
+of bifurcations into \eqva\ and \reqva\ described in
+\refref{ksgreene88} follows. For the system size
+$L=22$ investigated here, all relevant bifurcations are
+summarized \reffig{fig:ksBifDiag}.
 
 At $\tildeL=2$ a $2$-cell \eqv\ bifurcates off the \EQV{0} \eqv.
 % At point $B$ in \reffig{fig:GreeneKim}
 At point $B$ in \reffig{fig:ksBifDiag} the $1$-cell branch merges
-to the $2$-cell branch.  In general each $N$-cell branch merges
-to the corresponding $2N$-cell branch.
+to the $2$-cell branch.  In general each $n$-cell branch merges
+to the corresponding $2n$-cell branch.
 
 % At point $C$ in \reffig{fig:GreeneKim}
 At point $C$ in \reffig{fig:ksBifDiag}
@@ -681,7 +631,7 @@ the $2$-cell state bifurcates to a type of \eqv\ solution
 found by La Quey, Mahajan, Rutherford and Tang\rf{laquey74}
 and generalized by Greene and Kim who refer to them as GLMRT \eqva.
 For a GLMRT solution $u(x)$ is antisymmetric,
-a long wavelength distorted $N$-cell state.
+a long wavelength distorted $n$-cell state.
 
 \PC{STUDY - this suggests that \expctE\ grows with system size:
    The last type of solution identified in \refref{ksgreene88}
