@@ -35,7 +35,8 @@ system is $N-2$.  The truncated system looks as follows:
   \dot{a}_k = \pVeloc_k(a) = [(k/\tildeL)^2-(k/\tildeL)^4]a_k -
   \frac{ik}{2\tildeL}{\cal F}_N[({\cal F}_N^{-1}[a])^2]_k\,.
 \ee{eq:KS}
-where $k = 1,\ldots,N/2-1$.
+where $k = 1,\ldots,N/2-1$.  Note that, since $a_k \in \mathbb{C}$, 
+\refeq{eq:KS} represents a system of 
 %, although in the Fourier transform we need
 %to use $a_k$ over the full range of $k$ values from 0 to $N-1$.
 The discrete Fourier transform ${\cal F}_N$ can be computed by FFT.
@@ -47,18 +48,23 @@ can be used.
 
 In order to find the Jacobian of the solution, or compute
 Lyapunov exponents of the \KSe , one needs to solve the equation
-for a displacement vector $\delta$ in the tangent space:
+for a displacement vector $b$ in the tangent space:
 \beq
-  \dot{\delta} = \frac{\partial \pVeloc(a)}{\partial a} \delta\,.
+  \dot{b} = \frac{\partial \pVeloc(a)}{\partial a} b\,.
 \eeq
 Since ${\cal F}_N$ is a linear operator, it is easy to show that
 \beq
-  \dot{\delta_k} = [(k/\tildeL)^2-(k/\tildeL)^4]\delta_k -
+  \dot{b_k} = [(k/\tildeL)^2-(k/\tildeL)^4]b_k -
   \frac{ik}{\tildeL}{\cal F}_N[{\cal F}_N^{-1}[a]\cdot
-  {\cal F}_N^{-1}[\delta]]\,,
+  {\cal F}_N^{-1}[b]]\,,
 \ee{eq:KStan}
-where the dot indicates componentwise product of two vectors.  This
-equation needs to be solved simultaneously with \refeq{eq:KS}.
+where the dot indicates componentwise product of two vectors, \ie, 
+$a\cdot b = \diag(a)\,b = \diag(b)\,a$.  This
+equation needs to be solved simultaneously with \refeq{eq:KS}.  
+
+The Jacobian of the KS flow map, $J(a,t) = \partial f^t(a)/\partial a$, where
+the partial derivatives need to be evaluated separately with respect to the
+real and imaginary parts of the compoments of complex-valued vector $a$.
 
 %% To derive the equation for the matrix of variations, I use the fact
 %% that ${\cal F}_N$ is a linear operator.  Since we need to
@@ -90,3 +96,29 @@ equation needs to be solved simultaneously with \refeq{eq:KS}.
 %% with index $k$ running from 0 to $N-1$.  I admit, the notations are
 %% a bit stretched here, but I find them convenient when coding this
 %% equation using FFT.
+
+
+\section{Symmetries imply possible existence of \rpo s}
+\label{sec:SymRPO}
+In a dynamical system $\dot{a} = v(a)$ with a strange invarian set, there exist
+infinitely many periodic orbits
+\[ f^\period{}(a) = a \]
+characterized by period $\period{}$, which are dense within the invariant set.  
+Here $f^t$ is the flow map of the flow $v$, \ie, $a(t) = f^t(a)$ is the 
+solution of the flow $v$ with initial condition $a(0) = a$.
+
+Let the dynamical system have symmetries represented by the operators 
+$\Sigma_{k,s}$, where $k \in {\cal K} \subset \mathbb{Z}^p$ are 
+parameters of discrete symmetries and $s \in {\cal S} \subset \mathbb{R}^q$ 
+are parameters of continuous symmetries.  In other words, 
+\[ f^t(\Sigma_{k,s} a) = \Sigma_{k,s} f^t(a)\,. \]
+In this case it is likely that, in addition to \po s, the dynamical system also
+has \rpo s, characterized by the condition
+\[ \Sigma_{k,s}f^\period{}(a) = a\,, \]
+where, in addition to the period $\period{}$, the \rpo\ is also characterized by
+the symmetry parameters $k$ and/or $s$.
+
+In fact, if the symmetry is continuous, then it is much more likely to find 
+\rpo s, than it is to find exact \po s, since $s = 0$, corresponding to the 
+\po , is but one specific value in the continuum of possible values of 
+parameter $s$.
