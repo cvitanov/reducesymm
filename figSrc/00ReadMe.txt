@@ -29,6 +29,11 @@ is in
 	1st version: 	mathematica notebook plotEigenvalues.nb
 			Converted to .fig with pstoedit
 	2nd version:	gnuplot script plotEigenvalues.gnuplot
+source for
+	rpo_ks/figs/equilSpatial.eps
+is in	
+	programs/production/KS22.0/equil
+	file: plotSpatial.nb
 	
 
 Processing
