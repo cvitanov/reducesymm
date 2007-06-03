@@ -34,15 +34,14 @@ In the literature \refeq{ks} is sometimes written as
     \,,\qquad   x \in [0,L]
     \,,
 \ee{ksVisc}
-or in any number of other variants, all equivalent. The
-\KSe\ in  form \refeq{ks} is used, among others, in
-\refrefs{cross93,Mks86,ks04com}. In what follows
+or in any number of other variants, all equivalent.
+In what follows
 we shall state results of all calculations either in units of the
 `dimensionless system size' $\tildeL$, or the system size $L = 2 \pi
 \tildeL$, with the `hyper-viscosity' $\nu$ fixed to $1$. Other
 authors vary  $\nu$, with $L$ fixed to either $1$ or $2\pi$.
 All numerical results presented in this paper
-are for the system size $\tildeL=22/2\pi = 3.5014\dots$.
+are for the system size $\tildeL=22/2\pi = 3.5014\cdots$.
     }
 
 Spatial periodicity $u(x,t)=u(x+L,t)$
@@ -69,35 +68,24 @@ sum in \refeq{expan} by a sum over $k > 0$.
 Due to the hyperviscous damping $u_{xxxx}$, long time solutions of
 \KSe\ are smooth, $a_k$ drop off fast\PC{how fast?} with $k$,
 and truncations of \refeq{expan} to $d$ terms, $16 \leq d \leq 128$,
-yield highly accurate solutions for system sizes considered here.
-Robustness of the Fourier representation of KS as a function of the
-number of modes kept in truncations of \refeq{expan} is, however,
-a subtle issue.  Adding an extra mode to a truncation of the system
-introduces a small perturbation.
-However, this can (and often will) throw the dynamics
-into a different asymptotic state.
-A chaotic attractor for $d=15$ can
-collapse into an attractive period-3 cycle for $d=16$, and so on.
-\PC{this example is taken from \rf{Christiansen:97}.
-    do we have a better one from the current study?
-   }
-If
-we compute, for example, the Lyapunov exponent $\Lyap(\tildeL,d)$ for
-a strange attractor of the system \refeq{expan}, there is no reason to
-expect $\Lyap(\tildeL,d)$ to smoothly converge to a limit value
-$\Lyap(\tildeL,\infty)$ as $d \rightarrow \infty$, because of the lack
+yield accurate solutions for system sizes considered here.
+Robustness of the long-time dynamics of KS as a function of the
+number of Fourier modes kept in truncations of \refeq{expan} is, however,
+a subtle issue.
+    \PCedit{
+Adding an extra mode to a truncation of the system
+introduces a small perturbation in the space of dynamical
+systems. However, due to the lack
 of structural stability both as a function of truncation $d$, and the
-system size \tildeL.
-The topology is more robust for \tildeL\ windows
-of transient turbulence, where the system can be structurally stable,
-and it makes sense to compute Lyapunov exponents, escape rates, etc.,
-for the {repeller}, \ie, the closure of the set of all {unstable}
-periodic orbits.
-
-The \eqva\ and short \po s explored in this paper
-are robust both under mode truncations and small
-system parameter $\tildeL$ changes.
-%\PC{Is $L=88.86$ really in \reffig{f:ks_largeL}?}
+system size \tildeL, a small variation in a system parameter
+can (and often will) throw the dynamics
+into a different asymptotic state.
+For example, asymptotic attractor
+which appears to be chaotic in a $d$-dimensional
+\statesp\ truncation can
+collapse into an attractive period-$n$ cycle for
+$(d\!+\!1)$-dimensions.
+        }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[t]
@@ -128,35 +116,46 @@ Much more illuminating are the \statesp\ representations.
     Fourier modes as coordinates!}
         } %end \PublicPrivate{%
 
-
-%\ES{Can we? Galilean invariance allows a rescaling of $a_0$ but
-%     in \refeq{EFourier} all $a_k$'s appear.}
-
 \subsection{Symmetries of \KSe}
 \label{sec:KSeSymm}
-% former \subsection{Scaling and symmetries}
-% former symm.tex
-% Predrag extracted from newton.tex         jul  3 2006
 
-The  KS equation is Galilean invariant: if $u(x,t)$ is a solution,
+    \PCedit{
+The KS equation is Galilean invariant: if $u(x,t)$ is a solution,
 then $u(x \PCedit{-ct,t) -c} $, with $c$ an arbitrary constant
 speed, is also a solution. Without loss of generality, in our
 calculations we shall set the mean velocity of the front to zero,
-% \index{Galilean invariance}
-% \index{invariance!Galilean}
 \beq \int dx \, u = 0 \,. \ee{GalInv}
 As $\dot{a_0}=0$ in
 \refeq{expan}, $a_0$ is a conserved quantity, in our calculations
 fixed to $a_0=0$ by the
 % Galilean invariance
-condition \refeq{GalInv}. The KS equation  \refeq{ks} is time
-translationally invariant, and space translationally invariant under
-the 1-$d$ group of $O(2)$ rotations: if $u(x,t)$ is a solution,
-then
+condition \refeq{GalInv}.
+$G$, group of actions $ g \in G $
+on a \statesp\ (reflections, rotations, \etc)
+is a symmetry of the flow
+$\dot{u} = F(u)$ if $g\,\dot{u} = F(g\,u)$.
+The KS equation  \refeq{ks} is time
+translationally invariant, and space translationally invariant
+on a periodic domain under
+the 1-parameter group of $O(2)$ rotations:
+\beq
+g\,\dot{u} = F(g\,u)
+    \,,\qquad
+F(u) = -u u_x-u_{xx}- u_{xxxx}
+    \,,\qquad
+g \in O(2)
+\,.
+\ee{KSO2}
+If $u(x,t)$ is a solution, then
 $\Shift_{\shift/L}\, u(x) = u(x+\shift,t)$
-is an equivalent solution for any $-L/2 <
-\shift \leq L/2$.
-    \PCedit{
+is an equivalent solution for any
+$-L/2 < \shift \leq L/2$,
+as is the
+reflection (`parity' or `inversion')
+\beq
+    \Refl \, u(x) = -u(-x)
+\,.
+\ee{KSparity}
 The translation operator action on the Fourier coefficients
 \beq
   (\Shift_{\shift/L}\, a)_k= e^{ik\, \shift /\tildeL} \, a_k
@@ -165,36 +164,82 @@ The translation operator action on the Fourier coefficients
     \label{eq:RPOcondFouri}
 \eeq
 amounts to the $k$-th mode complex plane rotation by an angle
-$-k\, \shift /\tildeL$. Furthermore,
-the KS equation is invariant under
-reflection (`parity' or `inversion')
-\beq
-    \Refl \, u(x) = -u(-x)
-\,,
-\ee{KSparity}
-or, in the Fourier representation
+$-k\, \shift /\tildeL$, and the reflections acts on them
+by complex conjugation,
 \beq
   \Refl \, a_k = -a_k^\ast
 % a_{2m} \to a_{2m}
 \,.
 \ee{FModInvSymm}
-Reflection generates  $D_1$, the dihedral
-subgroup $\{1, \Refl\}$ of $O(2)$.
+Reflection generates  the dihedral
+subgroup $D_1 = \{1, \Refl\}$ of $O(2)$.
+Let $\bbU$ be the space of
+square-integrable, real-valued velocity fields periodic on
+the $\Omega = [-L/2,L/2]$ interval,
+\PC{replace ``square-integrable" by whatever the math papers say the
+    space is}
+\begin{align}
+ \bbU  &= \{u \in L^2(\Omega) \; | \; u(x) = u(x+L)\}  \,.
+\end{align}
+A continuous symmetry maps each
+state
+$u \in \bbU$ to a manifold of functions with identical dynamic behavior.
 Relation
 $\Refl^2 = 1$
 induces linear decomposition
-$u(x) = u_+(x)+ u_-(x)$
+$u(x) = u^+(x)+ u^-(x)$,
+$u^+(x)= P^+ u(x)$, $u^-(x)= P^- u(x)$,
 of the space of solutions into
-irreducible subspaces\rf{KNSks90},
-$u_S(x)= P_S u(x)$, $u_A(x)= P_A u(x)$, where
+irreducible subspaces,
+\PC{check $\oplus$ - do they use circle around +?}
+$
+\bbU = \bbU^+  % \oplus  \bbUsymm
+       \oplus \bbU^-
+$, where
 \beq
-    \Refl_S=(\matId+\Refl)/2
+    P^+=(\matId+\Refl)/2
     \,,\qquad
-    \Refl_A=(\matId-\Refl)/2
+    P^-=(\matId-\Refl)/2
 \ee{P1P2proj}
-are the symmetric/antisymmetric $u(x)$ subspace
+are the symmetric/antisymmetric
 projection operators.
-Together with any rational shift $ \Shift_{1/m}u(x)=u(x+L/m)$,
+% \beq
+% \bbUsymm  = \{u \in \bbU  \: | \; u = \Refl\,u \}
+%\label{symmSubspU}
+% \eeq
+% the subspace of velocity fields invariant under $D_1$.
+%    \PC{$\bbUsymm$ definition looks \PCedit{very wrong}}
+Substituting $u=u^+ + u^-$ into the KS equation \refeq{KSO2}
+and noting that the derivative
+$\partial_x$ is odd under reflection, we have\rf{KNSks90}
+\bea
+\dot{u}^+ &=& - \frac{1}{2}(u^+u^-_x + u^-u^+_x )
+                - u^+_{xx} - u^+_{xxxx}
+    \continue
+\dot{u}^- &=& - \frac{1}{2}(u^+u^+_x + u^-u^-_x )
+                - u^-_{xx} - u^-_{xxxx}
+\,.
+\label{KSD1}
+\eea
+The antisymmetric $\bbU^-$ subspace is
+an invariant subspace if $u^+ = 0$, but otherwise the
+nonlinear terms in \refeq{KSD1} evolution
+mix the two subspaces\rf{KNSks90}.
+    \PC{
+    why \refeq{KSD1}? (a) to clarify embedding of
+    $\bbU^-$ into $\bbU$
+    (b) to explain the desymmetrization of evolution defined on
+     $\Omega^{+} = [0, L/2]$ fundamental domain
+    $\bbU^+ +  \bbUsymm$ space, with evolution at
+    instant of crossing $\bbUsymm$ space given by reflection $\Refl$.
+    }
+    \PC{re integrators: make sure $\Refl$ applied after
+    all points used by integrator are in $\bbU^-$
+    }
+
+
+Together with any rational shift
+$ \Shift_{1/m}u(x)=u(x+L/m)$,
 such as the 1/2-cell shift
 \beq
     \Shift_{1/2}\, u(x)=u(x+L/2)
@@ -203,15 +248,17 @@ such as the 1/2-cell shift
 reflection generates a discrete dihedral $D_m$
 subgroup of $O(2)$, also a symmetry of KS.
 The only non-zero Fourier components of a solution invariant
-under $D_m$ are $a_{jm} \neq 0$, $j =1,2,\ldots$
+under $D_m$ are $a_{jm} \neq 0$, $j =1,2,\cdots$ .
 $D_m$ reduces the dimensionality
 of \statesp\ and aids computation of \eqva\ and \po s
-within it. For example, the reflection and 1/2-cell translation
+within it. For example, the reflection
+(For brevity, here $\Shift = \Shift_{1/2}$)
+and 1/2-cell translation
 group $D_2 = \{1, \Refl,\Shift,\Shift\Refl\}$
 reduces the \statesp\ into four irreducible representations:
 \begin{align}
  & \qquad\qquad\qquad\qquad\qquad
-              ~~~~ \Shift ~~ \Refl  ~~  \Shift\Refl
+              ~~~ \Shift ~~ \Refl  ~\;  \Shift\Refl
     \nnu\\
 P^{(1)} &= \frac{1}{4} (1 + \Shift + \Refl + \Shift\Refl)
            ~~~~  S  ~~  S   ~~   S
@@ -224,13 +271,15 @@ P^{(3)} &= \frac{1}{4} (1 - \Shift + \Refl - \Shift\Refl)
      \label{ek_defn}\\
 P^{(4)} &= \frac{1}{4} (1 - \Shift - \Refl + \Shift\Refl)
           ~~~~  A  ~~  A   ~~   S
-\,,
+\,.
     \nnu
 \end{align}
-where the last 3 columns refer to the symmetry of
-the subspace. $P^{(j)}$ is the projection operator onto
-$j$-irreducible subspace, and here
-for brevity $\Shift = \Shift_{1/2}$.
+$P^{(j)}$ is the projection operator onto
+$u^{(j)}$ irreducible subspace, and the last 3 columns
+refer to the symmetry of
+$u^{(j)}$ functions under reflection and
+1/2-cell shift.
+
 
   However, linearized stability of these solutions has
 eigenvectors outside of this subspace, and needs to be
@@ -240,16 +289,14 @@ computed in the full \statesp.
 \PublicPrivate{% WORK ON THIS TEXT
         }{ %switch to Private:
     \PC{this is not as in \refref{KNSks90}, I might be wrong}
-$\Shift_1=(\matId+\Shift_{1/2})/2$, and
-$\Shift_2=(\matId-\Shift_{1/2})/2$.
 The nonlinear term $(u^2)_x$ in
 the KS equation mixes these subspaces, leading
 to four invariant subspaces (labeled by the
 corresponding projection operators\rf{KNSks90}):
 \begin{romannum} % SIAM itemize}
- \item[$\Refl_1$:] The space of antisymmetric functions,
+ \item[$\bbU^-$:] The space of antisymmetric functions,
  \item[$\Shift_1$:] The space of $L/2$ periodic functions,
- \item[$\Refl_1 \Shift_1$:] The intersection of the above two,
+ \item[$\bbU^{-,\Shift}$:] The intersection of the above two,
  \item[$\mathbf{L}$:]
 The space of functions invariant under $x\mapsto L/2-x,\ u\mapsto -u$.
 \end{romannum} %itemize}
@@ -258,7 +305,7 @@ The space of functions invariant under $x\mapsto L/2-x,\ u\mapsto -u$.
 %\label{s:AntisymmSubsp}
 %
 \KSe\ preserves solutions $u(x,t)=-u(-x,t)$ within the
-antisymmetric subspace $\Refl_1$.
+antisymmetric subspace $\bbU^-$.
 With the continuous
 translational symmetry eliminated and no
 \reqva\ and \rpo s, one
@@ -300,7 +347,7 @@ geometry of the flow.
 % from Lan thesis                                8jun2004
 
 \Eqva\  (or the steady solutions)
-are the simplest flow-invariant solutions,
+are the fixed profile time-invariant solutions,
 \beq
  u(x,t) = u_\stagn(x) %\,,\quad t \in \mathbb{R}
 \,.
@@ -314,17 +361,10 @@ moving with constant speed $c$, {\ie}
  u(x,t) =  u_\stagn(x-ct) %\,,\quad t \in \mathbb{R}
 \,.
 \ee{reqva}
-
 Here suffix ${}_\stagn$ labels a particular invariant solution.
 Because of the reflection symmetry \refeq{KSparity},
 the \reqva\ come in counter-traveling pairs
-$u_\stagn(x-ct)$, $-u_\stagn(-x+ct)$. % $c \to -c$.
-\Eqva.
-%\RLD{Not sure what this means.}
-%PC:, OK, dropped now
-%and the connections between them form the coarsest
-%geometrical framework for organizing
-%\statesp\ orbits. %\rf{ksgreene88}.
+$u_\stagn(x-ct)$, $-u_\stagn(-x+ct)$.
 
 The \reqv\ condition for the {\KS} PDE \refeq{ks}
 is the ODE
@@ -386,18 +426,68 @@ For $\expctE>0$ there is rich
 $\expctE$-dependent dynamics, with
 fractal sets of bounded solutions investigated in
 depth by Michelson\rf{Mks86}.
+%
+% former\subsection{Bifurcation structure of \eqva\ and \reqva.}
+% \label{sec:KSlit}
+% Vaggelis               jan 20 2007
+%
+For $\tildeL<1$ the only \eqv\ of the system is the
+globally attracting constant
+solution $u(x,t)=0$, denoted $\EQV{0}$ from now on. With increasing system size $L$ system
+undergoes a series of bifurcations.
+The resulting \eqva\ and
+\reqva\ (but not \po s and \rpo s)
+are described in the classical papers of
+Kevrekidis, Nicolaenko and Scovel\rf{KNSks90},
+and Greene and Kim\rf{ksgreene88},
+The relevant bifurcations
+up to the system size
+investigated here are summarized
+in \reffig{fig:ksBifDiag}:
+at $\tildeL=22/2\pi =
+3.5014\dots$, the {\eqva} are the constant solution
+\EQV{0}, the GLMRT\rf{laquey74,ksgreene88} \eqv\ \EQV{1}, the $2$-
+and $3$-cell states \EQV{2} and \EQV{3}, the pair of \reqva\
+\REQV{\pm}{1}, and the  \REQV{\pm}{2} \reqva.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[t]       \label{fig:ksBifDiag}
+\begin{center}
+\includegraphics[width=0.5\textwidth]{figs/ksBifDiag_pst.eps}
+\end{center}
+\caption{
+The energy \refeq{ksEnergy} of the \eqva\ and \reqva\ that
+exist up to $L=22$, $\tildeL = 3.5014\ldots$, plotted as a function
+of the system size $\tildeL = L/2\pi$ (additional \eqva, not present
+at $L = 22$ are given in \refref{ksgreene88}). Solid curves denote
+$n$-cell solutions \EQV{2} and \EQV{3}, dotted curves the GLMRT
+\eqv\ \EQV{1},
+% the dash-dotted curve the `giant states' (??? don't have those),
+and dashed curves the \reqva\ \REQV{\pm}{1} and \REQV{\pm}{2}.
+The parameter $\alpha$ of \refrefs{KNSks90,ksgreene88} is
+related to the system size by $\tildeL=\sqrt{\alpha/4}$.
+% Open circles indicate Hopf bifurcations.
+%The color of a branch indicates the number of unstable eigenvalues:
+%(red) 2 unstable eigenvalues, (blue) 1 unstable eigenvalue, (green)
+%stable.
+        }
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 The solutions of the {\eqv}  condition
-\refeq{eq:3dks} are themselves in turn organized by the
+\refeq{eq:3dks} are
+% themselves in turn
+organized\rf{Mks86} by the
 `{\eqva}  of {\eqva}'  condition
-\( u_x= v_x= w_x= 0 \), and
-the connections between them\rf{Mks86}.
+\( u_x= v_x= w_x= 0 \).
+% , and the connections between them.
     For $\expctE>0$ the {\reqva}  points of \refeq{eqvOfEqv} are
 $C_{+}=(c+\sqrt{2\expctE},0,0)$ and $C_{-}=(c-\sqrt{2\expctE},0,0)$.
 Linearization of the flow around $C_{+}$ yields the cubic equation
-  \beq
+$ %  \beq
 \eigExp(1+\eigExp^2) = 4 \expctE
 \,,
-  \ee{KSeqvCubic}
+$ %  \ee{KSeqvCubic}
 with linear stability eigenvalues
 \beq
 \eigExp[1] = 2 \eigRe
@@ -410,6 +500,9 @@ along which solutions spiral in.
 By the $x \to -x$ `time reversal' symmetry, the
 invariant manifolds of $C_{-}$
 have reversed stability properties.
+\PC{
+    not sure we need this, not used in our paper? Where did the figure go?
+    }
 Most orbits escape quickly even if initiated close to \eqva, and that
 renders the numerical calculations
 difficult\rf{ksham95,kshooper88,pimyk,pimsimp}.
@@ -440,17 +533,6 @@ which needs to be solved for (time independent) $a_k$ and $c$.
 For a periodic boundary cell of size
 $L$ the only {\eqva}  are
 solutions of \refeq{eq:3dks} of spatial periodicity $L$.
-In the Fourier representation they satisfy
-the \eqv\ condition for \refeq{expan}
-\beq
-\left( \frac{k^2}{\tildeL^2} - \frac{k^4}{\tildeL^4}  \right)\, a_k
-    \PCedit{
-    -  \frac{i k}{2\tildeL} \sum_{m=-\infty}^{+\infty} a_m a_{k-m}
-            }
-  = 0
-\,.
-\label{eq:stfks}
-\eeq
 Periods of spatially periodic {\eqva} are multiples of $L$.
 Every time the system size crosses  $\tildeL=n$,
 $n$-cell states
@@ -542,6 +624,8 @@ $
 \,.
 $
 
+From \refeq{expan} we see that the origin $u(x,t) = 0$
+has Fourier modes as the linear stability eigenvectors.
 The $|k|<\tildeL$
 long wavelength perturbations of the flat-front {\eqv}
 are linearly unstable, while all
@@ -549,111 +633,43 @@ $|k|> \tildeL$ short wavelength perturbations are strongly contractive.
 The high $k$ eigenvalues, corresponding to rapid variations of
 the flame front, decay so fast that the corresponding eigendirections
 are physically irrelevant.
-% \index{Lyapunov exponent!{\eqv}}
-To illustrate the rapid contraction in the non-leading eigendirections
-we plot  in [MAYBE INCLUDE] % \reffig{f:eigenvalues}
-the eigenvalues of the \eqv\ in the unstable regime,
-for relatively small system size, % low viscosity $\nu$,
-and compare them with the
-stability eigenvalues of the least unstable cycle for the same
-system size.
-The `laminar' \EQV{0}~\eqv\ is very unstable,
-with many unstable eigendirections.
-
-
-From \refeq{expan} we see that the origin $u(x,t) = 0$
-has Fourier modes as the linear stability eigenvectors.
-For $0 \leq |k| \leq \tildeL$, these Fourier modes are
-unstable.
 The most unstable mode, nearest to $|k|=\tildeL/\sqrt{2}$,
 sets the scale of the mean wavelength $\sqrt{2}$
 of the spatiotemporal dynamics of the {\KSe},
-measured in the system size \tildeL, see \reffig{f:ks_largeL}.
-
-Even though our starting point \refeq{ks} is an infinite-dimensional
-dynamical system, the asymptotic dynamics unfolds on a
-finite-dimensional attracting manifold, and so we are back on the
-familiar territory: the theory of a finite number of ODEs applies to
-this infinite-dimensional PDE as well.
-
-% \subsection{Bifurcation structure of \eqva\ and \reqva.}
-% \label{sec:KSlit}
-% Vaggelis               jan 20 2007
-
-For small $\tildeL$ the only \eqv\ of the system is the constant
-solution $u(x,t)=0$, denoted $\EQV{0}$ from now on. $\EQV{0}$ is
-globally attracting for $\tildeL<1$.
-As described in the classical papers of
-%
-%The \eqva\ of \KSe\ used here are analyzed
-%in the classical
-% bifurcation and symmetry is
-%papers of
-Kevrekidis, Nicolaenko and Scovel\rf{KNSks90},
-and Greene and Kim\rf{ksgreene88},
-KS system
-undergoes a series of bifurcations
-with increasing system size $L$.
-The resulting \eqva\ and
-\reqva\ are discussed in \refref{ksgreene88}. For the system size
-$L=22$ investigated here, all relevant bifurcations are summarized
-in \reffig{fig:ksBifDiag}:
-at the system size $\tildeL=22/2\pi =
-3.5014\dots$ studied here, the {\eqva} are the constant solution
-\EQV{0}, the GLMRT\rf{laquey74,ksgreene88} \eqv\ \EQV{1}, the $2$-
-and $3$-cell states \EQV{2} and \EQV{3}, the pair of \reqva\
-\REQV{\pm}{1}, and the  \REQV{\pm}{2} \reqva.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}[t]       \label{fig:ksBifDiag}
-\begin{center}
-\includegraphics[width=0.5\textwidth]{figs/ksBifDiag_pst.eps}
-\end{center}
-\caption{
-The energy \refeq{ksEnergy} of the \eqva\ and \reqva\ that
-exist up to $L=22$, $\tildeL = 3.5014\ldots$, plotted as a function
-of the system size $\tildeL = L/2\pi$ (additional \eqva, not present
-at $L = 22$ are given in \refref{ksgreene88}). Solid curves denote
-$n$-cell solutions \EQV{2} and \EQV{3}, dotted curves the GLMRT
-\eqv\ \EQV{1},
-% the dash-dotted curve the `giant states' (??? don't have those),
-and dashed curves the \reqva\ \REQV{\pm}{1} and \REQV{\pm}{2}.
-The parameter $\alpha$ of \refrefs{KNSks90,ksgreene88} is
-related to the system size by $\tildeL=\sqrt{\alpha/4}$.
-% Open circles indicate Hopf bifurcations.
-%The color of a branch indicates the number of unstable eigenvalues:
-%(red) 2 unstable eigenvalues, (blue) 1 unstable eigenvalue, (green)
-%stable.
-        }
-\end{figure}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% measured in the system size \tildeL,
+see \reffig{f:ks_largeL}.
 
 \subsection{\Rpo s}
-% former history.tex
 % Predrag created file              jul 3 2006
 
 The KS equation \refeq{ks} is time translationally invariant,
 and space translationally invariant
 under the 1-$d$ Lie group of $O(2)$ rotations: if
-$u(x,t)$ is a solution, then $u(x+\shift,t)$ is an equivalent
+$u(x,t)$ is a solution, then $u(x+\shift,t)$ and
+$-u(-x+\shift,t)$ is an equivalent
 solution for any $-L/2 < \shift \leq L/2$.
 As a result, KS can have
 %\reqva\ (traveling wave) solutions $u(x-ct)$ and
-\rpo\ solutions with period $\period{}$ and
-a nonzero shift $\shift$
+\rpo\ (labeled here by ${}_p$) with period $\period{p}$ and
+a nonzero shift $\shift_p$
 \beq
-u(x+\shift,\period{}) = u(x,0)
+%\tau_p \Refl_p u_p(x,0) =
+\sigma_p u_p(\sigma_p x+\shift_p,\period{p}) = u_p(x,0)
+\,,\qquad
+\sigma_p = \pm 1
 \,,
 \ee{KSrpos}
-\ie, a state $u(x,0)$ can occur again after time $\period{}$,
-but with some shift $\shift$.
-Due to the reflection symmetry \refeq{KSparity}, every \rpo\
-$u(x,0) = u_\stagn(x)$ with shift $\shift$ has a symmetric partner
-$u(x,0) = -u_\stagn(-x)$ with shift $-\shift$.
+\ie, a state $u_p(x,0)$ that occurs again after time $\period{p}$,
+but with a shift $\shift_p$, and possibly also a reflection.
+Due to the reflection symmetry \refeq{KSparity} of KS equation,
+every \rpo\
+$u(x,0) = u_p(x)$ with shift $\shift$ has a symmetric partner
+$u(x,0) = -u_p(-x)$ with shift $-\shift$.
 
 {\Rpo s} were introduced by Poincar\'e in his study of
-the 3-body problem\rf{ChencinerLink,rtb}.
-\Reqva\ of this problem are known as the Lagrange points.
+the 3-body problem\rf{ChencinerLink,rtb}, where
+the Lagrange points are the
+\reqva.
 % They are stationary in the co-rotating frame, but
 % in the inertial frame they execute circular motions.
 Our initial searches for \rpo s in KS system were
