@@ -15,21 +15,27 @@ Mathematica front end.  Any changes you make to this file will be
 overwritten.
 ***********************************************************************)
 
+Needs["LinearAlgebra`MatrixManipulation`"]
+
+<<Graphics`Graphics3D`
+
 <<SiminosUtils`
 
 
 
 
 
-Needs["LinearAlgebra`MatrixManipulation`"]
 
-v=Import["rpoU.dat"];
+
+v=scale*Import["rpoU.dat"];
 
 
 
 pfile=OpenRead["periods.dat"];
 
 T=Read[pfile,{Number}][[1]];
+
+
 
 Close[pfile];
 
@@ -43,5 +49,41 @@ vPlt=ListDensityPlot[v,Mesh\[Rule] False,ColorFunction\[Rule]hby,
       AspectRatio\[Rule]2];
 
 Export[wd[]<>".eps",vPlt];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Exit[];
