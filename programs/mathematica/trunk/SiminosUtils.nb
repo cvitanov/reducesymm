@@ -41,9 +41,9 @@ Wolfram Research.
 
 (*NotebookFileLineBreakTest
 NotebookFileLineBreakTest*)
-(*NotebookOptionsPosition[     17597,        400]*)
-(*NotebookOutlinePosition[     18260,        423]*)
-(*  CellTagsIndexPosition[     18216,        419]*)
+(*NotebookOptionsPosition[     25204,        564]*)
+(*NotebookOutlinePosition[     25865,        587]*)
+(*  CellTagsIndexPosition[     25821,        583]*)
 (*WindowFrame->Normal*)
 
 
@@ -191,6 +191,12 @@ Cell[BoxData[{
             file, \(Flatten[
                 StringPosition[
                   file, "\</\>"]]\)[\([\(-1\)]\)]], \(-4\)];\)\), "\n", 
+    \(\(toDir[file_] := 
+        StringDrop[
+          file, \(Flatten[
+              StringPosition[
+                file, "\</\>"]]\)[\([\(-1\)]\)]];\)\), "\[IndentingNewLine]", \
+
     \(\(ToPeriod[file_] := 
         ToExpression[
           StringDrop[StringDrop[ToDir[file], 7], \(-7\)]];\)\), "\n", 
@@ -240,8 +246,13 @@ Cell[BoxData[
                   sm)\)/Norm[x[\([j]\)] - sm], {j, 2, Nv}]; y]\)], "Input",
   InitializationCell->True],
 
-Cell[BoxData[{
-    \(\(\(interpTraj[file_, Npt_, Nplt_, NpS_, rSkip_, nd_] := 
+Cell[BoxData[
+    \( (*added\ b, 
+      a\ as\ input\ arguments . \ 
+          Change\ this\ in\ calling\ programs*) \)], "Input"],
+
+Cell[BoxData[
+    \(interpTraj[file_, b_, a_, Npt_, Nplt_, NpS_, rSkip_, nd_] := 
       Module[{vfile, vi, v, p, ds, s, dS, adum, a1s, a2s, a3s, aStab}, 
         vfile = OpenRead[file]; \[IndentingNewLine]aStab = 
           Table[Null, {Npt}]; \[IndentingNewLine]Do[
@@ -249,7 +260,7 @@ Cell[BoxData[{
               RecordLists \[Rule] True]; \[IndentingNewLine]v = 
             Take[vi, {1, \(Dimensions[vi]\)[\([1]\)], 
                 rSkip}]; \[IndentingNewLine]p = 
-            coordsTraj[fourTraj[v], b, a2]; \[IndentingNewLine]ds = 
+            coordsTraj[fourTraj[v], b, a]; \[IndentingNewLine]ds = 
             Table[Norm[p[\([i + 1]\)] - p[\([i]\)]], {i, 1, 
                 Nplt - 1}]; \[IndentingNewLine]s = 
             Table[Null, {\(Dimensions[ds]\)[\([1]\)] + 
@@ -274,9 +285,45 @@ Cell[BoxData[{
             Table[{\(aS[\([1]\)]\)[sx*dS], \(aS[\([2]\)]\)[
                   sx*dS], \(aS[\([3]\)]\)[sx*dS]}, {sx, 1, NpS}], {j, 1, 
             Npt}]; \[IndentingNewLine]Close[
-          vfile]; \[IndentingNewLine]aStab]\)\(\n\)
-    \)\), "\[IndentingNewLine]", 
-    \(apPoinc[traj_, coord_] := 
+          vfile]; \[IndentingNewLine]aStab]\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(interp1Traj[p_, rSkip_, dS_] := 
+      Module[{pdum, ds, s, adum, Npt, NpS, aS, a1s, a2s, a3s, 
+          aStab}, \[IndentingNewLine]Npt = \(Dimensions[
+              p]\)[\([1]\)]; \[IndentingNewLine]pdum = 
+          Take[p, {1, \(Dimensions[p]\)[\([1]\)], 
+              rSkip}]; \[IndentingNewLine]Print[
+          Dimensions[p]]; \[IndentingNewLine]ds = 
+          Table[Norm[pdum[\([i + 1]\)] - pdum[\([i]\)]], {i, 1, 
+              Npt - 1}]; \[IndentingNewLine]s = 
+          Table[0, {Npt}]; \[IndentingNewLine]Print[
+          Dimensions[ds]]; \[IndentingNewLine]Do[
+          s[\([i + 1]\)] = s[\([i]\)] + ds[\([i]\)], {i, 1, 
+            Npt - 1}]; \[IndentingNewLine]Print[
+          Dimensions[s]]; \[IndentingNewLine]NpS = 
+          Floor[s[\([\(Dimensions[s]\)[\([1]\)]]\)]/
+              dS]; \[IndentingNewLine]adum = 
+          TakeColumns[p, {1}] // Flatten; \[IndentingNewLine]a1s = 
+          Table[{s[\([i]\)], adum[\([i]\)]}, {i, 
+              1, \(Dimensions[s]\)[\([1]\)]}]; \[IndentingNewLine]adum = 
+          TakeColumns[p, {2}] // Flatten; \[IndentingNewLine]a2s = 
+          Table[{s[\([i]\)], adum[\([i]\)]}, {i, 
+              1, \(Dimensions[s]\)[\([1]\)]}]; \[IndentingNewLine]adum = 
+          TakeColumns[p, {3}] // Flatten; \[IndentingNewLine]a3s = 
+          Table[{s[\([i]\)], adum[\([i]\)]}, {i, 
+              1, \(Dimensions[
+                  s]\)[\([1]\)]}]; \[IndentingNewLine]aS = {Interpolation[
+              a1s], Interpolation[a2s], 
+            Interpolation[a3s]}; \[IndentingNewLine]aStab = 
+          Table[{\(aS[\([1]\)]\)[sx*dS], \(aS[\([2]\)]\)[
+                sx*dS], \(aS[\([3]\)]\)[sx*dS]}, {sx, 1, 
+              NpS}]; \[IndentingNewLine]aStab]\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(\(\[IndentingNewLine]\)\(apPoinc[traj_, coord_] := 
       Module[{cros, ctraj}, 
         cros = {Null}; \[IndentingNewLine]ctraj = 
           Take[traj, All, {coord}] // Flatten; \[IndentingNewLine]Do[
@@ -285,14 +332,14 @@ Cell[BoxData[{
             2, \(Dimensions[ctraj]\)[\([1]\)]}]; \[IndentingNewLine]cros = 
           Drop[cros, 
             1]; \[IndentingNewLine]\((Extract[traj, cros] + 
-              Extract[traj, cros - 1])\)/2]\)}], "Input",
+              Extract[traj, cros - 1])\)/2]\)\)\)], "Input",
   InitializationCell->True],
 
 Cell[BoxData[
     \(\(\(\[IndentingNewLine]\)\(\(d1[x_List, t_] := \(D[#, t] &\) /@ 
           x;\)\n\[IndentingNewLine]
     \(d2[x_List, t_] := \(D[#, t, t] &\) /@ x;\)\[IndentingNewLine]\n
-    \(norm[x_List] := x/Sqrt[x . x];\)\n\[IndentingNewLine]
+    \(norm[x_List] := x/Sqrt[x . x];\)\[IndentingNewLine]\n
     \(FrenetFrame[x_List, t_, phi_, r_] := 
         Module[{xp, xpp, tangent, binormal, normal}, 
           xp = d1[x, t]; \[IndentingNewLine]xpp = 
@@ -300,52 +347,161 @@ Cell[BoxData[
             norm[xp]; \[IndentingNewLine]binormal = 
             norm[Cross[xp, xpp]]; \[IndentingNewLine]normal = 
             Cross[binormal, tangent]; \[IndentingNewLine]x + 
-            normal*r*Cos[phi] + r*binormal*Sin[phi]];\)\n
-    \)\)\)], "Input",
+            normal*r*Cos[phi] + r*binormal*Sin[phi]];\)\)\)\)], "Input",
   InitializationCell->True],
 
 Cell[BoxData[
-    \(plotEtab[dir_, c_] := 
-      Module[{Etab, Nk, mE, pm, pme, p, pE, pE1, pE2, coord, cros, poinc, 
+    \(ruslanizE[list_] := Map[Times[{2, 4, 4}, #] &, list, {1}]\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(plotEtab[Etab_, label_, c_, pt_:  0.01, 
+        thck_:  0.005] := \[IndentingNewLine]Module[{Nk, coord, cros, poinc, 
           plPoinc, rPoincE, rPoinc1, plrPoincE, 
-          plrPoinc1}, \[IndentingNewLine]Etab = 
-          Import[dir]; \[IndentingNewLine]Nk = \(Dimensions[
-              Etab]\)[\([1]\)]; \[IndentingNewLine] (*\[IndentingNewLine]dif \
+          plrPoinc1}, \[IndentingNewLine]Nk = \(Dimensions[
+              Etab]\)[\([1]\)]; \[IndentingNewLine]mE = 
+          Sum[Etab[\([i, 1]\)], {i, 1, Nk}]/Nk; \[IndentingNewLine]mP = 
+          Sum[Etab[\([i, 2]\)], {i, 1, Nk}]/Nk; \[IndentingNewLine]mD = 
+          Sum[Etab[\([i, 3]\)], {i, 1, Nk}]/Nk; \[IndentingNewLine]pEPEdot[
+            label] = 
+          ScatterPlot3D[
+            AppendRows[TakeColumns[Etab, {1}], TakeColumns[Etab, {2}], 
+              TakeColumns[Etab, {2}] - TakeColumns[Etab, {3}]]\ \ , 
+            DisplayFunction -> \ Identity, PlotJoined -> True, 
+            PlotRange -> All, AspectRatio -> Automatic, 
+            FrameLabel -> \ {"\<E\>", "\<P\>", \*"\"\<\!\(E\& . \)\>\""}, 
+            PlotStyle -> \ {c\ }]; \[IndentingNewLine]pPEdot[label]\  = 
+          ListPlot[
+            AppendRows[TakeColumns[Etab, {2}], 
+              TakeColumns[Etab, {2}] - TakeColumns[Etab, {3}]]\ \ , 
+            DisplayFunction -> \ Identity, PlotJoined -> True, 
+            AspectRatio -> Automatic, PlotStyle -> {c, Thickness[thck]}, 
+            FrameLabel -> \ {"\<P\>", \*"\"\<\!\(E\& . \)\>\""}]; \
+\[IndentingNewLine]pmPD[label] = 
+          ListPlot[{{mP, mD}}, PlotStyle \[Rule] {c, PointSize[pt]}, 
+            DisplayFunction \[Rule] Identity]; \[IndentingNewLine]pmEP[
+            label] = 
+          ListPlot[{{mE, mP}}, PlotStyle \[Rule] {c, PointSize[pt]}, 
+            DisplayFunction \[Rule] Identity]; \[IndentingNewLine]pmED[
+            label] = 
+          ListPlot[{{mE, mD}}, PlotStyle \[Rule] {c, PointSize[pt]}, 
+            DisplayFunction \[Rule] Identity]; \[IndentingNewLine]pPD[
+            label] = 
+          ListPlot[
+            AppendRows[TakeColumns[Etab, {2}], TakeColumns[Etab, {3}]]\ \ , 
+            DisplayFunction -> \ Identity, PlotJoined -> True, 
+            PlotRange -> All, AspectRatio -> Automatic, 
+            FrameLabel -> \ {"\<P\>", "\<D\>"}, 
+            PlotStyle -> {c, Thickness[thck]}]; \[IndentingNewLine]pEP[
+            label] = 
+          ListPlot[
+            AppendRows[TakeColumns[Etab, {1}], TakeColumns[Etab, {2}]]\ \ , 
+            DisplayFunction -> \ Identity, PlotJoined -> True, 
+            PlotRange -> All, AspectRatio -> Automatic, 
+            FrameLabel -> \ {"\<E\>", "\<P\>"}, 
+            PlotStyle -> {c, Thickness[thck]}]; \[IndentingNewLine]pED[
+            label] = 
+          ListPlot[
+            AppendRows[TakeColumns[Etab, {1}], TakeColumns[Etab, {3}]]\ \ , 
+            DisplayFunction -> \ Identity, PlotJoined -> True, 
+            PlotRange -> All, AspectRatio -> Automatic, 
+            FrameLabel -> \ {"\<E\>", "\<D\>"}, 
+            PlotStyle -> {c, Thickness[thck]}]; \[IndentingNewLine]pDEdot[
+            label] = 
+          ListPlot[
+            AppendRows[TakeColumns[Etab, {3}], 
+              TakeColumns[Etab, {2}] - TakeColumns[Etab, {3}]]\ \ , 
+            DisplayFunction -> \ Identity, PlotJoined -> True, 
+            PlotRange -> All, AspectRatio -> Automatic, 
+            FrameLabel -> \ {"\<D\>", \*"\"\<\!\(E\& . \)\>\""}, 
+            PlotStyle -> {c, Thickness[thck]}]; \[IndentingNewLine]pEEdot[
+            label] = 
+          ListPlot[
+            AppendRows[TakeColumns[Etab, {1}], 
+              TakeColumns[Etab, {2}] - TakeColumns[Etab, {3}]]\ \ , 
+            DisplayFunction -> \ Identity, PlotJoined -> True, 
+            PlotRange -> All, AspectRatio -> Automatic, 
+            FrameLabel -> \ {"\<E\>", \*"\"\<\!\(E\& . \)\>\""}, 
+            PlotStyle -> {c, Thickness[thck]}]; \[IndentingNewLine]coord = 
+          Etab[\([All, 3]\)] - 
+            Etab[\([All, 
+                2]\)]; \[IndentingNewLine]cros = {Null}; \
+\[IndentingNewLine]Do[
+          If[\ \((coord[\([i - 1]\)] > 0)\)\  && \ \((coord[\([i]\)] <= \ 
+                  0)\), cros = Append[cros, {i}]], {i, 
+            2, \(Dimensions[coord]\)[\([1]\)]}]; \[IndentingNewLine]cros = 
+          Drop[cros, 
+            1]; \[IndentingNewLine]poinc = \((Extract[
+                  Etab[\([All, {1, 2}]\)], cros] + 
+                Extract[Etab[\([All, {1, 2}]\)], cros - 1])\)/
+            2; \[IndentingNewLine]label\[IndentingNewLine]]\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(plotEtabDir[dir_, c_, pt_:  0.01, 
+        thck_:  0.005] := \[IndentingNewLine]Module[{Etab, 
+          label}, \[IndentingNewLine]Etab = 
+          ruslanizE@
+            Import[dir <> "\</energy.dat\>"]; \[IndentingNewLine]label = 
+          toDir[dir]; \[IndentingNewLine]plotEtab[Etab, label, c, pt, 
+          thck]\[IndentingNewLine]]\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(energyTraj[traj_, L_] := 
+      Module[{d, E, ux, uxx}, d = \(Dimensions[traj]\)[\([2]\)]; 
+        ux = Map[uDer[#, 1, L] &, traj, {1}]; 
+        uxx = Map[uDer[#, 2, L] &, traj, {1}]; 
+        Transpose[{Table[
+                Sum[traj[\([j, i]\)]\^2, {i, 1, d}], {j, 
+                  1, \(Dimensions[traj]\)[\([1]\)]}\ ]/d, 
+            Table[Sum[ux[\([j, i]\)]\^2, {i, 1, d}], {j, 
+                  1, \(Dimensions[traj]\)[\([1]\)]}\ ]/d, 
+            Table[Sum[uxx[\([j, i]\)]\^2, {i, 1, d}], {j, 
+                  1, \(Dimensions[traj]\)[\([1]\)]}\ ]/d}]]\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(\(\[IndentingNewLine]\)\(\(Etab = Import[dir];\)\[IndentingNewLine]
+      \(Nk = \(Dimensions[
+              Etab]\)[\([1]\)];\)\[IndentingNewLine] (*\[IndentingNewLine]dif \
 = Map[Greater[#, mind] &, 
-              Map[Norm, 
-                Etab\  - 
-                  Table[Ec2, {\(Dimensions[Etab\ ]\)[\([1]\)]}], {1}], {1}]; 
-          Etab = Pick[Etab\ , 
-              dif]; \[IndentingNewLine]Nk = \(Dimensions[
-                Etab\ ]\)[\([1]\)]; \[IndentingNewLine]ds = 
-            Table[Norm[Etab\ [\([i + 1]\)] - Etab\ [\([i]\)]], {i, 
-                1, \(Dimensions[Etab\ ]\)[\([1]\)] - 1}]; 
-          s = Table[Null, {\(Dimensions[ds]\)[\([1]\)] + 1}]; s[\([1]\)] = 0; 
-          Do[s[\([i + 1]\)] = s[\([i]\)] + ds[\([i]\)], {i, 
-              1, \(Dimensions[ds]\)[\([1]\)]}]; \[IndentingNewLine]dS = 
-            s[\([\(Dimensions[s]\)[\([1]\)]]\)]/Nk; \[IndentingNewLine]adum = 
-            TakeColumns[Etab\ , {1}] // Flatten; \[IndentingNewLine]a1s = 
-            Union[Table[{s[\([i]\)], adum[\([i]\)]}, {i, 
-                  1, \(Dimensions[s]\)[\([1]\)]}]]; \[IndentingNewLine]adum = 
-            TakeColumns[Etab\ , {2}] // Flatten; \[IndentingNewLine]a2s = 
-            Union[Table[{s[\([i]\)], adum[\([i]\)]}, {i, 
-                  1, \(Dimensions[s]\)[\([1]\)]}]]; \[IndentingNewLine]adum = 
-            TakeColumns[Etab\ , {3}] // Flatten; \[IndentingNewLine]a3s = 
-            Union[Table[{s[\([i]\)], adum[\([i]\)]}, {i, 
-                  1, \(Dimensions[s]\)[\([1]\)]}]]; 
-          aS = {Interpolation[a1s], Interpolation[a2s], Interpolation[a3s]}; 
-          Etab\  = 
-            Table[{\(aS[\([1]\)]\)[s*dS], \(aS[\([2]\)]\)[
-                  s*dS], \(aS[\([3]\)]\)[s*dS]}, {s, 1, 
-                Nk}];\[IndentingNewLine]*) \[IndentingNewLine]p\  = 
+            Map[Norm, 
+              Etab\  - 
+                Table[Ec2, {\(Dimensions[Etab\ ]\)[\([1]\)]}], {1}], {1}]; 
+        Etab = Pick[Etab\ , 
+            dif]; \[IndentingNewLine]Nk = \(Dimensions[
+              Etab\ ]\)[\([1]\)]; \[IndentingNewLine]ds = 
+          Table[Norm[Etab\ [\([i + 1]\)] - Etab\ [\([i]\)]], {i, 
+              1, \(Dimensions[Etab\ ]\)[\([1]\)] - 1}]; 
+        s = Table[Null, {\(Dimensions[ds]\)[\([1]\)] + 1}]; s[\([1]\)] = 0; 
+        Do[s[\([i + 1]\)] = s[\([i]\)] + ds[\([i]\)], {i, 
+            1, \(Dimensions[ds]\)[\([1]\)]}]; \[IndentingNewLine]dS = 
+          s[\([\(Dimensions[s]\)[\([1]\)]]\)]/Nk; \[IndentingNewLine]adum = 
+          TakeColumns[Etab\ , {1}] // Flatten; \[IndentingNewLine]a1s = 
+          Union[Table[{s[\([i]\)], adum[\([i]\)]}, {i, 
+                1, \(Dimensions[s]\)[\([1]\)]}]]; \[IndentingNewLine]adum = 
+          TakeColumns[Etab\ , {2}] // Flatten; \[IndentingNewLine]a2s = 
+          Union[Table[{s[\([i]\)], adum[\([i]\)]}, {i, 
+                1, \(Dimensions[s]\)[\([1]\)]}]]; \[IndentingNewLine]adum = 
+          TakeColumns[Etab\ , {3}] // Flatten; \[IndentingNewLine]a3s = 
+          Union[Table[{s[\([i]\)], adum[\([i]\)]}, {i, 
+                1, \(Dimensions[s]\)[\([1]\)]}]]; 
+        aS = {Interpolation[a1s], Interpolation[a2s], Interpolation[a3s]}; 
+        Etab\  = 
+          Table[{\(aS[\([1]\)]\)[s*dS], \(aS[\([2]\)]\)[
+                s*dS], \(aS[\([3]\)]\)[s*dS]}, {s, 1, 
+              Nk}];\[IndentingNewLine]*) \[IndentingNewLine]
+      \(p\  = 
           ListPlot[
             AppendRows[TakeColumns[Etab, {2}], 
               TakeColumns[Etab, {3}] - TakeColumns[Etab, {2}]]\ \ , 
             DisplayFunction -> \ Identity, PlotJoined -> True, 
-            AspectRatio -> Automatic, PlotStyle -> \ c\ , 
+            AspectRatio -> Automatic, PlotStyle -> {c, Thickness[thck]}, 
             FrameLabel -> \ {\*"\"\<<(\!\(u\_x\)\!\(\()\^2\)\)>\>\"", \
-\*"\"\<<(\!\(u\_xx\)\!\(\()\^2\)\)>-<(\!\(u\_x\)\!\(\()\^2\)\)>\>\""}]; \
-\[IndentingNewLine]pE = 
+\*"\"\<<(\!\(u\_xx\)\!\(\()\^2\)\)>-<(\!\(u\_x\)\!\(\()\^2\)\)>\>\""}];\)\
+\[IndentingNewLine]
+      \(pE = 
           ScatterPlot3D[
             AppendRows[TakeColumns[Etab, {1}], TakeColumns[Etab, {2}], 
               TakeColumns[Etab, {3}] - TakeColumns[Etab, {2}]]\ \ , 
@@ -354,14 +510,16 @@ Cell[BoxData[
             FrameLabel -> \ {"\<<E>\>", \
 \*"\"\<<(\!\(u\_x\)\!\(\()\^2\)\)>\>\"", \
 \*"\"\<<(\!\(u\_xx\)\!\(\()\^2\)\)>\>\""}, 
-            PlotStyle -> \ {c\ }]; \[IndentingNewLine]pE1 = 
+            PlotStyle -> \ {c\ }];\)\[IndentingNewLine]
+      \(pE1 = 
           ListPlot[
             AppendRows[TakeColumns[Etab, {1}], TakeColumns[Etab, {2}]]\ \ , 
             DisplayFunction -> \ Identity, PlotJoined -> True, 
             PlotRange -> All, AspectRatio -> Automatic, 
             FrameLabel -> \ {"\<E\>", \
 \*"\"\<<(\!\(u\_x\)\!\(\()\^2\)\)>\>\""}, 
-            PlotStyle -> \ c\ ]; \[IndentingNewLine]pE2 = 
+            PlotStyle -> {c, Thickness[thck]}];\)\[IndentingNewLine]
+      \(pE2 = 
           ListPlot[
             AppendRows[TakeColumns[Etab, {1}], 
               TakeColumns[Etab, {3}] - TakeColumns[Etab, {2}]]\ \ , 
@@ -369,40 +527,46 @@ Cell[BoxData[
             PlotRange -> All, AspectRatio -> Automatic, 
             FrameLabel -> \ {\*"\"\<<(\!\(u\_x\)\!\(\()\^2\)\)>\>\"", \
 \*"\"\<<(\!\(u\_xx\)\!\(\()\^2\)\)>-<(\!\(u\_x\)\!\(\()\^2\)\)>\>\""}, 
-            PlotStyle -> \ c\ ]; \[IndentingNewLine]coord = 
-          Etab[\([All, 2]\)] - Etab[\([All, 3]\)]; \ncros = {Null}; \n
-        Do[If[\ \((coord[\([i - 1]\)] > 0)\)\  && \ \((coord[\([i]\)] <= \ 
+            PlotStyle -> {c, Thickness[thck]}];\)\[IndentingNewLine]
+      \(coord = Etab[\([All, 2]\)] - Etab[\([All, 3]\)];\)\n
+      \(cros = {Null};\)\n
+      \(Do[
+          If[\ \((coord[\([i - 1]\)] > 0)\)\  && \ \((coord[\([i]\)] <= \ 
                   0)\), cros = Append[cros, {i}]], {i, 
-            2, \(Dimensions[coord]\)[\([1]\)]}]; \ncros = Drop[cros, 1]; \n
-        poinc = \((Extract[Etab[\([All, {1, 2}]\)], cros] + 
+            2, \(Dimensions[coord]\)[\([1]\)]}];\)\n
+      \(cros = Drop[cros, 1];\)\n
+      \(poinc = \((Extract[Etab[\([All, {1, 2}]\)], cros] + 
                 Extract[Etab[\([All, {1, 2}]\)], cros - 1])\)/
-            2; \[IndentingNewLine] (*\(plPoinc\  = \([poinc, 
-                PlotStyle -> \ {c\ , PointSize[3*pt]}]\);\)*) \n
-        plPoinc\  = 
+            2;\)\n (*\(plPoinc\  = \([poinc, 
+              PlotStyle -> \ {c\ , 
+                  PointSize[3*pt]}]\);\)*) \[IndentingNewLine]
+      \(plPoinc\  = 
           Show[Graphics[{c\ , Thickness[connPoincThck], 
                 Map[Circle[#, connR] &, poinc]}], 
             AspectRatio -> Automatic\ \ , 
-            DisplayFunction -> \ Identity]; \[IndentingNewLine]rPoincE = 
+            DisplayFunction -> \ Identity];\)\[IndentingNewLine]
+      \(rPoincE = 
           Table[{poinc[\([i, 1]\)], poinc[\([i + 1, 1]\)]}, {i, 
-              1, \(Dimensions[poinc]\)[\([1]\)] - 1}]; \n
-        rPoinc1 = 
+              1, \(Dimensions[poinc]\)[\([1]\)] - 1}];\)\n
+      \(rPoinc1 = 
           Table[{poinc[\([i, 2]\)], poinc[\([i + 1, 2]\)]}, {i, 
-              1, \(Dimensions[poinc]\)[\([1]\)] - 
-                1}]; \[IndentingNewLine]plrPoincE\  = 
+              1, \(Dimensions[poinc]\)[\([1]\)] - 1}];\)\[IndentingNewLine]
+      \(plrPoincE\  = 
           ListPlot[rPoincE, PlotRange -> All, 
             PlotStyle -> {PointSize[pt]}\ \ , DisplayFunction -> \ Identity, 
-            AspectRatio -> Automatic]; \[IndentingNewLine]plrPoinc1\  = 
+            AspectRatio -> Automatic];\)\[IndentingNewLine]
+      \(plrPoinc1\  = 
           ListPlot[rPoinc1, PlotRange -> All, 
             PlotStyle -> {PointSize[pt]}\ \ , DisplayFunction -> \ Identity, 
-            AspectRatio -> Automatic]; \[IndentingNewLine]{p, pE, pE1, 
-          pE2}\[IndentingNewLine]]\)], "Input",
-  InitializationCell->True]
+            AspectRatio -> Automatic];\)\[IndentingNewLine]
+      {p, pE, pE1, pE2}\[IndentingNewLine]
+      \)\(]\)\)\)], "Input"]
 },
 FrontEndVersion->"5.2 for X",
 ScreenRectangle->{{0, 1280}, {0, 1024}},
 AutoGeneratedPackage->Automatic,
-WindowSize->{654, 950},
-WindowMargins->{{Automatic, -19}, {Automatic, 0}}
+WindowSize->{634, 954},
+WindowMargins->{{Automatic, 1}, {Automatic, 0}}
 ]
 
 (*******************************************************************
@@ -428,7 +592,7 @@ Cell[1832, 55, 253, 7, 59, "Input",
   InitializationCell->True],
 Cell[2088, 64, 108, 2, 27, "Input",
   InitializationCell->True],
-Cell[2199, 68, 711, 14, 123, "Input",
+Cell[2199, 68, 711, 14, 139, "Input",
   InitializationCell->True],
 Cell[2913, 84, 435, 9, 91, "Input",
   InitializationCell->True],
@@ -450,26 +614,38 @@ Cell[5190, 147, 237, 6, 59, "Input",
   InitializationCell->True],
 Cell[5430, 155, 1612, 29, 299, "Input",
   InitializationCell->True],
-Cell[7045, 186, 458, 12, 75, "Input",
+Cell[7045, 186, 641, 18, 123, "Input",
   InitializationCell->True],
-Cell[7506, 200, 100, 2, 27, "Input",
+Cell[7689, 206, 100, 2, 27, "Input",
   InitializationCell->True],
-Cell[7609, 204, 196, 4, 43, "Input",
+Cell[7792, 210, 196, 4, 43, "Input",
   InitializationCell->True],
-Cell[7808, 210, 117, 2, 27, "Input",
+Cell[7991, 216, 117, 2, 27, "Input",
   InitializationCell->True],
-Cell[7928, 214, 139, 3, 27, "Input",
+Cell[8111, 220, 139, 3, 27, "Input",
   InitializationCell->True],
-Cell[8070, 219, 361, 9, 75, "Input",
+Cell[8253, 225, 361, 9, 75, "Input",
   InitializationCell->True],
-Cell[8434, 230, 539, 10, 91, "Input",
+Cell[8617, 236, 539, 10, 91, "Input",
   InitializationCell->True],
-Cell[8976, 242, 2610, 46, 491, "Input",
+Cell[9159, 248, 130, 3, 27, "Input"],
+Cell[9292, 253, 2050, 35, 379, "Input",
   InitializationCell->True],
-Cell[11589, 290, 737, 14, 251, "Input",
+Cell[11345, 290, 1771, 32, 347, "Input",
   InitializationCell->True],
-Cell[12329, 306, 5264, 92, 1081, "Input",
-  InitializationCell->True]
+Cell[13119, 324, 604, 11, 123, "Input",
+  InitializationCell->True],
+Cell[13726, 337, 730, 13, 235, "Input",
+  InitializationCell->True],
+Cell[14459, 352, 118, 2, 27, "Input",
+  InitializationCell->True],
+Cell[14580, 356, 4398, 81, 1039, "Input",
+  InitializationCell->True],
+Cell[18981, 439, 402, 8, 107, "Input",
+  InitializationCell->True],
+Cell[19386, 449, 626, 12, 142, "Input",
+  InitializationCell->True],
+Cell[20015, 463, 5185, 99, 1096, "Input"]
 }
 ]
 *)
