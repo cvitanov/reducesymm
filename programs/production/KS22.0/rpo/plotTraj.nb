@@ -41,9 +41,9 @@ Wolfram Research.
 
 (*NotebookFileLineBreakTest
 NotebookFileLineBreakTest*)
-(*NotebookOptionsPosition[      6440,        212]*)
-(*NotebookOutlinePosition[      7126,        236]*)
-(*  CellTagsIndexPosition[      7082,        232]*)
+(*NotebookOptionsPosition[      8117,        269]*)
+(*NotebookOutlinePosition[      8802,        293]*)
+(*  CellTagsIndexPosition[      8758,        289]*)
 (*WindowFrame->Normal*)
 
 
@@ -113,13 +113,17 @@ Cell[BoxData[
   InitializationCell->True],
 
 Cell[BoxData[
-    \(\(J = Import["\<../../equil/2w/JevU.dat\>"];\)\)], "Input"],
+    \(\(J = Import["\<../../equil/2w/JevU.dat\>"];\)\)], "Input",
+  InitializationCell->True],
 
 Cell[BoxData[
-    \(\(w2 = Import["\<../../equil/2w/equilU.dat\>"] // Flatten;\)\)], "Input"],
+    \(\(w2 = Import["\<../../equil/2w/equilU.dat\>"] // Flatten;\)\)], "Input",\
+
+  InitializationCell->True],
 
 Cell[BoxData[
-    \(\(a2 = Fourier[w2, fp];\)\)], "Input"],
+    \(\(a2 = Fourier[w2, fp];\)\)], "Input",
+  InitializationCell->True],
 
 Cell[BoxData[{
     \(\(\(e1 = J[\([1]\)];\)\(\[IndentingNewLine]\)
@@ -131,56 +135,93 @@ Cell[BoxData[{
     \(\(\(f2 = Fourier[e2, fp];\)\(\n\)
     \)\), "\[IndentingNewLine]", 
     \(\(e3 = J[\([13]\)];\)\), "\[IndentingNewLine]", 
-    \(\(f3 = Fourier[e3, fp];\)\[IndentingNewLine]\), "\n", 
-    \(cInner[f1, f1]\[IndentingNewLine]\), "\n", 
-    \(\(b = gsorth[{f1, f2, f3}];\)\[IndentingNewLine]\), "\n", 
-    \(cInner[b[\([1]\)], b[\([2]\)]]\)}], "Input"],
+    \(\(\(f3 = Fourier[e3, fp];\)\(\[IndentingNewLine]\)
+    \)\), "\n", 
+    \(\(\(cInner[f1, f1]\)\(\[IndentingNewLine]\)
+    \)\), "\n", 
+    \(\(\(b = gsorth[{f1, f2, f3}];\)\(\[IndentingNewLine]\)
+    \)\), "\n", 
+    \(cInner[b[\([1]\)], b[\([2]\)]]\)}], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\[Delta]\)], "Input"],
+
+Cell[BoxData[
+    \(\(traj = 
+        AppendColumns[v, uShiftFTraj[v, \[Delta], L], 
+          uShiftFTraj[v, 2  \[Delta], L], 
+          uShiftFTraj[v, 3  \[Delta], L]]\ ;\)\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[traj]\)], "Input"],
+
+Cell[BoxData[
+    \(<< Default3D`\)], "Input"],
 
 Cell[BoxData[
     \(\(E2plot = 
-        ScatterPlot3D[coordsTraj[fourTraj[v], b, a2], 
-          PlotStyle \[Rule] {RGBColor[0, 0, 0]}, PlotJoined \[Rule] True, 
-          PlotRange \[Rule] 
-            All,  (*\(AxesLabel -> \ {"\<u\>", \*"\"\<\!\(u\_x\)\>\"", \
-\*"\"\<\!\(u\_xx\)\>\""}\)\(,\)*) \ Ticks \[Rule] None, 
-          PlotRange -> {{\(-b\), b}, {\(-b\), b}, {\(-b\), b}}, 
-          TextStyle -> {\ FontSize -> \ 24, FontWeight \[Rule] Heavy}, 
-          ImageSize -> \ 72*6];\)\)], "Input"],
+        ScatterPlot3D[coordsTraj[fourTraj[traj], b, a2], 
+          PlotStyle \[Rule] {RGBColor[0, 0, 0], Thickness[0.01]}, 
+          PlotJoined \[Rule] True, PlotRange \[Rule] All, 
+          Ticks \[Rule] \ None, 
+          TextStyle -> {\ FontSize -> \ 24, FontWeight \[Rule] Heavy, 
+              FontFamily \[Rule] \ Times}, ImageSize -> \ 72*6, 
+          AxesLabel \[Rule] 
+            TraditionalForm /@ {\*"\"\<\!\(v\_1\)\>\"", \
+\*"\"\<\!\(v\_2\)\>\"", \*"\"\<\!\(v\_3\)\>\""}];\)\)], "Input",
+  InitializationCell->True],
 
 Cell[BoxData[
-    \(\(Export[wd[] <> "\<E2.eps\>", E2plot];\)\)], "Input"],
+    \(\(Export[wd[] <> "\<E2.eps\>", E2plot, "\<EPS\>", 
+        ConversionOptions \[Rule] {"\<IncludeSpecialFonts\>" \[Rule] 
+              True, "\<ImageSize\>" \[Rule] 72*6}];\)\)], "Input",
+  InitializationCell->True],
 
 Cell[BoxData[
-    \(c = \[Delta]/T\)], "Input"],
+    \(c = \[Delta]/T\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(Nrep = 4;\)\)], "Input"],
 
 Cell[BoxData[
     \(Dimensions[v]\)], "Input"],
 
 Cell[BoxData[
-    \(\(Np = \(Dimensions[v]\)[\([1]\)];\)\)], "Input"],
+    \(Np = \(Dimensions[v]\)[\([1]\)]\)], "Input",
+  InitializationCell->True],
 
 Cell[BoxData[
-    \(dt = T/Np\)], "Input"],
+    \(dt = T/Np\)], "Input",
+  InitializationCell->True],
 
 Cell[BoxData[
-    \(c*dt*Np\)], "Input"],
+    \(c*dt*Np\)], "Input",
+  InitializationCell->True],
 
 Cell[BoxData[
     \(\(?uShift\)\)], "Input"],
 
 Cell[BoxData[
     \(\(w2CM = 
-        Table[uShiftF[w2, c*dt*\((i - 1)\), L], {i, 1, Np}];\)\)], "Input"],
+        Table[uShiftF[w2, c*dt*\((i - 1)\), L], {i, 1, 
+            Np*Nrep}];\)\)], "Input",
+  InitializationCell->True],
 
 Cell[BoxData[
-    \(\(a2CM = fourTraj[w2CM];\)\)], "Input"],
+    \(Dimensions[w2CM]\)], "Input"],
 
 Cell[BoxData[
-    \(Dimensions[uCM]\)], "Input"],
+    \(\(a2CM = fourTraj[w2CM];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(Dimensions[a2CM]\)], "Input"],
 
 Cell[BoxData[
     \(Module[{e1, e2, e3, f1, f2, f3, b}, \[IndentingNewLine]vCM = 
-        Table[0, {Np}]; \[IndentingNewLine]Do[\[IndentingNewLine]e1 = 
+        Table[0, {Np*Nrep}]; \[IndentingNewLine]Do[\[IndentingNewLine]e1 = 
           uShiftF[J[\([1]\)], c*dt*\((i - 1)\), L]; \[IndentingNewLine]f1 = 
           Fourier[e1, fp]; \[IndentingNewLine]e2 = 
           uShiftF[J[\([2]\)], c*dt*\((i - 1)\), L]; \[IndentingNewLine]f2 = 
@@ -188,20 +229,36 @@ Cell[BoxData[
           uShiftF[J[\([13]\)], c*dt*\((i - 1)\), L]; \[IndentingNewLine]f3 = 
           Fourier[e3, fp]; \[IndentingNewLine]b\  = 
           gsorth[{f1, f2, f3}]; \[IndentingNewLine]vCM[\([i]\)] = 
-          coords[Fourier[v[\([i]\)], fp], b, 
+          coords[Fourier[traj[\([i]\)], fp], b, 
             a2CM[\([i]\)]]\[IndentingNewLine], {i, 1, 
-          Np}]\[IndentingNewLine]]\)], "Input"],
+          Np*Nrep}]\[IndentingNewLine]]\)], "Input",
+  InitializationCell->True],
 
 Cell[BoxData[
     \(Dimensions[vCM]\)], "Input"],
 
 Cell[BoxData[
     \(\(CMplot = 
-        ScatterPlot3D[vCM, PlotStyle \[Rule] {RGBColor[0, 0, 0]}, 
-          PlotJoined \[Rule] True, PlotRange \[Rule] All];\)\)], "Input"],
+        ScatterPlot3D[vCM, 
+          PlotStyle \[Rule] {RGBColor[0, 0, 0], Thickness[0.01]}, 
+          PlotJoined \[Rule] True, PlotRange \[Rule] All, 
+          Ticks \[Rule] \ None, 
+          TextStyle -> {\ FontSize -> \ 24, FontWeight \[Rule] Heavy, 
+              FontFamily \[Rule] \ Times}, ImageSize -> \ 72*6, 
+          AxesLabel \[Rule] 
+            TraditionalForm /@ {\*"\"\<\!\(\(v\&~\)\_1\)\>\"", \*"\"\<\!\(\(v\
+\&~\)\_2\)\>\"", \*"\"\<\!\(\(v\&~\)\_3\)\>\""}, 
+          ViewPoint -> {1.898, \ \(-1.784\), \ 2.160}];\)\)], "Input",
+  InitializationCell->True],
 
 Cell[BoxData[
-    \(\(Export[wd[] <> "\<E2.eps\>", CMplot];\)\)], "Input"],
+    \(\(Export[wd[] <> "\<E2CM.eps\>", CMplot, 
+        ConversionOptions \[Rule] {"\<IncludeSpecialFonts\>" \[Rule] 
+              True, "\<ImageSize\>" \[Rule] 72*6}];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(<< Default3D`\)], "Input"],
 
 Cell[BoxData[
     \(<< RealTime3D`\)], "Input"],
@@ -213,8 +270,8 @@ Cell[BoxData[
 FrontEndVersion->"5.2 for X",
 ScreenRectangle->{{0, 1280}, {0, 1024}},
 AutoGeneratedPackage->Automatic,
-WindowSize->{594, 729},
-WindowMargins->{{Automatic, 193}, {101, Automatic}},
+WindowSize->{594, 878},
+WindowMargins->{{Automatic, 253}, {Automatic, 22}},
 ShowSelection->True
 ]
 
@@ -261,27 +318,49 @@ Cell[2829, 101, 366, 7, 59, "Input",
   InitializationCell->True],
 Cell[3198, 110, 98, 2, 27, "Input",
   InitializationCell->True],
-Cell[3299, 114, 79, 1, 27, "Input"],
-Cell[3381, 117, 93, 1, 27, "Input"],
-Cell[3477, 120, 58, 1, 27, "Input"],
-Cell[3538, 123, 599, 13, 267, "Input"],
-Cell[4140, 138, 504, 9, 107, "Input"],
-Cell[4647, 149, 74, 1, 27, "Input"],
-Cell[4724, 152, 47, 1, 27, "Input"],
-Cell[4774, 155, 46, 1, 27, "Input"],
-Cell[4823, 158, 69, 1, 27, "Input"],
-Cell[4895, 161, 42, 1, 27, "Input"],
-Cell[4940, 164, 40, 1, 27, "Input"],
-Cell[4983, 167, 44, 1, 27, "Input"],
-Cell[5030, 170, 105, 2, 27, "Input"],
-Cell[5138, 174, 59, 1, 27, "Input"],
-Cell[5200, 177, 48, 1, 27, "Input"],
-Cell[5251, 180, 757, 12, 219, "Input"],
-Cell[6011, 194, 48, 1, 27, "Input"],
-Cell[6062, 197, 172, 3, 43, "Input"],
-Cell[6237, 202, 74, 1, 27, "Input"],
-Cell[6314, 205, 47, 1, 27, "Input"],
-Cell[6364, 208, 72, 2, 27, "Input",
+Cell[3299, 114, 107, 2, 27, "Input",
+  InitializationCell->True],
+Cell[3409, 118, 123, 3, 27, "Input",
+  InitializationCell->True],
+Cell[3535, 123, 86, 2, 27, "Input",
+  InitializationCell->True],
+Cell[3624, 127, 670, 17, 267, "Input",
+  InitializationCell->True],
+Cell[4297, 146, 41, 1, 27, "Input"],
+Cell[4341, 149, 187, 4, 43, "Input"],
+Cell[4531, 155, 49, 1, 27, "Input"],
+Cell[4583, 158, 46, 1, 27, "Input"],
+Cell[4632, 161, 564, 11, 107, "Input",
+  InitializationCell->True],
+Cell[5199, 174, 235, 4, 59, "Input",
+  InitializationCell->True],
+Cell[5437, 180, 75, 2, 27, "Input",
+  InitializationCell->True],
+Cell[5515, 184, 46, 1, 27, "Input"],
+Cell[5564, 187, 46, 1, 27, "Input"],
+Cell[5613, 190, 92, 2, 27, "Input",
+  InitializationCell->True],
+Cell[5708, 194, 70, 2, 27, "Input",
+  InitializationCell->True],
+Cell[5781, 198, 68, 2, 27, "Input",
+  InitializationCell->True],
+Cell[5852, 202, 44, 1, 27, "Input"],
+Cell[5899, 205, 151, 4, 27, "Input",
+  InitializationCell->True],
+Cell[6053, 211, 49, 1, 27, "Input"],
+Cell[6105, 214, 87, 2, 27, "Input",
+  InitializationCell->True],
+Cell[6195, 218, 49, 1, 27, "Input"],
+Cell[6247, 221, 798, 13, 219, "Input",
+  InitializationCell->True],
+Cell[7048, 236, 48, 1, 27, "Input"],
+Cell[7099, 239, 611, 12, 124, "Input",
+  InitializationCell->True],
+Cell[7713, 253, 226, 4, 59, "Input",
+  InitializationCell->True],
+Cell[7942, 259, 46, 1, 27, "Input"],
+Cell[7991, 262, 47, 1, 27, "Input"],
+Cell[8041, 265, 72, 2, 27, "Input",
   InitializationCell->True]
 }
 ]

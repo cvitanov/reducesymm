@@ -50,6 +50,28 @@ vPlt=ListDensityPlot[v,Mesh\[Rule] False,ColorFunction\[Rule]hby,
 
 Export[wd[]<>".eps",vPlt];
 
+J=Import["../../equil/2w/JevU.dat"];
+
+w2=Import["../../equil/2w/equilU.dat"]//Flatten;
+
+a2=Fourier[w2,fp];
+
+e1=J[[1]];
+
+f1=Fourier[e1,fp];
+
+e2=J[[2]];
+
+f2=Fourier[e2,fp];
+
+e3=J[[13]];
+f3=Fourier[e3,fp];
+
+cInner[f1,f1]
+
+b=gsorth[{f1,f2,f3}];
+
+cInner[b[[1]],b[[2]]]
 
 
 
@@ -59,32 +81,55 @@ Export[wd[]<>".eps",vPlt];
 
 
 
+\!\(\(E2plot = ScatterPlot3D[coordsTraj[fourTraj[traj], b, a2], PlotStyle \[Rule] {RGBColor[0, 0, 0], Thickness[0.01]}, PlotJoined \[Rule] True, PlotRange \[Rule] All, Ticks \[Rule] \ None, TextStyle -> {\ FontSize -> \ 24, FontWeight \[Rule] Heavy, FontFamily \[Rule] \ Times}, ImageSize -> \ 72*6, AxesLabel \[Rule] TraditionalForm /@ {\*"\"\<\!\(v\_1\)\>\"", \*"\"\<\!\(v\_2\)\>\"", \*"\"\<\!\(v\_3\)\>\""}];\)\)
+
+Export[wd[]<>"E2.eps",E2plot,"EPS",
+    ConversionOptions\[Rule]{"IncludeSpecialFonts"\[Rule]True,
+        "ImageSize"\[Rule]72*6}];
+
+c=\[Delta]/T
 
 
 
 
 
+Np=Dimensions[v][[1]]
+
+dt=T/Np
+
+c*dt*Np
 
 
 
+w2CM=Table[uShiftF[w2,c*dt*(i-1),L],{i,1,Np*Nrep}];
 
 
 
+a2CM=fourTraj[w2CM];
 
 
 
+Module[{e1,e2,e3,f1,f2,f3,b},
+  vCM=Table[0,{Np*Nrep}];
+  Do[
+    e1=uShiftF[J[[1]],c*dt*(i-1),L];
+    f1=Fourier[e1,fp];
+    e2=uShiftF[J[[2]],c*dt*(i-1),L];
+    f2=Fourier[e2,fp];
+    e3=uShiftF[J[[13]],c*dt*(i-1),L];
+    f3=Fourier[e3,fp];
+    b =gsorth[{f1,f2,f3}];
+    vCM[[i]]=coords[Fourier[traj[[i]],fp],b,a2CM[[i]]]
+    ,{i,1,Np*Nrep}]
+  ]
 
 
 
+\!\(\(CMplot = ScatterPlot3D[vCM, PlotStyle \[Rule] {RGBColor[0, 0, 0], Thickness[0.01]}, PlotJoined \[Rule] True, PlotRange \[Rule] All, Ticks \[Rule] \ None, TextStyle -> {\ FontSize -> \ 24, FontWeight \[Rule] Heavy, FontFamily \[Rule] \ Times}, ImageSize -> \ 72*6, AxesLabel \[Rule] TraditionalForm /@ {\*"\"\<\!\(\(v\&~\)\_1\)\>\"", \*"\"\<\!\(\(v\&~\)\_2\)\>\"", \*"\"\<\!\(\(v\&~\)\_3\)\>\""}, ViewPoint -> {1.898, \ \(-1.784\), \ 2.160}];\)\)
 
-
-
-
-
-
-
-
-
+Export[wd[]<>"E2CM.eps",CMplot,
+    ConversionOptions\[Rule]{"IncludeSpecialFonts"\[Rule]True,
+        "ImageSize"\[Rule]72*6}];
 
 
 
