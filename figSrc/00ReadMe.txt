@@ -1,4 +1,4 @@
-siminos/figSrc
+siminos/figSrc/00ReadMe.txt
 % $Author$ $Date$
 
 Siminos source programs for figures
@@ -37,10 +37,56 @@ is in
 	
 
 Processing
-----------
+==========
 
+
+figure too big?
+===============
+					Mason Porter 	20 Aug 2003 
+
+ One downloads jpeg2ps
+
+ One converts all .ps files to .jpg to make them small (so they aren't as
+ sharp, but they're _much_ smaller).
+
+ One then converts the jpgs back to .ps with jpeg2ps blah.jpg > blah.ps
+
+ (These are jpgs with .ps 'wrappers' to make latex think they're .ps
+ files.  They take up about twice the space of a jpg file, so--in
+ particular--the 11 meg .ps file is a 1 meg file on the arxiv.)
+
+--------------
+
+					Nicolas		27 Feb 2002
+used gimp on linux to generate
+    174895 Feb 22 18:13 Fig/standard1.2.eps
+from 
+   1629686 Jul  3  2001 OldFig/standard1.2-070301.eps
+decreased by factor 10!
+
+--------------
+
+					Predrag		27 May 2007
+
+ps2png energyBalance_pst.eps energyBlncKS.png produces coarse image
+gimp  energyBlncKS.png
+	save as energyBlncKS.eps	  % poor, but good for a talk
+	size reduced by a factor of 10
+
+Better;
+ 1382283 energyBalance_pst.eps
+gimp energyBalance_pst.eps - full antialias, resolution 100
+	save as
+   41603 energyBlncKS.png
+gimp energyBlncKS.png - save as
+  133561 energyBlncKS.eps
+	size reduced by a factor of 10
+
+
+NOTES
+=====
 
 
 Fix these:
---------------------
+==========
 
