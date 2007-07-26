@@ -1,18 +1,20 @@
 % fourierRLD.tex
-%
-% Predrag               jun 20 2006
 % $Author$ $Date$
+
+\section{Solving \KSe\ numerically}
+\label{sec:fourierRLD}
+% Predrag               jun 20 2006
 
 
 The \KSe\ in terms of Fourier modes:
 \beq
-  \hat{u}_k = {\cal F}[u]_k = \frac{1}{L}\int_0^L u(x,t) e^{-ikx/\tildeL}dx\,,
-  \qquad u(x,t) = {\cal F}^{-1}[\hat{u}] = \sum_{k\in{\mathbb Z}} \hat{u}_k e^{ikx/\tildeL}
+  \hat{u}_k = {\cal F}[u]_k = \frac{1}{L}\int_0^L u(x,t) e^{-i q_kx}dx\,,
+  \qquad u(x,t) = {\cal F}^{-1}[\hat{u}] = \sum_{k\in{\mathbb Z}} \hat{u}_k e^{i q_k x}
 \eeq
  is given by
 \beq
-  \dot{\hat{u}}_k = [(k/\tildeL)^2-(k/\tildeL)^4]\hat{u}_k -
-  \frac{ik}{2\tildeL}{\cal F}[({\cal F}^{-1}[\hat{u}])^2]_k\,.
+  \dot{\hat{u}}_k = (q_k^2-q_k^4) \hat{u}_k -
+  \frac{i q_k}{2}{\cal F}[({\cal F}^{-1}[\hat{u}])^2]_k\,.
 \eeq
 Since $u$ is real, the Fourier modes are related by $\hat{u}_{-k} =
 \hat{u}^\ast_k$.
@@ -21,16 +23,16 @@ The above system is truncated as follows: The Fourier transform
 ${\cal F}$ is replaced by its discrete equivalent
 \beq
   a_k = {\cal F}_N[u]_k = \sum_{n = 0}^{N-1} u(x_n)
-  e^{-ikx_n/\tildeL}\,,\qquad u(x_n) = {\cal F}_N^{-1}[a]_n
-  = \frac{1}{N}\sum_{k = 0}^{N-1} a_k e^{ikx_n/\tildeL}\,,
+  e^{-i q_k x_n}\,,\qquad u(x_n) = {\cal F}_N^{-1}[a]_n
+  = \frac{1}{N}\sum_{k = 0}^{N-1} a_k e^{i q_k x_n}\,,
 \eeq
 where $x_n = 2\pi\tildeL/N$ and $a_{N-k} = a^\ast_k$.  Since $a_0
 = 0$ due to galilean invariance and setting $a_{N/2} = 0$ (assuming
 $N$ is even), the number of independent variables in the truncated
 system is $N-2$.  The truncated system looks as follows:
 \beq
-  \dot{a}_k = \pVeloc_k(a) = [(k/\tildeL)^2-(k/\tildeL)^4]a_k -
-  \frac{ik}{2\tildeL}{\cal F}_N[({\cal F}_N^{-1}[a])^2]_k\,.
+  \dot{a}_k = \pVeloc_k(a) = [q_k^2-q_k^4]a_k -
+  \frac{i q_k}{2}{\cal F}_N[({\cal F}_N^{-1}[a])^2]_k\,.
 \ee{eq:KS}
 
 where $k = 1,\ldots,N/2-1$.  Note that, since $a_k \in \mathbb{C}$,
@@ -52,8 +54,8 @@ displacement vector $b$ in the tangent space: \beq
 \eeq
 Since ${\cal F}_N$ is a linear operator, it is easy to show that
 \beq
-  \dot{b_k} = [(k/\tildeL)^2-(k/\tildeL)^4]b_k -
-  \frac{ik}{\tildeL}{\cal F}_N[{\cal F}_N^{-1}[a]\cdot
+  \dot{b_k} = [q_k^2-q_k^4]b_k -
+  iq_k{\cal F}_N[{\cal F}_N^{-1}[a]\cdot
   {\cal F}_N^{-1}[b]]\,,
 \ee{eq:KStan}
 where the dot indicates componentwise product of two vectors, \ie,

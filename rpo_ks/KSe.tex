@@ -1,8 +1,8 @@
 % KSe.tex
 % $Author$ $Date$
 
-% \section{\KSe}
-% \label{s-KS}
+\section{\KSe}
+\label{s-KS}
 % Predrag                    4jul2006
 % Predrag                   jun 20 2006
 % Vaggelis                  may 20 2006
@@ -40,7 +40,7 @@ we shall state results of all calculations either in units of the
 \tildeL$. %, with the `hyper-viscosity' $\nu$ fixed to $1$. Other
 % authors vary  $\nu$, with $L$ fixed to either $1$ or $2\pi$.
 All numerical results presented in this paper
-are for the system size $\tildeL=22/2\pi = 3.5014\cdots$.
+are for the system size $\tildeL=22/2\pi = 3.5014\ldots$.
 Spatial periodicity $u(x,t)=u(x+L,t)$
 makes it convenient to work in the Fourier space,
 \beq
@@ -54,16 +54,19 @@ replaced by an infinite set of
 ODEs for the complex Fourier coefficients $a_k(t)$:
 \beq
 \dot{a}_k= \pVeloc_k(a)
-     = ( (k/\tildeL)^2 - ( k/\tildeL)^4 )\, a_k
-    - i \frac{k}{2\tildeL} \sum_{m=-\infty}^{+\infty} a_m a_{k-m}
-\,.
+     = ( q_k^2 - q_k^4 )\, a_k
+    - i \frac{q_k}{2} \sum_{m=-\infty}^{+\infty} a_m a_{k-m}
+\,,
 \ee{expan}
+where $q_k = k/\tildeL$.
 Since $u(x,t)$ is real, $a_k=a_{-k}^\ast$, and we can replace the
 sum by a $k > 0$ sum.
 
-\PC{find better place for this text?}
+% \PC{find better place for this text?}
 Due to the hyperviscous damping $u_{xxxx}$, long time solutions of
-\KSe\ are smooth, $a_k$ drop off fast\PC{how fast?} with $k$,
+\KSe\ are smooth, $a_k$ drop off fast
+% \PC{how fast?}
+with $k$,
 and truncations of \refeq{expan} to $16 \leq d \leq 128$  terms
 yield accurate solutions for system sizes considered here.
 Robustness of the long-time dynamics of KS as a function of the
@@ -103,7 +106,7 @@ scheme is used in other figures of this type throughout this work.
 \label{sec:KSeSymm}
 
 The KS equation is Galilean invariant: if $u(x,t)$ is a solution,
-then $u(x \PCedit{-ct,t) -c} $, with $c$ an arbitrary constant
+then $u(x -ct,t) -c $, with $c$ an arbitrary constant
 speed, is also a solution. Without loss of generality, in our
 calculations we shall set the mean velocity of the front to zero,
 \beq \int dx \, u = 0 \,. \ee{GalInv}
@@ -113,25 +116,25 @@ fixed to $a_0=0$ by the
 % Galilean invariance
 condition \refeq{GalInv}.
 $G$, the group of actions $ g \in G $
-on a \statesp\ (reflections, \PCedit{translations}, \etc)
+on a \statesp\ (reflections, translations, \etc)
 is a symmetry of the flow
 $\dot{u} = F(u)$ if $g\,\dot{u} = F(g\,u)$.
-The KS equation % \refeq{ks}, 
+The KS equation % \refeq{ks},
 \beq
-\dot{u} = 
+\dot{u} =
 F(u) = -u u_x-u_{xx}- u_{xxxx}
 % \,,
 \ee{KSO2}
 is time
 translationally invariant, and space translationally invariant
 on a periodic domain under
-the 1-parameter group of 
+the 1-parameter group of
 \PCedit{
 $O(2): \{\Shift_{\shift/L},\Refl \}$.
        }
 If $u(x,t)$ is a solution, then
 $\Shift_{\shift/L}\, u(x,t) = u(x+\shift,t)$
-is an equivalent solution for any \PCedit{shift}
+is an equivalent solution for any shift
 $-L/2 < \shift \leq L/2$,
 as is the
 reflection (`parity' or `inversion')
@@ -141,7 +144,7 @@ reflection (`parity' or `inversion')
 \ee{KSparity}
 The translation operator action on the Fourier coefficients
 \beq
-  (\Shift_{\shift/L}\, a)_k= e^{ik\, \shift /\tildeL} \, a_k
+  (\Shift_{\shift/L}\, a)_k= e^{i q_k\, \shift} \, a_k
     \qquad \mbox{(no summation on $k$)}
     \,.
     \label{eq:RPOcondFouri}
@@ -154,17 +157,17 @@ by complex conjugation,
 % a_{2m} \to a_{2m}
 \,.
 \ee{FModInvSymm}
-Reflection generates the dihedral subgroup $D_1 = \{1, \Refl\}$ 
+Reflection generates the dihedral subgroup $D_1 = \{1, \Refl\}$
 of $O(2)$.  Let $\bbU$ be the space of
 real-valued velocity fields periodic and square integrable
 on the interval $\Omega = [-L/2,L/2]$,
 \begin{align}
  \bbU  &= \{u \in L^2(\Omega) \; | \; u(x) = u(x+L)\}  \,.
 \end{align}
-A continuous symmetry maps each state $u \in \bbU$ 
+A continuous symmetry maps each state $u \in \bbU$
 to a manifold of functions with identical dynamic behavior.
 Relation $\Refl^2 = 1$ induces linear decomposition
-$u(x) = u^+(x)+ u^-(x)$, 
+$u(x) = u^+(x)+ u^-(x)$,
 \PCedit{
 $u^\pm(x)= P^\pm u(x) \in  \bbU^\pm$,
 into irreducible subspaces
@@ -201,16 +204,6 @@ the antisymmetric $\bbU^+$ subspace,
 \eeq
 but otherwise the nonlinear terms in \refeq{KSD1}
 mix the two subspaces.
-    \PC{still to be incorporated, most likely in the next paper:
-    wrote down \refeq{KSD1} in order to (a) to clarify embedding of
-    $\bbU^+$ into $\bbU$
-    (b) to explain the desymmetrization of evolution defined on
-     $\Omega^{+} = [0, L/2]$ fundamental domain, with evolution at
-    instant of crossing $x=0$ given by reflection $\Refl$.
-    Re integrators: make sure $\Refl$ applied after
-    all points used by integrator are in $\bbU^-$
-    }
-
 
 Together with any rational shift
 $ \Shift_{1/m}u(x)=u(x+L/m)$
@@ -220,7 +213,7 @@ The only non-zero Fourier components of a solution invariant
 under $D_m$ are $a_{jm} \neq 0$, $j =1,2,\cdots$ .
 $D_m$ reduces the dimensionality
 of \statesp\ and aids computation of \eqva\ and \po s
-within it. For example, the 1/2-cell translations 
+within it. For example, the 1/2-cell translations
 \beq
     \Shift_{1/2}\, u(x)=u(x+L/2)
 \,,
@@ -259,29 +252,28 @@ $u^{(j)}$ functions under reflection and
 1/2-cell shift.
 By the same argument that identified \refeq{KSU+} as
 the invariant subspace of KS, here the KS flow
-stays within the  
+stays within the
+ $\bbU^S =  \bbU^{(1)}+ \bbU^{(2)}$
+irreducible $D_1$ subspace of
 \PCedit{
- $\bbU^S =  \bbU^{(1)}+ \bbU^{(2)}$ 
-irreducible $D_1$ subspace of $\bbU$
-       } 
+$u$
+       }
 profiles symmetric under 1/2-cell shifts.
 
-    \PC{abandoned the \refref{KNSks90} notation, I might be wrong,
-        please recheck. Replace $\mathbf{L} \to P^{(1)}$ downstream}
 \PCedit{
 While in general the bilinear term $(u^2)_x$  mixes the
 irreducible subspaces of $D_n$, for $D_2$ there are
 four subspaces invariant under the flow\rf{KNSks90}:
 \begin{romannum} % SIAM itemize}
  \item[$\{0\}$:~~~~~~] the $u(x)=0$ {\eqv}
- \item[$\bbU^+ = \bbU^{(1)}+ \bbU^{(3)} $:] 
+ \item[$\bbU^+ = \bbU^{(1)}+ \bbU^{(3)} $:]
     the reflection $D_1$ irreducible space of antisymmetric $u(x)$
- \item[$\bbU^S =  \bbU^{(1)}+ \bbU^{(2)}$:] 
+ \item[$\bbU^S =  \bbU^{(1)}+ \bbU^{(2)}$:]
     the shift $D_1$ irreducible space of $L/2$ shift symmetric  $u(x)$
  \item[$\bbU^{(1)}$:~~~~~]
     the $D_2$ irreducible  space of $u(x)$ invariant under $x\mapsto L/2-x,\ u\mapsto -u$
 \end{romannum} %itemize}
-as long as all other components of $u(x)$ are 
+as long as all other components of $u(x)$ are
 set to zero (see for example \refeq{KSU+}).
         } % end \PCedit
 With the continuous
@@ -290,7 +282,7 @@ translational symmetry eliminated within each subspace, there are no
 can focus on the \eqva\ and \po s only, as was done
 for $\bbU^+$ in \refrefs{Christiansen:97,Lan:Thesis,LanCvi07}.
 In the Fourier
-representation, the 
+representation, the
 \PCedit{
 $u \in \bbU^+$
     }
@@ -300,7 +292,7 @@ The 1/2 cell-size shift $\Shift_{1/2}$
 generated 2-element discrete subgroup
 $\{1,\Shift_{1/2}\}$ is
 of particular interest
-because in the 
+because in the
 \PCedit{
 $\bbU^+$
        }
@@ -339,7 +331,7 @@ are the fixed profile time-invariant solutions,
 \,.
 \ee{eqva}
 Due to the translational symmetry,
-the KS system also allows for 
+the KS system also allows for
 \reqva\ (traveling waves, rotating waves),
 characterized by a fixed profile $u_\stagn(x)$
 moving with constant speed $c$, {\ie}
@@ -364,67 +356,16 @@ Integrating once we get
 \PC{
     \reqva\ = \eqva\ shifted by $c$?
    }
-\ESedit{
+% \ESedit{
 \beq
 {\textstyle\frac{1}{2}}u^2 - c u + u_x + u_{xxx}=\expctE
 \,.
 \label{eq:stdks}
 \eeq
-}%End ESedit
+% }%End ESedit
 This equation can be interpreted as a 3-dimen\-si\-on\-al dynamical system
 with spatial coordinate $x$ playing the role of `time' and integration constant \expctE\ can be interpreted as `energy',
 see \refsect{sec:energy}.
-% Integrate over $L$, and $u_x$, $u_{xx}$ drop put by the
-%  $L$ periodicity.
-% Written as a ,
-%\refeq{eq:stdks}
-% this is a volume preserving flow
-% % \beq
-% % \ESedit{
-% % v = u_x \,,\qquad
-% % w = v_x \,,\qquad
-% % w_x = \expctE - {\textstyle\frac{1}{2}} u^2 + c u - v 
-% %        }% end ESedit
-% % \,,
-%   \label{eq:3dks}
-% \eeq
-% \ES{
-% Changed signs here, seemed simpler this way. 
-% PC: I remember having a reason, so something down the line 
-%     came out with consistent signs. Perhaps \refeq{eqvOfEqv}?
-%    }
-% with the `time' reversal symmetry,
-% \[
-% x \to -x,\quad u \to -u, \quad v \to v, \quad w \to -w \,.
-% \]
-%     \ES{
-%    The term $c u$ breaks the symmetry. 
-%    We may overcome this by changing sign of c as well, 
-%    but it is a parameter, not a variable.
-%        }
-% \PC{might move space average def \refeq{rpo:spac_ave} to here,
-%     note that
-%     $\expct{u} = \expct{v} = \expct{w} =0$
-%     }
-%  Rewriting \refeq{eq:3dks} as 
-%      \ES{With the corrected form of \refeq{eq:stdks} we cannot write this}
-% \beq
-% \PCedit{
-% (u+w)_x={\textstyle\frac{1}{2}}(u-c)^2-\expctE
-%     ={\textstyle\frac{1}{2}}(u-c-\sqrt{2\expctE}) (u-c+\sqrt{2\expctE})
-%        } %end \PCedit{
-% \ee{eqvOfEqv}
-% we see that
-% for $\expctE<0$, 
-%     \ES{Isn't $E>0$ by definition?
-%     PC: Here $E$ is an integration constant - do not see how
-%     we can argue $E \geq 0$ at this point.
-%         } 
-% $u+w$ increases without bound with $x \to \infty$,
-% and every solution escapes to infinity.
-% If $\expctE=0$, the origin $(0,0,0)$ is the
-% only bounded  solution, a marginally stable center with
-% eigenvalues $(0, i,-i)$.
 
 For $\expctE>0$ there is rich
 $\expctE$-dependent dynamics, with
@@ -451,8 +392,8 @@ in \reffig{fig:ksBifDiag}:
 at $\tildeL=22/2\pi =
 3.5014\cdots$, the {\eqva} are the constant solution
 \EQV{0}, the GLMRT\rf{laquey74,ksgreene88} \eqv\ \EQV{1}, the $2$-
-and $3$-cell states \EQV{2} and \EQV{3}, the pair of \reqva\
-\REQV{\pm}{1}, and the  \REQV{\pm}{2} \reqva.
+and $3$-cell states \EQV{2} and \EQV{3},
+and the pairs of \reqva\ \REQV{\pm}{1}, \REQV{\pm}{2}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[t]       \label{fig:ksBifDiag}
@@ -461,7 +402,7 @@ and $3$-cell states \EQV{2} and \EQV{3}, the pair of \reqva\
 \end{center}
 \caption{
 The energy \refeq{ksEnergy} of the \eqva\ and \reqva\ that
-exist up to $L=22$, $\tildeL = 3.5014\cdots$, plotted as a function
+exist up to $L=22$, $\tildeL = 3.5014\ldots$, plotted as a function
 of the system size $\tildeL = L/2\pi$ (additional \eqva, not present
 at $L = 22$ are given in \refref{ksgreene88}). Solid curves denote
 $n$-cell solutions \EQV{2} and \EQV{3}, dotted curves the GLMRT
@@ -478,63 +419,19 @@ related to the system size by $\tildeL=\sqrt{\alpha/4}$.
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\ES{Removed text about equilibria of equilibria.}
-% ES removed
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-% The solutions of the {\eqv}  condition
-% \refeq{eq:3dks} are
-% % themselves in turn
-% organized\rf{Mks86} by the
-% `{\eqva}  of {\eqva}'  condition
-% \( u_x= v_x= w_x= 0 \).
-% % , and the connections between them.
-%     For $\expctE>0$ the {\reqva}  points of \refeq{eqvOfEqv} are
-% $C_{+}=(c+\sqrt{2\expctE},0,0)$ and $C_{-}=(c-\sqrt{2\expctE},0,0)$.
-% Linearization of the flow around $C_{+}$ yields the cubic equation
-% $ %  \beq
-% \eigExp(1+\eigExp^2) = 4 \expctE
-% \,,
-% $ %  \ee{KSeqvCubic}
-% with linear stability eigenvalues
-% \beq
-% \eigExp[1] = 2 \eigRe
-%     \,,\qquad
-% \eigExp[2,3] = - \eigRe \pm i \eigIm
-% \ee{eqvEqvEigV}
-% Hence $C_{+}$ has a {1\dmn}
-% unstable manifold and a 2\dmn\ stable manifold
-% along which solutions spiral in.
-% By the $x \to -x$ `time reversal' symmetry, the
-% invariant manifolds of $C_{-}$
-% have reversed stability properties.
-% \PC{
-%     not sure we need this, not used in our paper? Where did the figure go?
-%     }
-% Most orbits escape quickly even if initiated close to \eqva, and that
-% renders the numerical calculations
-% difficult\rf{ksham95,kshooper88,pimyk,pimsimp}.
-% In this context the variational method
-% developed in \refrefs{lanVar1,CvitLanCrete02}
-% appears more robust than
-% the earlier approaches.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% end ES removed
-
-%\subsection{\Eqva\ on a periodic domain}
-%
-
 %\RLD{This paragraph should probably be moved down after real-space
 %equation for equilibria and traveling waves are discussed.}
 In the Fourier representation the \reqva\ time
 dependence is
 \beq
- a_k(t) e^{-itc k/\tildeL} = a_k(0)
+ a_k(t) e^{-itc q_k} = a_k(0)
 \,.
 \ee{reqvaF}
 Differentiating with respect to time, we obtain
 the Fourier space version of the \reqv\ condition
+\refeq{KSeqvCond},
 \beq
- \pVeloc_k(a) - i \frac{k c}{\tildeL} a_k = 0
+ \pVeloc_k(a) - i q_k c a_k = 0
 \,,
 \ee{reqvCondF}
 which we solve for (time independent) $a_k$ and $c$.
@@ -556,10 +453,10 @@ In a periodic box of size $L$
 both \eqva\ and \reqva\ are  periodic solutions
 embedded in 3-$d$ space,
 conveniently represented as loops in
-$(u,u_x,u_{xx})$ space \ES{dropped 
-whose topology is controlled by the
-`\eqva\ of \eqva' stable-unstable manifold structure of
-\refeq{eqvEqvEigV} }
+$(u,u_x,u_{xx})$ space%
+% \ES{dropped whose topology is controlled by the
+%`\eqva\ of \eqva' stable-unstable manifold structure of
+%\refeq{eqvEqvEigV} }
 , see \reffig{f:KS22Equil}\,(\textit{d}).
 In this representation the continuous translation symmetry
 is automatic - a rotation in the $[0,L]$ periodic domain only
@@ -567,7 +464,7 @@ moves the points along the loop. For an \eqv\ the points
 are stationary in time; for \reqv\ they move in time, but in
 either case, the loop remains invariant.
 So we do not have the problem that we encounter in the Fourier
-representation, where from the frame of one of the \eqva\
+representation, where seen from the frame of one of the \eqva\
 the rest trace out circles under the action of continuous symmetry
 translations.
 
@@ -602,29 +499,30 @@ is then:
 % \index{Kuramoto-Sivashinsky system}
 \bea
     \frac{\partial \dot{c}_k}{\partial c_{j}} & = &
-    \frac{k^2}{\tildeL^2}\left(1- \frac{k^2}{\tildeL^2} \right)\delta_{kj}
-    - \frac{k}{\tildeL} (c_{k+j}-c_{k-j})
+    q_k^2\left(1- q_k^2 \right)\delta_{kj}
+    - q_k (c_{k+j}-c_{k-j})
 \continue
     \frac{\partial \dot{c}_k}{\partial b_{j}} & = &
-    - \frac{k}{\tildeL} ( b_{k+j}+b_{k-j} )
+    - q_k ( b_{k+j}+b_{k-j} )
 \label{expanMvar}\\
     \frac{\partial \dot{b}_k}{\partial b_{j}} & = &
-    \frac{k^2}{\tildeL^2}\left(1- \frac{k^2}{\tildeL^2} \right)\delta_{kj}
-    +  \frac{k}{\tildeL} (c_{k+j} + c_{k-j})
+    q_k^2\left(1- q_k^2 \right)\delta_{kj}
+    +  q_k (c_{k+j} + c_{k-j})
 \continue
     \frac{\partial \dot{b}_k}{\partial c_{j}} & = &
-    - \frac{k}{\tildeL} (b_{k+j}-b_{k-j})
+    - q_k (b_{k+j}-b_{k-j})
     \,,\qquad  k,j>0
-\,.
+\,,
 \nnu
 \eea
+where $q_k = k/\tildeL$.
 For the \KSe\ the constant solution $u(x,t)=0$ with zero energy $E$ is an
 \eqv\ point of \refeq{ks} which we shall henceforth refer to as
 \EQV{0}. For this `laminar' \eqv\ the {\stabmat}
 is diagonal, and
 so is the {\jacobianM}
 $
-\jMps^t_{kj}(0) = \delta_{kj} e^{(k/\tildeL)^2(1- (k/\tildeL)^2)t}
+\jMps^t_{kj}(0) = \delta_{kj} e^{(q_k^2- q_k^4)t}
 \,.
 $
 
@@ -679,8 +577,8 @@ of {\rpo s} of the Complex Ginzburg-Landau equation.
 However, there is a vast literature on
 {\rpo s} since their first appearance,
 in  Poincar\'e study of
-the 3-body problem\rf{ChencinerLink,rtb} where
-the Lagrange points are the \reqva.
+the 3-body problem\rf{ChencinerLink,rtb},
+where the Lagrange points are the \reqva.
 They arise in dynamics of systems
 with continuous symmetries, such as motions of rigid bodies, gravitational
 $N$-body problems, molecules and nonlinear waves.
@@ -729,7 +627,205 @@ evolution from $\period{}$ to $2\period{}$.
 \Po s built from repetitions of such shorter segments
 are encountered in dynamical systems with discrete
 symmetries\rf{CvitaEckardt,DasBuch}.
-    \PC{
-        are there
-        {\bf (c)} \po s which have $D_m$ symmetries?
-        }
+
+\section{Energy transfer rates} % of the \KSe}
+\label{sec:energy}
+% former energy.tex
+% Predrag                   Apr 12 2007
+
+In physical settings where the observation times are much longer
+than the dynamical `turnover' and Lyapunov times (statistical mechanics,
+quantum physics, turbulence)
+periodic orbit theory\rf{DasBuch}
+provides highly accurate predictions of measurable
+long-time averages such as the turbulent drag\rf{GHCW07}.
+Physical predictions have to be independent of a
+particular choice of ODE representation of
+the PDE under consideration
+and, most importantly,
+invariant under all symmetries of the dynamics.
+In this section we discuss
+a set of such physical observables for
+the  1$D$ KS invariant under reflections and translations.
+They offer a representation of
+dynamics in which the symmetries are explicitly quotiented out.
+We illustrate  this in  \refsect{sec:energyL22} by projecting
+a set of explicit solutions on these coordinates.
+
+The {space average} of a function $\obser = \obser(\pSpace,t)$  on
+the interval $L$,
+\beq
+    \expct{\obser} = \Lint{\pSpace}\, \obser(\pSpace,t)
+    % \expct{\obser} = \frac{1}{L}\int_0^{L} d\pSpace\, \obser(\pSpace,t)
+    \,,
+    \label{rpo:spac_ave}
+\eeq
+is in general time dependent.
+Its mean value is given by the {time average}
+\beq
+\timeAver{\obser}
+    =
+\lim_{t\rightarrow \infty} \frac{1}{t} \int_0^t \! d\tau \, \expct{\obser}
+    =
+\lim_{t\rightarrow \infty} \frac{1}{t} \int_0^t \!
+    \Lint{\tau}  d\pSpace\, \obser(\pSpace,\tau)
+    \,.
+\label{rpo:tim_ave}
+\eeq
+The mean value
+% $\timeAver{\obser}$,
+of $\obser = \obser(u_\stagn) \RLDedit{\equiv \obser_\stagn}$ evaluated on
+$q$ \eqv\ or {\reqv} $u(\pSpace,t) = u_\stagn(\pSpace-ct)$ is
+\beq
+%         \obser_\stagn = \timeAver{\obser}_\stagn = \expct{\obser}_\stagn
+\RLDedit{\timeAver{\obser}_\stagn = \expct{\obser}_\stagn = \obser_\stagn }
+\,.
+\label{rpo:u-eqv}
+\eeq
+Evaluation of the infinite time average \refeq{rpo:tim_ave}
+on a function of a
+\po\ or \rpo\ $u_p(\pSpace,t)=u_p(\pSpace,t+\period{p})$
+ requires only a single $\period{p}$
+traversal,
+\beq
+       \RLDedit{\timeAver{\obser}_p} = \frac{1}{\period{p}}
+    \int_0^{\period{p}} \! d\tau \, \expct{\obser}
+\,.
+\label{rpo:u-cyc}
+\eeq
+
+Equation \refeq{ks} can be written as % in ``potential'' form
+\beq
+    u_t=- V_x
+        \,,\qquad
+    V(x,t)={\textstyle\frac{1}{2}}u^2+u_{x} + u_{xxx}
+    \,.
+\ee{ksPotent}
+If $u$ is `flame-front velocity' then \expctE \RLDedit{, defined in \refeq{eq:stdks},}
+can be interpreted as the mean energy density.
+% \refeq{ksEnergy}.
+%
+So, even though KS is a phenomenological
+small-amplitude equation, the time-dependent quantity
+\beq
+    \expctE=
+%\frac{1}{L}\int_0^{L} \!dx \,
+\RLDedit{\Lint{\pSpace}}
+V(x,t)=
+%\frac{1}{L}\int_0^{L}\! dx \,
+\RLDedit{\Lint{\pSpace}}
+\frac{u^2}{2}
+\label{ksEnergy}
+\eeq
+has a physical interpretation\rf{ksgreene88}
+as the average `energy' density of the flame front.
+This analogy to the
+mean kinetic energy density for
+the Navier-Stokes motivates what follows.
+
+The energy \refeq{ksEnergy} is intrinsic to
+the flow, independent of the particular ODE basis set
+chosen to represent the PDE. However, as the Fourier
+amplitudes are eigenvectors of the translation operator,
+in the Fourier space the energy is a diagonalized
+quadratic norm,
+\beq
+\expctE   % = (u,u)
+          =  \sum_{k=-\infty}^{\infty} E_k
+\,,\qquad
+E_k = % a_{-k} a_k =
+    {\textstyle\frac{1}{2}}|a_k|^2
+\,,
+\ee{EFourier}
+and explicitly invariant term by term
+under translations \refeq{eq:RPOcondFouri}
+and reflections \refeq{KSparity}.
+
+Take time derivative of the energy density \refeq{ksEnergy},
+substitute \refeq{ks} and integrate by parts. Total derivatives vanish
+by the spatial periodicity on the $L$ domain:
+\bea
+   \dot{\expctE} &=&
+     \expct{u_t \, u}
+    % \frac{1}{L}\int_0^{L}u \, u_t\, dx
+     = - \expct{\left({u^2}/{2} + u \, u_{x} + u \, u_{xxx}\right)_x u }
+    \continue
+    &=&
+\expct{ u_x \, {u^2}/{2} + u_{x}{}^2 + u_x \, u_{xxx}}
+    \,.
+\label{rpo:ksErate}
+\eea
+The first term in \refeq{rpo:ksErate} vanishes by
+integration by parts,
+\(
+3 \expct{ u_x \, u^2}= \expct{(u^3)_x} = 0
+\,,
+\) % {EnNonl0}
+and integrating the third term by parts yet again
+one gets\rf{ksgreene88} that the energy variation
+\beq
+   \dot{\expctE} = P - D
+                \,,\qquad
+      P =  \expct{u_{x}{}^2}
+                \,,\quad
+      D =  \expct{u_{xx}{}^2}
+\ee{EnRate}
+balances the power $P$ pumped in by anti-diffusion $u_{xx}$
+against the energy dissipation rate $D$
+by hyper-viscosity $u_{xxxx}$
+in the KS equation \refeq{ks}.
+
+The time averaged energy density  $\timeAver{E}$
+computed on a typical orbit goes to a constant, so
+the expectation values \refeq{rpo:EtimAve} of drive and dissipation
+exactly balance each out:
+\beq
+    \timeAver{\dot{E}}  =
+    \lim_{t\rightarrow \infty}
+        \frac{1}{t} \int_0^t d\tau \, \dot{\expctE}
+=
+      \timeAver{P} - \timeAver{D}
+%       \timeAver{(u_{x})^2} - \timeAver{(u_{xx})^2}
+= 0
+    \,.
+\ee{rpo:EtimAve}
+In particular, the \eqva\
+and \reqva\ fall onto the diagonal in \reffig{f:drivedrag},
+and so do time averages computed on \po s and \rpo s:
+\beq
+\timeAver{E}_p =
+\frac{1}{\period{p}} \int_0^\period{p}d\tau \, E(\tau)
+    \,,\qquad
+\timeAver{P}_p =
+\frac{1}{\period{p}} \int_0^\period{p} d\tau \, P(\tau)
+    =
+      \timeAver{D}_p
+    \,.
+\label{poE}
+\eeq
+In the Fourier basis \refeq{EFourier} the conservation of energy on average
+takes form
+\beq
+0 = \sum_{k=-\infty}^{\infty} ( q_k^2 - q_k^4 )\,
+    \timeAver{E}_k
+\,,\qquad
+E_k(t) =  {\textstyle\frac{1}{2}} |a_k(t)|^2
+\,.
+\ee{EFourier1}
+The large $k$ convergence of this series is insensitive to the
+system size $L$; $\timeAver{E_k}$ have to decrease much faster than
+$q_k^{-4}$.
+\PC{determine the decay rate, presumably exponential in $k$}
+Deviation of $E_k$ from this bound for small $k$ determines the active modes.
+%     \PublicPrivate{%
+%         }{% switch to Private:
+% This may be useful to bound the number of equilibria, with
+% the upper bound given by zeros of a small number
+% of long wavelength modes.
+%         } %end \PublicPrivate{%
+For \eqva\ the $L$-independent bound
+    on $E$ is given by Michaelson\rf{Mks86}.
+The best current bound\rf{GiacoOtto05,bronski-2005} on the long-time limit
+of $E$
+as a function of the system size $L$ scales as
+$E \propto L^{3/2}$.
