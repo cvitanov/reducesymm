@@ -12,22 +12,18 @@ the MINPACK software package or function {\tt fsolve} in Matlab.
 
 Note that the LM algorithm is able to solve underdetermined systems of
 equations.  Therefore, there is no need to augment the system with
-additional constraint equations, as is done in
-\refappe{sec:NewtRPOs}.  For example,
-since L{\'o}pez {\etal}\rf{lop05rel} used
-{\tt lmder} to find \rpo s in CGLE, they did not need to augment
-their system with the three additional
-constraint equations.  In fact, we have found
-that, with the additional
-constraint equations, the solver takes many more steps to
-converge from the same seed, or fails to converge at all.
-Even thought both {\tt lmder} and {\tt fsolve} solvers
-require that the number of variables does not exceed the number
-of equations, the additional equations can be set identically to
-zero.
-\RLD{This trick was discovered by my PhD student Jonathan
-Crofts on 30 April 2007. PC: make bibtex entry for Croft's PhD thesis,
-refer to it here}
+additional constraint equations, as is done in \refappe{sec:NewtRPOs}.
+For example, since L{\'o}pez {\etal}\rf{lop05rel} used {\tt lmder} to
+find \rpo s in CGLE, they did not need to augment their system with the
+three additional constraint equations.  In fact, we have found that,
+with the additional constraint equations, the solver usually takes more
+steps to converge from the same seed, or fails to converge at all. Even
+thought both {\tt lmder} and {\tt fsolve} solvers require that the
+number of variables does not exceed the number of equations, the
+additional equations can be set identically to zero\rf{Crofts07thesis}.
+\RLD{This trick was discovered by my PhD student Jonathan Crofts on 30
+April 2007. PC: make bibtex entry for Croft's PhD thesis, refer to it
+here}
 
 We need to solve the system of $N-2$ equations
 \beq
@@ -100,13 +96,12 @@ $h$ and $h + \delta$:
   \frac{\partial f^{jh}(a)}{\partial t} = \frac{1}{j\delta}
   \left[f^{j(h+\delta)}(a) - f^{jh}(a)\right],\quad j \in
   {\mathbb Z}^{+}
-\eeq
-with $t = jh$ and $\delta = 10^{-7}$ for double precision calculations.
-Partial derivatives $\partial F^{(j)}/\partial d$ are all equal to
-zero except for $j = m$, where it is given by
+\eeq with $t = jh$ and $\delta = 10^{-7}$ for double precision
+calculations. Partial derivatives $\partial F^{(j)}/\partial \shift$
+are all equal to zero except for $j = m$, where it is given by
 \beq
-  \frac{\partial F^{(m)}}{\partial d} = \frac{d{\bf g}}{d\shift}
-  f^{\tau'}(a^{(m)})\,.
+  \frac{\partial F^{(m)}}{\partial \shift} =
+  \frac{d{\bf g}}{d\shift}f^{\tau'}(a^{(m)})\,.
 \eeq
 
 This Jacobian is supplied to the routine {\tt lmder} or {\tt fsolve}
