@@ -1,17 +1,15 @@
 % fourierRLD.tex
 % $Author$ $Date$
 
-\section{Solving \KSe\ numerically}
-\label{sec:fourierRLD}
+\section{Solving \KSe\ numerically} \label{sec:fourierRLD}
 % Predrag               jun 20 2006
-
-
 The \KSe\ in terms of Fourier modes:
 \beq
   \hat{u}_k = {\cal F}[u]_k = \frac{1}{L}\int_0^L u(x,t) e^{-i q_kx}dx\,,
-  \qquad u(x,t) = {\cal F}^{-1}[\hat{u}] = \sum_{k\in{\mathbb Z}} \hat{u}_k e^{i q_k x}
+  \qquad u(x,t) = {\cal F}^{-1}[\hat{u}] =
+  \sum_{k\in{\mathbb Z}} \hat{u}_k e^{i q_k x}
 \eeq
- is given by
+is given by
 \beq
   \dot{\hat{u}}_k = (q_k^2-q_k^4) \hat{u}_k -
   \frac{i q_k}{2}{\cal F}[({\cal F}^{-1}[\hat{u}])^2]_k\,.
@@ -34,10 +32,9 @@ system is $N-2$.  The truncated system looks as follows:
   \dot{a}_k = \pVeloc_k(a) = [q_k^2-q_k^4]a_k -
   \frac{i q_k}{2}{\cal F}_N[({\cal F}_N^{-1}[a])^2]_k\,.
 \ee{eq:KS}
-
-where $k = 1,\ldots,N/2-1$.  Note that, since $a_k \in \mathbb{C}$,
-\refeq{eq:KS} represents a system or ordinary differential equations in
-${\mathbb R}^{N-2}$.
+where $k = 1,\ldots,N/2-1$.  Note that, since $a_k \in
+\mathbb{C}$, \refeq{eq:KS} represents a system or ordinary differential
+equations in ${\mathbb R}^{N-2}$.
 %, although in the Fourier transform we need
 %to use $a_k$ over the full range of $k$ values from 0 to $N-1$.
 The discrete Fourier transform ${\cal F}_N$ can be computed by FFT.
@@ -54,12 +51,11 @@ displacement vector $b$ in the tangent space: \beq
 Since ${\cal F}_N$ is a linear operator, it is easy to show that
 \beq
   \dot{b_k} = [q_k^2-q_k^4]b_k -
-  iq_k{\cal F}_N[{\cal F}_N^{-1}[a]\cdot
-  {\cal F}_N^{-1}[b]]\,,
+  iq_k{\cal F}_N[{\cal F}_N^{-1}[a]\otimes {\cal F}_N^{-1}[b]]\,,
 \ee{eq:KStan}
-where the dot indicates componentwise product of two vectors, \ie,
-$a\cdot b = \diag(a)\,b = \diag(b)\,a$.  This
-equation needs to be solved simultaneously with \refeq{eq:KS}.
+where $\otimes$ indicates componentwise product of two
+vectors, \ie, $a\otimes b = \diag(a)\,b = \diag(b)\,a$.  This equation
+needs to be solved simultaneously with \refeq{eq:KS}.
 
 When evaluating the Jacobian of the KS flow map, $J(a,t) = \partial
 f^t(a)/\partial a$, the partial derivatives need to be evaluated
@@ -69,3 +65,11 @@ conditions for \refeq{eq:KStan} that yield the partial derivative of
 $f^t(a)$ with respect to Re $a_k$ and Im $a_k$, are $b_j(0) = 1 +
 0i$ and $b_j(0) = 0 + 1i$, respectively, for $j = k$ and $b_j(0) =
 0$ otherwise.
+
+Equations \refeq{eq:KS} and \refeq{eq:KStan} were solved using the
+exponential time differencing 4th-order Runge-Kutta method
+(ETDRK4)\rf{cox02jcomp,ks05com}.
+
+\section{Determining stability properties of equilibria,
+traveling waves, and \rpo s} \label{sec:stability}
+% Ruslan               aug 2 2007
