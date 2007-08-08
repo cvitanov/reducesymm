@@ -57,14 +57,14 @@ where $\otimes$ indicates componentwise product of two
 vectors, \ie, $a\otimes b = \diag(a)\,b = \diag(b)\,a$.  This equation
 needs to be solved simultaneously with \refeq{eq:KS}.
 
-When evaluating the Jacobian of the KS flow map, $J(a,t) = \partial
-f^t(a)/\partial a$, the partial derivatives need to be evaluated
-separately with respect to the real and imaginary parts of the
-components of complex-valued vector $a$.  Therefore, the initial
-conditions for \refeq{eq:KStan} that yield the partial derivative of
-$f^t(a)$ with respect to Re $a_k$ and Im $a_k$, are $b_j(0) = 1 +
-0i$ and $b_j(0) = 0 + 1i$, respectively, for $j = k$ and $b_j(0) =
-0$ otherwise.
+%% When evaluating the Jacobian of the KS flow map, $J(a,t) = \partial
+%% f^t(a)/\partial a$, the partial derivatives need to be evaluated
+%% separately with respect to the real and imaginary parts of the
+%% components of complex-valued vector $a$.  Therefore, the initial
+%% conditions for \refeq{eq:KStan} that yield the partial derivative of
+%% $f^t(a)$ with respect to Re $a_k$ and Im $a_k$, are $b_j(0) = 1 +
+%% 0i$ and $b_j(0) = 0 + 1i$, respectively, for $j = k$ and $b_j(0) =
+%% 0$ otherwise.
 
 Equations \refeq{eq:KS} and \refeq{eq:KStan} were solved using the
 exponential time differencing 4th-order Runge-Kutta method
@@ -73,3 +73,31 @@ exponential time differencing 4th-order Runge-Kutta method
 \section{Determining stability properties of equilibria,
 traveling waves, and \rpo s} \label{sec:stability}
 % Ruslan               aug 2 2007
+The stability properties of a solution $f^t(a)$ of the \KSe\ are
+determined by the fundamental matrix $J(a,t)$ consisting of partial
+derivatives of the flow map $f^t(a)$ with respect to $a$. Since $a$ and 
+$f^t$ are complex valued vectors, the real valued matrix
+$J(a,t)$ contains partial derivatives evaluated separately with
+respect to the real and imaginary parts of $a$, that is
+\[
+  J(a,t) = \frac{\partial f^t(a)}{\partial a} 
+  = \left(\begin{array}{cccc}
+  \frac{\partial f^t_{R,1}}{\partial a_{R,1}} & 
+  \frac{\partial f^t_{R,1}}{\partial a_{I,1}} & 
+  \frac{\partial f^t_{R,1}}{\partial a_{R,2}} & \\[1ex] 
+  \frac{\partial f^t_{I,1}}{\partial a_{R,1}} & 
+  \frac{\partial f^t_{I,1}}{\partial a_{I,1}} & 
+  \frac{\partial f^t_{I,1}}{\partial a_{R,2}} & \cdots \\[1ex] 
+  \frac{\partial f^t_{R,2}}{\partial a_{R,1}} & 
+  \frac{\partial f^t_{R,2}}{\partial a_{I,1}} & 
+  \frac{\partial f^t_{R,2}}{\partial a_{R,2}} & \\ 
+  & \vdots & & \ddots \end{array}\right)
+\]
+where $a_k = a_{R,k} + i a_{I,k}$ and $f^t_k = f^t_{R,k} + i f^t_{I,k}$.  
+The partial derivatives $\frac{\partial f^t}{\partial a_{R,k}}$ 
+and $\frac{\partial f^t}{\partial a_{I,k}}$ are determined
+by solving \refeq{eq:KStan} with initial condition $b_j(0) = 1 + 0i$ and
+$b_j(0) = 0 + 1i$, respectively, for $j = k$ and $b_j(0) = 0$ otherwise.
+
+The stability of a \rpo is determined by the eigenvalues of the matrix
+$\mathbf{g}(\shift_p)\,J(a_p,T_p)$.
