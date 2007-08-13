@@ -434,13 +434,14 @@
       title(['Time: ' num2str(h*np*(ii-1))]); grid on; pause; end, end
 
 %% Locate UQOs of ksfmedt
-  clear;  load kse22orbits;  d = 22;  N = 32;  h = 0.25;  global PFLG
-  switch 2,  %%% Switch for seed selection
+  clear;  load kse22orbits; 
+  L = 22; N = 32; h = 0.25; d = L; global PFLG
+  switch 1,  %%% Switch for seed selection
   case 1,  %%% Find close returns with a shift
-    x = d.*(1:N)'./N;  np = 6;  tpre = 600;  tb = 310;  te = 200;  
-    iav = 0;  msflag = 1;  PFLG = 1;
+    x = L.*(1:N)'./N; np = 4; tpre = 600; tb = 110; te = 200;  
+    iav = 0; msflag = 1; PFLG = 1;
     if 1,
-      a0 = zeros(N-2,1); randn('seed',22000223);  a0(1:10) = 0.3*randn(10,1);
+      a0 = zeros(N-2,1); randn('seed',22010012); a0(1:12) = 0.2*randn(12,1);
     else
 %      a0 = 0.1*ones(N-2,1); end,
 %      load ks22utw1a; %a0(1:2:end) = -a0(1:2:end);
@@ -452,7 +453,7 @@
 %      load ks22uss2a;
 %      load ks22seed2w3w; a0 = a1; clear a1;
     end
-    [tt, aa, a0p, ap] = ksfmetd(a0, d, h, tpre, np);  na = size(aa,2);
+    [tt, aa, a0p, ap] = ksfmetd2(a0, L, h, tpre, np);  na = size(aa,2);
     v = aa(1:2:end,:) + 1i*aa(2:2:end,:);
     v = [zeros(1,size(aa,2)); v; zeros(1,size(aa,2)); flipud(conj(v))];
     u = real(fft(v));
@@ -464,16 +465,16 @@
       nb = min(round(tb/(h*np))+ib, length(tt));
       ne = min(round(te/(h*np))+nb+1, length(tt));
       set(hp1,'xdata',[x([1 end]);NaN;x([end 1])],'ydata',[tt([nb nb]) NaN tt([ne ne])]);
-      a0 = aa(:,nb);  phase = (-0.51:0.01:0.51)'*d;
+      a0 = aa(:,nb);  phase = (-0.51:0.01:0.51)'*L;
       v = aa(1:2:end,nb-iav:ne+iav)+1i*aa(2:2:end,nb-iav:ne+iav);  k = (1:N/2-1)';
-      fac = exp((-2i*pi./d).*k*phase');  cr = zeros(size(fac,2),size(v,2)-2*iav);
+      fac = exp((-2i*pi./L).*k*phase');  cr = zeros(size(fac,2),size(v,2)-2*iav);
       if PFLG == -1,
         for ii = 1:size(fac,2), for iia = -iav:2:iav,
           cr(ii,:) = cr(ii,:) + ...
             sqrt(sum(abs(-conj(v(:,iia+iav+1:end+iia-iav)).*repmat(fac(:,ii),1,size(v,2)-2*iav) - ...
-            repmat(v(:,iia+iav+1),1,size(v,2)-2*iav)).^2))...
-          ./sqrt(sum(abs(repmat(v(:,iia+iav+1),1,size(v,2)-2*iav)).^2))...
+            repmat(v(:,iia+iav+1),1,size(v,2)-2*iav)).^2)) ...
           ./(iav+1); end, end
+%          ./sqrt(sum(abs(repmat(v(:,iia+iav+1),1,size(v,2)-2*iav)).^2))...
       else
         for ii = 1:size(fac,2), for iia = -iav:2:iav,
           cr(ii,:) = cr(ii,:) + ...
@@ -483,19 +484,23 @@
           ./(iav+1); end, end
 %          ./sqrt(sum(abs(repmat(v(:,iia+iav+1),1,size(v,2)-2*iav)).^2))...
       end
-      contourf(tt(nb:ne)-tt(nb),phase,cr,[0:.1:1]); shading flat;
+      contourf(tt(nb:ne)-tt(nb),phase,cr,[0:.1:1]*.8); caxis([0 .8]); shading flat;
 %      contourf(phase,tt(nb:ne)-tt(nb),cr',[0:.1:1]); shading flat;
-      hold on; plot([1;1]*[rpo.T],[1;-1]*[rpo.d],'w.','markersize',10); 
+      hold on; plot([1;1]*[rpo.T],[1;-1]*[rpo.d],'w.','markersize',10);
+      [mcr,rcr] = min(cr); [mmcr, ccr] = min(mcr(9:end)); ccr = ccr + 8;
+      plot(tt(nb-1+ccr)-tt(nb),phase(rcr(ccr)),'r.','markersize',16);
       set(gca,'pos',[0.06 0.08 0.90 0.86]); hold off;
-      title(sprintf('%4d  %6.2f',ib,tt(nb))); 
+      title(sprintf('%4d  %6.2f  %6.2f  %6.3f  %6.4f',ib,tt(nb),tt(nb-1+ccr)-tt(nb),phase(rcr(ccr)),mmcr)); 
       [tend, ph, but] = ginput(1); 
-      disp(sprintf('%4d %2d %6.2f',ib,but,tt(nb))); 
+      disp(sprintf('%4d %2d %6.2f  %6.2f %6.3f %6.4f',ib,but,tt(nb),tt(nb-1+ccr)-tt(nb),phase(rcr(ccr)),mmcr)); 
       if but == 46, ib = ib + 1; elseif but == 44, ib = ib - 1;
+      elseif but == 109, tend = tt(nb-1+ccr)-tt(nb); ph = phase(rcr(ccr));
+        hold on; plot(tend,ph,'k.','markersize',8); hold off; break;
       elseif but == 32, hold on; 
         plot(tend,ph,'k.','markersize',8); hold off; break; end, end
   case 2,  %%% Load seed from a file
-%    load ks50rpo026b; %tend = 167.8; %ph = 5.4988;
-    load ks22uqo204a;  msflag = 0; PFLG = 1;
+%    load ks50rpo009c;  msflag = 0; PFLG = 1;
+    load ks22uqo112g;  msflag = 0; PFLG = 1;
 %    load ks22upo169a;  msflag = 0; PFLG = -1; tend = tend/2;
 %    load ks22uqo125a;  tend = 44.75; ph = 1; msflag = 0;  PFLG = 1;
 %    load ks22uss2a; msflag = 0;
@@ -509,7 +514,7 @@
       switch 2,
       case 0,  C = eye(N-2);
       case 1, format short g;
-        [g, jac] = ksfmf5(0,[a0;tend;ph],d,h,eye(N),alpha);
+        [g, jac] = ksfmf5(0,[a0;tend;ph],L,h,eye(N),alpha);
         disp(['|g|=' num2str(norm(g(1:end-2)))]);  de = eig(jac(1:end-2,1:end-2)+eye(N-2)); 
         [se,ie]=sort(abs(de),'descend');  disp(de(ie(1:10)));
         [u,C,v] = svd(jac(1:end-2,1:end-2)); C = blkdiag(-v*u',eye(2)); format short;
@@ -546,7 +551,7 @@
     tend = upo(end-1)+ni(1)*ni(2)*h;  ph = upo(end);
     figure(2); hold on; plot(tend,ph,'ko','markersize',6); hold off;
   case 4,   %%% Use multiple shooting with variable stepsize (ksfmmult2)
-    if msflag == 1, np = round(tend/6.0);  else,  np = 1;  end
+    if msflag == 1, np = round(tend/6.0);  else  np = 1;  end
     nstp = round(tend./h);  mstp = round(nstp/np);
     if 0, hh = tend./nstp; else hh = h; tend = h.*nstp, end
     disp(['Using multiple shooting: ' num2str([np (hh-h)./h])]);
@@ -559,28 +564,26 @@
     a0 = upo(1:N-2);  tend = upo(end-1);  ph = upo(end);  h = tend./nstp;
     figure(2); hold on; plot(tend,ph,'ko','markersize',6); hold off;
   case 5,   %%% Use multiple shooting (ksfmms)
-    if msflag == 1, np = round(tend/6.0);  else,  np = 1; end
+    if msflag == 1, np = round(tend/4.0);  else  np = 1; end
     nstp = floor(tend./h);  mstp = floor(nstp./np);
     disp(['Using multiple shooting: ' num2str([np mstp]) '  ' num2str(tend-h*mstp*(np-1))]);
     if np > 1, [tt, aa] = ksfmstp(a0, L, h, mstp*(np-1), mstp); ai = [aa(:); tend; ph];
-    else, ai = [a0; tend; ph]; end
-    global AM
-%    load ks22sms130a;
-    for ic = 1:20,
-      gi = ksfmms(ai, L, h, mstp, np);  disp(['|gms| = ' num2str(norm(gi))]);
-      options = optimset('Display','on','DerivativeCheck','off','outputfcn',@ksoutfun2,'MaxIter',2000, ...
+    else ai = [a0; tend; ph]; end
+    global AM  %'outputfcn',@ksoutfun2,
+    for ic = 1:20, gi = ksfmms3(ai, L, h, mstp, np); disp(['|gms| = ' num2str(norm(gi))]);
+      options = optimset('Display','on','outputfcn',@ksoutfun2,'DerivativeCheck','off','MaxIter',2000, ...
         'MaxFunEvals',500000,'Jacobian','on','NonlEqnAlgorithm','lm','TolX',1e-12,'TolFun',1e-12);
-      upo = fsolve(@(ai)ksfmms2(ai,L,h,mstp,np),ai,options); ai = AM; 
+      upo = fsolve(@(ai)ksfmms3(ai,L,h,mstp,np),ai,options); ai = AM; 
       but = input('Stop? ','s');  if but == 'y', break; end, end
     a0 = upo(1:N-2);  tend = upo(end-1);  ph = upo(end);  
     if PFLG == -1, tend = 2.*tend,  ph = 0, end
     figure(2); hold on; plot(tend,ph,'ko','markersize',6); hold off;
   case 6,   %%% Use Kelley's solver with ksfmms
-    if msflag == 1, np = round(tend/6.0);  else,  np = 1; end
+    if msflag == 1, np = round(tend/6.0);  else  np = 1; end
     nstp = floor(tend./h);  mstp = floor(nstp./np);
     disp(['Using multiple shooting: ' num2str([np mstp]) '  ' num2str(tend-h*mstp*(np-1))]);
     if np > 1, [tt, aa] = ksfmstp(a0, L, h, mstp*(np-1), mstp); ai = [aa(:); tend; ph];
-    else, ai = [a0; tend; ph]; end
+    else ai = [a0; tend; ph]; end
     for ic = 1:1,
       gi = ksfmms(ai, L, h, mstp, np);  disp(['|gms| = ' num2str(norm(gi))]);
       parms = [1000, -1, 0.5, 0];
@@ -598,8 +601,8 @@
 
 %% List all located UPOs and UQOs
   clear;  
-  lst = dir('ks22uqo2*.mat');  nst = length(lst);
-%  lst = dir('ks50rpo00*.mat');  nst = length(lst);
+  lst = dir('ks22uqo112*.mat');  nst = length(lst);
+%  lst = dir('ks50rpo009*.mat');  nst = length(lst);
   for ist = 1:nst,  load(lst(ist).name);  N = length(a0)+2;
     g = ksfmf5new(tend, [a0; tend; ph], d, h, eye(N-2), [1 1]);
     disp(sprintf('    ''%15s'';%% %10.6f %10.6f %12.3e',lst(ist).name, tend, ph, norm(g(1:end-2))));  end
@@ -653,10 +656,11 @@
 
     'ks22uqo070b.mat';%  70.267324  -7.241052   8.882e-015
     'ks22upo070a.mat';%  70.339625  -0.000002   2.805e-014
-
     'ks22uqo071a.mat';%  70.900766   9.014213   1.653e-013
+    
     'ks22uqo072a.mat';%  71.678083   5.502827   1.717e-014
 %    'ks22uqo072b.mat';%  72.411828  -7.626821   2.400e-012  (36d x 2)
+    'ks22uqo073b.mat';%  72.866872  -9.917343   1.795e-012
     'ks22uqo073a.mat';%  73.373919   7.207963   7.750e-014
     'ks22uqo074a.mat';%  73.980562   0.678530   8.188e-013  
     'ks22uqo074c.mat';%  74.380749   4.434083   6.562e-009
@@ -673,8 +677,9 @@
     'ks22uqo079b.mat';%  78.814091   6.710732   5.464e-014
     'ks22uqo079c.mat';%  79.424098  -5.196330   3.916e-014
     'ks22uqo079a.mat';%  79.508303   8.872265   4.198e-009
+    'ks22uqo080c.mat';%  79.563025   2.815518   4.673e-013
+
     'ks22uqo080b.mat';%  80.000539   1.802967   4.775e-013
-    
     'ks22uqo080a.mat';%  80.253902  -8.305024   1.442e-013
     'ks22uqo081b.mat';%  80.568032   3.753738   1.477e-013
     'ks22uqo081a.mat';%  80.868624   1.049921   8.927e-009
@@ -700,18 +705,20 @@
     'ks22uqo089b.mat';%  89.397624  -0.472671   1.560e-012
     'ks22uqo089a.mat';%  89.419325  -0.788367   3.061e-014
     'ks22uqo091a.mat';%  91.354619   0.083919   1.993e-008
+    'ks22uqo093a.mat';%  92.543339  -4.620769   1.243e-013
+
     'ks22upo093a.mat';%  93.021612   0.000000   1.966e-012
-    
     'ks22uqo094b.mat';%  93.626071  -8.249659   6.477e-012
     'ks22upo094a.mat';%  93.811125  -0.000003   4.176e-013
     'ks22uqo094a.mat';%  94.045042  -6.395471   1.020e-010    
     'ks22upo095a.mat';%  94.923312  -0.000000   1.821e-014
-    
     'ks22uqo095a.mat';%  95.252982  -0.000001   1.432e-013
+
     'ks22uqo096b.mat';%  96.053538  -3.774012   5.968e-013
     'ks22uqo096d.mat';%  96.243585  -4.605318   3.901e-014
     'ks22uqo096c.mat';%  96.398132   0.000021   1.365e-013
     'ks22uqo096a.mat';%  96.421035 -10.911410   9.371e-009 <- deleted
+    'ks22uqo097a.mat';%  97.325533 -10.732688   1.886e-013
     'ks22uqo098d.mat';%  97.738506   4.791193   7.300e-012
 
     'ks22uqo098a.mat';%  98.254857  10.847250   4.403e-012
@@ -730,20 +737,23 @@
     
     'ks22uqo103a.mat';% 103.013668   1.006582   3.270e-013
     'ks22uqo103b.mat';% 103.066535   6.743595   2.427e-013
-    
+    'ks22uqo103h.mat';% 103.067700   0.664722   6.818e-013
     'ks22uqo103c.mat';% 103.160875   3.911896   1.539e-012
     'ks22uqo104a.mat';% 103.712763   4.907911   7.736e-014
+    
     'ks22uqo104b.mat';% 104.456725   6.132433   3.093e-014
     'ks22uqo105c.mat';% 104.537756   4.837363   1.495e-012
     'ks22uqo105a.mat';% 105.426220   0.212326   3.732e-012
     'ks22uqo105b.mat';% 105.489600   7.224473   3.984e-013
-    
     'ks22uqo106a.mat';% 105.755691  -9.329084   1.425e-012
     'ks22uqo106b.mat';% 105.935059  -4.194456   4.307e-011
+
     'ks22uqo107a.mat';% 107.269635  10.336297   3.588e-010
+    'ks22uqo107b.mat';% 107.330174   4.489813   1.577e-012
     'ks22uqo108b.mat';% 107.681157  -4.491332   1.956e-012
     'ks22uqo108a.mat';% 108.078928 -10.270938   1.988e-011
     'ks22uqo108c.mat';% 108.281056  -7.611592   1.294e-013
+    'ks22uqo109f.mat';% 108.603532  -7.656845   2.132e-012
     
     'ks22uqo109e.mat';% 108.907021   4.187748   4.076e-012
     'ks22uqo109b.mat';% 109.115133  -6.089034   4.053e-008
@@ -756,26 +766,33 @@
     'ks22uqo111a.mat';% 111.256292   7.788527   7.935e-013
     'ks22uqo112a.mat';% 111.535813  -0.219776   1.327e-013
     'ks22uqo112e.mat';% 111.576697   1.268022   2.261e-011
-    
     'ks22uqo112d.mat';% 111.628790   8.302648   2.114e-013
     'ks22uqo112b.mat';% 112.031992   5.448170   1.488e-013
+
+    'ks22uqo112f.mat';% 112.044745   5.493891   2.968e-013
     'ks22uqo112c.mat';% 112.180089  -0.074704   8.244e-013
+    
+    'ks22uqo112g.mat';% 112.237027  -1.871074   1.580e-013
     'ks22uqo113b.mat';% 112.684863  -2.182842   1.782e-013
     'ks22uqo113c.mat';% 112.870371   7.661806   5.416e-013
     'ks22uqo113a.mat';% 113.664192  -9.847374   8.846e-014
-    
     'ks22uqo114a.mat';% 114.428065   3.586259   6.805e-013
+    'ks22uqo114b.mat';% 114.482143  -4.271118   7.135e-013
+    
     'ks22uqo115a.mat';% 114.769360   4.912638   4.734e-013
     'ks22uqo115b.mat';% 115.149392  -0.453798   1.362e-013
     'ks22uqo116a.mat';% 115.982689  -7.711219   6.229e-012
     'ks22uqo117c.mat';% 116.767957   0.407063   1.904e-011
+    'ks22uqo117d.mat';% 116.901553   4.805835   3.805e-011
     'ks22uqo117a.mat';% 116.905525   6.640941   4.431e-010
     
     'ks22uqo117b.mat';% 117.437473   9.914628   7.289e-013
     'ks22uqo118a.mat';% 117.895473  -7.474551   1.618e-013
+    'ks22uqo118c.mat';% 118.071348   5.312605   1.086e-012
     'ks22uqo118b.mat';% 118.250408   0.747751   5.148e-013
     'ks22uqo119a.mat';% 118.761396   4.707699   1.076e-013
     'ks22upo119a.mat';% 118.876441  -0.000010   3.983e-006
+
     'ks22uqo120a.mat';% 119.556928   8.312556   4.791e-010
 
     'ks22uqo120b.mat';% 119.947182   6.921632   9.420e-012
@@ -788,10 +805,11 @@
     'ks22uqo122b.mat';% 122.493342  -4.008438   2.012e-012
     'ks22uqo123a.mat';% 122.823942  10.416812   4.744e-013
     'ks22uqo123b.mat';% 123.136374   1.651543   1.480e-012
-    'ks22uqo125a.mat';% 125.021554   9.062346   1.270e-009
+    'ks22uqo125a.mat';% 125.021554   9.062346   1.971e-012
+    'ks22uqo125b.mat';% 125.492496  -4.934292   2.910e-013
     'ks22uqo126b.mat';% 125.905296   7.153932   1.102e-013
-    'ks22uqo126a.mat';% 126.193329  -3.992781   2.909e-009
     
+    'ks22uqo126a.mat';% 126.193329  -3.992781   2.909e-009
     'ks22uqo127c.mat';% 126.756021  11.536072   1.929e-012
     'ks22uqo127d.mat';% 126.888703  -6.452584   4.869e-014
     'ks22uqo127a.mat';% 127.126195   7.157910   9.227e-013
@@ -801,22 +819,27 @@
     'ks22uqo128b.mat';% 127.526866   0.826251   1.674e-012
     'ks22uqo128a.mat';% 127.626882   0.662288   2.362e-012
     'ks22uqo128c.mat';% 128.371655   6.586471   1.420e-011
+    'ks22uqo129b.mat';% 128.979698   2.579730   1.328e-011
     'ks22uqo129a.mat';% 129.485734  -2.139248   1.103e-011
     'ks22upo130a.mat';% 130.325961   0.000002   5.218e-011
+
     'ks22uqo130a.mat';% 130.438430  -5.047473   3.046e-013
-    
     'ks22uqo131a.mat';% 131.077250  -5.940997   5.444e-013
     'ks22uqo132b.mat';% 131.981245   1.342006   1.397e-012    
     'ks22uqo132c.mat';% 132.012670 -10.918138   6.385e-010
     'ks22upo133a.mat';% 132.638412  -0.000001   3.223e-014
     'ks22uqo133a.mat';% 132.696432  -0.015114   7.568e-013
-    'ks22uqo133b.mat';% 133.030048   5.310700   3.773e-012
     
+    'ks22uqo133b.mat';% 133.030048   5.310700   3.773e-012
     'ks22uqo134a.mat';% 133.554049  -4.960788   4.720e-010 <- not converged
-
+    'ks22uqo135c.mat';% 134.680782  -8.978079   1.013e-012
+    'ks22uqo135b.mat';% 135.059012  -7.581623   6.654e-012
     'ks22uqo135a.mat';% 135.065036  -4.898096   2.916e-012
     'ks22uqo136a.mat';% 135.614655 -10.092283   1.998e-012
+    
     'ks22uqo136c.mat';% 135.715849   2.047110   4.442e-013
+    'ks22uqo136f.mat';% 135.820287  -1.918698   3.116e-012
+    'ks22uqo136g.mat';% 135.834684   2.167807   4.868e-012
     'ks22uqo136e.mat';% 135.883772   6.246869   1.154e-012
     'ks22uqo136d.mat';% 135.909982   8.382122   1.950e-011
     'ks22uqo136b.mat';% 136.065427   3.834442   2.098e-013
@@ -844,19 +867,23 @@
 
     'ks22uqo143a.mat';% 143.382773   3.754234   1.894e-013
     'ks22upo144a.mat';% 143.816002  -0.000001   5.615e-012
-
     'ks22uqo144b.mat';% 143.869603  -4.447408   1.558e-013
+    
     'ks22uqo144e.mat';% 143.911251  -2.812715   2.726e-012
     'ks22uqo144c.mat';% 144.038979  -5.515201   3.655e-012
     'ks22uqo144d.mat';% 144.196079 -10.587710   2.027e-011
     'ks22uqo144a.mat';% 144.306458  -4.708727   2.288e-013
     'ks22uqo145c.mat';% 144.775103   9.423231   1.523e-009
-    
     'ks22uqo145b.mat';% 144.889795  -8.803784   1.146e-013
+
     'ks22uqo145a.mat';% 144.941435 -10.925782   5.470e-013
+    'ks22uqo145d.mat';% 145.426885  -8.868935   2.773e-013
+
+    'ks22uqo146d.mat';% 145.542728   5.470052   2.223e-011
     'ks22uqo146a.mat';% 145.647372 -10.635471   6.209e-012
     'ks22uqo146c.mat';% 146.227355  -4.845983   1.421e-011
     'ks22uqo146b.mat';% 146.340000  -5.893415   3.383e-013
+    'ks22uqo147b.mat';% 147.098449  -3.522798   7.412e-013
     'ks22uqo147a.mat';% 147.429564   2.864155   6.686e-011
 
     'ks22uqo148a.mat';% 147.874385  -4.327200   1.776e-009
@@ -882,15 +909,21 @@
     
     'ks22uqo154c.mat';% 153.739702 -10.140171   1.270e-010
     'ks22uqo154a.mat';% 154.062637   8.408730   5.507e-012
+    
     'ks22uqo155a.mat';% 154.692972   5.734826   3.681e-013
+    'ks22uqo155b.mat';% 155.431130   2.880216   3.284e-012
     'ks22uqo156b.mat';% 156.091924  -6.543825   9.195e-013
     'ks22uqo156a.mat';% 156.257970   2.925257   5.687e-012
     'ks22uqo157a.mat';% 157.042870   2.961886   8.743e-012
-    
     'ks22uqo157b.mat';% 157.213530   7.468081   2.540e-011
+
+    'ks22uqo158b.mat';% 157.777111  -2.981041   9.771e-013
     'ks22upo158a.mat';% 157.829972  -0.000007   4.091e-012
     'ks22uqo158a.mat';% 158.062421   0.596793   2.928e-010
     'ks22uqo159a.mat';% 158.732736  -5.175850   6.590e-012
+    'ks22uqo160b.mat';% 159.893616 -10.686723   3.445e-012
+    'ks22upo160b.mat';% 160.182579   0.000009   3.870e-013
+
     'ks22upo160a.mat';% 160.328760  -0.000005   3.003e-013
 
     'ks22uqo160a.mat';% 160.476820  -7.444423   1.149e-011
@@ -898,100 +931,138 @@
     'ks22uqo161a.mat';% 161.135051  -4.871592   4.751e-014    
     'ks22uqo162a.mat';% 162.448652  -1.058212   4.360e-012
     'ks22uqo163b.mat';% 163.229756  -3.229459   1.343e-012
+    'ks22upo163a.mat';% 163.271839   0.000000   1.707e-011
+
     'ks22uqo163a.mat';% 163.423996  -5.979334   2.080e-011
-    
     'ks22uqo163d.mat';% 163.476283  -1.285034   5.865e-013
     'ks22uqo164a.mat';% 164.117594 -10.872756   5.843e-012
+    'ks22uqo165b.mat';% 164.639828  -4.779875   2.096e-012
     'ks22uqo165a.mat';% 165.179172   5.976510   6.969e-011
     'ks22upo165a.mat';% 165.347530  -0.000001   7.510e-013
+
     'ks22upo166a.mat';% 166.363483   0.000006   6.920e-013
     'ks22uqo167a.mat';% 166.689318 -10.090257   2.105e-012
-    
     'ks22uqo168a.mat';% 167.549441  -0.746615   4.408e-012
+    'ks22uqo168b.mat';% 168.223221   1.563786   5.332e-011
     'ks22upo169b.mat';% 168.824011  -0.000031   1.839e-010
-    'ks22uqo170b.mat';% 169.518906   5.916267   1.308e-010    
+    'ks22upo169c.mat';% 169.419180  -0.000018   2.951e-011
+    
+    'ks22uqo170b.mat';% 169.518906   5.916267   1.308e-010
+    'ks22uqo170e.mat';% 169.760672   8.930859   6.357e-012
     'ks22uqo170c.mat';% 170.008790   0.510044   7.809e-012
     'ks22uqo170a.mat';% 170.177047  -8.338197   5.753e-011
-    'ks22upo171b.mat';% 170.697395  -0.000003   6.192e-011
     
+    'ks22upo171b.mat';% 170.697395  -0.000003   6.192e-011
     'ks22upo171a.mat';% 170.755590   0.000013   1.328e-005
     'ks22uqo171b.mat';% 170.824336  -4.515187   5.133e-012
     'ks22uqo171a.mat';% 170.936876   6.562272   1.063e-009
+    'ks22upo171c.mat';% 171.120612  -0.000064   2.471e-012
     'ks22uqo172a.mat';% 172.205618  -9.322603   5.442e-012
+    
     'ks22uqo174a.mat';% 173.888171  -6.655034   2.042e-009
     'ks22uqo175b.mat';% 175.108774   9.455093   5.347e-012
-    
     'ks22uqo175c.mat';% 175.158062  -4.786639   7.514e-012
     'ks22uqo175a.mat';% 175.381385   5.432786   5.464e-013
+    'ks22uqo176b.mat';% 176.029380   5.976978   3.213e-013
     'ks22uqo176a.mat';% 176.410711   1.860644   1.747e-010
-    'ks22uqo177a.mat';% 177.020006  -6.857858   2.416e-013
-    'ks22uqo178a.mat';% 177.771829  -8.659162   7.135e-012
-    'ks22uqo178b.mat';% 178.077672  10.224434   1.428e-012
     
+    'ks22uqo177a.mat';% 177.020006  -6.857858   2.416e-013
+    'ks22upo177a.mat';% 177.290723   0.000009   1.884e-011
+    'ks22uqo178a.mat';% 177.771829  -8.659162   7.135e-012
+    'ks22uqo178c.mat';% 177.924469  -0.567232   1.686e-014
+    'ks22uqo178b.mat';% 178.077672  10.224434   1.428e-012
     'ks22uqo179a.mat';% 178.836578  -8.673101   2.748e-008
+    
     'ks22uqo179b.mat';% 179.450200  -7.626701   1.672e-013
     'ks22upo180a.mat';% 180.425745  -0.000002   3.508e-011
     'ks22uqo181b.mat';% 180.534548  -9.921382   1.375e-009
+    'ks22uqo181c.mat';% 180.863421   2.373611   4.368e-013
     'ks22uqo181a.mat';% 181.401640  -5.800474   2.933e-012    
     'ks22uqo182a.mat';% 182.256501   2.952701   2.434e-011
     
     'ks22uqo183b.mat';% 182.511632   0.021412   6.808e-013
+
     'ks22uqo183a.mat';% 182.590494   3.145397   2.067e-011
     'ks22uqo183d.mat';% 182.689438   6.793373   1.945e-013
+    'ks22uqo183e.mat';% 182.885708  -9.342984   3.691e-010
     'ks22uqo183c.mat';% 183.053153  -1.777032   6.843e-011
     'ks22uqo184a.mat';% 184.444306   9.457250   5.639e-012
     'ks22upo185a.mat';% 185.247492   0.000001   3.116e-008
 
+    'ks22upo186a.mat';% 185.620522   0.000000   3.331e-012
     'ks22uqo186a.mat';% 185.716244   6.906840   2.598e-012
+    'ks22upo188a.mat';% 187.538826   0.000001   5.671e-007
     'ks22uqo188b.mat';% 188.278826   3.904530   8.874e-011
     'ks22uqo188a.mat';% 188.498020   4.526301   6.670e-013
+    'ks22upo189b.mat';% 188.510723  -0.000000   5.860e-010
+    
     'ks22upo189a.mat';% 189.275487   0.000002   2.087e-012
     'ks22upo192a.mat';% 191.457080  -0.000000   1.166e-009
+    'ks22uqo193c.mat';% 192.920906  -4.767956   1.446e-012
     'ks22uqo193a.mat';% 193.124990   1.715112   7.954e-013 <- not converged
-
     'ks22uqo193b.mat';% 193.149928  -4.833093   1.918e-009
     'ks22upo194a.mat';% 194.274476   0.000003   1.634e-010
+
     'ks22uqo194a.mat';% 194.480030  10.421027   6.531e-012    
     'ks22upo195a.mat';% 194.837222  -0.000000   6.946e-007
     'ks22upo195b.mat';% 195.084546  -0.000007   1.258e-009
     'ks22upo195c.mat';% 195.174147   0.000006   1.674e-011
-    
     'ks22uqo196a.mat';% 195.830366   6.488804   4.627e-011
+    'ks22uqo197b.mat';% 196.713247   6.254122   4.046e-012
+
     'ks22uqo197a.mat';% 197.027147  10.443248   6.616e-011
+    'ks22upo197a.mat';% 197.340179  -0.000007   4.891e-006
     'ks22uqo198a.mat';% 197.746219  -6.505396   9.282e-012
     'ks22uqo198b.mat';% 198.396838   1.957356   3.476e-010
     'ks22upo199a.mat';% 198.556240  -0.000001   2.121e-012
     'ks22uqo200a.mat';% 199.713609  -2.659040   2.702e-010
 
     'ks22upo200a.mat';% 200.411897  -0.000008   8.800e-006
+    'ks22uqo202a.mat';% 201.653143   1.902984   2.352e-011
     'ks22uqo204a.mat';% 203.701352  10.264942   2.979e-012
     'ks22upo204a.mat';% 203.726644   0.000001   1.015e-011
+    'ks22upo204b.mat';% 203.888367  -0.000002   3.664e-012
+    'ks22upo205b.mat';% 204.890803  -0.000002   5.930e-012
     'ks22upo205a.mat';% 204.905561  -0.000002   8.648e-011
     'ks22upo207a.mat';% 206.541701   0.000001   1.642e-010
+    'ks22upo207b.mat';% 206.932867   0.000010   4.195e-011
+    'ks22uqo207a.mat';% 207.303703   4.836730   6.309e-011
     'ks22upo209a.mat';% 208.747017   0.000000   2.696e-011
     'ks22uqo214a.mat';% 213.791285   3.497022   4.641e-009
     'ks22upo220a.mat';% 219.630506   0.000000   8.812e-011
+    'ks22upo227a.mat';% 226.834143   0.000004   6.452e-005
    ];  save ks22names name;  nax = 6;
   case 50,
     clear;  name = [
+    'ks50rpo009b.mat';%   8.502416  10.601422   9.517e-013
+    'ks50rpo009c.mat';%   8.750152 -10.669003   2.307e-013
     'ks50rpo009a.mat';%   8.998497  19.623471   1.700e-015
     'ks50rpo011a.mat';%  11.092722  24.024793   3.651e-015
+    'ks50rpo013b.mat';%  12.660796  17.543293   2.959e-013
     'ks50rpo013a.mat';%  13.218836  -4.807292   4.609e-014
+    'ks50rpo014a.mat';%  13.732597  -3.268565   6.823e-014
     'ks50rpo016b.mat';%  15.557797  20.957970   6.501e-015
     'ks50rpo016a.mat';%  15.669563   9.486030   2.502e-014
     'ks50rpo018a.mat';%  18.182769 -19.657325   1.512e-014
     'ks50rpo020a.mat';%  20.065607 -20.198905   1.677e-014
+    'ks50rpo020b.mat';%  20.255101 -20.609250   2.056e-015
     'ks50rpo021a.mat';%  20.819836  -1.735221   2.666e-014
+    'ks50rpo024b.mat';%  23.705723  -6.662196   1.388e-014
     'ks50rpo024a.mat';%  24.104919 -10.811604   6.901e-015
     'ks50rpo026b.mat';%  26.236886 -13.718069   1.676e-014
     'ks50rpo026a.mat';%  26.464834 -19.193295   1.335e-014
     'ks50rpo027a.mat';%  27.388358  10.786236   1.206e-009
     'ks50rpo034b.mat';%  33.594548  -3.156112   1.016e-012
+    'ks50rpo034c.mat';%  33.953261  -2.957128   4.903e-014
     'ks50rpo034a.mat';%  34.449770   6.355855   4.935e-014
     'ks50rpo039a.mat';%  39.076672   6.512421   1.800e-013
     'ks50rpo041a.mat';%  41.067064   0.323054   5.223e-014
     'ks50rpo047a.mat';%  47.059378 -18.613127   5.588e-014
+    'ks50rpo051a.mat';%  51.464493 -15.635015   7.588e-013
     'ks50rpo070a.mat';%  70.288203 -12.358193   6.576e-012
+    'ks50upo073a.mat';%  73.056550  -0.000015   1.746e-011
+    'ks50rpo076a.mat';%  76.081092  23.559236   9.578e-012
+    'ks50rpo087a.mat';%  86.537804   8.738266   2.963e-011
     ];  save ks50names name;  nax = 3;
   end
   nst = size(name,1);  np = 2;  te = 200;%  nst = 24;
@@ -1353,31 +1424,31 @@ fig1 = figure('PaperPosition',[0.6345 6.345 20.3 15.23],...
   hh = 0.1;         % integration stepsize for ksfmedt
   switch 2,
   case 1, load ks22names;  iname = 102; load(name(iname,:),'a0','tend','ph');
-  case 2, load('ks22uqo140d','a0','tend','ph','h');
+  case 2, load('ks22uqo112g','a0','tend','ph','h');
   case 3, ipo = 235;  a0 = rpo(ipo).a;  tend = rpo(ipo).T;  ph = rpo(ipo).d; end
   disp(['Period = ' num2str(tend) '  Phase = ' num2str(ph)]);
   for hh = 0.1:-0.05:0.1,
-    np = round(tend/10.0); nstp = floor(tend./h);  mstp = floor(nstp./np./2).*2;
+    np = round(tend/12.0); nstp = floor(tend./h);  mstp = floor(nstp./np./2).*2;
     disp(['Using multiple shooting: ' num2str([np mstp]) '  ' num2str(tend-h*mstp*(np-1))]);
     [tt, aa] = ksfmstp(a0, L, h, mstp*(np-1), mstp);
     if size(aa,1) < N-2, aa = [aa; zeros(N-2-size(aa,1),size(aa,2))]; end
     ai = [aa(:); tend; ph]; mstp = round(mstp*h/hh); h = hh; 
     gi = ksfmms(ai, L, h, mstp, np); disp(['|gms| = ' num2str(norm(gi))]);
-    options = optimset('Display','iter','outputfcn',@ksoutfun2,'MaxIter',2000, ...
+    options = optimset('Display','on','outputfcn',@ksoutfun2,'MaxIter',2000, ...
       'MaxFunEvals',500000,'Jacobian','on','NonlEqnAlgorithm','lm','TolX',1e-12,'TolFun',1e-12);
-    upo = fsolve(@(ai)ksfmms(ai,L,h,mstp,np),ai,options);
+    upo = fsolve(@(ai)ksfmms3(ai,L,h,mstp,np),ai,options);
     a0 = upo(1:N-2); tend = upo(end-1); ph = upo(end);
     figure(2); hold on; plot(tend,ph,'ko','markersize',7); hold off; end
-  if 0,
+  if 1,
     np = round(tend/50.0); nstp = floor(tend./h); mstp = floor(nstp./np./2).*2;
     disp(['Using multiple shooting: ' num2str([np mstp]) '  ' num2str(tend-h*mstp*(np-1))]);
     [tt, aa] = ksfmstp(a0, L, h, mstp*(np-1), mstp);
     if size(aa,1) < 2*N-2, aa = [aa; zeros(2*N-2-size(aa,1),size(aa,2))]; end
     ai = [aa(:); tend; ph]; mstp = round(mstp*h/hh); h = hh; 
-    gi = ksfmms(ai, L, h, mstp, np); disp(['|gms| = ' num2str(norm(gi))]);
-    options = optimset('Display','iter','outputfcn',@ksoutfun2,'MaxIter',2000, ...
+    gi = ksfmms3(ai, L, h, mstp, np); disp(['|gms| = ' num2str(norm(gi))]);
+    options = optimset('Display','on','outputfcn',@ksoutfun2,'MaxIter',2000, ...
       'MaxFunEvals',500000,'Jacobian','on','NonlEqnAlgorithm','lm','TolX',1e-12,'TolFun',1e-12);
-    upo = fsolve(@(ai)ksfmms(ai,L,h,mstp,np),ai,options);
+    upo = fsolve(@(ai)ksfmms3(ai,L,h,mstp,np),ai,options);
     a0 = upo(1:2*N-2); tend = upo(end-1); ph = upo(end);
     figure(2); hold on; plot(tend,ph,'ko','markersize',7); hold off; end  
 %  [tt, aa] = ksfmstp(a0, L, h, ceil(tend./h),5);
@@ -1386,9 +1457,9 @@ fig1 = figure('PaperPosition',[0.6345 6.345 20.3 15.23],...
   else a0 = ksfmshift(a0); end
   if ph > L/2, ph = ph-L; elseif ph < -L/2, ph = ph+L; end
   if ph < 0, ph = -ph; a0(1:2:end) = -a0(1:2:end); end
-  options = optimset('Display','iter','outputfcn',@ksoutfun2,'MaxIter',5000, ...
+  options = optimset('Display','on','outputfcn',@ksoutfun2,'MaxIter',5000, ...
     'MaxFunEvals',20000,'Jacobian','on','NonlEqnAlgorithm','lm','TolX',1e-12,'TolFun',1e-12);
-  [upo,fval,eflag] = fsolve(@(a)ksfmms(a,L,h,1),[a0;tend;ph],options);
+  [upo,fval,eflag] = fsolve(@(a)ksfmms3(a,L,h,1),[a0;tend;ph],options);
   a0 = upo(1:end-2); tend = upo(end-1); ph = upo(end);
   for ic = 1:0, format short g;
     [g, jac] = ksfmf5(0,[a0;tend;ph],L,h,eye(2*N),[1 1]);
@@ -1412,7 +1483,7 @@ fig1 = figure('PaperPosition',[0.6345 6.345 20.3 15.23],...
   if add == 1, if repl == 0, ipo = ipo+1;
       for iit = size(rpo,2):-1:ipo,  rpo(iit+1) = rpo(iit); end, end
     rpo(ipo).a = a0;  rpo(ipo).T = tend;  rpo(ipo).d = ph;
-    [f,df] = ksfmf5(0,[rpo(ipo).a;rpo(ipo).T;rpo(ipo).d],L,h,eye(2*N),[1 1]); 
+    [f,df] = ksfmms3([rpo(ipo).a;rpo(ipo).T;rpo(ipo).d],L,h,1); 
     disp(['|f|=' num2str(norm(f(1:end-2)))]);
     [vdf,edf] = eig(df(1:end-2,1:end-2)+eye(2*N-2)); edf = diag(edf);
     [sedf, ie] = sort(abs(edf),1,'descend');
@@ -1511,19 +1582,25 @@ fig1 = figure('PaperPosition',[0.6345 6.345 20.3 15.23],...
   figure(2); clf;  plot(x,u,'.-');
 
 %% Plot RPOs in real space
-  clear;  load kse22orbits; nst = length(rpo); nax = 10; np = 10; te = 200;
- for ist = 1:220,  ost = 1:nst;
-% for ist = 1:nax, ost = 2:6, % ost = [3 22 50 57 95];
-% for ist = 1:nax,  ost = [2 23 52 58 113 151]; %ost = [73:78];
+  clear;  load kse22orbits; nst = length(rpo); nax = 6; np = 10; te = 200;
+%  for ist = 1:314,  ost = 1:nst;
+%  for ist = 1:nax, % ost = [3 22 50 57 95];
+%  for ist = 1:nax,  ost = [2 23 52 58 113 151]; %ost = [73:78];
+   ipo = find(abs([rpo.d]) < 1e-4);  % Periodic Orbits
+   for ist = 1:4*nax,  ost = ipo([[1:nax] [1:nax]*2+nax [1:nax]*2+3*nax [1:nax]*3 + 5*nax]);
+%   ipo = find(abs([rpo.d]) > 1e-4);  % RPOs
+%   for ist = 1:4*nax,  ost = ipo([[1:nax] [1:nax]*5+nax [1:nax]*10+6*nax [1:nax]*20 + 16*nax]);
     iorb = mod(ist-1,nax)+1;
     if iorb == 1,  
-      fig1 = figure('PaperPosition',[1.0 1.0 33 17],'PaperOrient','port',...
-         'PaperSize',[20.98 29.68],'Position',[35 200 1200 600]);
+%      fig1 = figure('PaperPosition',[1.0 1.0 33 17],'PaperOrient','port',...
+%         'PaperSize',[20.98 29.68],'Position',[35 200 1200 600]);
+      fig1 = figure('PaperPosition',[1.0 1.0 24 16],'PaperOrient','port',...
+         'PaperSize',[20.98 29.68],'Position',[35 200 900 600]);
       hax = subplots(1,nax,[0.03 0.03 0.07 0.15],[0.015 0 0 0]); end
 
     a0 = rpo(ost(ist)).a;  tend = rpo(ost(ist)).T;  ph = rpo(ost(ist)).d;
     N = length(a0)+2;  ek = exp((2i*pi/L).*ph.*(1:N/2-1)');
-    [tt, aa] = ksfmedt(L, tend, a0, h, np);
+    [tt, aa] = ksfmetd2(a0, L, h, tend, np);
     tti = tt(1:end-1);  aai = aa(:,1:end-1);  ne = ceil(te./tend);  aav = aa;
     for ie = 1:ne-1,
       vi = (aav(1:2:end,:)+1i*aav(2:2:end,:)).*repmat(ek,1,size(aav,2));
@@ -1541,17 +1618,17 @@ fig1 = figure('PaperPosition',[0.6345 6.345 20.3 15.23],...
     if iorb == nax,
       hax(nax+1) = axes('pos',[.04 .9 .9 .07]);
       tit1 = 'Kuramoto-Sivashinsky: $u_t = -uu_x - u_{xx} - u_{xxxx}$~~,~~';
-      tit2 = ['$x \in [-L/2, L/2]$;~~ BC: $u(x+L,t) = u(x,t)$;~~$' sprintf(' L = %4.1f ',L) '$;~'];
-      tit3 = '~~Solutions of the form: $u(x+\Delta,T) = u(x,0)$';
-      text(0.0,.9,[tit1 tit2 tit3],'interp','latex');  set(hax(nax+1),'visi','off');
+      tit2 = ['$x \in [-L/2, L/2]$;~~ BC: $u(x+L,t) = u(x,t)$;~~$'];
+      tit3 = ['$' sprintf(' L = %4.1f ',L) '$;~' '~~Solutions of the form: $u(x+d,T/2) = -u(-x,0)$'];
+      text(0.0,.9,[tit1 tit3],'interp','latex','fontsize',10);  set(hax(nax+1),'visi','off');
       axes(hax(1)); ylabel('t','rotat',0); 
-      print(gcf,'-dpng',sprintf('ks22rpos%05.1f-%05.1f.png',rpo(ist-nax+1).T,rpo(ist).T)); delete(fig1);   
+      print(gcf,'-dpng',sprintf('ks22rpos%05.1f-%05.1f.png',rpo(ost(ist-nax+1)).T,rpo(ost(ist)).T)); delete(fig1);   
     end
   end
   
 %% Plot individual RPOs with the first 4 FMs in polar coordinates
   clear;  load kse22orbits;  te = 200;  np = 1;  refl = 0;
-  for ist = 172:172, ost = 1:220; %ost = [1 2 5 10 50]; %ost = 20:5:40;
+  for ist = 57:57, ost = 1:314; %ost = [1 2 5 10 50]; %ost = 20:5:40;
     a0 = rpo(ost(ist)).a;  tend = rpo(ost(ist)).T;  ph = rpo(ost(ist)).d;
     if refl, a0r = a0;  a0r(1:2:end) = -a0r(1:2:end);  phr = -ph; end
     eig = rpo(ost(ist)).eig(1:8);
@@ -1565,7 +1642,7 @@ fig1 = figure('PaperPosition',[0.6345 6.345 20.3 15.23],...
         vi = (aas(1:2:end,:)+1i*aas(2:2:end,:)).*repmat(ek,1,ima-1);
         aas(1:2:end,:) = real(vi);  aas(2:2:end,:) = imag(vi);
         aa = [aa(:,ima:end) aas]; end, end
-    if 1, phase = 56/360*L,% phase = 0.12, % shift orbit's phase
+    if 1, phase = -52/360*L,% phase = 0.12, % shift orbit's phase
       vi = (aa(1:2:end,:) + 1i*aa(2:2:end,:)).*...
            repmat(exp((2i*pi/L).*phase.*(1:N/2-1)'),1,length(tt));
       aa(1:2:end,:) = real(vi);  aa(2:2:end,:) = imag(vi);
@@ -1747,5 +1824,42 @@ fig1 = figure('PaperPosition',[0.6345 6.345 20.3 15.23],...
   pa = sum(da.*tt)./na.*L./2./pi;
   figure(3); clf;  plot(t(1:end-1),cumsum(pa),'.-'); grid on;
   
+%% Compute Lyapunov exponents of KS (using ksfmstp with Jacobian)  
+  clear; L = 22; N = 32; h = 0.25; nlyap = 7;
+  tpre = 50.0; titr = 50.0; nitr = 500;
+  a = zeros(N-2,1);  randn('seed',22000009); a(1:10) = 0.2*randn(10,1);
+  [t, a] = ksfmstp(a, L, h, tpre/h, 0);
+  v = randn(N-2,nlyap); [v, s] = gsorth(v);
+  figure(2); clf; lyap = zeros(nitr,nlyap);
+  for ni = 1:nitr,
+    [t, a, da] = ksfmstp(a, L, h, titr/h, 0);
+    v = da*v;  [v, s] = gsorth(v);
+    lyap(ni,:) = log(s')./titr;
+    plot(ni,lyap(ni,:),'*'); hold on; drawnow;
+  end
   
+%% Compute Lyapunov exponents of KS (using ksfmlyap)
+  clear; N = 64; h = 0.25; nlyap = 7;
+  for L = 35.5:0.1:40.0,
+    tpre = 1000.0; titr = 20.0; nitr = 10000;
+    a = zeros(N-2,1); randn('seed',22000020); a(1:10) = 0.2*randn(10,1);
+    v = randn(N-2,nlyap); v = gsorth(v);
+    [a, v] = ksfmlyap(a, v, L, h, tpre/h); v = gsorth(v);
+    lyap = zeros(nitr,nlyap); tic;
+    for ni = 1:nitr,
+      [a, v] = ksfmlyap(a, v, L, h, titr/h); [v, s] = gsorth(v);
+      lyap(ni,:) = log(s')./titr; end, toc; %disp([ni lyap(ni,1:4)]);
+    figure(2); clf; plot(1:nitr,lyap,'*');
+    for ni = 1:nlyap, elyap(ni) = max(confint(lyap(:,ni))); end
+    lyap = mean(lyap); disp(num2str(L)); disp(num2str([lyap; elyap]));
+    load kslyaps;
+    Ls = [Ls; L]; Ns = [Ns; N]; Lyaps = [Lyaps; lyap]; eLyaps = [eLyaps; elyap];
+    save kslyaps Ls Ns Lyaps eLyaps; end
   
+%% Roots of equilibria lam*(1+lam^2) - 4*E
+  figure(1); clf;
+  for E = 0:.1:10,
+    lam = roots([1 0 1 -4*E]);
+    plot(E,[-real(lam(1))*2 imag(lam(1))],'o'); hold on;
+  end
+

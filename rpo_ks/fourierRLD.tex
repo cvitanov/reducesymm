@@ -32,11 +32,11 @@ system is $N-2$.  The truncated system looks as follows:
   \dot{a}_k = \pVeloc_k(a) = \left(q_k^2-q_k^4\right)a_k -
   \frac{i q_k}{2}{\cal F}_N[({\cal F}_N^{-1}[a])^2]_k\,.
 \ee{eq:KS}
-where $k = 1,\ldots,N/2-1$.  Note that, since $a_k \in
-\mathbb{C}$, \refeq{eq:KS} represents a system or ordinary differential
-equations in ${\mathbb R}^{N-2}$.
-%, although in the Fourier transform we need
-%to use $a_k$ over the full range of $k$ values from 0 to $N-1$.
+where $k = 1,\ldots,N/2-1$, although in the Fourier transform we need
+to use $a_k$ over the full range of $k$ values from 0 to $N-1$.
+Note that, since $a_k \in \mathbb{C}$, \refeq{eq:KS} represents a 
+system of ordinary differential equations in ${\mathbb R}^{N-2}$.
+
 The discrete Fourier transform ${\cal F}_N$ can be computed by FFT.
 In Fortran and C, the FFTW library \refref{FFTW05} can be used.
 % In Matlab, it is more convenient to use complex
@@ -94,24 +94,23 @@ respect to the real and imaginary parts of $a$, that is
   & \vdots & & \ddots \end{array}\right)
 \label{eq:FundMat}\eeq
 where $a_k = a_{R,k} + i a_{I,k}$ and $f^t_k = f^t_{R,k} + i f^t_{I,k}$.  
-The partial derivatives $\frac{\partial f^t}{\partial a_{R,k}}$ 
-and $\frac{\partial f^t}{\partial a_{I,k}}$ are determined
-by solving \refeq{eq:KStan} with initial conditions $b_j(0) = 1 + 0i$ and
-$b_j(0) = 0 + 1i$, respectively, for $j = k$ and $b_j(0) = 0$ otherwise.
+The partial derivatives $\frac{\partial f^t}{\partial a_{R,j}}$ 
+and $\frac{\partial f^t}{\partial a_{I,j}}$ are determined
+by solving \refeq{eq:KStan} with initial conditions 
+$b_k(0) = b_{N-k}(0) = 1 + 0i$ and $b_k(0) = -b_{N-k}(0) = 0 + 1i$, 
+respectively, for $k = j$ and $b_k(0) = 0$ otherwise.
 
-The stability of a \po\ with period $\period{p}$ is determined by the position
+The stability of a \po\ with period $\period{p}$ is determined by the location
 of eivenvalues of $J(a_p,\period{p})$ with respect to the unit circle in the 
 complex plane. 
 
 Because of the translation operation, the stability of a \rpo\ is
 determined by the eigenvalues of the matrix
 $\mathbf{g}(\shift_p)\,J(a_p,\period{p})$, where $\mathbf{g}(\shift)$
-is the action of translation operator introduced in
+is the action of the translation operator introduced in
 \refeq{eq:shiftFour}, which in real valued representation takes the form
-\[ 
-  \mathbf{g}(\shift) = \diag(\cos q_1\shift, \sin q_1\shift, \cos
-  q_2\shift, \sin q_2\shift, \ldots)\,.
-\]
+$\mathbf{g}(\shift) = \diag(\cos q_1\shift, \sin q_1\shift, \cos
+  q_2\shift, \sin q_2\shift, \ldots)$.
 
 For an equilibrium solution $a_q$, $f^t(a_q) = a_q$ and so 
 the fundamental matrix $J(a_q,t)$ can be expressed in term of the 
@@ -121,30 +120,49 @@ where
 \beq
   A(a_q) = \left.\frac{\partial v}{\partial a}\right|_{a=a_q}.
 \label{eq:StabMat}\eeq
-Using the real valued representation similar to that in \refeq{eq:FundMat},
+Using the real valued representation of \refeq{eq:FundMat},
 the partial derivatives of $v(a)$ with respect to the real and imaginary
 parts of $a$ are given by
 \bea
+    \frac{\partial v_k}{\partial a_{R,j}} & = &
+    \left(q_k^2 - q_k^4\right)\delta_{kj}
+    - iq_k {\cal F}_N[{\cal F}_N^{-1}[a]\otimes {\cal F}_N^{-1}[b_R^{(j)}]]_k\,,
+\continue
+    \frac{\partial v_k}{\partial a_{I,j}} & = &
+    \left(q_k^2 - q_k^4\right)i\delta_{kj}
+    - iq_k {\cal F}_N[{\cal F}_N^{-1}[a]\otimes {\cal F}_N^{-1}[b_I^{(j)}]]_k\,,
+\label{eq:StabMatElem}
+\eea
+where $b_R^{(j)}$ and $b_I^{(j)}$ are complex valued vectors such that
+$b_{R,k}^{(j)} = b_{R,N-k}^{(j)} = 1 + 0i$ and 
+$b_{I,k}^{(j)} = -b_{I,N-k}^{(j)} = 0 + 1i$ for $k = j$ and 
+$b_{R,k}^{(j)} = b_{I,k}^{(j)} = 0$ otherwise.
+Or explicitly in terms of $a_{R,k}$ and $a_{I,k}$ we have
+\bea
     \frac{\partial v_{R,k}}{\partial a_{R,j}} & = &
     \left(q_k^2 - q_k^4\right)\delta_{kj}
-    - \frac{q_k}{2} (a_{I,k+j}+a_{I,k-j})\,,
+    + q_k (a_{I,k+j} + a_{I,k-j})\,,
 \continue
     \frac{\partial v_{R,k}}{\partial a_{I,j}} & = &
-    - \frac{q_k}{2} (a_{R,k+j}-a_{R,k-j})\,,
+    - q_k (a_{R,k+j} - a_{R,k-j})\,,
 \label{expanMvar}\\
     \frac{\partial v_{I,k}}{\partial a_{R,j}} & = &
-    - \frac{q_k}{2} (a_{I,k+j} + a_{I,k-j})\,,
+    - q_k (a_{R,k+j} + a_{R,k-j})\,,
 \continue
     \frac{\partial v_{I,k}}{\partial a_{I,j}} & = &
     \left(q_k^2 - q_k^4\right)\delta_{kj}
-    + \frac{q_k}{2} (a_{R,k+j}-a_{R,k-j})\,.
+    - q_k (a_{I,k+j} - a_{I,k-j})\,,
 \nnu
 \eea
-
+where $\delta_{kj}$ is Kronecker delta.
 
 Thus the stability of equilibria is characterized by the location of eigenvalues
 of $J(a_q,t)$ relative to the unit circle in the complex plane, or by the sign 
 of the real part of eigenvalues of $A(a_q)$.
 
 The stability of a \reqv\ is detemined in the co-moving reference frame, so
-the fundamental matrix takes the form $\mathbf{g}(c_q t)\,J(a_q,t)$.  
+the fundamental matrix takes the form $\mathbf{g}(c_q t)\,J(a_q,t)$.  The
+stability matrix of a \reqv\ is thus equal to $A(a_q) + c_q\mathbf{L}$ 
+where $\mathbf{L} = iq_k\delta_{kj}$ is the Lie algebra translation 
+generator, which in real-space representation takes the form 
+$\mathbf{L} = \diag(0, q_1, 0, q_2, \ldots)$.
