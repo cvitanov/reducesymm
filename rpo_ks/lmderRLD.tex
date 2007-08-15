@@ -27,11 +27,10 @@ here}
 
 We need to solve the system of $N-2$ equations
 \beq
-  {\bf g}(\shift)f^\period{}(a) - a = 0\,,
+  {\bf g}(\shift_p)f^\period{p}(a_p) - a_p = 0\,,
 \ee{eq:system}
-with $N$ unknowns $(a, \period{}, \shift)$, where $f^t$
-is the flow map of the \KSe , i.e. $f^t(a) = a(t)$ is the solution of
-$\dot{a} = \pVeloc(a)$ with initial condition $a(0) = a$.
+with $N$ unknowns $(a_p, \period{p}, \shift_p)$, where $f^t$
+is the flow map of the \KSe.
 
 We have tried two different implementations of the multiple shooting.
 The emphasis was on the simplicity of the implementations, so, even
@@ -72,7 +71,8 @@ With the Jacobian of this system given by
   \end{array}\right),\quad j,k = 1,\ldots,m\,,
 \eeq
 the partial derivatives with respect to $a^{(k)}$ can be calculated
-using the solution of \refeq{eq:KStan}.  The partial derivatives
+using the solution of \refeq{eq:KStan} as described in 
+Appendix~\ref{sec:stability}.  The partial derivatives
 with respect to $T$ are given by
 \beq
   \frac{\partial F^{(j)}}{\partial \period{}} =
@@ -109,9 +109,11 @@ augmented with two rows of zeros corresponding to the two identical
 zeros augmenting \refeq{eq:MultShoot} in order to make the number of
 equations formally equal to the number of variables,
 as discussed above.
-\RLD{The drawback of this scheme is that the \KSe\ is integrated with
+    \RLD{
+The drawback of this scheme is that the \KSe\ is integrated with
 different step sizes, so different \rpo s cannot be readily compared,
-since they have been approximated using different step sizes.}
+since they have been approximated using different step sizes.
+        }
 
 In the second implementation, we keep $h$ and $\tau$ fixed and vary
 only $\tau' = \period{} - (m-1)\tau$.  In this case, we need to be
