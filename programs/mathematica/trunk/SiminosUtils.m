@@ -21,6 +21,8 @@ wd[]:=StringDrop[Directory[],
       Flatten[StringPosition[Directory[],
               ParentDirectory[Directory[]]] ][[2]]+1];
 
+CleanInOut[]=Module[{},Unprotect[In,Out];Clear[In,Out];Protect[In,Out]];
+
 fp=FourierParameters\[Rule]{-1,1};
 
 uSpatial[u_,L_]:=Module[{ux,uxx,dx,d},d=Dimensions[u][[1]];
@@ -102,6 +104,33 @@ UnsortedUnion[x_List]:=
     tmp=Split[Sort[Transpose[{x,Range[len]}]],(#1[[1]]===#2[[1]]&)][[All,1]];
     Sort[Transpose[RotateLeft[Transpose[tmp]]]][[All,2]]]
 
+dropRep[x_,prec_]:=UnsortedUnion[SetPrecision[x,prec]]
+
+elimPoints[traj_,ds_]:=
+    Module[{straj,dif,cros},
+      dif=Table[Norm[traj[[i]]-traj[[i+1]]],{i,1,Dimensions[traj][[1]]-1}];
+      cros={Null};
+      Do[If[dif[[i]]>ds,cros=Append[cros,{i}]],{i,1,Dimensions[dif][[1]]}];
+      cros=Drop[cros,1];
+      straj=Extract[traj,cros]];
+
+\!\(curvature[{x1_, y1_}, {x2_, y2_}, {x3_, y3_}] := Module[{a, d, e, f}, \[IndentingNewLine]a = Det[{{x1, y1, 1}, {x2, y2, 1}, {x3, y3, 1}}]; \[IndentingNewLine]d = \(-Det[{{x1\^2 + y1\^2, y1, 1}, {x2\^2 + y2\^2, y2, 1}, {x3\^2 + y3\^2, y3, 1}}]\); \[IndentingNewLine]e = Det[{{x1\^2 + y1\^2, x1, 1}, {x2\^2 + y2\^2, x2, 1}, {x3\^2 + y3\^2, x3, 1}}]; \[IndentingNewLine]f = \(-Det[{{x1\^2 + y1\^2, x1, y1}, {x2\^2 + y2\^2, x2, y2}, {x3\^2 + y3\^2, x3, y3}}]\); \[IndentingNewLine]1/Sqrt[\((d\^2 + e\^2)\)/\((4\ a\^2)\) - f\/a]\[IndentingNewLine]]\)
+
+\!\(curvProbl[{x1_, y1_}, {x2_, y2_}, {x3_, y3_}] := Module[{r, a, d, e, f, K}, \[IndentingNewLine]a = Det[{{x1, y1, 1}, {x2, y2, 1}, {x3, y3, 1}}]; \[IndentingNewLine]d = \(-Det[{{x1\^2 + y1\^2, y1, 1}, {x2\^2 + y2\^2, y2, 1}, {x3\^2 + y3\^2, y3, 1}}]\); \[IndentingNewLine]e = Det[{{x1\^2 + y1\^2, x1, 1}, {x2\^2 + y2\^2, x2, 1}, {x3\^2 + y3\^2, x3, 1}}]; \n\ \ \ \ f = \(-Det[{{x1\^2 + y1\^2, x1, y1}, {x2\^2 + y2\^2, x2, y2}, {x3\^2 + y3\^2, x3, y3}}]\); \[IndentingNewLine]K = 1/Sqrt[\((d\^2 + e\^2)\)/\((4\ a\^2)\) - f\/a]; \[IndentingNewLine]If[\((Abs[a]\  < \ 10\^\(-17\))\)\ \  \[Or] \ \((\ Abs[K]\  > \ 10\^3)\), \ True, False]\[IndentingNewLine]]\)
+
+sPoints[traj_,ds_]:=
+    Module[{straj,sdum,cros,s,dif},
+      dif=Table[Norm[traj[[i]]-traj[[i+1]]],{i,1,Dimensions[traj][[1]]-1}];
+      s=Table[0,{Dimensions[dif][[1]]+1}];
+      Do[s[[i]]=s[[i-1]]+dif[[i-1]],{i,2,Dimensions[s][[1]]}];
+      cros={{1}};
+      sdum=0;
+      Do[If[(s[[i]]-sdum>ds) (* \[Or]
+              curvProbl[traj[[i-1]],traj[[i]],traj[[i+1]]] *),
+          cros=Append[cros,{i}];sdum=s[[i]]],{i,2,Dimensions[dif][[1]]}];
+      cros=Append[cros,{Dimensions[dif][[1]]+1}];
+      straj=Extract[traj,cros]];
+
 gsorth[x_]:=Module[{y,Nv,d,sm},Nv=Dimensions[x][[1]];d=Dimensions[x][[2]];
     y=Table[Null,{Nv}];y[[1]]=x[[1]]/Norm[x[[1]]];
     Do[sm=Sum[Conjugate[y[[j-k]]].x[[j]]y[[j-k]],{k,1,j-1}];
@@ -135,8 +164,8 @@ interpTraj[file_,b_,a_,Npt_,Nplt_,NpS_,rSkip_,nd_]:=
 
 interp1Traj[p_,rSkip_,dS_]:=
   Module[{pdum,ds,s,adum,Npt,NpS,aS,a1s,a2s,a3s,aStab},
-    Npt=Dimensions[p][[1]];
     pdum=Take[p,{1,Dimensions[p][[1]],rSkip}];
+    Npt=Dimensions[p][[1]];
     Print[Dimensions[p]];
     ds=Table[Norm[pdum[[i+1]]-pdum[[i]]],{i,1,Npt-1}];
     s=Table[0,{Npt}];
@@ -177,7 +206,8 @@ FrenetFrame[x_List,t_,phi_,r_]:=
       normal=Cross[binormal,tangent];
       x+normal*r*Cos[phi]+r*binormal*Sin[phi]];
 
-ruslanizE[list_]:=Map[Times[{2,4,4},#]&,list,{1}]
+ruslanizE[list_]:=
+  Map[Times[{2,4,4},#]&,list,{1}]
 
 \!\(plotEtab[Etab_, label_, c_, pt_:  0.01, thck_:  0.005] := \[IndentingNewLine]Module[{Nk, coord, cros, poinc, plPoinc, rPoincE, rPoinc1, plrPoincE, plrPoinc1}, \[IndentingNewLine]Nk = \(Dimensions[Etab]\)[\([1]\)]; \[IndentingNewLine]mE = Sum[Etab[\([i, 1]\)], {i, 1, Nk}]/Nk; \[IndentingNewLine]mP = Sum[Etab[\([i, 2]\)], {i, 1, Nk}]/Nk; \[IndentingNewLine]mD = Sum[Etab[\([i, 3]\)], {i, 1, Nk}]/Nk; \[IndentingNewLine]pEPEdot[label] = ScatterPlot3D[AppendRows[TakeColumns[Etab, {1}], TakeColumns[Etab, {2}], TakeColumns[Etab, {2}] - TakeColumns[Etab, {3}]]\ \ , DisplayFunction -> \ Identity, PlotJoined -> True, PlotRange -> All, AspectRatio -> Automatic, FrameLabel -> \ {"\<E\>", "\<P\>", \*"\"\<\!\(E\& . \)\>\""}, PlotStyle -> \ {c\ }]; \[IndentingNewLine]pPEdot[label]\  = ListPlot[AppendRows[TakeColumns[Etab, {2}], TakeColumns[Etab, {2}] - TakeColumns[Etab, {3}]]\ \ , DisplayFunction -> \ Identity, PlotJoined -> True, AspectRatio -> Automatic, PlotStyle -> {c, Thickness[thck]}, FrameLabel -> \ {"\<P\>", \*"\"\<\!\(E\& . \)\>\""}]; \[IndentingNewLine]pmPD[label] = ListPlot[{{mP, mD}}, PlotStyle \[Rule] {c, PointSize[pt]}, DisplayFunction \[Rule] Identity]; \[IndentingNewLine]pmEP[label] = ListPlot[{{mE, mP}}, PlotStyle \[Rule] {c, PointSize[pt]}, DisplayFunction \[Rule] Identity]; \[IndentingNewLine]pmED[label] = ListPlot[{{mE, mD}}, PlotStyle \[Rule] {c, PointSize[pt]}, DisplayFunction \[Rule] Identity]; \[IndentingNewLine]pPD[label] = ListPlot[AppendRows[TakeColumns[Etab, {2}], TakeColumns[Etab, {3}]]\ \ , DisplayFunction -> \ Identity, PlotJoined -> True, PlotRange -> All, AspectRatio -> Automatic, FrameLabel -> \ {"\<P\>", "\<D\>"}, PlotStyle -> {c, Thickness[thck]}]; \[IndentingNewLine]pEP[label] = ListPlot[AppendRows[TakeColumns[Etab, {1}], TakeColumns[Etab, {2}]]\ \ , DisplayFunction -> \ Identity, PlotJoined -> True, PlotRange -> All, AspectRatio -> Automatic, FrameLabel -> \ {"\<E\>", "\<P\>"}, PlotStyle -> {c, Thickness[thck]}]; \[IndentingNewLine]pED[label] = ListPlot[AppendRows[TakeColumns[Etab, {1}], TakeColumns[Etab, {3}]]\ \ , DisplayFunction -> \ Identity, PlotJoined -> True, PlotRange -> All, AspectRatio -> Automatic, FrameLabel -> \ {"\<E\>", "\<D\>"}, PlotStyle -> {c, Thickness[thck]}]; \[IndentingNewLine]pDEdot[label] = ListPlot[AppendRows[TakeColumns[Etab, {3}], TakeColumns[Etab, {2}] - TakeColumns[Etab, {3}]]\ \ , DisplayFunction -> \ Identity, PlotJoined -> True, PlotRange -> All, AspectRatio -> Automatic, FrameLabel -> \ {"\<D\>", \*"\"\<\!\(E\& . \)\>\""}, PlotStyle -> {c, Thickness[thck]}]; \[IndentingNewLine]pEEdot[label] = ListPlot[AppendRows[TakeColumns[Etab, {1}], TakeColumns[Etab, {2}] - TakeColumns[Etab, {3}]]\ \ , DisplayFunction -> \ Identity, PlotJoined -> True, PlotRange -> All, AspectRatio -> Automatic, FrameLabel -> \ {"\<E\>", \*"\"\<\!\(E\& . \)\>\""}, PlotStyle -> {c, Thickness[thck]}]; \[IndentingNewLine]coord = Etab[\([All, 3]\)] - Etab[\([All, 2]\)]; \[IndentingNewLine]cros = {Null}; \[IndentingNewLine]Do[If[\ \((coord[\([i - 1]\)] > 0)\)\  && \ \((coord[\([i]\)] <= \ 0)\), cros = Append[cros, {i}]], {i, 2, \(Dimensions[coord]\)[\([1]\)]}]; \[IndentingNewLine]cros = Drop[cros, 1]; \[IndentingNewLine]poinc = \((Extract[Etab[\([All, {1, 2}]\)], cros] + Extract[Etab[\([All, {1, 2}]\)], cros - 1])\)/2; \[IndentingNewLine]label\[IndentingNewLine]]\)
 

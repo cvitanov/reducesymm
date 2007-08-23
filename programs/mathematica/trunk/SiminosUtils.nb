@@ -41,9 +41,9 @@ Wolfram Research.
 
 (*NotebookFileLineBreakTest
 NotebookFileLineBreakTest*)
-(*NotebookOptionsPosition[     25204,        564]*)
-(*NotebookOutlinePosition[     25865,        587]*)
-(*  CellTagsIndexPosition[     25821,        583]*)
+(*NotebookOptionsPosition[     28850,        644]*)
+(*NotebookOutlinePosition[     29511,        667]*)
+(*  CellTagsIndexPosition[     29467,        663]*)
 (*WindowFrame->Normal*)
 
 
@@ -60,6 +60,12 @@ Cell[BoxData[
                 StringPosition[Directory[], 
                   ParentDirectory[Directory[]]]\ ]\)[\([2]\)] + 
             1];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(CleanInOut[] = 
+        Module[{}, Unprotect[In, Out]; Clear[In, Out]; 
+          Protect[In, Out]];\)\)], "Input",
   InitializationCell->True],
 
 Cell[BoxData[
@@ -235,6 +241,80 @@ Cell[BoxData[
   InitializationCell->True],
 
 Cell[BoxData[
+    \(dropRep[x_, prec_] := UnsortedUnion[SetPrecision[x, prec]]\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(elimPoints[traj_, ds_] := 
+        Module[{straj, dif, cros}, 
+          dif = Table[
+              Norm[traj[\([i]\)] - traj[\([i + 1]\)]], {i, 
+                1, \(Dimensions[traj]\)[\([1]\)] - 1}]; 
+          cros = {Null}; \[IndentingNewLine]Do[
+            If[dif[\([i]\)] > ds, cros = Append[cros, {i}]], {i, 
+              1, \(Dimensions[dif]\)[\([1]\)]}]; 
+          cros = Drop[cros, 1]; \[IndentingNewLine]straj = 
+            Extract[traj, cros]];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(curvature[{x1_, y1_}, {x2_, y2_}, {x3_, y3_}] := 
+      Module[{a, d, e, f}, \[IndentingNewLine]a = 
+          Det[{{x1, y1, 1}, {x2, y2, 1}, {x3, y3, 
+                1}}]; \[IndentingNewLine]d = \(-Det[{{x1\^2 + y1\^2, y1, 
+                  1}, {x2\^2 + y2\^2, y2, 1}, {x3\^2 + y3\^2, y3, 
+                  1}}]\); \[IndentingNewLine]e = 
+          Det[{{x1\^2 + y1\^2, x1, 1}, {x2\^2 + y2\^2, x2, 
+                1}, {x3\^2 + y3\^2, x3, 
+                1}}]; \[IndentingNewLine]f = \(-Det[{{x1\^2 + y1\^2, x1, 
+                  y1}, {x2\^2 + y2\^2, x2, y2}, {x3\^2 + y3\^2, x3, 
+                  y3}}]\); \[IndentingNewLine]1/
+          Sqrt[\((d\^2 + e\^2)\)/\((4\ a\^2)\) - 
+              f\/a]\[IndentingNewLine]]\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(curvProbl[{x1_, y1_}, {x2_, y2_}, {x3_, y3_}] := 
+      Module[{r, a, d, e, f, K}, \[IndentingNewLine]a = 
+          Det[{{x1, y1, 1}, {x2, y2, 1}, {x3, y3, 
+                1}}]; \[IndentingNewLine]d = \(-Det[{{x1\^2 + y1\^2, y1, 
+                  1}, {x2\^2 + y2\^2, y2, 1}, {x3\^2 + y3\^2, y3, 
+                  1}}]\); \[IndentingNewLine]e = 
+          Det[{{x1\^2 + y1\^2, x1, 1}, {x2\^2 + y2\^2, x2, 
+                1}, {x3\^2 + y3\^2, x3, 
+                1}}]; \n\ \ \ \ f = \(-Det[{{x1\^2 + y1\^2, x1, 
+                  y1}, {x2\^2 + y2\^2, x2, y2}, {x3\^2 + y3\^2, x3, 
+                  y3}}]\); \[IndentingNewLine]K = 
+          1/Sqrt[\((d\^2 + e\^2)\)/\((4\ a\^2)\) - 
+                f\/a]; \[IndentingNewLine]If[\((Abs[a]\  < \ 
+                10\^\(-17\))\)\ \  \[Or] \ \((\ Abs[K]\  > \ 10\^3)\), \ 
+          True, False]\[IndentingNewLine]]\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(sPoints[traj_, ds_] := 
+        Module[{straj, sdum, cros, s, dif}, 
+          dif = Table[
+              Norm[traj[\([i]\)] - traj[\([i + 1]\)]], {i, 
+                1, \(Dimensions[traj]\)[\([1]\)] - 
+                  1}]; \[IndentingNewLine]s = 
+            Table[0, {\(Dimensions[dif]\)[\([1]\)] + 
+                  1}]; \[IndentingNewLine]Do[
+            s[\([i]\)] = s[\([i - 1]\)] + dif[\([i - 1]\)], {i, 
+              2, \(Dimensions[
+                  s]\)[\([1]\)]}]; \[IndentingNewLine]cros = {{1}}; \
+\[IndentingNewLine]sdum = 0; \[IndentingNewLine]Do[
+            If[\((s[\([i]\)] - sdum > 
+                  ds)\)\  (*\ \(\[Or]\)\(curvProbl[traj[\([i - 1]\)], 
+                    traj[\([i]\)], traj[\([i + 1]\)]]\)\ *) , 
+              cros = Append[cros, {i}]; sdum = s[\([i]\)]], {i, 
+              2, \(Dimensions[dif]\)[\([1]\)]}]; \[IndentingNewLine]cros = 
+            Append[cros, {\(Dimensions[dif]\)[\([1]\)] + 
+                  1}]; \[IndentingNewLine]straj = 
+            Extract[traj, cros]];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
     \(gsorth[x_] := 
       Module[{y, Nv, d, sm}, Nv = \(Dimensions[x]\)[\([1]\)]; 
         d = \(Dimensions[x]\)[\([2]\)]; \[IndentingNewLine]y = 
@@ -291,10 +371,10 @@ Cell[BoxData[
 Cell[BoxData[
     \(interp1Traj[p_, rSkip_, dS_] := 
       Module[{pdum, ds, s, adum, Npt, NpS, aS, a1s, a2s, a3s, 
-          aStab}, \[IndentingNewLine]Npt = \(Dimensions[
-              p]\)[\([1]\)]; \[IndentingNewLine]pdum = 
+          aStab}, \[IndentingNewLine]pdum = 
           Take[p, {1, \(Dimensions[p]\)[\([1]\)], 
-              rSkip}]; \[IndentingNewLine]Print[
+              rSkip}]; \[IndentingNewLine]Npt = \(Dimensions[
+              p]\)[\([\)\(1\)\(]\)]; \[IndentingNewLine]Print[
           Dimensions[p]]; \[IndentingNewLine]ds = 
           Table[Norm[pdum[\([i + 1]\)] - pdum[\([i]\)]], {i, 1, 
               Npt - 1}]; \[IndentingNewLine]s = 
@@ -351,7 +431,8 @@ Cell[BoxData[
   InitializationCell->True],
 
 Cell[BoxData[
-    \(ruslanizE[list_] := Map[Times[{2, 4, 4}, #] &, list, {1}]\)], "Input",
+    \(ruslanizE[list_] := \[IndentingNewLine]Map[Times[{2, 4, 4}, #] &, 
+        list, {1}]\)], "Input",
   InitializationCell->True],
 
 Cell[BoxData[
@@ -537,9 +618,8 @@ Cell[BoxData[
       \(cros = Drop[cros, 1];\)\n
       \(poinc = \((Extract[Etab[\([All, {1, 2}]\)], cros] + 
                 Extract[Etab[\([All, {1, 2}]\)], cros - 1])\)/
-            2;\)\n (*\(plPoinc\  = \([poinc, 
-              PlotStyle -> \ {c\ , 
-                  PointSize[3*pt]}]\);\)*) \[IndentingNewLine]
+            2;\)\[IndentingNewLine] (*\(plPoinc\  = \([poinc, 
+              PlotStyle -> \ {c\ , PointSize[3*pt]}]\);\)*) \n
       \(plPoinc\  = 
           Show[Graphics[{c\ , Thickness[connPoincThck], 
                 Map[Circle[#, connR] &, poinc]}], 
@@ -565,8 +645,8 @@ Cell[BoxData[
 FrontEndVersion->"5.2 for X",
 ScreenRectangle->{{0, 1280}, {0, 1024}},
 AutoGeneratedPackage->Automatic,
-WindowSize->{634, 954},
-WindowMargins->{{Automatic, 1}, {Automatic, 0}}
+WindowSize->{629, 954},
+WindowMargins->{{Automatic, 4}, {Automatic, 0}}
 ]
 
 (*******************************************************************
@@ -590,62 +670,74 @@ Cell[1754, 51, 75, 2, 27, "Input",
   InitializationCell->True],
 Cell[1832, 55, 253, 7, 59, "Input",
   InitializationCell->True],
-Cell[2088, 64, 108, 2, 27, "Input",
+Cell[2088, 64, 165, 4, 43, "Input",
   InitializationCell->True],
-Cell[2199, 68, 711, 14, 139, "Input",
+Cell[2256, 70, 108, 2, 27, "Input",
   InitializationCell->True],
-Cell[2913, 84, 435, 9, 91, "Input",
+Cell[2367, 74, 711, 14, 139, "Input",
   InitializationCell->True],
-Cell[3351, 95, 477, 9, 91, "Input",
+Cell[3081, 90, 435, 9, 91, "Input",
   InitializationCell->True],
-Cell[3831, 106, 141, 3, 27, "Input",
+Cell[3519, 101, 477, 9, 91, "Input",
   InitializationCell->True],
-Cell[3975, 111, 98, 2, 27, "Input",
+Cell[3999, 112, 141, 3, 27, "Input",
   InitializationCell->True],
-Cell[4076, 115, 318, 7, 59, "Input",
+Cell[4143, 117, 98, 2, 27, "Input",
   InitializationCell->True],
-Cell[4397, 124, 213, 5, 43, "Input",
+Cell[4244, 121, 318, 7, 59, "Input",
   InitializationCell->True],
-Cell[4613, 131, 291, 6, 59, "Input",
+Cell[4565, 130, 213, 5, 43, "Input",
   InitializationCell->True],
-Cell[4907, 139, 280, 6, 59, "Input",
+Cell[4781, 137, 291, 6, 59, "Input",
   InitializationCell->True],
-Cell[5190, 147, 237, 6, 59, "Input",
+Cell[5075, 145, 280, 6, 59, "Input",
   InitializationCell->True],
-Cell[5430, 155, 1612, 29, 299, "Input",
+Cell[5358, 153, 237, 6, 59, "Input",
   InitializationCell->True],
-Cell[7045, 186, 641, 18, 123, "Input",
+Cell[5598, 161, 1612, 29, 299, "Input",
   InitializationCell->True],
-Cell[7689, 206, 100, 2, 27, "Input",
+Cell[7213, 192, 641, 18, 123, "Input",
   InitializationCell->True],
-Cell[7792, 210, 196, 4, 43, "Input",
+Cell[7857, 212, 100, 2, 27, "Input",
   InitializationCell->True],
-Cell[7991, 216, 117, 2, 27, "Input",
+Cell[7960, 216, 196, 4, 59, "Input",
   InitializationCell->True],
-Cell[8111, 220, 139, 3, 27, "Input",
+Cell[8159, 222, 117, 2, 27, "Input",
   InitializationCell->True],
-Cell[8253, 225, 361, 9, 75, "Input",
+Cell[8279, 226, 139, 3, 27, "Input",
   InitializationCell->True],
-Cell[8617, 236, 539, 10, 91, "Input",
+Cell[8421, 231, 361, 9, 91, "Input",
   InitializationCell->True],
-Cell[9159, 248, 130, 3, 27, "Input"],
-Cell[9292, 253, 2050, 35, 379, "Input",
+Cell[8785, 242, 119, 2, 27, "Input",
   InitializationCell->True],
-Cell[11345, 290, 1771, 32, 347, "Input",
+Cell[8907, 246, 525, 11, 123, "Input",
   InitializationCell->True],
-Cell[13119, 324, 604, 11, 123, "Input",
+Cell[9435, 259, 786, 14, 178, "Input",
   InitializationCell->True],
-Cell[13726, 337, 730, 13, 235, "Input",
+Cell[10224, 275, 926, 16, 199, "Input",
   InitializationCell->True],
-Cell[14459, 352, 118, 2, 27, "Input",
+Cell[11153, 293, 1090, 21, 219, "Input",
   InitializationCell->True],
-Cell[14580, 356, 4398, 81, 1039, "Input",
+Cell[12246, 316, 539, 10, 91, "Input",
   InitializationCell->True],
-Cell[18981, 439, 402, 8, 107, "Input",
+Cell[12788, 328, 130, 3, 27, "Input"],
+Cell[12921, 333, 2050, 35, 379, "Input",
   InitializationCell->True],
-Cell[19386, 449, 626, 12, 142, "Input",
+Cell[14974, 370, 1779, 32, 347, "Input",
   InitializationCell->True],
-Cell[20015, 463, 5185, 99, 1096, "Input"]
+Cell[16756, 404, 604, 11, 123, "Input",
+  InitializationCell->True],
+Cell[17363, 417, 730, 13, 235, "Input",
+  InitializationCell->True],
+Cell[18096, 432, 146, 3, 43, "Input",
+  InitializationCell->True],
+Cell[18245, 437, 4398, 81, 1039, "Input",
+  InitializationCell->True],
+Cell[22646, 520, 402, 8, 107, "Input",
+  InitializationCell->True],
+Cell[23051, 530, 626, 12, 196, "Input",
+  InitializationCell->True],
+Cell[23680, 544, 5166, 98, 1154, "Input"]
 }
 ]
 *)
