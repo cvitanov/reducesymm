@@ -41,9 +41,9 @@ Wolfram Research.
 
 (*NotebookFileLineBreakTest
 NotebookFileLineBreakTest*)
-(*NotebookOptionsPosition[     16387,        552]*)
-(*NotebookOutlinePosition[     17015,        574]*)
-(*  CellTagsIndexPosition[     16971,        570]*)
+(*NotebookOptionsPosition[     17252,        583]*)
+(*NotebookOutlinePosition[     17902,        606]*)
+(*  CellTagsIndexPosition[     17858,        602]*)
 (*WindowFrame->Normal*)
 
 
@@ -56,13 +56,22 @@ Cell[BoxData[
     \(<< SiminosUtils`\)], "Input"],
 
 Cell[BoxData[
+    \(<< Graphics`Spline`\)], "Input"],
+
+Cell[BoxData[
     \(\($HistoryLength = 0;\)\)], "Input"],
 
 Cell[BoxData[
     \(\(L = 22.0;\)\)], "Input"],
 
 Cell[BoxData[
-    \(\(thck = 0.007;\)\)], "Input"],
+    \(\(thck = 0.001;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(ps = 0.03;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(thres = 2;\)\)], "Input"],
 
 Cell[BoxData[
     \(\(w2 = Import["\<2w/equilU.dat\>"] // Flatten;\)\)], "Input"],
@@ -137,12 +146,6 @@ Cell[BoxData[
     \(\(A3a3 = Fourier[uShift[w3, 3  d/4], fp];\)\)], "Input"],
 
 Cell[BoxData[
-    \(\(ps = 0.03;\)\)], "Input"],
-
-Cell[BoxData[
-    \(\(thres = 5;\)\)], "Input"],
-
-Cell[BoxData[
     \(equil = 
       Show[Graphics[{PointSize[0.03], RGBColor[1, 0, 0], 
             Point[\ Take[coords[a1, b, a2], 2]], 
@@ -153,16 +156,25 @@ Cell[BoxData[
             Point[\ Take[coords[A2a3, b, a2], 2]]}]]\)], "Input"],
 
 Cell[BoxData[
-    \(\(vcn = Import["\<../conn/3wA2w/trajU.dat\>"];\)\)], "Input"],
+    \(\(ds = 0.01;\)\)], "Input"],
 
 Cell[BoxData[
-    \(\(vcn = dropRep[vcn, thres];\)\)], "Input"],
+    \(\(vcn = Import["\<../conn/3wA2w/trajU.dat\>"];\)\)], "Input"],
 
 Cell[BoxData[
     \(Dimensions[vcn]\)], "Input"],
 
 Cell[BoxData[
     \(\(bcn = coordsTraj[fourTraj[vcn], b, a2];\)\)], "Input"],
+
+Cell[BoxData[
+    \(Dimensions[bcn]\)], "Input"],
+
+Cell[BoxData[
+    \(\(bcnI = TakeColumns[bcn, 2];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(ds = 0.008;\)\)], "Input"],
 
 Cell[BoxData[
     \(MemoryInUse[]\)], "Input"],
@@ -181,21 +193,18 @@ Cell[BoxData[
 
 Cell[BoxData[
     \(\(conn3wA2w = 
-        ListPlot[TakeColumns[bcn, 2], 
-          PlotStyle \[Rule] {\ RGBColor[0, 0, 0], Thickness[0.01]}, 
-          PlotJoined \[Rule] True];\)\)], "Input"],
+        ListPlot[sPoints[bcnI, ds], 
+          PlotStyle \[Rule] \ {RGBColor[0, 0, 0], Thickness[0.01]}, 
+          PlotJoined \[Rule] \ True, PlotRange \[Rule] \ All];\)\)], "Input"],
 
 Cell[BoxData[
     \(\(vcn = Import["\<../conn/3wA2wMinus/trajU.dat\>"];\)\)], "Input"],
 
 Cell[BoxData[
-    \(\(vcn = dropRep[vcn, thres];\)\)], "Input"],
-
-Cell[BoxData[
-    \(Dimensions[vcn]\)], "Input"],
-
-Cell[BoxData[
     \(\(bcn = coordsTraj[fourTraj[vcn], b, a2];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(bcnI = TakeColumns[bcn, 2];\)\)], "Input"],
 
 Cell[BoxData[
     \(MemoryInUse[]\)], "Input"],
@@ -214,9 +223,9 @@ Cell[BoxData[
 
 Cell[BoxData[
     \(\(conn3wA2wMinus = 
-        ListPlot[TakeColumns[bcn, 2], 
-          PlotStyle \[Rule] {\ RGBColor[0, 0, 0], Thickness[0.01]}, 
-          PlotJoined \[Rule] True];\)\)], "Input"],
+        ListPlot[sPoints[bcnI, ds], 
+          PlotStyle \[Rule] \ {RGBColor[0, 0, 0], Thickness[0.01]}, 
+          PlotJoined \[Rule] \ True, PlotRange \[Rule] \ All];\)\)], "Input"],
 
 Cell[BoxData[
     \(\(Nplt = 501;\)\)], "Input"],
@@ -239,12 +248,11 @@ Cell[BoxData[{
             RecordLists \[Rule] True]; \[IndentingNewLine]v = 
           Take[vi, {1, \(Dimensions[vi]\)[\([1]\)], 
               rSkip}]; \[IndentingNewLine]p = 
-          coordsTraj[\ fourTraj[v], b, 
-            a2]; \[IndentingNewLine]plc2D23[\([i]\)] = 
-          ListPlot[Take[p, All, 2], 
-            PlotStyle \[Rule] {RGBColor[0, 0, 0], Thickness[0.01]}, 
-            PlotJoined \[Rule] True, DisplayFunction \[Rule] Identity, 
-            PlotRange \[Rule] All];\[IndentingNewLine], {i, 1, 
+          TakeColumns[coordsTraj[\ fourTraj[v], b, a2], 
+            2]; \[IndentingNewLine]plc2D23[\([i]\)] = 
+          Show[Graphics[{RGBColor[0, 0, 0], Thickness[0.01], 
+                Spline[sPoints[p, ds], Cubic]}], PlotRange \[Rule] All, 
+            DisplayFunction \[Rule] Identity];\[IndentingNewLine], {i, 1, 
           Npt}\[IndentingNewLine]];\)\), "\n", 
     \(\(Close[vfile];\)\), "\n", 
     \(Show[plc2D23, DisplayFunction \[Rule] $DisplayFunction, 
@@ -258,19 +266,32 @@ Cell[BoxData[
       PlotRange \[Rule] All\ ]\)], "Input"],
 
 Cell[BoxData[
+    \(\(Show[
+        Graphics[{RGBColor[0, 0.8, 0], Thickness[thck], 
+            Spline[sPoints[p, ds], Cubic, SplineDivision \[Rule] 10\ , 
+              SplinePoints \[Rule] 20\ ]}], 
+        PlotRange \[Rule] All];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(ds = 0.001;\)\)], "Input"],
+
+Cell[BoxData[
     \(\(vfile = OpenRead["\<../manif/2w/manif/v.dat\>"];\)\)], "Input"],
 
 Cell[BoxData[
     \(\(Nplt = 501;\)\)], "Input"],
 
 Cell[BoxData[
-    \(\(Npt = 100;\)\)], "Input"],
+    \(\(Npt = 10;\)\)], "Input"],
 
 Cell[BoxData[
     \(\(rSkip = 1;\)\)], "Input"],
 
 Cell[BoxData[
     \(\(nd = 128;\)\)], "Input"],
+
+Cell[BoxData[
+    \(thck\)], "Input"],
 
 Cell[BoxData[{
     \(\(plP = Table[Null, {Npt}];\)\), "\[IndentingNewLine]", 
@@ -280,11 +301,12 @@ Cell[BoxData[{
           RecordLists \[Rule] True]; \[IndentingNewLine]v = 
         Take[vi, {1, \(Dimensions[vi]\)[\([1]\)], 
             rSkip}]; \[IndentingNewLine]p = 
-        dropRep[coordsTraj[\ fourTraj[v], b, a2], 
-          thres]; \[IndentingNewLine]plP2D[\([i]\)] = 
-        ListPlot[Take[p, All, 2], PlotStyle \[Rule] {\ RGBColor[0, 0.8, 0]}, 
-          PlotJoined \[Rule] True, DisplayFunction \[Rule] Identity, 
-          PlotRange \[Rule] All];\[IndentingNewLine], {i, 1, 
+        TakeColumns[coordsTraj[fourTraj[v], b, a2], 
+          2]; \[IndentingNewLine]plP2D[\([i]\)] = 
+        Show[Graphics[{RGBColor[0, 0.8, 0], Thickness[thck], 
+              Spline[sPoints[p, ds], Cubic, SplineDivision \[Rule] 10\ , 
+                SplinePoints \[Rule] 20\ ]}], PlotRange \[Rule] All, 
+          DisplayFunction \[Rule] Identity];\[IndentingNewLine], {i, 1, 
         Npt}\[IndentingNewLine]]\)}], "Input"],
 
 Cell[BoxData[
@@ -300,9 +322,13 @@ Cell[BoxData[
     \(MemoryInUse[]\)], "Input"],
 
 Cell[BoxData[
-    \(Show[Take[plP2D, {2, \(-1\), 2}], plc2D23[\([1]\)], conn3wA2w, 
-      conn3wA2wMinus, DisplayFunction \[Rule] $DisplayFunction, 
-      PlotRange \[Rule] All\ ]\)], "Input"],
+    \(cpt = 
+      Show[Take[plP2D, {1, \(-1\)}], plc2D23[\([1]\)], conn3wA2w, 
+        conn3wA2wMinus, DisplayFunction \[Rule] $DisplayFunction, 
+        PlotRange \[Rule] All\ , ImageSize \[Rule] \ 72*6]\)], "Input"],
+
+Cell[BoxData[
+    \(Export["\<connTest.eps\>", cpt]\)], "Input"],
 
 Cell[BoxData[
     \(Show[Take[plP2D, {10, 11}], 
@@ -311,6 +337,9 @@ Cell[BoxData[
 Cell[BoxData[
     \(Show[Take[plP2D, {60, 61}], 
       DisplayFunction \[Rule] $DisplayFunction]\)], "Input"],
+
+Cell[BoxData[
+    \(\(ds = 0.001;\)\)], "Input"],
 
 Cell[BoxData[
     \(\(vfile = OpenRead["\<../manif/2w/manif/v.dat\>"];\)\)], "Input"],
@@ -328,7 +357,7 @@ Cell[BoxData[
     \(\(nd = 128;\)\)], "Input"],
 
 Cell[BoxData[
-    \(\(thck = 0.005;\)\)], "Input"],
+    \(\(thck = 0.004;\)\)], "Input"],
 
 Cell[BoxData[{
     \(\(plP = Table[Null, {Npt}];\)\), "\[IndentingNewLine]", 
@@ -342,19 +371,21 @@ Cell[BoxData[{
           RecordLists \[Rule] True]; \[IndentingNewLine]v = 
         Take[vi, {1, \(Dimensions[vi]\)[\([1]\)], 
             rSkip}]; \[IndentingNewLine]p = 
-        dropRep[coordsTraj[\ fourTraj[v], b, a2], 
-          thres]; \[IndentingNewLine]plP2D1[\([i]\)] = 
-        ListPlot[Take[p, All, 2], 
-          PlotStyle \[Rule] {\ RGBColor[0, 0.8, 0], Thickness[thck]}, 
-          PlotJoined \[Rule] True, DisplayFunction \[Rule] Identity, 
-          PlotRange \[Rule] All];\[IndentingNewLine], {i, 1, 
+        TakeColumns[coordsTraj[fourTraj[v], b, a2], 2]; 
+      plP2D1[\([i]\)] = 
+        Show[Graphics[{RGBColor[0, 0.8, 0], Thickness[thck], 
+              Spline[sPoints[p, ds], Cubic, SplineDivision \[Rule] 10\ , 
+                SplinePoints \[Rule] 20\ ]}], PlotRange \[Rule] All, 
+          DisplayFunction \[Rule] Identity];\[IndentingNewLine], {i, 1, 
         Npt}\[IndentingNewLine]]\)}], "Input"],
 
 Cell[BoxData[
     \(Close[vfile]\)], "Input"],
 
 Cell[BoxData[
-    \(Show[plP2D1, DisplayFunction \[Rule] $DisplayFunction]\)], "Input"],
+    \(Show[Take[plP2D1, {1, \(-1\), 3}], 
+      DisplayFunction \[Rule] $DisplayFunction, 
+      ImageSize \[Rule] \ 72*6]\)], "Input"],
 
 Cell[BoxData[
     \(\(vfile = OpenRead["\<../manif/2w/manif/v.dat\>"];\)\)], "Input"],
@@ -382,12 +413,12 @@ Cell[BoxData[{
           RecordLists \[Rule] True]; \[IndentingNewLine]v = 
         Take[vi, {1, \(Dimensions[vi]\)[\([1]\)], 
             rSkip}]; \[IndentingNewLine]p = 
-        dropRep[coordsTraj[\ fourTraj[v], b, a2], 
-          thres]; \[IndentingNewLine]plP2D2[\([i]\)] = 
-        ListPlot[Take[p, All, 2], 
-          PlotStyle \[Rule] {\ RGBColor[0, 0, 0.8], Thickness[thck]}, 
-          PlotJoined \[Rule] True, DisplayFunction \[Rule] Identity, 
-          PlotRange \[Rule] All];\[IndentingNewLine], {i, 1, 
+        TakeColumns[coordsTraj[fourTraj[v], b, a2], 2]; 
+      plP2D2[\([i]\)] = 
+        Show[Graphics[{RGBColor[0, 0, 0.8], Thickness[thck], 
+              Spline[sPoints[p, ds], Cubic, SplineDivision \[Rule] 10\ , 
+                SplinePoints \[Rule] 20\ ]}], PlotRange \[Rule] All, 
+          DisplayFunction \[Rule] Identity];\[IndentingNewLine], {i, 1, 
         Npt}\[IndentingNewLine]]\)}], "Input"],
 
 Cell[BoxData[
@@ -414,12 +445,12 @@ Cell[BoxData[
           RecordLists \[Rule] True]; \[IndentingNewLine]v = 
         Take[vi, {1, \(Dimensions[vi]\)[\([1]\)], 
             rSkip}]; \[IndentingNewLine]p = 
-        dropRep[coordsTraj[\ fourTraj[v], b, a2], 
-          thres]; \[IndentingNewLine]plP2D2[\([40 + i]\)] = 
-        ListPlot[Take[p, All, 2], 
-          PlotStyle \[Rule] {\ RGBColor[0, 0, 0.8], Thickness[thck]}, 
-          PlotJoined \[Rule] True, DisplayFunction \[Rule] Identity, 
-          PlotRange \[Rule] All];\[IndentingNewLine], {i, 1, 
+        TakeColumns[coordsTraj[fourTraj[v], b, a2], 2]; 
+      plP2D2[\([40 + i]\)] = 
+        Show[Graphics[{RGBColor[0, 0, 0.8], Thickness[thck], 
+              Spline[sPoints[p, ds], Cubic, SplineDivision \[Rule] 10\ , 
+                SplinePoints \[Rule] 20\ ]}], PlotRange \[Rule] All, 
+          DisplayFunction \[Rule] Identity];\[IndentingNewLine], {i, 1, 
         Npt}\[IndentingNewLine]]\)], "Input"],
 
 Cell[BoxData[
@@ -451,12 +482,12 @@ Cell[BoxData[{
           RecordLists \[Rule] True]; \[IndentingNewLine]v = 
         Take[vi, {1, \(Dimensions[vi]\)[\([1]\)], 
             rSkip}]; \[IndentingNewLine]p = 
-        dropRep[coordsTraj[\ fourTraj[v], b, a2], 
-          thres]; \[IndentingNewLine]plP1[\([i]\)] = 
-        ListPlot[Take[p, All, 2], 
-          PlotStyle \[Rule] {\ RGBColor[0.8, 0, 0], Thickness[thck]}, 
-          PlotJoined \[Rule] True, DisplayFunction \[Rule] Identity, 
-          PlotRange \[Rule] All];\[IndentingNewLine], {i, 1, 
+        TakeColumns[coordsTraj[fourTraj[v], b, a2], 2]; 
+      plP1[\([i]\)] = 
+        Show[Graphics[{RGBColor[0.8, 0, 0], Thickness[thck], 
+              Spline[sPoints[p, ds], Cubic, SplineDivision \[Rule] 10\ , 
+                SplinePoints \[Rule] 20\ ]}], PlotRange \[Rule] All, 
+          DisplayFunction \[Rule] Identity];\[IndentingNewLine], {i, 1, 
         Npt}\[IndentingNewLine]]\)}], "Input"],
 
 Cell[BoxData[
@@ -518,12 +549,12 @@ Cell[BoxData[{
             RecordLists \[Rule] True]; \[IndentingNewLine]v = 
           Take[vi, {1, \(Dimensions[vi]\)[\([1]\)], 
               rSkip}]; \[IndentingNewLine]p = 
-          dropRep[coordsTraj[\ fourTraj[v], b, a2], 
-            thres]; \[IndentingNewLine]plf12D[\([i]\)] = 
-          ListPlot[Take[p, All, 2], 
-            PlotStyle \[Rule] \ {RGBColor[0.3, 0.8, 1], Thickness[0.007]}, 
-            PlotJoined \[Rule] True, DisplayFunction \[Rule] Identity, 
-            PlotRange \[Rule] All];\[IndentingNewLine], {i, 1, 
+          TakeColumns[coordsTraj[fourTraj[v], b, a2], 2]; 
+        plf12D[\([i]\)] = 
+          ListPlot[sPoints[p, ds], 
+            PlotStyle \[Rule] \ {RGBColor[0.8, 0, 0], Thickness[thck]}, 
+            PlotJoined \[Rule] \ True, PlotRange \[Rule] \ All, 
+            DisplayFunction \[Rule] Identity];\[IndentingNewLine], {i, 1, 
           Npt}\[IndentingNewLine]];\)\), "\n", 
     \(\(Close[vfile];\)\), "\[IndentingNewLine]", 
     \(\(Show[plf12D, DisplayFunction \[Rule] \ $DisplayFunction, 
@@ -539,7 +570,7 @@ Cell[BoxData[
         Axes \[Rule] False, ImageSize \[Rule] 72*6\ ]\)], "Input"],
 
 Cell[BoxData[
-    \(Export["\<cage.eps\>", pAll, ImageSize \[Rule] \ 72*6]\)], "Input"],
+    \(Export["\<KS22hetero.eps\>", pAll, ImageSize \[Rule] \ 72*6]\)], "Input"],
 
 Cell[BoxData[
     \(MemoryInUse[]\)], "Input"],
@@ -552,8 +583,9 @@ Cell[BoxData[
 },
 FrontEndVersion->"5.2 for X",
 ScreenRectangle->{{0, 1280}, {0, 1024}},
-WindowSize->{629, 954},
-WindowMargins->{{Automatic, 1}, {Automatic, 0}}
+WindowSize->{1280, 963},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+ShowSelection->True
 ]
 
 (*******************************************************************
@@ -575,124 +607,132 @@ CellTagsIndex->{}
 Notebook[{
 Cell[1754, 51, 69, 1, 27, "Input"],
 Cell[1826, 54, 49, 1, 27, "Input"],
-Cell[1878, 57, 56, 1, 27, "Input"],
-Cell[1937, 60, 46, 1, 27, "Input"],
-Cell[1986, 63, 50, 1, 27, "Input"],
-Cell[2039, 66, 81, 1, 27, "Input"],
-Cell[2123, 69, 69, 1, 27, "Input"],
-Cell[2195, 72, 83, 1, 27, "Input"],
-Cell[2281, 75, 81, 1, 27, "Input"],
-Cell[2365, 78, 51, 1, 27, "Input"],
-Cell[2419, 81, 81, 1, 27, "Input"],
-Cell[2503, 84, 62, 1, 27, "Input"],
-Cell[2568, 87, 74, 1, 27, "Input"],
-Cell[2645, 90, 106, 2, 27, "Input"],
-Cell[2754, 94, 106, 2, 27, "Input"],
-Cell[2863, 98, 106, 2, 27, "Input"],
-Cell[2972, 102, 54, 1, 27, "Input"],
-Cell[3029, 105, 58, 1, 27, "Input"],
-Cell[3090, 108, 50, 1, 27, "Input"],
-Cell[3143, 111, 72, 1, 27, "Input"],
-Cell[3218, 114, 58, 1, 27, "Input"],
-Cell[3279, 117, 72, 1, 27, "Input"],
-Cell[3354, 120, 73, 1, 27, "Input"],
-Cell[3430, 123, 76, 1, 27, "Input"],
-Cell[3509, 126, 58, 1, 27, "Input"],
-Cell[3570, 129, 72, 1, 27, "Input"],
-Cell[3645, 132, 73, 1, 27, "Input"],
-Cell[3721, 135, 76, 1, 27, "Input"],
-Cell[3800, 138, 47, 1, 27, "Input"],
-Cell[3850, 141, 47, 1, 27, "Input"],
-Cell[3900, 144, 443, 8, 107, "Input"],
-Cell[4346, 154, 81, 1, 27, "Input"],
-Cell[4430, 157, 63, 1, 27, "Input"],
-Cell[4496, 160, 48, 1, 27, "Input"],
-Cell[4547, 163, 76, 1, 27, "Input"],
-Cell[4626, 166, 46, 1, 27, "Input"],
-Cell[4675, 169, 43, 1, 27, "Input"],
-Cell[4721, 172, 46, 1, 27, "Input"],
-Cell[4770, 175, 55, 1, 27, "Input"],
-Cell[4828, 178, 46, 1, 27, "Input"],
-Cell[4877, 181, 193, 4, 43, "Input"],
-Cell[5073, 187, 86, 1, 27, "Input"],
-Cell[5162, 190, 63, 1, 27, "Input"],
-Cell[5228, 193, 48, 1, 27, "Input"],
-Cell[5279, 196, 76, 1, 27, "Input"],
-Cell[5358, 199, 46, 1, 27, "Input"],
-Cell[5407, 202, 43, 1, 27, "Input"],
-Cell[5453, 205, 46, 1, 27, "Input"],
-Cell[5502, 208, 55, 1, 27, "Input"],
-Cell[5560, 211, 46, 1, 27, "Input"],
-Cell[5609, 214, 198, 4, 43, "Input"],
-Cell[5810, 220, 48, 1, 27, "Input"],
-Cell[5861, 223, 45, 1, 27, "Input"],
-Cell[5909, 226, 47, 1, 27, "Input"],
-Cell[5959, 229, 46, 1, 27, "Input"],
-Cell[6008, 232, 1011, 20, 235, "Input"],
-Cell[7022, 254, 163, 3, 43, "Input"],
-Cell[7188, 259, 85, 1, 27, "Input"],
-Cell[7276, 262, 48, 1, 27, "Input"],
-Cell[7327, 265, 47, 1, 27, "Input"],
-Cell[7377, 268, 47, 1, 27, "Input"],
-Cell[7427, 271, 46, 1, 27, "Input"],
-Cell[7476, 274, 719, 13, 155, "Input"],
-Cell[8198, 289, 45, 1, 27, "Input"],
-Cell[8246, 292, 46, 1, 27, "Input"],
-Cell[8295, 295, 55, 1, 27, "Input"],
-Cell[8353, 298, 46, 1, 27, "Input"],
-Cell[8402, 301, 192, 3, 43, "Input"],
-Cell[8597, 306, 109, 2, 27, "Input"],
-Cell[8709, 310, 109, 2, 27, "Input"],
-Cell[8821, 314, 85, 1, 27, "Input"],
-Cell[8909, 317, 48, 1, 27, "Input"],
-Cell[8960, 320, 46, 1, 27, "Input"],
-Cell[9009, 323, 47, 1, 27, "Input"],
-Cell[9059, 326, 46, 1, 27, "Input"],
-Cell[9108, 329, 50, 1, 27, "Input"],
-Cell[9161, 332, 938, 18, 219, "Input"],
-Cell[10102, 352, 45, 1, 27, "Input"],
-Cell[10150, 355, 87, 1, 27, "Input"],
-Cell[10240, 358, 85, 1, 27, "Input"],
-Cell[10328, 361, 48, 1, 27, "Input"],
-Cell[10379, 364, 46, 1, 27, "Input"],
-Cell[10428, 367, 47, 1, 27, "Input"],
-Cell[10478, 370, 46, 1, 27, "Input"],
-Cell[10527, 373, 880, 17, 203, "Input"],
-Cell[11410, 392, 45, 1, 27, "Input"],
-Cell[11458, 395, 85, 1, 27, "Input"],
-Cell[11546, 398, 48, 1, 27, "Input"],
-Cell[11597, 401, 46, 1, 27, "Input"],
-Cell[11646, 404, 47, 1, 27, "Input"],
-Cell[11696, 407, 46, 1, 27, "Input"],
-Cell[11745, 410, 623, 12, 139, "Input"],
-Cell[12371, 424, 45, 1, 27, "Input"],
-Cell[12419, 427, 102, 2, 27, "Input"],
-Cell[12524, 431, 84, 1, 27, "Input"],
-Cell[12611, 434, 48, 1, 27, "Input"],
-Cell[12662, 437, 47, 1, 27, "Input"],
-Cell[12712, 440, 47, 1, 27, "Input"],
-Cell[12762, 443, 46, 1, 27, "Input"],
-Cell[12811, 446, 682, 13, 155, "Input"],
-Cell[13496, 461, 45, 1, 27, "Input"],
-Cell[13544, 464, 126, 2, 27, "Input"],
-Cell[13673, 468, 118, 2, 27, "Input"],
-Cell[13794, 472, 138, 2, 43, "Input"],
-Cell[13935, 476, 137, 2, 43, "Input"],
-Cell[14075, 480, 133, 2, 43, "Input"],
-Cell[14211, 484, 137, 2, 43, "Input"],
-Cell[14351, 488, 46, 1, 27, "Input"],
-Cell[14400, 491, 55, 1, 27, "Input"],
-Cell[14458, 494, 46, 1, 27, "Input"],
-Cell[14507, 497, 48, 1, 27, "Input"],
-Cell[14558, 500, 45, 1, 27, "Input"],
-Cell[14606, 503, 47, 1, 27, "Input"],
-Cell[14656, 506, 46, 1, 27, "Input"],
-Cell[14705, 509, 1064, 21, 235, "Input"],
-Cell[15772, 532, 365, 6, 75, "Input"],
-Cell[16140, 540, 87, 1, 27, "Input"],
-Cell[16230, 543, 46, 1, 27, "Input"],
-Cell[16279, 546, 55, 1, 27, "Input"],
-Cell[16337, 549, 46, 1, 27, "Input"]
+Cell[1878, 57, 52, 1, 27, "Input"],
+Cell[1933, 60, 56, 1, 27, "Input"],
+Cell[1992, 63, 46, 1, 27, "Input"],
+Cell[2041, 66, 50, 1, 27, "Input"],
+Cell[2094, 69, 47, 1, 27, "Input"],
+Cell[2144, 72, 47, 1, 27, "Input"],
+Cell[2194, 75, 81, 1, 27, "Input"],
+Cell[2278, 78, 69, 1, 27, "Input"],
+Cell[2350, 81, 83, 1, 27, "Input"],
+Cell[2436, 84, 81, 1, 27, "Input"],
+Cell[2520, 87, 51, 1, 27, "Input"],
+Cell[2574, 90, 81, 1, 27, "Input"],
+Cell[2658, 93, 62, 1, 27, "Input"],
+Cell[2723, 96, 74, 1, 27, "Input"],
+Cell[2800, 99, 106, 2, 27, "Input"],
+Cell[2909, 103, 106, 2, 27, "Input"],
+Cell[3018, 107, 106, 2, 27, "Input"],
+Cell[3127, 111, 54, 1, 27, "Input"],
+Cell[3184, 114, 58, 1, 27, "Input"],
+Cell[3245, 117, 50, 1, 27, "Input"],
+Cell[3298, 120, 72, 1, 27, "Input"],
+Cell[3373, 123, 58, 1, 27, "Input"],
+Cell[3434, 126, 72, 1, 27, "Input"],
+Cell[3509, 129, 73, 1, 27, "Input"],
+Cell[3585, 132, 76, 1, 27, "Input"],
+Cell[3664, 135, 58, 1, 27, "Input"],
+Cell[3725, 138, 72, 1, 27, "Input"],
+Cell[3800, 141, 73, 1, 27, "Input"],
+Cell[3876, 144, 76, 1, 27, "Input"],
+Cell[3955, 147, 443, 8, 59, "Input"],
+Cell[4401, 157, 47, 1, 27, "Input"],
+Cell[4451, 160, 81, 1, 27, "Input"],
+Cell[4535, 163, 48, 1, 27, "Input"],
+Cell[4586, 166, 76, 1, 27, "Input"],
+Cell[4665, 169, 48, 1, 27, "Input"],
+Cell[4716, 172, 64, 1, 27, "Input"],
+Cell[4783, 175, 48, 1, 27, "Input"],
+Cell[4834, 178, 46, 1, 27, "Input"],
+Cell[4883, 181, 43, 1, 27, "Input"],
+Cell[4929, 184, 46, 1, 27, "Input"],
+Cell[4978, 187, 55, 1, 27, "Input"],
+Cell[5036, 190, 46, 1, 27, "Input"],
+Cell[5085, 193, 218, 4, 27, "Input"],
+Cell[5306, 199, 86, 1, 27, "Input"],
+Cell[5395, 202, 76, 1, 27, "Input"],
+Cell[5474, 205, 64, 1, 27, "Input"],
+Cell[5541, 208, 46, 1, 27, "Input"],
+Cell[5590, 211, 43, 1, 27, "Input"],
+Cell[5636, 214, 46, 1, 27, "Input"],
+Cell[5685, 217, 55, 1, 27, "Input"],
+Cell[5743, 220, 46, 1, 27, "Input"],
+Cell[5792, 223, 223, 4, 27, "Input"],
+Cell[6018, 229, 48, 1, 27, "Input"],
+Cell[6069, 232, 45, 1, 27, "Input"],
+Cell[6117, 235, 47, 1, 27, "Input"],
+Cell[6167, 238, 46, 1, 27, "Input"],
+Cell[6216, 241, 995, 19, 187, "Input"],
+Cell[7214, 262, 163, 3, 27, "Input"],
+Cell[7380, 267, 248, 5, 27, "Input"],
+Cell[7631, 274, 48, 1, 27, "Input"],
+Cell[7682, 277, 85, 1, 27, "Input"],
+Cell[7770, 280, 48, 1, 27, "Input"],
+Cell[7821, 283, 46, 1, 27, "Input"],
+Cell[7870, 286, 47, 1, 27, "Input"],
+Cell[7920, 289, 46, 1, 27, "Input"],
+Cell[7969, 292, 37, 1, 27, "Input"],
+Cell[8009, 295, 786, 14, 155, "Input"],
+Cell[8798, 311, 45, 1, 27, "Input"],
+Cell[8846, 314, 46, 1, 27, "Input"],
+Cell[8895, 317, 55, 1, 27, "Input"],
+Cell[8953, 320, 46, 1, 27, "Input"],
+Cell[9002, 323, 232, 4, 27, "Input"],
+Cell[9237, 329, 64, 1, 27, "Input"],
+Cell[9304, 332, 109, 2, 27, "Input"],
+Cell[9416, 336, 109, 2, 27, "Input"],
+Cell[9528, 340, 48, 1, 27, "Input"],
+Cell[9579, 343, 85, 1, 27, "Input"],
+Cell[9667, 346, 48, 1, 27, "Input"],
+Cell[9718, 349, 46, 1, 27, "Input"],
+Cell[9767, 352, 47, 1, 27, "Input"],
+Cell[9817, 355, 46, 1, 27, "Input"],
+Cell[9866, 358, 50, 1, 27, "Input"],
+Cell[9919, 361, 954, 18, 203, "Input"],
+Cell[10876, 381, 45, 1, 27, "Input"],
+Cell[10924, 384, 149, 3, 27, "Input"],
+Cell[11076, 389, 85, 1, 27, "Input"],
+Cell[11164, 392, 48, 1, 27, "Input"],
+Cell[11215, 395, 46, 1, 27, "Input"],
+Cell[11264, 398, 47, 1, 27, "Input"],
+Cell[11314, 401, 46, 1, 27, "Input"],
+Cell[11363, 404, 896, 17, 187, "Input"],
+Cell[12262, 423, 45, 1, 27, "Input"],
+Cell[12310, 426, 85, 1, 27, "Input"],
+Cell[12398, 429, 48, 1, 27, "Input"],
+Cell[12449, 432, 46, 1, 27, "Input"],
+Cell[12498, 435, 47, 1, 27, "Input"],
+Cell[12548, 438, 46, 1, 27, "Input"],
+Cell[12597, 441, 639, 12, 123, "Input"],
+Cell[13239, 455, 45, 1, 27, "Input"],
+Cell[13287, 458, 102, 2, 27, "Input"],
+Cell[13392, 462, 84, 1, 27, "Input"],
+Cell[13479, 465, 48, 1, 27, "Input"],
+Cell[13530, 468, 47, 1, 27, "Input"],
+Cell[13580, 471, 47, 1, 27, "Input"],
+Cell[13630, 474, 46, 1, 27, "Input"],
+Cell[13679, 477, 698, 13, 139, "Input"],
+Cell[14380, 492, 45, 1, 27, "Input"],
+Cell[14428, 495, 126, 2, 27, "Input"],
+Cell[14557, 499, 118, 2, 27, "Input"],
+Cell[14678, 503, 138, 2, 27, "Input"],
+Cell[14819, 507, 137, 2, 27, "Input"],
+Cell[14959, 511, 133, 2, 27, "Input"],
+Cell[15095, 515, 137, 2, 27, "Input"],
+Cell[15235, 519, 46, 1, 27, "Input"],
+Cell[15284, 522, 55, 1, 27, "Input"],
+Cell[15342, 525, 46, 1, 27, "Input"],
+Cell[15391, 528, 48, 1, 27, "Input"],
+Cell[15442, 531, 45, 1, 27, "Input"],
+Cell[15490, 534, 47, 1, 27, "Input"],
+Cell[15540, 537, 46, 1, 27, "Input"],
+Cell[15589, 540, 1039, 21, 187, "Input"],
+Cell[16631, 563, 365, 6, 43, "Input"],
+Cell[16999, 571, 93, 1, 27, "Input"],
+Cell[17095, 574, 46, 1, 27, "Input"],
+Cell[17144, 577, 55, 1, 27, "Input"],
+Cell[17202, 580, 46, 1, 27, "Input"]
 }
 ]
 *)
