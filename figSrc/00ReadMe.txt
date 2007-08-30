@@ -42,6 +42,44 @@ Processing
 
 figure too big?
 ===============
+					Evangelos	30 Aug 2007
+
+Use ImageMagick to convert eps to png:
+
+ # convert +antialias file.eps file.png
+
+Option +antialias will reduce number of colors used. Usually this greatly reduces size 
+without significant loss in quality over true-color.
+
+Then use program bmeps ( download from http://bmeps.sourceforge.net/, be sure to install
+all required programs icluding the developer versions before compiling) to generate
+reduced size eps:
+
+ # bmeps -leps3 -tpng file.png new_file.eps
+
+Options -leps3 will generate level-3 eps. The reduction in size is anywere from 5 to 50
+times (!). On the other hands one trades scalability of both graphics and fonts.
+
+A moderate reduction in size (by a factor of 2) of some eps figures , particularly those 
+create by programs such as Mathematica, can be achieved if one uses pstoedit to convert
+them to fig files:
+
+ # pstoedit -f xfig -usebbfrominput -adt file.eps file.fig
+ 
+The files are then loaded to xfig and exported in eps. This procedure also fixes a problem
+with some Mathematica fonts not being embedded in the mapping file of the figures (-adt option
+converts non-recognized fonts to polygons).
+
+To create a png with a transparent background, this works pretty well:
+
+ # (cat file.eps ; echo showpage ) | gs -q -dEPSCrop -dBATCH -dNOPAUSE -sDEVICE=pngalpha -sOutputFile=file.png -f -    
+
+To get a level-3 eps with transparent background from this png use:
+ 
+ # bmeps -leps3,c.i.m=y,i.m.t.l=0 -tpng  -a file.png new_file.eps
+
+The resulting file do not always display correctly with gs.
+
 					Mason Porter 	20 Aug 2003 
 
  One downloads jpeg2ps
@@ -85,7 +123,7 @@ gimp energyBlncKS.png - save as
 
 NOTES
 =====
-
+epstopdf --nogs connEP.eps | gs -q -dBATCH -dNOPAUSE -sDEVICE=pngalpha -sOutputFile=test.png -f - 
 
 Fix these:
 ==========
