@@ -81,11 +81,11 @@ cInner[b[[1]],b[[2]]]
 
 
 
-\!\(\(E2plot = ScatterPlot3D[coordsTraj[fourTraj[traj], b, a2], PlotStyle \[Rule] {RGBColor[0, 0, 0], Thickness[0.01]}, PlotJoined \[Rule] True, PlotRange \[Rule] All, Ticks \[Rule] \ None, TextStyle -> {\ FontSize -> \ 24, FontWeight \[Rule] Heavy, FontFamily \[Rule] \ Times}, ImageSize -> \ 72*6, AxesLabel \[Rule] TraditionalForm /@ {\*"\"\<\!\(v\_1\)\>\"", \*"\"\<\!\(v\_2\)\>\"", \*"\"\<\!\(v\_3\)\>\""}];\)\)
+\!\(\(E2plot = ScatterPlot3D[coordsTraj[fourTraj[traj], b, a2], PlotStyle \[Rule] {RGBColor[0, 0, 0], Thickness[0.01]}, PlotJoined \[Rule] True, PlotRange \[Rule] All, Ticks \[Rule] \ None, TextStyle -> {\ FontSize \[Rule] 11, FontWeight \[Rule] Heavy, FontFamily \[Rule] \ Helvetica}, ImageSize -> \ 0.46*410, AxesLabel \[Rule] {\*"\"\<\!\(v\_1\)\>\"", \*"\"\<\!\(v\_2\)\>\"", \*"\"\<\!\(v\_3\)\>\""}, AspectRatio \[Rule] 1];\)\)
 
 Export[wd[]<>"E2.eps",E2plot,"EPS",
     ConversionOptions\[Rule]{"IncludeSpecialFonts"\[Rule]True,
-        "ImageSize"\[Rule]72*6}];
+        "ImageSize"\[Rule]0.46*410}];
 
 c=\[Delta]/T
 
@@ -125,11 +125,11 @@ Module[{e1,e2,e3,f1,f2,f3,b},
 
 
 
-\!\(\(CMplot = ScatterPlot3D[vCM, PlotStyle \[Rule] {RGBColor[0, 0, 0], Thickness[0.01]}, PlotJoined \[Rule] True, PlotRange \[Rule] All, Ticks \[Rule] \ None, TextStyle -> {\ FontSize -> \ 24, FontWeight \[Rule] Heavy, FontFamily \[Rule] \ Times}, ImageSize -> \ 72*6, AxesLabel \[Rule] TraditionalForm /@ {\*"\"\<\!\(\(v\&~\)\_1\)\>\"", \*"\"\<\!\(\(v\&~\)\_2\)\>\"", \*"\"\<\!\(\(v\&~\)\_3\)\>\""}, ViewPoint -> {1.898, \ \(-1.784\), \ 2.160}];\)\)
+\!\(\(CMplot = ScatterPlot3D[vCM, PlotStyle \[Rule] {RGBColor[0, 0, 0], Thickness[0.01]}, PlotJoined \[Rule] True, PlotRange \[Rule] All, Ticks \[Rule] \ None, TextStyle -> {\ FontSize \[Rule] 11, FontWeight \[Rule] Heavy, FontFamily \[Rule] \ Helvetica}, ImageSize -> \ 0.46*410, AxesLabel \[Rule] {\*"\"\<\!\(v\&~\_1\)\>\"", \*"\"\<\!\(v\&~\_2\)\>\"", \*"\"\<\!\(v\&~\_3\)\>\""}, ViewPoint -> {1.898, \ \(-1.784\), \ 2.160}, AspectRatio \[Rule] 1];\)\)
 
 Export[wd[]<>"E2CM.eps",CMplot,
     ConversionOptions\[Rule]{"IncludeSpecialFonts"\[Rule]True,
-        "ImageSize"\[Rule]72*6}];
+        "ImageSize"\[Rule]0.46*410}];
 
 
 
