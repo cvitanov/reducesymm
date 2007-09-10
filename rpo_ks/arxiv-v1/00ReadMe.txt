@@ -28,7 +28,7 @@ PACS replaced by AMS codes pacs-ams.txt
     [ ] AMS codes rechecked, ES Sept?? 2007
 
 incorporated upload.tex into rpo.tex
-    [ ] mark here when done
+    [x] mark here when done
 
 remove all % commented and incriminating text from the submission copy
     [ ] mark here when done
