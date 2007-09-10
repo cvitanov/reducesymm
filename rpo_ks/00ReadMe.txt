@@ -1,9 +1,12 @@
-Topology of a spatio-temporally chaotic Kuramoto-Sivashinsky system
-    Ruslan L. Davidchack, Evangelos Siminos and Predrag Cvitanovi\'c
-
+rpo_ks/00ReadMe.txt
 $Author$ $Date$
 ===========================================================
                     Predrag Jun 20 2006
+
+State space geometry of a spatio-temporally chaotic
+Kuramoto-Sivashinsky flow
+    Ruslan L. Davidchack, Evangelos Siminos and Predrag Cvitanovi\'c
+
 
 Processing
 ----------
@@ -15,21 +18,27 @@ Processing
 Submission
 ----------
 
-1) submit arXiv
-
-=== before submission, remove all unused figures
-    [ ] check here when done, enter date: June ?. 2007
+=== submit arXiv - see arxiv-v1/00ReadMe.txt
+    [ ] check here when done, enter date: Sept ? 2007
 
 
+=== submit SIADS  - see SIADS/00ReadMe.txt
+    [ ] check here when done, enter date: Sept ? 2007
 
-2) submit to
+
     SIAM Journal on Applied Dynamical Systems
     www.siam.org/journals/siads.php
     epubs.siam.org/SIADS
 
+
+NOTES
+-----
                     Predrag Mar 10 2007
 reformatted using SIAM macros
     www.siam.org/journals/auth-info.php
+
+check http://arxiv.org/hypertex/bibstyles/ for hyperref compatible
+BiBTeX styles
 
 
 When submitting, remember to
@@ -40,9 +49,22 @@ When submitting, remember to
     3) PostScript figures should be generated with sufficient
        line thickness.
 
+
+Notes
+-----
+
+previous titles:
+  "Relative periodic orbits in Kuramoto-Sivashinsky equation"
+  "Topology of a spatio-temporally chaotic Kuramoto-Sivashinsky system"
+
+
 Fix these:
 ----------
 
 
-previous titles:
-  "Relative periodic orbits in Kuramoto-Sivashinsky equation"
+==============================================================
+FORMERLY OUTSTANDING ITEMS, NOW DISPOSED OFF:
+
+= DONE: 
+= DONE:  
+
