@@ -44,7 +44,7 @@ svn rm  [all unused figures and all *.pdf]
 
 Set bibstyle to alphabetical order, temporarily,
         and check for double entries.
-    [ ] mark here when done
+    [x] mark here when done
 
 does SIAD want spaces between the initials?
 PC fixed that once by using   bibclean fluid.bib; redo:
