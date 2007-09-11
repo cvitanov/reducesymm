@@ -30,8 +30,11 @@ PACS replaced by AMS codes pacs-ams.txt
 incorporated upload.tex into rpo.tex
     [x] mark here when done
 
-remove all % commented and incriminating text from the submission copy
+remove all footnotes and "edits" from the submission copy
     [ ] mark here when done
+
+remove all % commented and incriminating text from the submission copy
+    [x] mark here when done
 
 remove extraneous macros from defs.tex before submission
     [x] mark here when done
@@ -71,7 +74,7 @@ svn rm steady/inputs/
 svn rm steady/old/
     [ ] mark here when done
 
-copy all used and cleaned-up source files and figs from
+svn copy all used and cleaned-up source files and figs from
 rpo_ks,rpo_ks/figs to  arxiv-v1/
     [ ] mark here when done
 
