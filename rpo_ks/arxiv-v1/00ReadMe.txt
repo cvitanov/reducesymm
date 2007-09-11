@@ -34,7 +34,7 @@ remove all % commented and incriminating text from the submission copy
     [ ] mark here when done
 
 remove extraneous macros from defs.tex before submission
-    [ ] mark here when done
+    [x] mark here when done
 
 svn rm  [all unused *.tex and other files]
     [ ] mark here when done
@@ -48,7 +48,7 @@ Set bibstyle to alphabetical order, temporarily,
 
 does SIAD want spaces between the initials?
 PC fixed that once by using   bibclean fluid.bib; redo:
-    [ ] mark here when done
+    [x] mark here when done
 
 at submission generate pruned file rpo.bib?
 \bibliography{rpo}  % in rpo.tex
