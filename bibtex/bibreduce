@@ -19,18 +19,23 @@ die "usage: bibreduce large.bib article.aux small.bib \n" if @ARGV < 3;
  
 open AUX, $ARGV[0];
 
+# Step 1: Scan .aux file for bibcite items
 while (<AUX>) {
   chomp;
   if (/\\bibcite\{(\w+)}/) {
 #  	print $1,"\n";
   	$used_refs[$i]=$1;
 	$i=$i+1;
-#	print $i,$myref[$i],"\n";
+#	print $i,$used_refs[$i],"\n";
 }
 }
 
 close AUX;
 
+# Sort labels alphabetically (case insensitive)
+@used_refs = sort { "\L$a" cmp "\L$b" }  @used_refs;
+
+# Step 2: Find bibtex entries in original bibliography and write in the new file
 open NEWBIB, "> $ARGV[2]";
 
 foreach $label (@used_refs) {
