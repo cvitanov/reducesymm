@@ -1,0 +1,52 @@
+#!/usr/bin/perl
+# Evangelos Siminos, Vasilios Christaras	Sep 11 2007 
+#
+# Given a large bibtex collection large.bib, the script uses information 
+# from article.aux to obtain a list of the items that are cited in article.tex
+# and export them in file small.bib.
+#
+# bibreduce large.bib article.aux small.bib 
+#
+# The initial bibtex file must have entries of the form
+# @format{label,
+# 	....
+# }
+# with closing brace in the first column. Using program bibclean is
+# thus suggested if there are problems in extraction.
+
+ 
+die "usage: bibreduce large.bib article.aux small.bib \n" if @ARGV < 3;
+ 
+open AUX, $ARGV[0];
+
+while (<AUX>) {
+  chomp;
+  if (/\\bibcite\{(\w+)}/) {
+#  	print $1,"\n";
+  	$used_refs[$i]=$1;
+	$i=$i+1;
+#	print $i,$myref[$i],"\n";
+}
+}
+
+close AUX;
+
+open NEWBIB, "> $ARGV[2]";
+
+foreach $label (@used_refs) {
+
+$big_line="";
+
+open BIB, $ARGV[1];
+
+while (<BIB>) {
+#	chomp;
+	if(/(\@\w+\{$label,\n)/) {
+		$big_line=$1;
+		do { $new_line = <BIB>; $big_line .= $new_line } until ( $new_line =~ /^\}/ ||  eof ); 
+	}
+}
+print NEWBIB $big_line,"\n";
+
+close BIB;
+}
