@@ -17,7 +17,7 @@
  
 die "usage: bibreduce large.bib article.aux small.bib \n" if @ARGV < 3;
  
-open AUX, $ARGV[0];
+open AUX, $ARGV[1];
 
 # Step 1: Scan .aux file for bibcite items
 while (<AUX>) {
@@ -26,7 +26,6 @@ while (<AUX>) {
 #  	print $1,"\n";
   	$used_refs[$i]=$1;
 	$i=$i+1;
-#	print $i,$used_refs[$i],"\n";
 }
 }
 
@@ -42,7 +41,7 @@ foreach $label (@used_refs) {
 
 $big_line="";
 
-open BIB, $ARGV[1];
+open BIB, $ARGV[0];
 
 while (<BIB>) {
 #	chomp;
