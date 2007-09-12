@@ -55,7 +55,7 @@ PC fixed that once by using   bibclean fluid.bib; redo:
 
 at submission generate pruned file rpo.bib?
 \bibliography{rpo}  % in rpo.tex
-    [ ] mark here if this was done
+    [x] mark here if this was done
 PC;  tedious, probably not needed. Instead:
 do not submit the {\tt .bib} file, submit the completed
 rpo.bbl file, having used siam.bst as the bibliographic
