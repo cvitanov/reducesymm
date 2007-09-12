@@ -9,22 +9,24 @@ Evangelos Siminos
 Maintain only ONE bib file for all dynamical systems publications
               ***
 
-rpo_ks/rpo.bib is a SUBSET of siminos.bib
-
 
 NOTES
 -----
 
+bibtex/bibreduce: 
+	perl script that examines article.aux, creates a list of 
+	the papers that are cited in article.tex and extracts them
+	from large.bib to small.bib.
+
+
 When submitting rpo.tex, remember to
     1) Submit rpo.bib file. 
-
+       rpo_ks/rpo.bib is always a bibreduce subset of siminos.bib
 
 Fix these:
 ----------
 
                     Predrag Mar 10 2007
--- rpo_ks/rpo.bib is a SUBSET of siminos.bib
-   all eprint edits should be THE same in both
 
 -- do not disable hyperlinking in bibtex/siminos.bib
    improve it, not remove it
