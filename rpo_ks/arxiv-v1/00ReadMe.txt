@@ -40,10 +40,10 @@ remove extraneous macros from defs.tex before submission
     [x] mark here when done
 
 svn rm  [all unused *.tex and other files]
-    [ ] mark here when done
+    [!] mark here when done (ES: Removed or moved them in texUnused)
 
 svn rm  [all unused figures and all *.pdf]
-    [ ] mark here when done
+    [x] mark here when done (ES: Unused figures allready in figUnused)
 
 Set bibstyle to alphabetical order, temporarily,
         and check for double entries.
@@ -69,10 +69,10 @@ Consistent use of $\ldots$, (I)/(a)/(1)/itemize, others?
        line thickness?
 
 svn rm steady/inputs/
-    [ ] mark here when done
+    [?] mark here when done (Is this from other project?)
 
 svn rm steady/old/
-    [ ] mark here when done
+    [?] mark here when done (Is this from other project?)
 
 svn copy all used and cleaned-up source files and figs from
 rpo_ks,rpo_ks/figs to  arxiv-v1/

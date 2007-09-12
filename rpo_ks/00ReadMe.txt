@@ -42,9 +42,7 @@ BiBTeX styles
 
 
 When submitting, remember to
-    1) do not submit the {\tt .bib} file, submit the completed
-       rpo.bbl file, having used siam.bst as the bibliographic
-       style file.
+    1) Submit rpo.bib file. 
     2) All PostScript figures should be sent in separate files.
     3) PostScript figures should be generated with sufficient
        line thickness.
