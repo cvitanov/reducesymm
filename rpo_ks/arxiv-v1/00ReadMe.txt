@@ -31,10 +31,10 @@ incorporated upload.tex into rpo.tex
     [x] mark here when done
 
 remove all footnotes and "edits" from the submission copy
-    [ ] mark here when done
+    [x] mark here when done
 
 remove all % commented and incriminating text from the submission copy
-    [x] mark here when done
+    [ ] mark here when done
 
 remove extraneous macros from defs.tex before submission
     [x] mark here when done
