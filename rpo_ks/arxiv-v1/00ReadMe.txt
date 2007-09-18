@@ -25,7 +25,7 @@ SIAD style files: reformatted using SIAM macros
 
 PACS replaced by AMS codes pacs-ams.txt
 35B05, 35B10, 37L05, 37L20, 76F20, 65H10, 90C53
-    [ ] AMS codes rechecked, ES Sept?? 2007
+    [x] AMS codes rechecked, ES Sept 18 2007
 
 incorporated upload.tex into rpo.tex
     [x] mark here when done
@@ -40,10 +40,10 @@ remove extraneous macros from defs.tex before submission
     [x] mark here when done
 
 svn rm  [all unused *.tex and other files]
-    [!] mark here when done (ES: Removed or moved them in texUnused)
+    [x] mark here when done 
 
 svn rm  [all unused figures and all *.pdf]
-    [x] mark here when done (ES: Unused figures allready in figUnused)
+    [x] mark here when done 
 
 Set bibstyle to alphabetical order, temporarily,
         and check for double entries.
