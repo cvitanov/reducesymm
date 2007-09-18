@@ -63,16 +63,11 @@ style file. [or the hyperref version, with eprint]
     [ ] mark here when done
 
 Consistent use of $\ldots$, (I)/(a)/(1)/itemize, others?
-    [ ] mark here when done
+    [x] mark here when done
 
-    [ ] PostScript figures generated with sufficient
-       line thickness?
-
-svn rm steady/inputs/
-    [?] mark here when done (Is this from other project?)
-
-svn rm steady/old/
-    [?] mark here when done (Is this from other project?)
+    [x] PostScript figures generated with sufficient
+       line thickness? 
+	ES: Cannot find any specific instructions
 
 svn copy all used and cleaned-up source files and figs from
 rpo_ks,rpo_ks/figs to  arxiv-v1/
