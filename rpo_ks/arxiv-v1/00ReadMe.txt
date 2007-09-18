@@ -71,7 +71,7 @@ Consistent use of $\ldots$, (I)/(a)/(1)/itemize, others?
 
 svn copy all used and cleaned-up source files and figs from
 rpo_ks,rpo_ks/figs to  arxiv-v1/
-    [ ] mark here when done
+    [x] mark here when done
 
 submit to arXiv.org
     [ ] created rpo.tex for arXiv submission
