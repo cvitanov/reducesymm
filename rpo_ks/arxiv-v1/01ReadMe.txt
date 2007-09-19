@@ -16,6 +16,9 @@ Submission
     http://arxiv.org/abs/0709.2944
     [x] check here when done, enter date: Sept 18 2007
 
+    add comment about high-resolution link at
+    http://www.cns.gatech.edu/~predrag/papers/preprints.html#rpo
+
 
 arXiv submission notes
 ----------------------
