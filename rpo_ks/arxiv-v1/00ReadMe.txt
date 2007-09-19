@@ -60,7 +60,7 @@ PC;  tedious, probably not needed. Instead:
 do not submit the {\tt .bib} file, submit the completed
 rpo.bbl file, having used siam.bst as the bibliographic
 style file. [or the hyperref version, with eprint]
-    [ ] mark here when done
+    [x] mark here when done
 
 Consistent use of $\ldots$, (I)/(a)/(1)/itemize, others?
     [x] mark here when done
