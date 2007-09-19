@@ -13,6 +13,7 @@ Submission
 1) submit arXiv
     arXiv article-id:       0709.2944
     Article password: b7yxa
+    http://arxiv.org/abs/0709.2944
     [x] check here when done, enter date: Sept 18 2007
 
 
