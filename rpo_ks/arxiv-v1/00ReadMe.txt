@@ -11,9 +11,9 @@ Submission
 ----------
 
 1) submit arXiv
-    arXiv article-id:       070?.????
-    Article password: ?????
-    [ ] check here when done, enter date: Sept ? 2007
+    arXiv article-id:       0709.2944
+    Article password: b7yxa
+    [x] check here when done, enter date: Sept 18 2007
 
 
 arXiv submission notes
@@ -74,9 +74,9 @@ rpo_ks,rpo_ks/figs to  arxiv-v1/
     [x] mark here when done
 
 submit to arXiv.org
-    [ ] created rpo.tex for arXiv submission
+    [x] created rpo.tex for arXiv submission
     arxiv-v1/*.tex *.bst *.cls figs/*.eps rpo.bbl [or rpo.bib]
-    [ ] 2007-05-?? mark here and date when done
+    [x] 2007-09-18 mark here and date when done
 
 
 !!! then DO NOT TOUCH arxiv-v1/* again, do all edits in rpo_ks/
