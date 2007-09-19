@@ -17,7 +17,7 @@ Submission
     [x] check here when done, enter date: Sept 18 2007
 
     add comment about high-resolution link at
-    http://www.cns.gatech.edu/~predrag/papers/preprints.html#rpo
+    http://ChaosBook.org/~predrag/papers/preprints.html#rpo
 
 
 arXiv submission notes
