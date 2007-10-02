@@ -1,4 +1,4 @@
-inputs/00ReadMe.txt                           
+siminos/inputs/00ReadMe.txt                           
 svn $Author$ $Date$
 ----------------------------------------------------------------------------
 
@@ -7,9 +7,11 @@ svn $Author$ $Date$
 defsBlog.tex		% enter all Gibson commands here
 setup.tex		% edit LaTeX setups here
 
+
 %%%%% no need to edit these files: %%%%%%%%%
 
 defsDasBuch.tex 	% do not tuch - this is edited only within ChaosBook.org
 		% update occasionally by
 		% cp ~dasbuch/book/inputs/def.tex defsDasbuch.tex
+prlabels.sty
 

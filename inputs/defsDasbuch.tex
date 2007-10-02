@@ -49,7 +49,7 @@
 %%%%%%%%%%%%%%%%%%%%%% QUOTATIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %  the learned/witty quotes at the chapter and section headings
-% 
+%
 \newsavebox{\bartName}
 \newcommand{\bauthor}[1]{\sbox{\bartName}{\parbox{\textwidth}{\vspace*{0.8ex}
        %\hspace*{\fill}
@@ -71,6 +71,11 @@
 \makeatletter
 \newcommand{\inputfile}{ }  % the rest is in the prlabels.sty
 \newcommand{\version}{}
+
+%%%%%%%%%%%%%%% Oxford UP tweaks %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\listofsections}[1]{} % ChaosBook does not do this
+%\newcommand{\thebibliographybychapter}{\begin{thebibliography}}
+%\renewcommand{\endthebibliographybychapter}{\end{thebibliography}}
 
 
 %%%%%%%%%%%%%%% PREPARE PAGINATION FOR bin/mkbook %%%%%%%%%%%%%%%%%%%%%%%
@@ -102,7 +107,7 @@
                         }
                         }
 \newcommand{\Solution}[3]{
-        \section*{Chapter~\ref{c-#1}} 
+        \section*{Chapter~\ref{c-#1}}
                 \renewcommand{\inputfile}{#2 -  #3}
         % PC:  modified 28 may 2000
                 %         \renewcommand{\chapName}{#1}
@@ -130,7 +135,7 @@
                          }
 
 %%%%%%%%%%%%%%%%%%%%%% SPLIT ChaosBook.ps INTO VOLUMES %%%%%%%%%%%%%%%%%%%
-\newcounter{startVol}   %% page number of the start of a volume 
+\newcounter{startVol}   %% page number of the start of a volume
 \newcounter{endVol}     %% page number of the end of a volume
 % \setcounter{endVol}{1} %% mess with this to renumber the stqrt v vol II
 
@@ -185,13 +190,14 @@
        \newcommand{\wwwcnsQFT}[1]{{\tt ChaosBook.org/\-Field\-Theory#1}}
        \newcommand{\weblink}[1]{{\tt #1}}
        \newcommand{\HREF}[2]{{#2}}
-           \newcommand{\arXiv}[1]{ {\tt #1}}
-%RM    \newcounter{startVol}   %% page number of the start of a volume 
+       \newcommand{\arXiv}[1]{ {\tt #1}}
+       \newcommand{\mpArc}[1]{{\tt \goodbreak mp\_arc~#1}}
+%RM    \newcounter{startVol}   %% page number of the start of a volume
 %RM    \newcounter{endVol}     %% page number of the end of a volume
        \newcommand{\volName}{Unnamed} %% volume label
        \newcommand{\Volume}[2]{
                          \renewcommand{\volName}{ChaosBook-#1}
-%            \setcounter{page}{\endVol} % experimenting 
+%            \setcounter{page}{\endVol} % experimenting
                          \setcounter{startVol}{\thepage}
                          \addtocontents{toc}{
                                 \vspace{18pt}
@@ -233,16 +239,18 @@
 {\color{blue}#2}%
 \marginpar{\color{blue}$\Uparrow$\footnotesize PRIVATE}}
 
-    \newcommand{\PC}[1]
-{\marginpar{\renewcommand{\baselinestretch}{0.7}\footnotesize #1}%
-\renewcommand{\baselinestretch}{1.0}}
-    \newcommand{\RM}[1]{\marginpar{
-        \renewcommand{\baselinestretch}{0.7}
-        \hrule \vspace{0.2ex}
-        \footnotesize RM:~ #1
-        \\ \hrule}%
-        \renewcommand{\baselinestretch}{1.0}%
-                    }
+\newcommand{\PC}[1]{$\footnotemark\footnotetext{Predrag: #1}$}
+%      \newcommand{\PC}[1]
+%{\marginpar{\renewcommand{\baselinestretch}{0.7}\footnotesize #1}%
+%\renewcommand{\baselinestretch}{1.0}}
+%    \newcommand{\RM}[1]{\marginpar{
+%        \renewcommand{\baselinestretch}{0.7}
+%        \hrule \vspace{0.2ex}
+%        \footnotesize RM:~ #1
+%        \\ \hrule}%
+%        \renewcommand{\baselinestretch}{1.0}%
+%                    }
+  \newcommand{\RM}[1]{\marginpar{Ronnie: \footnotesize#1}}
   \newcommand{\PCedit}[1]{{\color{red}#1}}
   \newcommand{\AW}[1]{\marginpar{
         \renewcommand{\baselinestretch}{0.7}
@@ -285,7 +293,7 @@
   \newcommand{\MAP}[1]{$\footnotemark\footnotetext{Mason: #1}$}
   \newcommand{\TB}[1]{$\footnotemark\footnotetext{Bartsch: #1}$}
   \newcommand{\TZ}[1]{$\footnotemark\footnotetext{Zazy: #1}$}
-}{  % if display_comments {false}, drop comments 
+}{  % if display_comments {false}, drop comments
     % do not turn on labeling of equations on margins
   \newcommand{\Preliminary}[1]{}
   \newcommand{\PublicPrivate}[2]{#1}
@@ -436,15 +444,15 @@
 \newcommand{\refsolu}[1] {solution~\ref{#1}}
 \newcommand{\exerbox}[1]{
          \marginpar[{%
-            \color{green} 
+            \color{green}
         \raisebox{-0.5ex}[1.0ex][1.0ex]{\huge \ding{46}}
-        \sf ~\ref{#1}\\ \footnotesize page~\pageref{#1} 
-                   }]% 
+        \sf ~\ref{#1}\\ \footnotesize page~\pageref{#1}
+                   }]%
           { \raggedright
-            \color{green} 
+            \color{green}
         \raisebox{-0.5ex}[1.0ex][1.0ex]{\huge \ding{46}}
-        \sf ~\ref{#1}\\ \footnotesize page~\pageref{#1} 
-          } 
+        \sf ~\ref{#1}\\ \footnotesize page~\pageref{#1}
+          }
                         }
            %\includegraphics[width=0.04\textwidth]{Fig/padPencil.eps}
            %\includegraphics[width=0.04\textwidth]{Fig/exercise.ps}
@@ -452,59 +460,76 @@
 
 \newcommand{\advSect}{\marginpar{\fbox{\sf $\bullet$ advanced section $\bullet$ } } }
 \newcommand{\toSect}[1]{\marginpar[{
-        \color{green} 
+        \color{green}
         \raisebox{-1.0ex}[1.0ex][1.0ex]{\huge \ding{43}}
         {\sf \footnotesize \refsect{#1} }
-                  }]{ 
+                  }]{
             \raggedright
-        \color{green} 
+        \color{green}
         \raisebox{-1.0ex}[1.0ex][1.0ex]{\huge \ding{43}}
         {\sf \footnotesize \refsect{#1} }
                                   } }
 \newcommand{\toChap}[1]{\marginpar[{
-        \color{green} 
+        \color{green}
         \raisebox{-1.0ex}[1.0ex][1.0ex]{\huge \ding{43}}
         {\sf \footnotesize ~\refchap{#1} }
-                  }]{ 
+                  }]{
             \raggedright
-        \color{green} 
+        \color{green}
         \raisebox{-1.0ex}[1.0ex][1.0ex]{\huge \ding{43}}
         {\sf \footnotesize ~\refchap{#1} }
                                   } }
         %\includegraphics[width=0.6cm]{Fig/thisWay.ps}
 
 \newcommand{\toAppe}[1]{\marginpar[{
-        \color{green} 
+        \color{green}
         \raisebox{-1.0ex}[1.0ex][1.0ex]{\huge \ding{43}}
         {\sf \footnotesize \refappe{#1} }
-                  }]{ 
+                  }]{
             \raggedright
-        \color{green} 
+        \color{green}
         \raisebox{-1.0ex}[1.0ex][1.0ex]{\huge \ding{43}}
-        {\sf \footnotesize \refappe{#1} } 
+        {\sf \footnotesize \refappe{#1} }
                                   } }
 \newcommand{\toRem}[1]{\marginpar[{
-        \color{green} 
+        \color{green}
         \raisebox{-1.0ex}[1.0ex][1.0ex]{\huge \ding{43}}
         {\sf \footnotesize \refrem{#1} }
-                 }]{ 
+                 }]{
             \raggedright
-        \color{green} 
+        \color{green}
         \raisebox{-1.0ex}[1.0ex][1.0ex]{\huge \ding{43}}
         {\sf \footnotesize \refrem{#1} }
                                   } }
 \newcommand{\toExam}[1]{\marginpar[{
-        \color{green} 
+        \color{green}
         \raisebox{-1.0ex}[1.0ex][1.0ex]{\huge \ding{43}}
         {\sf \footnotesize \refexam{#1} }
-                 }]{ 
+                 }]{
             \raggedright
-        \color{green} 
+        \color{green}
         \raisebox{-1.0ex}[1.0ex][1.0ex]{\huge \ding{43}}
         {\sf \footnotesize \refexam{#1} }
                                   } }
 \newcommand{\tangent}{\includegraphics[width=0.08\textwidth]{Fig/chili.eps}~~}
 %\newcommand{\tangent}{\marginpar{\fbox{ \includegraphics{Fig/chili.ps} } } }
+
+  %% Predrag 26aug2007: this supposedly speeds up compilation
+  %% of frequently used object(Lipkin, "Latex" p. 362)
+%%%%  mark section as `cyclist':
+            \newsavebox{\bike}\sbox{\bike}
+            {\raisebox{-5.0ex}[4.5ex][3.5ex]
+             {\includegraphics[width=1.6cm]{Fig/w11-1bicycle}}}
+\newcommand{\cyclist}{\marginpar[\hfill\usebox{\bike}]
+        {\usebox{\bike}\hfill}}
+
+%%%% mark section as `pedestrian':
+           \newsavebox{\trot}\sbox{\trot}
+           {\raisebox{-5.0ex}[4.5ex][3.5ex]
+            {\includegraphics[width=1.6cm]{Fig/i-4-pedestrian}}}
+\newcommand{\pedestrian}{\marginpar[\hfill\usebox{\trot}]
+        {\usebox{\trot}\hfill}}
+
 \newcommand{\fastTrack}[1]
            {\hfill {\raisebox{-3.0ex}[4.5ex][3.5ex]{
                               \includegraphics[width=1.25cm]{Fig/thisWay.ps}
@@ -513,7 +538,7 @@
             {\sf \footnotesize
                    fast track: \\
                                \refsect{#1}, p.~\pageref{#1}
-                        } 
+                        }
             \end{minipage}
                     }
            }
@@ -525,7 +550,7 @@
             {\sf \footnotesize
                    fast track: \\
                                \refchap{#1}, p.~\pageref{#1}
-                        } 
+                        }
             \end{minipage}
                     }
            }
@@ -537,7 +562,7 @@
             {\sf \footnotesize
                    in depth: \\
                                \refsect{#1}, p.~\pageref{#1}
-                        } 
+                        }
             \end{minipage}
                     }
            }
@@ -549,7 +574,7 @@
             {\sf \footnotesize
                    in depth: \\
                                \refchap{#1}, p.~\pageref{#1}
-                        } 
+                        }
             \end{minipage}
                     }
            }
@@ -561,7 +586,7 @@
             {\sf \footnotesize
                    in depth: \\
                                \refappe{#1}, p.~\pageref{#1}
-                        } 
+                        }
             \end{minipage}
                     }
            }
@@ -619,7 +644,7 @@
          ~~\textsf{\textbf{#1}} ~
            \slshape\sffamily{#2}  } % \textsl would not work...
     }
-         \vskip -1mm 
+         \vskip -1mm
 % removed the line: % \noindent\rule[.1mm]{\linewidth}{.5mm}
          \end{exerc}
                           }
@@ -644,8 +669,8 @@
 % \newcommand{\exercise}[2]{
 % %        \vskip -12mm
 %          \begin{quotation}
-%         \noindent\rule[.1mm]{10.7cm}{.2mm} 
-%    % \vskip -22mm 
+%         \noindent\rule[.1mm]{10.7cm}{.2mm}
+%    % \vskip -22mm
 %          \noindent
 %          \begin{exerc}{
 %           \noindent ~~{\small\em\bf #1 ~}\small\em #2 }
@@ -653,15 +678,15 @@
 %   \end{exerc}
 %          \end{quotation}
 %                 }
- 
+
 \newcommand{\solution}[3]{
          \vskip -4mm
         {\noindent\small
          ~~\textsf{\textbf{  Solution \ref{#1}:   %NUMBER
-                ~#2}}         %TITLE 
+                ~#2}}         %TITLE
            \slshape\sffamily{#3}          %TEXT
          }
-         \vskip  4mm 
+         \vskip  4mm
 % removed the line: % \noindent\rule[.1mm]{\linewidth}{.5mm}
                         }
 
@@ -680,8 +705,8 @@
         \begin{offset}
         \begin{exmple}
            \noindent\small
-           \textsf{\textbf{#1}} ~ 
-       \slshape\sffamily{#2}  
+           \textsf{\textbf{#1}} ~
+       \slshape\sffamily{#2}
        % \textsl would not work...
     \end{exmple}
     \end{offset}
@@ -742,7 +767,7 @@
               \hspace*{0.10\textwidth}
               \begin{minipage}[b]{0.55\textwidth}
                       \caption[#2]{#3}
-                      \label{#4} 
+                      \label{#4}
               \end{minipage}~~~~~%
               \begin{minipage}[b]{0.40\textwidth}
                       \includegraphics[width=1.00\textwidth]{Fig/#1}
@@ -781,9 +806,9 @@
 %\newcommand{\Maslov}{Keller-Maslov}
 \newcommand{\jacobian}{Jacobian}        % determinant
 \newcommand{\jacobianM}{fundamental matrix} % standard name
-\newcommand{\jacobianMs}{fundamental matrices}  % 
-\newcommand{\JacobianM}{Fundamental matrix} % 
-\newcommand{\JacobianMs}{Fundamental matrices}  % 
+\newcommand{\jacobianMs}{fundamental matrices}  %
+\newcommand{\JacobianM}{Fundamental matrix} %
+\newcommand{\JacobianMs}{Fundamental matrices}  %
 % \newcommand{\jacobianM}{Jacobian matrix}  % Predrag's name
 % \newcommand{\jacobianMs}{Jacobian matrices}   % matrices
 \newcommand{\stabmat}{stability matrix}     % stability matrix
@@ -835,7 +860,7 @@
 \newcommand{\integers}{\mathbb{Z}}
 \newcommand{\rationals}{\mathbb{Q}}
 \newcommand{\naturals}{\mathbb{N}}
-\newcommand{\LieD}{{{\cal L}\!\!\llap{-}\,\,}}  % {{\pound}} % Lie Derivative 
+\newcommand{\LieD}{{{\cal L}\!\!\llap{-}\,\,}}  % {{\pound}} % Lie Derivative
 \newcommand{\half}{{\scriptstyle{1\over2}}}
 \newcommand{\pde}{\partial}
 \newcommand{\pdfrac}[2]{{\partial #1 \over \partial #2}}
@@ -849,17 +874,17 @@
 \newcommand{\sign}[1]{\sigma_{#1}}
 %\newcommand{\sign}[1]{{\rm sign}(#1)}
 \newcommand{\DiffC}{\ensuremath{D}}     % diffusion constant
-\newcommand{\mInv}{{I}}                 % material invariant 
-\newcommand{\msr}{\ensuremath{\rho}}                % measure 
-\newcommand{\Msr}{{\mu}}                % coarse measure 
+\newcommand{\mInv}{{I}}                 % material invariant
+\newcommand{\msr}{\ensuremath{\rho}}                % measure
+\newcommand{\Msr}{{\mu}}                % coarse measure
 \newcommand{\dMsr}{{d\mu}}              % measure infinitesimal
-\newcommand{\SRB}{{\rho_0}}             % natural measure 
+\newcommand{\SRB}{{\rho_0}}             % natural measure
 \newcommand{\vol}{{V}}                  % volume of i-th tile
 \newcommand{\prpgtr}[1]{\delta\negthinspace\left( {#1} \right)}
 %\newcommand{\Zqm}{\ensuremath{Z_{qm}}}         % Gutz-Voros zeta function
 \newcommand{\Zqm}{\ensuremath{\det(\hat{H} - E)_{sc} }} % semicls spectr. det:
 \newcommand{\Fqm}{\ensuremath{F_{qm}}}
-\newcommand{\zfct}[1]{\zeta ^{-1}_{#1}}     
+\newcommand{\zfct}[1]{\zeta ^{-1}_{#1}}
 \newcommand{\zetaInv}{\ensuremath{1/\zeta}}
 % \newcommand{\zetaInv}{{\zeta^{-1}}}
 \newcommand{\zetatop}{\ensuremath{1/\zeta_{\mbox{\footnotesize top}} }}
@@ -869,7 +894,7 @@
 \newcommand{\expct}    [1]{\left\langle {#1} \right\rangle}
 \newcommand{\spaceAver}[1]{\left\langle {#1} \right\rangle}
 \newcommand{\timeAver} [1]{\overline{#1}}
-\newcommand{\pS}{\ensuremath{{\cal M}}}          % symbol for phase space 
+\newcommand{\pS}{\ensuremath{{\cal M}}}          % symbol for phase space
 \newcommand{\ssp}{\ensuremath{x}}                % state space point
 \newcommand{\DOF}{\ensuremath{D}}          % Hamiltonian deegree of freedom
 \newcommand{\NWS}{\ensuremath{\Omega}}     % symbol for the non--wandering set
@@ -888,7 +913,7 @@
 \newcommand{\Lop}{\ensuremath{{\cal L}}}       % evolution operator
 \newcommand{\Uop}{\ensuremath{{\cal K}}}       % Koopman operator, Driebe notation
 \newcommand{\Aop}{\ensuremath{{\cal A}}}       % evolution generator
-\newcommand{\Top}{\ensuremath{{\cal T}}}       % transfer operator, like in statmech
+\newcommand{\TrOp}{\ensuremath{{\cal T}}}       % transfer operator, like in statmech
 \newcommand{\matId}{\ensuremath{{\bf 1}}}      % matrix identity
 \newcommand{\eigenvL}{\ensuremath{s}}      % evolution operator eigenvalue
 \newcommand{\eigenvG}{\ensuremath{m}}      % compact group eigenvalues
@@ -915,8 +940,8 @@
 \newcommand\pSpace{x}       % phase space x=(q,p) coordinate
 \newcommand\coord{q}        % configuration space p coordinate
 \newcommand{\para}{\parallel}
-\newcommand\stagn{*}        %equilibrium/stagnation point suffix
-% \newcommand\stagn{q}      %equilibrium/stagnation point suffix
+%\newcommand\stagn{*}        %equilibrium/stagnation point suffix
+\newcommand\stagn{q}      %equilibrium/stagnation point suffix
 \newcommand\multiX{x}       %multi point n-dim vector
 \newcommand\multiF{f}       %multi point n-dim vector mapping
 
@@ -980,30 +1005,34 @@
 \newcommand{\PP}{{\cal P}}
 \newcommand{\NN}{{\cal N}}
 
+%%%%%%%%%%%%%%% Gibsonia %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\tEQ}{\ensuremath{{EQ}}}
+
 %%%%%%%%%%%%%%% symbolic dynamics %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\MarkGraph}{Markov graph}
 \newcommand{\admissible}{admissible}
 \newcommand{\inadmissible}{inadmissible}
-\newcommand{\cycle}[1]{{$\overline{#1}$}}
+\newcommand{\cycle}[1]{\ensuremath{\overline{#1}}}
 \newcommand{\cycpt}{_{p,m}}
 \newcommand\sumprime{\mathop{{\sum}'}}
 \newcommand{\pseudos}{\pi}
 % \newcommand{\pseudos}{{p_1+p_2+\dots+p_k}}
 % \newcommand{\pseudos}{{\{p_1 p_2 \dots p_k\}}}
-\newcommand{\block}[1]{#1}
-\newcommand{\prune}[1]{\_{#1}\_}        % fits into math env.
+\newcommand{\block}[1]{\ensuremath{#1}}
+\newcommand{\prune}[1]{\ensuremath{\_{#1}\_}}        % fits into math env.
 %\newcommand{\prune}[1]{\ldots{#1}\ldots}
+% replace \strng by \prune throghout
 \newcommand{\strng}[1]{$\_#1\_$}    % fits into text without $'s
-\newcommand{\biinf}[2]{\cdots#1.#2\cdots}
-\newcommand{\rctngl}[2]{[#1.#2]}
-\newcommand{\BKsym}[1]{S_{#1}}
-\newcommand{\Ksym}[1]{\sigma_{#1}}
-\newcommand{\Ssym}[1]{{s_{#1}}}
-\newcommand{\gmax}{\hat{\gamma}}
-\newcommand{\Spast}{S^\textrm{-}}       % past itenerary
-\newcommand{\Sfuture}{S^\textrm{\scriptsize +}} % future itenerary
-\newcommand{\Sbiinf}{S}             % biinf. itenerary
-\newcommand{\str}{\epsilon_{1},\epsilon_{2}, \ldots } % Ronnie's problems
+\newcommand{\biinf}[2]{\ensuremath{\cdots#1.#2\cdots}}
+\newcommand{\rctngl}[2]{\ensuremath{[#1.#2]}}
+\newcommand{\BKsym}[1]{\ensuremath{S_{#1}}}
+\newcommand{\Ksym}[1]{\ensuremath{\sigma_{#1}}}
+\newcommand{\Ssym}[1]{\ensuremath{s_{#1}}}
+\newcommand{\gmax}{\ensuremath{\hat{\gamma}}}
+\newcommand{\Spast}{\ensuremath{S^\textrm{-}}}       % past itenerary
+\newcommand{\Sfuture}{\ensuremath{S^\textrm{\scriptsize +}}} % future itenerary
+\newcommand{\Sbiinf}{\ensuremath{S}}             % biinf. itenerary
+\newcommand{\str}{\ensuremath{\epsilon_{1},\epsilon_{2}, \ldots} } % Ronnie's problems
 
 %%%%%%%%%%%%%%% Ronnie's problems %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\estr}[1] {\epsilon_{1},\epsilon_{2}, \ldots, \epsilon_{#1}}
@@ -1019,10 +1048,10 @@
 \newcommand{\Descent}{Newton Descent}
 \newcommand{\CostFct}{Cost function}    % functional to minimize
 \newcommand{\costFct}{cost function}    % functional to minimize
-\newcommand{\costF}{F^2}        % cost function, 
+\newcommand{\costF}{F^2}        % cost function,
 \newcommand{\Loop}{L}
-\newcommand{\pVeloc}{v}         % phase-space velocity 
-\newcommand{\lSpace}{\tilde{x}}     % a point on a loop 
+\newcommand{\pVeloc}{v}         % phase-space velocity
+\newcommand{\lSpace}{\tilde{x}}     % a point on a loop
 \newcommand{\lVeloc}{\tilde{v}}     % loop tangent
 \newcommand{\damp}{\Delta\tau}      % descrete fititous time step
 % \newcommand{\pSpaceDer}[1]{x^{(#1)}}
@@ -1031,6 +1060,7 @@
 %%%%%%%%%%%%%% ks.tex specific %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\KS}{Kuramoto-Sivashinsky}
 \newcommand{\KSe}{Kuramoto-Sivashinsky equation}
+\newcommand{\pCf}{plane Couette flow}
 \newcommand{\PCf}{Plane Couette flow}
 \newcommand{\dmn}{\ensuremath{\!-\!d}}             %  n-dimensional
 \newcommand{\expctE}{\ensuremath{E}}    % E space averaged
@@ -1147,14 +1177,14 @@
 \newcommand{\sourceFT}{{\tilde{J}}}
 \newcommand{\derSource}{{d~\over d\source}}
 \newcommand{\derSourceFT}{{d~\over d\sourceFT}}
-\newcommand{\field}{{\phi}}     % used in lattFT.tex 
+\newcommand{\field}{{\phi}}     % used in lattFT.tex
 %\newcommand{\field}{{x}}       % not a good notation
 \newcommand{\fieldFT}{{\tilde{\phi}}}
 \newcommand{\derField}{{d~\over d\field}}
 \newcommand{\saddleField}{{\field^c}}
 \newcommand{\saddleCoord}{{\coord^c}}
 \newcommand{\Laplacian}{\Delta}
-% \newcommand{\Prpgtr}{{G_0}}       % modified in lattFT.tex 
+% \newcommand{\Prpgtr}{{G_0}}       % modified in lattFT.tex
 \newcommand{\Prpgtr}{{M}}
 \newcommand{\PrpgtrFT}{{\tilde{G}_0}}
 % \newcommand{\InvPrpgtr}{{G_0^{-1}}}   % modified in lattFT.tex
@@ -1191,7 +1221,7 @@
 \newdimen\onebox
 \newdimen\boxsize
 \newcount\boxnum
-\gdef\mult#1#2#3{% #1 = #2 * #3 
+\gdef\mult#1#2#3{% #1 = #2 * #3
     \ifx#1\relax\else%
       \ifx#2\relax\else%
         #1=#2%
@@ -1212,14 +1242,14 @@
           { \epsfig{file=Fig/f_#1.eps,height=9ex}\negthinspace} }
 %% BB is 11/5 larger
 \newcommand{\btrackBB}[1]{\raisebox{-5.0ex}[6.5ex][5.5ex]
-          { \epsfig{file=Fig/f_#1.eps,height=11ex}\negthinspace} } 
+          { \epsfig{file=Fig/f_#1.eps,height=11ex}\negthinspace} }
 %% C is 1/2 smaller
 \newcommand{\btrackC}[1]{\raisebox{-0.4ex}[1.75ex][1.25ex]
           { \epsfig{file=Fig/f_#1.eps,height=2.5ex}\negthinspace} }
 %% birtrack to be drawn:
 \newcommand{\zzzz}{{\tt birdTrack}}
 %%   Birdtracks with vertical alignment info
-%%%% copied from Anders Johansen inputs/anders_def.tex  15 May 2002 
+%%%% copied from Anders Johansen inputs/anders_def.tex  15 May 2002
 \newlength{\verti}
 \newcommand{\btrackAl}[3]{%
     \setlength{\verti}{-#3pt*5+2.5pt}% -(5pt*m)+2.5pt  m=#3
@@ -1263,12 +1293,12 @@
         \setlength{\unitlength}{\Fsize}
     \put(0,0){\line(1,1){0.7}}
         \end{picture}}
-\newcommand{\FDdr}{ 
+\newcommand{\FDdr}{
         \begin{picture}(0,0)
         \setlength{\unitlength}{\Fsize}
         \put(0,0){\line(1,-1){0.7}}
         \end{picture}}
-\newcommand{\FDul}{  
+\newcommand{\FDul}{
         \begin{picture}(0,0)
         \setlength{\unitlength}{\Fsize}
         \put(0,0){\line(-1,1){0.7}}
@@ -1283,7 +1313,7 @@
         \setlength{\unitlength}{\Fsize}
     \qbezier[15](0,0)(-1,1)(-1,0)
         \end{picture}}
-\newcommand{\FDcdl}{  
+\newcommand{\FDcdl}{
         \begin{picture}(0,0)
         \setlength{\unitlength}{\Fsize}
         \qbezier(0,0)(-1,-1)(-1,0)
@@ -1423,8 +1453,8 @@
 %  \sfcode`\.=1000\relax
 % }
 % \let\endbibliographylist=\endlist
-% 
-% 
+%
+%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1433,4 +1463,3 @@
 % %?\setcounter{\changebargray}{85}     % margin changes bars blackness
 % \newcommand{\Preliminary}[1]{\cbstart #1 \cbend}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- 

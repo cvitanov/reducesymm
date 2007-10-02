@@ -7,6 +7,9 @@ Evangelos Siminos dynamical systems blog
 ========================================
 	(with Ruslan L. Davidchack, and Predrag Cvitanovi\'c)
 
+pdflatex fall07.tex
+	the blog
+
 ../bibtex/siminos.bib 
 	one bibliography for all projects
 
@@ -23,6 +26,8 @@ HISTORY:
 
 --------------------------------------------------------------------------
 NOTES:
+							Predrag 	Oct  1 2007
+need to clean this up
 
 --------------------------------------------------------------------------
 TO FIX:
