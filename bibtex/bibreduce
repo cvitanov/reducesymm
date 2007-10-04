@@ -22,7 +22,7 @@ open AUX, $ARGV[1];
 # Step 1: Scan .aux file for \citation items
 while (<AUX>) {
   chomp;
-  if (/\\citation\{(\w+)}/) {
+  if (/\\citation\{(.+)}/) {
 #  	print $1,"\n";
   	$used_refs[$i]=$1;
 	$i=$i+1;
@@ -51,7 +51,7 @@ open BIB, $ARGV[0];
 
 while (<BIB>) {
 #	chomp;
-	if(/(\@\w+\{$label,\n)/) {
+	if(/(\@.*\{$label,\n)/) {
 		$big_line=$1;
 		do { $new_line = <BIB>; $big_line .= $new_line } until ( $new_line =~ /^\}/ ||  eof ); 
 	}
