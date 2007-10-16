@@ -19,7 +19,7 @@ Submission
 ----------
 
 === submit arXiv - see arxiv-v1/00ReadMe.txt
-    [ ] check here when done, enter date: Sept ? 2007
+    [X] check here when done, enter date: Sept 19 2007
 
 
 === submit SIADS  - see SIADS/00ReadMe.txt
