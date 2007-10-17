@@ -18,11 +18,11 @@ see SIADS/00ReadMe.txt
     www.siam.org/journals/siads.php
     epubs.siam.org/SIADS
     editor: ??.
-    [ ] mark when read submission instructions,
+    [X] mark when read submission instructions,
         entered relevant notes into SIADS/00ReadMe.txt
 
 subscribe as a SIAM journal author
-    [ ] mark here when done
+    [X] mark here when done
 
 SIAD style files: reformatted using SIAM macros
     www.siam.org/journals/auth-info.php
@@ -32,61 +32,61 @@ move all source files and figs from rpo_ks to  SIADS/
     [x] mark here when done [ES 14 Oct 2007]
 
 when submitting SIADS  prepare double spaced pdf
-    [ ] mark here when done
+    [?] mark here when done (was not in SIADS instructions so didn't do that)
 
 recheck AMS codes pacs-ams.txt
 35B05, 35B10, 37L05, 37L20, 76F20, 65H10, 90C53
     [x] AMS codes rechecked, ES Sept 18 2007
 
 remove all footnotes and "edits" from the submission copy
-    [ ] mark here when done
+    [X] mark here when done
 
 remove all % commented and incriminating text from the submission copy
-    [ ] mark here when done
+    [X] mark here when done
 
 remove extraneous macros from defs.tex before submission
-    [ ] mark here when done
+    [X] mark here when done
 
 svn rm  [all unused *.tex and other files]
-    [ ] mark here when done
+    [X] mark here when done
 
 svn rm  [all unused figures and all *.pdf]
-    [ ] mark here when done
+    [X] mark here when done
 
 Set bibstyle to alphabetical order, temporarily,
         and check for double entries.
-    [ ] mark here when done
+    [X] mark here when done
 
 siam.bst as the bibliographic,  hyperref version, with eprint
-    [ ] mark here when done
+    [X] mark here when done
 
 at submission DO NOT generate pruned file rpo.bib
 \bibliography{rpo}  % in rpo.tex
-    [ ] rpo.bbl added to repository
+    [?] rpo.bbl added to repository (we didn't submit source yet and didn't need to touch bibliography at all)
 
 does SIAD want spaces between the initials?
 PC fixed that once by using   bibclean fluid.bib; redo:
-    [ ] mark here when done
+    [X] mark here when done
 
 Consistent use of $\ldots$, (I)/(a)/(1)/itemize, others?
-    [ ] mark here when done
+    [X] mark here when done
 
 PostScript figures generated with sufficient line thickness?
     [x] ES: Cannot find any specific instructions
 
 svn copy all used and cleaned-up source files and figs from
 rpo_ks,rpo_ks/figs to  SIAD/
-    [ ] mark here when done
+    [X] mark here when done
 
 Revisions SIADS; when referees incorporated,
 update arXiv.org with the revised version
     [ ] mark here when done
     [ ] mark final, revised submission, date:
 
-submit to arXiv.org
-    [ ] created rpo.tex for arXiv submission
+submit to SIADS
+    [X] created rpo.tex for SIADS submission
     arxiv-v?/*.tex *.bst *.cls figs/*.eps rpo.bbl [or rpo.bib]
-    [ ] 2007-09-18 mark here and date when done
+    [X] 2007-10-17 mark here and date when done
 
 
 !!! then DO NOT TOUCH SIAD/* again, edit only rpo_ks/current/
