@@ -9,6 +9,14 @@ Evangelos Siminos
 Maintain only ONE bib file for all dynamical systems publications
               ***
 
+When submitting to arXiv, journals,
+please DO NOT generate yet another *.bib:
+	submit article_name.bbl file
+
+why:
+	1) purging main BibTeX file is waste of time
+	2) it's tedious to keep all versions updated
+
 
 NOTES
 -----

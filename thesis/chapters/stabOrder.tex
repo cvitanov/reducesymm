@@ -1,0 +1,390 @@
+% stabOrder.tex
+% $Author$ $Date$
+
+%\section{Stability ordering of cycle expansions}
+%\label{s-StabOrd}
+% extracted from \Chapter{recycle}{30aug2006}{Cycle expansions}
+
+\noindent
+\index{cycle!expansion!stability ordered}
+\index{stability!ordering!cycle expansions}
+Most dynamical systems of interest have no finite grammar, so
+at any order in $z$ a cycle
+expansion may contain unmatched terms which do
+not fit neatly into the almost canceling curvature corrections.
+Similarly, for intermittent systems discussed
+in \wwwcb,
+curvature corrections are in general not small, so again the
+cycle expansions may converge slowly.  For such systems
+schemes which
+% do not respect the topology of the flow, but
+collect the
+pseudo\-cycle terms according to some criterion other
+than the topology of the flow may converge
+more quickly than expansions based on the topological length.
+
+All chaotic systems exhibit some degree of shadowing, and a
+good truncation criterion should do its best to respect the shadowing
+at least approximately.
+If a long cycle is
+shadowed by two or more shorter cycles and the flow is smooth, the period
+and the action will be additive in sense that the period of the longer cycle is
+approximately the sum of the shorter cycle periods.  Similarly,
+stability is multiplicative, so shadowing is approximately preserved
+by including all terms with pseudocycle stability
+\beq
+\left|\ExpaEig_{p_1}\cdots\ExpaEig_{p_k}\right| \leq \stabCutoff
+\ee{StabCutoff}
+and ignoring all more unstable pseudocycles.
+
+Two such schemes for ordering cycle expansions which
+approximately respect shadowing are truncations
+by the pseudo\-cycle period (or action)
+%\Preliminary{
+%discussed in \refrem{r-BKconj},
+%            }% end \Preliminary
+and the stability ordering
+that we shall discuss here.  In these schemes a \dzeta\ or a
+\fd\ is expanded keeping all terms for which the period, action or stability
+for a combination of cycles (pseudocycle) is less than a given cutoff.
+
+
+Stability ordering was introduced by
+Dahlqvist and Russberg\rf{DR91} in a study of chaotic dynamics for the
+$(x^2y^2)^{1/a}$ potential.
+%in the quantum case.
+The presentation here is extracted from \wwwcb, and
+follows the exposition of
+Dettmann and Morriss\rf{DM97} for the Lorentz gas
+which is hyperbolic but the symbolic dynamics is highly pruned, and
+Dettmann and Cvitanovi\'c\rf{carl97int} for a family of intermittent maps.
+In
+%all of
+the
+%above
+applications discussed in the above papers, the stability ordering
+yields a considerable improvement over the topological length
+ordering. In quantum chaos applications cycle expansion cancelations
+are affected by the phases of pseudocycles (their actions), hence
+{\em period ordering} rather than stability is frequently employed.
+
+The two settings in which the stability ordering may be preferable to
+\PC{add Berry-Keating somewhere}
+the ordering by topological cycle length are the cases of bad grammar
+and of intermittency.
+
+\subsection{Stability ordering for bad grammars}
+
+For generic flows it is often not clear what
+% Poincar\'{e} section should be used, and how it should be
+partition of the {\statesp} generates the ``optimal''
+symbolic dynamics.  Stability ordering
+does not require understanding dynamics in such detail:
+if you can find the cycles, you can use
+stability ordered cycle expansions.
+Stability truncation
+% requires only that all cycles up to given
+% stability cutoff be determined, without
+% requiring detailed understanding of the topology of the
+% flow and symbolic dynamics. It
+is thus
+%much
+easier to implement for
+a generic dynamical system than the
+curvature expansions
+\PC{refer here to the thesis section} %\refeq{curvbin}
+which rely on finite subshift approximations
+to a given flow.
+
+Cycles can be detected numerically by
+searching a long trajectory for near recurrences.
+The long trajectory method for detecting cycles
+\PC{refer here to the thesis section} %\refsect{s_long_time}
+preferentially finds
+the least unstable cycles, regardless of their topological length.
+Another practical advantage of the method (in contrast to
+Newton method searches)
+is that it only finds
+cycles in a given connected ergodic component of {\statesp},
+ignoring  isolated cycles or other ergodic regions
+elsewhere in the {\statesp}.
+
+Why should stability ordered cycle expansion of a \dzeta\ converge
+better than the rude trace formula
+\PC{explain better}
+\refeq{LevelAver}?
+\PC{refer here to the thesis equation}
+The argument has essentially already been laid out in
+\refsect{s-Shadow}:
+\PC{refer here to the thesis equation}
+in truncations that respect shadowing most of
+the pseudocycles appear in shadowing combinations and nearly cancel,
+while only the relatively small subset affected by the longer and
+longer pruning rules is not shadowed. So the error is typically
+of the order of $1/\ExpaEig$, smaller by factor $e^{hT}$ than the
+\PC{refer here to the thesis equation}
+trace formula
+%\refeq{levl-sumHOA}
+\refeq{LevelAver}
+error, where $h$ is the entropy and
+$T$ typical cycle length for cycles of stability  $\ExpaEig$.
+\PC{Incorporate Grassberger's dimension of the Cantor set of pruning rules}
+
+\subsection{Smoothing}
+\label{s-Smoothing}
+
+The breaking of exact shadowing cancellations deserves further comment.
+Partial shadowing which may be present can be (partially) restored by smoothing
+the stability ordered cycle expansions by replacing the
+$1/\ExpaEig$ weight for each term with
+pseudocycle stability
+$\ExpaEig=
+\ExpaEig_{p_1}\cdots\ExpaEig_{p_k}$ by $f(\ExpaEig)/\ExpaEig$.
+Here, $f(\ExpaEig)$ is a monotonically decreasing function from $f(0)=1$ to
+$f(\stabCutoff)=0$.  No smoothing corresponds to a step function.
+\PC{I do not believe yet that this is significant improvement}
+
+A typical ``shadowing error'' induced by the cutoff is due to two
+pseudocycles of stability $\ExpaEig$ separated by $\Delta\ExpaEig$, and
+whose contribution is of opposite signs.
+Ignoring possible weighting factors the magnitude of the resulting term
+is of order
+$1/\ExpaEig-1/(\ExpaEig+\Delta\ExpaEig)
+\approx\Delta\ExpaEig/\ExpaEig^2$.
+% \PC{I think this is wrong - error is of order $1/\ExpaEig$?
+% this estimate is true for the intermitten case only?}
+With smoothing there is an
+extra term of the form $f'(\ExpaEig)\Delta\ExpaEig/\ExpaEig$, which we
+want to minimise.  A reasonable guess might be to keep $f'(\ExpaEig)/\ExpaEig$
+constant and as small as possible, that is
+\[
+f(\ExpaEig)=1-\left(\frac{\ExpaEig}{\stabCutoff}\right)^2
+\]
+
+The results of a stability ordered expansion
+\refeq{StabCutoff}
+should always be tested for
+robustness by varying the cutoff  $\stabCutoff$.
+If this introduces significant variations,
+smoothing is probably necessary.
+% It is also necessary in any scheme which
+% attempts to extrapolate results to infinite $\stabCutoff$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}
+    % \vspace*{-5pt}
+\begin{center}
+plot here % \includegraphics[width=0.75\textwidth]{../figs/nameMe}
+\end{center}
+\caption{
+    {\small
+The leading eigenvalue $\ln | s_0^{(N)} - s_0|$
+convergence for the
+logistic map (??), plotted {\em vs.} $ln N$.
+The convergence of
+(a)  the first $\eigenvL_0 = - \gamma = ???$
+and
+(b)  the second $\eigenvL_1 = ???$ eigenvalues
+of the
+\FP. Plotted:
+$\ln |\eigenvL_\alpha^{(N)}-\eigenvL_\alpha^{\infty|}$
+as a function of $\ln N$,
+the number of partition intervals $N$.
+In the binary
+logistic map partition, with the $2^n$ intervals,
+$\ln N= n \ln 2$ for the Ulam map.
+$\eigenvL_\alpha$ is estimated as a limit
+$\eigenvL_\alpha^{(\infty)}$ from the computed
+$\ln |\eigenvL_\alpha^{(N)}|$.
+        }}
+\label{fig:logStabOrder1}
+    % \vspace*{-5pt}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}
+    % \vspace*{-5pt}
+\begin{center}
+plot here % \includegraphics[width=0.75\textwidth]{../figs/nameMe}
+\end{center}
+\caption{
+    {\small
+The entropy $\ln | h^{(N)} - h|$
+convergence for the
+logistic map (??), plotted {\em vs.} $ln N$
+for the binary and the stability (Kolmogorov) \statesp\ partitioned
+topological zeta functions.
+        }}
+\label{fig:logStabOrder1}
+    % \vspace*{-5pt}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The leading eigenvalue convergence
+$\ln |\eigenvL_0^{(N)} - \eigenvL_0|$ is plotted in
+\reffig{fig:logStabOrder1} as a function of
+$ln N$,
+the number of intervals $N$ is $N = 2^{n}$ for the Ulam map,
+$N =e^{n h_n}$ for a pruned logistic map, and $N = N(\stabCutoff)$
+for the stability ordered cycle expansion.
+
+Plotted:
+$\ln |\eigenvL_\alpha^{(N)}-\eigenvL_\infty|$
+as a function of $\ln N$,
+the number of partition intervals $N$.
+In the deterministic
+Ulam map partition, with the $2^n$ intervals,
+$\ln N= n \ln 2$.
+$\eigenvL_\alpha$ is estimated as a limit
+$\eigenvL_\alpha^{(\infty)}$ from the computed
+$\ln |\eigenvL_\alpha^{(N)}|$.
+
+
+
+\subsection{Topological entropy, Lyapunov exponents}
+\label{s-StOrdKS}
+
+Compute here the topological entropy for the logistic map, first
+as in \wwwcb, ``Counting" chapter, and then as a function of
+$\ln \stabCutoff = - \ln \epsilon$, where $ \epsilon$ is the
+effective unit interval discretization.
+Compare the two in
+\reffig{fig:EntrStabOrder1}.
+
+I believe
+$h_K = \lim_{{\stabCutoff} \to \infty} N(\stabCutoff)/\ln \stabCutoff$
+is probably the Kolmogorov, or metric entropy, the lower bound on
+$h$ computed as infimum of all possible \statesp\ partitionings.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}
+    % \vspace*{-5pt}
+\begin{center}
+plot here % \includegraphics[width=0.75\textwidth]{../figs/nameMe}
+\end{center}
+\caption{
+    {\small
+The entropy $\ln | h^{(N)} - h|$
+convergence for the
+logistic map (??), plotted {\em vs.} $ln N$
+for the binary and the stability (Kolmogorov) \statesp\ partitioned
+topological zeta functions.
+        }}
+\label{fig:EntrStabOrder1}
+    % \vspace*{-5pt}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\subsection{Stability ordering for KS cycles}
+\label{s-StOrdKS}
+
+Describe here the numerical attempts to check the
+flow conservation sum rule (??) using the
+stability ordered set of Ruslan's \rpo s.
+
+
+
+
+\subsection{Stability ordering for intermittent flows}
+\label{s-StOrdInterm}
+
+\index{stability!ordering!intermittent flows}
+\index{intermittency!stability ordering}
+\PC{use what you need from this section, remove the rest}
+Longer but less unstable cycles can give larger contributions
+to a cycle expansion than short but highly unstable cycles.
+In such situation truncation by length may require
+an exponentially large number of very unstable cycles before a significant
+longer cycle is first included in the expansion.
+This situation is best illustrated by intermittent maps
+\PC{add figure}
+that we shall study in detail in \wwwcb, the simplest
+of which is the Farey map
+\PC{replace by your logistic map}
+\beq
+f(x)=\left\{\begin{array}{ccc}
+f_0=x/(1-x) & \quad 0\leq x\leq 1/2& \\
+f_1=(1-x)/x & \quad 1/2\leq x\leq 1& \,.
+\end{array}
+\right.
+\ee{e:fareymap}
+
+For this map the symbolic dynamics
+is of complete binary type, so lack of shadowing is not due to
+lack of a finite grammar, but rather to the
+intermittency caused by the existence of the marginal fixed point $x_0=0$,
+for which the stability equals
+$\ExpaEig_0=1$.  This fixed point does not
+participate directly in the dynamics and is omitted from cycle
+expansions.  Its presence is felt in
+the stabilities of neighboring cycles with $n$ consecutive repeats
+of the symbol $0$'s whose stability falls of only as
+% a power law
+$\ExpaEig\sim n^2$, in contrast to
+the most unstable cycles with $n$ consecutive $1$'s which  are
+exponentially unstable, $|\ExpaEig_{01^n}|\sim[(\sqrt{5}+1)/2]^{2n}$.
+
+The symbolic dynamics
+is of complete binary type. A quick count in the style
+of \wwwcb %\refsect{s-CountPrimes}
+leads to a total of
+74,248,450 prime cycles of length 30 or less, not including the marginal
+point $x_0=0$. Evaluating a cycle expansion to this order
+would be no mean computational feat.  However, the least unstable cycle
+omitted has stability of roughly
+$\ExpaEig_{10^{30}} \sim 30^2=900$, and so amounts to
+a $0.1\%$ correction.  The situation may be much worse than this estimate
+suggests, because the next, $10^{31}$
+cycle contributes a similar amount, and could
+easily reinforce the error.  Adding up all such omitted terms, we arrive
+at an estimated error of about $3\%$,  for a cycle-length truncated
+cycle expansion
+based on more than $10^9$ pseudocycle terms! On the other hand,
+truncating by stability at say $\stabCutoff=3000$,
+only 409 prime cycles suffice to attain the same
+accuracy of about $3\%$ error, \reffig{fig:logStabOrder}.
+
+As the Farey map maps the unit interval onto itself, the leading eigenvalue of
+the \FPoper\ should equal $\eigenvL_0=0$, so
+$1/\zeta(0)=0$. Deviation from this exact result serves as an indication
+of the convergence of a given cycle expansion.
+The errors of different truncation
+schemes are indicated in \reffig{fig:logStabOrder}.
+We see that topological length truncation schemes are hopelessly
+\PC{ why is error in \reffig{fig:logStabOrder}larger when smoothed?}
+bad in this case; stability length truncations are somewhat better,
+but still rather bad.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}
+    % \vspace*{-5pt}
+\begin{center}
+plot here % \includegraphics[width=0.75\textwidth]{../figs/nameMe}
+\end{center}
+\caption{
+    {\small
+Comparison of cycle expansion truncation schemes for the
+logistic map (??)%
+%\refeq{e:fareymap}
+;
+the deviation of the truncated cycles
+expansion for $|1/\zeta_\nCutoff(0)|$ from the exact
+flow conservation value $1/\zeta(0)=0$ is a measure of the accuracy of the
+truncation.  The jagged
+line is logarithm of the stability ordering
+truncation error; the smooth line is smoothed according to
+\refsect{s-Smoothing}; the diamonds indicate the error
+due the topological length truncation, with
+the maximal cycle length $\nCutoff$ shown.
+They are placed along the stability cutoff axis at points determined
+by the condition that the total number of cycles is the same for both
+truncation schemes.
+        }}
+\label{fig:logStabOrder}
+    % \vspace*{-5pt}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

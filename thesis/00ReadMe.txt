@@ -9,7 +9,7 @@ Evangelos Siminos thesis
 	pdflatex thesis
 	yupee!
 
-../bibtex/siminos.bib 
+../bibtex/siminos.bib
 	one bibliography for all projects
 
 ../figs/
@@ -20,15 +20,14 @@ Evangelos Siminos thesis
 	one directory for source programs for all figures
 	(or .txt files explain how to regenerate them if needed)
 
+../inputs/
+	one directory for all Siminos specific macros
 
 --------------------------------------------------------------------------
-NOTES:
+TO FIX:
 
---------------------------------------------------------------------------
-HISTORY:
-
-						Predrag Feb 10 2007
-	installed  thesis configuration files (from Halcrow setup)
+-- make hyperlinks active
+-- \figurespagetrue option generates hyperref errors
 
 --------------------------------------------------------------------------
 NOTES:
@@ -42,8 +41,7 @@ into the file, and then
 	svn propset svn:keywords "Date Author" someFile.type
 
 --------------------------------------------------------------------------
-TO FIX:
+HISTORY:
 
-
---------------------------------------------------------------------------
-
+	Predrag Oct 10 2007:
+	installed  thesis configuration files (from Halcrow's setup)

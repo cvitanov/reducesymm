@@ -1,5 +1,5 @@
 articles/halcrow/thesis/chapters/00ReadMe.txt
-svn $Author: predrag $ $Date: 2007-02-17 01:46:29 -0500 (Sat, 17 Feb 2007) $
+svn $Author$ $Date$
 ----------------------------------------------------------------------------
 
 Jonathan Halcrow 				 

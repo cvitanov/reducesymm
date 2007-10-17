@@ -1,17 +1,20 @@
-siminos/inputs/00ReadMe.txt                           
+siminos/inputs/00ReadMe.txt
 svn $Author$ $Date$
 ----------------------------------------------------------------------------
 
-%%%%% Siminos blog specific configurations, commands:
+%%%%% Siminos blog, thesis specific configurations, commands:
 
-defsBlog.tex		% enter all Gibson commands here
-setup.tex		% edit LaTeX setups here
+defsBlog.tex		% enter all Vaggelis commands here
+defsThesis.tex      % all Vaggelis edits: \renowcommand, etc
+
+setupBlog.tex       % edit LaTeX setups here
+setupThesis.tex     % edit LaTeX setups here
 
 
 %%%%% no need to edit these files: %%%%%%%%%
 
-defsDasBuch.tex 	% do not tuch - this is edited only within ChaosBook.org
-		% update occasionally by
-		% cp ~dasbuch/book/inputs/def.tex defsDasbuch.tex
+def     do not edit; edited only within ChaosBook.org
+		update occasionally by
+		> cp ~dasbuch/book/inputs/def.tex def.tex
+setupDasbuch.tex    some ChaosBook tweaks
 prlabels.sty
-
