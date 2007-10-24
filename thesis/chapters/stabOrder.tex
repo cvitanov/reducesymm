@@ -73,6 +73,112 @@ The two settings in which the stability ordering may be preferable to
 the ordering by topological cycle length are the cases of bad grammar
 and of intermittency.
 
+
+\subsection{Stability ordering for a good grammars}
+
+We now  explore three
+approaches to construction of a partition of
+the \statesp\ of a unimodal map,
+in the presence of weak, Gaussian noise, by
+adopting the deterministic partitions by
+\begin{itemize}
+    \item preimages of the critical point
+    \item kneading invariant of the critical point
+    \item periodic orbit neighborhoods.
+\end{itemize}
+
+%\subsection{Skew Ulam map:}{ \label{exmp:SkewUlam}
+%
+    \PC{draw \reffig{f:skewUlam}!}
+%
+We shall refer to any unimodal map for which
+the critical point $x_c$ is
+mapped onto the unstable fixed point \cycle{0} as an ``Ulam'' map.
+For Ulam maps of the critical point is preperiodic to fixed
+point \cycle{0}, so the kneading invariant
+is simply 1\cycle{0}, and it plays no further role in partitioning
+of the \statesp.
+As a model map on which to test different approaches
+we take the ``skew Ulam" map\rf{AACII},
+\beq
+f(x)=\ExpaEig_0 x(1-x)(1-bx) \,\, , \quad
+1/\ExpaEig_0  = x_c (1-x_c) (1-b x_c) \,.
+\label{exmp:skew_Ulam}
+\eeq
+The $x_0=0$ fixed point \cycle{0} stability multiplier $\ExpaEig_0$
+is fixed by condition $f(x_c)=1$, and $x_c$ as a  function
+of $b$ fixed by $f'(x_c)=0$ condition.
+The skew Ulam map
+is a convenient starting point for testing
+ideas about partitioning for several reasons:
+\begin{itemize}
+\item
+The symbolic dynamics is a complete binary symbolic dynamics,
+and the $n$th preimage
+of the critical point generates a complete binary cover
+of the unit interval.\PC{add refs}
+
+\item
+All cycles can be easily determined through a combination of
+inverse iterations %, \refsect{s_inv_1d},
+and the Newton method\rf{DasBuch}. %\refsect{s-Newton1d}.
+
+\item
+The quadratic contraction around the critical point
+$x_c$ makes this  mapping {\em nonhyperbolic}.
+
+\end{itemize}
+
+
+In our numerical work we fix  $b=0.6$ (arbitrarily,
+it is the value used in \refref{AACII}), so
+$x_c =0.40456\dots$, and $\Lambda_0 = 5.4819\dots$ in
+\refeq{exmp:skew_Ulam}.
+% x_c=((1+b)-sqrt(1-b+b*b))/3 -> x_c =.40456678405103627197
+% 1/\Lambda_0 = .18241823856341201233
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}
+    % \vspace*{-5pt}
+\begin{center}
+plot here % \includegraphics[width=0.75\textwidth]{../figs/nameMe}
+\end{center}
+\caption{
+    {\small
+The entropy $h = \ln M(\ln \stabCutoff)/ln\stabCutoff$ for the
+the skew Ulam map \refeq{exmp:skew_Ulam}, stability
+partitioned \statesp,
+is the slope of
+the $\ln M(\ln \stabCutoff)$ {\em vs.}
+$\ln \stabCutoff$
+for the stability \statesp\ partitioned
+topological zeta functions.
+        }}
+\label{fig:logStabOrder1}
+    % \vspace*{-5pt}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Let $M(\ln \stabCutoff)$ be the number of prime cycles whose
+stability is less than $\stabCutoff$. For a chaotic system,
+$M$ is expected to grow exponentially with $ \stabCutoff)$ and
+the rate of the growth is the
+``entropy" $h (\ln\stabCutoff) = \ln M(\ln \stabCutoff)/\ln\stabCutoff$
+is expected to go to a value $h$ as $\stabCutoff \to \infty$.
+This value is probably the Kolmogorov entropy.
+    \PC{Vaggelis, read up
+        on Kolmogorov entropy, and examples of it for 1$\dmn$ mappings}
+For the
+the skew Ulam map \refeq{exmp:skew_Ulam}, stability
+partitioned \statesp,
+$h$ is the slope of
+the $\ln M(\stabCutoff)$ {\em vs.}
+$\ln \stabCutoff)$
+the Kolmogorov entropy (maybe - see Eq. (88) in \refref{AACI}, which
+is probably not the correct definition, either) evaluated from
+the zeta functions \refeq{??} is plotted in \reffig{fig:logStabOrder1}.
+
+
 \subsection{Stability ordering for bad grammars}
 
 For generic flows it is often not clear what
@@ -152,10 +258,10 @@ is of order
 $1/\ExpaEig-1/(\ExpaEig+\Delta\ExpaEig)
 \approx\Delta\ExpaEig/\ExpaEig^2$.
 % \PC{I think this is wrong - error is of order $1/\ExpaEig$?
-% this estimate is true for the intermitten case only?}
+% this estimate is true for the intermittent case only?}
 With smoothing there is an
 extra term of the form $f'(\ExpaEig)\Delta\ExpaEig/\ExpaEig$, which we
-want to minimise.  A reasonable guess might be to keep $f'(\ExpaEig)/\ExpaEig$
+want to minimize.  A reasonable guess might be to keep $f'(\ExpaEig)/\ExpaEig$
 constant and as small as possible, that is
 \[
 f(\ExpaEig)=1-\left(\frac{\ExpaEig}{\stabCutoff}\right)^2
@@ -192,7 +298,7 @@ as a function of $\ln N$,
 the number of partition intervals $N$.
 In the binary
 logistic map partition, with the $2^n$ intervals,
-$\ln N= n \ln 2$ for the Ulam map.
+$\ln N= n \ln 2$ for the skew Ulam map \refeq{exmp:skew_Ulam}.
 $\eigenvL_\alpha$ is estimated as a limit
 $\eigenvL_\alpha^{(\infty)}$ from the computed
 $\ln |\eigenvL_\alpha^{(N)}|$.
@@ -202,30 +308,13 @@ $\ln |\eigenvL_\alpha^{(N)}|$.
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}
-    % \vspace*{-5pt}
-\begin{center}
-plot here % \includegraphics[width=0.75\textwidth]{../figs/nameMe}
-\end{center}
-\caption{
-    {\small
-The entropy $\ln | h^{(N)} - h|$
-convergence for the
-logistic map (??), plotted {\em vs.} $ln N$
-for the binary and the stability (Kolmogorov) \statesp\ partitioned
-topological zeta functions.
-        }}
-\label{fig:logStabOrder1}
-    % \vspace*{-5pt}
-\end{figure}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 The leading eigenvalue convergence
 $\ln |\eigenvL_0^{(N)} - \eigenvL_0|$ is plotted in
 \reffig{fig:logStabOrder1} as a function of
 $ln N$,
-the number of intervals $N$ is $N = 2^{n}$ for the Ulam map,
+the number of intervals $N$ is $N = 2^{n}$
+for the for the skew Ulam map \refeq{exmp:skew_Ulam},
 $N =e^{n h_n}$ for a pruned logistic map, and $N = N(\stabCutoff)$
 for the stability ordered cycle expansion.
 
