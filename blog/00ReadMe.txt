@@ -7,7 +7,7 @@ Evangelos Siminos dynamical systems blog
 ========================================
 	(with Ruslan L. Davidchack, and Predrag Cvitanovi\'c)
 
-pdflatex fall07.tex
+pdflatex blog.tex
 	the blog
 
 ../bibtex/siminos.bib 
@@ -19,7 +19,8 @@ pdflatex fall07.tex
 ../figsSrc
 	one directory for source programs for all figures
 	(or .txt files explain how to regenerate them if needed)
-
+../Fig 
+	figures from dasbuch/book/Fig/ (do not edit these)
 
 --------------------------------------------------------------------------
 HISTORY:
