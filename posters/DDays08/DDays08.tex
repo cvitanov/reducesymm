@@ -30,6 +30,8 @@
 \usepackage{amsmath,amssymb,psfrag,pifont}
 \usepackage{graphicx}
 
+\input defs
+
 %% Farben
 
 \definecolor{lightblue}{rgb}{0.75,0.8,1}
@@ -157,92 +159,152 @@
 \begin{poster}{3}
 
 \begin{sheet}{Introduction}
-Many reaction rates in physics and chemistry are determined by quantum
-mechanical tunneling below a classically insurmountable barrier.
-In the semi-
+In the dynamical systems approach, the
+theory of turbulence for a given system, with given boundary conditions,
+is given by (a) the geometry of the \statesp\ and (b) the associated natural measure,
+\ie, the likelihood that asymptotic dynamics visits a given \statesp\ region.
+We pursue this program in context of the \KS\ (KS) equation,
+one of the simplest physically interesting spatially extended
+nonlinear systems.
 
-\noindent
-\begin{minipage}[c]{.49\textwidth}
-classical approximation, the tunneling transmission probability is
-determined by the action integral
-\begin{equation}
-%  \label{TunnAct}
-  K=\int |p|\,dq
-\end{equation}
-along the tunneling path. The latter is easy to identify in one-dimensional
-problems as the straight line path below\, the barrier,\, but\, in systems
-\hfill with
-\end{minipage}
-\begin{minipage}[c]{.47\textwidth}
-\centerline{\includegraphics[width=.95\textwidth]{../../figs/1wKS22equil.eps}}
-\end{minipage}
-\noindent
-several degrees of freedom it can deviate markedly from being straight.
-As a further complication, oscillations transverse to the reaction
-coordinate can be excited in multidimensional systems.
+Dynamical \statesp\ representation of a PDE is $\infty$-dimensional,
+but the KS flow is strongly contracting and its non-wondering set,
+and, within it, the set of invariant solutions investigated here, is
+embedded into a finite-dimensional inertial manifold\rf{FNSTks85} in
+a non-trivial, nonlinear way. `Geometry' in the title of this paper
+refers to our attempt to systematically triangulate this set in
+terms of dynamically invariant solutions (\eqva, \po s, $\ldots$)
+and their unstable manifolds, in a PDE representation and numerical simulation algorithm 
+independent way. The goal is to describe a given
+`turbulent' flow quantitatively, not model it qualitatively by a
+low-dimensional model.
 
-If reactant and product regions of configuration space are separated by a
-saddle point in a multidimensional potential, the path of steepest descent
-from the saddle is regarded as the ``reaction path'' in chemistry (see, eg.,
-\cite{Truhlar96}). However, it is also well known that the tunneling
-integral taken along that path severely underestimates the tunneling
-probability. The true tunneling path tends to lie on the concave
-side of the reaction path (``corner cutting''). In the absence of
-transverse excitation, it can be identified as the configuration space
-projection of an imaginary-time complex periodic orbit. How best to include
-the effects of the transverse modes is still a hotly debated topic in
-reaction rate theory.
+In previous work, the \statesp\ geometry and the natural measure for
+this system have been
+studied\rf{Christiansen97,LanThesis,LanCvi07} in terms of unstable
+periodic solutions restricted to the antisymmetric subspace of the
+KS dynamics. The focus in this paper is on the role continuous symmetries play in
+spatiotemporal dynamics.
+The notion of exact periodicity in time is
+replaced by the notion of relative spatiotemporal
+periodicity, and \reqva\ and \rpo s here play the role the \eqva\
+and \po s played in the earlier studies. 
 
-I will here demonstrate that normal form theory allows a decoupling of the
-degrees of freedom and permits an identification
-of the tunneling path in the absence and in the presence of transverse
-excitation.
+Building upon the pioneering work of \refrefs{KNSks90,ksgreene88},
+we undertake here
+a study of the \KS\ dynamics
+for a specific system size $L = 22$, sufficiently large
+to exhibit many of the features typical of `turbulent' dynamics
+observed in large KS systems, but small enough to lend itself to a
+detailed exploration of the  \eqva\ and \reqva,
+their stable/unstable manifolds,
+determination of a large number of
+\rpo s, and a preliminary exploration of the relation between the
+observed spatiotemporal `turbulent' patterns and the \rpo s.
+
 \end{sheet}
 
 
-\begin{sheet}{Tunneling in multiple degrees of freedom}
-We assume that the saddle point is unstable in one degree of freedom, which
-is the reaction coordinate, and stable in all others.
-The optimal tunneling path is easy to identify if the
-different degrees of freedom decouple, as in the Hamiltonian
-\begin{equation}
-  H=\frac{\lambda}{2}(p_x^2-x^2) + \frac{\omega_y}{2}(p_y^2+y^2)
-   +\frac{\omega_z}{2}(p_z^2+z^2) \;.
-\end{equation}
-Here $x$ represents the reaction coordinate and $y$ and $z$ are transverse
-coordinates. In this case, the optimum tunneling path can be found by
-setting the transverse coordinates to their equilibrium values
-$y=p_y=z=p_z=0$, which reduces the problem to one degree of freedom. The
-tunneling integral can then be computed from the reduced problem in the
-usual way.
+\begin{sheet}{\KSe}
 
-In general, a multidimensional dynamical system is non-separable. However,
-if its Hamiltonian is expanded in a multidimensional power series around an
-equilibrium point, normal form theory (see, eg., \cite{Jorba99}) allows one
-to construct a coordinate transformation that puts the Hamiltonian into a
-separable form up to an arbitrarily high finite order.  The high-order
-remainder that has not been brought into normal form is then neglected.
+The \KS\ [henceforth KS] system\rf{ku,siv},
+which arises in the description of
+stability of flame fronts, reaction-diffusion systems and many other
+physical settings\rf{KNSks90}, is one of the simplest nonlinear PDEs that
+exhibit spatiotemporally chaotic behavior. In the formulation
+adopted here, the time evolution of the `flame front velocity'
+$u=u(x,t)$ on a periodic domain $u(x,t) = u(x+L,t)$ is given by
+\beq
+  u_t = F(u) = -{\textstyle\frac{1}{2}}(u^2)_x-u_{xx}-u_{xxxx}
+    \,,\qquad   x \in [-L/2,L/2]
+    \,.
+\ee{ks}
+Here $t \geq 0$ is the time, and $x$ is the spatial coordinate.
+The subscripts $x$ and $t$ denote partial derivatives with respect to
+$x$ and $t$. In what follows
+we shall state results of all calculations either in units of the
+`dimensionless system size' $\tildeL$, or the system size $L = 2 \pi
+\tildeL$. \refFig{f:ks_largeL} presents a typical `turbulent' evolution
+for KS. All numerical results presented in this paper
+are for the system size $\tildeL=22/2\pi = 3.5014\ldots$.
+
 \end{sheet}
 
+\begin{sheet}{Symmetries of \KSe}
 
-\begin{sheet}{Tunneling paths}
-Once the tunneling path has been determined in normal form coordinates, it
-can be transformed to laboratory coordinates. The tunneling path thus
-found coincides with the projection of the periodic tunneling orbit into the
-configuration space.
+$G$, the group of actions $ g \in G $ on a
+\statesp\ (reflections, translations, \etc) is a symmetry of the KS
+flow \refeq{ks} if $g\,u_t = F(g\,u)$.
+The KS equation is time translationally invariant, and space translationally invariant
+on a periodic domain under
+the 1-parameter group of
+$O(2): \{\Shift_{\shift/L},\Refl \}$.
+If $u(x,t)$ is a solution, then
+\beq
+	\Shift_{\shift/L}\, u(x,t) = u(x+\shift,t)
+\eeq
+is an equivalent solution for any shift
+$-L/2 < \shift \leq L/2$,
+as is the
+reflection (`parity' or `inversion')
+\beq
+    \Refl \, u(x) = -u(-x)
+\,.
+\ee{KSparity}
 
-This is here illustrated for the dynamics of an electron under the combined
-influences of two identical Coulomb centers and a homogeneous electric
-field. This system has been used as a simple model for the ionization of a
-$H_2^+$ molecular ion by a laser field \cite{Bandrauk00}. In the example
-shown, the Coulomb centers are located at $x=z=0, y=\pm 1\,\text{a.u.}$ The
-external field strength is $0.77\,\text{a.u.}$, and the field makes an
-angle of 84.3 degrees with the molecular axis. For these parameter
-values the reaction path is highly curved.
-
-\centerline{\includegraphics[width=.85\textwidth]{../../figs/1wKS22equil.eps}}
 \end{sheet}
 
+\begin{sheet}{\Eqva\ and \reqva}
+
+\Eqva\  (or the steady solutions)
+are the fixed profile time-invariant solutions,
+\beq
+ u(x,t) = u_\stagn(x)
+\,.
+\ee{eqva}
+Due to the translational symmetry,
+the KS system also allows for
+\reqva\ (traveling waves, rotating waves),
+characterized by a fixed profile $u_\stagn(x)$
+moving with constant speed $c$, {\ie}
+\beq
+ u(x,t) =  u_\stagn(x-ct)
+\,.
+\ee{reqva}
+Here suffix ${}_\stagn$ labels a particular invariant solution.
+Because of the reflection symmetry \refeq{KSparity},
+the \reqva\ come in counter-traveling pairs
+$u_\stagn(x-ct)$, $-u_\stagn(-x+ct)$.
+
+\end{sheet}
+
+\begin{sheet}{\Rpo s, symmetries and \po s} \label{sec:KSePO}
+
+A relative periodic orbit satisfies
+\beq
+	g\, u(x,T_p)=u(x,0)\,,
+\eeq
+where $g\in G$, with $G$ a symmetry of the flow.
+Thus, the KS equation can have relative periodic orbits corresponding
+to 
+\begin{enumerate}
+ \item Invariance under $\Shift_{\shift/L}$
+	\beq
+		\Shift_{\shift_p/L}u(x,\period{p}) =
+			u(x+\shift_p,\period{p}) = u(x,0) = u_p(x)\,.
+		\label{KSrpos}
+	\eeq
+ \item Invariance under reflections 
+	\beq
+		\Refl u(x,\period{p}) =
+			-u(-x,\period{p}) = u(x,0) = u_p(x)
+			\,,
+		\label{KSpos}
+	\eeq
+	Such an orbit is pre-periodic to a \po\ with period $2\period{p}$.
+\end{enumerate}
+
+\end{sheet}
 
 
 \begin{sheet}{Tunneling action}
