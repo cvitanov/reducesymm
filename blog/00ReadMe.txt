@@ -25,6 +25,9 @@ pdflatex blog.tex
 --------------------------------------------------------------------------
 HISTORY:
 
+blog\davidchack\071231fundamental.html
+	Ruslan's KS with O(2) quotiented out, Predrag comments Jan 2, 2008
+
 --------------------------------------------------------------------------
 NOTES:
 							Predrag 	Oct  1 2007
