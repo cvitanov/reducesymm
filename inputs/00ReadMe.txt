@@ -4,11 +4,13 @@ svn $Author$ $Date$
 
 %%%%% Siminos blog, thesis specific configurations, commands:
 
-defsBlog.tex		% enter all Vaggelis commands here
+defsBlog.tex	  % enter all Vaggelis commands here
 defsThesis.tex      % all Vaggelis edits: \renowcommand, etc
+def.tex		  % no edits, update from dasbuch/book/inputs/def.tex
 
 setupBlog.tex       % edit LaTeX setups here
 setupThesis.tex     % edit LaTeX setups here
+setupDasbuch.tex	  % edit to harmonize with ChaosBook.org layout, if needed
 
 
 %%%%% no need to edit these files: %%%%%%%%%
