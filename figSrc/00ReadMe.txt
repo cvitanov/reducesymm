@@ -78,7 +78,19 @@ To get a level-3 eps with transparent background from this png use:
  
  # bmeps -leps3,c.i.m=y,i.m.t.l=0 -tpng  -a file.png new_file.eps
 
-The resulting file do not always display correctly with gs.
+The resulting files do not always display correctly with gs.
+
+** Using bitmapped graphics while keeping true-type fonts (Mathematica specific?)
+
+Split the Mathematica figure in two parts (same size, viewpoint, box etc). 
+One should contain the parts of graphics that will be bitmapped and 
+the other the labels, axes etc that will remain in vector format.
+Save the former as png and the second as eps. 
+Convert the png file to eps as above. Use pstricks to superimpose
+the 2 figures. Any good way to change bounding box of the image
+to a tight one? (eps2eps does not work because it seems to convert
+the bitmapped part to vector form again)
+
 
 					Mason Porter 	20 Aug 2003 
 
