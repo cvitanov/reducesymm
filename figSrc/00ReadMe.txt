@@ -80,17 +80,64 @@ To get a level-3 eps with transparent background from this png use:
 
 The resulting files do not always display correctly with gs.
 
-** Using bitmapped graphics while keeping true-type fonts (Mathematica specific?)
+Question: How can I use bitmapped graphics while keeping scalable fonts?
 
-Split the Mathematica figure in two parts (same size, viewpoint, box etc). 
-One should contain the parts of graphics that will be bitmapped and 
-the other the labels, axes etc that will remain in vector format.
-Save the former as png and the second as eps. 
-Convert the png file to eps as above. Use pstricks to superimpose
-the 2 figures. Any good way to change bounding box of the image
-to a tight one? (eps2eps does not work because it seems to convert
-the bitmapped part to vector form again)
+The following answer is Mathematica specific regarding the creation of files
+but one should be able to use it with other programs. It cannot be used
+to seperate text and graphics in already existing images, one has to export
+those seperately. 
 
+Export three figures from Mathematica:
+fig.eps: The original figure
+figB.png: The part of the figure that can be bitmapped
+figC.eps: The part of the figure that has to remain in vector format
+
+Plot all of them with the same options (use function Absolute options
+to get the info from the original image) and do not specify size or
+resolution when exporting. 
+
+Wrap figB.png into an eps file:
+
+ # bmeps -leps3 -tpng figB.png figB.eps 
+
+Use the original figure to obtain the correct bounding box for the eps files:
+
+ # gs -sDEVICE=bbox -dNOPAUSE -dBATCH fig.eps
+
+Replace the bounding box in figB.eps and figC.eps with the output of the above.
+Use pstricks to superimpose the two figures. A sample fig.tex file should look like:
+
+	\documentclass{article}
+	\usepackage{graphicx}
+	\usepackage{pstricks}
+	\pagestyle{empty}
+
+	\begin{document}
+
+
+	\rput(0,0){\includegraphics{plDetGraphB.eps}}
+	\rput(0,0){\includegraphics{plDetTextC.eps}}
+
+
+	\end{document}
+  
+Then 
+
+ # latex fig.tex
+ # dvips -E fig.dvi -o figNew.eps
+
+If dvips complains about missing fonts one can convert the missing fonts in figC.eps
+to curves using:
+
+eps2eps figC.eps figCfixed.eps
+
+or 
+
+pstoedit -f ps -adt -usebbfrominput figC.eps figCfixed.eps
+
+and after editing the bounding box in either case use figCfixed.eps in pstricks. 
+This will generally result in even smaller filesize so it might be a good idea
+to use eps2eps anyway with figC.eps. 
 
 					Mason Porter 	20 Aug 2003 
 
