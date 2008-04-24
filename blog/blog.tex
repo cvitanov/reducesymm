@@ -36,6 +36,71 @@ article siminos/rpo\_ks/ .
 
 \newpage
 
+\section{ES: April 22, 2008 -- Locating Heteroclinic Connections}
+
+I recently tried to locate heteroclinic connections in Lorenz equations. One
+can easilly see that the 2-dimensional unstable manifold of $\EQV{1}$ intersects the 
+$2-$dimensional stable manifold of $E_0$ and thus there should be such connections. 
+As I couldn't find Predrag's secret method documented somewhere I followed a simple
+shooting approach. 
+
+Although a heteroclinic orbit is an infinite-time orbit it is sufficient to
+pin down a finite time segment of the orbit originating at the linear unstable subspace $E_u^{(1)}$ 
+of $\EQV{1}$ and ending at the linear stable subspace $E_s^{(0)}$ of $\EQV{0}$. Those
+requirements can be expressed as the boundary value problem:
+\bea
+	x(0) & = & \EQV{1}+ \epsilon Re(\mathbf{e}_1^{(1)}) \, \label{eq:shootHetIC} \\
+	P_1^{(0)} (x(T)-\EQV{0}) & = &  0 \,. \label{eq:shootHetBC} 
+%%	P_2^{(0)} (x(T)-\EQV{0}) & = &  d_2 \,. \label{eq:shootHetFixT} %% Not needed for Lorenz
+\eea
+
+Eq. \refeq{eq:shootHetIC} imposes the requirement that we start on the unstable subspace of $\EQV{1}$.
+Alternatively we could have used as a search space a circle of radius $\epsilon$ on the plane defined
+by orthonormalizing $\left(Re(\mathbf{e}_1^{(1)}),Im(\mathbf{e}_1^{(1)})\right)$, parametrized by some 
+angle $\theta$. Eq. \refeq{eq:shootHetBC} imposes the condition that the final point on the trajectory is
+on the stable manifold of $\EQV{0}$. Here
+\beq
+	P_j^{(0)}= \prod_{i\neq j}^d \frac{\mathbf{A}(\EQV{0})-\lambda_i^{(0)} \mathbf{1}}{\lambda_j^{(0)}-\lambda_i^{(0)}}\,,
+\eeq 
+is projection operator on the $j$'th eigendirection of the linear stability matrix $\mathbf{A}$ at $\EQV{0}$.
+%Condition \refeq{eq:shootHetFixT} needs to be imposed due to the time-translational invariance of the 
+%equations. It corresponds to restricting the final point on a \Poincare section $\PoincS$ transverse to
+%the least contracting eigendirection of $\mathbf{A}(\EQV{0})$. For Lorenz this would be a plane normal
+%to the $z$-axis at distance $d_2$ from $\EQV{0}$. 
+\ES{According to Predrag's notation the left hand side
+of equation \refeq{eq:shootHetBC} %%and \refeq{eq:shootHetFixT} 
+is a scalar.}
+
+To solve the boundary value problem I have used Newton's method to refine a guess for $\epsilon_n$. %and $T_n$ 
+%based on the linearization:
+%\beq
+%	f^{T_{n+1}}(x_{n+1}) \simeq f^{T_n}(x_n) + \mathbf{J}^{T_n}(x_n) Re(\mathbf{e}_1^{(1)})\delta\epsilon\,, %+ v(f^{T_n}(x_n)) \delta T
+%\eeq
+%and imposing condition \refeq{eq:shootHetBC} % and \refeq{eq:shootHetFixT} 
+%on $f^{T_{n+1}}(x_{n+1})$.
+Predrag suggests using the linear approximation of the flow to analytically continue the heteroclinic
+orbits after period $T$ and impose the condition that this analytic solution ends up on the equilibrium.
+I cannot see why this is necessary here. The condition \refeq{eq:shootHetBC} guarantees that the solution
+is on the linear approximation of the stable manifold of $\EQV{0}$ and thus will end up on $\EQV{0}$.
+Essentially this is the analytic part of the problem and no more needs to be done. The accuracy of the 
+method is limited by the approximation of the local stable manifold of $\EQV{0}$ and the local unstable
+manifold of $\EQV{1}$ by the corresponding linear unstable subspaces, \ie by planes in the case of Lorenz 
+equations. One can estimate the distance of minimum approach to $\EQV{0}$ by using the expressions for 
+the linearized flow. Disregarding the stronly contracting eigendirection $e_3^{(0)}$ I find:
+\beq
+	r_{min}^2= d_2^2\left(1-\frac{\lambda_2}{\lambda_1}\right)\left(\-\frac{d_1^2 \lambda_1}{d_2^2\lambda_2}\right)^{-\frac{\lambda_2}{\lambda_1-\lambda_2}}
+\eeq
+where $d_1=P_1^{(0)} (x(T)-\EQV{0})$ and $d_2=P_2^{(0)} (x(T)-\EQV{0})$ \ES{Predrag might want to compare
+this against his secret notes.}. I use this to compare with the actual minimum distance from $E_0$ and 
+evaluate the validity of the linear approximation of the stable manifold. 
+
+In \refref{FriedmanDoedelConnections91} the authors present a method for computation and continuation 
+of heteroclining connections similar in spirit but in a more general setting. They suggest that a condition breaking the time-translational invariance should be used allong with \refeq{eq:shootHetBC}. Here,
+\refeq{eq:shootHetIC} is formulated in a way that excludes variation in the initial conditions in the direction
+of the flow and we need not impose an extra condition.
+
+It works well for Lorenz equations but fails to converge for ZM. 
+
 \section{May 17, 2007 -- $s_1$, $s_2$, $\tau_x$, $\tau_z$ generate 16 irreps?}
 
 {\bf PC}: My main problem is - we are currently using only 4 irreducible reps
