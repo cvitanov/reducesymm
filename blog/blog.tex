@@ -36,6 +36,125 @@ article siminos/rpo\_ks/ .
 
 \newpage
 
+\section{ES: May 24, 2008 -- Zeghlache Mandel center manifold}
+
+This is just an attempt to understand the primary bifurcation in
+Zeghlache and Mandel\rf{ZeMa85} 5-dimensional flow:
+\bea
+\dot{x}_1 &=&  \sigma (- x_1 -  \delta x_2 + y_1)
+               \continue
+\dot{x}_2 &=&  \sigma (\delta x_1   - x_2 + y_2)
+               \continue
+\dot{y}_1 &=& \rho\,  x_1 - y_1 + \delta y_2 - x_1 z
+                                                \label{ZMeqs} \\
+\dot{y}_2 &=& \rho\,  x_2 - \delta y_1 - y_2 - x_2 z
+               \continue
+\dot{z}   &=& x_1 y_1 + x_2 y_2  - \gamma\, z
+            \,.\nnu
+\eea
+Here $\sigma>1,\, \rho>0$.
+
+The equation is equivariant under the action of $\Gamma=SO(2)$ defined by
+ \beq
+ {D}(\theta)
+%  =   \left(\barr{ccc}
+%     {\bf R}(\theta) &  0              & 0  \\
+%     0               & {\bf R}(\theta) & 0  \\
+%     0               &  0              & 1
+%     \earr\right)
+=   \left(\barr{ccccc}
+   \cos\theta  &  \sin\theta & 0  &  0 & 0  \\
+  -\sin\theta  &  \cos\theta & 0  &  0 & 0 \\
+   0  &  0 & \cos\theta  &  \sin\theta & 0  \\
+   0  &  0 &-\sin\theta  &  \cos\theta & 0 \\
+   0  &  0 & 0  &  0 & 1
+   \earr\right)
+ \,.
+ \label{ZMrotation}
+ \eeq
+
+The \stabmat\ is
+  \beq
+{\Mvar_{ZM}} =
+  \left(\barr{ccccc}
+    -\sigma    & -\epsilon\sigma & \sigma &  0       &  0 \\
+\sigma\epsilon & -\sigma         & 0      & \sigma   &  0 \\
+\rho-z         &     0           & -1     & \epsilon & -x_1 \\
+0              & \rho-z       & -\epsilon & -1       & -x_2 \\
+y_1            & y_2             & x_1    & x_2      & -\gamma
+    \earr\right)
+\,.
+  \ee{ZMstabMat}
+
+The \stabmat\ commutes with ${D}(\theta)$ for points on the fixed point subspace of $\Gamma$, \ie the
+$z$-axis.
+
+The origin is a fixed point of the flow and as it is rotationally invariant (lies on the $z$-axis)
+its \stabmat\ has no zero eigenvalue associated with the action of $\Gamma$. For $r<1+\delta^2$ 
+the origin is a stable fixed point, while at $r=1+\delta^2$ the stability
+matrix has eigenvalues $ \left(0,0,-\gamma ,-(\sigma+1) \pm i \delta  (\sigma-1) \right)$
+and  thus a bifurcation occurs which in the literature\rf{GL-Gil07b} is classified as pitchfork to a
+stable circle ($\Gamma$-orbit) of equilibria, while the origin looses stability. This is a surprising
+fact because generically \rf{golubII} one would expect an equivariant Hopf bifurcation to a $\Gamma$-invariant periodic
+orbit, \ie a relative equilibrium (traveling wave). Of course, in view of the degenerate zero eigenvalue
+of the \stabmat\ at bifurcation we already begin to question the posibility of a Hopf bifurcation.
+Nevertheless one should proceed by first reducing the bifurcation problem to one where all of the \stabmat\ eigenvalues
+have zero real part, \ie apply either Lyapunov-Schmidt reduction\rf{golubI} or the Center Manifold Theorem\rf{guckb}.
+We follow the latter approach. The procedure is standard but for a five dimensional system I had to use computer algerba
+to hope to do it correctly\ES{I only outline the procedure for now, I'll give a better description
+and explicit form of transformation matrices, etc, later on if needed.}.
+
+We begin by a linear transformation to new variables $w_i,\, i=1\ldots 5$ such that at bifurcation
+the \stabmat\ at the origin is in block-diagonal form. Thus we use the transformation
+\beq
+	w = T^{-1} x
+\eeq
+where $w$ and $x$ is shorthand notation for the new and old variables respectively and $T$ is the column matrix of
+eigenvectors of \stabmat\ evaluated at the origin, for $\rho=1+\delta^2$. We seek an approximation to the center manifold
+as a graph over the center manifold: $w_i = h_i(w_1,w_2,\mu),\, i=3\ldots5$, where $\mu=\rho-1-\delta^2$ is regarded
+as the bifurcation parameter but also as an extra variable satisfying $\dot{\mu}=0$. Substituting a Taylor expansion for $h$
+up to third order in $w_1,w_2,\mu$ in the transformed equation\ES{actually to a PDE for h which I haven't introduced.} we obtain a local approximation of the center manifold
+and we can write the dynamics for $w_1,w_2$ as:
+% \begin{eqnarray}
+%  \dot{w}_1 & = & \frac{ \sigma}{B^2+F^2}\left[ F\left(\mu +\frac{\left(3 B^2-F^2\right) \mu ^2 \sigma }{\left(B^2+F^2\right)^2}-\frac{w_1^2+w_2^2}{\gamma
+%  \left(1+\delta ^2\right)}\right) w_1 + B\left(\mu +\frac{\left(B^2-3 F^2\right) \mu ^2 \sigma }{\left(B^2+F^2\right)^2}-\frac{w_1^2+w_2^2}{\gamma  \left(1+\delta
+% ^2\right)}\right) w_2 \right]  \\
+%  \dot{w}_2 & = & \frac{ \sigma}{B^2+F^2}\left[ -B\left(\mu +\frac{\left(B^2-3 F^2\right) \mu ^2 \sigma }{\left(B^2+F^2\right)^2}-\frac{w_1^2+w_2^2}{\gamma
+%  \left(1+\delta ^2\right)}\right) w_1 + F\left(\mu +\frac{\left(3 B^2- F^2\right) \mu ^2 \sigma }{\left(B^2+F^2\right)^2}-\frac{w_1^2+w_2^2}{\gamma  \left(1+\delta
+% ^2\right)}\right) w_2 \right]
+% \end{eqnarray}
+
+\begin{eqnarray}
+ \left(\begin{array}{c} \dot{w}_1 \\ \dot{w}_2  \end{array}\right) & = & \left[\lambda + g_r(w_1^2+w_2^2) \right]\left(\begin{array}{c} w_1 \\ w_2  \end{array}\right) + \left[\omega + g_\theta(w_1^2+w_2^2) \right] \left(\begin{array}{c} -w_2 \\ w_1 \end{array}\right)
+\end{eqnarray}
+where
+\[\begin{array}{cc}
+	\lambda = \frac{ \sigma F}{B^2+F^2} \left(\mu +\frac{\left(3 B^2-F^2\right) \mu ^2 \sigma }{\left(B^2+F^2\right)^2}\right)\,, & 
+		\omega = -\frac{ \sigma B}{B^2+F^2}\left(\mu +\frac{\left(B^2-3 F^2\right) \mu ^2 \sigma }{\left(B^2+F^2\right)^2}\right) \\
+	g_r= -g_\theta= -\frac{ \sigma F}{B^2+F^2} \frac{w_1^2+w_2^2}{\gamma\left(1+\delta ^2\right)}\,,  & B = \delta(\sigma-1)\,,\ F=\sigma+1\,.  \\
+\end{array}
+\]
+
+In this form it is clear that the reduced system is $SO(2)$-equivariant and that the eigenvalues of the \stabmat\ vanish at the bifurcation. Thus we can't have a Hopf bifurcation. On the other hand, for $\mu>0$ and sufficiently small there is no equilibrium
+other than the origin, while there is a $SO(2)$-invariant periodic orbit, \ie a relative equilibrium. This is most readily seen if
+we transform the system in polar coordinates:
+\bea
+	\dot{r} &=&\left(\lambda+ g_r(r^2)\right)r \continue
+	\dot{\theta} &=& \omega+ g_\theta(r^2)\,.
+\eea
+This form justifies the use of $g_r,g_\theta$ above. One can see that we cannot have $\dot{r}=\dot{\theta}=0$ for $\mu>0$ and
+thus there are no equilibria to the right of the bifurcation point (other than the origin) . On the other hand there exists a Hopf(?) cycle with
+\beq
+	r^2= \gamma  \left(1+\delta ^2\right) \mu  \left(1+\frac{\left(3 B^2-F^2\right) \mu  \sigma }{\left(B^2+F^2\right)^2}\right)\,,\ \dot{\theta}=\frac{2 B \sigma^2 \mu^2}{\left(B^2+F^2\right)^2}\,,
+\eeq
+which is a geometrical circle and thus is $SO(2)$-invariant, \ie it is a relative equilibrium.
+
+This is in direct contradiction with my proof of no existance of relative equilibria in the original system, so something
+is wrong. Posibilities are: The application of center manifold theorem was not performed correctly (perharps consider $\delta$
+as bifurcation parameter?) One has to go one step further and study the unfolding of the bifurcation (is it codimension-4 bifurcation
+or am I counting totally wrong?) I meshed up in proving there aren't relative equilibria in ZM system (did somebody else check at least the polar coordinate representation of the system?) The relative equilibrium in the center manifold is not relative equilibrium in
+the original system (sounds crazy but I'll check it.)
+
 \section{ES: April 22, 2008 -- Locating Heteroclinic Connections}
 
 I recently tried to locate heteroclinic connections in Lorenz equations. One
