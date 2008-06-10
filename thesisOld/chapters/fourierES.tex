@@ -1,0 +1,144 @@
+% fourierES.tex
+%
+% Predrag               jun 20 2006
+% $Author$ $Date$
+
+
+\section{\KSe\ according to Evangelos}
+\label{ap:rpo}
+
+\PC{move to siminos/thesis/chapters/ once rpo.tex is finalized}
+%
+The \KSe\ % (KSe)
+reads:
+ \beq
+  u_t=(u^2)_x-u_{xx}- u_{xxxx} \, ,
+  \label{eq:KS}
+ \eeq
+
+ We assume periodic boundary conditions on the $x\in [0,2\pi \tildeL]$
+ interval:
+ \beq
+   u(x+2\pi\tildeL,t)=u(x,t) \, ,
+ \eeq
+ which allows a Fourier series expansion:
+ \beq
+  u(x,t)=\sum_{k=-\infty}^{+\infty} a_k (t) e^{ i k x / \tildeL} \, .
+  \label{eq:Fourier}
+ \eeq
+ Since $u(x,t)$ is real,
+ \beq
+  a_{k}=a^*_{-k} \, .
+  \label{eq:a*}
+ \eeq
+ Substituting \refeq{eq:Fourier} into \refeq{eq:KS} we get:
+ \beq
+  \dot{a}_k=(k/\tildeL)^2\left(1-(1/\tildeL)^2 k^2\right)a_k
+        + i (k/\tildeL)  \sum_{m=-\infty}^{+\infty}a_m a_{k-m} \, .
+  \label{eq:Fcoef}
+ \eeq
+
+ From \refeq{eq:Fcoef} we notice that $\dot{a}_0=0$ and thus $a_0$ is an integral
+ of the equations or, from \refeq{eq:Fourier}, the average of the solution $\int dx u(x,t)$
+ is a constant. Due to galilean invariance we may set $a_0=0$ without loss of generality
+ and we only have to compute $a_k$'s with $k\geq 1$. % Explain this in detail somewhere.
+
+ Truncating the infinite tower of equations by setting $a_k=0$ for $k>d$, using the identity $a_{-k}=a^*_k$ and splitting the
+ resulting equations into real and imaginary part by setting $a_k=b_k+i c_k$, we have
+
+ \bea
+  \dot{b}_k & = & \left(\frac{k}{\tildeL}\right)^2\left(1- \left(k/\tildeL\right)^2 \right)b_k  \continue
+    & & - \frac{k}{\tildeL} \left(\sum_{m=1}^{k-1}c_m b_{k-m}+\sum_{m=k+1}^{N}c_m b_{m-k}
+                    -\sum_{m=1}^{N-k}c_m b_{k+m} \right)  \continue
+    & & - \frac{k}{\tildeL} \left(\sum_{m=1}^{k-1}b_m c_{k-m}-\sum_{m=k+1}^{N}b_m c_{m-k}
+                    +\sum_{m=1}^{N-k}b_m c_{k+m} \right)
+  \label{eq:tmp:b-Trunc}
+ \eea
+ \bea
+   \dot{c}_k & = & \left(\frac{k}{\tildeL}\right)^2\left(1- \left(k/\tildeL\right)^2 \right)c_k  \continue
+    & & - \frac{k}{\tildeL}\left( \sum_{m=1}^{k-1}c_m c_{k-m}-\sum_{m=k+1}^{N}c_m c_{m-k}
+                    -\sum_{m=1}^{N-k}c_m c_{k+m} \right)    \continue
+    & & + \frac{k}{\tildeL} \left(\sum_{m=1}^{k-1}b_m b_{k-m}+\sum_{m=k+1}^{N}b_m b_{m-k}
+                    +\sum_{m=1}^{N-k}b_m b_{k+m} \right)
+   \label{eq:tmp:c-Trunc}
+ \eea
+ where now only terms $c_{k},b_{k}$ with $0<k<d$ appear. Observe
+ \beq
+    \sum_{m=1}^{N-k}c_m b_{k+m} = \sum_{m=k+1}^{N}b_m c_{m-k}\,,
+ \eeq
+ \etc and thus \refeq{eq:tmp:b-Trunc} and \refeq{eq:tmp:c-Trunc} simplify to
+  \bea
+  \dot{b}_k & = & \left(\frac{k}{\tildeL}\right)^2\left(1- \left(k/\tildeL\right)^2 \right)b_k  \continue
+    & & - \frac{k}{\tildeL} \left(\sum_{m=1}^{k-1}c_m b_{k-m}-2\sum_{m=1}^{N-k}c_m b_{k+m} \right)  \continue
+    & & - \frac{k}{\tildeL} \left(\sum_{m=1}^{k-1}b_m c_{k-m}+2\sum_{m=1}^{N-k}b_m c_{k+m} \right)
+  \label{eq:b-Trunc}
+ \eea
+ \bea
+   \dot{c}_k & = & \left(\frac{k}{\tildeL}\right)^2\left(1- \left(k/\tildeL\right)^2 \right)c_k  \continue
+    & & - \frac{k}{\tildeL}\left( \sum_{m=1}^{k-1}c_m c_{k-m}-2\sum_{m=1}^{N-k}c_m c_{k+m} \right)  \continue
+    & &  +\frac{k}{\tildeL}\left( \sum_{m=1}^{k-1}b_m b_{k-m}+2\sum_{m=1}^{N-k}b_m b_{k+m} \right)\,.
+   \label{eq:c-Trunc}
+ \eea
+
+ We begin by calculating the matrix of variations 
+$A_{ij} \equiv \frac{\partial v_i(x)}{\partial x_j}$ for the antisymmetric
+ subspace for which $b_k=0, c_{-k}=-c_{k}$ and thus
+ \beq
+       \dot{c}_k =  \left(\frac{k}{\tildeL}\right)^2\left(1- \left(k/\tildeL\right)^2 \right)c_k
+            - \frac{k}{\tildeL}\left( \sum_{m=1}^{k-1}c_m c_{k-m}
+                            -2\sum_{m=1}^{N-k}c_m c_{k+m} \right)   \,.
+ \eeq
+
+ Then
+ \bea
+    \frac{\partial \dot{c}_k}{\partial c_{j}}  &=&
+        \left(\frac{k}{\tildeL}\right)^2\left(1- \left(k/\tildeL\right)^2 \right) \delta_{kj}
+            - \frac{k}{\tildeL}\frac{\partial}{\partial c_j}
+     \left( \sum_{m=1}^{k-1}c_m c_{k-m}-2\sum_{m=1}^{N-k}c_m c_{k+m} \right) \,.
+ \eea
+ Consider the second term:
+ \bea
+    - \frac{k}{\tildeL}\frac{\partial}{\partial c_j}
+ \left( \sum_{m=1}^{k-1}c_m c_{k-m}-2\sum_{m=1}^{N-k}c_m c_{k+m} \right) 
+& = &
+        - \frac{k}{\tildeL} \sum_{m=1}^{k-1} \left(\delta_{m,j} c_{k-m}+c_m \delta_{k-m,j} \right) 
+\ceq
+       + 2 \frac{k}{\tildeL}\sum_{m=1}^{N-k} \left(\delta_{m,j} c_{k+m}+c_m \delta_{k+m,j}\right)
+ \eea
+ We need to consider two cases separately:
+ \begin{itemize}
+    \item $k\leq j$
+        \bea
+             -\frac{k}{\tildeL}\frac{\partial}{\partial c_j}\left( \sum_{m=1}^{k-1}c_m c_{k-m}-2\sum_{m=1}^{N-k}c_m c_{k+m} \right) & = &
+                    -\frac{k}{\tildeL}( 0+0 ) + 2\frac{k}{\tildeL} (c_{k+j} + c_{j-k}) \continue
+                & = &   2 \frac{k}{\tildeL} (c_{k+j}-c_{k-j})
+        \eea
+    \item $k > j$
+        \bea
+             -\frac{k}{\tildeL}\frac{\partial}{\partial c_j}\left( \sum_{m=1}^{k-1}c_m c_{k-m}-2\sum_{m=1}^{N-k}c_m c_{k+m} \right) & = &
+                    -\frac{k}{\tildeL}(c_{k-j} + c_{k-j} ) + 2\frac{k}{\tildeL} (c_{k+j}  + 0 ) \continue
+                & = &  2 \frac{k}{\tildeL} (c_{k+j}-c_{k-j})
+        \eea
+ \end{itemize}
+ and thus
+ \beq
+    \frac{\partial \dot{c}_k}{\partial c_{j}} =  \left(\frac{k}{\tildeL}\right)^2\left(1- \left(k/\tildeL\right)^2 \right)\delta_{kj} + 2 \frac{k}{\tildeL} (c_{k+j}-c_{k-j})
+ \eeq
+
+ For the case of the full space we need to consider the four matrices 
+$\frac{\partial \dot{b}_k}{\partial b_j}$,
+$\frac{\partial \dot{b}_k}{\partial c_j}$,
+$\frac{\partial \dot{c}_k}{\partial b_j}$,
+$\frac{\partial \dot{c}_k}{\partial c_j}$. Following the above procedure
+ \beq
+    \frac{\partial \dot{c}_k}{\partial b_{j}} =  2 \frac{k}{\tildeL} ( b_{k+j}+b_{k-j} )\,,
+ \eeq
+ \beq
+    \frac{\partial \dot{b}_k}{\partial b_{j}} =  
+\left(\frac{k}{\tildeL}\right)^2\left(1- \left(k/\tildeL\right)^2 \right)\delta_{kj} - 2 \frac{k}{\tildeL} (c_{k+j} + c_{k-j}) \,,
+ \eeq
+ \beq
+    \frac{\partial \dot{b}_k}{\partial c_{j}} = 2 \frac{k}{\tildeL} (b_{k+j}-b_{k-j}) \,.
+ \eeq
+
+
