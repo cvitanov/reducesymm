@@ -1,13 +1,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
-%% GATECH-THESIS.CLS (v1.7)
+%% SIMINOS-THESIS.CLS (v1.7s)
 %% Copyright (c) 2006 by Mitchel T. Keller. Portions copyright (c)
 %% 2002 by Charles S. Wilson. All rights reserved.
 %% See licensing information, below.
 %%
-%% Last Update: V1.7 (24 January 2006) by Mitchel T. Keller
+%% Last Update: V1.7s (29 June 2008) by Predrag Cvitanovic
 %%
 %% Heritage:
+%%   GATECH-THESIS.CLS (v1.7)
+%%     -- by Mitchel T. Keller (24 January 2006)
 %%   UT-THESIS.CLS (v1.8) 
 %%     -- by Francois Pitt (1999 Dec 10)
 %%     -- as modified by Aichen Low, 2000 Jan 14
@@ -23,8 +25,8 @@
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\gtthesisversion}{1.7}% current version number
-\newcommand{\gtthesisupdated}{2006/01/24}% date of last change(s)
+\newcommand{\gtthesisversion}{1.7s}% current version number
+\newcommand{\gtthesisupdated}{2008/06/24}% date of last change(s)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
@@ -52,6 +54,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
 %%  REVISION HISTORY:
+
+%%  v1.7s: 2008-Jun-26 Predrag Cvitanovic
+%%      * created siminos-thesis.cls from gatech-thesis.cls (v1.7)
+%%      * search for '%% Predrag' to find edits 
 %%
 %%  v1.7: 2006-Jan-24  Mitchel T. Keller
 %%      * Remove double spacing of thesis title as per July 2005
@@ -760,8 +766,8 @@
 %%%%%%%%%%%%        IDENTIFICATION        %%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{gatech-thesis}
-        [\gtthesisupdated\space\gtthesisversion\space(Mitchel T. Keller)]%
+\ProvidesClass{siminos-thesis}
+        [\gtthesisupdated\space\gtthesisversion\space(Predrag Cvitanovic)]%
 \RequirePackage{calc}% part of LaTeX tools bundle   
 
 \def\gtthesis@checkVersion#1{\edef\reserved@a{#1}%
@@ -2824,23 +2830,28 @@ openright,doublespaced,normalmargins,final}
   \@tcpagefalse%
   \let\@mkboth\@gobbletwo%
   \def\@oddfoot{%
-    \if@draft%
+    \if@boyscout%
+%   \if@draft%
       \blDRAFT\hfil%
       {\slshape\small\today}\hfil\brDRAFT%
     \fi%
    }%
    \let\@evenfoot\@oddfoot%
    \def\@oddhead{%
-     \if@draft\tlDRAFT\fi%
+     \if@boyscout\tlDRAFT\fi%
+%     \if@draft\tlDRAFT\fi%
      {\slshape\rightmark}\hfil%
      \thepage%
-     \if@draft\trDRAFT\fi%
+     \if@boyscout\tlDRAFT\fi%
+%     \if@draft\trDRAFT\fi%
    }%
    \def\@evenhead{%
-     \if@draft\tlDRAFT\fi%
+     \if@boyscout\tlDRAFT\fi%
+%     \if@draft\tlDRAFT\fi%
      \thepage\hfil%
      {\slshape\leftmark}%
-     \if@draft\trDRAFT\fi%
+     \if@boyscout\tlDRAFT\fi%
+%     \if@draft\trDRAFT\fi%
    }%
    \let\chaptermark\@gobble\let\sectionmark\@gobble%
 }%ps@myheadings

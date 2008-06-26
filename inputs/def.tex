@@ -1,6 +1,12 @@
 % def.tex
 % $Author$ $Date$
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% defines macros used throughout ChaosBook and related
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%               Predrag         12jun2008
+%               Predrag         15dec2008
 %               Predrag         29oct2005
 %               Predrag         13jul2005
 %               Predrag         24apr2005
@@ -20,139 +26,47 @@
 %               Predrag         19nov2000
 %               Ronnie          23sep2000
 % Predrag disabled \basedirectory machine identifier    25aug2000
-% created               Predrag         30/10-94
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% define abreviations used throughout DasBuch
-%% goal: make it easier to change conventions throughout
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Predrag created               30oct1994
 
-
-%%%%%%%%%%%%%%%%%%%%%% WHERE ARE WE? %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% OPTIMAL:
-% input a single line file that tells you where you are texing at
-%
-%       \providecommand{\basedirectory}{ronnie\@felix/asc/book/}
-%
-% or something like it.  Put this file outside the book subdirectory, in
-% your own TEXINPUTS path, so when you ftp things back and forth
-% the basedirectory.tex file will remain unchanged on each machine.
-% then uncomment
-%\input{basedirectory}
-%
-% MACHINE BLIND VERSION:
-%
-\providecommand{\basedirectory}{}
-% \providecommand{\basedirectory}{{$\sim$}DasBuch/book/}
-%
-
-%%%%%%%%%%%%%%%%%%%%%% QUOTATIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%  the learned/witty quotes at the chapter and section headings
-%
-\newsavebox{\bartName}
-\newcommand{\bauthor}[1]{\sbox{\bartName}{\parbox{\textwidth}{\vspace*{0.8ex}
-       %\hspace*{\fill}
-       \small\noindent #1}}}
-\newenvironment{bartlett}{\hfill\begin{minipage}[t]{0.65\textwidth}\small}%
-{\hspace*{\fill}\nolinebreak[1]\usebox{\bartName}\vspace*{1ex}\end{minipage}}
-
-%
-%  a quotation inserted into the text
-%
-\newenvironment{txtquote}{\begin{quotation} \small}{\end{quotation}}
-
-
-%%%%%%%%%%%%%%%%%%%%%% INDEXING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\indx}[1] {#1\index{#1}}    % do not need to repeat the word
-
-
-%%%%%%%%%%%%%%% PAGE STYLE (to write footers) %%%%%%%%%%%%%%%%%%%%%%%%%%%
-\makeatletter
-\newcommand{\inputfile}{ }  % the rest is in the prlabels.sty
-\newcommand{\version}{}
-
-%%%%%%%%%%%%%%% Oxford UP tweaks %%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\listofsections}[1]{} % ChaosBook does not do this
-%\newcommand{\thebibliographybychapter}{\begin{thebibliography}}
-%\renewcommand{\endthebibliographybychapter}{\end{thebibliography}}
-
-
-%%%%%%%%%%%%%%% PREPARE PAGINATION FOR bin/mkbook %%%%%%%%%%%%%%%%%%%%%%%
-\newcounter{startSect}  %% page numbering used to generate ps pages
-\newcounter{endSect}    %% page numbering used to generate ps pages
-\newcommand{\chapName}{Unnamed} %% chapter label
-\newcommand{\Chapter}[3]{\clearpage\thispagestyle{empty}\cleardoublepage
-                \renewcommand{\inputfile}{#1 -  #2}
-                         \renewcommand{\chapName}{#1}
-                         \chapter[#3]{\textsf{\textbf{#3}}}
-                         \label{c-#1}
-                         \setcounter{startSect}{\thepage}
-                        }
-\newcommand{\References}[2]{\renewcommand{\inputfile}{#1 -  #2}
-            %\renewcommand{\chapName}{#1}   % do not rename the chapter
-            %\setcounter{startSect}{\thepage}   % do not restart counting
-        \markright{\MakeUppercase{References}}
-            \addtocontents{toc}{{\small\em references \thepage\ -}}
-                        }
-\newcommand{\Problems}[2]{\clearpage
-                \renewcommand{\inputfile}{#1 -  #2}
-                         \renewcommand{\chapName}{#1}
-                         \setcounter{startSect}{\thepage}
-             \markright{\MakeUppercase{Exercises}}
-             \section*{\textsf{\textbf{Exercises}}}
-             %\addcontentsline{toc}{section}{{~~~~Exercises}}
+\ifpaper % prepare for B&W paper printing:
+       \newcommand{\href}[2]{{#2}}	% no hyperref
+       \newcommand{\HREF}[2]{{#2}}
+       \renewcommand{\color}[1]{}		% B&W
+       \newcommand{\wwwcb}[1]{{\tt ChaosBook.org#1}}
+       \newcommand{\wwwgt}{{\tt birtracks.eu}}
+       \newcommand{\wwwQFT}[1]{{\tt ChaosBook.org/\-Field\-Theory#1}}
+       \newcommand{\wwwcnsQFT}[1]{{\tt ChaosBook.org/\-Field\-Theory#1}}
+       \newcommand{\weblink}[1]{{\tt #1}}
+       \newcommand{\arXiv}[1]{ {\tt arXiv:#1}}
+       \newcommand{\mpArc}[1]{{\tt \goodbreak mp\_arc~#1}}
+       \newcommand{\volName}{Unnamed} %% volume label
+       \newcommand{\Volume}[2]{
+                         \renewcommand{\volName}{ChaosBook-#1}
+                         \setcounter{startVol}{\thepage}
                          \addtocontents{toc}{
-                            {\small\em exercises \thepage \par}
-                        }
-                        }
-\newcommand{\Solution}[4]{
-        \section*{Chapter~\ref{c-#1}. #4}
-                \renewcommand{\inputfile}{#2 -  #3}
-        % PC:  modified 28 may 2000
-                %         \renewcommand{\chapName}{#1}
-                %        \setcounter{startSect}{\thepage}
-                        }
-\newcommand{\Solutions}{
-        \section{\textsf{\textbf{Solutions}}}
-        %\addcontentsline{toc}{section}{{~~~~Solutions}}
-                        }
-\newcommand{\Resume}{
-        \section*{\textsf{\textbf{R\'esum\'e}}}
-    %   \addcontentsline{toc}{section}{{~~~~Resum\'e}}
-                \addtocontents{toc}{{\small\em  resum\'e \thepage\ - }}
-                    }
-\newcommand{\Remarks}{
-        \section*{\textsf{\textbf{Commentary}}}
-        %\section*{Historical remarks}
-        \addcontentsline{toc}{subsection}{{~~~~Historical remarks}}
-                        }
-\newcommand{\forMkbook}{\setcounter{endSect}{\thepage}
-                        \addtocounter{endSect}{-1}
-\typeout{ set Chp=\chapName\space set pp=\arabic{startSect}-\arabic{endSect}}
-\typeout{ dvips -q -pp $pp book.dvi -o $sdir/$Chp.ps ; echo finished $Chp}
-\typeout{ $PS2PAGES $PS2PFLAGS $sdir/$Chp.ps > $sdir/$Chp-2p.ps ; echo finished $Chp-2p}
-                         }
-
-%%%%%%%%%%%%%%%%%%%%%% SPLIT ChaosBook.ps INTO VOLUMES %%%%%%%%%%%%%%%%%%%
-\newcounter{startVol}   %% page number of the start of a volume
-\newcounter{endVol}     %% page number of the end of a volume
-% \setcounter{endVol}{1} %% mess with this to renumber the stqrt v vol II
-
-
-
-\ifthenelse{\boolean{prepare_pdf}}
-       {
-           }{
-       }  %end of ifthenelse prepare_pdf}
-
-
-\ifthenelse{\boolean{prepare_pdf}}
-       {
-                    % keep homepage flexible:
-       \newcommand{\wwwcb}[1]{
+                                \vspace{18pt}
+                                \hrule
+                                \vspace{4pt}
+                                \noindent
+                                {\Large\textsf{\textbf{Part~#1: #2}}}
+                                \vspace{4pt}
+                                \hrule
+                                \vspace{12pt}
+                        		    }
+                                }
+       \newcommand{\VolumeEnd}{
+       \setcounter{endVol}{\thepage} \addtocounter{endVol}{-1}
+       \newpage
+       \typeout{ set Vlm=\volName\space set pp=\arabic{startVol}-\arabic{endVol}}
+       \typeout{ dvips -q -pp $pp book.dvi -o $sdir/$Vlm.ps ; echo finished $Vlm}
+       \typeout{ $PS2PAGES $PS2PFLAGS $sdir/$Vlm.ps > $sdir/$Vlm-2p.ps ; echo finished $Vlm-2p}
+                              }
+\else % prepare hyperlinked pdf
+        \newcommand{\wwwcb}[1]{       % keep homepage flexible:
                   {\tt \href{http://ChaosBook.org#1}
               {ChaosBook.org#1}}}
+       \newcommand{\wwwgt}{{\tt \href{http://birtracks.eu}
+              {birtracks.eu}}}
        \newcommand{\wwwQFT}[1]{
                   {\tt \href{http://ChaosBook.org/FieldTheory#1}
               {ChaosBook.org/\-Field\-Theory#1}}}
@@ -166,9 +80,8 @@
               {\tt \href{http://www.ma.utexas.edu/mp_arc-bin/mpa?yn=#1}
                    {\goodbreak mp\_arc~#1}}}
        \newcommand{\arXiv}[1]{
-              {\tt \href{http://arXiv.org/abs/#1}{\goodbreak #1}}}
+              {\tt \href{http://arXiv.org/abs/#1}{\goodbreak arXiv:#1}}}
        \newcommand{\Volume}[2]{
-%            \setcounter{page}{\endVol} %experimenting
                          \addtocontents{toc}{
                                 \vspace{18pt}
                                 \hrule
@@ -178,238 +91,46 @@
                                 \vspace{4pt}
                                 \hrule
                                 \vspace{12pt}
-                        }
+                                            }
                                }
-%   \setcounter{page}{\value{endVol}}   % experimenting with hopping page nos
-%   \addtocounter{page}{-22}    % experimenting with hooping page nos
        \newcommand{\VolumeEnd}{\newpage }
-           }{
-                   %% prepare for postscript printing:
-       \newcommand{\wwwcb}[1]{{\tt ChaosBook.org#1}}
-       \newcommand{\wwwQFT}[1]{{\tt ChaosBook.org/\-Field\-Theory#1}}
-       \newcommand{\wwwcnsQFT}[1]{{\tt ChaosBook.org/\-Field\-Theory#1}}
-       \newcommand{\weblink}[1]{{\tt #1}}
-       \newcommand{\HREF}[2]{{#2}}
-       \newcommand{\arXiv}[1]{ {\tt #1}}
-       \newcommand{\mpArc}[1]{{\tt \goodbreak mp\_arc~#1}}
-%RM    \newcounter{startVol}   %% page number of the start of a volume
-%RM    \newcounter{endVol}     %% page number of the end of a volume
-       \newcommand{\volName}{Unnamed} %% volume label
-       \newcommand{\Volume}[2]{
-                         \renewcommand{\volName}{ChaosBook-#1}
-%            \setcounter{page}{\endVol} % experimenting
-                         \setcounter{startVol}{\thepage}
-                         \addtocontents{toc}{
-                                \vspace{18pt}
-                                \hrule
-                                \vspace{4pt}
-                                \noindent
-                                {\Large\textsf{\textbf{Part~#1: #2}}}
-                                \vspace{4pt}
-                                \hrule
-                                \vspace{12pt}
-                        }
-                                  }
-\newcommand{\VolumeEnd}{
-\setcounter{endVol}{\thepage}
-\addtocounter{endVol}{-1}
-\newpage
-\typeout{ set Vlm=\volName\space set pp=\arabic{startVol}-\arabic{endVol}}
-\typeout{ dvips -q -pp $pp book.dvi -o $sdir/$Vlm.ps ; echo finished $Vlm}
-\typeout{ $PS2PAGES $PS2PFLAGS $sdir/$Vlm.ps > $sdir/$Vlm-2p.ps ; echo finished $Vlm-2p}
-                         }
-       }  %end of ifthenelse prepare_pdf}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%% QUOTATIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  the learned/witty quotes at the chapter and section headings
+%
+\newsavebox{\bartName}
+\newcommand{\bauthor}[1]{\sbox{\bartName}{\parbox{\textwidth}{\vspace*{0.8ex}
+       %\hspace*{\fill}
+       \hspace{2em}---\small\noindent #1}}}
+\newenvironment{bartlett}{\hfill\begin{minipage}[t]{0.65\textwidth}\small}%
+{\hspace*{\fill}\nolinebreak[1]\usebox{\bartName}\vspace*{1ex}\end{minipage}}
+%
+%  a quotation inserted into the text
+%
+\newenvironment{txtquote}{\begin{quotation} \small}{\end{quotation}}
 
 
-%%%%%%%%%%%%%%%%%%%%%% COMMENTS IN THE TEXT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% also search the text for lines starting with %%  to
-% locate various internal comments, recent edits etc.
-\ifthenelse{\boolean{display_comments}}
-{ % if display_comments {true}, display comments in text
-  \printlabels            %% turns on labeling of equations on margins
-  \usepackage{showidx}    %% display index entries on margins
-
-    \newcommand{\Preliminary}[1]
-{\marginpar{\color{magenta}$\Downarrow$\footnotesize PRELIMINARY}%
-{\color{magenta}#1}%
-\marginpar{\color{magenta}$\Uparrow$\footnotesize PRELIMINARY}}
-
-    \newcommand{\PublicPrivate}[2]
-{\marginpar{\color{blue}$\Downarrow$\footnotesize PRIVATE}%
-{\color{blue}#2}%
-\marginpar{\color{blue}$\Uparrow$\footnotesize PRIVATE}}
-
-\newcommand{\PC}[1]{$\footnotemark\footnotetext{Predrag: #1}$}
-%      \newcommand{\PC}[1]
-%{\marginpar{\renewcommand{\baselinestretch}{0.7}\footnotesize #1}%
-%\renewcommand{\baselinestretch}{1.0}}
-%    \newcommand{\RM}[1]{\marginpar{
-%        \renewcommand{\baselinestretch}{0.7}
-%        \hrule \vspace{0.2ex}
-%        \footnotesize RM:~ #1
-%        \\ \hrule}%
-%        \renewcommand{\baselinestretch}{1.0}%
-%                    }
-  \newcommand{\RM}[1]{\marginpar{Ronnie: \footnotesize#1}}
-  \newcommand{\PCedit}[1]{{\color{red}#1}}
-  \newcommand{\AW}[1]{\marginpar{
-        \renewcommand{\baselinestretch}{0.7}
-        \hrule \vspace{0.2ex}
-        \footnotesize AW:~ #1
-        \\ \hrule}%
-        \renewcommand{\baselinestretch}{1.0}%
-                }
-  \newcommand{\LR}[1]{\marginpar{
-        \renewcommand{\baselinestretch}{0.7}
-        \hrule \vspace{0.2ex}
-        \footnotesize LR:~ #1
-        \\ \hrule}%
-        \renewcommand{\baselinestretch}{1.0}%
-                }
-  %\newcommand{\LR}[1]{$\footnotemark\footnotetext{Lamberto: #1}$}
-  \newcommand{\RA}[1]{$\footnotemark\footnotetext{Artuso: #1}$}
-  \newcommand{\VB}[1]{$\footnotemark\footnotetext{Baladi: #1}$}
-  \newcommand{\OB}[1]{$\footnotemark\footnotetext{Biham: #1}$}
-  \newcommand{\PD}[1]{$\footnotemark\footnotetext{Dahlqvist: #1}$}
-  \newcommand{\CPD}[1]{$\footnotemark\footnotetext{Carl: #1}$}
-  \newcommand{\DJD}[1]{$\footnotemark\footnotetext{Driebe: #1}$}
-  \newcommand{\AG}[1]{$\footnotemark\footnotetext{Garg: #1}$}
-  \newcommand{\DG}[1]{$\footnotemark\footnotetext{Dorte: #1}$}
-  \newcommand{\KTH}[1]{$\footnotemark\footnotetext{Kai H: #1}$}
-  \newcommand{\BL}[1]{$\footnotemark\footnotetext{Lautrup: #1}$}
-  \newcommand{\DL}[1]{$\footnotemark\footnotetext{Domenico: #1}$}
-  \newcommand{\DLedit}[1]{{\color{green}#1}}
-  \newcommand{\SFN}[1]{$\footnotemark\footnotetext{Sune: #1}$}
-  \newcommand{\PER}[1]{$\footnotemark\footnotetext{Rosenqvist: #1}$}
-  \newcommand{\HHR}[1]{$\footnotemark\footnotetext{HHR: #1}$}
-  \newcommand{\EAS}[1]{$\footnotemark\footnotetext{Spiegel: #1}$}
-  \newcommand{\NS}[1]{$\footnotemark\footnotetext{Niels S: #1}$}
-  \newcommand{\GT}[1]{$\footnotemark\footnotetext{Tanner: #1}$}
-  \newcommand{\GV}[1]{$\footnotemark\footnotetext{Vattay: #1}$}
-  \newcommand{\DV}[1]{$\footnotemark\footnotetext{Divikar: #1}$}
-  \newcommand{\NW}[1]{$\footnotemark\footnotetext{Whelan: #1}$}
-  \newcommand{\DW}[1]{$\footnotemark\footnotetext{Wojcik: #1}$}
-  \newcommand{\RS}[1]{$\footnotemark\footnotetext{Raenell: #1}$}
-  \newcommand{\MAP}[1]{$\footnotemark\footnotetext{Mason: #1}$}
-  \newcommand{\TB}[1]{$\footnotemark\footnotetext{Bartsch: #1}$}
-  \newcommand{\TZ}[1]{$\footnotemark\footnotetext{Zazy: #1}$}
-}{  % if display_comments {false}, drop comments
-    % do not turn on labeling of equations on margins
-  \newcommand{\Preliminary}[1]{}
-  \newcommand{\PublicPrivate}[2]{#1}
-  \newcommand{\OB}[1]{}
-  \newcommand{\PC}[1]{}
-  \newcommand{\PCedit}[1]{}
-  \newcommand{\PD}[1]{}
-  \newcommand{\DG}[1]{}
-  \newcommand{\BL}[1]{}
-  \newcommand{\DL}[1]{}
-  \newcommand{\DLedit}[1]{}
-  \newcommand{\SFN}[1]{}
-  \newcommand{\RM}[1]{}
-  \newcommand{\GV}[1]{}
-  \newcommand{\AG}[1]{}
-  \newcommand{\VB}[1]{}
-  \newcommand{\LR}[1]{}
-  \newcommand{\PER}[1]{}
-  \newcommand{\GT}[1]{}
-  \newcommand{\AW}[1]{}
-  \newcommand{\DW}[1]{}
-  \newcommand{\RS}[1]{}
-  \newcommand{\NS}[1]{}
-  \newcommand{\RA}[1]{}
-  \newcommand{\HHR}[1]{}
-  \newcommand{\EAS}[1]{}
-  \newcommand{\NW}[1]{}
-  \newcommand{\KTH}[1]{}
-  \newcommand{\CPD}[1]{}
-  \newcommand{\DJD}[1]{}
-  \newcommand{\DV}[1]{}
-  \newcommand{\MAP}[1]{}
-  \newcommand{\TB}[1]{}
-  \newcommand{\TZ}[1]{}
-}
-%%%%%%%%%%%%%%%%%%%%%% END OF ON/OFF COMMENTS SWITCH %%%%%%%%%%%%%%%%%%%%
-
-\newcommand{\authorRA}%{\marginpar{RM+PC}}
-         {\hfill (R. Artuso)}
-\newcommand{\authorRAPC} %{\marginpar{EAS+PC}}
-     {\hfill (R. Artuso and P. Cvitanovi\'c)}
-\newcommand{\authorOBPC} %{\marginpar{EAS+PC}}
-     {\hfill (O. Biham and P. Cvitanovi\'c)}
-\newcommand{\authorOBCCPC} %{\marginpar{EAS+PC}}
-     {\hfill (O. Biham, C. Chandre and P. Cvitanovi\'c)}
-\newcommand{\authorCCPSFKD} %{\marginpar{EAS+PC}}
-     {\hfill (C. Chandre, F.K. Diakonos and P. Schmelcher)}
-\newcommand{\authorFC} %{\marginpar{FC}}
-     {\hfill (F. Christiansen)}
-\newcommand{\authorHHR} %{\marginpar{EAS+PC}}
-     {\hfill (H.H. Rugh)}
-\newcommand{\authorRAHHRPC} %{\marginpar{EAS+PC}}
-     {\hfill (R. Artuso, H.H. Rugh and P. Cvitanovi\'c)}
-\newcommand{\authorJMPC} %{\marginpar{EAS+PC}}
-     {\hfill (J. Mathiesen and P. Cvitanovi\'c)}
-\newcommand{\authorGSPC} %{\marginpar{EAS+PC}}
-     {\hfill (G. Simon and P. Cvitanovi\'c)}
-\newcommand{\authorRAPD} %{\marginpar{EAS+PD}}
-     {\hfill (R. Artuso and P. Dahlqvist)}
-\newcommand{\authorRAPDGTPC} %{\marginpar{EAS+PD}}
-     {\hfill (R. Artuso, P. Dahlqvist, G. Tanner and P. Cvitanovi\'c)}
-\newcommand{\authorPCRALREAS}
-     {\hfill (P. Cvitanovi\'c, R. Artuso, L. Rondoni, and  E.A. Spiegel)}
-\newcommand{\authorPC} %{\marginpar{PC}}
-     {\hfill (P. Cvitanovi\'c)}
-\newcommand{\authorPD} %{\marginpar{PD+PC}}
-     {\hfill (P. Dahlqvist)}
-\newcommand{\authorEASPC} %{\marginpar{EAS+PC}}
-     {\hfill (E.A. Spiegel and P. Cvitanovi\'c)}
-\newcommand{\authorLC} %{\marginpar{DL}
-     {\hfill (Y. Lan and P. Cvitanovi\'c)}
-\newcommand{\authorDL} %{\marginpar{DL}
-     {\hfill (D. Lippolis)}
-\newcommand{\authorRMPCEAS}
-     {\hfill (R. Mainieri, P. Cvitanovi\'c and  E.A. Spiegel)}
-\newcommand{\authorRM} %{\marginpar{RM+PC}}
-     {\hfill (R. Mainieri)}
-\newcommand{\authorRMPC} %{\marginpar{RM+PC}}
-     {\hfill (R. Mainieri and P. Cvitanovi\'c)}
-\newcommand{\authorRPPC} %{\marginpar{RM+PC}}
-     {\hfill (R. Pa\v skauskas and P. Cvitanovi\'c)}
-\newcommand{\authorLRPC} %{\marginpar{LR+PC}}
-     {\hfill (L. Rondoni and P. Cvitanovi\'c)}
-\newcommand{\authorLR} %{\marginpar{LR}}
-     {\hfill (L. Rondoni)}
-\newcommand{\authorCPDPC} %{\marginpar{CPD+PC}}
-     {\hfill  (C.P. Dettmann and P. Cvitanovi\'c)}
-\newcommand{\authorKTHPC} %{\marginpar{KTH+PC}}
-     {\hfill  (K.T. Hansen and P. Cvitanovi\'c)}
-\newcommand{\authorGT} %{\marginpar{GT}}
-     {\hfill  (G. Tanner)}
-\newcommand{\authorMJFPC} %{\marginpar{MJF+PC}}
-     {\hfill  (M.J. Feigenbaum and P. Cvitanovi\'c)}
-\newcommand{\authorGV} %{\marginpar{GV+PC}}
-     {\hfill (G. Vattay)}
-\newcommand{\authorGVGTPC} %{\marginpar{GV+PC}}
-     {\hfill (G. Vattay, G. Tanner and P. Cvitanovi\'c)}
-\newcommand{\authorGVPC} %{\marginpar{GV+PC}}
-     {\hfill (G. Vattay and P. Cvitanovi\'c)}
-\newcommand{\authorNW} %{\marginpar{FC}}
-     {\hfill (N. Whelan)}
-\newcommand{\authorAW} %{\marginpar{FC}}
-     {\hfill (A. Wirzba)}
-\newcommand{\authorCV} %{\marginpar{FC}}
-     {\hfill (P. Cvitanovi\'c and L.V. Vela-Arevalo)}
-\newcommand{\authorCW} %{\marginpar{FC}}
-     {\hfill (A. Wirzba and P. Cvitanovi\'c)}
-\newcommand{\authorWCW} %{\marginpar{FC}}
-     {\hfill (A. Wirzba, P. Cvitanovi\'c and N. Whelan)}
-
+%%%%%%%%%%%%%%%%%%%%%% INDEXING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\indx}[1] {#1\index{#1}}    % do not need to repeat the word
 
 \newcommand{\file}[1]{$\footnotemark\footnotetext{{\bf file} #1}$}
 %\newcommand{\lecture}{\addtocontents{toc}{\sf\small lecture: }}
 \newcommand{\lecture}[2]{ \addtocontents{toc}
            {{\scriptsize #1}{\sf\small lecture: \scriptsize #2}} }
 
+%%%%%%%%%%%%%%% EQUATIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\continue}{\nonumber \\ }
+\newcommand{\nnu}{\nonumber}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\ee}[1] {\label{#1} \end{equation}}
+\newcommand{\bea}{\begin{eqnarray}}
+\newcommand{\ceq}{\nonumber \\ & & }
+\newcommand{\eea}{\end{eqnarray}}
+\newcommand{\barr}{\begin{array}}
+\newcommand{\earr}{\end{array}}
 
 %%%%%%%%%%%%%%% REFERENCING EQUATIONS ETC. %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\rf}     [1] {~\cite{#1}}
@@ -424,16 +145,17 @@
 \newcommand{\reffigs} [2] {figures~\ref{#1} and~\ref{#2}}
 \newcommand{\refFig} [1] {Figure~\ref{#1}}
 \newcommand{\refFigs} [2] {Figures~\ref{#1} and~\ref{#2}}
-\newcommand{\refFigToFig}  [2] {Figures~\ref{#1} -~\ref{#2}}
 \newcommand{\reftab} [1] {table~\ref{#1}}
 \newcommand{\refTab} [1] {Table~\ref{#1}}
 \newcommand{\reftabs}[2] {tables~\ref{#1} and~\ref{#2}}
 \newcommand{\refsect}[1] {sect.~\ref{#1}}
 \newcommand{\refsects}[2] {sects.~\ref{#1} and \ref{#2}}
 \newcommand{\refSect}[1] {Sect.~\ref{#1}}
+\newcommand{\refSects}[2] {Sects.~\ref{#1} and \ref{#2}}
 \newcommand{\refchap}[1] {chapter~\ref{#1}}
 \newcommand{\refChap}[1] {Chapter~\ref{#1}}
 \newcommand{\refchaps}[2] {chapters~\ref{#1} and \ref{#2}}
+\newcommand{\refchaptochap}[2] {chapters~\ref{#1} to \ref{#2}}
 \newcommand{\refappe}[1] {appendix~\ref{#1}}
 \newcommand{\refappes}[2] {appendices~\ref{#1} and \ref{#2}}
 \newcommand{\refAppe}[1] {Appendix~\ref{#1}}
@@ -443,166 +165,74 @@
 \newcommand{\refexer}[1] {exercise~\ref{#1}}
 \newcommand{\refExer}[1] {Exercise~\ref{#1}}
 \newcommand{\refsolu}[1] {solution~\ref{#1}}
-\newcommand{\exerbox}[1]{
-         \marginpar[{%
-            \color{green}
-        \raisebox{-0.5ex}[1.0ex][1.0ex]{\huge \ding{46}}
-        \sf ~\ref{#1}\\ \footnotesize page~\pageref{#1}
-                   }]%
-          { \raggedright
-            \color{green}
-        \raisebox{-0.5ex}[1.0ex][1.0ex]{\huge \ding{46}}
-        \sf ~\ref{#1}\\ \footnotesize page~\pageref{#1}
-          }
-                        }
-           %\includegraphics[width=0.04\textwidth]{Fig/padPencil.eps}
-           %\includegraphics[width=0.04\textwidth]{Fig/exercise.ps}
-           %\includegraphics[width=0.04\textwidth]{Fig/archive.ps}
 
-\newcommand{\advSect}{\marginpar{\fbox{\sf $\bullet$ advanced section $\bullet$ } } }
-\newcommand{\toSect}[1]{\marginpar[{
-        \color{green}
-        \raisebox{-1.0ex}[1.0ex][1.0ex]{\huge \ding{43}}
-        {\sf \footnotesize \refsect{#1} }
-                  }]{
-            \raggedright
-        \color{green}
-        \raisebox{-1.0ex}[1.0ex][1.0ex]{\huge \ding{43}}
-        {\sf \footnotesize \refsect{#1} }
-                                  } }
-\newcommand{\toChap}[1]{\marginpar[{
-        \color{green}
-        \raisebox{-1.0ex}[1.0ex][1.0ex]{\huge \ding{43}}
-        {\sf \footnotesize ~\refchap{#1} }
-                  }]{
-            \raggedright
-        \color{green}
-        \raisebox{-1.0ex}[1.0ex][1.0ex]{\huge \ding{43}}
-        {\sf \footnotesize ~\refchap{#1} }
-                                  } }
-        %\includegraphics[width=0.6cm]{Fig/thisWay.ps}
+%%%%%%%%%%%%%%  Abbreviations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% APS (American Physiology Society, it seems) style:
+%%%     Latin or foreign words or phrases should be roman, not italic.
+%%%     Insert a `hard' space after full points
+%%%                                         that do not end sentences.
 
-\newcommand{\toAppe}[1]{\marginpar[{
-        \color{green}
-        \raisebox{-1.0ex}[1.0ex][1.0ex]{\huge \ding{43}}
-        {\sf \footnotesize \refappe{#1} }
-                  }]{
-            \raggedright
-        \color{green}
-        \raisebox{-1.0ex}[1.0ex][1.0ex]{\huge \ding{43}}
-        {\sf \footnotesize \refappe{#1} }
-                                  } }
-\newcommand{\toRem}[1]{\marginpar[{
-        \color{green}
-        \raisebox{-1.0ex}[1.0ex][1.0ex]{\huge \ding{43}}
-        {\sf \footnotesize \refrem{#1} }
-                 }]{
-            \raggedright
-        \color{green}
-        \raisebox{-1.0ex}[1.0ex][1.0ex]{\huge \ding{43}}
-        {\sf \footnotesize \refrem{#1} }
-                                  } }
-\newcommand{\toExam}[1]{\marginpar[{
-        \color{green}
-        \raisebox{-1.0ex}[1.0ex][1.0ex]{\huge \ding{43}}
-        {\sf \footnotesize \refexam{#1} }
-                 }]{
-            \raggedright
-        \color{green}
-        \raisebox{-1.0ex}[1.0ex][1.0ex]{\huge \ding{43}}
-        {\sf \footnotesize \refexam{#1} }
-                                  } }
-\newcommand{\tangent}{\includegraphics[width=0.08\textwidth]{Fig/chili.eps}~~}
-%\newcommand{\tangent}{\marginpar{\fbox{ \includegraphics{Fig/chili.ps} } } }
+\newcommand{\etc}{{etc.}}       % APS
+\newcommand{\etal}{{\em et al.}}    % etal in italics, APS too
+\newcommand{\ie}{{i.e.}}        % APS
+\newcommand{\cf}{{\em cf.\ }}     % APS
+\newcommand{\eg}{{e.g.\ }}        % APS, OUP, hard space '\eg\ NextWord'
+% \newcommand{\etc}{{\em etc.}}     % etcetera in italics
+% \newcommand{\ie}{{that is}}       % use Latin or English?  Decide later.
+% \newcommand{\cf}{{cf.}}
+% \newcommand{\eg}{{\it e.g.,\ }}   % Wirzba 2sep2001
 
-  %% Predrag 26aug2007: this supposedly speeds up compilation
-  %% of frequently used object(Lipkin, "Latex" p. 362)
-%%%%  mark section as `cyclist':
-            \newsavebox{\bike}\sbox{\bike}
-            {\raisebox{-5.0ex}[4.5ex][3.5ex]
-             {\includegraphics[width=1.6cm]{Fig/w11-1bicycle}}}
-\newcommand{\cyclist}{\marginpar[\hfill\usebox{\bike}]
-        {\usebox{\bike}\hfill}}
+%%%%%%%%%%%%%%% ChaosBook Abbreviations %%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%% mark section as `pedestrian':
-           \newsavebox{\trot}\sbox{\trot}
-           {\raisebox{-5.0ex}[4.5ex][3.5ex]
-            {\includegraphics[width=1.6cm]{Fig/i-4-pedestrian}}}
-\newcommand{\pedestrian}{\marginpar[\hfill\usebox{\trot}]
-        {\usebox{\trot}\hfill}}
-
-\newcommand{\fastTrack}[1]
-           {\hfill {\raisebox{-3.0ex}[4.5ex][3.5ex]{
-                              \includegraphics[width=1.25cm]{Fig/thisWay.ps}
-                                                   }
-            \begin{minipage}[t]{0.25\textwidth}
-            {\sf \footnotesize
-                   fast track: \\
-                               \refsect{#1}, p.~\pageref{#1}
-                        }
-            \end{minipage}
-                    }
-           }
-\newcommand{\fastTrackChap}[1]
-           {\hfill {\raisebox{-3.0ex}[4.5ex][3.5ex]{
-                              \includegraphics[width=1.25cm]{Fig/thisWay.ps}
-                                                   }
-            \begin{minipage}[t]{0.25\textwidth}
-            {\sf \footnotesize
-                   fast track: \\
-                               \refchap{#1}, p.~\pageref{#1}
-                        }
-            \end{minipage}
-                    }
-           }
-\newcommand{\inDepth}[1]
-           {\hfill {\raisebox{-3.0ex}[4.5ex][3.5ex]{
-                         \includegraphics[width=1.24cm]{Fig/eyep.ps}
-                                                   }
-            \begin{minipage}[t]{0.25\textwidth}
-            {\sf \footnotesize
-                   in depth: \\
-                               \refsect{#1}, p.~\pageref{#1}
-                        }
-            \end{minipage}
-                    }
-           }
-\newcommand{\inDepthChap}[1]
-           {\hfill {\raisebox{-3.0ex}[4.5ex][3.5ex]{
-                         \includegraphics[width=1.24cm]{Fig/eyep.ps}
-                                                   }
-            \begin{minipage}[t]{0.25\textwidth}
-            {\sf \footnotesize
-                   in depth: \\
-                               \refchap{#1}, p.~\pageref{#1}
-                        }
-            \end{minipage}
-                    }
-           }
-\newcommand{\inDepthAppe}[1]
-           {\hfill {\raisebox{-3.0ex}[4.5ex][3.5ex]{
-                         \includegraphics[width=1.24cm]{Fig/eyep.ps}
-                                                   }
-            \begin{minipage}[t]{0.25\textwidth}
-            {\sf \footnotesize
-                   in depth: \\
-                               \refappe{#1}, p.~\pageref{#1}
-                        }
-            \end{minipage}
-                    }
-           }
-
-%%%%%%%%%%%%%%% EQUATIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\beq}{\begin{equation}}
-\newcommand{\continue}{\nonumber \\ }
-\newcommand{\nnu}{\nonumber}
-\newcommand{\eeq}{\end{equation}}
-\newcommand{\ee}[1] {\label{#1} \end{equation}}
-\newcommand{\bea}{\begin{eqnarray}}
-\newcommand{\ceq}{\nonumber \\ & & }
-\newcommand{\eea}{\end{eqnarray}}
-\newcommand{\barr}{\begin{array}}
-\newcommand{\earr}{\end{array}}
+\newcommand{\evOper}{evolution oper\-ator}
+\newcommand{\EvOper}{Evolution oper\-ator}
+ %% \newcommand{\evOp}{Ruelle operator} %could be ``evolution'' instead?
+%\newcommand{\FPoper}{Frobenius-Perron oper\-ator}
+\newcommand{\FPoper}{Perron-Frobenius oper\-ator} % Pesin's ordering
+\newcommand{\FP}{Perron-Frobenius}
+\newcommand{\statesp}{state space}
+\newcommand{\Statesp}{State space}
+\newcommand{\maslov}{topological}
+\newcommand{\Maslov}{Topological}
+%\newcommand{\Maslov}{Keller-Maslov}
+\newcommand{\jacobian}{Jacobian}        % determinant
+\newcommand{\jacobianM}{fundamental matrix} % standard name
+\newcommand{\jacobianMs}{fundamental matrices}  %
+\newcommand{\JacobianM}{Fundamental matrix} %
+\newcommand{\JacobianMs}{Fundamental matrices}  %
+% \newcommand{\jacobianM}{Jacobian matrix}  % Predrag's name
+% \newcommand{\jacobianMs}{Jacobian matrices}   % matrices
+\newcommand{\stabmat}{stability matrix}     % stability matrix
+\newcommand{\Stabmat}{Stability matrix}     % Stability matrix
+\newcommand{\stabmats}{stability matrices}
+% \newcommand{\stabmat}{matrix of variations}   % Arnold, says Vattay
+\newcommand{\monodromyM}{monodromy matrix} % monodromy matrix, Poincare cut
+\newcommand{\MonodromyM}{Monodromy matrix} % monodromy matrix, Poincare cut
+\newcommand{\dzeta}{dyn\-am\-ic\-al zeta func\-tion}
+\newcommand{\Dzeta}{Dyn\-am\-ic\-al zeta func\-tion}
+\newcommand{\tzeta}{top\-o\-lo\-gi\-cal zeta func\-tion}
+\newcommand{\Tzeta}{Top\-o\-lo\-gi\-cal zeta func\-tion}
+\newcommand{\BERzeta}{BER zeta func\-tion}
+%\newcommand{\tzeta}{Artin-Mazur zeta func\-tion} %alternative to topological
+\newcommand{\qS}{semi\-classical zeta func\-tion}
+%\newcommand{\qS}{Gutz\-willer-Voros zeta func\-tion}
+\newcommand{\Gt}{Gutz\-willer trace formula}
+\newcommand{\Fd}{spec\-tral det\-er\-min\-ant}
+\newcommand{\fd}{spec\-tral det\-er\-min\-ant}
+\newcommand{\FD}{Spec\-tral det\-er\-min\-ant}
+\newcommand{\cFd}{semiclass\-ic\-al spec\-tral det\-er\-mi\-nant}
+\newcommand{\cFD}{Semiclass\-ic\-al spec\-tral det\-er\-mi\-nant}
+% \newcommand{\cFd}{semiclass\-ic\-al Fred\-holm det\-er\-mi\-nant}
+\newcommand{\Vd}{Vattay det\-er\-mi\-nant}
+\newcommand{\cycForm}{cycle averaging formula}
+\newcommand{\CycForm}{Cycle averaging formula}
+\newcommand{\freeFlight}{mean free flight time}
+\newcommand{\FreeFlight}{Mean free flight time}
+\newcommand{\pdes}{partial differential equations}
+\newcommand{\Pdes}{Partial differential equations}
+\newcommand{\dof}{dof}         % Hamiltonian deegree of freedom
+% \newcommand{\dof}{deegree of freedom}
+\newcommand\Poincare{Poincar\'e }
 
 %%%%%%%%%%%%%%% VECTORS, MATRICES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Commented out AMS-style pmatrix, which is incompatible with TeX/LaTeX pmatrix
@@ -661,227 +291,6 @@
 
 \newcommand{\combinatorial}[2]{ {#1 \choose #2}}
 
-%%%%%%%%%%%%%%% NUMBERED ENVIRONMENTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% REPLACE {13.5cm} by \textwidth counter in these environments
-
-\newtheorem{exerc}{\textsf{\textbf{Exercise}}}[chapter]
-% \newtheorem{exerc}{}[chapter]
-% \newtheorem{exerc}{{$\bullet$}}[chapter]
- \newcommand{\exercise}[2]{
-        \vskip -13mm
-         \noindent
-         \begin{exerc}{
-\renewcommand{\theenumi}{\alph{enumi}}
-\renewcommand{\labelenumi}{\textbf{(\alph{enumi})\ }}
-    {\noindent\small
-         ~~\textsf{\textbf{#1}} ~
-           \slshape\sffamily{#2}  } % \textsl would not work...
-    }
-         \vskip -1mm
-% removed the line: % \noindent\rule[.1mm]{\linewidth}{.5mm}
-         \end{exerc}
-                          }
-
-\newcommand{\Exercise}[2]{      %environment for obligatory problems
-        \vskip -13mm
-        \noindent
-        \begin{exerc}{
-\renewcommand{\theenumi}{\alph{enumi}}
-\renewcommand{\labelenumi}
-    {\textsf{\textbf{ (\alph{enumi})\ }}}
-        {\noindent
-         ~~\textsf{\textbf{\underline{#1}}} ~
-           \slshape\sffamily{#2}  } % \textsl would not work...
-        }
-         \vskip -1mm
-        \end{exerc}
-                          }
-
-% from LaTeX style file for the CUP standard designs 5a to 9b
-% \newtheorem{exerc}{Exercise}[chapter]
-% \newcommand{\exercise}[2]{
-% %        \vskip -12mm
-%          \begin{quotation}
-%         \noindent\rule[.1mm]{10.7cm}{.2mm}
-%    % \vskip -22mm
-%          \noindent
-%          \begin{exerc}{
-%           \noindent ~~{\small\em\bf #1 ~}\small\em #2 }
-%           \vskip -1mm \noindent\rule[.1mm]{10.7cm}{.5mm}
-%   \end{exerc}
-%          \end{quotation}
-%                 }
-
-\newcommand{\solution}[3]{
-         \vskip -4mm
-        {\noindent\small
-         ~~\textsf{\textbf{  Solution \ref{#1}:   %NUMBER
-                ~#2}}         %TITLE
-           \slshape\sffamily{#3}          %TEXT
-         }
-         \vskip  4mm
-% removed the line: % \noindent\rule[.1mm]{\linewidth}{.5mm}
-                        }
-
-\newtheorem{rmark}{{\small\textsf{\textbf{Remark}}}}[chapter]
-\newcommand{\remark}[2]{
-        % \begin{quotation}
-        \begin{rmark}
-        {\small\em\noindent {\small\sf \underline{ #1} ~} #2 }
-    \end{rmark}
-    % \end{quotation}
-              }
-
-\newtheorem{exmple}{\noindent\small\textsf{\textbf{Example}}}[chapter]
-\newcommand{\example}[2]{
-    \vskip -13mm
-        \begin{offset}
-        \begin{exmple}
-           \noindent\small
-           \textsf{\textbf{#1}} ~
-       \slshape\sffamily{#2}
-       % \textsl would not work...
-    \end{exmple}
-    \end{offset}
-        \vskip -1mm
-             }
-
-%   \FIG{#1}    % \includegraphics[width=0.40\textwidth]{Fig/f_name.ps}
-%   {#2}    % short caption text
-%   {#3}    % full caption text
-%   {#4}    % f-figure-label
-%       defined here:
-\newcommand{\FIG}[4]{\begin{figure}
-              \hspace*{0.10\textwidth}%
-              \begin{minipage}[b]{1.00\textwidth}
-              \noindent{#1}
-              %\centering{#1}
-                      \caption[#2]{#3}
-                      \label{#4}
-              \end{minipage}
-              \end{figure} }
-
-%% Eventually get rid of {floatingfigure}
-%  \FFIG{#1}    % width=?cm, ... here
-%       {#2}    % Fig/f_name.ps
-%       {#3}    % short caption text
-%       {#4}    % full caption text
-%       {#5}    % f-figure-label
-\newcommand{\FFIG}[5]{\begin{floatingfigure}[v]{0.40\textwidth}
-                      \noindent
-                      \includegraphics[#1]{#2}
-                      \caption[#3]{#4}
-                      \label{#5}
-              \end{floatingfigure} }
-
-%   \BFIG{#1}   % width=#1\textwidth
-%        {#2}   % f_name.ps
-%    {#3}   % short caption text
-%    {#4}   % full caption text
-%    {#5}   % f-figure-label
-%       defined here:
-\newcommand{\BFIG}[5]{\begin{figure}
-              \hspace*{0.10\textwidth}%
-              \begin{minipage}[b]{1.00\textwidth}
-              \centering{
-                      \includegraphics[width=#1\textwidth]{Fig/#2}
-                     }
-                      \caption[#3]{#4}
-                      \label{#5}
-              \end{minipage}
-              \end{figure} }
-
-%  \SFIG{#1}    % f_name.eps
-%       {#2}    % short caption text
-%       {#3}    % full caption text
-%       {#4}    % f-figure-label
-\newcommand{\SFIG}[4]{\begin{figure}
-              %\hspace*{-0.10\textwidth}
-              \hspace*{0.10\textwidth}
-              \begin{minipage}[b]{0.55\textwidth}
-                      \caption[#2]{#3}
-                      \label{#4}
-              \end{minipage}~~~~~%
-              \begin{minipage}[b]{0.40\textwidth}
-                      \includegraphics[width=1.00\textwidth]{Fig/#1}
-              \end{minipage}
-              %\hfill
-              \end{figure} }
-
-%%%%%%%%%%%%%%  Abbreviations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% APS (American Physiology Society, it seems) style:
-%%%     Latin or foreign words or phrases should be roman, not italic.
-
-\newcommand{\etc}{{etc.}}       % APS
-\newcommand{\etal}{{\em et al.}}    % etal in italics, APS too
-\newcommand{\ie}{{i.e.}}        % APS
-\newcommand{\cf}{{\em cf.}}     % APS
-\newcommand{\eg}{{e.g.}}        % APS
-% \newcommand{\etc}{{\em etc.}}     % etcetera in italics
-% \newcommand{\ie}{{that is}}       % use Latin or English?  Decide later.
-% \newcommand{\cf}{{cf.}}
-% \newcommand{\eg}{{\it e.g.,\ }}   % Wirzba 2sep2001
-
-%%%%%%%%%%%%%%% TEXT ABBREVS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-         %% [Evolution operators, zetas, ...] %%%%%%%%
-\newcommand{\evOper}{evolution oper\-ator}
-\newcommand{\EvOper}{Evolution oper\-ator}
- %% \newcommand{\evOp}{Ruelle operator} %could be ``evolution'' instead?
-%\newcommand{\FPoper}{Frobenius-Perron oper\-ator}
-\newcommand{\FPoper}{Perron-Frobenius oper\-ator} % Pesin's ordering
-\newcommand{\FP}{Perron-Frobenius}
-
-\newcommand{\statesp}{state space}
-\newcommand{\Statesp}{State space}
-\newcommand{\maslov}{topological}
-\newcommand{\Maslov}{Topological}
-%\newcommand{\Maslov}{Keller-Maslov}
-\newcommand{\jacobian}{Jacobian}        % determinant
-\newcommand{\jacobianM}{fundamental matrix} % standard name
-\newcommand{\jacobianMs}{fundamental matrices}  %
-\newcommand{\JacobianM}{Fundamental matrix} %
-\newcommand{\JacobianMs}{Fundamental matrices}  %
-% \newcommand{\jacobianM}{Jacobian matrix}  % Predrag's name
-% \newcommand{\jacobianMs}{Jacobian matrices}   % matrices
-\newcommand{\stabmat}{stability matrix}     % stability matrix
-\newcommand{\Stabmat}{Stability matrix}     % Stability matrix
-% \newcommand{\stabmat}{matrix of variations}   % Arnold, says Vattay
-\newcommand{\monodromyM}{monodromy matrix} % monodromy matrix, Poincare cut
-\newcommand{\MonodromyM}{Monodromy matrix} % monodromy matrix, Poincare cut
-\newcommand{\dzeta}{dyn\-am\-ic\-al zeta func\-tion}
-\newcommand{\Dzeta}{Dyn\-am\-ic\-al zeta func\-tion}
-\newcommand{\tzeta}{top\-o\-lo\-gi\-cal zeta func\-tion}
-\newcommand{\Tzeta}{Top\-o\-lo\-gi\-cal zeta func\-tion}
-\newcommand{\BERzeta}{BER zeta func\-tion}
-%\newcommand{\tzeta}{Artin-Mazur zeta func\-tion} %alternative to topological
-\newcommand{\qS}{semi\-classical zeta func\-tion}
-%\newcommand{\qS}{Gutz\-willer-Voros zeta func\-tion}
-\newcommand{\Gt}{Gutz\-willer trace formula}
-\newcommand{\Fd}{spec\-tral det\-er\-min\-ant}
-\newcommand{\fd}{spec\-tral det\-er\-min\-ant}
-\newcommand{\FD}{Spec\-tral det\-er\-min\-ant}
-\newcommand{\cFd}{semiclass\-ic\-al spec\-tral det\-er\-mi\-nant}
-\newcommand{\cFD}{Semiclass\-ic\-al spec\-tral det\-er\-mi\-nant}
-% \newcommand{\cFd}{semiclass\-ic\-al Fred\-holm det\-er\-mi\-nant}
-\newcommand{\Vd}{Vattay det\-er\-mi\-nant}
-\newcommand{\cycForm}{cycle averaging formula}
-\newcommand{\CycForm}{Cycle averaging formula}
-\newcommand{\freeFlight}{mean free flight time}
-\newcommand{\FreeFlight}{Mean free flight time}
-\newcommand{\pdes}{partial differential equations}
-\newcommand{\Pdes}{Partial differential equations}
-\newcommand{\dof}{dof}         % Hamiltonian deegree of freedom
-% \newcommand{\dof}{deegree of freedom}
-\newcommand{\equilibrium}{equilibrium}
-\newcommand{\equilibria}{equilibria}
-\newcommand{\Equilibria}{Equilibria}
-% \newcommand{\equilibrium}{steady state}
-% \newcommand{\equilibria}{steady states}
-% \newcommand{\Equilibria}{Steady states}
-\newcommand\Poincare{Poincar\'e }
-
 %%%%%%%%%%%%%%% Sundry symbols within math eviron.: %%%%%%%%%%%%
 
 \newcommand{\obser}{\ensuremath{a}}     % an observable from phase space to R^n
@@ -898,8 +307,8 @@
 \newcommand{\half}{{\scriptstyle{1\over2}}}
 \newcommand{\pde}{\partial}
 \newcommand{\pdfrac}[2]{{\partial #1 \over \partial #2}}
-\renewcommand\Im{{\rm Im\,}}
-\renewcommand\Re{{\rm Re\,}}
+\renewcommand\Im{\ensuremath{\rm Im\,}}
+\renewcommand\Re{\ensuremath{\rm Re\,}}
 \renewcommand{\det}{\mbox{\rm det}\,}
 \newcommand{\Det}{\mbox{\rm Det}\,}
 \newcommand{\tr}{\mbox{\rm tr}\,}
@@ -928,12 +337,14 @@
 \newcommand{\expct}    [1]{\left\langle {#1} \right\rangle}
 \newcommand{\spaceAver}[1]{\left\langle {#1} \right\rangle}
 \newcommand{\timeAver} [1]{\overline{#1}}
-\newcommand{\pS}{\ensuremath{{\cal M}}}          % symbol for phase space
+\newcommand{\pS}{\ensuremath{{\cal M}}}          % symbol for state space
 \newcommand{\ssp}{\ensuremath{x}}                % state space point
+\newcommand{\pSpace}{x}       % Hamiltonian phase space x=(q,p) coordinate
+\newcommand{\coord}{q}        % configuration space p coordinate
 \newcommand{\DOF}{\ensuremath{D}}          % Hamiltonian deegree of freedom
 \newcommand{\NWS}{\ensuremath{\Omega}}     % symbol for the non--wandering set
 \newcommand{\AdmItnr}{\Sigma}      % set of admissible itineraries
-\newcommand{\intM}[1]{{\int_\pS{\!d #1}\:}} %phasespace integral
+\newcommand{\intM}[1]{{\int_\pS{\!d #1}\:}} %phase space integral
 \newcommand{\Cint}[1]{\oint\frac{d#1}{2 \pi i}\;} %Cauchy contour integral
 \newcommand{\PoincS}{{\cal P}}     % symbol for Poincare section
 \newcommand{\PoincM}{\ensuremath{P}}       % symbol for Poincare map
@@ -971,18 +382,21 @@
 %\newcommand\tflow{\tilde{f}^\tau}        %RECHECK USE OF THIS!
 \newcommand\xInit{{x_0}}        %initial x
 %\newcommand\xInit{\xi}     %initial x, Spiegel notation
-\newcommand\pSpace{x}       % phase space x=(q,p) coordinate
-\newcommand\coord{q}        % configuration space p coordinate
 \newcommand{\para}{\parallel}
-%\newcommand\stagn{*}        %equilibrium/stagnation point suffix
-\newcommand\stagn{q}      %equilibrium/stagnation point suffix
 \newcommand\multiX{x}       %multi point n-dim vector
 \newcommand\multiF{f}       %multi point n-dim vector mapping
 
+    %%% 3D physical flow
+\newcommand{\stagp}{stagnation point}
+\newcommand{\Stagp}{Stagnation point}
+\newcommand{\relstagp}{traveling stagnation point}
+\newcommand{\Relstagp}{Traveling stagnation point}
+\newcommand{\velgradmat}{velocity gradients matrix}
+
      %%%%%%%%%% periods: %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand\period[1]{{T_{#1}}}         %continuous cycle period
+\newcommand\period[1]{{\ensuremath{T_{#1}}}}         %continuous cycle period
 %\newcommand\period[1]{{\tau_{#1}}}
-\newcommand{\cl}[1]{{n_{#1}}}   % discrete length of a cycle, Predrag
+\newcommand{\cl}[1]{{\ensuremath{n_{#1}}}}   % discrete length of a cycle, Predrag
 %\newcommand{\cl}[1]{|#1|}  % the length of a periodic orbit, Ronnie
 \newcommand{\nCutoff}{N}    % maximal cycle length
                 % maximal stability cutoff:
@@ -1008,7 +422,10 @@
 \newcommand{\monodromy}{\ensuremath{M}}   % monodromy matrix, full Poincare cut
 % \newcommand{\monodromy}{\ensuremath{{\bf M}}}   % bold monodromy matrix, full Poincare cut
                    % Fredholm det jacobian weight:
-\newcommand{\jEigvec}[1]{{\bf e}^{(#1)}}   % jacobiam eigenvector
+%\newcommand{\jEigvec}[1]{\ensuremath{{\bf e}^{(#1)}}}   % jacobiam eigenvector
+%\newcommand{\jEigvecT}[1]{\ensuremath{{\bf e}_{(#1)}}}   % jacobiam eigenvector transposed
+\newcommand{\jEigvec}[1][]{\ensuremath{{\bf e}^{(#1)}}} % jacobiam eigenvector
+\newcommand{\jEigvecT}[1][]{\ensuremath{{\bf e}_{(#1)}}}   % jacobiam eigenvector transposed
 \newcommand{\oneMinJ}[1]
            {\left|\det\!\left(\matId-\monodromy_p^{#1}\right)\right|}
 \newcommand{\maslovInd}{\ensuremath{m}}        % Maslov index
@@ -1020,12 +437,19 @@
 %%   no subscript: \eigRe\
 %%   with subscript j: \eigRe[j]
 %%
-\newcommand{\eigExp}[1][ ]{\ensuremath{\lambda_{#1}}}   % complex eigenexponent
+% \newcommand{\eigExp}[1][ ]{\ensuremath{\lambda_{#1}}}   % complex eigenexponent
 %%  Guckenheimer&Holmes:  lambda = alpha + i beta
 %%  Hirsch-Smale:         lambda = a     + i b
 %%  Boyce-di Prima:       lambda = mu    + i nu
-\newcommand{\eigRe}[1][ ]{\ensuremath{\mu_{#1}}}    % Re eigenexponent
-\newcommand{\eigIm}[1][ ]{\ensuremath{\nu_{#1}}}    % Im eigenexponent
+% \newcommand{\eigRe}[1][ ]{\ensuremath{\mu_{#1}}}    % Re eigenexponent
+% \newcommand{\eigIm}[1][ ]{\ensuremath{\nu_{#1}}}    % Im eigenexponent
+
+\newcommand{\eigExp}[1][]{
+     \ifthenelse{\equal{#1}{}}{\ensuremath{\lambda}}{\ensuremath{\lambda^{(#1)}}}}
+\newcommand{\eigRe}[1][]{
+     \ifthenelse{\equal{#1}{}}{\ensuremath{\mu}}{\ensuremath{\mu^{(#1)}}}}
+\newcommand{\eigIm}[1][]{
+     \ifthenelse{\equal{#1}{}}{\ensuremath{\omega}}{\ensuremath{\omega^{(#1)}}}}
 
 \newcommand\LyapTime{T_{\mbox{\footnotesize Lyap}}} %Lyapunov time
 \newcommand{\hatx}{{\hat{x}}}
@@ -1036,11 +460,7 @@
 \newcommand{\dz}{{\delta z}}
 \newcommand{\dth}{{\delta \theta}}
 \newcommand{\delh}{{\delta h}}
-\newcommand{\PP}{{\cal P}}
 \newcommand{\NN}{{\cal N}}
-
-%%%%%%%%%%%%%%% Gibsonia %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\tEQ}{\ensuremath{{EQ}}}
 
 %%%%%%%%%%%%%%% symbolic dynamics %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\MarkGraph}{Markov graph}
@@ -1104,12 +524,14 @@
 % E_0: u = 0 - trivial equilibrium
 % E_1,E_2,E_3, for 1,2,3-wave equilibria
 \newcommand{\REQV}[2]{\ensuremath{TW_{#1#2}}} % #1 is + or -
-% TW_1^{+,-} for 1-wave travelling waves (positive and negative velocity).
+% TW_1^{+,-} for 1-wave traveling waves (positive and negative velocity).
 \newcommand{\PO}[1]{\ensuremath{PO_{#1}}}
 % PO_{period to 2-4 significant digits} - periodic orbits
 \newcommand{\RPO}[1]{\ensuremath{RPO_{#1}}}
 % RPO_{period to 2-4 significant digits} - relative PO.  We use ^{+,-}
 % to distinguish between members of a reflection-symmetric pair.
+% Gibson likes:
+\newcommand{\tEQ}{\ensuremath{{EQ}}}
 
 %%%%%%%%%%%%%%% Lorentz gas section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\hn{\hat n}
@@ -1121,7 +543,7 @@
 \def\tpk{}              %why redefined?
 \def\ttime{\sigma_{\tilde{p}}}
 
-%%%%%%%%%%%%%%% Henon map section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%% Henon map specific %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\logisticm}{quadratic map}
 \newcommand{\Logisticm}{Quadratic map}
 \newcommand{\stretchf}{``stretch \&\ fold''}
@@ -1173,16 +595,14 @@
 \newcommand{\nsymf}{n_{\tilde s}}
 
 %%%%%%%%%%%%%%% relative periodic orbits: %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \newcommand{\po}{periodic orbit}
 \newcommand{\Po}{Periodic orbit}
 \newcommand{\rpo}{relative periodic orbit}
 %   \newcommand{\rpo}{equivariant periodic orbit}
 \newcommand{\Rpo}{Relative periodic orbit}
 %   \newcommand{\Rpo}{Equivariant periodic orbit}
-
 \newcommand{\eqv}{equilibrium}
-\newcommand{\Eqv}{equilibrium}
+\newcommand{\Eqv}{Equilibrium}
 \newcommand{\eqva}{equilibria}
 \newcommand{\Eqva}{Equilibria}
 \newcommand{\reqv}{relative equilibrium}
@@ -1195,7 +615,15 @@
 %   \newcommand{\reqva}{equivariant equilibria}
 \newcommand{\Reqva}{Relative equilibria}
 %   \newcommand{\Reqva}{Equivariant equilibria}
+\newcommand{\equilibrium}{equilibrium}
+\newcommand{\equilibria}{equilibria}
+\newcommand{\Equilibria}{Equilibria}
+% \newcommand{\equilibrium}{steady state}
+% \newcommand{\equilibria}{steady states}
+% \newcommand{\Equilibria}{Steady states}
 
+%\newcommand\stagn{*}        %equilibrium/stagnation point suffix
+\newcommand\stagn{q}      %equilibrium/stagnation point suffix
 \newcommand{\rpprime}{{\tilde{p}}}  % relative periodic prime orbit
 
 %%%%%%%%%%%%%% Quantum mechanical stuff %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1231,7 +659,6 @@
 
 
 %%%%  gli commandi di Commandottore Roberto   %%%%%%%%%%%%
-
 \newcommand {\tidue}{{\mbox{\bf T}}^{2}}
 \newcommand {\bom}[1]{\mbox{\boldmath $#1$}}
 \newcommand {\polit}{{\cal P}_{T}}
@@ -1239,7 +666,6 @@
 \newcommand {\ep}{\epsilon}
 
 %%%%%%% Wirzba scattering.tex  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \newcommand{\gesim}{\mbox{\raisebox{-.6ex}{$\,{\stackrel{>}{\sim}}\,$}}}
 \newcommand{\lesim}{\mbox{\raisebox{-.6ex}{$\,{\stackrel{<}{\sim}}\,$}}}
 \newcommand{\Ageom}[1]{{\bf A}^{#1}}
@@ -1249,6 +675,9 @@
 
 %%%%%%%%%%%%%%%%%%%%%% birdtracks SPECIFIC %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% from def_group.tex
+\newcommand{\PP}{{\mathbf P}}                   % projection operator
+\newcommand{\RR}{{\mathbf R}}    % real part, projection operator
+\newcommand{\QQ}{{\mathbf Q}}    % imaginary part, projection operator
 
 %% Young diagrams (multiplication-stuff due to C. Holm -- cheers!)
 %% command \btrackYt[size of one box (optional)]{filename}{number of boxes}
@@ -1389,9 +818,15 @@
         \end{picture}}
 \setlength{\unitlength}{1pt}
 
+%%%%%%%%%%%%      stuff below this line will probably be dropped%%%%%%%%%%%
+
+\renewcommand{\b}{\beta}
+\newcommand{\w}{\omega}
+\newcommand{\p}{2\pi}
+\newcommand{\J}{\mbox{  \rule[.03ex]{.03em}{1.5ex} \hspace*{-0.9em} \rm J}}
+\newcommand{\f}{\varphi}
 
 %%%%%%%%%%%%%%  Bibliography abbreviations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 %\newcommand{\AP}[1]{{\em Ann.\ Phys.}\/ {\bf #1}}
 %\newcommand{\CHAOS}[1]{{\em CHAOS}\/ {\bf #1}}
 %\newcommand{\CM}[1]{{\em Cont.\ Math.}\/ {\bf #1}}
@@ -1418,14 +853,6 @@
 %\newcommand{\RMS}[1]{{\em Russ.\ Math.\ Surv.}\/ {\bf #1}}
 %\newcommand{\USSR}[1]{{\em Math.\ USSR.\ Sb.}\/ {\bf #1}}
 %\newcommand{\ZNat}[1]{{\em Z. Naturforschung}\/ {\bf #1}}
-
-%%%%%%%%%%%%      stuff below this line will probably be dropped%%%%%%%%%%%
-
-\renewcommand{\b}{\beta}
-\newcommand{\w}{\omega}
-\newcommand{\p}{2\pi}
-\newcommand{\J}{\mbox{  \rule[.03ex]{.03em}{1.5ex} \hspace*{-0.9em} \rm J}}
-\newcommand{\f}{\varphi}
 
 % \newcommand{\R}{\mbox{  \rule[.07ex]{.03em}{1.5ex} \hspace*{-0.75em} \rm R}}
 % \newcommand{\nextchapter}{\newpage{\pagestyle{empty}\cleardoublepage}}
@@ -1497,3 +924,79 @@
 % %?\setcounter{\changebargray}{85}     % margin changes bars blackness
 % \newcommand{\Preliminary}[1]{\cbstart #1 \cbend}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \ifthenelse{\boolean{prepare_pdf}}
+%        {
+%                     % keep homepage flexible:
+%        \newcommand{\wwwcb}[1]{
+%                   {\tt \href{http://ChaosBook.org#1}
+%               {ChaosBook.org#1}}}
+%        \newcommand{\wwwgt}{{\tt \href{http://birtracks.eu}
+%               {birtracks.eu}}}
+%        \newcommand{\wwwQFT}[1]{
+%                   {\tt \href{http://ChaosBook.org/FieldTheory#1}
+%               {ChaosBook.org/\-Field\-Theory#1}}}
+%        \newcommand{\wwwnsQFT}[1]{
+%                   {\tt \href{http://ChaosBook.org/FieldTheory#1}
+%               {ChaosBook.org/\-Field\-Theory#1}}}
+%        \newcommand{\weblink}[1]{{\tt \href{http://#1}{#1}}}
+%        \newcommand{\HREF}[2]{
+%               {\href{#1}{#2}}}
+%        \newcommand{\mpArc}[1]{
+%               {\tt \href{http://www.ma.utexas.edu/mp_arc-bin/mpa?yn=#1}
+%                    {\goodbreak mp\_arc~#1}}}
+%        \newcommand{\arXiv}[1]{
+%               {\tt \href{http://arXiv.org/abs/#1}{\goodbreak arXiv:#1}}}
+%        \newcommand{\Volume}[2]{
+% %            \setcounter{page}{\endVol} %experimenting
+%                          \addtocontents{toc}{
+%                                 \vspace{18pt}
+%                                 \hrule
+%                                 \vspace{4pt}
+%                                 \noindent
+%                                 {\Large\textsf{\textbf{Part~#1: #2}}}
+%                                 \vspace{4pt}
+%                                 \hrule
+%                                 \vspace{12pt}
+%                         }
+%                                }
+% %   \setcounter{page}{\value{endVol}}   % experimenting with hopping page nos
+% %   \addtocounter{page}{-22}    % experimenting with hooping page nos
+%        \newcommand{\VolumeEnd}{\newpage }
+%            }{
+%                    %% prepare for postscript printing:
+%        \newcommand{\wwwcb}[1]{{\tt ChaosBook.org#1}}
+%        \newcommand{\wwwgt}{{\tt birtracks.eu}}
+%        \newcommand{\wwwQFT}[1]{{\tt ChaosBook.org/\-Field\-Theory#1}}
+%        \newcommand{\wwwcnsQFT}[1]{{\tt ChaosBook.org/\-Field\-Theory#1}}
+%        \newcommand{\weblink}[1]{{\tt #1}}
+%        \newcommand{\HREF}[2]{{#2}}
+%        \newcommand{\arXiv}[1]{ {\tt arXiv:#1}}
+%        \newcommand{\mpArc}[1]{{\tt \goodbreak mp\_arc~#1}}
+% %RM    \newcounter{startVol}   %% page number of the start of a volume
+% %RM    \newcounter{endVol}     %% page number of the end of a volume
+%        \newcommand{\volName}{Unnamed} %% volume label
+%        \newcommand{\Volume}[2]{
+%                          \renewcommand{\volName}{ChaosBook-#1}
+% %            \setcounter{page}{\endVol} % experimenting
+%                          \setcounter{startVol}{\thepage}
+%                          \addtocontents{toc}{
+%                                 \vspace{18pt}
+%                                 \hrule
+%                                 \vspace{4pt}
+%                                 \noindent
+%                                 {\Large\textsf{\textbf{Part~#1: #2}}}
+%                                 \vspace{4pt}
+%                                 \hrule
+%                                 \vspace{12pt}
+%                         }
+%                                   }
+% \newcommand{\VolumeEnd}{
+% \setcounter{endVol}{\thepage}
+% \addtocounter{endVol}{-1}
+% \newpage
+% \typeout{ set Vlm=\volName\space set pp=\arabic{startVol}-\arabic{endVol}}
+% \typeout{ dvips -q -pp $pp book.dvi -o $sdir/$Vlm.ps ; echo finished $Vlm}
+% \typeout{ $PS2PAGES $PS2PFLAGS $sdir/$Vlm.ps > $sdir/$Vlm-2p.ps ; echo finished $Vlm-2p}
+%                          }
+%        }  %end of ifthenelse prepare_pdf}

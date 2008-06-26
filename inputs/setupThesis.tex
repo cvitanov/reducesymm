@@ -1,16 +1,53 @@
 % siminos/inputs/setupThesis.tex
-% $Author: predrag $ $Date: 2007-09-23 21:37:17 -0400 (Sun, 23 Sep 2007) $
+% $Author$ $Date$
 
 % E Siminos thesis setup
 
-\usepackage{graphicx}
-\usepackage{natbib}
-%\usepackage{inputs/upmath}
+\ifpaper %%%%%%% GaTech PAPER VERSION  %%%%%
+    \documentclass{gatech-thesis}
+\else    %%%%%%% PREPARE WEB, HYPERLINKED VERSION, SAVE PAPER
+    \documentclass[11pt,singlespaced,hyperref]{gatech-thesis}
+\fi
+
+\usepackage[square]{natbib}
 \usepackage{amsmath,amsfonts,amssymb,amsbsy,amscd}
-\usepackage{color}
+\usepackage{ifthen}             %% used for boolean logic commands
 %\usepackage{url}
-\usepackage{ifthen}
-\usepackage[pdfmark,colorlinks]{hyperref}
+\usepackage{../inputs/prlabels}    %% DasBuch homemade footer package
+\usepackage{makeidx}
+\usepackage{inputs/gatech-thesis-index}
+
+  %\makeindex    %% Predrag: cannot generate index file book.idx?
+
+\ifboyscout %%%%%%% EDITING VERSION  %%%%%
+  \typeout{============ boyscout =====}
+  \newcommand{\booktype}{boyscout}
+  \usepackage{showidx}          %% display index entries on margins
+  \setbodypagestyle{headings}
+\else        %%%%%%% PUBLIC, WEB VERSIONS  %%%%%
+  \typeout{============ public version =====}
+  \newcommand{\booktype}{GaTech thesis}
+\fi
+
+\ifPDF %%%%%%%% HYPERLINKED VS PAPER PDF VERSIONS %%%%%%%%%%%%%%%%%%%%
+  \usepackage[dvips]{graphicx}
+  % \usepackage[pdftex]{graphicx} % test switch to pdflatex?
+  \ifpaper % prepare public B&W pdf individual chapters:
+    \newcommand{\color}[1]{}
+  \else    % prepare hyperlinked WWW/chapters/ChaosBook.pdf
+    \usepackage[dvips]{color}
+    % \usepackage[pdftex]{color}
+    	      %% pdfmark produces Acroread index:
+    \usepackage[pdfauthor={Evangelos Siminos}% must be LAST package loaded
+                pdftitle={Just do it: Kuramoto-Sivashinsky state space},%
+                pdfmark,colorlinks]{hyperref} %% hyperlinks
+    	      %% TEMPORARILY COMMENTED OUT backref:
+    %	      pdfmark,colorlinks,backref]{hyperref}
+  \fi
+\else % prepare the public PostScript version, abandoned
+  \usepackage[dvips]{graphicx}
+\fi
+
 % to enable the kile forward dvi search feature:
 %       cd /opt/kde3/share/doc/HTML/en/kdvi/
 %        cp srcltx.sty /usr/share/texmf/tex/latex/misc/
@@ -29,6 +66,17 @@
 
 \graphicspath{../figs/}         %% directories with graphics files
     %\graphicspath{{./figs/}{./otherFigs/}}  %% for each directory
+
+%%%%%%%%%%%%%%% PAGE STYLE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% writeversion & date footers%
+\providecommand{\basedirectory}{}
+\makeatletter
+\newcommand{\inputfile}{ }  % the rest is in the prlabels.sty
+\newcommand{\version}{}
+%% disable footers by  commenting out in thesis.tex
+%% the line after \end{preliminary}:
+%% \pagestyle{headings}
 
 %%%%%%%% eventually delete these: %%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Example macros (most are not used in steady.tex) %%%

@@ -1,48 +1,20 @@
 % prlabels.sty
+% Predrag              Jun 26 2008  - created siminos/inputs/prlabels.sty
+%                                     from dasbuch/book/inputs/prlabels.sty
 % Predrag              Jun 18 2003  - removed / from the \basedirectory
 % Predrag              May  2 2003  - version in the footer
-% Predrag              Jul 17 2000  - removed  Krogh's bibliography hack
-% 					saved as chapterRefs.sty
 % Predrag              Dec  2 1995  - filename in the footer
-% Anders Krogh May 23 1995   - bibliography hack
 %
 % PC: reinstate \let\@oddfoot\@empty\let\@evenfoot\@empty
 %     in the final version
 %
-%  \printlabels makes equation labels written in the margin in
-%  small (\tiny) size.
-%
-%  Bugs:
-%  =======
-%  If you use $$ instead of \begin{equation} etc, some equations with
-%    no label defined may have a wrong label printed next to it.
-%  It will not work with leqno and other macroes that redefine \@eqnnum
-
-% This is what it took to be able to handle labels with _ ^ etc.
-% The TeX book page 382
-% It took me a day to figure that out.
-
-\long\def\@H@CK#1{\def\next{#1}{\tiny\expandafter\strip\meaning\next}}
-\def\strip#1>{}
-
-\def\printlabels{%
-	\let\@lb@=\label
-	\def\label##1{\gdef\@@@memory{\@H@CK{##1}}\@lb@{##1}}
-	\def\@eqnnum{{\rm (\theequation)} \makebox[0mm][l]%
-           {\hspace{2mm}{\@@@memory}}\gdef\@@@memory{}}
-}
-\def\lb{\label}
-\let\@eq@=\equation
-\def\equation{\gdef\@@@memory{}\@eq@}
-\let\@eqa@=\eqnarray
-\def\eqnarray{\gdef\@@@memory{}\@eqa@}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%PC insert that labels the footer with file name:
-   \let\@inputfile\@empty 
+   \let\@inputfile\@empty
    \if@twoside
        \def\ps@headings{%
-	%%PC replaced 
+	%%PC replaced
 	%%      \let\@oddfoot\@empty\let\@evenfoot\@empty
 	%%   with
    \def\@oddfoot{\tiny{ \version \hfil {\basedirectory\inputfile}}}
@@ -62,8 +34,11 @@
                ##1}}}}
    \else
        \def\ps@headings{%
-   \def\@oddfoot{\footnotesize{\basedirectory\inputfile.tex\hfil}}
-         \def\@oddhead{{\slshape\rightmark}\hfil\thepage}%
+   \def\@oddfoot{\footnotesize{\basedirectory\inputfile.tex}}
+   \def\@evenfoot{\footnotesize{\basedirectory\inputfile.tex}}
+         \def\@evenhead{\thepage\hfil\leftmark}%
+         \def\@oddhead{{\rightmark}\hfil\thepage}%
+%         \def\@oddhead{{\slshape\rightmark}\hfil\thepage}%
          \let\@mkboth\markboth
          \def\chaptermark##1{%
            \markright {\uppercase{\ifnum \c@secnumdepth >\m@ne
@@ -71,9 +46,39 @@
                ##1}}}}
    \fi %%PC insert finished
 
+% Anders Krogh May 23 1995   - bibliography hack
+%  \printlabels makes equation labels written in the margin in
+%  small (\tiny) size.
+%
+%  Bugs:
+%  =======
+%  If you use $$ instead of \begin{equation} etc, some equations with
+%    no label defined may have a wrong label printed next to it.
+%  It will not work with leqno and other macroes that redefine \@eqnnum
+
+% This is what it took to be able to handle labels with _ ^ etc.
+% The TeX book page 382
+% It took me a day to figure that out.
+
+%\long\def\@H@CK#1{\def\next{#1}{\tiny\expandafter\strip\meaning\next}}
+%\def\strip#1>{}
+%
+%\def\printlabels{%
+%	\let\@lb@=\label
+%	\def\label##1{\gdef\@@@memory{\@H@CK{##1}}\@lb@{##1}}
+%	\def\@eqnnum{{\rm (\theequation)} \makebox[0mm][l]%
+%           {\hspace{2mm}{\@@@memory}}\gdef\@@@memory{}}
+%}
+%\def\lb{\label}
+%\let\@eq@=\equation
+%\def\equation{\gdef\@@@memory{}\@eq@}
+%\let\@eqa@=\eqnarray
+%\def\eqnarray{\gdef\@@@memory{}\@eqa@}
+
+% Predrag              Jul 17 2000  - removed  Krogh's bibliography hack
+% 					saved as chapterRefs.sty
 % Notice that the labels will be wider when citations are like [2.17],
-% so you may want to tell that to latex by the second arg of 
+% so you may want to tell that to latex by the second arg of
 % 	\begin{thebibliography}{2.99}
 % which indicates the widest possible label.
 % - Anders Krogh
-

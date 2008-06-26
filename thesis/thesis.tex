@@ -1,20 +1,18 @@
 % thesis.tex
-% $Author: jhalcrow $ $Date: 2007-09-19 16:30:51 -0400 (Wed, 19 Sep 2007) $
+% $Author$ $Date$
 
-\input type
-\documentclass[hyperref]{gatech-thesis}
-\input ../inputs/setupThesis
-\input ../inputs/setupDasbuch % no edits: some ChaosBook tweaks
-\input ../inputs/def % no edits; update from dasbuch/book/inputs/def.tex
-\input ../inputs/defsThesis % all Vaggelis edits: \renewcommand, etc
-
-\usepackage{inputs/gatech-thesis-index}
+\input type                     %% type: public/editing version
+\input ../inputs/setupThesis    %% logical chores (nothing to edit)
+\input ../inputs/editsDasbuch   %% editing comments, DasBuch style
+\input ../inputs/def            %% do not edit; update from dasbuch/book/inputs/def.tex
+\input ../inputs/defsThesis     %% all Vaggelis edits: \renewcommand, etc
+\input{version}                 %% version		keep updating this!
 
 
 \title{Just do it:    \KS\  \statesp}
 \author{Evangelos Siminos}
 
-\principaladviser{Professor Predrag Cvitanovic}
+\principaladviser{Professor Predrag Cvitanovi\'c}
 %\committeechair{}
 \firstreader{Professor Roman Grigoriev}
 \secondreader{Professor Kurt Wiesenfeld}
@@ -24,19 +22,17 @@
 \department{School of Physics}
 \degree{Doctor of Philosophy}
 \copyrightyear{2008}
-\submitdate{December 2008}
-\approveddate{1 February 2006}
-
-\bibfiles{../bibtex/siminos}
-\bibpagetrue
-
-% \glossfiles{../bibtex/gloss} % ``List of Symbols or Abbreviations''
-%			     % explained in gatech-thesis-gloss.sty.
-% \bibpagetrue
-
- \figurespagefalse    %% FIX THIS!
-% \tablespagefalse     %% reinstate later
-
+    \ifpaper               %% GT SUBMISSION
+\submitdate{1 December 2008}
+\approveddate{11 December 2008}
+%\figurespagefalse          %% FIX THIS!
+    \else                   %% Predrag WHILE EDITING
+\submitdate{\version}
+\signaturepagefalse
+\approveddate{[not yet]}
+\figurespagefalse    %% drop from the web version
+\tablespagefalse     %% drop from the web version
+    \fi
 %% The following are the defaults
 %%    \titlepagetrue
 %%    \signaturepagetrue
@@ -48,16 +44,24 @@
 %%    \thesisproposalfalse
 %%    \strictmarginstrue
 
+\bibfiles{../bibtex/siminos}
+% \glossfiles{../bibtex/gloss} % ``List of Symbols or Abbreviations''
+%			     % explained in gatech-thesis-gloss.sty.
+\bibpagetrue
+
+
 \begin{document}
-\bibliographystyle{inputs/gatech-thesis}
+\bibliographystyle{inputs/gatech-thesis} %% must place right after \begin{document}
 
 %% Preliminary Stuff
 \begin{preliminary}
 
+    \ifpaper               %% GT SUBMISSION
     \begin{dedication}
         \input chapters/dedication
     \end{dedication}
-
+    \fi
+    
     \begin{preface}
         \input chapters/preface
     \end{preface}
@@ -81,6 +85,7 @@
 %                          BEGIN MAIN BODY OF THESIS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\ifboyscout \pagestyle{headings} \fi  %% Predrag: while editing
 
 \chapter{Introduction}
 %\input chapters/intro
@@ -128,16 +133,11 @@
 
 
 \chapter{\KSe}
-\label{chap:pCf}
+\label{chap:KSe}
 
     \section{\KS: literature survey}
         \label{sec:KSlit}
         \input chapters/KSlit
-
-\chapter{\KSe}
-\label{chap:KSe}
-%    \input chapters/KSe
-
 
 
 % PART II: Implementation
@@ -150,14 +150,13 @@
 
 % PART III Numerical results:
 
-\chapter{\KSe phase space}
+\chapter{\KS\ \statesp}
     %\input chapters/eqba
 
-\chapter{Periodic orbit theory for \KSe}
+\chapter{Periodic orbit theory for \KS\ flow}
     % \input chapters/statesp
 
 \chapter{Conclusion}
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -175,17 +174,22 @@
 
 \chapter{Numerical Results}
 
-%          \PublicPrivate{
-%          }{ % switch to Private
-% %  \input chapters/flotsam
-%          } % end \PublicPrivate}
+          \PublicPrivate{
+          }{ % switch to Private
+\chapter{Flotsam}
+\input chapters/flotsam      %% PC moved from blog/      26 jun 2008
+\input chapters/bronski-2005 %% PC moved from blog/      26 jun 2008
+\renewcommand{\inputfile}{\version\ - \today\ references}
+          } % end \PublicPrivate}
 
 \begin{postliminary}
 \references
+\gtindex
+    \ifpaper               %% GT SUBMISSION
 \begin{vita}
     \input chapters/vita
 \end{vita}
-\gtindex
+    \fi
 \end{postliminary}
 
 \end{document}

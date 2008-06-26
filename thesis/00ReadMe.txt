@@ -1,5 +1,5 @@
 siminos/thesis/00ReadMe.txt
-$Author: predrag $ $Date: 2007-06-10 02:45:16 -0400 (Sun, 10 Jun 2007) $
+$Author$ $Date$
 ----------------------------------------------------------------------------
 
 Evangelos Siminos thesis
@@ -7,8 +7,7 @@ Evangelos Siminos thesis
 
 ./thesis/
 	pdflatex thesis
-	yupee!
-
+	
 ../bibtex/siminos.bib
 	one bibliography for all projects
 
@@ -26,11 +25,11 @@ Evangelos Siminos thesis
 --------------------------------------------------------------------------
 TO FIX:
 
--- make hyperlinks active
--- \figurespagetrue option generates hyperref errors
-
 --------------------------------------------------------------------------
 NOTES:
+
+-- \figurespagetrue option generates hyperref errors
+   if there are math symbols in the \caption[...]
 
 Time stamp:
 ----------
@@ -43,5 +42,24 @@ into the file, and then
 --------------------------------------------------------------------------
 HISTORY:
 
-	Predrag Oct 10 2007:
+
+						Predrag Jun 26 2008
+	rescued flotsam from siminos/blog/*.tex for inclusion
+	into thesis
+
+
+						Predrag Oct 10 2007:
 	installed  thesis configuration files (from Halcrow's setup)
+
+
+--------------------------------------------------------------------------
+FIXED:
+
+-- made hyperlinks active
+-- made figure references [..], not (..) as is GaTech default
+   by option \usepackage[square]{natbib}
+
+
+
+
+
