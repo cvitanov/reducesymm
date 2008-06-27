@@ -25,6 +25,44 @@ Evangelos Siminos thesis
 --------------------------------------------------------------------------
 TO FIX:
 
+svn diff examples.tex -r 903:904
+Index: examples.tex
+===================================================================
+--- examples.tex        (revision 903)
++++ examples.tex        (revision 904)
+@@ -1,4 +1,7 @@
+-% Chapter Introduction, section Example dynamical systems used throughout the thesis. Label: s:exampleIntro
++\renewcommand{\inputfile}{\version\ - edited 2007-03-11 examples}
++% Chapter Introduction, section Example dynamical systems used throughout the thesis.
++% $Author$ $Date$
++% Label: s:exampleIntro
+
+ In this section we briefly introduce some dynamical systems that will be used as simple examples
+ to demonstrate various concepts in later chapters.
+@@ -17,7 +20,7 @@
+
+ \subsection{Complex Lorenz equations}
+
+-The complex Lorenz equations were introduced by Gibbon and McGuinness, \refref{GibMcCLE82}, as a low dimensional model
++The complex Lorenz equations were introduced by Gibbon and McGuinness, \refref{GibMcCLE82}, as a low dimensional model
+ of baroclinic instability in the atmosphere. As the name suggest the equations turned out to be a complex generalization
+ of Lorenz equations:
+ \beq
+@@ -47,6 +50,5 @@
+ \eeq
+ where $z_1,z_2\in \mathbf{C}$ and $\mu_j$ and $e_{jk}$ real parameters. Details on the motivation
+ of those equation will be given in a later chapter. %This system corresponds to the
+-%first few terms in the center manifold reduction of a $O(2)$-symmetric partial differential
++%first few terms in the center manifold reduction of a $O(2)$-symmetric partial differential
+ %equation near a codimension two bifurcation.
+-
+
+Property changes on: examples.tex
+___________________________________________________________________
+Name: svn:keywords
+   + Author Date
+
+
 --------------------------------------------------------------------------
 NOTES:
 
