@@ -33,6 +33,11 @@ the yesterday's bunch of edits in detail - nothing of conceptual interest
 happened, just it is easier for me too proofread if paper printout
 pages have file and date info on them, that was the main change.
 
+if we modify siminos-thesis.cls, we'll modify
+	    \documentclass{gatech-thesis} to \documentclass{siminos-thesis} in
+\input ../inputs/setupThesis    %% logical chores (nothing to edit).
+Currently siminos-thesis.cls is the same as gatech-thesis.cls.
+
 						Vaggelis Jun 26 2008
 svn diff examples.tex -r 903:904
 Index: examples.tex
