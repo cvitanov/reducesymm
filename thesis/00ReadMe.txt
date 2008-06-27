@@ -25,6 +25,15 @@ Evangelos Siminos thesis
 --------------------------------------------------------------------------
 TO FIX:
 
+						Predrag  Jun 27 2008
+Sorry about this - I'm quite sure I did not touch text like
+`The complex Lorenz equations ...', and do not understand why
+it shows up as edited under svn diff. No need for you to recheck
+the yesterday's bunch of edits in detail - nothing of conceptual interest
+happened, just it is easier for me too proofread if paper printout
+pages have file and date info on them, that was the main change.
+
+						Vaggelis Jun 26 2008
 svn diff examples.tex -r 903:904
 Index: examples.tex
 ===================================================================

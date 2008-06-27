@@ -21,8 +21,6 @@
    \def\@evenfoot{\tiny{\basedirectory\inputfile\hfil \version}}
          \def\@evenhead{\thepage\hfil\leftmark}%
          \def\@oddhead{{\rightmark}\hfil\thepage}%
-%latex2e         \def\@evenhead{\thepage\hfil\slshape\leftmark}%
-%latex2e         \def\@oddhead{{\slshape\rightmark}\hfil\thepage}%
          \let\@mkboth\markboth
          \def\chaptermark##1{%
            \markboth {\uppercase{\ifnum \c@secnumdepth >\m@ne
@@ -32,10 +30,10 @@
            \markright {\uppercase{\ifnum \c@secnumdepth >\z@
                \thesection. \ \fi
                ##1}}}}
-   \else
+   \else %%PC - it seems to not be twoside, it uses the oddfoot below:
        \def\ps@headings{%
-   \def\@oddfoot{\footnotesize{\basedirectory\inputfile.tex}}
-   \def\@evenfoot{\footnotesize{\basedirectory\inputfile.tex}}
+   \def\@oddfoot{\hfil\footnotesize{\basedirectory\inputfile.tex}}
+   \def\@evenfoot{\footnotesize{\basedirectory\inputfile.tex}\hfil}
          \def\@evenhead{\thepage\hfil\leftmark}%
          \def\@oddhead{{\rightmark}\hfil\thepage}%
 %         \def\@oddhead{{\slshape\rightmark}\hfil\thepage}%
@@ -45,40 +43,3 @@
                \@chapapp\ \thechapter. \ \fi
                ##1}}}}
    \fi %%PC insert finished
-
-% Anders Krogh May 23 1995   - bibliography hack
-%  \printlabels makes equation labels written in the margin in
-%  small (\tiny) size.
-%
-%  Bugs:
-%  =======
-%  If you use $$ instead of \begin{equation} etc, some equations with
-%    no label defined may have a wrong label printed next to it.
-%  It will not work with leqno and other macroes that redefine \@eqnnum
-
-% This is what it took to be able to handle labels with _ ^ etc.
-% The TeX book page 382
-% It took me a day to figure that out.
-
-%\long\def\@H@CK#1{\def\next{#1}{\tiny\expandafter\strip\meaning\next}}
-%\def\strip#1>{}
-%
-%\def\printlabels{%
-%	\let\@lb@=\label
-%	\def\label##1{\gdef\@@@memory{\@H@CK{##1}}\@lb@{##1}}
-%	\def\@eqnnum{{\rm (\theequation)} \makebox[0mm][l]%
-%           {\hspace{2mm}{\@@@memory}}\gdef\@@@memory{}}
-%}
-%\def\lb{\label}
-%\let\@eq@=\equation
-%\def\equation{\gdef\@@@memory{}\@eq@}
-%\let\@eqa@=\eqnarray
-%\def\eqnarray{\gdef\@@@memory{}\@eqa@}
-
-% Predrag              Jul 17 2000  - removed  Krogh's bibliography hack
-% 					saved as chapterRefs.sty
-% Notice that the labels will be wider when citations are like [2.17],
-% so you may want to tell that to latex by the second arg of
-% 	\begin{thebibliography}{2.99}
-% which indicates the widest possible label.
-% - Anders Krogh
