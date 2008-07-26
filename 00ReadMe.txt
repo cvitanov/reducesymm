@@ -1,0 +1,62 @@
+siminos/00ReadMe.txt
+$Author$ $Date$
+----------------------------------------------------------------------------
+
+Evangelos Siminos thesis, publications and working notes
+========================================================
+
+thesis/
+	pdflatex thesis
+	
+rpo_ks/
+    Cvitanovi\'c, Davidchack and Siminos
+    "State space geometry of a spatio-temporally chaotic
+     Kuramoto-Sivashinsky flow"
+
+bibtex/siminos.bib
+	one bibliography for all projects
+
+figs/
+	one directory for thesis and blog figures
+	.eps figures needed for compatibility with articles, ChaosBook
+
+Fig/
+    copied from ChaosBook.org (do not edit here)
+
+figsSrc/
+	one directory for source programs for all figures
+	(or .txt files explain how to regenerate them if needed
+     from the other repository, siminos????, with code)
+
+inputs/
+	one directory for all Siminos specific macros
+
+--------------------------------------------------------------------------
+TO FIX:
+
+--
+
+--------------------------------------------------------------------------
+NOTES:
+
+-- maths classification for a paper about Lorenz system:
+   MSC: Primary: 37C45, 37D40; Secondary: 37D45
+
+
+Time stamp:
+----------
+
+To have svn time-stamp file "someFile.type", include the contents of
+	thesis/chapter/svnHeader.txt
+into the file, and then
+	svn propset svn:keywords "Date Author" someFile.type
+
+--------------------------------------------------------------------------
+HISTORY:
+						Predrag Jul 26 2008
+    created this file
+
+--------------------------------------------------------------------------
+FIXED:
+
+-- made ...
