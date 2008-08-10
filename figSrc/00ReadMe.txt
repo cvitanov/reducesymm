@@ -58,7 +58,7 @@ reduced size eps:
  # bmeps -leps3 -tpng file.png new_file.eps
 
 Options -leps3 will generate level-3 eps. The reduction in size is anywere from 5 to 50
-times (!). On the other hands one trades scalability of both graphics and fonts.
+times (!). On the other hand one trades scalability of both graphics and fonts.
 
 A moderate reduction in size (by a factor of 2) of some eps figures , particularly those 
 create by programs such as Mathematica, can be achieved if one uses pstoedit to convert
