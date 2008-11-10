@@ -17,7 +17,7 @@ please (mark [ ] when finished)
         [x] P Cvitanovic
         [ ] ? R Grigoriev
         [ ] ? L Dieci
-        [ ] ?
+        [ ] ? K Wiesenfeld
         [ ] ?
     [ ] propose defense dates
         [ ]
@@ -28,7 +28,7 @@ please (mark [ ] when finished)
         [x] P Cvitanovic
         [ ] ? R Grigoriev
         [ ] ? L Dieci
-        [ ] ?
+        [ ] ? K Wiesenfeld
         [ ] ?
     [ ] GT thesis paperwork completed:
     [ ] thesis target date:
