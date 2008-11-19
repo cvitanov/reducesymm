@@ -15,15 +15,15 @@ please (mark [ ] when finished)
     [ ] make sure that Thesis proposal is OK / Zangwill
     [ ] contact the thesis committee
         [x] P Cvitanovic
-        [ ] ? R Grigoriev
+        [x] R Grigoriev
         [ ] ? L Dieci
-        [ ] ? K Wiesenfeld
+        [x] K Wiesenfeld
         [ ] ?
     [ ] propose defense dates
-        [ ]
-        [ ]
-        [ ]
-        [ ]
+        [ ] March 23 (two weeks before thesis deadline)
+        [ ] March 24
+        [ ] March 20
+        [ ] March 19
     [ ] check with the committee which dates are OK
         [x] P Cvitanovic
         [ ] ? R Grigoriev
@@ -69,6 +69,7 @@ Evangelos Siminos job applications
 Vaggelis, talk to Cristel - Ruffo has 6 months funding (only); probably 
 unrealistic...
 
+- Done. Unrealistic...
 
 --------------------------------------------------------------------------
 TO FIX:
