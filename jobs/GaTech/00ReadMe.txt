@@ -71,6 +71,22 @@ unrealistic...
 
 - Done. Unrealistic...
 
+
+--------------------------------------------------------------------------
+
+Schedule
+========
+
+Monday: 8am - ... home (baby-free 2pm-4:30pm and after 7pm)
+Tuesday: 2pm-10pm Office (8am-1:30pm home)
+Wednesday: 8am - ... home (3-4pm Colloquium) (baby-free after 7pm)
+Thursday: 3pm-11pm Office (8am-2pm home)
+Friday:  3pm-11pm Office (8am-2pm home)
+Saturday: 9am-5pm Office 
+Sunday: 2pm-10pm Office 
+
+
+
 --------------------------------------------------------------------------
 TO FIX:
 
