@@ -1,18 +1,18 @@
 siminos/jobs/GaTech/00ReadMe.txt
 $Author: predrag $ $Date: 2008-07-26 06:30:43 -0400 (Sat, 26 Jul 2008) $
-----------------------------------------------------------------------------
+-------------------------------------------------------------------------
 
 
 Evangelos Siminos thesis defense
 ================================
 
---------------------------------------------------------------------------
+-------------------------------------------------------------------------
                                     Predrag Nov 10 2008
 
 please (mark [ ] when finished)
 
-    [ ] determine spring PhD deadlines 
-    [ ] make sure that Thesis proposal is OK / Zangwill
+    [?] determine spring PhD deadlines 
+    [ ] make sure that thesis proposal is OK / Zangwill
     [ ] contact the thesis committee
         [x] P Cvitanovic
         [x] R Grigoriev
@@ -22,8 +22,8 @@ please (mark [ ] when finished)
     [ ] propose defense dates
         [ ] March 23 (two weeks before thesis deadline)
         [ ] March 24
-        [ ] March 20
-        [ ] March 19
+        [?] March 20 [APS March meeting - Kurt? other?]
+        [-] March 19 [APS March meeting - Predrag]
     [ ] check with the committee which dates are OK
         [x] P Cvitanovic
         [ ] ? R Grigoriev
@@ -31,7 +31,7 @@ please (mark [ ] when finished)
         [ ] ? K Wiesenfeld
         [ ] ?
     [ ] GT thesis paperwork completed:
-    [ ] thesis target date:
+    [?] thesis target date: April 6 2008
     [ ] delivered to the committee:
         
 
