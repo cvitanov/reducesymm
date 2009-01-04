@@ -1,0 +1,274 @@
+%% poster.tex
+%% Vorlage fr A0-Poster
+%% Harry Schmidt
+%% 25.04.2003
+
+%% translation instructions (there should be a better way):
+%% latex ...
+%% dvips -Ppdf -D9600 ...
+%% psresize -w84cm -h118.8cm ... outfile.ps
+%% edit postscript to position and size poster correctly
+%%    bounding box in ps: 0 0 2380 3368
+%%    after %%EndComments add:  gsave 0 -140 translate
+%%    before showpage     add:  grestore
+%% (adjust voffset and hoffset below to center text on page)
+%% ps2pdf -sPAPERSIZE=a0 poster2a.ps
+
+
+\documentclass{theo1poster}[2003/04/25]
+\textwidth=14.5in                 % real width of latex text 
+\textheight=9in                % height of latex text
+\special{papersize=15in,12in}   % small width ensures portrait orientation
+\addtolength{\voffset}{-.7in}
+\addtolength{\textheight}{1.5cm}
+\addtolength{\voffset}{52pt}  %% depends on actual length of poster
+\addtolength{\hoffset}{0pt}   %% probably universal
+%\usepackage[american,ngerman]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+%\usepackage{ae}
+\usepackage{amsmath,amssymb,psfrag,pifont}
+\usepackage{graphicx}
+
+\input defs
+%% Farben
+
+\definecolor{lightblue}{rgb}{0.75,0.8,1}
+\definecolor{graublau}{rgb}{0.85,0.85,0.9}
+\definecolor{gruen}{rgb}{0.0,0.4,0.0}
+\definecolor{alexblue}{rgb}{0.8,0.64,0.0}
+\definecolor{strangeyellow}{rgb}{0.875,1.0,0.08}
+\definecolor{verylightgray}{gray}{0.99}
+\definecolor{meinrot}{rgb}{0.8,0.1,0.2}
+\definecolor{lightocker}{rgb}{1,0.9,0.6}
+\definecolor{orange}{rgb}{1,0.5,0}
+\definecolor{darkorange}{rgb}{0.7,0.35,0}
+
+
+\definecolor{sheetbg}{rgb}{0.75,0.8,1}
+\definecolor{boxbg}{rgb}{1,1,0.95}
+\definecolor{boxrahmen}{rgb}{0.11,0.15,0.4}
+
+
+%% Stil-Befehle fr das Poster, kann fr jedes
+%% einzelne Poster festgelegt werden
+
+\posterbgcolor{white}    %% Hintergrundfarbe des Posters
+%\posterbgcolor{lightocker}
+%\posterbgcolor{lightblue}
+%\posterbgcolor{graublau}
+
+
+%\titlecolor{black}         %% Farbe des Titels
+\headingcolor{black}       %% Farbe der �erschriften
+%\headingcolor{meinrot}
+
+%\headingfont{\sffamily}    %% Font der �erschriften
+%\headingfontsize{\large}   %% Fontgr�e der �erschriften
+
+\sheetframewidth{1mm}    %% Breite des Sheet-Rahmens
+\sheetframesep{3pt}        %% Abstand des Textes vom Rahmen
+
+\sheetframecolor{boxrahmen}    %% Farbe des Sheet-Rahmens
+%\sheetframecolor{boxbg}
+\sheetbgcolor{white}       %% Farbe des Sheet-Hintergrunds
+%\sheetbgcolor{verylightgray}
+
+\colorsheets               %% Wird automatisch von \sheet..color  ausgefhrt
+%\nocolorsheets             %% Default, solange \sheet..color nicht aufgerufen
+%\roundsheets               %% Abgerundete Ecken ohne Farbe
+\roundcolorsheets          %% Farbig und abgerundete Ecken
+
+%\highlightcolor{lightocker} %% Farbe fr Hervorhebungen (Formeln)
+
+%\renewcommand*\sectfont{\sffamily}
+%\renewcommand*\sectfont{\bfseries\mathversion{bold}}
+
+%\renewcommand*\bfdefault{b}
+
+
+%% Sonstige Befehle
+
+\renewcommand{\labelitemi}{\ding{228}}
+\renewenvironment{itemize}% Liste mit bullet in gegebenem Abstand
+                              % von linkem Rand der umschliessenden Umgebung
+                              % M. Stollsteimer, 15.1.2001
+ {\begin{list}{\labelitemi}%
+       {%
+%        \setlength{\topsep}{0pt}% Abstand vor Liste
+        \setlength{\leftmargin}{0pt}% Raum vor bullet
+        \setlength{\itemindent}{0pt}% Einrckung der ersten Zeile
+        \settowidth{\labelwidth}{\labelitemi}%
+        \addtolength{\labelsep}{\itemindent}
+        \addtolength{\leftmargin}{\labelwidth}%
+        \addtolength{\leftmargin}{\labelsep}%
+        \addtolength{\leftmargin}{-\itemindent}%
+       }%
+ }
+ {\end{list}}
+
+\newenvironment{itemizenotopsep}{% Wie oben, nur mit \topsep=0pt
+  \begin{list}{\labelitemi}%
+    {%
+      \setlength{\topsep}{0pt}% Abstand vor Liste
+      \setlength{\leftmargin}{0pt}% Raum vor bullet
+      \setlength{\itemindent}{0pt}% Einrckung der ersten Zeile
+      \setlength{\itemsep}{0.5pt}% vertikaler Abstand von Items
+      \setlength{\parsep}{1.5pt}%
+      \settowidth{\labelwidth}{\labelitemi}%
+      \addtolength{\labelsep}{\itemindent}
+      \addtolength{\leftmargin}{\labelwidth}%
+      \addtolength{\leftmargin}{\labelsep}%
+      \addtolength{\leftmargin}{-\itemindent}}%
+    }
+  {\end{list}}
+
+
+%% Daten fr den Titel
+
+\title{Towards continuous symmetry reduction\\ 
+for high dimensional flows
+}
+
+\author{\underline{Evangelos Siminos}\ensuremath{^\diamond} and Predrag Cvitanovi\'c}
+\newlength{\addresswidth}
+ 
+\address{
+	\begin{minipage}[c]{\textwidth}
+		\begin{center}
+			Center for Nonlinear Science, School of Physics,\\
+			Georgia Institute of Technology, Atlanta, GA 30332-0430\\
+			\ensuremath{^\diamond} siminos@gatech.edu
+	 	 \end{center}
+         \end{minipage}
+}
+
+
+
+%% Wem die Titelei nicht gef�lt:
+%\renewcommand{\maketitle}{eigene Titelei}
+
+
+
+
+\begin{document}
+
+
+\begin{poster}{3}
+
+\small
+
+\begin{sheet}{Continuous symmetry in PDE's}
+
+\large
+\begin{itemize}
+ \item Continuous symmetry arizes in many PDE's and their truncations, e.g.
+	\begin{itemize}
+		\item \KSe~ in periodic domain ($\On{2}$)
+		\item \PCf
+		\item Maxwell-Bloch equations for a detuned ring laser ($\SOn{2}$)
+	\end{itemize}
+ \item For any solution a continuoum of ``rotated'' solutions exists
+ \item Phase space structure ``blured'' - recurrence up to symmetry
+ \item \Poincare~sections hard to construct 
+\end{itemize}
+
+\end{sheet}
+
+
+
+
+\begin{sheet}{\CLe}
+ \large
+ \begin{itemize}
+ \item Drastic truncation of Maxwell-Bloch equations for a unidirectional ring laser with detuning,
+	under slow-varying envelope and rotating wave approximations
+ \item Also appears in hydrodynamic context 
+ \item Complex version of \Le:
+	\beq
+	\begin{split}
+	\dot{x} &=-\sigma x+ \sigma y \,,\\
+	\dot{y} &=(r-z)x-a y \,,\\
+	\dot{z} &= \frac{1}{2}\left(x \bar{y}+\bar{x}y\right)-b z\,,
+	\label{eq:CLe}
+	\end{split}
+	\eeq
+	where $x,y\in\Clx{}$, $z\in\Rls{}$ and parameters $r=r_1+i r_2$, $a=1-i e$, $\sigma,\,b,\,r_1,\,r_2,\, e\in\Rls{}$.
+ \item Equations left invariant (flow is equivariant) under the action of $\SOn{2}$
+	\beq
+		\Rot{\theta} (x,y,z) = (e^{i\theta} x, e^{i\theta} y, z)\,,\ \ \  \theta\in[0,2\pi)\,.
+		\label{eq:RotCLe}
+	\eeq
+ \item For detuned laser case $r_2=0$, $e$ proportional to detuning
+ \item Parameters used here: $r_1=28,\, b=8/3,\, \sigma=10,\, a=1,\, e=1/10,\, r_2=0$\\
+ \centerline{
+		\includegraphics[width=.38\textwidth]{../../figs/CLE.eps}
+}
+\end{itemize}
+ 
+\end{sheet}
+
+
+
+
+\begin{sheet}{Symmetry Reduction}
+
+\begin{itemize}
+ \item All points on the same group orbit, \ie related by a symmetry operation
+	are mapped to the same orbit
+ \item Usuall approach: Rewrite the dynamics in a symmetry-invariant polynomial basis(Hilbert basis)
+	\begin{itemize}
+ 		\item Computationally prohibitive as the dimension of the system increases	
+	\end{itemize}
+\end{itemize}
+
+
+
+\end{sheet}
+
+
+
+
+\begin{sheet}{References}
+\begin{thebibliography}{99}
+ \bibitem{thisone}
+	{\sc P.~Cvitanovi\'c, R.~L.~Davidchack and E.~Siminos},
+	\emph{State space geometry of a spatio-temporally chaotic Kuramoto-Sivashinsky flow}, Submitted to
+	SIAM J. Appl. Dyn. Systems (2007), arxiv.org/abs/0709.2944v1
+\bibitem{FNSTks85}
+{\sc C.~Foias, B.~Nicolaenko, G.~R. Sell, and R.~Temam}, C. R. Acad. Sci. I-Math, 301
+  (1985), pp.~285--288.
+\bibitem{LanThesis}
+{\sc Y.~Lan}, PhD thesis, School of Physics, Georgia Institute of
+  Technology, Atlanta, 2004.
+\bibitem{LanCvi07}
+{\sc Y.~Lan and P.~Cvitanovi\'{c}}, {\em Unstable recurrent patterns in
+  {K}uramoto-{S}ivashinsky dynamics}.
+{\sc Y.~Lan and P.~Cvitanovi\'{c}}, 
+\newblock In preparation, 2007.
+\bibitem{KNSks90}
+{\sc I.~G. Kevrekidis, B.~Nicolaenko, and J.~C. Scovel},  SIAM J. Appl. Math., 50 (1990), pp.~760--790.
+%\bibitem{ksgreene88}
+%{\sc J.~M. Greene and J.~S. Kim},  Physica D, 33 (1988), pp.~99--120.
+\bibitem{ku}
+{\sc Y.~Kuramoto and T.~Tsuzuki},  Progr. Theor.
+  Phys., 55 (1976), p.~365.
+\bibitem{siv}
+{\sc G.~I. Sivashinsky}, Acta Astr., 4
+  (1977), p.~1177.
+\bibitem{Christiansen97}
+{\sc F.~Christiansen, P.~Cvitanovi\'{c}, and V.~Putkaradze}, Nonlinearity,
+  10 (1997), p.~55.
+\bibitem{DasBuch}
+{\sc P.~Cvitanovi\'{c}, R.~Artuso, R.~Mainieri, G.~Tanner, and G.~Vattay}, {\em
+  Chaos: Classical and Quantum}, Niels Bohr Institute, Copenhagen, 2005,
+  ChaosBook.org.
+\end{thebibliography}
+\end{sheet}
+
+
+
+\end{poster}
+
+
+\end{document}
