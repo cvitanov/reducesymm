@@ -75,10 +75,15 @@ unrealistic...
 				    Vaggelis Jan 19 2008
 
 [X] No luck with Leoncini's proposal. All CNRS postoc's cancelled!
-- Leoncini suggested opening in Didier Benisti's group
+ 	- Leoncini suggested opening in Didier Benisti's group
+	[*] Applied
+
 [X] Rondoni's position goes through Politecnico di Torino. Formal requirement
 	not met: to hold PhD by the application deadline Jan 29.
-- Dresden guest scientist deadline: 20 Feb (incl. reference letters.)  
+
+[ ] Dresden guest scientist deadline: 20 Feb (incl. reference letters.)  
+
+[ ] Univ. Burgundy, Dijon deadline: 8 March 
 
 --------------------------------------------------------------------------
 
