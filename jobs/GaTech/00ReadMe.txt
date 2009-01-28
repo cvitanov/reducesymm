@@ -76,7 +76,8 @@ unrealistic...
 
 [X] No luck with Leoncini's proposal. All CNRS postoc's cancelled!
  	- Leoncini suggested opening in Didier Benisti's group
-	[*] Applied
+	[X] Applied
+	[*] Got offer, considering.
 
 [X] Rondoni's position goes through Politecnico di Torino. Formal requirement
 	not met: to hold PhD by the application deadline Jan 29.
