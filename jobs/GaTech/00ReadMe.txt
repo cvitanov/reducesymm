@@ -20,10 +20,10 @@ please (mark [ ] when finished)
         [x] K Wiesenfeld
         [ ] ? Liu
     [ ] propose defense dates
-        [ ] March 23 (KW okayed, RG not sure) (two weeks before thesis deadline)
-        [ ] March 24
-        [-] March 20 [APS March meeting - Kurt? other?]
-        [-] March 19 [APS March meeting - Predrag]
+        [ ] March 23	OK: PC, KW;  not sure: RG  (two weeks before thesis deadline)
+        [ ] March 24	OK: PC, 
+        [ ] March 20	OK: PC, [APS March meeting - Kurt? other?]
+        [ ] March 19	OK: PC, [APS March meeting]
     [ ] check with the committee which dates are OK
         [x] P Cvitanovic
         [ ] ? R Grigoriev
