@@ -1,0 +1,107 @@
+
+ 
+The \KS\ [henceforth KS] system\rf{ku,siv} was derived by Kuramoto and Tsuzuki\rf{ku} as a phase equation for reaction-diffusion
+systems described by Complex Ginzburg-Landau equation and independently by Sivashinsky\rf{siv} to describe instabilities in laminar flame fronts
+but also appears in a variety of contexts including thin falling films\rf{BenKS66,LinKS74}, interfacial instabilities between concurent viscous fluids, drift waves in plasmas. 
+% For an instructive derivation from Complex Ginzburg-Landau equation \cf~\rf{}.
+
+Our motivation for its study is that it is one of the simplest nonlinear PDEs that
+exhibit spatiotemporally chaotic behavior. Moreover the dynamics in the chaotic regime are
+interesting in their own right.
+
+ In the formulation
+adopted here, the time evolution of the `flame front velocity'
+$u=u(x,t)$ on a periodic domain $u(x,t) = u(x+L,t)$ is given by
+\beq
+  u_t = F(u) = -{\textstyle\frac{1}{2}}(u^2)_x-u_{xx}-u_{xxxx}
+    \,,\qquad   x \in [-L/2,L/2]
+    \,.
+\ee{ks}
+Here $t \geq 0$ is the time, and $x$ is the spatial coordinate.
+The subscripts $x$ and $t$ denote partial derivatives with respect to
+$x$ and $t$. In what follows
+we shall state results of all calculations either in units of the
+`dimensionless system size' $\tildeL$, or the system size $L = 2 \pi
+\tildeL$.All numerical results presented in this thesis
+are for the system size $\tildeL=22/2\pi = 3.5014\ldots$.
+Spatial periodicity $u(x,t)=u(x+L,t)$
+makes it convenient to work in the Fourier space,
+\beq
+  u(x,t)=\sum_{k=-\infty}^{+\infty} a_k (t) e^{ i k x /\tildeL }
+\,,
+\ee{eq:ksexp}
+with the $1$-dimensional PDE \refeq{ks}
+replaced by an infinite set of
+ODEs for the complex Fourier coefficients $a_k(t)$:
+\beq
+\dot{a}_k= \pVeloc_k(a)
+     = ( q_k^2 - q_k^4 )\, a_k
+    - i \frac{q_k}{2} \sum_{m=-\infty}^{+\infty} a_m a_{k-m}
+\,,
+\ee{expan}
+where $q_k = k/\tildeL$.
+Since $u(x,t)$ is real, $a_k=a_{-k}^\ast$, and we can replace the
+sum by a $k > 0$ sum.
+
+Due to the hyperviscous damping $u_{xxxx}$, long time solutions of KS
+equation are smooth, $a_k$ drop off fast
+with $k$, and truncations of \refeq{expan} to $16 \leq N \leq 128$
+terms yield accurate solutions for system sizes considered here (see
+Appendix~\ref{sec:fourierRLD}).  Robustness of the long-time dynamics
+of KS as a function of the number of Fourier modes kept in truncations
+of \refeq{expan} is, however, a subtle issue.  Adding an extra mode to
+a truncation of the system introduces a small perturbation in the
+space of dynamical systems.  However, due to the lack of structural
+stability both as a function of truncation $N$, and the system size
+\tildeL, a small variation in a system parameter can (and often will)
+throw the dynamics into a different asymptotic state.  For example,
+asymptotic attractor which appears to be chaotic in a $N$-dimensional
+\statesp\ truncation can collapse into an attractive cycle
+for $(N\!+\!1)$-dimensions.
+
+
+
+\subsection{Symmetries of \KSe}
+\label{sec:KSeSymm}
+
+The KS equation is Galilean invariant: if $u(x,t)$ is a solution,
+then $u(x -ct,t) -c $, with $c$ an arbitrary constant
+speed, is also a solution. Without loss of generality, in our
+calculations we shall set the mean velocity of the front to zero,
+\beq \int dx \, u = 0 \,. \ee{GalInv}
+As $\dot{a_0}=0$ in
+\refeq{expan}, $a_0$ is a conserved quantity
+fixed to $a_0=0$ by the condition \refeq{GalInv}. $G$, the group of actions $ g \in G $ on a
+\statesp\ (reflections, translations, \etc) is a symmetry of the KS
+flow \refeq{ks} if $g\,u_t = F(g\,u)$.
+The KS equation is time translationally invariant, and space translationally invariant
+on a periodic domain under
+the 1-parameter group of
+$O(2): \{\Shift_{\shift/L},\Refl \}$.
+If $u(x,t)$ is a solution, then
+$\Shift_{\shift/L}\, u(x,t) = u(x+\shift,t)$
+is an equivalent solution for any shift
+$-L/2 < \shift \leq L/2$,
+as is the
+reflection (`parity' or `inversion')
+\beq
+    \Refl \, u(x) = -u(-x)
+\,.
+\ee{KSparity}
+The translation operator action on the Fourier coefficients \refeq{eq:ksexp},
+represented here by a complex valued vector
+$a = \{a_k\in\mathbb{C}\,|\,k = 1, 2, \ldots\}$, is given by
+\beq
+  \Shift_{\shift/L}\, a = \mathbf{g}(\shift) \, a \,,
+  \label{eq:shiftFour}
+\eeq
+where $\mathbf{g}(\shift) = \mathrm{diag}( e^{i q_k\, \shift} )$ is a complex
+valued diagonal matrix, which amounts to the $k$-th mode complex plane
+rotation by an angle $k\, \shift /\tildeL$.  The reflection acts on
+the Fourier coefficients by complex conjugation,
+\beq
+  \Refl \, a = -a^\ast
+\,.
+\ee{FModInvSymm}
+Reflection generates the dihedral subgroup $D_1 = \{1, \Refl\}$
+of $O(2)$. 
