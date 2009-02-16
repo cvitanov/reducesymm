@@ -1,8 +1,8 @@
 
  
 The \KS\ [henceforth KS] system\rf{ku,siv} was derived by Kuramoto and Tsuzuki\rf{ku} as a phase equation for reaction-diffusion
-systems described by Complex Ginzburg-Landau equation and independently by Sivashinsky\rf{siv} to describe instabilities in laminar flame fronts
-but also appears in a variety of contexts including thin falling films\rf{BenKS66,LinKS74}, interfacial instabilities between concurent viscous fluids, drift waves in plasmas. 
+systems described by Complex Ginzburg-Landau equation and independently by Sivashinsky\rf{siv} to describe instabilities in laminar flame fronts.
+It also appears appears in a variety of contexts including thin falling films\rf{BenKS66,LinKS74}, interfacial instabilities between concurent viscous fluids, drift waves in plasmas\ES{citations needed.}. 
 % For an instructive derivation from Complex Ginzburg-Landau equation \cf~\rf{}.
 
 Our motivation for its study is that it is one of the simplest nonlinear PDEs that
@@ -22,43 +22,9 @@ The subscripts $x$ and $t$ denote partial derivatives with respect to
 $x$ and $t$. In what follows
 we shall state results of all calculations either in units of the
 `dimensionless system size' $\tildeL$, or the system size $L = 2 \pi
-\tildeL$.All numerical results presented in this thesis
-are for the system size $\tildeL=22/2\pi = 3.5014\ldots$.
-Spatial periodicity $u(x,t)=u(x+L,t)$
-makes it convenient to work in the Fourier space,
-\beq
-  u(x,t)=\sum_{k=-\infty}^{+\infty} a_k (t) e^{ i k x /\tildeL }
-\,,
-\ee{eq:ksexp}
-with the $1$-dimensional PDE \refeq{ks}
-replaced by an infinite set of
-ODEs for the complex Fourier coefficients $a_k(t)$:
-\beq
-\dot{a}_k= \pVeloc_k(a)
-     = ( q_k^2 - q_k^4 )\, a_k
-    - i \frac{q_k}{2} \sum_{m=-\infty}^{+\infty} a_m a_{k-m}
-\,,
-\ee{expan}
-where $q_k = k/\tildeL$.
-Since $u(x,t)$ is real, $a_k=a_{-k}^\ast$, and we can replace the
-sum by a $k > 0$ sum.
-
-Due to the hyperviscous damping $u_{xxxx}$, long time solutions of KS
-equation are smooth, $a_k$ drop off fast
-with $k$, and truncations of \refeq{expan} to $16 \leq N \leq 128$
-terms yield accurate solutions for system sizes considered here (see
-Appendix~\ref{sec:fourierRLD}).  Robustness of the long-time dynamics
-of KS as a function of the number of Fourier modes kept in truncations
-of \refeq{expan} is, however, a subtle issue.  Adding an extra mode to
-a truncation of the system introduces a small perturbation in the
-space of dynamical systems.  However, due to the lack of structural
-stability both as a function of truncation $N$, and the system size
-\tildeL, a small variation in a system parameter can (and often will)
-throw the dynamics into a different asymptotic state.  For example,
-asymptotic attractor which appears to be chaotic in a $N$-dimensional
-\statesp\ truncation can collapse into an attractive cycle
-for $(N\!+\!1)$-dimensions.
-
+\tildeL$. All numerical results presented in this thesis
+are for the system size $\tildeL=22/2\pi = 3.5014\ldots$, unless otherwise
+noted.
 
 
 \subsection{Symmetries of \KSe}
@@ -66,12 +32,17 @@ for $(N\!+\!1)$-dimensions.
 
 The KS equation is Galilean invariant: if $u(x,t)$ is a solution,
 then $u(x -ct,t) -c $, with $c$ an arbitrary constant
-speed, is also a solution. Without loss of generality, in our
-calculations we shall set the mean velocity of the front to zero,
-\beq \int dx \, u = 0 \,. \ee{GalInv}
-As $\dot{a_0}=0$ in
-\refeq{expan}, $a_0$ is a conserved quantity
-fixed to $a_0=0$ by the condition \refeq{GalInv}. $G$, the group of actions $ g \in G $ on a
+speed, is also a solution. As one can verify by integrating \refeq{ks} with 
+respect to $x$ over the periodic domain $[-L/2,L/2]$ the quantity
+ $\int_{-L/2}^{L/2} u\,dx$ 
+is conserved and we can, without loss of generality, set it equal to zero. This corresponds
+to the choice $c=0$, therefore eliminating Galilean invariance.
+.
+\ES{Use later on: As $\dot{a}_0=0$ in
+ \refeq{expan}, $a_0$ is a conserved quantity
+ fixed to $a_0=0$ by the condition \refeq{GalInv}.}
+
+$G$, the group of actions $ g \in G $ on a
 \statesp\ (reflections, translations, \etc) is a symmetry of the KS
 flow \refeq{ks} if $g\,u_t = F(g\,u)$.
 The KS equation is time translationally invariant, and space translationally invariant
@@ -88,7 +59,33 @@ reflection (`parity' or `inversion')
     \Refl \, u(x) = -u(-x)
 \,.
 \ee{KSparity}
-The translation operator action on the Fourier coefficients \refeq{eq:ksexp},
+Reflection generates the dihedral subgroup $D_1 = \{1, \Refl\}$
+of $O(2)$. 
+
+
+\subsection{Fourier space}
+\label{sec:fourKS}
+
+\On{2} equivariance makes it convenient to work in the Fourier space,
+\beq
+  u(x,t)=\sum_{k=-\infty}^{+\infty} a_k (t) e^{ i k x /\tildeL }
+\,,
+\ee{eq:ksexp}
+with the $1$-dimensional PDE \refeq{ks}
+replaced by an infinite set of
+ODEs for the complex Fourier coefficients $a_k(t)$:
+\beq
+\dot{a}_k= \pVeloc_k(a)
+     = ( q_k^2 - q_k^4 )\, a_k
+    - i \frac{q_k}{2} \sum_{m=-\infty}^{+\infty} a_m a_{k-m}
+\,,
+\ee{expan}
+where $q_k = k/\tildeL$.
+Since $u(x,t)$ is real, $a_k=a_{-k}^\ast$, and we can replace the
+sum by a $k > 0$ sum. 
+In the Fourier basis \On{2} acts absolutely irreducibly on each complex plane
+$\left(\Re(a_k),\Im(a_k)\right)$.
+Indeed, the translation operator action on the Fourier coefficients \refeq{eq:ksexp},
 represented here by a complex valued vector
 $a = \{a_k\in\mathbb{C}\,|\,k = 1, 2, \ldots\}$, is given by
 \beq
@@ -98,10 +95,52 @@ $a = \{a_k\in\mathbb{C}\,|\,k = 1, 2, \ldots\}$, is given by
 where $\mathbf{g}(\shift) = \mathrm{diag}( e^{i q_k\, \shift} )$ is a complex
 valued diagonal matrix, which amounts to the $k$-th mode complex plane
 rotation by an angle $k\, \shift /\tildeL$.  The reflection acts on
-the Fourier coefficients by complex conjugation,
+the Fourier coefficients by complex conjugation and a change of sign,
 \beq
   \Refl \, a = -a^\ast
 \,.
 \ee{FModInvSymm}
-Reflection generates the dihedral subgroup $D_1 = \{1, \Refl\}$
-of $O(2)$. 
+The reader should observe that this action is similar to the action \refneq{eq:O2stndrd} of \On{2} studied
+in \refsect{sec:strata}, apart from the minus sign in \refeq{FModInvSymm}. The isotropy lattice remains the same but the \fixedsp  of \Dn{m} is now given by the condition
+\bea
+	z_k=0\ \mathrm{unless}\ k = m j\,,\ j=1,\ldots\lfloor n/m \rfloor \\
+	Re(z_k)=0\ \mathrm{for}\ k=1,\ldots,n\,.
+	\label{eq:O2ksDqFix}
+\eea
+
+
+
+Some qualitative comments about the KS equation can now be easilly
+given in view of \refeq{expan}. The linear behaviour of the system 
+depends on the sign of the quantity $k^2- \left(2\pi/L\right)  k^4$. 
+For a sufficiently large system, the first few values of $k$ yield $k^2- \left(2\pi/L\right)
+k^4>0$ or $k<\sqrt{L/2\pi}$ and the corresponding Fourier components grow exponentially
+with time (unstable components). In other words the anti-diffusion
+term in \refeq{eq:KS} (resulting in the term $\sim k^2$ in
+\refeq{eq:Fcoef}) dominates over the dissipation term (resulting in
+$\sim k^4$ in \refeq{eq:Fcoef}).  On the other hand there are infinitely many larger
+wavenumber components with $k>\sqrt{L/2\pi}$ for which the solutions
+are bounded (stable components). The role of the bilinear term in
+\refeq{eq:Fcoef} is then to excite the larger wavenumber components
+while dissipating the smaller wavenumber ones. The result of this
+competition is that the asymptotic dynamics of the system are
+confined on a low dimensional attractor.
+
+\ES{Move elsewere: Due to the hyperviscous damping $u_{xxxx}$, long time solutions of KS
+equation are smooth, $a_k$ drop off fast
+with $k$, and truncations of \refeq{expan} to $16 \leq N \leq 128$
+terms yield accurate solutions for system sizes considered here.  
+Robustness of the long-time dynamics
+of KS as a function of the number of Fourier modes kept in truncations
+of \refeq{expan} is, however, a subtle issue.  Adding an extra mode to
+a truncation of the system introduces a small perturbation in the
+space of dynamical systems.  However, due to the lack of structural
+stability both as a function of truncation $N$, and the system size
+\tildeL, a small variation in a system parameter can (and often will)
+throw the dynamics into a different asymptotic state.  For example,
+asymptotic attractor which appears to be chaotic in a $N$-dimensional
+\statesp\ truncation can collapse into an attractive cycle
+for $(N\!+\!1)$-dimensions.}
+
+
+
