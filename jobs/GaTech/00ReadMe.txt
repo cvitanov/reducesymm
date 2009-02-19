@@ -16,23 +16,23 @@ please (mark [ ] when finished)
     [ ] contact the thesis committee
         [x] P Cvitanovic
         [x] R Grigoriev
-        [ ] ? L Dieci
+        [x] L Dieci
         [x] K Wiesenfeld
-        [ ] ? Liu
+        [ ] ? Liu or Schatz
     [ ] propose defense dates
         [ ] March 23	OK: PC, KW;  not sure: RG  (two weeks before thesis deadline)
         [ ] March 24	OK: PC, 
-        [ ] March 20	OK: PC, [APS March meeting - Kurt? other?]
-        [ ] March 19	OK: PC, [APS March meeting]
+        [-] March 20	OK: PC, Not OK: KW [APS March meeting]
+        [-] March 19	OK: PC, Not OK: KW [APS March meeting]
     [ ] check with the committee which dates are OK
         [x] P Cvitanovic
         [ ] ? R Grigoriev
-        [ ] ? L Dieci
-        [ ] ? K Wiesenfeld
+        [x] L Dieci (23,24) prefers 23, needs hard copy 2 weeks before.
+        [x] K Wiesenfeld(23,24) prefers 23
         [ ] ?
     [ ] GT thesis paperwork completed:
-    [?] thesis target date: April 6 2008
-    [ ] delivered to the committee:
+    [x] thesis target date: April 6 2008
+    [ ] delivered to the committee: March 9 (if defence is March 23)
         
 
 
@@ -77,7 +77,8 @@ unrealistic...
 [X] No luck with Leoncini's proposal. All CNRS postoc's cancelled!
  	- Leoncini suggested opening in Didier Benisti's group
 	[X] Applied
-	[*] Got offer, considering.
+	[X] Got offer
+	[ ] Waiting scientific committee, official offer  
 
 [X] Rondoni's position goes through Politecnico di Torino. Formal requirement
 	not met: to hold PhD by the application deadline Jan 29.
