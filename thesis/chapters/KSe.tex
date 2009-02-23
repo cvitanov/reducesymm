@@ -46,7 +46,7 @@ in \refsect{sec:KSeSymm}, in conjuction with the discussion of the symmetries of
 Another common choice of boundary conditions is 
 \beq
   u(0,t) = u(L,t)=0\,,
- \label{eq:KSper}
+ \label{eq:KSodd}
 \eeq
 which restricts the system to the subspace of odd functions. This choice will also be discussed
 in \refsect{sec:KSeSymm}.
@@ -77,13 +77,13 @@ $\shift\in\Rls{}$, as is the reflection (`parity' or `inversion')
 \ee{KSparity}
 
 Imposing periodic boundary conditions we restrict attention to the fixed
-point subspace of the compact subgroup \On{2} of \En{1}:
+point subspace of the compact subgroup \On{2} of \En{1} with elements:
 \beq
 	\Shift_{\shift/L}\, u(x,t) = u(x+\shift,t)\,,\qquad \shift\in\left[-L/2,L/2\right]	
 \eeq
 and reflections \refneq{KSparity}. Here we use subscript notation for shifts to differentiate
 with the case of \En{1}.
-Moreover, one only considers perturbations within \fixedsp{\On{2}} invariant subspace, \ie\ we do not
+Moreover, one only considers perturbations within \Fix{\On{2}}, \ie\ we do not
 consider subharmonic perturbations. The system size $L$ affects the representation
 of \On{2}, \cf \refsect{sec:fourKS}. \ES{This statement needs to be checked: 
 An important fact is that the isotropy subgroups of
@@ -96,8 +96,12 @@ quasi-continuous.}
 % \beq
 % 	\Rot \, u(x)=u(x+L)
 % \eeq
-Reflection generates the dihedral subgroup $D_1 = \{1, \Refl\}$
-of $O(2)$. 
+Reflection generates the dihedral subgroup $\Dn{1} = \{1, \Refl\}$
+of $\On{2}$. Boundary conditions \refneq{eq:KSodd} restrict the system to \Fix{\Dn{1}}. 
+To avoid technical difficulties associated with the action of \On{2} on an infinite dimensional
+space we will discuss the isotropy subgroups of \On{2} in \refsect{sec:ksIso}, 
+after we truncate \refeq{expan} to finite order.
+
 
 The KS equation is also Galilean invariant: if $u(x,t)$ is a solution,
 then $u(x -ct,t) -c $, with $c$ an arbitrary constant
@@ -106,7 +110,7 @@ respect to $x$ over the periodic domain $[-L/2,L/2]$ the quantity
  $\int_{-L/2}^{L/2} u\,dx$ 
 is conserved and we can, without loss of generality, set it equal to zero. This corresponds
 to the choice $c=0$, therefore eliminating Galilean invariance.
-\ES{Use later on: }
+
 
 % $G$, the group of actions $ g \in G $ on a
 % \statesp\ (reflections, translations, \etc) is a symmetry of the KS
@@ -167,23 +171,13 @@ the Fourier coefficients by complex conjugation and a change of sign,
 \beq
   \Refl \, a = -a^\ast
 \,.
-\ee{FModInvSymm}
-The reader should observe that this action is the action \refneq{eq:O2stndrd} of \On{2} on \Clx{n} studied
-in \refsect{sec:strata}, apart from the minus sign in \refeq{FModInvSymm}. The subgroup lattice remains unchanged but \fixedsp s of the dihedral subgroups are affected\ES{Not sure if this is true, the space is 
-infinite dimensional.}. We will discuss the isotropy lattice after we
-truncate the tower of equations \refneq{expan}.  \ES{Discuss after discussing truncation: The isotropy lattice remains unchanged, as well as the \fixedsp s with the exception of \Fix{\Dn{m}} which is now given by the conditions
-\bea
-	a_k=0\ \mathrm{unless}\ k = m j\,,\ j=1,\ldots\lfloor n/m \rfloor\,, \\
-	\Re(a_k)=0\ \mathrm{for}\ k=1,\ldots,n\,.
-	\label{eq:O2ksDqFix}
-\eea
-It follows that \Fix{\Dn{1}} is the subspace of antisymmetric functions $Re(z_k)=0,\, \forall k$ 
-or $u(-x)=-u(x)$.}
+\label{eq:FModInvSymm}
+\eeq
 
 We can now justify the choice of boundary conditions and system size. With periodic boundary conditions
 we expect to find traveling wave and modulated amplitude traveling wave solutions. Moreover,
 we have observed in numerical simulations that $L=22$ is just after the onset of chaos while still
-not spatiomporaly chaotics.
+not spatiomporaly chaotic.
 
 
 \ES{This is from my first year KS special problem, perharps some parts are usuable: 
@@ -228,5 +222,64 @@ Dynamical \statesp\ representation of a PDE is $\infty$-dimensional,
 but the KS flow is strongly contracting and its non-wondering set,
 and, within it, the set of invariant solutions investigated here, is
 embedded into a finite-dimensional inertial manifold\rf{FNSTks85} in
-a non-trivial, nonlinear way.
+a non-trivial, nonlinear way. The existence of an inertial manifold for
+KSe with both odd and periodic boundary conditions has been proved and
+several bounds for its dimension have been found, \cf\ \refref{jolly_evaluating_2000} and references
+therein. The best current bound in dimension of inertial manifold for KS
+equation with periodic boundary condition is, to the authors knowledge,
+given in \refrefs{Robinson_inertial_1994,jolly_evaluating_2000}: $O(L^{2.46})$ for $L\in[2\pi,6\pi]$.
+
+The fact that the asymptotic dynamics lies on a finite dimensional manifold
+justifies truncation of the infinite tower of equations \refneq{expan} to finite
+order $N$. According to the bound $O(L^{2.46})\simeq2000$ for $L=22$\ES{$L=22>6\pi$, so it looks like their proof does not apply to our system if one wants to be rigorous.} and 
+we would expect to need even more Fourier modes, since the Fourier basis
+is not directly connected to coordinates on the inertial manifold of KSe and would therefore
+be less optimal than an approach that approximates such coordinates\cite[for example]{Jolly_approximate_1990,jolly_accurate_2001}.
+Nevertheless such a bound seems rather inflated compared to numerical simulations
+of the asymptotic dynamics that typically require $O(10)-O(100)$ Fourier modes. 
+In practice we keep $16\leq N \leq 128$ Fourier modes in numerical simulations 
+and check the robustness of the results against increase of $N$.
+
+\subsection{Isotropy lattice and invariant subspaces}
+\label{ksIso}
+
+Let $N$ be the number of Fourier modes retained in \refneq{expan}
+and observe that the action of $O(2)$ 
+on \Rls{N} by \refneq{eq:shiftF} and \refneq{eq:FModInvSymm} is,
+up to the minus sign in \refeq{eq:FModInvSymm}, identical
+to the action \refneq{eq:O2stndrd} of \On{2} on \Clx{N} studied
+in \refsect{sec:strata}. 
+The isotropy lattice remains unchanged but \fixedsp s of the dihedral subgroups are affected. 
+\Fixedsp\ of \Cn{q}, given by the condition
+\beq
+	a_k=0\ \mathrm{unless}\ k = q j\,,\ j=1,\ldots\lfloor n/q \rfloor\,,
+	\label{eq:O2CqFix}
+\eeq
+remain unchanged but the \fixedsp s of the dihedral subgroups \Fix{\Dn{m}} are now given by the conditions
+\bea
+	a_k=0\ \mathrm{unless}\ k = m j\,,\ j=1,\ldots\lfloor n/m \rfloor\,, \\
+	\Re(a_k)=0\ \mathrm{for}\ k=1,\ldots,n\,.
+	\label{eq:O2ksDqFix}
+\eea
+In relation to physical space we observe that \Fix{\Dn{1}} is the subspace of antisymmetric functions $Re(z_k)=0,\, \forall k$ or $u(-x)=-u(x)$ while for the action \refneq{eq:O2stndrd} the corresponding
+subspace would be that of symmetric functions.
+
+\subsection{Equilibria and their bifurcations}
+
+The equilibria of KS equation and their bifurcations have been the object of extensive study
+and the literature is too hard to exhaust. The results of main interest for this thesis
+can be found in \refrefs{Mks86,laquey74,ksgreene88,KNSks90,AGHks89}. 
+Although the results were obtained by direct bifurcation analysis rather than with use of methods of equivariant bifurcation theory, the relation of bifurcations
+to \On{2} symmetry has been recognized in the literature particularly in \refrefs{KNSks90,AGHks89} 
+The relation of the bifurcations found numerically (and in some cases analytically) in \cite{KNSks90} 
+to the predictions of equivariant bifurcation theory is discussed in Krupa\cite{Krupa_bifurcations_1990}
+but without explicit calculations. In this section we follow Krupa's analysis to describe how the various
+stationary solutions fit in the isotropy lattice.
+
+The isotropy lattice determines the bifurcations of equilibria for \KS. Since the origin (u(x,t)=0 in 
+physical space) is the \fixedsp\ of \On{2} it is, by \refPro{pro:gfInv}, flow invariant and thus 
+an equilibrium. 
+
+
+
 
