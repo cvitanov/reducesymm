@@ -18,23 +18,24 @@ please (mark [ ] when finished)
         [x] R Grigoriev
         [x] L Dieci
         [x] K Wiesenfeld
-        [ ] ? Liu or Schatz
+        [x] M Schatz
     [ ] propose defense dates
-        [ ] March 23	OK: PC, KW;  not sure: RG  (two weeks before thesis deadline)
-        [ ] March 24	OK: PC, 
+        [ ] March 23	OK: PC; KW; MS(after 1pm);LD ;  not sure: RG  (two weeks before thesis deadline)
+        [ ] March 24	OK: PC, RG:Teaching until 11 TU-TH
         [-] March 20	OK: PC, Not OK: KW [APS March meeting]
         [-] March 19	OK: PC, Not OK: KW [APS March meeting]
-    [ ] check with the committee which dates are OK
-        [x] P Cvitanovic
-        [ ] ? R Grigoriev
+    [x] check with the committee which dates are OK
+        [x] P Cvitanovic 
+        [x] R Grigoriev
         [x] L Dieci (23,24) prefers 23, needs hard copy 2 weeks before.
         [x] K Wiesenfeld(23,24) prefers 23
-        [ ] ?
+        [x] Schatz(23,24) with constraints	
     [ ] GT thesis paperwork completed:
-    [x] thesis target date: April 6 2008
+    [x] thesis target date: April 6 2009
+    [x] defense: March 23, 1pm
     [ ] delivered to the committee: March 9 (if defence is March 23)
-        
-
+    [ ] RSVP for commencement by April 17 2009    
+	
 
                                     Predrag Nov 10 2008
 
