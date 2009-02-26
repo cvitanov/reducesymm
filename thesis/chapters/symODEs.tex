@@ -445,7 +445,7 @@ $\rho(K)$ of $K$ is known\ES{Or if one is able to determine the character of the
 	dim(Fix(K))=\frac{1}{|K|}\sum_{\kappa\in K} \trace(\rho(\kappa))\,.
 \eeq
 
-\subsection{Group Action types}
+\subsection{Group Actions}
 
 In this section we recall definitions on the different types of group actions. 
 
@@ -516,36 +516,103 @@ $\tSp$ then the $\Gamma$-bundle is a fibre bundle with fibre $\Gamma$ and is cal
 
 \subsection{Symmetries of solutions}
 
-In the preceding section we concentrated on symmetries of the space on which the group acts.
-We now proceed to examine the symmetries of solutions of equivariant dynamical systems.
+In the preceding section we concentrated on symmetries of the space on which a group acts.
+Solutions of a differential equation do not necessarily have the full symmetry group $\Gamma$ of the differential 
+equation. Their symmetry group is the isotropy subgroup of the invariant subspace they live in and this is
+why one cares about isotropy subgroups. Thus the stratification by orbit type can be used to characterize
+solutions as well.
+
+A solution with full symmetry lies in $\Fix{\Gamma}$. If $\dim\Fix{\Gamma}=0$, since \fixedsp s are flow
+invariant, the solution has to be an equilibrium. For most reasonable group actions that occur in physics the dimension of $\Fix{\Gamma}$ is low and no interesting dynamics can occur in a linear subspace of low dimension.
+The orbit type is $\Idg$ and thus the multiplicity of the solution is one. 
+
+At the other extreme let's define a generic trajectory (with respect to symmetry) to be one that has no
+symmetry and thus lives in the principal stratum and has group-orbit type $\Gamma$. For finite groups there exists a family of $|\Gamma|$ (disconnected) copies of the solution. For compact groups there exists a manifold of solutions of dimension $\dim \Gamma$.
 
 
 \subsection{Equivariant bifurcation theory}
 
 
 
-\subsection{Moving frames}
+\subsection{Symmetry reduction}
 
-In this section we present the method of moving coframes
+The purpose of symmetry reduction in differential equations is to project the dynamics to a space
+in which the symmetry group $G$ acts trivially. Such a space is called \emph{orbit space} because each
+group orbit of a point in original space is mapped to a single point in orbit space, or \emph{quotient
+space} because the symmetry has been ``divided out'' or simply \emph{reduced space}. If the original
+space is a manifold $\Manif$ it is then costmary to write the quotient space as $\Manif/\Gamma$.
+The resulting dynamical system is called \emph{image} of the original.
+
+The stratification of $\Manif$ induced by the group action is carried over to the quotient space with each disconnected set in a stratum mapped to the same manifold in quotient space.
+Yet, a fundamental problem with symmetry reduction is that the orbit space is in general not a manifold.
+Unless the action of the group is free, group orbits do not have the same dimension and different
+strata are mapped to manifolds of different dimension. We will see this property of quotient space
+manifest itself in different ways depending on the reduction method but always introducing some 
+singularity eventhough there is nothing singular about $\Manif$ or the flow of the dynamical system
+on it. 
+
+
+\subsubsection{Hilbert basis approach}
+
+
+The most common approach to symmetry reduction is through the use of a Hilbert basis of invariant
+polynomials. One computes a (non-unique) basis of linearly independent polynomials, invariant under the action
+of the symmetry group (\cf \refref{gatermannHab} for a discussion of methods) and either rewrites
+the dynamics in this basis or maps the solutions to the polynomials.
+We will describe how this approach works for the example of \CLe in \refsect{sec:CLe}. 
+The reader is refered to the book of Gilmore and Lettelier \cite{GL-Gil07b} for a very detailed discussion of symmetry reduction. For the action \refneq{eq:SO2act} of $\SOn{2}$ on \Rls{5} a Hilbert 
+basis is\cite{GL-Gil07b},
+\beq
+\begin{split}
+	u_1 &= x_1^2+x_2^2 \cont
+	u_2 &= y_1^2+y_2^2 \cont
+	u_3 &= x_1 y_2-x_2 y_1\cont
+	u_4 &= x_1 y_1+x_2 y_2\cont
+	u_5 &= z\,.
+	\label{eq:ipLaser}
+\end{split}
+\eeq
+The polynomials in a Hilbert basis are linearly independent, but functionally dependent through
+relation called \emph{syzygies}. For polynomials \refneq{eq:ipLaser} the syzygy is
+\beq
+ 	u_1u_2 -u_3^2-u_4^2 =0\,.
+	\label{eq:syzLaser}
+\eeq
+
+When one takes syzygies into account in rewriting 
+the dynamical system, singularities are introduced. Moreover when one \emph{lifts} the
+dynamics from the quotient space $\Manif/G$ to the original space $\Manif$ the transformations
+have singularities at the \fixedsp s of the isotropy subgroups in $\Manif$, in the optima case, \cf \refref{GL-Gil07b}. Those singularities do not seem to restrict our ability to use invariant polynomials to obtain symmetry reduced projections of the dynamics as we will see in \refchap{chap:lasers}.
+
+What restricts the utility of Hilbert basis methods is that the determination of a Hilbert basis becomes computationally prohibitive as the dimension of the system or of the group increases\cite{gatermannHab,ChossLaut00} and typicaly computations are constraint to dimension smaller than ten. As our goal is to quotient continuous symmetries of high-dimensional flows, specifically those arising from truncations of the Kuramoto-Shivasinsky and Navier-Stokes flows and thus we need an efficient
+framework. 
+
+
+\subsubsection{Moving frames} 
+
+In this section we present the method of moving frames
     \PC{do they really say ``moving coframes'' rather than ``comoving frames''? {\bf ES}: Yes, they really do. They refer to
 Cartan's method as method of ``moving frames'' and they claim it to be a special (and less rigorous) case of the moving coframe method.
 I don't know Cartan's method and the two papers of Fels and Olver\rf{FelsOlver98,FelsOlver99} are lengthy and technical. Olver's
 book is readable but I it doesn't describe Cartan's method. I think they say ``moving'' rather than ``comoving" frames
 because one only comoves in the direction of group action.}
-of Fels and Olver\rf{FelsOlver98,FelsOlver99}, also \cf~\refref{OlverInv} for
-a pedagogical exposition. The method can be used to generate functionally independent fundamental invariants for the action of a group $\Gamma$ on a manifold $\Manif$ under certain conditions. 
-It is a generalization of the method of moving frames of Cartan. The name ``moving coframes'' is due to
-the fact that the justification of the method relies on use of Maurer-Cartan forms which are a coframe on
-the Lie group $\Gamma$, in the sense that they form a poinwise basis for the cotangent space.
-    \ES{cite Cartan}
-Here we follow \refref{OlverInv} but first motivate the general method through an example.
+of Cartan\cite{CartanMF} in the formulation of Fels and Olver\rf{FelsOlver98,FelsOlver99}, also \cf~\refref{OlverInv} for
+a pedagogical exposition and the proofs of theorems listed here. The method can be used to generate functionally independent invariants for the action of a group $\Gamma$ on a manifold $\Manif$ under certain assumptions. \ES{Use elsewere: Fundamental here
+means that they can be used to generate all other invariants.}
+\ES{The name ``moving coframes'' arises through the use of Maurer-Cartan form which is a coframe on the Lie group $\Gamma$, in the sense that they form a poinwise basis for the cotangent space.}
+
+In the following let $\Gamma$ act regularly on a $n$-dimensional manifold $\Manif$ with $r$-dimensional orbits.
+\begin{definition}
+ A moving frame is a smouth $\Gamma$-equivariant mapping $\rho:\,M \rightarrow \Gamma$. 
+\end{definition}
+Here we consider left moving frames, \ie the equivariance condition is $\rho(\gamma x)=\gamma\rho(x)\,,\ x\in\Manif\,,\ \gamma\in\Gamma$.
 
 For groups acting regularly we can define a cross-section for the group orbits.
 
 \begin{definition}
 \label{def:cross-section}
 \index{cross-section}
-Let $\Gamma$ act regularly on a $n$-dimensional manifold $\Manif$ with $r$-dimensional orbits. Define a (local) \emph{cross-section}
+Define a (local) \emph{cross-section}
 to be an $(n-r)$-dimensional submanifold $K$ of $\Manif$ such that $K$ intersects each orbit transversally and at most once.
 \end{definition}
 
