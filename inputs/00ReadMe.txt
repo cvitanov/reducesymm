@@ -20,3 +20,8 @@ def     do not edit; edited only within ChaosBook.org
 		> cp ~dasbuch/book/inputs/def.tex def.tex
 setupDasbuch.tex    some ChaosBook tweaks
 prlabels.sty
+
+%%%%% temporary - eliminate eventually %%%%%%%%%
+
+								PC: Feb 27 2008 
+temporarily added to inputs/layoutThesis.tex	\FIG \SFIG

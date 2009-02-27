@@ -25,6 +25,15 @@ Evangelos Siminos thesis
 --------------------------------------------------------------------------
 TO FIX:
 
+						Predrag  Feb 27 2009
+if you are using figures in
+    siminos/thesis/figs/
+please move them to the canonical location
+    ../figs/
+then
+    svn rm siminos/thesis/figs/
+(makes it easier to keep track of them)
+
 						Predrag  Jun 27 2008
 
 if we modify siminos-thesis.cls, we'll modify

@@ -19,6 +19,9 @@ bibtex/siminos.bib
 figs/
 	one directory for thesis and blog figures
 	.eps figures needed for compatibility with articles, ChaosBook
+    when creating a new version, please use the SAME name (so
+    it propagates to publications etc. as well, without messing
+    around with renaming it)
 
 Fig/
     copied from ChaosBook.org (do not edit here)

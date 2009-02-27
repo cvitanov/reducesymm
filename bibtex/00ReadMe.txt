@@ -6,14 +6,14 @@ $Author$ $Date$
 Maintain only ONE bib file for all dynamical systems publications
               ***
 
-Evangelos Siminos 
+Evangelos Siminos
 	bibtex/siminos.bib
 
 bibtex/05bibTools.txt
 	notes about BibTeX tools, web resources, etc
 
-bibtex/bibreduce: 
-	perl script that examines article.aux, creates a list of 
+bibtex/bibreduce:
+	perl script that examines article.aux, creates a list of
 	the papers that are cited in article.tex and extracts them
 	from large.bib to small.bib.
 
@@ -21,8 +21,12 @@ bibtex/bibreduce:
 NOTES
 -----
 
+Zoteromania: do not rename any existing citation, either
+in siminos.bib or when you are adding a bibTeX entry to
+a citation copied from ChaosBook.org.
+
 When submitting rpo.tex, remember to
-    1) Submit rpo.bib file. 
+    1) Submit rpo.bib file.
        rpo_ks/rpo.bib is always a bibreduce subset of siminos.bib
 
 When submitting to arXiv, journals,
@@ -44,9 +48,8 @@ Fix these:
 ==============================================================
 FORMERLY OUTSTANDING ITEMS, NOW DISPOSED OFF:
 
-= DONE: 
+= DONE:
 check http://arxiv.org/hypertex/bibstyles/ for hyperref compatible
 BiBTeX styles
 
-= DONE:  
-
+= DONE:
