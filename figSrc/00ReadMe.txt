@@ -4,6 +4,20 @@ siminos/figSrc/00ReadMe.txt
 Siminos source programs for figures
 ===================================
 
+					Predrag     Mar  1 2009
+read days's edit of
+    siminos/thesis/00ReadMe.txt
+
+					Evangelos	Mar  1 2009
+Fixed scripts
+    sys_utils/bbox_add.pl
+    sys_utils/epscom.pl
+to combine eps files so that the final eps file has correct
+bounding box. The trick is (as noted below):
+    eps2eps -dEPSCrop -dEmbedAllFonts=true file.eps corrected.eps
+The second option is sometimes needed to correct problems with
+fonts.
+
 					Predrag Feb  9 2009
 
     dasbuch/book/Fig/ lorenz2Poinc.eps
@@ -24,12 +38,9 @@ documented source programs for these, I do not see where. The
 closest I come is:
 
 Author: siminos 2008-01-10  Revision: 865
-Added:
   testing/flows/lorenzPolar.nb
-Modified:
   testing/flows/lorenz.nb
 Log: Plotting Lorenz figures.
-
 
 Vaggelis fix:
 ------------
@@ -40,8 +51,6 @@ eps2eps -dEPSCrop -dEmbedAllFonts=true file.eps corrected_file.eps
 The crucial option is -dEPSCrop, -dEmbedAllFonts=true can help if
 there are problems with fonts, eg mathematica fonts. The output
 has to be a different file. Not sure whether the fix is universal.
-
-
 
 -----------------------------------------------------------------
 					Predrag Feb 10 2007
