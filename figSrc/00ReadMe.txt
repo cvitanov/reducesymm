@@ -30,6 +30,19 @@ Modified:
   testing/flows/lorenz.nb
 Log: Plotting Lorenz figures.
 
+
+Vaggelis fix:
+------------
+Use:
+
+eps2eps -dEPSCrop -dEmbedAllFonts=true file.eps corrected_file.eps
+
+The crucial option is -dEPSCrop, -dEmbedAllFonts=true can help if
+there are problems with fonts, eg mathematica fonts. The output
+has to be a different file. Not sure whether the fix is universal.
+
+
+
 -----------------------------------------------------------------
 					Predrag Feb 10 2007
 
