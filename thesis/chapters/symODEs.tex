@@ -620,12 +620,13 @@ In the following let $\Gamma$ act regularly on a $n$-dimensional manifold $\Mani
 \begin{definition}
  A moving frame is a smooth $\Gamma$-equivariant mapping $\rho:\,\Manif \rightarrow \Gamma$.
 \end{definition}
-Here we consider left moving frames, \ie the equivariance condition is $\rho(\gamma x)=\gamma\rho(x)\,,\ x\in\Manif\,,\ \gamma\in\Gamma$.
+One distinguishes between left moving frames for which the equivariance condition is $\rho(\gamma x)=\gamma\rho(x)\,,\ x\in\Manif\,,\ \gamma\in\Gamma$ and right moving frames for which the equivariance condition is $\rho(\gamma x)=\rho(x)\gamma^{-1}\,,\ x\in\Manif\,,\ \gamma\in\Gamma$.
 
-The following existence theorem for moving frames is very important.
+The following existence theorem for moving frames will be very important.
 
 \begin{theorem}
-
+ A moving frame exists in a neighborhood of a point $x\in \Manif$ if and
+ only if $\Gamma$ acts freely and regularly near x.
 \end{theorem}
 
 
@@ -642,52 +643,53 @@ to be an $(n-r)$-dimensional submanifold $K$ of $\Manif$ such that $K$ intersect
 In other words, can we interpret
 the latter as a submanifold in total space \tSp\ of a $\Gamma$-bundle $(\tSp,\pi,\tSp/\Gamma)$? }
 
-\begin{proposition}[\cite{OlverInv}]
+\begin{proposition}%[\cite{OlverInv}]
+ \label{pro:crossExist}
  If a Lie group $\Gamma$ acts regularly on a manifold $\Manif$, then one can construct a local cross-section
  passing through any point $x\in \Manif$.
 \end{proposition}
+
+\begin{theorem} 
+ Assume the conditions of \refPro{pro:crossExits} hold and let $K\subset\Manif$ be a cross-section. 
+ For $x\in \Manif$, let $g=ρ(x)$ be the unique group element that maps $x$ to the
+ cross-section: $g\dot z = ρ(z) \dot z\, \in K$. Then $ρ:M\rightarrow G$ is a right moving frame.
+\end{theorem}
 
 A cross-section $K$ can be defined by means of level sets of functions $K_i(x)=c_i$,
 where $x\in V$ and $i=1,\ldots,r$. If the $K_i(x)$
 coincide with the local coordinates $x_i$ on the manifold $V$, \ie~$K_i(x)=x_i$,
 then we call $K$ a \emph{coordinate cross
-section}. In our example we can define a coordinate cross-section for the action of
-$\Sigma=\SOn{2}$ on $\Rls{5}\backslash\{x_1=x_2=y_1=y_2=0\}$  by, for instance, $x_1=0$.
+section}. 
 
-\begin{example}% SO{n} on R^5
-% Consider $\Sigma=\SOn{2}$ acting on $\Rls{5}$ by
-%
-We can now construct a moving frame for the action
-\refeq{eq:SO2act} of $\SOn{2}$ as follows. We write out
+\begin{example}
+Consider the action standart action of $\SOn{2}$ on \Rls{2}:
+\beq
+	(x,y) \mapsto (x\cos\theta -y \sin\theta,\,x\sin\theta +y \cos\theta )
+\eeq
+which is regular on $\Rls{2}\backslash\{0\}$. Thus we can define 
+a cross-section by, for instance, the
+positive $y$ axis: $x=0,\,y>0$.
+We can now construct a moving frame as follows. We write out
 explicitly the group transformations:
 \beq
 \begin{split}
- 	\overline{x}_1 &= x_1 \cos\theta - x_2 \sin\theta\cont
-	\overline{x}_2 &= x_1 \sin\theta + x_2 \cos\theta\cont
-	\overline{y}_1 &= y_1 \cos\theta - y_2 \sin\theta\cont
-	\overline{y}_2 &= y_1 \sin\theta + y_2 \cos\theta\cont	
-	\overline{z} &= z\,.
-	\label{eq:CLEexplSO2}
+ 	\overline{x} &= x \cos\theta - y \sin\theta\cont
+	\overline{y} &= x \sin\theta + y \cos\theta\cont
+	\label{eq:explSO2stnd}
 \end{split}
 \eeq
-Then make $\overline{x}_1$ equal to the constant in the choice of cross-section, \ie~set $\overline{x}_1=0$. Thus, we can solve
-the first of \refeq{eq:CLEexplSO2} for the group parameter $\theta$ and substitute in the remaining equations. We get
+Then set $\overline{x}=0$ and solve
+the first of \refeq{eq:explSO2stnd} for the group parameter to obtain the moving frame
 \beq
-\begin{split}
-	\theta &= 2 \tan^{-1}\frac{-x_2+\sqrt{x_1^2+x_2^2}}{x_1} \cont
-	\overline{x}_2 &= \sqrt{x_1^2+x_2^2} \cont
-	\overline{y}_1 &= \frac{x_2 y_1-x_1 y_2}{\sqrt{x_1^2+x_2^2}}\cont
-	\overline{y}_2 &=\frac{x_1 y_1+x_2 y_2}{\sqrt{x_1^2+x_2^2}}\,.
-	\label{eq:invLaser}
-\end{split}
+	\theta=\tan^{-1}\frac{x}{y}
+	\label{eq:SO2stndMF}
+\eeq 
+which brings any point  back to the cross-section.\footnote{Implementation note: Here it is important that $\tan^{-1}$ 
+distinguishes quadrants on the $(x,y)$ plane so that we get the correct geometric operation.} Substituting \refeq{eq:SO2stndMF} in the remaining equation. We get
+the $\SOn{2}$-invariant
+\beq
+	\overline{y} = \sqrt{x^2+y^2}\,.
 \eeq
-\ES{The solution $\theta = 2 \tan^{-1}\frac{-x_2+\sqrt{x_1^2+x_2^2}}{x_1}$ was returned by Mathematica. If we use
-$\theta = \tan^{-1}\frac{x_2}{x_1}$ our results are multiplied by $sgn(x_2)$.} We note that $\overline{x}_2,\overline{y}_1,
-\overline{y}_2,\overline{z}$ are $\SOn{2}$
-invariant. In fact they are the \emph{fundamental invariants} for our problem: any other invariant can be expressed
-as a function of $\overline{x}_2,\overline{y}_1, \overline{y}_2,\overline{z}$ and they are functionally independent.
-Thus they serve to distinguish orbits in the neighborhood of the cross-section, \ie~two points lie on the same group
-orbit if and only if all the fundamental invariants agree.
 \end{example}
 
 The \emph{normalization} procedure for the computation of
@@ -700,7 +702,7 @@ coordinate cross-section $K=\{x_1=c_1,\ldots,x_r=c_r\}$ defined
 by the first $r$ coordinates (relabel coordinates as
 necessary). Introduce local coordinates $g=(g_1,\ldots,g_r)$ on
 $\Gamma$ in the neighborhood of the identity.
-The group transformations is
+The group transformations are
 \beq
 	\overline{x}= g \cdot x = w(g,x)\,.
 	\label{eq:transNorm}
@@ -713,10 +715,20 @@ of the cross-section $K_i(x)=c_i$ yields the \emph{normalization equations} for 
 \eeq
 From the definition of cross-section and the Implicit Function Theorem the normalization equations
 \refeq{eq:normalization} can always be solved for the group parameters in terms of $x$,
-yielding the \emph{moving frame} associated with $K$: $g=\gamma(x)$. Substitution
+yielding the moving frame associated with $K$: $g=\gamma(x)$. Substitution
 of the moving frame equation back to \refeq{eq:transNorm} will yield the $n-r$
-fundamental invariants. For proof \cf~\refrefs{FelsOlver98,FelsOlver99}.
+\emph{fundamental invariants}, in the sense that any other invariant can be expressed
+as a function of $\overline{x}_2,\overline{y}_1, \overline{y}_2,\overline{z}$ and they are functionally independent.
+Thus they serve to distinguish orbits in the neighborhood of the cross-section, \ie~two points lie on the same group
+orbit if and only if all the fundamental invariants agree. For proof \cf~\refrefs{FelsOlver98,FelsOlver99}.
 
+There exist two methods to convert a non-free\ES{but effective} action of a group $\Gamma$ on a 
+manifold $\Manif$ to a free action: one either prolongs the action to jet space and thus calculates
+differential invariants, or considers the action of the group in $n$ copies of $\Manif$ with $n>>0$
+and thus calculates joint invariants. The second method will not be helpful for us since the dimension
+of the manifolds that we are interested in is already very high. We have not found a way to implement
+the method of prolongation efficiently for the problems considered here. The way to get around of 
+non-free actions will be explained in \refchap{cha:reduction}.
 
 \ES{It would appear removing a continuous symmetry is a simple task. Yet, the problem arises due to the structure of the group action. If we have isotropy subgroups and the action is not free then there are points
 with less symmetry: the source of singularities.}
