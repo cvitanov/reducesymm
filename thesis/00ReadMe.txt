@@ -25,6 +25,11 @@ Evangelos Siminos thesis
 -----------------------------------------------------------------
 TO FIX:
 
+size of
+    figs/ks_L22_long_orbit.eps (also in rpo_ks/figs)
+    figs/ks_prox_eq_tw.eps
+and is few others is disgusting - ~2MB
+
 						Predrag  Mar  1 2009
 Vladimir Ilyich Lenin:
 ``One Step Forward, Two Steps Back''
