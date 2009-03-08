@@ -1,24 +1,71 @@
 \renewcommand{\inputfile}{\version\ - edited 2008-06-26 appeKSeDetails}
 
-\subsection{Pseudospectral method and time stepping}
-
 Truncating the infinite tower of equations \refeq{expan} by setting $a_k=0$ for $k>N$
 allows to numerically integrate it. There are three technical issues that need some attention
 in order to accurately and efficiently simulate Kuramoto-Sivashinsky: evaluation of
 the nonlinear part, number of modes retained and stiffness.
 
+\subsection{Pseudospectral method}
+
 The linear part of \KSe\ is conveniently diagonal in the Fourier basis, see \refeq{expan}.
 The nonlinear part can be evaluated directly from the finite order truncation of \refeq{expan},
 see \refsect{sec:} for an implementation. By using a pseudo-spectral method though, one
-can take advantage of the efficiency of the Fast Fourier Transform (FFT) in evaluating the
+can take advantage of the efficiency of the Fast Fourier Transform in evaluating the
 linear part. For \KSe\ this is done by  applying a discrete Fourier transform to refeq{ks} and
 taking into account that the Fourier operator is linear so that we can rewrite \refeq{expan} 
 in the following way
 \beq
 \dot{a}_k= ( q_k^2 - q_k^4 )\, a_k
     - i \frac{q_k}{2} \mathcal{F}\left[\left(\mathcal{F}^{-1}\left[a\right]\right)^2\right]_k \,,
+	\label{eq:ksPseudo}
 \eeq
-where 
+where the discrete $\mathcal F$ the discrete Fourier transform:
+\beq
+  a_k = \mathcal{F}[u]_k = \sum_{n = 0}^{N-1} u(x_n)
+  e^{-i q_k x_n}\,,\qquad u(x_n) = \mathcal{F}^{-1}[a]_n
+  = \frac{1}{N}\sum_{k = 0}^{N-1} a_k e^{i q_k x_n}\,,
+\eeq
+with $x_n = 2\pi\tildeL n/N$ and $a_{N-k} = a^\ast_k$ from the reality condition \refneq{eq:astar}
+and thus calculation of the discrete Fourier transform involves  $N-1$ independent, real variables. 
+
+Since we have set $a_0=0$ to eliminate Galilean invariance and the modes with $k<0$
+are redudant from \refneq{eq:astar}, we can evaluate then nonlinear part in \refeq{expan}
+in $N/2-1$ real variables. The operation would correspond to multiplication of a $(N/2-1)\times(N/2-1)$
+matrix by a $N/2-1$-dimensional vector, while calculating just the forward Fourier transform
+seems to require the multiplication of a $(N-1)\times(N-1)$ matrix by an $N-1$-dimensional vector. 
+In any case the operation count is $\Order{N^2}$, but with the pseudo-spectral method we need two
+of them. The power of the pseudo-spectral method lies in the existance of the Fast Fourier Transform (FFT)
+algorithm that performs the discrete Fourier transform in $\Order{N log_2 N}$ operations therefore
+providing substancial performance advantage to the pseudo-spectral method. The FFT algorithm
+has been rediscovered many times, apparently starting with Gauss, see \refref{Press96} for references
+and a presentation of the algorithm. In our implementation we have used the FFTW package \refref{Frigo05}.
+
+\subsection{Stiffness}
+
+The second issue one has to deal with in integrating \refeq{expan} is due to the linear part.
+The term $k^4$ that appears in the linear part means that the timescales in which the first
+and the $N$'th mode evolve is very different even for $N$ of the order of $10$. This
+is termed stiffness, see \refref{Press96} for a nice discussion. In practice, unless taken care
+of by the integration method, it forces us to follow the evolution of the equation in the
+fastest time-scale in order to maintain stability of the integration routine, thus imposing an 
+impractically small stepsize. There are different approaches to dealing with stiffness,
+see \refref{ks05com} for a comparison of algorithms that can be used to integrate stiff PDEs.
+
+The algodrithm that we have found very efficient and accurate in our numerical explorations
+is Exponential Time Differencing with fourth order Runge-Kutta timesteping (ETDRK4)
+introduced in \refref{cox02jcomp} and further developed in \refref{ks05com}, which we have
+followed in our implementation. The essence of the method is that it treats the linear
+and nonlinear part seperatly, applying an integrating factor to the linear part to eliminate
+the effect of stiffness.
+
+As the method requires the computation of prefactors that depend on the linear part of
+the equation, we found it inconvenient to implement an addaptive stepsize control. Instead,
+we check the results of integration against decreasing the timestep, especially the
+robustness of relative periodic and periodic orbits found in \refchap{chap:kseStSp}. 
+
+\subsection{Truncation}
+
+Another decision one has to take is how many modes to retain in \refneq{eq:ksPseudo}. 
 
 % \section{\KSe\ according to Evangelos}
 % $Author$ $Date$
@@ -40,11 +87,14 @@ where
 %   u(x,t)=\sum_{k=-\infty}^{+\infty} a_k (t) e^{ i k x / \tilde{L}} \, .
 %   \label{eq:Fourier}
 %  \eeq
- Since $u(x,t)$ is real,
- \beq
-  a_{k}=a^*_{-k} \, .
-  \label{eq:a*}
- \eeq
+
+\subsection{KSe, real representation}
+
+%  Since $u(x,t)$ is real,
+%  \beq
+%   a_{k}=a^*_{-k} \, .
+%   \label{eq:a*}
+%  \eeq
 %  Substituting \refeq{eq:Fourier} into \refeq{eq:KS} we get:
 %  \beq
 %   \dot{a}_k=(q_k)^2\left(1-(1/\tildeL)^2 k^2\right)a_k
@@ -57,7 +107,8 @@ where
 %  is a constant. Due to galilean invariance we may set $a_0=0$ without loss of generality
 %  and we only have to compute $a_k$'s with $k\geq 1$. % Explain this in detail somewhere.
 
- Truncating the infinite tower of equations \refeq{expan} by setting $a_k=0$ for $k>N$, using the identity \refneq{eq:a*} and splitting the
+ Truncating the infinite tower of equations \refeq{expan} by setting $a_k=0$ for $k>N$, 
+ using the identity \refneq{eq:astar} and splitting the
  resulting equations into real and imaginary part by setting $a_k=b_k+i c_k$, we have
 
  \bea
