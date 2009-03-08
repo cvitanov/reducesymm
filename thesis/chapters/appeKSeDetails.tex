@@ -26,12 +26,12 @@ where the discrete $\mathcal F$ the discrete Fourier transform:
   = \frac{1}{N}\sum_{k = 0}^{N-1} a_k e^{i q_k x_n}\,,
 \eeq
 with $x_n = 2\pi\tildeL n/N$ and $a_{N-k} = a^\ast_k$ from the reality condition \refneq{eq:astar}
-and thus calculation of the discrete Fourier transform involves  $N-1$ independent, real variables. 
+and thus calculation of the discrete Fourier transform involves $N-1$ real variables. 
 
 Since we have set $a_0=0$ to eliminate Galilean invariance and the modes with $k<0$
 are redudant from \refneq{eq:astar}, we can evaluate then nonlinear part in \refeq{expan}
-in $N/2-1$ real variables. The operation would correspond to multiplication of a $(N/2-1)\times(N/2-1)$
-matrix by a $N/2-1$-dimensional vector, while calculating just the forward Fourier transform
+in $N/2-1$ complex variables. The operation would correspond to multiplication of a real $(N-2)\times(N-2)$
+matrix by a $N-2$-dimensional vector, while calculating just the forward Fourier transform
 seems to require the multiplication of a $(N-1)\times(N-1)$ matrix by an $N-1$-dimensional vector. 
 In any case the operation count is $\Order{N^2}$, but with the pseudo-spectral method we need two
 of them. The power of the pseudo-spectral method lies in the existance of the Fast Fourier Transform (FFT)
@@ -65,7 +65,34 @@ robustness of relative periodic and periodic orbits found in \refchap{chap:kseSt
 
 \subsection{Truncation}
 
-Another decision one has to take is how many modes to retain in \refneq{eq:ksPseudo}. 
+Another decision one has to take is how many modes to retain in \refneq{eq:ksPseudo}. One
+has to keep in mind that we want accurate solutions to the original PDE, we don't just
+consider a truncation to finite $N$ on it's own right. Due to the hyperviscous 
+damping $u_{xxxx}$, long time solutions of KS
+equation are smooth, $a_k$ drop off fast
+with $k$, and truncations of \refeq{expan} to $16 \leq N \leq 128$
+terms yield accurate solutions for system sizes considered here.
+Robustness of the long-time dynamics of KS as a function of the 
+number of Fourier modes kept in truncations
+of \refeq{expan} is, however, a subtle issue.  Adding an extra mode to
+a truncation of the system introduces a small perturbation in the
+space of dynamical systems.  However, due to the lack of structural
+stability both as a function of truncations $N$, and the system size
+\tildeL, a small variation in a system parameter can (and often will)
+throw the dynamics into a different asymptotic state.  For example,
+asymptotic attractor which appears to be chaotic in a $N$-dimensional
+\statesp\ truncation can collapse into an attractive cycle
+for $(N\!+\!1)$-dimensions. Therefore we always evaluate the robustness
+of our results against increasing the number of modes. 
+
+For system size $L=22$ all results presented here were computed using
+a $128$-point spatial discretization, corresponding to $N=64$ complex Fourier modes
+(with $a_0=0$ though). Note that going back and forth in Fourier and physical
+space in \refeq{eq:ksPseud} one has to worry about the effect of alliasing
+on the results of the integration. Since our computations are relatively cheap
+we circumvent this difficulty by keeping enough modes so that at least half
+of the modes remain close to roundoff during a calculation. 
+
 
 % \section{\KSe\ according to Evangelos}
 % $Author$ $Date$
@@ -87,6 +114,7 @@ Another decision one has to take is how many modes to retain in \refneq{eq:ksPse
 %   u(x,t)=\sum_{k=-\infty}^{+\infty} a_k (t) e^{ i k x / \tilde{L}} \, .
 %   \label{eq:Fourier}
 %  \eeq
+
 
 \subsection{KSe, real representation}
 
