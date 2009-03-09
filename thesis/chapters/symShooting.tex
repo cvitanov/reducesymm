@@ -1,6 +1,7 @@
 % section: Numerically locating relative equilibria and periodic orbits
 
 \subsection{Multipoint shooting for \rpo s}
+\label{sec:symShoot}
 
 Assume that we have an initial guess for a \rpo\ of period
 $T_p$ and phase shift $\phi_p$.
@@ -10,11 +11,11 @@ phase shift $\phi_p$. For the true \rpo\ we have
 \bea
 	f^{\tilde{T}_i}(\tilde{x}_i) & = & \tilde{x}_{i+1}\,,\  i=1,\ldots N-1,\continue
 	R(\tilde{\phi}_p)f^{\tilde{T}_N}(\tilde{x}_N) & = & \tilde{x}_{1}\,.
-	\label{eq:rpoCond}
+	\label{eq:rpoCond0}
 \eea
 
 Assuming that our guess is in the linear neighborh of the
-\rpo\ we can Taylor expand \refeq{eq:rpoCond} around the guess
+\rpo\ we can Taylor expand \refeq{eq:rpoCond0} around the guess
 to linear order in the small quantities $\Delta
 x_i=\tilde{x}_i-x_i,\, \Delta T_i=\tilde{T}_i-T_i,\, \Delta
 \phi_p=\tilde{\phi}_p-\phi_p$ to get
@@ -25,7 +26,17 @@ x_i=\tilde{x}_i-x_i,\, \Delta T_i=\tilde{T}_i-T_i,\, \Delta
 	\label{eq:rpoCond}
 \eea
 \normalsize
-where $v_{T_i}$ denotes $v$ evaluated at ${f^{T_i}\left(x_i\right)}$ and $\Lg$ denotes the Lie algebra generator of the group. Interpreting $\Delta x_i,\, \Delta T_i,\, \Delta \phi_p$ as corrections to our guess solution we iteratively improve our approximation
+where $v_{T_i}$ denotes $v$ evaluated at ${f^{T_i}\left(x_i\right)}$, $\Lg$ denotes the generator of the group and the matrix 
+\beq
+	J^{t}(x_i)=\frac{\partial f^t(x_i)}{\partial x}
+\eeq
+is evaluated by integrating, along with the flow, the equation
+\beq
+    	\dot{J}^t=A J^t \, ,
+ 	\label{eq:Jdef}
+\eeq
+with initial condition $J^0=\mathbf{1}$.
+Interpreting $\Delta x_i,\, \Delta T_i,\, \Delta \phi_p$ as corrections to our guess solution we iteratively improve our approximation
 of $\tilde{x}_p$.
 To exclude variations along the two unit eigendirections of $R(\tilde{\phi}_p)J^{\tilde{T}_p}(\tilde{x})$ 
 we impose the conditions
@@ -88,4 +99,8 @@ provided the initial guess is sufficiently close to the true solution. If we are
 of the solution we are guarranted to find it. In practice we can increase the chances of convergence 
 by taking more segments along the orbit. The limit of $N\rightarrow\infty$ leads one to consider
 variational methods, see for example \refrefs{bl,lanVar1}.
+
+By setting $N=1$ in \refeq{eq:rpoCond} we observe that we have to interprete $R(\phi_p)J^{T_p}(x_p)$
+as the fundamental matrix for relative periodic orbits, with each eigenvalues playing the role
+of Floquet multipliers.
 
