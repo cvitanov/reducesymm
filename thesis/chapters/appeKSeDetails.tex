@@ -6,10 +6,11 @@ in order to accurately and efficiently simulate Kuramoto-Sivashinsky: evaluation
 the nonlinear part, number of modes retained and stiffness.
 
 \subsection{Pseudospectral method}
+\label{sec:ksPseudo}
 
 The linear part of \KSe\ is conveniently diagonal in the Fourier basis, see \refeq{expan}.
 The nonlinear part can be evaluated directly from the finite order truncation of \refeq{expan},
-see \refsect{sec:} for an implementation. By using a pseudo-spectral method though, one
+see \refsect{sec:ksReal} for an implementation. By using a pseudo-spectral method though, one
 can take advantage of the efficiency of the Fast Fourier Transform in evaluating the
 linear part. For \KSe\ this is done by  applying a discrete Fourier transform to refeq{ks} and
 taking into account that the Fourier operator is linear so that we can rewrite \refeq{expan} 
@@ -88,10 +89,11 @@ of our results against increasing the number of modes.
 For system size $L=22$ all results presented here were computed using
 a $128$-point spatial discretization, corresponding to $N=64$ complex Fourier modes
 (with $a_0=0$ though). Note that going back and forth in Fourier and physical
-space in \refeq{eq:ksPseud} one has to worry about the effect of alliasing
+space in \refeq{eq:ksPseudo} one has to worry about the effect of alliasing
 on the results of the integration. Since our computations are relatively cheap
 we circumvent this difficulty by keeping enough modes so that at least half
-of the modes remain close to zero during a calculation. 
+of the modes remain close to zero during a calculation. We also confirm our
+results against direct evalution of the truncation of \refeq{expan}, see \refsect{sec:ksReal}.
 
 
 % \section{\KSe\ according to Evangelos}
@@ -115,10 +117,24 @@ of the modes remain close to zero during a calculation.
 %   \label{eq:Fourier}
 %  \eeq
 
-\section{Calculating the }
+\section{Calculating stability of equilibria}
+\label{sec:ksReal}
 
-\subsection{KSe, real representation}
 
+To calculate stability of equilibrium $A(a_q)$, the matrix 
+\beq
+  A(a_q) = \left.\frac{\partial v}{\partial a}\right|_{a=a_q}
+\label{eq:StabMat}
+\eeq
+has to be evaluated, either numerically or analytically. In \KS\
+we can obtain the value of $A(a_q)$ efficiently for numerical
+purposes by using the linearity of the
+Fourier transform, in the same we did to obtain \ref{eq:ksPseudo},
+see \refref{SCD07}. 
+
+In what follows we derive an analytical expression for it,
+as one might find it useful for the study of bifurcation problems,
+or, in our case, to cross-check the results of the pseudo-spectral method.
 %  Since $u(x,t)$ is real,
 %  \beq
 %   a_{k}=a^*_{-k} \, .
@@ -130,16 +146,16 @@ of the modes remain close to zero during a calculation.
 %         + i (q_k)  \sum_{m=-\infty}^{+\infty}a_m a_{k-m} \, .
 %   \label{eq:Fcoef}
 %  \eeq
-
+% 
 %  From \refeq{eq:Fcoef} we note that $\dot{a}_0=0$ and thus $a_0$ is an integral
 %  of the equations or, from \refeq{eq:Fourier}, the average of the solution $\int dx u(x,t)$
 %  is a constant. Due to galilean invariance we may set $a_0=0$ without loss of generality
 %  and we only have to compute $a_k$'s with $k\geq 1$. % Explain this in detail somewhere.
-
+ To do so, we have to split \KS\ equation in real and imaginary
+ parts \ES{or consider $a$ and $a^{*}$ as independent variables.}.
  Truncating the infinite tower of equations \refeq{expan} by setting $a_k=0$ for $k>N$, 
  using the identity \refneq{eq:astar} and splitting the
  resulting equations into real and imaginary part by setting $a_k=b_k+i c_k$, we have
-
  \bea
   \dot{b}_k & = & q_k^2\left(1- q_k^2 \right)b_k  \continue
     & & + \frac{q_k}{2} \left(\sum_{m=1}^{k-1}c_m b_{k-m}+\sum_{m=k+1}^{N}c_m b_{m-k}
@@ -160,7 +176,7 @@ of the modes remain close to zero during a calculation.
  \beq
     \sum_{m=1}^{N-k}c_m b_{k+m} = \sum_{m=k+1}^{N}b_m c_{m-k}\,,
  \eeq
- \etc and thus \refeq{eq:tmp:b-Trunc} and \refeq{eq:tmp:c-Trunc} simplify to
+ \etc\ and thus \refeq{eq:tmp:b-Trunc} and \refeq{eq:tmp:c-Trunc} simplify to
   \bea
   \dot{b}_k & = & q_k^2\left(1- q_k^2 \right)b_k  \continue
     & & + \frac{q_k}{2} \left(\sum_{m=1}^{k-1}c_m b_{k-m}-2\sum_{m=1}^{N-k}c_m b_{k+m} \right)  \continue
@@ -173,8 +189,12 @@ of the modes remain close to zero during a calculation.
     & & - \frac{q_k}{2}\left( \sum_{m=1}^{k-1}b_m b_{k-m}+2\sum_{m=1}^{N-k}b_m b_{k+m} \right)\,.
    \label{eq:c-Trunc}
  \eea
+ As discussed in \refsect{eq:ksPseudo} such expressions are not as efficient as \refeq{eq:ksPseudo},
+ but we use them for comparison purposes, to detect possible issues in our pseudo-spectral integrator due to 
+ aliasing or the FFT implementation\ES{For instance I was able to find using this that the FFT in
+ numerical recipes basicaly sucks.}.	
 
- To calculate the matrix of variations $A_{ij} \equiv \frac{\partial v_i(x)}{\partial x_j}$  we need to consider the four matrices $\frac{\partial \dot{b}_k}{\partial b_j},\frac{\partial \dot{b}_k}{\partial c_j},\frac{\partial \dot{c}_k}{\partial b_j},\frac{\partial \dot{c}_k}{\partial c_j}$. We begin with
+ To calculate the matrix $A_{ij}(a) \equiv \frac{\partial v_i(x)}{\partial x_j}$  we need to consider the four matrices $\frac{\partial \dot{b}_k}{\partial b_j},\frac{\partial \dot{b}_k}{\partial c_j},\frac{\partial \dot{c}_k}{\partial b_j},\frac{\partial \dot{c}_k}{\partial c_j}$. We begin with
  \bea
     \frac{\partial \dot{c}_k}{\partial c_{j}}  =
         q_k^2\left(1- q_k^2 \right) \delta_{kj}
@@ -217,8 +237,7 @@ of the modes remain close to zero during a calculation.
     \frac{\partial \dot{b}_k}{\partial c_{j}} =  q_k (b_{k+j}-b_{k-j}) \,.
  \eeq
 
-\PC{Vaggelis, you might want to include some of the text commented out here
-    into your thesis}
+
 % In terms of the system size $ 2\pi L$, the only length scale available,
 % the dimensions of terms in \refeq{ks} are
 % $ %\[
