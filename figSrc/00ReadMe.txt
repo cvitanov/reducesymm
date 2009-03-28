@@ -4,19 +4,16 @@ siminos/figSrc/00ReadMe.txt
 Siminos source programs for figures
 ===================================
 
-					Predrag     Mar  1 2009
-read days's edit of
-    siminos/thesis/00ReadMe.txt
+					Vaggelis Mar 28 2009
 
-					Evangelos	Mar  1 2009
-Fixed scripts
-    sys_utils/bbox_add.pl
-    sys_utils/epscom.pl
-to combine eps files so that the final eps file has correct
-bounding box. The trick is (as noted below):
-    eps2eps -dEPSCrop -dEmbedAllFonts=true file.eps corrected.eps
-The second option is sometimes needed to correct problems with
-fonts.
+To have latex correctly display figures with white space extending 
+beyond the bounding box use the option clip=true in the \includegraphics 
+command:
+
+\includegraphics[width=w, clip=true]{file}
+
+Works with the graphicx package, the same should be achieved 
+with use of \includegraphics* in graphics package.
 
 					Predrag Feb  9 2009
 
