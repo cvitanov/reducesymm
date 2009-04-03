@@ -2,12 +2,15 @@
 \label{sec:KSeMF}
 
 To visualize the reduced \statesp\ of KS flow we will use a moving frame
-to compute the first few fundamental invariants and, following the example of \CLe\ of \refsect{sec:CLeMF},
-modify these invariants to overcome these singularities. This will help us understand what the invariant objects of importance in organizing the \statesp\
+to compute the first few fundamental invariants of the action of $\SOn{2}$ and, following the example of \CLe\ of \refsect{sec:CLeMF},
+modify these invariants to overcome these singularities. 
+This will help us understand what the invariant objects of importance in organizing the \statesp\
 are. The final goal is to choose
 Poincar\'e sections that capture the dynamics but on which we can define local cross-sections, implement symmetry reduction on the Poincar\'e sections applying a moving frame on
 the points of intersection of trajectories with the Poincar\'e sections and finally construct
-return maps of the dynamics.
+return maps of the dynamics. \ESedit{At this point we will not reduce by the discrete symmetry as we can always 
+do it afterwards by utilizing a fundamental domain as in \refchap{chap:Lorenz}.}
+
 
 We begin by computing invariants for the ``standard action'' \refeq{eq:SO2stndrd} of $\SOn{2}$ on $\Clx{n}\cong\Rls{2n}$ which we write here as
 \beq
@@ -77,32 +80,43 @@ b_1 b_6 c_1 \left(3 b_1^4-10 b_1^2 c_1^2+3 c_1^4\right)+\left(b_1^6-15 b_1^4 c_1
 
 As was the case in \CLe\ example in \refchap{chap:lasers},
 there is an obvious singularity at $b_1=c_1=0$ that can be corrected by substituting
-$r_1$ with $r=\sum_{i=1}^3 (b_i^2+c_i^2)$ in the denominators.
-The reason for using only the first three mode magnitudes is
-that dynamics in our case like to visit $\EQV{2}$ and $\EQV{3}$
+$r_1$ with 
+\ESedit{$r=\sum_{i=1}^N (b_i^2+c_i^2)$ in the denominators.
+Here we will instead use $r=\sum_{i=1}^3 (b_i^2+c_i^2)$
+since
+} 
+dynamics in our case like to visit $\EQV{2}$ and $\EQV{3}$
 and this choice is enough to prevent the denominator from
 vanishing at any region of \statesp\ of dynamical interest.
 With this modification one has to note that the invariants of
-\reftab{tab:SO2n6} vanish at \EQB{2} and \EQB{3}. In principle
+\reftab{tab:SO2n6} vanish at \EQB{2} and \EQB{3} 
+\ESedit{(in general
+they vanish on $b_1=c_1=0$).
+} 
+In principle
 this is not a problem since we want to carry out reduction in
 the principal stratum. In practice this causes two important
 \eqva\ to be mapped to the origin and leads to \statesp\
 portraits as in \reffig{fig:ksSO2eqbTo0}. The neighbor of
 \EQB{2} and \EQB{3} which is where we would like to get some
 intuition about the behavior of \rpo s, has been squeezed into
-a kink shaped structure. Inspection of the invariants in table
+a kink shaped structure. 
+\ESedit{
+Inspection of the invariants in 
 \reftab{tab:SO2n6} reveals
-that the problem is caused by the fact that by using $c_1=0$
-in the definition of the cross-section we have
-assigned special importance to the first Fourier mode
-which vanishes
-on both \EQB{2} and \EQB{3}, causing all invariants to vanish.
-We could overcome this by using the second, third, or sixth Fourier
+that the problem is caused by $b_1$ and $c_1$ (which vanish at 
+\EQV{2}, \EQV{3}) appearing in all monomials in the
+numerators. This is related to the fact that we have chosen
+the cross-section in the $k=1$-irreducible subspace which introduces
+$b_1$ and $c_1$ through the substitution of \refneq{eq:SO2stand} into \refneq{eq:SO2norm}.
+A group-theoretical understanding of this behavior is still missing.
+}
+We could overcome this difficulty by using the second, third, or sixth Fourier
 mode to setup the moving frame but then the expressions we get after
 substitution cannot be fully simplified and we loose the ability
 to manipulate the denominators. We will use a higher mode to setup the moving
 frame in the numerical implementation, though,
-after we define suitable Poincar\'e sections.
+after we define suitable Poincar\'e sections, see \refchap{chap:tobedone}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[t]
@@ -122,9 +136,29 @@ the invariants of \reftab{tab:SO2n6} as follows. We observe
 that the invariants come as either symmetric or antisymmetric
 under the action of $\Dn{1}\subset\On{2}$. We modify the
 symmetric invariants by adding a term $\sqrt{b_i^2+c_i^2}$
-where $i$ the corresponding irreducible subspace  (Fourier
+where $i$ labels the corresponding irreducible subspace  (Fourier
 mode). The new invariants are listed in
-\reftab{tab:SO2n6modif}.
+\reftab{tab:SO2n6modif}. \ESedit{One has to note that such a
+modification is not unique as any linear combination of invariants is an invariant.
+The basic requirement
+is that the invariants remain linearly independent, which can be easily verified
+for the present choice.
+The motivation behind this choice, apart from its simplicity (the Fourier magnitudes 
+are obviously \SOn{2}-invariant) is that if we set up a cross-section by $c_i=0$
+then the invariant that we get associated with the $i$'th irreducible subspace is
+$\sqrt{b_i^2+c_i^2}=0$ (and the trivial invariant $0$).}
+\ESedit{ A linear combination
+of invariants resulting from more than one moving frame is a natural
+choice since the problem is caused by only taking into account the $i=1$-mode
+in setting up the moving frame. Computing a full set of
+invariants using a moving frame in every irreducible subspace would be time
+consuming and for the group action we examine here the algebra required to
+obtain explicit expressions was not carried out by Mathematica and thus
+we only use the simplest available invariants, the Fourier magnitudes. An
+other choice would be to replace the $\Dn{1}$-invariant by the magnitudes
+instead of forming a linear combination, but we have found that the resulting phase space
+portraits are not as useful. 
+}
 
 \begin{table}
 \caption[Modified invariants for $\SOn{2}, n=6$]
@@ -155,7 +189,7 @@ b_1 b_6 c_1 \left(3 b_1^4-10 b_1^2 c_1^2+3 c_1^4\right)+\left(b_1^6-15 b_1^4 c_1
 \end{small}
 \end{table}
 
-\Statesp\ projections on those invariants are shown in
+\Statesp\ projections on the invariants of \reftab{tab:SO2n6modif} are shown in
 \reffigTofig{fig:TW1red}{fig:SO2inv}\ES{Sophia says: Do not scrible-scrable!}.
 Visualizing the unstable manifold of $\REQV{\pm}{1}$ is not a
 straightforward task, since it is $4$-dimensional, see \reftab{tab:Eksym}.
@@ -203,7 +237,7 @@ subspace provide a boundary for those orbits, in the same
 obstruction to the flow. This behavior illustrates our point
 of view that the dynamics can be described through maps
 between a set of Poincar\'e sections, each associated with a
-(relative) equilibrium and parametrized by intrinsic
+(relative) equilibrium and parameterized by intrinsic
 coordinates such as the arclength along its unstable manifold.
 Further pursuing this goal will be subject of future work,
 see \refchap{chap:tobedone}.
