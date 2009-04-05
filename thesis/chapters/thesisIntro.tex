@@ -134,31 +134,16 @@ the continuous symmetry, or ``symmetry reduction.''
 
 \subsection{Symmetry reduction}
 
-In physics symmetry usually leads to simplification of a problem so it will sound as a contradiction that it actually
-complicates matters in our case.
-\PC{recheck usage of `oxymoron?' ES: not sure about the correct usage in English, replaced with contradiction.}
+\ESedit{When a symmetry is present in a physical system taking it into account usually leads to simplification of the problem.} 
 Indeed, in linear theories, such as quantum mechanics, symmetry is often exploited
 through separation of variables. In Hamiltonian mechanics it leads to conserved quantities which can often be
 directly exploited. For instance in the central force problem conservation of angular momentum fixes the plane
 of motion. %In field theories Hamiltonians are constructed so that they respect a certain symmetry.
 In general exploiting symmetry by identifying points in space or solutions
 related by a symmetry operation is the objective of
-symmetry reduction. The subject has a long history in Hamiltonian mechanics and for general systems
+\emph{symmetry reduction}. The subject has a long history in Hamiltonian mechanics and for general systems
 and group actions it usually is rather technical and highly non-trivial, see for example
 \refrefs{marsden_introduction_1999,marsden_hamiltonian_2007,cushman_global_1997}.
-
-Here we will concentrate on dissipative dynamical systems and high-dimensional truncations
-of PDEs. The main problems we are facing are: 1) the high dimensionality of \statesp, 2) the structure of
-the \statesp\ induced by the symmetry group action (see \refsect{sec:strata})
-usually prevents carrying out reduction globally.
-High dimensionality does not allow us to use Hilbert bases (see \refsect{sec:symRed}),
-a very powerful tool in symmetry reduction,
-since their determination seems computationally prohibitive for anything larger
-than a ten-dimensional space\rf{ChossLaut00,gatermannHab}. Moreover, even if such a basis were available,
-rewriting the equation of motion in a basis of invariant polynomials appears impractical for high-dimensional
-flows. The issue of absence of  a global transformation demonstrates itself in different
-ways, see \refsect{sec:symRed}, and we will have to overcome it since we are interested in understanding
-how the attractor is organized globally.
 
 We motivate the need for symmetry reduction by a preview of the results in the case of $5$-dimensional,
 \SOn{2}-symmetric Complex Lorenz equations that will be used as our illustrative example in \refchap{chap:lasers}.
@@ -171,27 +156,68 @@ invariance by means of a Poincar\'e section is familiar to the reader as a way o
 a continuous time flow. In the presence of continuous symmetry one also needs to eliminate the less interesting
 linear group invariance by some means before one can obtain the return map of \reffig{fig:CLEinvRM}.
 
-Our approach to symmetry reduction is centered around the method of moving frames of Cartan\rf{CartanMF}
-that we present in the formulation of Fels and Olver\rf{FelsOlver98} in \refsect{sec:mf}. For visualization
-purposes it allows the determination of invariants of the group action by a simple
-and efficient algorithm that works up to moderate dimension.
-Invariants generated for \CLe\ (see \refsect{sec:CLeMF}) for \KS\ equation
-(see \refsect{sec:CLeMF}) are singular in subsets of \statesp, a manifestation of the non-global
-nature of reduction. We modify those invariants so that there is
-no singularity in regions of interest and we use them for visualizing our solutions and obtain insight
-for the geometry of \statesp.
+Here we will concentrate on dissipative dynamical systems and high-dimensional truncations
+of PDEs. The main problems we are facing are: 1) the high dimensionality of \statesp, 2) the structure of
+the \statesp\ induced by the symmetry group action (see \refsect{sec:strata})
+usually prevents carrying out reduction globally.
+High dimensionality does not allow us to use a very powerful tool in symmetry reduction, \emph{Hilbert bases}. 
+\ESedit{
+These are bases of polynomials invariant under the group action in which one rewrites the dynamics, (see \refsect{sec:symRed}).
+}
+Unfortunately their determination appears at the present moment computationally prohibitive for 
+phase-space dimension larger than ten\rf{ChossLaut00,gatermannHab}. Moreover, even if such a basis were available,
+rewriting the equation of motion in a basis of invariant polynomials appears impractical for high-dimensional
+flows, 
+\ESedit{
+eventhough this difficulty can be surpassed by mapping the solution to the invariant variables
+}.
+\ES{dropped: The issue of absence of  a global transformation demonstrates itself in different
+ways, see \refsect{sec:symRed}, and we will have to overcome it since we are interested in understanding
+how the attractor is organized globally.} 
 
-Visualization in reduced space facilitates the choice of local Poincar\'e sections as the first step in
-our attempt to describe the flow by discrete maps. Choosing Poincar\'e sections on which the invariants
+\ESedit{
+A different approach to symmetry reduction of PDEs has been presented by Rowley and Marsden\rf{rowley_reconstruction_2000}
+formulated in the context of {Karhunen-Lo\`{e}ve} expansion but also applicable to direct numerical 
+simulations\rf{rowley_reduction_2003}. The method allows one to integrate a PDE defined in the \emph{reduced space}
+along with a \emph{reconstruction equation} that allows the dynamics in the original space to be recovered.
+As noticed in \refref{rowley_reconstruction_2000} the reconstruction equation can fail for reasons related
+to the structure of \statesp\ under the group action, see \refsect{sec:symRed} and one would
+be forced to cover the reduced space with local coordinate charts. As the latter procedure is
+not straightforward to implement and we don't want to
+sacrifice the ability to move back and forth between the initial and the reduced \statesp we will need
+to take a different path.
+} 
+
+\ESedit{
+Our approach to symmetry reduction is centered around the method of moving frames of Cartan\rf{CartanMF}
+that we present in the formulation of Fels and Olver\rf{FelsOlver98} in \refsect{sec:mf}. It allows 
+the determination of (non-polynomial) invariants of the group action by a simple
+and efficient algorithm that works well in \statesp\ dimension of order $100$.
+Invariants generated for \CLe\ (see \refsect{sec:CLeMF}) and for \KS\ equation
+(see \refsect{sec:CLeMF}) are singular in subsets of \statesp, again due to the
+special structure of the \statesp\ under the group action. We modify these invariants so that there is 
+no singularity in regions of dynamical interest and visualize dynamics of invariant objects in
+reduced \statesp\ by mapping solutions computed in the original space
+to this basis.
+}
+
+\ESedit{
+Visualization in reduced space provides insight in its geometry and facilitates the choice 
+of local Poincar\'e sections as the first step in
+our attempt to describe the flow by discrete maps.}
+Choosing Poincar\'e sections on which the invariants
 determined by the moving frame method are not singular allows for a crucial simplification of the reduction
 process: it allows to apply reduction through a linear transformation at any point on the Poincar\'e section,
-see \refsect{sec:mf}\ES{This refers to section on moving frames in group theory intro, but I'll
-have to write a small section or chapter dedicated to application of moving frames to dynamics.} and
-\refsect{sec:CLeMF}.
+see \refsect{sec:CLeMF}.
+\ESedit{
+This simplification allows one to perform the reduction procedure
+for points of intersection of solutions with the Poincar\'e section very efficiently even
+for very high dimensional spaces.
+}
 
 For \KS\ equation construction of discrete time maps in reduced \statesp\ is still a subject of ongoing
-work, see \refchap{chap:tobedone}. Yet the reward of applying this procedure even for visualization
+work, see \refchap{chap:tobedone}. Yet the reward of applying this procedure for visualization
 is that, when continuous symmetry is quotiented out, relative periodic
 orbits become periodic, traveling waves become \eqva, the dimensionality of their unstable manifolds
 is reduced by the dimension of the group and our understanding of the role solutions play is dramatically
-enhanced.
+enhanced, see \refchap{chap:kseRedStSp}.
