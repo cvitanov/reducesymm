@@ -19,39 +19,41 @@ as in \refchap{chap:Lorenz}.
 
 
 We begin by computing invariants for the ``standard action''
-\refeq{eq:SO2stndrd} of $\SOn{2}$ on $\Clx{n}\cong\Rls{2n}$
+\refeq{eq:SO2stndrd} of $\SOn{2}$ on $\Clx{N}\cong\Rls{2N}$
 which we write here as
 \beq
 	\left(\barr{cc} \overline{b}_k \\ \overline{c}_k\earr \right)=\left(\barr{cc}
 			    			\cos(k\theta) & -\sin(k\theta)\\
 						\sin(k\theta) & \cos(k\theta)\\
 			   			\earr\\	
-						\right) \left(\barr{cc} b_k \\ c_k\earr\right)\,,\ \ k=1,\ldots n\,.
+						\right) \left(\barr{cc} b_k \\ c_k\earr\right)\,,\ \ k=1,\ldots N\,.
 	\label{eq:SO2stand}
 \eeq
 with $a_k=b_k+i c_k\,,\ b_k,c_k\in\Rls{}$.
 The choice of a cross-section is arbitrary and thus, after some
 experimentation, we choose one that results in convenient
 algebra.
+\ESedit{
 Define the cross-section by
 \beq
- 	K_1(a)=c_1=0\,,
+ 	K_1(a)=c_1=0\,,\qquad b_1>0\,
 \eeq
 which leads to the normalization equation
 \beq
-	\overline{c}_1 = \sin\theta\, b_1 +\sin\theta\, c_1 = 0\,.
+	\overline{c}_1 = \sin\theta\, b_1 +\cos\theta\, c_1 = 0\,.
 	\label{eq:SO2norm}
 \eeq
 from which we obtain the moving frame
 \beq
-	\theta=-\tan^{-1}\frac{c_1}{b_1}\,.
+	\theta=-\tan^{-1}\frac{c_1}{b_1}\,,
 	\label{eq:SO2stand}
 \eeq
-Substituting the moving frame into the rest of \refeq{eq:SO2stand} we get the fundamental invariants for the action
+where, as noted in \refchap{chap:lasers}, $\tan^{-1}$ distinguishes quadrants.
+} Substituting the moving frame into the rest of \refeq{eq:SO2stand} we get the fundamental invariants for the action
 of $\SOn{2}$ in Fourier space of \KS\ equation. The simplifications of expressions were performed using computer algebra system Mathematica. Computation of $255$ invariants for $n=128$ took approximately $20$ minutes on a typical processor.
 We list the first $11$ invariants on \reftab{tab:SO2n6}. It is important to note that computation in each irreducible
 subspace (for each $k$ in \refeq{eq:SO2stand}) can be carried out independently and thus we can parallelize the computations
-and also avoid recomputing invariants when increasing $n$. For the present visualization purposes, though, the  invariants
+and also avoid recomputing invariants when increasing $N$. For the present visualization purposes, though, the  invariants
 listed in \reftab{tab:SO2n6} are more than enough.
 
 \ES{The Gr\"{o}bner basis methods usually perform poorly as $n$ becomes larger than six. On a 1GHz Pentium III processor the fundamental invariants for $n=16$, for the cross
@@ -64,9 +66,9 @@ for \CLe.}
 
 
 \begin{table}[t]
-\caption[Fundamental invariants for $\SOn{2}, n=6$]
+\caption[Fundamental invariants for standard action of $\SOn{2}$]
 {First $11$ fundamental invariants for the standard action
- \refneq{eq:SO2stand} of \SOn{2} on \Rls{n}.}
+ \refneq{eq:SO2stand} of \SOn{2} on \Rls{2N}.}
 \scriptsize
 \[
 \begin{array}{ll}
@@ -93,14 +95,15 @@ since
 dynamics in our case like to visit $\EQV{2}$ and $\EQV{3}$
 and this choice is enough to prevent the denominator from
 vanishing at any region of \statesp\ of dynamical interest.
-With this modification one has to note that the invariants of
+Even with this modification one has to note that problems
+are still present: the invariants of
 \reftab{tab:SO2n6} vanish at \EQB{2} and \EQB{3} (in general
-they vanish on $b_1=c_1=0$).
+they vanish on $b_1=c_1=0$). 
 In principle
 this is not a problem since we want to carry out reduction in
 the principal stratum. In practice this causes two important
 \eqva\ to be mapped to the origin and leads to \statesp\
-portraits as in \reffig{fig:ksSO2eqbTo0}. The neighbor of
+portraits as in \reffig{fig:ksSO2eqbTo0}. The neighborhood of
 \EQB{2} and \EQB{3} which is where we would like to get some
 intuition about the behavior of \rpo s, has been squeezed into
 a kink shaped structure.
@@ -111,6 +114,9 @@ that the problem is caused by $b_1$ and $c_1$ (which vanish at
 numerators. This is related to the fact that we have chosen
 the cross-section in the $k=1$-irreducible subspace which introduces
 $b_1$ and $c_1$ through the substitution of \refneq{eq:SO2stand} into \refneq{eq:SO2norm}.
+\ESedit{One has to note that the cross-section does not 
+exist when $b_1=c_1=0$, as there the group
+action fails to be regular when restricted on the $k=1$-irreducible subspace.}
 A group-theoretical understanding of this behavior is still missing.
 We could overcome this difficulty by using the second, third, or sixth Fourier
 mode to setup the moving frame but then the expressions we get after
@@ -122,7 +128,7 @@ after we define suitable Poincar\'e sections, see \refchap{chap:tobedone}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[t]
 \begin{center}
-  (\textit{a})\includegraphics[width=0.4\textwidth]{../figs/ksSO2inv145eqbTo0}
+\includegraphics[width=0.4\textwidth, clip=true]{../figs/ksSO2inv145eqbTo0}
 \end{center}
 \caption[\KS\ \SOn{2} reduced \statesp, modified invariants]
    {\Statesp\ portrait of $L=22$ \KS\ dynamics projected to
@@ -145,7 +151,7 @@ linear combination of invariants is an invariant. The basic
 requirement is that the invariants remain linearly
 independent, which can be easily verified for the present
 choice. The motivation behind this choice, apart from its
-simplicity (the Fourier magnitudes are \SOn{2}-invariant) is
+simplicity (the magnitudes of Fourier modes are \SOn{2}-invariant) is
 that if we set up a cross-section by $c_i=0$ then the
 invariant that we get associated with the $i$'th irreducible
 subspace is $\sqrt{b_i^2+c_i^2}=0$ (and the trivial invariant
@@ -238,7 +244,7 @@ obstruction to the flow. This behavior illustrates our point
 of view that the dynamics can be described through maps
 between a set of Poincar\'e sections, each associated with a
 (relative) equilibrium and parameterized by intrinsic
-coordinates such as the arclength along its unstable manifold.
+coordinates such as the length along its unstable manifold.
 Further pursuing this goal will be subject of future work,
 see \refchap{chap:tobedone}.
 
@@ -278,8 +284,8 @@ corresponding to \eigExp[1],  (\textit{b}) part of the unstable manifold of \EQV
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[t]
 \begin{center}
-  (\textit{a})\includegraphics[width=0.45\textwidth]{../figs/ksSO2inv134}
-~~~~(\textit{b})\includegraphics[width=0.45\textwidth]{../figs/ksSO2inv145}
+  (\textit{a})\includegraphics[width=0.45\textwidth, clip=true]{../figs/ksSO2inv134}
+~~~~(\textit{b})\includegraphics[width=0.45\textwidth, clip=true]{../figs/ksSO2inv145}
 \end{center}
 \caption[\KS\ \SOn{2} reduced \statesp\ projection II]
 {Two different projections of L=22 \KS\ dynamics on invariants
