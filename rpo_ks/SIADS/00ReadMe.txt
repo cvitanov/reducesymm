@@ -13,6 +13,16 @@ Kuramoto-Sivashinsky flow
 SIAD submission notes
 ---------------------
 
+haines@siam.org                     Mar 12 2009
+Dear Prof. Siminos,
+   How are you proceeding with your revision of "State space
+geometry of a spatio-temporally chaotic Kuramoto-Sivashinsky
+flow," in response to the Reviewing Editor's decision letter
+of February 28, 2008? We are concerned that we have not yet
+received this revision.
+   Provided there are no special circumstances, we ask that you
+submit your revised manuscript within a month.
+
 see SIADS/00ReadMe.txt
     SIAM Journal on Applied Dynamical Systems
     www.siam.org/journals/siads.php
@@ -32,7 +42,8 @@ move all source files and figs from rpo_ks to  SIADS/
     [x] mark here when done [ES 14 Oct 2007]
 
 when submitting SIADS  prepare double spaced pdf
-    [?] mark here when done (was not in SIADS instructions so didn't do that)
+    [?] mark here when done
+    (was not in SIADS instructions so didn't do that)
 
 recheck AMS codes pacs-ams.txt
 35B05, 35B10, 37L05, 37L20, 76F20, 65H10, 90C53

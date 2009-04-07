@@ -34,11 +34,11 @@ system is $N-2$:
 \ee{eq:KS}
 where $k = 1,\ldots,N/2-1$, although in the Fourier transform we need
 to use $a_k$ over the full range of $k$ values from 0 to $N-1$.
-As $a_k \in \mathbb{C}$, \refeq{eq:KS} represents a 
+As $a_k \in \mathbb{C}$, \refeq{eq:KS} represents a
 system of ordinary differential equations in ${\mathbb R}^{N-2}$.
 
 The discrete Fourier transform ${\cal F}_N$ can be computed by FFT.
-In Fortran and C, the FFTW library \refref{FFTW05} can be used.
+In Fortran and C, the FFTW library \refref{Frigo05} can be used.
 
 In order to find the Jacobian of the solution, or compute Lyapunov
 exponents of the \KSe , one needs to solve the equation for a
@@ -61,38 +61,38 @@ exponential time differencing 4th-order Runge-Kutta method
 \section{Determining stability properties of equilibria,
 traveling waves, and \rpo s} \label{sec:stability}
 
-Let $f^t$ be the flow map of the \KSe, \ie\ $f^t(a) = a(t)$ is the 
+Let $f^t$ be the flow map of the \KSe, \ie\ $f^t(a) = a(t)$ is the
 solution of \refeq{eq:KS} with initial condition $a(0) = a$.
 The stability properties of the solution $f^t(a)$ are
 determined by the fundamental matrix $J(a,t)$ consisting of partial
-derivatives of $f^t(a)$ with respect to $a$.  Since $a$ and 
+derivatives of $f^t(a)$ with respect to $a$.  Since $a$ and
 $f^t$ are complex valued vectors, the real valued matrix
 $J(a,t)$ contains partial derivatives evaluated separately with
 respect to the real and imaginary parts of $a$, that is
 \beq
-  J(a,t) = \frac{\partial f^t(a)}{\partial a} 
+  J(a,t) = \frac{\partial f^t(a)}{\partial a}
   = \left(\begin{array}{cccc}
-  \frac{\partial f^t_{R,1}}{\partial a_{R,1}} & 
-  \frac{\partial f^t_{R,1}}{\partial a_{I,1}} & 
-  \frac{\partial f^t_{R,1}}{\partial a_{R,2}} & \\[1ex] 
-  \frac{\partial f^t_{I,1}}{\partial a_{R,1}} & 
-  \frac{\partial f^t_{I,1}}{\partial a_{I,1}} & 
-  \frac{\partial f^t_{I,1}}{\partial a_{R,2}} & \cdots \\[1ex] 
-  \frac{\partial f^t_{R,2}}{\partial a_{R,1}} & 
-  \frac{\partial f^t_{R,2}}{\partial a_{I,1}} & 
-  \frac{\partial f^t_{R,2}}{\partial a_{R,2}} & \\ 
+  \frac{\partial f^t_{R,1}}{\partial a_{R,1}} &
+  \frac{\partial f^t_{R,1}}{\partial a_{I,1}} &
+  \frac{\partial f^t_{R,1}}{\partial a_{R,2}} & \\[1ex]
+  \frac{\partial f^t_{I,1}}{\partial a_{R,1}} &
+  \frac{\partial f^t_{I,1}}{\partial a_{I,1}} &
+  \frac{\partial f^t_{I,1}}{\partial a_{R,2}} & \cdots \\[1ex]
+  \frac{\partial f^t_{R,2}}{\partial a_{R,1}} &
+  \frac{\partial f^t_{R,2}}{\partial a_{I,1}} &
+  \frac{\partial f^t_{R,2}}{\partial a_{R,2}} & \\
   & \vdots & & \ddots \end{array}\right)
 \label{eq:FundMat}\eeq
-where $a_k = a_{R,k} + i a_{I,k}$ and $f^t_k = f^t_{R,k} + i f^t_{I,k}$.  
-The partial derivatives $\frac{\partial f^t}{\partial a_{R,j}}$ 
+where $a_k = a_{R,k} + i a_{I,k}$ and $f^t_k = f^t_{R,k} + i f^t_{I,k}$.
+The partial derivatives $\frac{\partial f^t}{\partial a_{R,j}}$
 and $\frac{\partial f^t}{\partial a_{I,j}}$ are determined
-by solving \refeq{eq:KStan} with initial conditions 
-$b_k(0) = b_{N-k}(0) = 1 + 0i$ and $b_k(0) = -b_{N-k}(0) = 0 + 1i$, 
+by solving \refeq{eq:KStan} with initial conditions
+$b_k(0) = b_{N-k}(0) = 1 + 0i$ and $b_k(0) = -b_{N-k}(0) = 0 + 1i$,
 respectively, for $k = j$ and $b_k(0) = 0$ otherwise.
 
 The stability of a \po\ with period $\period{p}$ is determined by the location
-of eivenvalues of $J(a_p,\period{p})$ with respect to the unit circle in the 
-complex plane. 
+of eivenvalues of $J(a_p,\period{p})$ with respect to the unit circle in the
+complex plane.
 
 Because of the translation invariance, the stability of a \rpo\ is
 determined by the eigenvalues of the matrix
@@ -100,15 +100,15 @@ $\mathbf{g}(\shift_p)\,J(a_p,\period{p})$, where $\mathbf{g}(\shift)$
 is the action of the translation operator introduced in
 \refeq{eq:shiftFour}, which in real valued representation takes the form
 of a block diagonal matrix with the $2\times 2$ blocks
-\[ 
+\[
   \left( \begin{array}{cc}
    \cos q_k\shift  & \sin q_k\shift \\
-   -\sin q_k\shift & \cos q_k\shift 
+   -\sin q_k\shift & \cos q_k\shift
   \end{array}\right),\ \ k=1,2,\ldots, N/2-1\,.
 \]
 
-For an equilibrium solution $a_q$, $f^t(a_q) = a_q$ and so 
-the fundamental matrix $J(a_q,t)$ can be expressed in terms of the 
+For an equilibrium solution $a_q$, $f^t(a_q) = a_q$ and so
+the fundamental matrix $J(a_q,t)$ can be expressed in terms of the
 time independent stability matrix $A(a_q)$ as follows
 \[  J(a_q,t) = e^{A(a_q)t}, \]
 where
@@ -129,8 +129,8 @@ parts of $a$ are given by
 \label{eq:StabMatElem}
 \eea
 where $b_R^{(j)}$ and $b_I^{(j)}$ are complex valued vectors such that
-$b_{R,k}^{(j)} = b_{R,N-k}^{(j)} = 1 + 0i$ and 
-$b_{I,k}^{(j)} = -b_{I,N-k}^{(j)} = 0 + 1i$ for $k = j$ and 
+$b_{R,k}^{(j)} = b_{R,N-k}^{(j)} = 1 + 0i$ and
+$b_{I,k}^{(j)} = -b_{I,N-k}^{(j)} = 0 + 1i$ for $k = j$ and
 $b_{R,k}^{(j)} = b_{I,k}^{(j)} = 0$ otherwise.
 In terms of $a_{R,k}$ and $a_{I,k}$ we have
 \bea
@@ -151,11 +151,11 @@ In terms of $a_{R,k}$ and $a_{I,k}$ we have
 \eea
 where $\delta_{kj}$ is Kronecker delta.
 
-The stability of equilibria is characterized by the sign 
+The stability of equilibria is characterized by the sign
 of the real part of the eigenvalues of $A(a_q)$.
 The stability of a \reqv\ is detemined in the co-moving reference frame, so
 the fundamental matrix takes the form $\mathbf{g}(c_q t)\,J(a_q,t)$.  The
-stability matrix of a \reqv\ is thus equal to $A(a_q) + c_q \translGen$ 
-where $\translGen = iq_k\delta_{kj}$ is the Lie algebra translation 
-generator, which in the real-space representation takes the form 
+stability matrix of a \reqv\ is thus equal to $A(a_q) + c_q \translGen$
+where $\translGen = iq_k\delta_{kj}$ is the Lie algebra translation
+generator, which in the real-space representation takes the form
 $ \translGen = \diag(0, q_1, 0, q_2, \ldots)$.
