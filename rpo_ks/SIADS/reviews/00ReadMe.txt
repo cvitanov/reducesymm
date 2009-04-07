@@ -1,16 +1,29 @@
-../gibson/steady/reviews/00ReadMe.txt
+siminos/rpo_ks/SIADS/reviews/00ReadMe.txt
 $Author$ $Date$
 ---------------------------------------------------------------------
 
-John F Gibson
-plane Couette topology paper I
+State space geometry of a spatio-temporally chaotic
+Kuramoto-Sivashinsky flow
+  Predrag Cvitanovi\'c, Ruslan L. Davidchack, and Evangelos Siminos
+
+-----------------------------------------------------------
+
+
+SIAD resubmission notes
+---------------------
+
+see SIADS/00ReadMe.txt
+    SIAM Journal on Applied Dynamical Systems
+    www.siam.org/journals/siads.php
+    epubs.siam.org/SIADS
+    editor: ??.
 
 log of referee suggested edits
 ==============================
 
-							Predrag Dec  1 2007
+							Predrag Apr 6, 2009
 
-John, please read/update these files
+Vaggelis, please read/update these files
 when you start the final submission edits
 
 1st report review1.1.{pdf,txt}:
@@ -19,12 +32,9 @@ when you start the final submission edits
 2nd report review2.1.{pdf,txt}:
     response1.1.txt
 
-3rd report review3.1.{pdf,txt}:
-    response1.1.txt
-
-Divakar, Wally email suggestions:
-	../00Edits.txt
-
+Ruslan email suggestions:
+    rpo_RLDcomments.pdf
+    review2_RLDcomments.pdf
 
 
 ==============================================
