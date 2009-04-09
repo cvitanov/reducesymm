@@ -5,21 +5,33 @@
 \label{sec:lmderRLD}
 
 To find periodic and \rpo s of the \KSe , we use multiple shooting and
-the Levenberg--Marquardt (LM) algorithm implemented in {\tt lmder} from
-the MINPACK software package. % or function {\tt fsolve} in Matlab.
+the Levenberg--Marquardt (LM) algorithm implemented in the routine 
+{\tt lmder} from the MINPACK software package\rf{minpack}. 
+% or function {\tt fsolve} in Matlab.
 
-Note that the LM algorithm is able to solve underdetermined systems of
-equations.  Therefore, there is no need to augment the system with
-additional constraint equations, as is done in
-\refrefs{lop05rel, brkevr96,Visw07b,SiminosThesis}.
-For example, since L{\'o}pez {\etal}\rf{lop05rel} used {\tt lmder} to
-find \rpo s in CGLE, they \edit{could have avoided augmenting} their system with the
-three additional constraint equations.  In fact, we have found that,
-with the additional constraint equations, the solver usually takes more
-steps to converge from the same seed, or fails to converge at all. Even
-though {\tt lmder} explicitly restricts the number of equations to be
-not smaller than the number of variables, the additional equations 
-can be set identically equal to zero\rf{Crofts07thesis}.
+In order to find periodic orbits, a system of nonlinear
+algebraic equations need to be solved.  For flows, this
+system is underdetermined, so, traditionally, it is augmented with
+a constraint that restricts the search space to be transversal to the
+flow (otherwise, most of the popular solvers of systems of nonlinear
+algebraic equations, e.g. those based on Newton's method, cannot be used).  
+When detecting \rpo s, more constraints are added for each of the continuous
+symmetries present in their definition.  For example, when detecting
+relative periodic orbits in the complex Ginzburg–Landau equation (CGLE),
+L{\'o}pez {\etal}\rf{lop05rel} introduce three additional constraints.
+
+Our approach differs from those used previously in that we do not
+introduce the constraints.  Note that, being an optimization solver,
+the LM algorithm is able to solve an underdetermined systems of 
+equations, and, even though {\tt lmder} explicitly restricts the 
+number of equations to be not smaller than the number of variables, 
+the additional equations can be set identically equal to 
+zero\rf{Crofts07thesis}.  In fact, there is numerical evidence 
+that, when implemented with additional constraints, the 
+solver usually takes more steps to converge from the same seed, 
+or fails to converge at all\rf{Crofts07thesis}. 
+
+
 
 We need to solve the system of $N-2$ equations
 \beq
@@ -99,7 +111,7 @@ are all equal to zero except for $j = m$, where it is given by
   \frac{d{\bf g}}{d\shift}f^{\tau'}(a^{(m)})\,.
 \eeq
 
-This Jacobian is supplied to {\tt lmder} 
+This Jacobian is supplied to {\tt lmder}
 augmented with two rows of zeros corresponding to the two identical
 zeros augmenting \refeq{eq:MultShoot} in order to make the number of
 equations formally equal to the number of variables,
