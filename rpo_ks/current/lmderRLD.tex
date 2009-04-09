@@ -4,17 +4,17 @@
 \section{Levenberg--Marquardt searches for \rpo s}
 \label{sec:lmderRLD}
 
-To find periodic and \rpo s of the \KSe , we use multiple shooting and
-the Levenberg--Marquardt (LM) algorithm implemented in the routine 
-{\tt lmder} from the MINPACK software package\rf{minpack}. 
+To find \rpo s of the \KSe , we use multiple shooting and
+the Levenberg--Marquardt (LM) algorithm implemented in the routine
+{\tt lmder} from the MINPACK software package\rf{minpack}.
 % or function {\tt fsolve} in Matlab.
 
 In order to find periodic orbits, a system of nonlinear
-algebraic equations need to be solved.  For flows, this
+algebraic equations needs to be solved.  For flows, this
 system is underdetermined, so, traditionally, it is augmented with
 a constraint that restricts the search space to be transversal to the
 flow (otherwise, most of the popular solvers of systems of nonlinear
-algebraic equations, e.g. those based on Newton's method, cannot be used).  
+algebraic equations, e.g. those based on Newton's method, cannot be used).
 When detecting \rpo s, more constraints are added for each of the continuous
 symmetries present in their definition.  For example, when detecting
 relative periodic orbits in the complex Ginzburg–Landau equation (CGLE),
@@ -22,23 +22,28 @@ L{\'o}pez {\etal}\rf{lop05rel} introduce three additional constraints.
 
 Our approach differs from those used previously in that we do not
 introduce the constraints.  Note that, being an optimization solver,
-the LM algorithm is able to solve an underdetermined systems of 
-equations, and, even though {\tt lmder} explicitly restricts the 
-number of equations to be not smaller than the number of variables, 
-the additional equations can be set identically equal to 
-zero\rf{Crofts07thesis}.  In fact, there is numerical evidence 
-that, when implemented with additional constraints, the 
-solver usually takes more steps to converge from the same seed, 
-or fails to converge at all\rf{Crofts07thesis}. 
+the LM algorithm has no problem with solving an underdetermined systems of
+equations, and, even though {\tt lmder} explicitly restricts the
+number of equations to be not smaller than the number of variables,
+the additional equations can be set identically equal to
+zero\rf{Crofts07thesis}.  In fact, there is numerical evidence
+that, when implemented with additional constraints, the
+solver usually takes more steps to converge from the same seed,
+or fails to converge at all\rf{Crofts07thesis}.
 
+Below we give a detailed description of the algorithm and the
+search strategy which we have used to find a large number 
+of \rpo s (RPOs) defined in \refeq{KSrpos} and pre-periodic orbits (PPOs)
+defined in \refeq{KSpos}.
 
-
-We need to solve the system of $N-2$ equations
+When searching for RPOs and PPOs of the truncated \KSe\ 
+(see \refeq{eq:KS}), we need to solve the system of $N-2$ equations
 \beq
-  {\bf g}(\shift_p)f^\period{p}(a_p) - a_p = 0\,,
+  \pm{\bf g}(\pm\shift_p)f^\period{p}(a_p) - a_p = 0\,,
 \ee{eq:system}
 with $N$ unknowns $(a_p, \period{p}, \shift_p)$, where $f^t$
-is the flow map of the \KSe.
+is the flow map of the \KSe.  We use plus sign for RPOs and 
+minus sign for PPOs (see \refeq{KSposFour}).
 
 We have tried two different implementations of the multiple shooting.
 The emphasis was on the simplicity of the implementations, so, even
@@ -64,7 +69,7 @@ number of shooting stages equal to $m$, the system in
  F^{(2)}&\!=\!& f^\tau(a^{(2)}) - a^{(3)} = 0\,,\nonumber\\
  && \cdots \\
  F^{(m-1)}&\!=\!& f^\tau(a^{(m-1)}) - a^{(m)} = 0\,,\nonumber\\
- F^{(m)}&\!=\!& {\bf g}(\shift)f^{\tau'}(a^{(m)}) - a^{(1)} = 0\,,\nonumber
+ F^{(m)}&\!=\!& \pm{\bf g}(\pm\shift)f^{\tau'}(a^{(m)}) - a^{(1)} = 0\,,\nonumber
 \label{eq:MultShoot} \eea
 where $\tau = \lfloor n/m \rfloor h$ ($\lfloor x \rfloor$ is the nearest
 integer smaller than $x$),
@@ -87,7 +92,7 @@ with respect to $T$ are given by
     \frac{\partial f^\tau(a^{(j)})}{\partial \tau}
     \frac{\partial \tau}{\partial T} = v(f^\tau(a^{(j)}))
     \lfloor n/m \rfloor/n\,, & j = 1,\ldots, m-1\\[.5ex]
-    {\bf g}(\shift) v(f^{\tau'}(a^{(j)}))
+    \pm{\bf g}(\pm\shift) v(f^{\tau'}(a^{(j)}))
     (1 - \frac{m-1}{n} \lfloor n/m \rfloor ), & j = m\,.
   \end{array}\right.
 \eeq
