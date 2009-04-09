@@ -32,17 +32,17 @@ solver usually takes more steps to converge from the same seed,
 or fails to converge at all\rf{Crofts07thesis}.
 
 Below we give a detailed description of the algorithm and the
-search strategy which we have used to find a large number 
+search strategy which we have used to find a large number
 of \rpo s (RPOs) defined in \refeq{KSrpos} and pre-periodic orbits (PPOs)
 defined in \refeq{KSpos}.
 
-When searching for RPOs and PPOs of the truncated \KSe\ 
+When searching for RPOs and PPOs of the truncated \KSe\
 (see \refeq{eq:KS}), we need to solve the system of $N-2$ equations
 \beq
-  \pm{\bf g}(\pm\shift_p)f^\period{p}(a_p) - a_p = 0\,,
+  \pm{\bf g}(\pm\shift)f^\period{}(a) - a = 0\,,
 \ee{eq:system}
-with $N$ unknowns $(a_p, \period{p}, \shift_p)$, where $f^t$
-is the flow map of the \KSe.  We use plus sign for RPOs and 
+with $N$ unknowns $(a, \period{}, \shift)$, where $f^t$
+is the flow map of the \KSe.  We use plus sign for RPOs and
 minus sign for PPOs (see \refeq{KSposFour}).
 
 We have tried two different implementations of the multiple shooting.
@@ -55,10 +55,11 @@ each shooting stage and change the numerical integrator step size
 $h$ in order to adjust the total integration time to a desired value
 $\period{}$.
 
-Let $(a_0, \period{}_0, \shift_0)$ be the starting guess for a \rpo\
-obtained through a close return within a chaotic attractor.  We
-require that the initial step does not exceed $h_0$, so we round off the
-number of integration steps to $n = \lceil \period{}_0/h_0\rceil$, where
+Let $(\bar{a}, \bar{\period{}}, \bar{\shift})$ be the starting guess for a \rpo\
+obtained through a close return within a chaotic attractor.  
+We require that the initial integration step size
+does not exceed $h_0$, so we round off the
+number of integration steps to $n = \lceil \bar{\period{}}/h_0\rceil$, where
 $\lceil x \rceil$ denotes the nearest integer larger than $x$.
 
 The integration step size is equal to $h = \period{}/n$. With the
@@ -113,7 +114,8 @@ calculations. Partial derivatives $\partial F^{(j)}/\partial \shift$
 are all equal to zero except for $j = m$, where it is given by
 \beq
   \frac{\partial F^{(m)}}{\partial \shift} =
-  \frac{d{\bf g}}{d\shift}f^{\tau'}(a^{(m)})\,.
+  \frac{d{\bf g}}{d\shift}f^{\tau'}(a^{(m)}) = 
+  \diag(i q_k e^{i q_k\, \shift} )f^{\tau'}(a^{(m)})\,.
 \eeq
 
 This Jacobian is supplied to {\tt lmder}
@@ -133,17 +135,37 @@ is that partial derivatives $\partial F^{(j)}/\partial \period{}$
 are zero for all $j = 1,\ldots,m-1$, except for
 \beq
   \frac{\partial F^{(m)}}{\partial \period{}} =
-  {\bf g}(\shift)v(f^{\tau'}(a^{(m)}))\,.
+  \pm{\bf g}(\pm\shift)v(f^{\tau'}(a^{(m)}))\,.
 \eeq
 which, for consistency, needs to be evaluated from the cubic
 polynomial, not from the flow equation evaluated
 at $f^{\tau'}(a^{(m)})$.
 
-We found the second implementation more convenient.
-
 For detecting \rpo s of the \KSe\ with $L = 22$, we used
 $N = 32$, $h = 0.25$ (or $h_0 = 0.25$ within the first implementation),
 and the number of shooting stages such that $\tau \approx 40.0$.
+While both implementations were equally successful in detecting
+periodic orbits of \KSe , we found the second implementation more
+convenient.  
+
+The following search strategy was adopted: The search for \rpo s with 
+$\period{} \in [10, 200]$ was conducted within a rectangular region 
+containing the chaotic attractor.  To generate a seed, a random point was 
+selected within the region and the flow \refeq{eq:KS} was 
+integrated for a transient time $t = 40$, sufficient for an orbit 
+to settle on the attractor at some point $\bar{a}$.  This point was taken 
+to be the seed location.  In order to find orbits with different
+periods, the time interval $[10, 200]$ was subdivided into windows
+of length 10, i.e. $[t_\mathrm{min}, t_\mathrm{max}]$, where
+$t_\mathrm{min} = 10j$ and $t_\mathrm{max} = 10(j+1)$, with
+$j = 1, 2, \ldots, 19$.  To determine the seed time 
+$\bar{\period{}}$ and shift $\bar{\shift}$, we located an 
+approximate global minimum of $\| \pm{\bf g}(\pm\shift)f^t(a) - a \|$ as 
+a function of $t \in [t_\mathrm{min}, t_\mathrm{max}]$ and 
+$\shift \in (-L/2, L/2]$.  We did this simply by finding the minimum 
+value of the function on a grid of points with resolution $h$ 
+in time and $L/50$ in $\shift$.  
+
 Once a \rpo\ is found, its existence in the \KS\ PDE is verified
  numerical approximation improved by increasing the number of
 Fourier modes ($N = 64$) and reducing the step size ($h = 0.1$).
