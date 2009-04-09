@@ -5,8 +5,8 @@
 \label{sec:lmderRLD}
 
 To find periodic and \rpo s of the \KSe , we use multiple shooting and
-the Levenberg--Marquardt algorithm implemented in {\tt lmder} from
-the MINPACK software package or function {\tt fsolve} in Matlab.
+the Levenberg--Marquardt (LM) algorithm implemented in {\tt lmder} from
+the MINPACK software package. % or function {\tt fsolve} in Matlab.
 
 Note that the LM algorithm is able to solve underdetermined systems of
 equations.  Therefore, there is no need to augment the system with
@@ -17,9 +17,9 @@ find \rpo s in CGLE, they \edit{could have avoided augmenting} their system with
 three additional constraint equations.  In fact, we have found that,
 with the additional constraint equations, the solver usually takes more
 steps to converge from the same seed, or fails to converge at all. Even
-thought both {\tt lmder} and {\tt fsolve} solvers require that the
-number of variables does not exceed the number of equations, the
-additional equations can be set identically to zero\rf{Crofts07thesis}.
+though {\tt lmder} explicitly restricts the number of equations to be
+not smaller than the number of variables, the additional equations 
+can be set identically equal to zero\rf{Crofts07thesis}.
 
 We need to solve the system of $N-2$ equations
 \beq
@@ -99,7 +99,7 @@ are all equal to zero except for $j = m$, where it is given by
   \frac{d{\bf g}}{d\shift}f^{\tau'}(a^{(m)})\,.
 \eeq
 
-This Jacobian is supplied to the routine {\tt lmder} or {\tt fsolve}
+This Jacobian is supplied to {\tt lmder} 
 augmented with two rows of zeros corresponding to the two identical
 zeros augmenting \refeq{eq:MultShoot} in order to make the number of
 equations formally equal to the number of variables,
@@ -112,7 +112,7 @@ $t_j = jh, j = 1, 2, \ldots$, but at any intermediate time as well.
 We do this by a cubic polynomial interpolation through points
 $f^{t_j}(a)$ and $f^{t_{j+1}}(a)$ with slopes $v(f^{t_j}(a))$ and
 $v(f^{t_{j+1}}(a))$.  The difference from the first implementation
-is in that partial derivatives $\partial F^{(j)}/\partial \period{}$
+is that partial derivatives $\partial F^{(j)}/\partial \period{}$
 are zero for all $j = 1,\ldots,m-1$, except for
 \beq
   \frac{\partial F^{(m)}}{\partial \period{}} =
@@ -124,9 +124,9 @@ at $f^{\tau'}(a^{(m)})$.
 
 We found the second implementation more convenient.
 
-For detecting periodic and \rpo s of the \KSe\ with $L = 22$, we used
+For detecting \rpo s of the \KSe\ with $L = 22$, we used
 $N = 32$, $h = 0.25$ (or $h_0 = 0.25$ within the first implementation),
-and the number of shooting stages such that $\tau \approx 6.0$.
+and the number of shooting stages such that $\tau \approx 40.0$.
 Once a \rpo\ is found, its existence in the \KS\ PDE is verified
  numerical approximation improved by increasing the number of
 Fourier modes ($N = 64$) and reducing the step size ($h = 0.1$).
