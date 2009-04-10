@@ -9,6 +9,7 @@ the Levenberg--Marquardt (LM) algorithm implemented in the routine
 {\tt lmder} from the MINPACK software package\rf{minpack}.
 % or function {\tt fsolve} in Matlab.
 
+\edit{
 In order to find periodic orbits, a system of nonlinear
 algebraic equations needs to be solved.  For flows, this
 system is underdetermined, so, traditionally, it is augmented with
@@ -35,6 +36,7 @@ Below we give a detailed description of the algorithm and the
 search strategy which we have used to find a large number
 of \rpo s (RPOs) defined in \refeq{KSrpos} and pre-periodic orbits (PPOs)
 defined in \refeq{KSpos}.
+}
 
 When searching for RPOs of the truncated \KSe\
 (see \refeq{eq:KS}), we need to solve the system of $N-2$ equations
@@ -78,7 +80,7 @@ number of shooting stages equal to $m$, the system in
 \end{eqnarray}
 where $\tau = \lfloor n/m \rfloor h$ ($\lfloor x \rfloor$ is the nearest
 integer smaller than $x$),
-$\tau' = nh - (m-1)\tau$, and $a^{(j)} = f^{(j-1)\tau}(a)$, 
+$\tau' = nh - (m-1)\tau$, and $a^{(j)} = f^{(j-1)\tau}(a)$,
 $j = 1, \ldots , m$.  For the detection of PPOs, the last equation
 in \refeq{eq:MultShoot} should be replaced with
 \[
@@ -157,6 +159,7 @@ While both implementations were equally successful in detecting
 periodic orbits of \KSe , we found the second implementation more
 convenient.
 
+\edit{
 The following search strategy was adopted: The search for \rpo s with
 $\period{} \in [10, 200]$ was conducted within a rectangular region
 containing the chaotic attractor.  To generate a seed, a random point was
@@ -169,16 +172,27 @@ of length 10, i.e. $[t_\mathrm{min}, t_\mathrm{max}]$, where
 $t_\mathrm{min} = 10j$ and $t_\mathrm{max} = 10(j+1)$, with
 $j = 1, 2, \ldots, 19$.  To determine the seed time
 $\hat{\period{}}$ and shift $\hat{\shift}$, we located an
-approximate global minimum of $\| \pm{\bf g}(\pm\shift)f^t(a) - a \|$ as
+approximate global minimum of $\| {\bf g}(\shift)f^t(a) - a \|$ 
+(or of $\| -{\bf g}(-\shift)[f^t(a)]^\ast - a \|$ in the case of PPOs) as
 a function of $t \in [t_\mathrm{min}, t_\mathrm{max}]$ and
 $\shift \in (-L/2, L/2]$.  We did this simply by finding the minimum
 value of the function on a grid of points with resolution $h$
 in time and $L/50$ in $\shift$.
 
-Once a \rpo\ is found, its existence in the \KS\ PDE is verified
- numerical approximation improved by increasing the number of
+Approximately equal numbers of seeds were generated for the detection
+of RPOs and PPOs and within each time window.  The hit rate, i.e. 
+the fraction of seeds that converged to RPOs or PPOs, varied from 
+about 70\% for windows with $t_\mathrm{max} \leq 80$ to about 
+30\% for windows with $t_\mathrm{min} \geq 160$.  The total number 
+of hits for RPOs and PPOs was over $10^6$ each.  Each newly found
+orbit was compared, after factoring out the translation and rotation
+symmetries, to those already detected.  Thus we found over 30\,000 
+distinct prime RPOs with $\shift > 0$ and over 30\,000 distinct prime
+PPOs.
+}
+
+To test the structural stability of the detected orbits and their
+relevance to the full Kuramoto-Sivashinsky PDE, the numerical
+accuracy was improved by increasing the number of
 Fourier modes ($N = 64$) and reducing the step size ($h = 0.1$).
-    \edit{
-Among the thousands of orbits
-computed in this study only two failed this higher-resolution test.
-    }
+Only a handful of orbits failed this higher-resolution test.
