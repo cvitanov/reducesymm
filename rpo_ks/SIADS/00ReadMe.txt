@@ -1,4 +1,4 @@
-rpo_ks/SIADS/00ReadMe.txt
+rpo_ks/SIADS-v1/00ReadMe.txt
 $Author: predrag $ $Date: 2007-05-30 12:53:02 -0400 (Wed, 30 May 2007) $
 ===========================================================
                     started writing: Predrag 10 Oct 2007
@@ -10,7 +10,7 @@ Kuramoto-Sivashinsky flow
 -----------------------------------------------------------
 
 
-SIAD submission notes
+SIAD resubmission notes
 ---------------------
 
 haines@siam.org                     Mar 12 2009
@@ -28,17 +28,10 @@ see SIADS/00ReadMe.txt
     www.siam.org/journals/siads.php
     epubs.siam.org/SIADS
     editor: ??.
-    [X] mark when read submission instructions,
-        entered relevant notes into SIADS/00ReadMe.txt
+    [ ] mark when read submission instructions,
+        entered relevant notes into SIADS-v1/00ReadMe.txt
 
-subscribe as a SIAM journal author
-    [X] mark here when done
-
-SIAD style files: reformatted using SIAM macros
-    www.siam.org/journals/auth-info.php
-    [x] mark here when done [Predrag Mar 10 2007]
-
-move all source files and figs from rpo_ks to  SIADS/
+copy all source files and figs from rpo_ks/current to  SIADS/
     [x] mark here when done [ES 14 Oct 2007]
 
 when submitting SIADS  prepare double spaced pdf
@@ -50,55 +43,57 @@ recheck AMS codes pacs-ams.txt
     [x] AMS codes rechecked, ES Sept 18 2007
 
 remove all footnotes and "edits" from the submission copy
-    [X] mark here when done
+    [ ] mark here when done
 
 remove all % commented and incriminating text from the submission copy
-    [X] mark here when done
+    [ ] mark here when done
 
 remove extraneous macros from defs.tex before submission
-    [X] mark here when done
+    [ ] mark here when done
 
 svn rm  [all unused *.tex and other files]
-    [X] mark here when done
+    [ ] mark here when done
 
 svn rm  [all unused figures and all *.pdf]
-    [X] mark here when done
+    [ ] mark here when done
 
 Set bibstyle to alphabetical order, temporarily,
         and check for double entries.
-    [X] mark here when done
+    [ ] mark here when done
 
 siam.bst as the bibliographic,  hyperref version, with eprint
-    [X] mark here when done
+    [ ] mark here when done
 
 at submission DO NOT generate pruned file rpo.bib
 \bibliography{rpo}  % in rpo.tex
-    [?] rpo.bbl added to repository (we didn't submit source yet and didn't need to touch bibliography at all)
+    [?] rpo.bbl added to repository
+(we didn't submit source yet and didn't need to touch bibliography at all)
 
 does SIAD want spaces between the initials?
 PC fixed that once by using   bibclean fluid.bib; redo:
-    [X] mark here when done
+    [ ] mark here when done
 
 Consistent use of $\ldots$, (I)/(a)/(1)/itemize, others?
-    [X] mark here when done
+    [ ] mark here when done
 
 PostScript figures generated with sufficient line thickness?
-    [x] ES: Cannot find any specific instructions
+    [?] ES: Cannot find any specific instructions
 
 svn copy all used and cleaned-up source files and figs from
 rpo_ks,rpo_ks/figs to  SIAD/
-    [X] mark here when done
+    [ ] mark here when done
+
+submit to SIADS
+    [ ] created rpo.tex for SIADS submission
+    arxiv-v?/*.tex *.bst *.cls figs/*.eps rpo.bbl [NO rpo.bib! please]
+    [ ] rpo_ks/SIADS/reviews/response2.1.txt
+    [ ] coverLettResubm.tex
+    [ ] 2007-10-17 mark here and date when done
 
 Revisions SIADS; when referees incorporated,
 update arXiv.org with the revised version
     [ ] mark here when done
     [ ] mark final, revised submission, date:
-
-submit to SIADS
-    [X] created rpo.tex for SIADS submission
-    arxiv-v?/*.tex *.bst *.cls figs/*.eps rpo.bbl [or rpo.bib]
-    [X] 2007-10-17 mark here and date when done
-
 
 !!! then DO NOT TOUCH SIAD/* again, edit only rpo_ks/current/
 ===============================================================
@@ -138,3 +133,10 @@ FORMERLY OUTSTANDING ITEMS, NOW DISPOSED OFF:
   check http://arxiv.org/hypertex/bibstyles/ for hyperref compatible
   BiBTeX styles
 = DONE:
+
+subscribe as a SIAM journal author
+    [X] mark here when done
+
+SIAD style files: reformatted using SIAM macros
+    www.siam.org/journals/auth-info.php
+    [X] mark here when done [Predrag Mar 10 2007]
