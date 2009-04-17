@@ -3,9 +3,19 @@ $Author: predrag $ $Date: 2007-05-30 12:53:02 -0400 (Wed, 30 May 2007) $
 ===========================================================
                     started writing: Predrag Jun 20 2006
 
+arXiv:0709.2944      (revised v2): 11 Apr 2009  (1098kb)
+
+On state space geometry of
+the Kuramoto-Sivashinsky flow in a periodic domain
+
+                    Date: 19 Sep 2007    (318kb)
 State space geometry of a spatio-temporally chaotic
 Kuramoto-Sivashinsky flow
-    Predrag Cvitanovi\'c, Ruslan L. Davidchack,  and Evangelos Siminos
+    Ruslan L. Davidchack, Evangelos Siminos and Predrag Cvitanovi\'c
+
+State space geometry of a spatio-temporally chaotic
+Kuramoto-Sivashinsky flow
+    Predrag Cvitanovi\'c, Ruslan L. Davidchack and Evangelos Siminos
 
 Submission
 ----------

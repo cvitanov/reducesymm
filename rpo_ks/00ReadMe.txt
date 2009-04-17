@@ -1,12 +1,17 @@
 rpo_ks/00ReadMe.txt
 $Author$ $Date$
 ===========================================================
-                    Predrag Jun 20 2006
 
+arXiv:0709.2944
+                    Date (revised v2): 11 Apr 2009  (1098kb)
+
+On state space geometry of
+the Kuramoto-Sivashinsky flow in a periodic
+
+                    Date: 19 Sep 2007    (318kb)
 State space geometry of a spatio-temporally chaotic
 Kuramoto-Sivashinsky flow
     Ruslan L. Davidchack, Evangelos Siminos and Predrag Cvitanovi\'c
-
 
 Processing
 ----------
@@ -42,7 +47,7 @@ BiBTeX styles
 
 
 When submitting, remember to
-    1) Submit rpo.bib file. 
+    1) Submit rpo.bib file.
     2) All PostScript figures should be sent in separate files.
     3) PostScript figures should be generated with sufficient
        line thickness.
@@ -63,6 +68,5 @@ Fix these:
 ==============================================================
 FORMERLY OUTSTANDING ITEMS, NOW DISPOSED OFF:
 
-= DONE: 
-= DONE:  
-
+= DONE:
+= DONE:
