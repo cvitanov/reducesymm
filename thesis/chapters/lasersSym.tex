@@ -241,6 +241,7 @@ Calculation  in polar coordinates $\rho_1,\rho_2,\Phi,z$ of stability eigenvalue
 for the set of parameters we use here yields
 \beq
 	\mu_{1,2}\pm\omega_{1,2}= 0.0938\pm 10.1945i,\, \lambda_3=-11.0009,\, \lambda_4= -13.8534\,.
+	\label{eq:CLeREQBstab}
 \eeq
 
 
@@ -567,13 +568,71 @@ to the group action for any $x$ on $\mathcal{K}$. We observe that for the point 
 \beq
 	\vf(x_o)=\vf_\shortparallel(x_o)+\vf_\perp(x_o)\,.
 \eeq
-One can always write $\vf(x_o)=c\Lg.x$ where $c$ a constant\ES{
+To compute stability eigenvalues of \reqv\ we only need to consider the linearization
+of $\vf_\perp$ which is identified with $\vf$ in reduced space. It is
+convenient to introduce the operator
+ \beq
+ 	\PperpOp=\mathbf{1}-\frac{(\Lg.x) \otimes (\Lg.x)}{(\Lg.x)^2}
+ \eeq 
+that projects a vector to the cross-section. Then for the stability matrix $M_{ij}$ we have
+ \bea
+	M_{ij} &\equiv& \frac{\partial}{\partial x_j}(\PperpOp. \vf)_i\continue
+		&=& \frac{\partial}{\partial x_j}(\Pperp_{in} \vf_n)\continue
+		&=& \Pperp_{in}\frac{\partial  \vf_n}{\partial x_j}+\frac{\partial \Pperp_{in}}{\partial x_j} \vf_n 
+		\label{eq:stabreqvdef}
+ \eea
+
+Now
+\bea
+	\Pperp_{in}	&=& \delta_{in}-\frac{(\Lg.x)_i(\Lg.x)_n}{(\Lg.x)^2}\continue
+			&=& \delta_{in}-\frac{\Lg_{iq}.x_q \Lg_{n\ell}.x_\ell}{(\Lg.x)^2}
+\eea
+and
+\bea
+	\frac{\partial \Pperp_{in}}{\partial x_j}  &=&  -\frac{\partial}{\partial x_j}\left(\frac{\Lg_{iq}.x_q \Lg_{n\ell}.x_\ell}{(\Lg.x)^2}\right)\continue
+			&=& -\left(\frac{\Lg_{iq}\delta_{jq} \Lg_{n\ell}x_\ell}{(\Lg.x)^2}+\frac{\Lg_{iq}x_q \Lg_{n\ell}\delta_{j\ell}}{(\Lg.x)^2}-\frac{\Lg_{iq}x_q \Lg_{n\ell}x_\ell}{(\Lg.x)^4}\frac{\partial}{\partial x_j}(\Lg.x)^2 \right)\continue
+			&=& -\left(\frac{\Lg_{ij} \Lg_{n\ell}x_\ell}{(\Lg.x)^2}+\frac{\Lg_{iq}x_q \Lg_{nj}}{(\Lg.x)^2}-2\frac{\Lg_{iq}x_q \Lg_{n\ell} x_\ell}{(\Lg.x)^4}\Lg_{mj}\Lg_{mp}x_p \right)\continue
+% 			&=& -\frac{1}{(\Lg.x)^2}\left(\Lg_{ij}\Lg_{n\ell}x_\ell+\Lg_{iq}x_q \Lg_{nj}-2\frac{\Lg_{iq}x_q \Lg_{n\ell} x_\ell}{(\Lg.x)^2}\Lg_{mj}\Lg_{mp}x_p \right)\continue
+			&=& -\frac{1}{(\Lg.x)^2}\left(\Lg_{n\ell}x_\ell\left(\Lg_{ij}-\frac{\Lg_{iq}x_q }{(\Lg.x)^2}\Lg_{mj}\Lg_{mp}x_p\right)+\Lg_{iq}x_q\left( \Lg_{nj}-\frac{ \Lg_{n\ell} x_\ell}{(\Lg.x)^2}\Lg_{mj}\Lg_{mp}x_p\right) \right)\continue
+			&=& -\frac{1}{(\Lg.x)^2}\left(\Lg_{n\ell}x_\ell\left(\delta_{im}-\frac{\Lg_{iq}x_q }{(\Lg.x)^2}\Lg_{mp}x_p\right)\Lg_{mj}+\Lg_{iq}x_q\left( \delta_{nm}-\frac{ \Lg_{n\ell} x_\ell}{(\Lg.x)^2}\Lg_{mp}x_p\right)\Lg_{mj} \right)\continue
+			&=& -\frac{1}{(\Lg.x)^2}\left(\Lg_{n\ell}x_\ell \Pperp_{im} \Lg_{mj}+\Lg_{iq}x_q \Pperp_{nm} \Lg_{mj} \right)\continue
+\eea
+
+Therefore \refeq{eq:stabreqvdef} takes the form
+\beq
+	M_{ij}=\Pperp_{in}\frac{\partial  \vf_n}{\partial x_j}-\frac{1}{(\Lg.x)^2}\left(\Lg_{n\ell}x_\ell \Pperp_{im} \Lg_{mj}+\Lg_{iq}x_q \Pperp_{nm} \Lg_{mj} \right)\vf_n
+\eeq
+or in matrix form
+\beq
+	\mathbf{M}=\PperpOp \mathbf{A}-\frac{1}{(\Lg. x)^2}\left( \left[\vf.\left(\Lg.x\right)\right] \left(\PperpOp \Lg\right) +\left(\Lg.x\right) \otimes \left[\vf.\left( \PperpOp \Lg\right)\right] \right)
+	\label{eq:reqvStab}
+\eeq
+where $A_{ij}=\frac{\partial \vf_i}{\partial x_j}$. This expression allows to calculate stability
+of \reqva\ working in the equivariant variables, without explicit knowledge of the form the differential
+assumes in reduced space. Applying \refeq{eq:reqvStab} for \reqv\ \REQB{1} of \CLe\ we obtain the 
+same eigenvalues \refneq{eq:CLeREQBstab} we computed in polar coordinates along with a zero eigenvalue
+due to the fact that we still work in the equivariant variables.
+}% end ESedit
+
+\PublicPrivate{}{
+\subsection{Wrong: Stability of \reqva}
+
+In the moving frame method the reduced \statesp\ is identified (at least locally) with 
+the cross-section $\mathcal{K}$. This provides a means of calculating stability of \reqva in
+reduced \statesp. Assume that, as was the case for \CLe, the cross-section is orthogonal
+to the group action for any $x$ on $\mathcal{K}$. We observe that for the point $x_o$ on \reqv\ \REQB{1} that lies on the cross-section $\mathcal{K}$ we can decompose $\vf(x)$ in \refeq{eq:difeq} in a part $\vf_\shortparallel$ parallel to the group action and a part $\vf_\perp$ on the cross-section
+\beq
+	\vf(x_o)=\vf_\shortparallel(x_o)+\vf_\perp(x_o)\,.
+\eeq
+One can always write $\vf_\shortparallel(x_o)=c\Lg.x$ where $c$ a constant\ES{
 I believe that the following is wrong because $c$ will in general
 depend on the point on the cross-section and thus when we consider
 variations we have to take this fact into account, yet I write it
 down since it is what we use for stability of \reqva\ in KS paper.
 Chossat and Lauterbach\rf{ChossLaut00} seem to take this into
-account but I don't know how to use their expressions in practice.}. Then
+account but I don't know how to use their expressions in practice. The subsection 
+with the same title as this one, I argue, is the correct way to do it, and 
+also most straightforward.}. Then
 \beq
 	A_{ij}=\left.\frac{\partial\vf_i}{\partial x_j}\right|_{x_o}=c\Lg+\left.\frac{(\partial\vf_\perp)_i}{\partial x_j}\right|_{x_o}\,.
 \eeq
@@ -584,4 +643,4 @@ we identify
 \eeq
 as the fundamental matrix which we are able to compute without explicitly computing the dynamics on
 the cross-section.
-}%end ESedit 
+}%end PublicPrivate 
