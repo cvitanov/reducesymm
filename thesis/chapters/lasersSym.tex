@@ -1,6 +1,5 @@
 \renewcommand{\inputfile}{\version\ - Predrag edited 2009-06-22 lasersSym.tex}
 
-
 \CLe\ were introduced by Gibbon and McGuinness\rf{GibMcCLE82} as a low-dimensional model
 of baroclinic instability in the atmosphere.
 As the name suggests they turned out to be a complex generalization
@@ -9,29 +8,61 @@ of Lorenz equations:
 \index{Complex Lorenz equations}
 \begin{split}
  \dot{x} &=-\sigma x+ \sigma y \,,\\
- \dot{y} &=(r-z)x-a y \,,\\
+ \dot{y} &=(\rLor-z)x-a y \,,\\
  \dot{z} &= \frac{1}{2}\left(x y^*+x^*y\right)-b z\,,
  \label{eq:CLe}
 \end{split}
 \eeq
-where now $x,y$ are complex variables, $z$ is real, while the parameters $\sigma,\,b$ are real and $r=r_1+i r_2$, $a=1-i e$ are
-complex.
-Ning and Haken\rf{NingHakenCLE90} have shown that equations isomorphic to \CLe\ also
-appear as a truncation of Maxwell-Bloch equations
-describing a single mode, detuned, ring laser, %with $x,y$ and $z$
+where now $x,y$ are complex variables, $z$ is real, while the
+parameters $\sigma,\,b$ are real and $\rLor=\RerCLor+i
+\ImrCLor$, $a=1-i e$ are complex.
+\PC{to PC: remember {\textbackslash}rLor, {\textbackslash}RerCLor
+    for ChaosBook def.tex}
+\PCedit{
+In all numerical examples
+that follow, the parameters will be set to the Lorenz values
+$\RerCLor=28,\, b=8/3,\, \sigma=10,\, a=1$, unless explicitly
+stated otherwise.
+}
+We rewrite the system in real variables
+$x=x_1+ i\, x_2\,,\ y=y_1+i\, x_2$ as
+\beq
+\begin{split}
+	\dot{x}_1 &= -\sigma x_1 + \sigma y_1\cont
+	\dot{x}_2 &= -\sigma x_2 + \sigma y_2\cont
+	\dot{y}_1 &= (\RerCLor-z) x_1 - \ImrCLor x_2 -y_1-e y_2 \cont
+	\dot{y}_2 &= \ImrCLor x_1 + (\RerCLor-z) x_2 + e y_1- y_2\cont
+	\dot{z} &= -b z + x_1 y_1 + x_2 y_2\,.
+	\label{eq:CLeR}
+\end{split}
+\eeq
+Ning and Haken\rf{NingHakenCLE90} have shown
+that equations isomorphic to \CLe\ also appear as a
+truncation of Maxwell-Bloch equations describing a single
+mode, detuned, ring laser,
+%with $x,y$ and $z$
 %proportional to electric field, polarization and population inversion, respectively.
-but the authors choose $e+r_2=0$ so that a detuned stationary solution exists.\ES{This assumption is
-questionable unless it is forced by the physics of the problem, which I cannot follow very
-well. It leads to non-generic bifurcation behavior, while one would like a model of
-a physical system to be robust under perturbations (of the model). Furthermore, the fact that the
-Hopf cycle in the general case is an $\SOn{2}$-orbit has gone unnoticed. The \reqv\ can
-be interpreted as an \eqv\ in a rotating frame and the measured electric field of the laser
-would be the same in both cases.} Bakasov and Abraham\rf{BakasovAbraham93} criticize this choice
-as being ``degenerate'' and show that one can use \CLe\ with $r_2=0$ and $e\neq0$ to describe detuned lasers.
-From our point of view the choice of Ning and Haken leads to non-generic bifurcations as we now explain.
+but the authors choose $e+\ImrCLor=0$ so that a detuned stationary
+solution exists.\ES{This assumption is questionable unless it
+is forced by the physics of the problem, which I cannot
+follow very well. It leads to non-generic bifurcation
+behavior, while one would like a model of a physical system
+to be robust under perturbations (of the model). Furthermore,
+the fact that the Hopf cycle in the general case is an
+$\SOn{2}$-orbit has gone unnoticed. The \reqv\ can be
+interpreted as an \eqv\ in a rotating frame and the measured
+electric field of the laser would be the same in both cases.}
+Bakasov and Abraham\rf{BakasovAbraham93} criticize this
+choice as being ``degenerate'' and show that one can use
+\CLe\ with $\ImrCLor=0$ and $e\neq0$ to describe detuned lasers.
+As we explain in \refsect{sec:Eqv0}, the choice of Ning and
+Haken leads to non-generic bifurcations.
 
-\PublicPrivate{}{
-With the  $\SOn{2}$ Lie algebra generator
+\PCedit{
+\subsection{$\SOn{2}$ equivariance}
+
+\CLf\ \refeq{eq:CLeR} is equivariant under infinitesimal
+$\SOn{2}$ rotations induced by the Lie algebra generator
     \PC{experimental; explicit rotation generators, as in
     the abandoned Zeglache model}
   \beq
@@ -42,14 +73,14 @@ With the  $\SOn{2}$ Lie algebra generator
     0  &  0 &-1  &  0 & 0 \\
     0  &  0 & 0  &  0 & 0
     \earr\right)
- \,,
+ \,.
  \label{ZMgen}
  \eeq
-and using a 2\dmn\ matrix
-representation of  rotation by $\theta$,
+Using a 2\dmn\ matrix representation of a rotation by a
+finite angle $\theta$,
     \PC{is the sign standard?}
 \beq
- {\bf R}(\theta) = e^{i\sigma \theta}
+ {\bf R}(\theta) = e^{i\Lg \theta}
  = \cos\theta
    \left(\barr{cc}
     1  &  0   \\
@@ -66,10 +97,11 @@ representation of  rotation by $\theta$,
     \earr\right)
  \,,
 \label{2Drotation}
-\eeq %  $0  \leq \phi < \pi/2$.
-we can express the action of an $\SOn{2}$ group element ${D}(\theta)$
-as a simultaneous
-rotation of the $(x_1,x_2)$ and $(y_1,y_2)$ planes:
+\eeq
+%  $0  \leq \theta < \pi/2$.
+we can express the action of an $\SOn{2}$ group element
+${D}(\theta)$ as a simultaneous finite rotation in the $(x_1,x_2)$
+and $(y_1,y_2)$ planes:
 \beq
  {D}(\theta) = e^{i\Lg\theta}
  =   \left(\barr{ccc}
@@ -87,72 +119,77 @@ rotation of the $(x_1,x_2)$ and $(y_1,y_2)$ planes:
  \,.
  \label{ZMrotation}
  \eeq
-$\SOn{2}$ is a commutative, Abelian group. Solving the
-problem 1. of Sect. 6.2 of Arnol'd {\em Ordinary Differential
-Equations}\rf{arnold92},
-we decompose $\vf(x)$
+% $\SOn{2}$ is a commutative, Abelian group.
+Next we decompose $\vf(x)$
 in \refeq{eq:difeq} in a part $\vf_\shortparallel$ parallel
 to the group action and a part $\vf_\perp$ transverse to it
 % on the {\csection}
-\[
+\beq
 	\vf(\ssp)=\vf_\shortparallel(\ssp)+\vf_\perp(\ssp)\,.
-\]
+\ee{flowSplit}
 using the projection operator
- \[
+\beq
  	\PperpOp_{ij}=\delta_{ij}-
     \frac{(\Lg \ssp_0)_i (\Lg \ssp_0)_j}{(\Lg \ssp_0)^2}
- \]
+\ee{transvProj}
 that projects a $d$-dimensional flow $\vf(\ssp)$ onto
-flow $\vf_\perp(\ssp)$
+flow
 \beq
-	\dot{\ssp}_\perp = \vf(\ssp)
+	\dot{\ssp}_\perp = \vf_\perp(\ssp) = \vf(\ssp)
     - \Lg \ssp_0 \frac{(\Lg\ssp_0)\cdot\vf(\ssp)}{(\Lg \ssp_0)^2}
 \ee{transvFlow}
-in a $(d\!-\!1)$-dimensional transverse \emph{{\slice}} trough
-$\ssp_0$.
-\RLD{I think this way of removing SO(2) will only work if the slice through $\ssp_0$ is flat, i.e. if the group action everywhere on the slice is parallel to $\Lg \ssp_0$.  Therefore, I don't think this will work for KSE, where the M/SO(2) manifold is not flat.  If the slide is not flat, then, once we move away from $\ssp_0$, the group action is not going to be in the direction of $\Lg \ssp_0$, so we will be projecting away the wrong direction, i.e. moving off the slice.  We would be able to stay on the slice if we kept updating the projector, i.e. use $\Lg x$ instead of $\Lg \ssp_0$, but in this case the accumulated phase shift would not be equal to the phase shift of an RPO.  See {\tt kse\_removing\_so2.pdf} in {\tt siminos/blog/davidchack/}. {\bf}}
-This quotients the flow by the continuous $\SOn{2}$
-transformations. Note, however, that the reduced flow is
-still equivariant under the action of discrete cyclic group $\Ztwo =
-\{e,D(\pi)\}$ on $\ssp$, $\vf(\ssp)$ and the reference
+in a $(d\!-\!1)$-dimensional {\csection} transverse to the
+direction fixed by an arbitrary point $\ssp_0$.
+    \RLD{I think this way of removing SO(2) will only work if the
+    slice through $\ssp_0$ is flat, i.e. if the group action
+    everywhere on the slice is parallel to $\Lg \ssp_0$.
+    Therefore, I don't think this will work for KSE, where the
+    M/SO(2) manifold is not flat.  If the slide is not flat,
+    then, once we move away from $\ssp_0$, the group action is
+    not going to be in the direction of $\Lg \ssp_0$, so we will
+    be projecting away the wrong direction, i.e. moving off the
+    slice.  We would be able to stay on the slice if we kept
+    updating the projector, i.e. use $\Lg x$ instead of $\Lg
+    \ssp_0$, but in this case the accumulated phase shift would
+    not be equal to the phase shift of an RPO.  See {\tt
+    kse\_removing\_so2.pdf} in {\tt siminos/blog/davidchack/}.
+    }
+By ignoring
+the direction of the flow that can be compensated for by an
+$\SOn{2}$ rotation we quotient the flow by $\SOn{2}$. The
+idea is presumably very old; for example, it is stated as the
+problem 1. of Sect. 6.2 of Arnol'd {\em Ordinary Differential
+Equations}\rf{arnold92}. Note, however, that a choice of
+$\ssp_0$ fixes only a direction, so the reduced flow is still
+equivariant under the action of discrete cyclic group $\Ztwo
+= \{e,D(\pi)\}$ on $\ssp$, $\vf(\ssp)$ and the reference
 point $\ssp_0$, just as was the case \refeq{LorenzR} for the
 Lorenz flow \refeq{Lorenz}.
-}%end \PublicPrivate.
+}%end \PCedit
 
+\subsection{Stability of the \eqv\ at the origin}
+\label{sec:Eqv0}
 
-\CLf\ is equivariant under the action
-\PublicPrivate{\refeq{eq:RotCLe}}{\refeq{ZMrotation}} of $\SOn{2}$.
-We rewrite the system in real variables $x=x_1+ i\, x_2\,,\ y=y_1+i\, x_2$ as
-\beq
-\begin{split}
-	\dot{x}_1 &= -\sigma x_1 + \sigma y_1\cont
-	\dot{x}_2 &= -\sigma x_2 + \sigma y_2\cont
-	\dot{y}_1 &= (r_1-z) x_1 - r_2 x_2 -y_1-e y_2 \cont
-	\dot{y}_2 &= r_2 x_1 + (r_1-z) x_2 + e y_1- y_2\cont
-	\dot{z} &= -b z + x_1 y_1 + x_2 y_2\,.
-	\label{eq:CLeR}
-\end{split}
-\eeq
-The \stabmat\ is
+The linear \stabmat\ for \CLf\ \refeq{eq:CLeR} is given by
   \beq
 {\Mvar_{CLe}} =
   \left(\barr{ccccc}
     -\sigma    	& 0 		& \sigma & 0    &  0 \\
 	0 	& -\sigma       & 0      & \sigma   &  0 \\
-	r_1-z  &     -r_2      & -1     & -e & -x_1 \\
-	r_2     & r_1-z       	& e  	& -1       & -x_2 \\
+	\RerCLor-z  &     -\ImrCLor      & -1     & -e & -x_1 \\
+	\ImrCLor     & \RerCLor-z       	& e  	& -1       & -x_2 \\
 	y_1     & y_2           & x_1    & x_2      & -b
     \earr\right)
 \,.
   \ee{CLeStabMat}
 The origin is an \eqv\ of \refeq{eq:CLeR} for any value of the parameters. As shown in
-\refref{FowlerCLE82} it is stable for $0<r_1<r_{1c}$ and unstable for $r_{1c}<r_1$, where
+\refref{FowlerCLE82} it is stable for $0<\RerCLor<r_{1c}$ and unstable for $r_{1c}<\RerCLor$, where
 \beq
-	r_{1c} = 1 + \frac{(e+r_2)(e-\sigma r_2)}{(\sigma+1)^2}\,.
+	r_{1c} = 1 + \frac{(e+\ImrCLor)(e-\sigma \ImrCLor)}{(\sigma+1)^2}\,.
 \eeq
 At bifurcation a pair of eigenvalues crosses the imaginary axis with imaginary part:
 \beq
-	\omega_c = \frac{\sigma (e + r_2)}{\sigma+1}\,.
+	\omega_c = \frac{\sigma (e + \ImrCLor)}{\sigma+1}\,.
 	\label{eq:omegaCLE}
 \eeq
 
@@ -161,8 +198,8 @@ can apply the equivariant Hopf bifurcation theorem\ES{state it in appropriate se
 refer to it.} with $\SOn{2}$ symmetry
 and verify the existence of a \reqv\ after bifurcation\ES{I'll do this
 if I have time.}. In \refref{FowlerCLE82} the authors perform a direct bifurcation analysis and
-show that, for $e+r_2\neq 0$, a Hopf cycle \REQB{1} is created which also turns out to be an \SOn{2}-orbit,
-\ie\ a \reqv. For $e+r_2=0$ the cycle degenerates to an \SOn{2}-orbit of \eqva,
+show that, for $e+\ImrCLor\neq 0$, a Hopf cycle \REQB{1} is created which also turns out to be an \SOn{2}-orbit,
+\ie\ a \reqv. For $e+\ImrCLor=0$ the cycle degenerates to an \SOn{2}-orbit of \eqva,
 since $\omega_c =0$ and the conditions of equivariant Hopf theorem do not apply.
 
 The secondary bifurcation from the \reqv\ is expected according
@@ -179,12 +216,12 @@ continue this discussion later}
 Since we are interested in \CLe\
 precisely for its symmetry properties we will concentrate on the
 case that results to generic bifurcations. Before we proceed
-with this, we briefly examine the special case $e=r_2=0$.
+with this, we briefly examine the special case $e=\ImrCLor=0$.
 
 
-\subsection{The $e=r_2=0$ case}
+\subsection{The $e=\ImrCLor=0$ case}
 
-When $e=r_2=0$ we immediately observe the real subspace $x_2=y_2=0$ is flow invariant
+When $e=\ImrCLor=0$ we immediately observe the real subspace $x_2=y_2=0$ is flow invariant
 and the usual \Le\ are recovered. From equivariance, any subspace $U_\theta$ on the $\SOn{2}$-orbit of the real
 subspace is invariant as well, for example the imaginary subspace $x_1=y_1=0$. The
 $U_\theta$'s are  parameterized by the angle of \SOn{2} rotations with
@@ -197,11 +234,12 @@ in \reffig{fig:LorenzCoex}. A continuum of identical, disjoint ``Lorenz mask'' a
   (\textit{a})\includegraphics[width=0.35\textwidth, clip=true]{../figs/LorenzCoexA}
 ~~~~(\textit{b})\includegraphics[width=0.35\textwidth, clip=true]{../figs/LorenzCoexB}
 \end{center}
-\caption[Complex Lorenz eq. coexisting attractors]{ Two different projections
-of the \CLe\ dynamics \refeq{eq:CLe}
-for $r_1=28,\, b=8/3,\, \sigma=10,\, a=1$ and $e=r_2=0$. The dynamics in
-the real subspace $U_0$ and in $U_{5\pi/6}$ is shown in red, blue respectively. The green circle
-is the \SOn{2}-orbit of \eqv\ $E_1$.
+\caption[Complex Lorenz eq. coexisting attractors]{
+Two different projections of the \CLe\ dynamics
+\refeq{eq:CLe} for $e=\ImrCLor=0$. The dynamics in the real
+subspace $U_0$ and in $U_{5\pi/6}$ is shown in red, blue
+respectively. The green circle is the \SOn{2}-orbit of \eqv\
+$E_1$.
     }
 \label{fig:LorenzCoex}
 \end{figure}
@@ -225,18 +263,18 @@ rotations of the system
 %     \left(\barr{c}
 % 	 -\sigma x_1 + \sigma y_1 \\
 % 	 -\sigma x_2 + \sigma y_2 \\
-% 	 (r_1-z) x_1 - r_2 x_2 -y_1-e y_2 \\
-% 	 r_2 x_1 + (r_1-z) x_2 + e y_1- y_2\\
+% 	 (\RerCLor-z) x_1 - \ImrCLor x_2 -y_1-e y_2 \\
+% 	 \ImrCLor x_1 + (\RerCLor-z) x_2 + e y_1- y_2\\
 % 	 -b z + x_1 y_1 + x_2 y_2\,.
 %     \earr\right)
 % \,.
 % \eeq
 \beq
-	(\Lg.a).\vf(a) = \left(r_1-\sigma-z\right)\left(x_1 y_2 -x_2 y_1\right) -r_2\left(x_1 y_1+ x_2 y_2\right)- e\left(y_1^2+y_2^2\right)
+	(\Lg.a).\vf(a) = \left(\RerCLor-\sigma-z\right)\left(x_1 y_2 -x_2 y_1\right) -\ImrCLor\left(x_1 y_1+ x_2 y_2\right)- e\left(y_1^2+y_2^2\right)
 	\label{eq:CLe0ip}
 \eeq
 where we have used $\Lg$, the Lie algebra generator \PublicPrivate{}{\refeq{ZMgen}} of \SOn{2} and $\vf(a)$, the vector field in \refeq{eq:CLeR}.
-We observe that for $e=r_2=0$ only $x_1 y_2-x_2 y_1$ and $z$ appear. By taking the time derivative of $x_1 y_2-x_2 y_1$ and using \refeq{eq:CLeR}
+We observe that for $e=\ImrCLor=0$ only $x_1 y_2-x_2 y_1$ and $z$ appear. By taking the time derivative of $x_1 y_2-x_2 y_1$ and using \refeq{eq:CLeR}
 we can show that
 \beq
 	\frac{d}{dt}\left(x_1 y_2-x_2 y_1\right)= -(\sigma+1)\left(x_1 y_2-x_2 y_1\right)
@@ -252,7 +290,7 @@ This is demonstrated in \reffig{fig:CLe0trans}.
 ~~~~(\textit{b})\includegraphics[width=0.35\textwidth]{../figs/CLe0transB}
 \end{center}
 \caption[Transient trajectory in degenerate Complex Lorenz flow]{ A trajectory
-of the \CLe\ dynamics for $r_1=28,\, b=8/3,\, \sigma=10,\, a=1$ and $e=r_2=0$ with
+of the \CLe\ dynamics for $e=\ImrCLor=0$ with
 initial conditions on the complement of $U$ in \Rls{5}. (a) Projection on the
 complex $x$-plane, (b) Projection on the complex $y$-plane. The trajectory
 approaches some $U_\theta$.
@@ -261,16 +299,21 @@ approaches some $U_\theta$.
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{The $e\neq0,\ r_2=0$ case}
+\subsection{The $e\neq0,\ \ImrCLor=0$ case}
 
-In this section we turn to the ``laser case'' $e\neq0,\ r_2=0$. We work with
-parameters $r_1=28,\, b=8/3,\, \sigma=10,\, a=1$ that correspond
-to the standard Lorenz values and with detuning set to $e=1/10$.
-\refFig{fig:CLE} illustrates the need to project dynamics on \reducedsp: Dynamics
-is organized by the interplay of the stable and unstable manifolds of \eqv\ \EQB{0}
-and \reqv\ \REQB{1} but the dynamics along the direction of rotation blur the picture
-and the notion of recurrence becomes relative. We will present various approaches
-to orbit space reduction in the following sections.
+\PCedit{
+In this section we turn to the ``laser case''
+$e\neq0,\;\ImrCLor=0$; in the numerical examples we set the
+detuning to $e=1/10$.
+}
+\refFig{fig:CLE} illustrates the need
+to project dynamics on \reducedsp: Dynamics is organized by
+the interplay of the stable and unstable manifolds of \eqv\
+\EQB{0} and \reqv\ \REQB{1} but the dynamics along the
+direction of rotation blur the picture and the notion of
+recurrence becomes relative. We will present various
+approaches to orbit space reduction in the following
+sections.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -279,8 +322,7 @@ to orbit space reduction in the following sections.
   \includegraphics[height=0.25\textheight]{../figs/CLE}
 \end{center}
 \caption[Complex Lorenz flow phase space]
-{ \Statesp\ portrait of \CLe\ dynamics for $r_1=28,\, b=8/3,\,
-\sigma=10,\, a=1\, e=1/10,\, r_2=0$. Plotted are \reqv\
+{ \Statesp\ portrait of \CLe\ dynamics for $e=1/10,\, \ImrCLor=0$. Plotted are \reqv\
 \REQB{1} (red), its unstable manifold (brown), \eqv\ \EQB{0}, a
 representative of its unstable manifold (green), 3 repetitions
 of \rpo\ ``01''(magenta) and a generic orbit (blue).}
@@ -289,22 +331,22 @@ of \rpo\ ``01''(magenta) and a generic orbit (blue).}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 To find the location of the \reqv\ it is convenient to work on polar
-coordinates defined by $x=\rho_1 e^{i \phi_1},\,y=\rho_2 e^{i \phi_2}$. Equations \refeq{eq:CLe} with $r_2=0$
+coordinates defined by $x=r_x e^{i \phi_1},\,y=r_y e^{i \phi_2}$. Equations \refeq{eq:CLe} with $\ImrCLor=0$
 take the form
 \beq
 \begin{split}
-	\dot{\rho}_1 &=-\sigma  \rho_1+\sigma \rho_2\cos\Phi \cont
-	\dot{\rho}_2 &=-\rho_2 + \rho_1(r_1 -z)\cos\Phi \cont
-	\dot{z} &=  -b z+\rho_1 \rho_2\cos\Phi \cont	
-	\dot{\Phi} &=-e-\frac{\sigma \rho_2 \sin\Phi}{\rho_1}-\frac{\rho_1(r_1-z) \sin\Phi }{\rho_2}\,,
+	\dot{r}_x &=-\sigma  r_x+\sigma r_y\cos\Phi \cont
+	\dot{r}_y &=-r_y + r_x(\RerCLor -z)\cos\Phi \cont
+	\dot{z} &=  -b z+r_x r_y\cos\Phi \cont	
+	\dot{\Phi} &=-e-\frac{\sigma r_y \sin\Phi}{r_x}-\frac{r_x(\RerCLor-z) \sin\Phi }{r_y}\,,
 	\label{eq:CLePolar}
 \end{split}
 \eeq
 where $\Phi=\phi_1-\phi_2$ and the evolution equations for $\phi_1,\phi_2$ are given by
 \beq
 \begin{split}
-	\dot{\phi}_1 &=-\frac{\sigma \rho_2 \sin\Phi}{\rho_1}\cont
-	\dot{\phi_2} &= e +\frac{\rho_1 (r_1 -z)\sin\Phi}{\rho_2}\,.
+	\dot{\phi}_1 &=-\frac{\sigma r_y \sin\Phi}{r_x}\cont
+	\dot{\phi_2} &= e +\frac{r_x (\RerCLor -z)\sin\Phi}{r_y}\,.
 	\label{eq:CLeAngl}
 \end{split}
 \eeq
@@ -312,24 +354,24 @@ The condition for a \reqv~ is that all time derivatives in \refeq{eq:CLePolar} v
 % Explicit form here, simplified in terms of z component below
 % \beq
 % \begin{split}
-% 	z &= -\frac{e^2}{(\sigma +1)^2}+r_1 -1\cont
-% 	\rho_2 &= \frac{\sqrt{-b \left(e^2+(\sigma +1)^2\right)\left(e^2-(r_1 -1) (\sigma +1)^2\right)}}{(\sigma+1)^2}\cont
-% 	\rho_1 &= \frac{\sqrt{-b \left(e^2-(r_1 -1) (\sigma +1)^2\right)}}{\sigma +1}\cont
+% 	z &= -\frac{e^2}{(\sigma +1)^2}+\RerCLor -1\cont
+% 	r_y &= \frac{\sqrt{-b \left(e^2+(\sigma +1)^2\right)\left(e^2-(\RerCLor -1) (\sigma +1)^2\right)}}{(\sigma+1)^2}\cont
+% 	r_x &= \frac{\sqrt{-b \left(e^2-(\RerCLor -1) (\sigma +1)^2\right)}}{\sigma +1}\cont
 % 	\Phi &= -\cos ^{-1}\left(\frac{\sigma +1}{\sqrt{e^2+(\sigma +1)^2}}\right)
 % \end{split}
 % \eeq
 \beq
 \begin{split}
-	z^{(1)} &= \frac{-e^2+(r_1 -1)(\sigma +1)^2}{(\sigma +1)^2}\cont
-	\rho_2^{(1)} &= \sqrt{b \left(e^2+(\sigma +1)^2\right)z^{(1)}}\cont
-	\rho_1^{(1)} &= \sqrt{b z^{(1)}}\cont
+	z^{(1)} &= \frac{-e^2+(\RerCLor -1)(\sigma +1)^2}{(\sigma +1)^2}\cont
+	r_y^{(1)} &= \sqrt{b \left(e^2+(\sigma +1)^2\right)z^{(1)}}\cont
+	r_x^{(1)} &= \sqrt{b z^{(1)}}\cont
 	\Phi^{(1)} &= -\cos ^{-1}\left(\frac{\sigma +1}{\sqrt{e^2+(\sigma +1)^2}}\right)
 \end{split}
 \eeq
 Substituting in \refeq{eq:CLeAngl} we get $\dot{\phi}_1=\dot{\phi}_2=e \sigma/(1 + \sigma)\neq 0$ for $e\neq0$
 and thus we have indeed a \reqv, not a group orbit of \eqva.
 
-Calculation  in polar coordinates $\rho_1,\rho_2,\Phi,z$ of stability eigenvalues for \REQB{1}
+Calculation  in polar coordinates $r_x,r_y,\Phi,z$ of stability eigenvalues for \REQB{1}
 for the set of parameters we use here yields
 \beq
 	\mu_{1,2}\pm\omega_{1,2}= 0.0938\pm 10.1945i,\, \lambda_3=-11.0009,\, \lambda_4= -13.8534\,.
@@ -347,7 +389,7 @@ for the set of parameters we use here yields
 ~~~~(\textit{b})\includegraphics[width=0.36\textwidth]{../figs/CLEip2}
 \end{center}
 \caption[Orbit space projection of Complex Lorenz flow: Invariant polynomials]{ \Statesp\
-portraits of \CLe\ dynamics for $r_1=28,\, b=8/3,\, \sigma=10,\, a=1$, $e=1/10$, $r_2=0$
+portraits of \CLe\ dynamics for $e=1/10$, $\ImrCLor=0$
 in \reducedsp. Projecting on invariant polynomials \refeq{eq:ipLaser}.
     }
 \label{fig:CLEip}
@@ -357,7 +399,7 @@ in \reducedsp. Projecting on invariant polynomials \refeq{eq:ipLaser}.
 The first approach we try is by use of invariant polynomials \refeq{eq:ipLaser},
 following Gilmore and Letellier\rf{GL-Gil07b} who compute invariant polynomials
 for the same action of $\SOn{2}$ and use them for symmetry reduction
-of a system conjugate to \CLe s with $e=-r_2$.
+of a system conjugate to \CLe s with $e=-\ImrCLor$.
 For visualization purposes, rather than rewritting the dynamics,
 we merelly map the orbits from original coordinates to $u_i$'s, \reffig{fig:CLEip}.
 In most projections the folding mechanism is hidden since the dynamics is squeezed near the $z$-axis.
@@ -380,7 +422,7 @@ of the unstable manifold of \REQB{1} with the Poincar\'e surface of section, mea
 \includegraphics[width=0.35\textwidth]{../figs/CLEipRM}
 \end{center}
 \caption[Return map for Complex Lorenz flow, invariant polynomials]{Return map to the \Poincare\
-surface of section $u_1=u_4$ for \CLe\ with $r_1=28,\, b=8/3,\, \sigma=10,\, a=1$, $e=1/10$, $r_2=0$,
+surface of section $u_1=u_4$ for \CLe\ with $e=1/10$, $\ImrCLor=0$,
 projecting on invariant polynomials \refeq{eq:ipLaser}.
 % (a) The return map coordinate is $u_1$, (b)
 The return map coordinate is the Euclidean
@@ -401,7 +443,7 @@ length along the \Poincare\ section of the unstable manifold of $E_1$.
 ~~~~(\textit{b})\includegraphics[width=0.35\textwidth]{../figs/CLEmfYYZ}
 \end{center}
 \caption[Orbit space projection of Complex Lorenz flow: Moving frame]{ \Statesp\
-portraits of \CLe\ dynamics for $r_1=28,\, b=8/3,\, \sigma=10,\, a=1$, $e=1/10$, $r_2=0$
+portraits of \CLe\ dynamics for $e=1/10$, $\ImrCLor=0$
 in \reducedsp. Projecting on invariants given in \refeq{eq:invLaser}.
     }
 \label{fig:CLEmf}
@@ -549,7 +591,7 @@ This set of invariants lacks a geometric interpretation\ES{or does it?} but resu
 ~~~~(\textit{b})\includegraphics[width=0.35\textwidth]{../figs/CLEinvYYZ}
 \end{center}
 \caption[Orbit space projection of Complex Lorenz flow: Modified moving frame]{ \Statesp\
-portraits of \CLe\ dynamics for $r_1=28,\, b=8/3,\, \sigma=10,\, a=1$, $e=1/10$, $r_2=0$
+portraits of \CLe\ dynamics for $e=1/10$, $\ImrCLor=0$
 in \reducedsp. Projecting on invariants given in \refeq{eq:invLaser2}.
     }
 \label{fig:CLEinv}
@@ -563,13 +605,13 @@ in \reducedsp. Projecting on invariants given in \refeq{eq:invLaser2}.
 %  ~~~~(\textit{b})
 \includegraphics[width=0.35\textwidth]{../figs/CLEinvRM}
 \end{center}
-\caption[Return map for Complex Lorenz flow]{Return map to the \Poincare\
-surface of section $\overline{x}_2=\overline{y}_2$ for \CLe\ with $r_1=28,\, b=8/3,\, \sigma=10,\, a=1$, $e=1/10$, $r_2=0$,
-projecting on invariants given in \refeq{eq:invLaser2}.
-% (a) The return map coordinate is
-% $\overline{x}_2$, (b)
-The return map coordinate is the Euclidean
-length along the \Poincare\ section of the unstable manifold of $E_1$.
+\caption[Return map for Complex Lorenz flow]{
+Return map to the \Poincare\ surface of section
+$\overline{x}_2=\overline{y}_2$ for \CLe\ with $e=1/10$,
+$\ImrCLor=0$, projecting on invariants given in
+\refeq{eq:invLaser2}. The return map coordinate is the
+Euclidean length along the \Poincare\ section of the unstable
+manifold of $E_1$.
     }
 \label{fig:CLEinvRM}
 \end{figure}
@@ -643,7 +685,7 @@ algorithm of \refsect{sec:symShoot} to refine them to machine accuracy.
 \end{center}
 \caption[\CLe\ desymmetrization with double section]{Use of \Poincare\
 surface of section $\mathcal{P}$ and {\csection} $\mathcal{K}$ for symmetry
-reduction of \CLe\ dynamics with $r_1=28,\, b=8/3,\, \sigma=10,\, a=1$, $e=1/10$, $r_2=0$.
+reduction of \CLe\ dynamics with $e=1/10$, $\ImrCLor=0$.
 Group orbits of the points of intersection of \rpo\ ``01'' have been visualized as circles.
     }
 \label{fig:CLEmartini}
@@ -654,31 +696,31 @@ Group orbits of the points of intersection of \rpo\ ``01'' have been visualized 
 \subsection{Stability of \reqva}
 
 \ESedit{
-In the moving frame method the reduced \statesp\ is identified (at least locally) with
-the {\csection} $\mathcal{K}$. This provides a means of calculating stability of \reqva in
-reduced \statesp. Assume that, as was the case for \CLe, the {\csection} is orthogonal
-to the group action for any $x$ on $\mathcal{K}$. We observe that for the point $x_o$ on \reqv\ \REQB{1} that lies on the {\csection} $\mathcal{K}$ we can decompose $\vf(x)$ in \refeq{eq:difeq} in a part $\vf_\shortparallel$ parallel to the group action and a part $\vf_\perp$ on the {\csection}
-\beq
-	\vf(x_o)=\vf_\shortparallel(x_o)+\vf_\perp(x_o)\,.
-\eeq
-To compute stability eigenvalues of \reqv\ we only need to consider the linearization
-of $\vf_\perp$ which is identified with $\vf$ in reduced space. It is
-convenient to introduce the operator
- \beq
- 	\PperpOp=\mathbf{1}-\frac{(\Lg.x) \otimes (\Lg.x)}{(\Lg.x)^2}
- \eeq
+In the moving frame method the reduced \statesp\ is
+identified (at least locally) with the {\csection}
+$\mathcal{K}$. This provides a means of calculating stability
+of \reqva in reduced \statesp. Assume that, as was the case
+for \CLe, the {\csection} is orthogonal to the group action
+for any $x$ on $\mathcal{K}$. We observe that for the point
+$x_o$ on \reqv\ \REQB{1} that lies on the {\csection}
+$\mathcal{K}$ we can decompose $\vf(x)$ in \refeq{eq:difeq}
+in a part $\vf_\shortparallel$ parallel to the group action
+and a part $\vf_\perp$ on the {\csection}, as in
+\refeq{flowSplit}. To compute stability eigenvalues of \reqv\
+we only need to consider the linearization of $\vf_\perp$
+which is identified with $\vf$ in reduced space. It is
+convenient to introduce the projection operator \refeq{transvProj}
 that projects a vector to the {\csection}. Then for the stability matrix $M_{ij}$ we have
- \bea
-	M_{ij} &\equiv& \frac{\partial}{\partial x_j}(\PperpOp. \vf)_i\continue
-		&=& \frac{\partial}{\partial x_j}(\Pperp_{in} \vf_n)\continue
-		&=& \Pperp_{in}\frac{\partial  \vf_n}{\partial x_j}+\frac{\partial \Pperp_{in}}{\partial x_j} \vf_n
+ \beq
+	M_{ij} = \frac{\partial}{\partial x_j}(\PperpOp. \vf)_i
+		= \Pperp_{ik}\frac{\partial  \vf_k}{\partial x_j}+\frac{\partial \Pperp_{ik}}{\partial x_j} \vf_k
 		\label{eq:stabreqvdef}
- \eea
+ \eeq
 
 Now
 \bea
-	\Pperp_{in}	&=& \delta_{in}-\frac{(\Lg.x)_i(\Lg.x)_n}{(\Lg.x)^2}\continue
-			&=& \delta_{in}-\frac{\Lg_{iq}.x_q \Lg_{n\ell}.x_\ell}{(\Lg.x)^2}
+	\Pperp_{ik}	&=& \delta_{ik}-\frac{(\Lg.x)_i(\Lg.x)_k}{(\Lg.x)^2}\continue
+			&=& \delta_{ik}-\frac{\Lg_{iq}.x_q \Lg_{k\ell}.x_\ell}{(\Lg.x)^2}
 \eea
 and
 \bea
@@ -777,7 +819,7 @@ even though this could be attributed to numerical issues.
 Attempt to restrict \CLe\ dynamics on the {\slice} $\mathcal{K}$ through
 \refeq{eq:difeqTransv}. (a) A trajectory initiated on the unstable
 manifold of $\REQB{1}$, (b) \rpo\ ``0011''
-($r_1=28,\, b=8/3,\, \sigma=10,\, a=1$, $e=1/10$, $r_2=0$).
+($e=1/10$, $\ImrCLor=0$).
     }
 \label{fig:CLEtransv}
 \end{figure}
@@ -791,7 +833,7 @@ manifold of $\REQB{1}$, (b) \rpo\ ``0011''
 \caption[Numerical error in \CLe\ desymmetrization with transverse integration]{
 Distance of $\ssp^\perp(t)$ to $\ssp(t)$ in invariant variables\refneq{eq:invLaser2}
 for selected \rpo s of \CLe\,
-($r_1=28,\, b=8/3,\, \sigma=10,\, a=1$, $e=1/10$, $r_2=0$).
+($e=1/10$, $\ImrCLor=0$).
     }
 \label{fig:CLEerrTransv}
 \end{figure}
@@ -837,7 +879,7 @@ Restriction of \CLe\ dynamics on the {\slice} $\mathcal{K}$ through
 \refeq{eq:difeqTransvII}. A trajectory initiated on the unstable
 manifold of $\REQB{1}$ is shown in blue and \rpo\ ``011'' is shown
 in green.
-($r_1=28,\, b=8/3,\, \sigma=10,\, a=1$, $e=1/10$, $r_2=0$).
+($e=1/10$, $\ImrCLor=0$).
     }
 \label{fig:CLEtransvII}
 \end{figure}
