@@ -3,12 +3,12 @@
 \CLe\ were introduced by Gibbon and McGuinness\rf{GibMcCLE82} as a low-dimensional model
 of baroclinic instability in the atmosphere.
 As the name suggests they turned out to be a complex generalization
-of Lorenz equations:
+of Lorenz equations \refeq{Lorenz}:
 \beq
 \index{Complex Lorenz equations}
 \begin{split}
- \dot{x} &=-\sigma x+ \sigma y \,,\\
- \dot{y} &=(\rLor-z)x-a y \,,\\
+ \dot{x} &=-\sigma x+ \sigma y \cont
+ \dot{y} &=(\rLor-z)x-a y \cont
  \dot{z} &= \frac{1}{2}\left(x y^*+x^*y\right)-b z\,,
  \label{eq:CLe}
 \end{split}
@@ -32,18 +32,19 @@ $x=x_1+ i\, x_2\,,\ y=y_1+i\, x_2$ as
 	\dot{x}_2 &= -\sigma x_2 + \sigma y_2\cont
 	\dot{y}_1 &= (\RerCLor-z) x_1 - \ImrCLor x_2 -y_1-e y_2 \cont
 	\dot{y}_2 &= \ImrCLor x_1 + (\RerCLor-z) x_2 + e y_1- y_2\cont
-	\dot{z} &= -b z + x_1 y_1 + x_2 y_2\,.
+	\dot{z} \; &= -b z + x_1 y_1 + x_2 y_2\,.
 	\label{eq:CLeR}
 \end{split}
 \eeq
 Ning and Haken\rf{NingHakenCLE90} have shown
 that equations isomorphic to \CLe\ also appear as a
 truncation of Maxwell-Bloch equations describing a single
-mode, detuned, ring laser,
+mode, detuned, ring laser.
 %with $x,y$ and $z$
 %proportional to electric field, polarization and population inversion, respectively.
-but the authors choose $e+\ImrCLor=0$ so that a detuned stationary
-solution exists.\ES{This assumption is questionable unless it
+They set $e+\ImrCLor=0$ so that a detuned
+\eqv\ exists.
+    \ES{This assumption is questionable unless it
 is forced by the physics of the problem, which I cannot
 follow very well. It leads to non-generic bifurcation
 behavior, while one would like a model of a physical system
@@ -51,10 +52,11 @@ to be robust under perturbations (of the model). Furthermore,
 the fact that the Hopf cycle in the general case is an
 $\SOn{2}$-orbit has gone unnoticed. The \reqv\ can be
 interpreted as an \eqv\ in a rotating frame and the measured
-electric field of the laser would be the same in both cases.}
+electric field of the laser would be the same in both cases.
+    }
 Bakasov and Abraham\rf{BakasovAbraham93} criticize this
 choice as being ``degenerate'' and show that one can use
-\CLe\ with $\ImrCLor=0$ and $e\neq0$ to describe detuned lasers.
+\CLe\ with $\ImrCLor=0$ and $e \neq 0$ to describe detuned lasers.
 As we explain in \refsect{sec:Eqv0}, the choice of Ning and
 Haken leads to non-generic bifurcations.
 
@@ -64,7 +66,7 @@ Haken leads to non-generic bifurcations.
 \CLf\ \refeq{eq:CLeR} is equivariant,
 $v(\ssp)= g^{-1} v(g \ssp)$,
 under
-$\SOn{2}$ rotations induced by the Lie algebra generator
+$\SOn{2}$ rotations \refeq{eq:RotCLe5d} induced by the Lie algebra generator
   \beq
  \Lg =   \left(\barr{ccccc}
     0  &  1 & 0  &  0 & 0  \\
@@ -121,14 +123,23 @@ and $(y_1,y_2)$ planes:
  \eeq
 % $\SOn{2}$ is a commutative, Abelian group.
 The infinitesimal statement of invariance is obtained by
-expanding $g=e^{i\Lg_j\theta_j}$ for small $\theta_j$ and
-keeping the leading term in $v(\ssp)= g^{-1} v(g \ssp)$:
+expanding $g=e^{i\Lg_a \theta_a}$ for small $\theta_a$ and
+keeping the leading $\theta_a$ term in $v(\ssp)= g^{-1} v(g \ssp)$:
+    \PC{ This general discussion belong to
+    \refchap{chap:Symmetry}, as the second, infinitesimal
+    rotations part of \refsect{sec:symIntro} (where the first
+    part is the statement of equivariance under global
+    rotations). Checking equivariance as a condition on Lie algebra
+    is much easier than checking it for global, finite angle rotations,
+    especially for non-trivial Lie groups.}
 \beq
-  \Lg_j v(\ssp) - \Mvar \Lg_j \ssp =
-  (\Lg_j)_{ab} v_b(\ssp) - \Mvar_{ac} (\Lg_j)_{cb} \ssp_b =0
+  \left(
+    \Lg_a  - (\Lg_a \ssp) \cdot \frac{\partial}{\partial \ssp}
+  \right) v(\ssp) =
+  (\Lg_a)_{ij} v_j(\ssp) - \Mvar_{ik} (\Lg_a)_{kj} \ssp_j =0
   \,,
 \ee{inftmInv}
-where the linear \stabmat\ for \CLf\ \refeq{eq:CLeR} is given by
+where the \stabmat\ for \CLf\ \refeq{eq:CLeR} is given by
   \beq
 \Mvar =
   \left(\barr{ccccc}
@@ -141,6 +152,20 @@ where the linear \stabmat\ for \CLf\ \refeq{eq:CLeR} is given by
 \,.
   \ee{CLeStabMat}
 
+\PublicPrivate{}{
+\PCedit{
+$  {\cal L}_g v(x) = \left(\Lg_a  - (\Lg_a \ssp) \cdot
+\frac{\partial}{\partial \ssp} \right) v(\ssp) $ is the {\em
+Lie derivative} of the flow $v$ with respect to the direction
+of the group-rotation induced flow $\Lg_a \ssp$.
+\refeq{inftmInv} is the {\em Lie bracket} (called the {\em
+Poisson bracket} by Arnol'd\rf{arnold89}) of the two flows.
+The Lie derivative $  {\cal L}_g v$ measures how much the
+flows induced by the two vector fields commute with each
+other. The commute if and only if their Lie bracket is equal
+to zero, as is the case in \refeq{inftmInv}.
+}
+}% end \PublicPrivate
 
 Next we decompose $\vf(x)$
 in \refeq{eq:difeq} in a part $\vf_\shortparallel$ parallel
@@ -172,6 +197,20 @@ equivariant under the action of discrete cyclic group $\Ztwo
 = \{e,D(\pi)\}$ on $\ssp$, $\vf(\ssp)$ and the reference
 point $\ssp_0$, just as was the case \refeq{LorenzR} for the
 Lorenz flow \refeq{Lorenz}.
+    \PC{\emph{Mea culpa}: Here I screwed up. I forgot that rotation
+    moves $v$ and counter-moves $\ssp$ in $v(\ssp)$, \ie,
+    acts by the Lie derivative \refeq{inftmInv}. I could never
+    understand why we do not see a translational zero eigenvalue
+    everywhere (the Lie group acts globally and commutatively
+    right?), but only on \eqva, \reqva\ and \rpo s. Presumably
+    the projection operator \refeq{transvProj} is OK for the
+    \reqv\ calculation of \refeq{sect:StabEq},
+    as the action of the group on $\ssp_{\REQB{1}}$ is trivial?
+    Not sure how to rewrite the decomposition induced by
+    \refeq{transvProj} correctly, in
+    terms of the full Lie derivative action, and not only the $\Lg$
+    action.
+    }
 }%end \PCedit
 
 \subsection{Stability of the \eqv\ at the origin}
@@ -510,7 +549,7 @@ On the other hand observe that the denominator is singular on
 the subspace $U_S$ defined by $x_1=x_2=0$ even though the
 group action is non-regular only in a subset of $U_S$, the
 $z$-axis $x_1=x_2=y_1=y_2=0$. The transformations
-\refneq{eq:invLaser} can thus be characterized as
+\refeq{eq:invLaser} can thus be characterized as
 non-optimal, in the sense that we have singularity in a
 proper superset of $\Fix{\SOn{2}}$. The reason the
 transformations fail on $U_S$ and not only on the $z$-axis
@@ -664,7 +703,7 @@ a suitable orientation condition so that trajectories intersect the section away
 $x_1=x_2=0$ subspace. Here the orientation condition has be chosen so that trajectories intersect
 $\mathcal{P}$ moving from the ``outside'' of the section in \reffig{fig:CLEmartini} to the
 ``inside''.
-Since $\mathcal{P}$ has been defined by a condition in invariant variables \refneq{eq:invLaser}
+Since $\mathcal{P}$ has been defined by a condition in invariant variables \refeq{eq:invLaser}
 it turns out to be $\SOn{2}$-invariant in the full space. Therefore the group orbit of any point on
 $\mathcal{P}$ lies on $\mathcal{P}$. In \reffig{fig:CLEmartini} the group orbits of the points
 of intersection of \rpo~``01'' have been visualized as circles on $\mathcal{P}$.
@@ -727,6 +766,10 @@ which is identified with $\vf$ in reduced space. It is
 convenient to introduce the projection operator
 \refeq{transvProj} that projects a vector to the {\csection}.
 The stability matrix $M_{ij}$ is then given by
+    \PC{Here the projection operator \refeq{transvProj} is OK,
+    as the action of the group on $\ssp_{\REQB{1}}$ is trivial?
+    Not sure...
+    }
  \beq
 	M_{ij} = \frac{\partial}{\partial x_j}(\PperpOp \cdot  \vf)_i
 		= \Pperp_{ik}\frac{\partial  \vf_k}{\partial x_j}
@@ -758,11 +801,14 @@ or in matrix form
 	\mathbf{M}=\PperpOp \mathbf{A}-\frac{1}{(\Lg \cdot  x)^2}\left( \left[\vf \cdot \left(\Lg \cdot x\right)\right] \left(\PperpOp \Lg\right) +\left(\Lg \cdot x\right) \otimes \left[\vf \cdot \left( \PperpOp \Lg\right)\right] \right)
 	\label{eq:reqvStab}
 \eeq
-where $A_{ij}=\frac{\partial \vf_i}{\partial x_j}$. This expression allows to calculate stability
-of \reqva\ working in the equivariant variables, without explicit knowledge of the form the differential
-assumes in reduced space. Applying \refeq{eq:reqvStab} for \reqv\ \REQB{1} of \CLe\ we obtain the
-same eigenvalues \refneq{eq:CL eREQBstab} we computed in polar coordinates along with a zero eigenvalue
-due to the fact that we still work in the equivariant variables.
+where $A_{ij}=\frac{\partial \vf_i}{\partial x_j}$. This
+expression allows to calculate stability of \reqva\ working
+in the equivariant variables, without explicit knowledge of
+the form the differential assumes in reduced space. Applying
+\refeq{eq:reqvStab} for \reqv\ \REQB{1} of \CLe\ we obtain
+the same eigenvalues \refeq{eq:CLeREQBstab} we computed in
+polar coordinates along with a zero eigenvalue due to the
+fact that we still work in the equivariant variables.
 }% end ESedit
 
 \PublicPrivate{}{
@@ -801,7 +847,7 @@ the {\csection}.
 \subsection{Integration on the {\slice}}
 \label{sec:IntSliceI}
 
-If we replace our differential equations \refneq{eq:difeq} with the system
+If we replace our differential equations \refeq{eq:difeq} with the system
 \beq
 	\frac{dx}{dt}=\PperpOp v(x)\,,
 	\label{eq:difeqTransv}
@@ -849,7 +895,7 @@ manifold of $\REQB{1}$, (b) \rpo\ ``0011''
   (\textit{a})\includegraphics[width=0.9\textwidth, clip=true]{../figs/CLEerrTransv}
 \end{center}
 \caption[Numerical error in \CLe\ desymmetrization with transverse integration]{
-Distance of $\ssp^\perp(t)$ to $\ssp(t)$ in invariant variables\refneq{eq:invLaser2}
+Distance of $\ssp^\perp(t)$ to $\ssp(t)$ in invariant variables\refeq{eq:invLaser2}
 for selected \rpo s of \CLe\,
 ($e=1/10$, $\ImrCLor=0$).
     }
@@ -862,7 +908,7 @@ of integration of \refeq{eq:difeqTransv} by integrating
 initial conditions for several \rpo s both in \statesp\ and
 on the section and compute the distance
 $|\overline{\ssp}(t)-\overline{\ssp}^\perp(t)|$ in invariant
-variables \refneq{eq:invLaser2} (the norm is Euclidean). The
+variables \refeq{eq:invLaser2} (the norm is Euclidean). The
 distance does not grow exponentially indicating that
 numerical solution of \refeq{eq:difeqTransv} is accurate.
     \PC{\refFig{fig:CLEtransv} shows that there is something
@@ -918,7 +964,7 @@ direction fixed by an arbitrary point $\ssp_0$.
     the argument about getting the correct phase shift integration...
     }
 \ESedit{
-If we replace our differential equations \refneq{eq:difeq} with the system
+If we replace our differential equations \refeq{eq:difeq} with the system
 \beq
 	\frac{dx}{dt}=\PperpOp(x_o) v(x)\,,
 	\label{eq:difeqTransvII}
