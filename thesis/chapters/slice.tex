@@ -9,12 +9,61 @@
 
 
 \PCedit{
+\renewcommand{\Group}{\ensuremath{G}}         % Predrag Lie or discrete group
+
+
 \subsection{$\SOn{2}$ equivariance}
 
+    \PC{general discussion belongs someplace earlier in the thesis}
+A flow $\dot{x}= \vel(x)$ is equivariant under an operation
+$\LieEl$ when
+\beq
+\LieEl \cdot \vel(x)=\vel(\LieEl \cdot x)
+\,.
+\ee{eq:FiniteRot}
+A Lie group element relating different \statesp\ points by a
+linear continuous symmetry operation can be written as
+\beq
+\LieEl(\theta)=e^{{\theta} \Lg }
+\,.
+\ee{FiniteRot}
+For an infinitesimal rotation, $\theta \ll 1$,
+\[
+\LieEl(\theta)=1+\theta  \Lg  + \cdots
+\,,
+\]
+the statement of equivariance
+$
+\dot{\ssp}=\LieEl^{-1} \, \vel(\LieEl \, \ssp)
+$
+becomes
+\[
+\dot{x}=(1-\theta \Lg ) \cdot \vel(x+i\theta  \Lg \cdot x) + \cdots
+       =\vel(x)-\theta \left(
+            \Lg \cdot \vel(x) - \frac{d\vel}{dx} \cdot \Lg \cdot x
+                     \right)  + \cdots
+\,.
+\]
+The $\dot{x}$ and $\vel(x)$ cancel, and the $\theta$ can be
+divided out. We are left with the {\em infinitesimal
+rotations} version of the equivariance condition
+\refeq{eq:FiniteRot}:
+\beq
+0=- \Lg \cdot \vel(x)+\Mvar \cdot \Lg \cdot x
+\,,
+\label{eq:InfnmslRot}
+\eeq
+where $\Mvar = \frac{\pde \vel}{\pde x}$ is the \stabmat\ \refeq{5x5stabMat}.
+%    \PC{to Vaggelis: is the equivariance condition \refeq{eq:InfnmslRot}
+%    anyplace in the thesis, THE article, drafts of articles,
+%    \texttt{Mathematica} notebooks or among Kalli's diapers?
+%    }
+
 \CLf\ \refeq{eq:CLeR} is equivariant,
-$v(\ssp)= g^{-1} v(g \ssp)$,
+$\vel(\ssp)= \LieEl^{-1} \, \vel(\LieEl \, \ssp)$,
 under
-$\SOn{2}$ rotations \refeq{eq:RotCLe5d} induced by the Lie algebra generator
+$\SOn{2}$ rotations \refeq{eq:RotCLe5d} induced by the
+antihermitian Lie algebra generator
   \beq
  \Lg =   \left(\barr{ccccc}
     0  &  1 & 0  &  0 & 0  \\
@@ -30,17 +79,8 @@ Using a 2\dmn\ matrix representation of an $\SOn{2}$ rotation by a
 finite angle $\theta$,
     \PC{is the sign standard?}
 \beq
- {\bf R}(\theta) = e^{i\Lg \theta}
- = \cos\theta
-   \left(\barr{cc}
-    1  &  0   \\
-    0  &  1
-    \earr\right)
- + \sin\theta
-   \left(\barr{cc}
-    0  &  1   \\
-   -1  &  0
-    \earr\right)
+ {\bf R}(\theta) = e^{\Lg \theta}
+ = \cos\theta \matId + \sin\theta \Lg
  =   \left(\barr{cc}
     \cos\theta  &  \sin\theta   \\
    -\sin\theta  &  \cos\theta
@@ -50,10 +90,10 @@ finite angle $\theta$,
 \eeq
 %  $0  \leq \theta < \pi/2$.
 we can express the action of an $\SOn{2}$ group element
-${D}(\theta)$ as a simultaneous finite rotation in the $(x_1,x_2)$
+$\LieEl(\theta)$ as a simultaneous finite rotation in the $(x_1,x_2)$
 and $(y_1,y_2)$ planes:
 \beq
- {D}(\theta) = e^{i\Lg\theta}
+ \LieEl(\theta) = e^{\Lg\theta}
  =   \left(\barr{ccc}
     {\bf R}(\theta) &  0              & 0  \\
     0               & {\bf R}(\theta) & 0  \\
@@ -71,8 +111,8 @@ and $(y_1,y_2)$ planes:
  \eeq
 % $\SOn{2}$ is a commutative, Abelian group.
 The infinitesimal statement of invariance is obtained by
-expanding $g=e^{i\Lg_a \theta_a}$ for small $\theta_a$ and
-keeping the leading $\theta_a$ term in $v(\ssp)= g^{-1} v(g \ssp)$:
+expanding $g=e^{\Lg_a \theta_a}$ for small $\theta_a$ and
+keeping the leading $\theta_a$ term in $\vel(\ssp)= g^{-1} \vel(g \ssp)$:
     \PC{ This general discussion belong to
     \refchap{chap:Symmetry}, as the second, infinitesimal
     rotations part of \refsect{sec:symIntro} (where the first
@@ -83,8 +123,8 @@ keeping the leading $\theta_a$ term in $v(\ssp)= g^{-1} v(g \ssp)$:
 \beq
   \left(
     \Lg_a  - (\Lg_a \ssp) \cdot \frac{\partial}{\partial \ssp}
-  \right) v(\ssp) =
-  (\Lg_a)_{ij} v_j(\ssp) - \Mvar_{ik} (\Lg_a)_{kj} \ssp_j =0
+  \right) \vel(\ssp) =
+  (\Lg_a)_{ij} \vel_j(\ssp) - \Mvar_{ik} (\Lg_a)_{kj} \ssp_j =0
   \,,
 \ee{inftmInv}
 where the \stabmat\ for \CLf\ \refeq{eq:CLeR} is given by
@@ -102,64 +142,18 @@ where the \stabmat\ for \CLf\ \refeq{eq:CLeR} is given by
 
 \PublicPrivate{}{
 \PCedit{
-$  {\cal L}_g v(x) = \left(\Lg_a  - (\Lg_a \ssp) \cdot
-\frac{\partial}{\partial \ssp} \right) v(\ssp) $ is the {\em
-Lie derivative} of the flow $v$ with respect to the direction
+$  {\cal L}_g \vel(x) = \left(\Lg_a  - (\Lg_a \ssp) \cdot
+\frac{\partial}{\partial \ssp} \right) \vel(\ssp) $ is the {\em
+Lie derivative} of the flow $\vel$ with respect to the direction
 of the group-rotation induced flow $\Lg_a \ssp$.
-\refeq{inftmInv} is the {\em Lie bracket} (called the {\em
-Poisson bracket} by Arnol'd\rf{arnold89}) of the two flows.
-The Lie derivative $  {\cal L}_g v$ measures how much the
+\refeq{inftmInv} is the {\em Lie bracket} (or the {\em
+Poisson bracket}\rf{arnold89}) of the two flows.
+The Lie derivative $  {\cal L}_g \vel$ measures how much the
 flows induced by the two vector fields commute with each
 other. The commute if and only if their Lie bracket is equal
 to zero, as is the case in \refeq{inftmInv}.
 }
 }% end \PublicPrivate
-
-Next we decompose $\vf(x)$
-in \refeq{eq:difeq} in a part $\vf_\shortparallel$ parallel
-to the group action and a part $\vf_\perp$ transverse to it,
-\beq
-	\vf(\ssp)=\vf_\shortparallel(\ssp)+\vf_\perp(\ssp)\,,
-\ee{flowSplit}
-using the projection operator
-\beq
- 	\PperpOp_{ij}(\ssp)=\delta_{ij}-
-    \frac{(\Lg \ssp)_i (\Lg \ssp)_j}{(\Lg \ssp)^2}
-\ee{transvProj}
-that projects a $d$-dimensional flow $\vf(\ssp)$ onto
-flow
-\beq
-	\dot{\ssp}_\perp = \vf_\perp(\ssp) = \vf(\ssp)
-    - \Lg \ssp \frac{(\Lg\ssp)\cdot\vf(\ssp)}{(\Lg \ssp)^2}
-\ee{transvFlow}
-in a $(d\!-\!1)$-dimensional {\csection} transverse to the
-direction fixed by the point $\ssp$.
-By ignoring
-the flow component that can be compensated for by an
-$\SOn{2}$ rotation we quotient the flow by $\SOn{2}$. The
-idea is presumably very old; for example, it is stated as the
-problem 1. of Sect. 6.2 of Arnol'd {\em Ordinary Differential
-Equations}\rf{arnold92}. Note, however, that a choice of
-$\ssp_0$ fixes only a direction, so the reduced flow is still
-equivariant under the action of discrete cyclic group $\Ztwo
-= \{e,D(\pi)\}$ on $\ssp$, $\vf(\ssp)$ and the reference
-point $\ssp_0$, just as was the case \refeq{LorenzR} for the
-Lorenz flow \refeq{Lorenz}.
-    \PC{\emph{Mea culpa}: Here I screwed up. I forgot that rotation
-    moves $v$ and counter-moves $\ssp$ in $v(\ssp)$, \ie,
-    acts by the Lie derivative \refeq{inftmInv}. I could never
-    understand why we do not see a translational zero eigenvalue
-    everywhere (the Lie group acts globally and commutatively
-    right?), but only on \eqva, \reqva\ and \rpo s. Presumably
-    the projection operator \refeq{transvProj} is OK for the
-    \reqv\ calculation of \refeq{sect:StabEq},
-    as the action of the group on $\ssp_{\REQB{1}}$ is trivial?
-    Not sure how to rewrite the decomposition induced by
-    \refeq{transvProj} correctly, in
-    terms of the full Lie derivative action, and not only the $\Lg$
-    action.
-    }
-}%end \PCedit
 
 
 
@@ -172,9 +166,30 @@ Lorenz flow \refeq{Lorenz}.
 % Predrag                           Jul 19 2009
 % Predrag                           Aug 12 2009
 
-In refsect?? we have discussed symmetry reduction by the
+In \refsect{sec:mf} we have discussed symmetry reduction by the
 method of {\em moving frames} of Cartan\rf{CartanMF}, in the
 formulation of Fels and
+Olver\rf{FelsOlver98,FelsOlver99,OlverInv}.
+
+Split up the integration of the $\SOn{2}$-equivariant ODE into
+a sequence of short time steps, each followed by a rotation
+such that the next segment initial point is in the point
+$\slicep $ {\slice}, a $(d\!-\!1)$-dimensional hyperplane
+normal to the group rotation tangent $t^{*}$ at point
+$\slicep $:
+\beq
+(\ssp- \slicep ) \cdot t^{*}=0
+    \,,\qquad
+t^{*} = \Lg \cdot \slicep
+\,.
+\ee{PCsectQ}
+For any $\hat{\ssp}$, $\ssp =
+\LieEl(\theta)\cdot\hat{\ssp}$ is defined to be the
+rotation of $\hat{\ssp}$ that lies in the \slice; in other
+words, \slice\ is a Poincar\'e section for group orbits.
+Such a
+map from a point in space to the group action is called a
+\emph{moving frame} in the formulation of Fels and
 Olver\rf{FelsOlver98,FelsOlver99,OlverInv}.
 The moving frames method allows the determination of (non-polynomial)
 invariants of the group action by a simple and efficient
@@ -183,44 +198,48 @@ algorithm that works well in high-dimensional \statesp s.
     \PC{Vaggelis, why ``(non-polynomial)'' invariants?
         length$^2$ is polynomial {\bf ES}: It is the only one though.
         {\bf PC}: is this an answer?}
+The idea is presumably very old; for example, it is stated
+without attribution as the problem 1. of Sect. 6.2 of Arnol'd
+{\em Ordinary Differential Equations}\rf{arnold92}.
+\PCedit{Replace `desymmetrized {\statesp}' by
+    `orbit space?' `image space?'}
+Here se shall use the term {\em `\reducedsp'} as a shorthand for
+what in other literature is referred to as
+`desymmetrized {\statesp},'
+% `reduced \statesp,'
+`image space,'
+`orbit space,' or
+`quotient space,'
+obtained by mapping equivariant dynamics to invariant dynamics
+by methods such as
+`moving frames,'
+`\csection s,'
+`\slice s,'
+`Hilbert bases,'
+\etc.
+\PC{Cite literature that uses each of the above}
 
-As far as we are aware,
-our exposition does not follow the above references.
-
-Split up the integration of the $\SOn{2}$-equivariant ODE into
-a sequence of short time steps, each followed by a rotation
-such that the next segment initial point is in the point
-$\ssp^{*}$ {\slice}, a $(d\!-\!1)$-dimensional hyperplane
-normal to the group rotation tangent $t^{*}$ at point
-$\ssp^{*}$:
-\beq
-(\ssp- \ssp^{*}) \cdot t^{*}=0
-    \,,\qquad
-t^{*} = \Lg \cdot \ssp^{*}
-\,.
-\ee{PCsectQ}
-For any $\hat{\ssp}$, $\ssp =
-\mathbb{G}(\theta)\cdot\hat{\ssp}$ is defined to be the
-rotation of $\hat{\ssp}$ that lies in the \slice. Such a
-map from a point in space to the group action is called a
-\emph{moving frame} in the formulation of Fels and
-Olver\rf{FelsOlver98,FelsOlver99,OlverInv}. A generic point
-$\ssp^{*}$ not on the $z$ axis should suffice to fix a good
+A generic point
+$\slicep $ not in an invariant subspace (on the $z$ axis, for example) should suffice to fix a good
 \slice, for example a point on an \reqv\ group orbit,
-$\ssp^{*} = \ssp_{\REQB{}1}$.
-As $\ssp^{*} \cdot t^{*}=0$ by the antisymmetry of
-$\Lg$, \refeq{PCsectQ} reduces to the condition
+$\slicep  = \ssp_{\REQB{}1}$.
+As $\slicep  \cdot t^{*}=0$ by the antisymmetry of
+$\Lg$, the slice condition \refeq{PCsectQ} reduces to the condition
+    \PC{to PC: remember {\textbackslash}rLor,
+    {\textbackslash}RerCLor, {\textbackslash}Lg,
+    {\textbackslash}\LieEl, \dots for ChaosBook def.tex}
 \beq
-0 = \ssp \cdot \Lg \cdot \ssp^{*}
-  %= \mathbb{G}(\theta) \cdot \hat{\ssp}   \cdot \Lg \cdot \ssp^{*}
-	=\hat{\ssp} \cdot \mathbb{G}(\theta)^T \cdot \Lg \cdot \ssp^{*}
+0 = \ssp \cdot \Lg \cdot \slicep
+  %= \LieEl(\theta) \cdot \hat{\ssp}   \cdot \Lg \cdot \slicep
+	=\hat{\ssp} \cdot \LieEl(\theta)^T \cdot \Lg \cdot \slicep
 \ee{PCsectQ1}
 that determines $\theta$ for a given $\hat{\ssp}$. Each
 circle intersects the section exactly twice,  so there are
-two solutions, separated by $\pi$. We select the one
-with a smaller clockwise rotation angle into the \slice.
-The $z$-axis invariant subspace is always within the section,
-so this is a nice, globally transverse \slice.
+two solutions, separated by $\pi$. We select the one with a
+smaller clockwise rotation angle into the \slice. The
+invariant subspaces are always within the \slice, as $\Lg
+\cdot \ssp =0$ for $\ssp$ in an invariant subspace, so this
+is a nice, globally transverse \slice.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % computed by PCunrot.nb
@@ -250,7 +269,7 @@ $x_1=0,\,x_2>0$. Start at $\ssp^{(0)}$ with $\ssp_1^{(0)}
 the polar angle $\theta_1$ of $\hat{\ssp}^{(1)}_1$ in the
 $(\ssp_1,\ssp_2)$ plane, and rotate the {\em entire}
 \statesp\ (hence `moving frame') clockwise by $\theta_1$,
-$\ssp^{(1)} = \mathbb{G}(\theta_1) \cdot \hat{\ssp}^{(1)}$,
+$\ssp^{(1)} = \LieEl(\theta_1) \cdot \hat{\ssp}^{(1)}$,
 to satisfy the $\ssp_1=0$ \slice\ condition. Repeat. The
 trajectory remains in the 4$\dmn$ $\ssp_1=0$
 \reducedsp.
@@ -280,20 +299,20 @@ reduction is attained by taking small time steps in
 \reffig{fig:PCunrot} and dropping the higher order terms, as
 in \refsect{sect:SymmDyn}. For infinitesimal  $d\theta$ we
 set $\sin d\theta \approx d\theta$, $\cos d\theta \approx
-1$, $\mathbb{G}(d\theta) \approx {1}+ d\theta \, \Lg $, and
+1$, $\LieEl(d\theta) \approx {1}+ d\theta \, \Lg $, and
 the condition \refeq{PCsectQ} for rotating an infinitesimal
-time evolution step $dx = v\,dt$ back into the \slice\
+time evolution step $dx = \vel\,dt$ back into the \slice\
 \[
-0 = (\ssp + dx) \cdot \mathbb{G}(d\theta)^T \cdot \Lg \cdot \ssp^{*}
-  \approx (\ssp + dt\,v) \cdot (1+ d\theta\,\Lg)^T \cdot \Lg \cdot \ssp^{*}
-  \approx dt\,v \cdot \Lg \cdot \ssp^{*} - d\theta\,\ssp \cdot \Lg \cdot \Lg \cdot \ssp^{*}
+0 = (\ssp + dx) \cdot \LieEl(d\theta)^T \cdot \Lg \cdot \slicep
+  \approx (\ssp + dt\,\vel) \cdot (1+ d\theta\,\Lg)^T \cdot \Lg \cdot \slicep
+  \approx dt\,\vel \cdot \Lg \cdot \slicep  - d\theta\,\ssp \cdot \Lg \cdot \Lg \cdot \slicep
 \]
 %\ES{It is $\Lg^T=-\Lg$.}
 yields
         \PC{will need quality infMF.eps}
 \beq
-d\theta \approx \frac{v \cdot \Lg \cdot \ssp^{*}}
-                     { \ssp \cdot \Lg \cdot \Lg \cdot \ssp^{*}} \,  dt
+d\theta \approx \frac{\vel \cdot \Lg \cdot \slicep }
+                     { \ssp \cdot \Lg \cdot \Lg \cdot \slicep } \,  dt
 \,.
 \ee{MFdtheta}
 
@@ -308,35 +327,35 @@ Method of moving frames, infinitesimal formulation.
 
 Let $u(\ssp)$ be the vector field that generates the flow in
 the \reducedsp. According to \reffig{fig:infMF}, in
-the limit that $\mathbb{G}(d\theta) \approx 1+d\theta\,\Lg$ the
+the limit that $\LieEl(d\theta) \approx 1+d\theta\,\Lg$ the
 infinitesimal time step under $u$ is connected to the time
-step under $v$ by
+step under $\vel$ by
     \PC{in \reffig{fig:infMF}:\\
-        * Change $R$ into $\mathbb{G}$. \\
+        * Change $R$ into $\LieEl$. \\
         * Draw $z$ axis
         (would lie horizontal in the present version, so tilt the figure).\\
-        * Indicate $d\theta$ by drawing from origin, spanned by arc $x, x+v dt$.\\
+        * Indicate $d\theta$ by drawing from origin, spanned by arc $x, x+\vel dt$.\\
         * Include a segment of the group-orbit ellipse, so $t^{*}$ is
           clearly visualized as a tangent.\\
-        * Add arrows to $v dt$, $u dt$.
+        * Add arrows to $\vel dt$, $u dt$.
         }
 \[
- \ssp+u\,dt=  (1+d\theta\Lg)\cdot(\ssp+v dt)\,.
+ \ssp+u\,dt=  (1+d\theta\Lg)\cdot(\ssp+\vel dt)\,.
 \]
 Dropping second order terms, dividing through with $dt$
 \[
- u = v+\frac{d\theta}{dt} \,\Lg\cdot\hat{x}
+ u = \vel+\frac{d\theta}{dt} \,\Lg\cdot\hat{x}
  \,,
 \]
 and substituting \refeq{MFdtheta} gives the \reducedsp\ equations:
 \beq
-\dot{\ssp} = v - \frac{(v \cdot \Lg \cdot \ssp^{*})}{(\ssp \cdot\ssp^{*})_4}
+\dot{\ssp} = \vel - \frac{(\vel \cdot \Lg \cdot \slicep )}{(\ssp \cdot\slicep )_4}
                  \, \Lg \cdot \ssp
 \,,
 \ee{EqMotionMovFramePC}
 where we have used the fact that
-$- \ssp \cdot \Lg\cdot\Lg \cdot \ssp^{*}
- = (\ssp \cdot \ssp^{*})_4 =
+$- \ssp \cdot \Lg\cdot\Lg \cdot \slicep
+ = (\ssp \cdot \slicep )_4 =
     x_1 x_1^{*}
    +x_2 x_2^{*}
    +y_1 y_1^{*}
@@ -350,27 +369,27 @@ stays in the $(d\!-\!1)$-dimensional \slice.
 A more elegant derivation is given in
 \refrefs{rowley_reconstruction_2000,rowley_reduction_2003}.
 By equivariance on can always write the full \statesp\ trajectory
-as $\ssp(t)= \mathbb{G}(t)\cdot\sspRed(t)$, where the \reducedsp\
-trajectory $\sspRed(t)$ is to be fixed by some condition, and $\mathbb{G}(t)$
+as $\ssp(t)= \LieEl(t)\cdot\sspRed(t)$, where the \reducedsp\
+trajectory $\sspRed(t)$ is to be fixed by some condition, and $\LieEl(t)$
 is the group action that rotates  $\ssp$ into $\sspRed$ at time $t$. The time
 derivative is then
-$\dot{\ssp}= \vel(\mathbb{G}\sspRed) = \dot{\mathbb{G}}\sspRed + \mathbb{G}\velRed$,
+$\dot{\ssp}= \vel(\LieEl\sspRed) = \dot{\LieEl}\sspRed + \LieEl\velRed$,
 where the \reducedsp\ velocity fields is $\velRed=\dot{\sspRed}$. This leads to
 the \reducedsp\ flow
 \[
-\velRed(\sspRed) = \vel(\sspRed) - \mathbb{G}^{-1} \dot{\mathbb{G}} \, \sspRed
+\velRed(\sspRed) = \vel(\sspRed) - \LieEl^{-1} \dot{\LieEl} \, \sspRed
 \,.
 \]
     }
-A generic  $ \ssp^{*}$ can be brought to form $ \ssp^{*} =
+A generic  $ \slicep $ can be brought to form $ \slicep  =
 (0,1,y_1^{*},y_2^{*})$ by a rotation and rescaling. Then $\Lg
-\cdot \ssp^{*}  = (1,0,y_2^{*},-y_1^{*})$, and
+\cdot \slicep   = (1,0,y_2^{*},-y_1^{*})$, and
 \beq
-\frac{(v \cdot \Lg \cdot \ssp^{*})}{(\ssp \cdot\ssp^{*})_4} =
-\frac{v_1 + v_3 y^{*}_2 -v_4 y^{*}_1}
+\frac{(\vel \cdot \Lg \cdot \slicep )}{(\ssp \cdot\slicep )_4} =
+\frac{\vel_1 + \vel_3 y^{*}_2 -\vel_4 y^{*}_1}
      {x_2 + y_1 y^{*}_1 + y_2 y^{*}_2}
-%\frac{v_1 x^{*}_2 -v_2 x^{*}_1 + v_3 y^{*}_2 -v_4 y^{*}_1}
-%     {v_1 x^{*}_1 + v_2 x^{*}_2 + v_3 y^{*}_1 + v_4 y^{*}_2}
+%\frac{\vel_1 x^{*}_2 -\vel_2 x^{*}_1 + \vel_3 y^{*}_2 -\vel_4 y^{*}_1}
+%     {\vel_1 x^{*}_1 + \vel_2 x^{*}_2 + \vel_3 y^{*}_1 + \vel_4 y^{*}_2}
 \,.
 \label{PCsectSin}
 \eeq
@@ -386,12 +405,12 @@ A generic  $ \ssp^{*}$ can be brought to form $ \ssp^{*} =
 \end{center}
 \caption{
 Method of moving frames, \slice\ fixed by a point on an
-\reqv\ group orbit, $\ssp^{*} = \ssp_{\REQB{}1}$. The strange
-attractor of \reffig{fig:CLEx1x2z} in the \reducedsp\
+\reqv\ group orbit, $\slicep  = \ssp_{\REQB{}1}$. The strange
+attractor of \reffig{fig:CLE} in the \reducedsp\
 of \refeq{EqMotionMovFramePC}:
 (a) $\{x_1,x_2,z\}$ projection,
 (b) $\{x_1,y_1,z\}$ projection.
-Color-coding indicates $(\hat{\ssp} \cdot \hat{\ssp^{*}})_4$
+Color-coding indicates $(\hat{\ssp} \cdot \hat{\slicep })_4$
 where $\hat{.}$ stands for unit vector, with green indicating values
 of the inner product close to $1$ and brown indicating values
 close to $0$.
@@ -430,7 +449,7 @@ on \reqv\ \REQB{1} group orbit,
 and initial point
 $\ssp(0) \approx  (4.81,0.154,7.59,0.281,15.9)$
       taken from a long run on the strange attractor, the denominator
-$(\ssp(t) \cdot\ssp^{*})_4$ vanishes at $t \approx 1.217\cdots$.
+$(\ssp(t) \cdot\slicep )_4$ vanishes at $t \approx 1.217\cdots$.
     } %end ES
 %    \ES{Could this happen for the present group action and
 %    choice of \slice? {\bf PC:} seems yes...}
@@ -465,10 +484,60 @@ $x^{*}=(0,1,0,0)$, $x_1=0,\;x_2>0$,
 %\sqrt{\ssp_1^{ 2} + \ssp_2^{2}}$, see \refeq{eq:CartToPol},
 are given by
 \beq
-\dot{\ssp} = v - \frac{v_1}{\ssp_2} \Lg \cdot \ssp
+\dot{\ssp} = \vel - \frac{\vel_1}{\ssp_2} \Lg \cdot \ssp
 \,.
 \ee{EqMotionMovFrame}
 A typical trajectory is shown in \reffig{fig:PCunrot1}.
 The problem with defining the \slice\ by
 \refeq{EqMotionMovFrame} is apparently that it fixes rotations
 in the $(\ssp_1,\ssp_2)$ plane, not the full 4\dmn\ space.
+
+\subsection*{Flotsam}
+
+We decompose $\vel(x)$
+in \refeq{eq:difeq} in a part $\vel_\shortparallel$ parallel
+to the group action and a part $\vel_\perp$ transverse to it,
+\beq
+	\vel(\ssp)=\vel_\shortparallel(\ssp)+\vel_\perp(\ssp)\,,
+\ee{flowSplit}
+using the projection operator
+\beq
+ 	\PperpOp_{ij}(\ssp)=\delta_{ij}-
+    \frac{(\Lg \ssp)_i (\Lg \ssp)_j}{(\Lg \ssp)^2}
+\ee{transvProj}
+that projects a $d$-dimensional flow $v(\ssp)$ onto
+flow
+\beq
+	\dot{\ssp}_\perp = \vel_\perp(\ssp) = \vel(\ssp)
+    - \Lg \ssp \frac{(\Lg\ssp)\cdot \vel(\ssp)}{(\Lg \ssp)^2}
+\ee{transvFlow}
+in a $(d\!-\!1)$-dimensional {\csection} transverse to the
+direction fixed by the point $\ssp$.
+By ignoring
+the flow component that can be compensated for by an
+$\SOn{2}$ rotation we quotient the flow by $\SOn{2}$.
+
+Note, however, that a choice of
+$\ssp_0$ fixes only a direction, so the reduced flow is still
+equivariant under the action of discrete cyclic group $\Ztwo
+= \{e,D(\pi)\}$ on $\ssp$, $\vel(\ssp)$ and the reference
+point $\ssp_0$, just as was the case \refeq{LorenzR} for the
+Lorenz flow \refeq{Lorenz}.
+    \PC{\emph{Mea culpa}: Here I screwed up. I forgot that rotation
+    moves $\vel$ and counter-moves $\ssp$ in $\vel(\ssp)$, \ie,
+    acts by the Lie derivative \refeq{inftmInv}. I could never
+    understand why we do not see a translational zero eigenvalue
+    everywhere (the Lie group acts globally and commutatively
+    right?), but only on \eqva, \reqva\ and \rpo s. Presumably
+    the projection operator \refeq{transvProj} is OK for the
+    \reqv\ calculation of \refeq{sect:StabEq},
+    as the action of the group on $\ssp_{\REQB{1}}$ is trivial?
+    Not sure how to rewrite the decomposition induced by
+    \refeq{transvProj} correctly, in
+    terms of the full Lie derivative action, and not only the $\Lg$
+    action.
+    }
+
+\renewcommand{\Group}{\ensuremath{\Gamma}}    % Siminos Lie group
+
+}%end \PCedit
