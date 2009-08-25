@@ -318,6 +318,95 @@ shifts of state $a$.  Then there could exist $\ell_1$ and $\ell_2 \neq \ell_1$ s
 Then $\tau_{\ell_1/L - s}\,a$ and $\tau_{\ell_2/L - s}\,a$ would be two distinct points
 in $M$/SO(2) representing the same state $a$.  This doesn't seem right.
 
+\subsection{RLD Aug 25, 2009 -- Forget KS, let's consider a simpler dynamical system}
+%{\em \underline{Preamble:} My gut tells me that the method of moving frames, as described in the Section 4.2 of the thesis will \underline{not} work for KS.  But since my brain is dafter than my gut, I cannot explain why I feel that way.  So, in order to make progress in this direction, I'm going to work with a dynamical system similar to KS, but much simpler.  If I can figure out how to apply the moving frames to this system, then I can do it for KS as well.  If not, then I hope it will help me understand why my gut is right. \vspace{2ex}}
+
+Let's say that, just like KS, we have a dynamical system on the space of real function $u(x,t)$ periodic in $x \in [-\pi, \pi)$, i.e. $u(x+2\pi,t) = u(x,t)$.  In the Fourier space $a = \mathcal{F}[u]$, $a = (a_1, a_2, \ldots)$, $a_k \in \mathbb{C}$ and $a_{-k} = a_k^\ast$.
+I will also use polar coordinates, so $a_k = r_k \mathrm{e}^{i \phi_k}$.
+The action of SO(2) on $u(x,t)$ is $g(\theta) u(x,t) = u(x+\theta,t)$. In the Fourier space
+\[ g(\theta) a_k = \mathrm{e}^{ik\theta}a_k\,, \]
+%In polar coordinates $\tau_{\ell/L} (r_k, \theta_k) = (r_k, \theta_k + q_k \ell)$.
+To define the SO(2) group rotation tangent $t(a)$, we consider an infinitesimal rotation
+\[ \mathrm{e}^{ik\theta}a_k = (1 + ik\theta)a_k  = a_k + \theta t_k\,, \]
+so $t_k = ika_k$.  We can also define $\mathbf{T} = \mathrm{diag}(ik)$, so that $t = \mathbf{T}a$.
+
+The equation defining the slice through some point $a^*$ is
+\[ (\bar{a} - a^*) \cdot t^* = 0 \]
+I assume that by the dot product here we mean
+\[ a \cdot b = \sum_{k=-\infty}^\infty a_k b_k^*\,, \]
+which in the space of periodic functions corresponds to
+\[ f \cdot g = \int_{-\pi}^\pi f(x) g(x) dx\,, \]
+where $f(x) = \mathcal{F}^{-1}[a]$ and $g(x) = \mathcal{F}^{-1}[b]$, so this makes sense.  But note that this is not the only way of defining the dot product...
+
+{\bf Simple dynamical system:} 
+Let's define the dynamical system $\dot{a}_k = v_k(a)$ as follows: $v_k = i \omega_k a_k$, 
+where $\omega_k \in \mathbb{R}$ are constants.
+This is a linear dynamical system, so we can solve it analytically:
+\[ a_k(t) = a_k(0) \mathrm{e}^{i \omega_k t} \]
+Even simpler, I'm going to use only the first two modes, so $a_k(0) = 0$ for all $|k| \neq 1$ or 2.
+
+We can choose constants $\omega_1$ and $\omega_2$ such that this system can have
+a traveling wave or a RPOs in the original space of periodic functions $u(x,t)$.\\
+{\bf Example 1:} If $\omega_1 = c$ and $\omega_2 = 2c$, then
+\[ a_k(t) = a_k(0) \mathrm{e}^{ikct} = g(ct) a_k(0)\,, \]
+which is a wave traveling with speed $c$.\\
+{\bf Example 2:} For the system to have an RPO, we can choose, for example,
+$\omega_1 = \pi/2$ and $\omega_2 = 3\pi$.  This RPO has period $T = 1$ and shift $\pi/2$, since
+\[ a_1(1) = a_1(0) \mathrm{e}^{i\pi/2} = g(\pi/2) a_1(0) \quad \mathrm{and} \quad 
+   a_2(1) = a_2(0) \mathrm{e}^{i3\pi} = a_2(0) \mathrm{e}^{i\pi} = g(\pi/2) a_2(0) \]
+
+Let's now see what happens if we apply the method of 'slices' to these two examples.  The reconstruction equation is
+\[ \dot{\theta} = \frac{v(\bar{a}) \cdot t(a^*)}{t(\bar{a}) \cdot t(a^*)} \]
+Let's say the initial condition $a_1(0) = r_1 > 0$, $a_2(0) = r_2 > 0$ (i.e. $\phi_1 = \phi_2 = 0$) is also the point $a^*$ defining the slice.  Then
+$t_k(a^*) = ikr_k$ when $|k| = 1,2$ and zero otherwise.  So,
+\[ \dot{\theta} = \frac{\sum_k (i\omega_k \bar{a}_k) (ikr_k)^*}{\sum_k (i k \bar{a}_k)(ikr_k)^*} 
+                = \frac{\sum_k k \omega_k \bar{a}_k r_k}{\sum_k k^2 \bar{a}_k r_k}\]
+The equation for the flow on the slice (aka reduced flow) is
+\[ \dot{\bar{a}}_k = v_k(\bar{a}) - \frac{v(\bar{a}) \cdot t(a^*)}{t(\bar{a}) \cdot t(a^*)} t(\bar{a}) 
+                   = i\omega_k \bar{a}_k - \frac{\sum_k k \omega_k \bar{a}_k r_k}{\sum_k k^2 \bar{a}_k r_k} ik\bar{a}_k\,. \]
+\noindent {\bf Example 1:} Here $\omega_k = kc$, so we immediately get
+\[ \dot{\theta} = c \quad \mathrm{and} \quad \dot{\bar{a}}_k = 0\,, \]
+as expected for the traveling wave.\\
+{\bf Example 2:} In general, for the flow with two non-zero modes (remembering that $a_{-k} = a_k^*$):
+\[ \dot{\theta} = \frac{\omega_1 r_1 (\bar{a}_1 + \bar{a}_1^*) + 2\omega_2 r_2 (\bar{a}_2 + \bar{a}_2^*)}{r_1(\bar{a}_1 + \bar{a}_1^*) + 4r_2 (\bar{a}_2 + \bar{a}_2^*)} \]
+and
+\[ \dot{\bar{a}}_k = i\omega_k \bar{a}_k - \frac{\omega_1 r_1 (\bar{a}_1 + \bar{a}_1^*) + 2\omega_2 r_2 (\bar{a}_2 + \bar{a}_2^*)}{r_1(\bar{a}_1 + \bar{a}_1^*) + 4r_2 (\bar{a}_2 + \bar{a}_2^*)}ik\bar{a}_k \]
+When $\omega_1 = \pi/2$ and $\omega_2 = 3\pi$, the second equation should generate a periodic orbit with period $T = 1$, while the solution of the first equation, starting with $\theta(0) = 0$, should give us $\theta(1) = \pi/2$.  Unfortunately, we cannot solve these equations analytically, so I'll do it numerically for different values of $r_{1,2}$.  I'll set $r_1 = 1$ and increase $r_2$ from zero.  Note that when $r_2 = 0$, we just have a traveling wave with speed $\omega_1$.  Also, when $r_2$ is sufficiently smaller than $r_1$, we will have a traveling wave slightly modulated by the 2nd mode.  This case is shown in the figure below:
+
+\vspace{2ex}\noindent\includegraphics[width=\textwidth]{sliceflow1.eps}
+
+So, everything works well: the reduced orbit is periodic (the beginning of the orbit is denoted by the red circle, while the end is denoted by the black asterisk), and the phase shift at $t = 1$ is equal to $\pi/2$.  We can see similar picture when we increase $r_2$:
+
+\vspace{2ex}\noindent\includegraphics[width=\textwidth]{sliceflow2.eps}
+
+Now, when $r_2$ approaches 0.5, it is clear that the orbit approaches a singularity:
+
+\vspace{2ex}\noindent\includegraphics[width=\textwidth]{sliceflow3.eps}
+
+At $r_2 = 0.5$ we get rubbish:
+
+\vspace{2ex}\noindent\includegraphics[width=\textwidth]{sliceflow4.eps}
+
+which persists for awhile 
+
+\vspace{2ex}\noindent\includegraphics[width=\textwidth]{sliceflow5.eps}
+
+until we get back the nice smooth solution:
+
+\vspace{2ex}\noindent\includegraphics[width=\textwidth]{sliceflow6.eps}
+
+which, however, is no longer periodic, while the shift is now $3\pi/2$.  This picture persists for all $r_2 > r_1$.
+
+\vspace{2ex}\noindent\includegraphics[width=\textwidth]{sliceflow7.eps}
+
+So, it looks like the problem with the method of slices is not only due to running into the singularities, but also due to the possibility of generating orbits around which go around those singularities.  These orbits are no longer periodic in the reduced space.  The only time this method works reliably is when the flow is dominated by the first Fourier mode.  If this is not the case, as in the KSE regime with multiple active modes, then we cannot expect that it will work.~~{\em Q.E.D.}
+
+\vspace{2ex}
+So, what can we do about all this?\\
+Hey, I have an idea... Why don't we define the dot product in the above equations as follows:
+\[ a \cdot b = a_1 b_1^*\,. \]
+Then, if I'm not mistaken, the whole thing reduces to my original idea for factoring out the SO(2) symmetry from the KS flow.  In this case we won't need to worry about running into, or moving around, the singularities while generating spurious phases.  The only singularity will be at $r_1 = 0$, which is trivial to deal with.
+
 
 % \input flotsam      %% PC moved to thesis/chapters      26 jun 2008
 % \input bronski-2005 %% PC moved to thesis/chapters      26 jun 2008
