@@ -370,14 +370,18 @@ Let's now see what happens if we apply the method of 'slices' to these two examp
 \[ \dot{\theta} = \frac{v(\bar{a}) \cdot t(a^*)}{t(\bar{a}) \cdot t(a^*)} \]
 Let's say the initial condition $a_1(0) = r_1 > 0$, $a_2(0) = r_2 > 0$ (i.e. $\phi_1 = \phi_2 = 0$) is also the point $a^*$ defining the slice.  Then
 $t_k(a^*) = ikr_k$ when $|k| = 1,2$ and zero otherwise.  So,
-\[ \dot{\theta} = \frac{\sum_k (i\omega_k \bar{a}_k) (ikr_k)^*}{\sum_k (i k \bar{a}_k)(ikr_k)^*}
-                = \frac{\sum_k k \omega_k \bar{a}_k r_k}{\sum_k k^2 \bar{a}_k r_k}\]
+\beq 
+\dot{\theta} = \frac{\sum_k (i\omega_k \bar{a}_k) (ikr_k)^*}{\sum_k (i k \bar{a}_k)(ikr_k)^*}
+                = \frac{\sum_k k \omega_k \bar{a}_k r_k}{\sum_k k^2 \bar{a}_k r_k}
+\ee{RLDrec}
 The equation for the flow on the slice (aka reduced flow) is
     \PC{have this also for $a^*$ complex, if we need it - no reason to chose
         it real, though it seem not to be the cause of the singularity in $\dot{\theta}$
         }
-\[ \dot{\bar{a}}_k = v_k(\bar{a}) - \frac{v(\bar{a}) \cdot t(a^*)}{t(\bar{a}) \cdot t(a^*)} t(\bar{a})
-                   = i\omega_k \bar{a}_k - \frac{\sum_k k \omega_k \bar{a}_k r_k}{\sum_k k^2 \bar{a}_k r_k} ik\bar{a}_k\,. \]
+\beq
+\dot{\bar{a}}_k = v_k(\bar{a}) - \frac{v(\bar{a}) \cdot t(a^*)}{t(\bar{a}) \cdot t(a^*)} t(\bar{a})
+                   = i\omega_k \bar{a}_k - \frac{\sum_k k \omega_k \bar{a}_k r_k}{\sum_k k^2 \bar{a}_k r_k} ik\bar{a}_k\,. 
+\ee{RLDred}
 \noindent {\bf Example 1:} Here $\omega_k = kc$, so we immediately get
 \[ \dot{\theta} = c \quad \mathrm{and} \quad \dot{\bar{a}}_k = 0\,, \]
 as expected for the traveling wave.\\
@@ -413,15 +417,24 @@ which, however, is no longer periodic, while the shift is now $3\pi/2$.  This pi
 
 \vspace{2ex}\noindent\includegraphics[width=\textwidth]{sliceflow7.eps}
 
-So, it looks like the problem with the method of slices is not only due to running into the singularities, but also due to the possibility of generating orbits around which go around those singularities.  These orbits are no longer periodic in the reduced space.  The only time this method works reliably is when the flow is dominated by the first Fourier mode.  If this is not the case, as in the KSE regime with multiple active modes, then we cannot expect that it will work.~~{\em Q.E.D.}
+So, it looks like the problem with the method of slices is not only due to running into the singularities, but also due to the possibility of generating smooth orbits which go around those singularities and generate wrong shifts without any indication that something has gone wrong.  These orbits are no longer periodic in the reduced space.  The only time this method works reliably is when the flow is dominated by the first Fourier mode.  If this is not the case, as in the KSE regime with multiple active modes, then we cannot expect that it will work.~~{\em Q.E.D.}
 
 \vspace{2ex}
 An old idea presented as a new one:  Why don't we define the dot product in the above equations as follows:
 \beq
- a \cdot b = a_1 b_1^*
+ a \cdot b = a_1 b_1^* + a_1^* b_1
  \,.
 \ee{RLDfix}
 Then, if I'm not mistaken, the whole thing reduces to my original idea for factoring out the $U(1)$ symmetry from the KS flow.  In this case we won't need to worry about running into, or moving around, the singularities while generating spurious phases.  The only singularity will be at $r_1 = 0$, which is trivial to deal with.
+
+With the dot product defined as in \refeq{RLDfix}, Eqs.~(\ref{RLDrec}) and (\ref{RLDred}) become
+\[ 
+  \dot{\theta} = \omega_1
+  \quad \mathrm{and} \quad
+  \dot{\bar{a}}_k = i(\omega_k - k\omega_1) \bar{a}_k\,.
+\]
+So they obviously do the job.
+
 
 \subsection{2009-08-25 Eurosceptics do not like to slice}
 \noindent{\bf Ruslan:} (Predrag's translation) one gets a phase shift by $\pi$ if one crosses the singularity.\\
@@ -479,7 +492,7 @@ but the result is the same - for $r_2$ sufficiently larger
 than 1/2 one gets extra $\pi$ shift, with no integration hint
 that one is going around a singularity. That is unacceptable.
 As Ruslan expects,
-random choices od complex (not real) slicing section fixing
+random choices of complex (not real) slicing section fixing
 point $a^*$ move the singularity around but are essentially no
 help.
 
