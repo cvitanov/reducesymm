@@ -576,14 +576,79 @@ of connections'' - are you sure that the extra geometrical
 phases gained by relative periodic orbits were not rational
 fractions of $\pi$?
 
-\subsection{2009-08-27 RLD: If I understand correctly what you worry about, then maybe you don't need to worry about it at all?}
-Let me start by answering Vaggelis's question about rotation by $\pi$.  Forget about multiple modes for the moment.  Just consider evolution of the first mode: $a_1(t) = r_1(t)\mathrm{e}^{i\phi_1(t)} \in \mathbb{C}$.  If $a_1(t)$ goes through zero, then $r_1(t)$ bounces off of zero, while $\phi_1(t)$ changes by $\pi$ or $-\pi$, (the sign is immaterial).   This is just the nature of the polar coordinates and has nothing to do with the implementation of $arg$.
+\subsection{2009-08-27 Don't worry. Be happy}
 
-Now about the nature of what you call the 'singularity'.  If I understand it correctly, what worries you is that, if we take $\phi_1$ as our $\theta$, then each time it changes by $\pi$, the $k$-th mode needs to be changed by $k\pi$, $k > 1$.  You perceive this as a jump, i.e. a discontinuity of the reduced orbit, which you don't like.  Is this what you mean by the 'singularity'? If 'yes', then do you really need to worry about it?  
+\noindent{\bf Ruslan:}
+Let me start by answering Vaggelis's question about rotation
+by $\pi$.  Forget about multiple modes for the moment.  Just
+consider evolution of the first mode: $a_1(t) =
+r_1(t)\mathrm{e}^{i\phi_1(t)} \in \mathbb{C}$.  If $a_1(t)$
+goes through zero, then $r_1(t)$ bounces off of zero, while
+$\phi_1(t)$ changes by $\pi$ or $-\pi$, (the sign is
+immaterial).   This is just the nature of the polar
+coordinates and has nothing to do with the implementation of
+$arg$.
 
-If you think about it, what you perceive as a jump is actually a very fast rotation (infinitely fast if you go exactly through zero, but otherwise finitely fast).  If you don't like that it rotates so fast, then why don't you just rescale the time?  Just slow it down near $r_1 = 0$.  I think something like $d\tau = dt/r_1(t)$ might work, since it will remove $\Re\ssp_1$ from the denominator in \refeq{EqMotionMovFrame}.
+Now about the nature of what you call the 'singularity'.  If
+I understand it correctly, what worries you is that, if we
+take $\phi_1$ as our $\theta$, then each time it changes by
+$\pi$, the $k$-th mode needs to be changed by $k\pi$, $k >
+1$.  You perceive this as a jump, i.e. a discontinuity of the
+reduced orbit, which you don't like.  Is this what you mean
+by the 'singularity'? If 'yes', then do you really need to
+worry about it?
 
-On the other hand, if our goal is to eventually reduce the dynamics to a Poincar\'e map, then why do we need to worry about time at all?
+\noindent{\bf Predrag:} \PCedit{
+If $1/x$ is considered a
+'singularity' for $x=0$ on small islands off Continent, than
+we will be so bold to call it singularity. As you say, there
+should be simple analytic fixes for going through zero; we
+have to make sure that we teach our numerical routines how to
+implement this. Your pretty and clean epicycle model just
+gave me a new set of ulcers, as for $r_2$ not very larger
+than 1/2 the integrators seem not to know that there was any
+singularity at all, and relative periodic orbits became
+periodic only mod~$\pi$. And $\pi$ or $-\pi$  sign is not
+immaterial - we have to get \rpo s shifts right.
+                                }
+
+\noindent{\bf Ruslan:}
+If you think about it, what you perceive as a jump is
+actually a very fast rotation (infinitely fast if you go
+exactly through zero, but otherwise finitely fast).  If you
+don't like that it rotates so fast, then why don't you just
+rescale the time?  Just slow it down near $r_1 = 0$.  I think
+something like $d\tau = dt/r_1(t)$ might work, since it will
+remove $\Re\ssp_1$ from the denominator in
+\refeq{EqMotionMovFrame}.
+
+\noindent{\bf Predrag:} \PCedit{
+Agreed. I have been also thinking about redefining time.
+That's also in
+\HREF{http://chaosbook.org/chapters/conjug.pdf} {ChaosBook
+Chapter 6 - Get straight}, called there the
+Kustaanheimo-Stiefel (also known as KS!) transformation, and
+applied in Example 6.2: what to do with Keplerian ellipses of
+arbitrarily large velocity. That we might need for close
+passages to the $U(1)$ invariant subspace, with $r^2 = \sum
+\ssp_k^*\ssp_k$ going small. Fortunately, in KS that never
+happens - strange attractor is safely away from the $u(x)=1$
+\eqv. Our problem with method of slices is more naive, as you
+explain above.
+                                }
+
+\noindent{\bf Ruslan:}
+On the other hand, if our goal is to eventually reduce the
+dynamics to a Poincar\'e map, then why do we need to worry
+about time at all?
+
+\noindent{\bf Predrag:} \PCedit{
+agreed - anything that gets us the sensible return (or
+forward) maps is good. Just have to make numerics is correct,
+and yields correct \rpo s shifts and periods - at the moment
+we do not know how to do that right even for the 2-mode
+epicycles model.
+                                }
 
 
 \subsection{2009-08-27 Maslov trick}
