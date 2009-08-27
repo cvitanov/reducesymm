@@ -350,8 +350,12 @@ where $f(x) = \mathcal{F}^{-1}[a]$ and $g(x) = \mathcal{F}^{-1}[b]$, so this mak
 
 \subsubsection{Epicycles: 2-Fourier modes linear dynamical system}
 
-Let's define the dynamical system $\dot{a}_k = v_k(a)$ as follows: $v_k = i \omega_k a_k$,
+Let's define the dynamical system $\dot{a}_k = v_k(a)$ as follows:
+$v_k = i \omega_k a_k$, $\omega_{-k} = -\omega_k$,
 where $\omega_k \in \mathbb{R}$ are constants.
+    \RLD{$\omega_{-k} = -\omega_k$.
+    I used this in my derivation to get the sign right.
+    {\bf Predrag:} Agreed - I used that too in rederiving your model.}
 This is a linear dynamical system, so we can solve it analytically:
 \[ a_k(t) = a_k(0) \mathrm{e}^{i \omega_k t} \]
 Even simpler, I'm going to use only the first two modes, so $a_k(0) = 0$ for all $|k| \neq 1$ or 2.
@@ -473,10 +477,19 @@ functions that differ only by a shift.  My answer: The phase
 of the 1st Fourier mode will give you the shift.  So just use
 it to rotate the functions on top of each other.
 
-\noindent {\bf Vaggelis:} Apart from quantum mechanics there are classical systems that exhibit such behavior, see for example http://prl.aps.org/accepted/L/cf079Ya5Q7f19828e08c7183313c1d9b2e9126ce4 . I've only seen it in Hamiltonian systems, where this behavior is called monodromy since one studies the system as it goes once around a singularity (is the etymology clear to non-Greeks too?). It apparently arises when a function fails to be single-valued, which again should point out why we need monotonicity in phase.\\
+\noindent {\bf Vaggelis:} Apart from quantum mechanics there
+are classical systems that exhibit such behavior, see for
+example
+\HREF{http://prl.aps.org/accepted/L/cf079Ya5Q7f19828e08c7183313c1d9b2e9126ce4}
+{this PRL paper}. I've only seen it in Hamiltonian systems,
+where this behavior is called monodromy since one studies the
+system as it goes once around a singularity (is the etymology
+clear to non-Greeks too?). It apparently arises when a
+function fails to be single-valued, which again should point
+out why we need monotonicity in phase.\\
 \textit{Question for Ruslan:} Is it really trivial to deal with the singularity at $r_1=0$?\\
 {\bf Ruslan:} Yes, but you should never ever try to numerically integrate the reconstruction or the reduced flow equations if you expect to get the correct reduced representation of the orbits of the original flow.  Instead, integrate the original flow and then pull the obtained orbit onto the slice while keeping track of the shift you generate while doing it.  If the original orbit goes exactly through $r_1 = 0$ (within the round-off error), then add (or subtract) $\pi$.  That's all.\\
-{\bf Vaggelis:}  \ESedit{I agree that integrating the equation on the slice is not the safest think to do. I would like to understand where the spurius shifts that you have discovered come from, though. It looks like the reduced space has a branch cut and as one integrates the equations around the singularity he finds oneself on a different leaf. 
+{\bf Vaggelis:}  \ESedit{I agree that integrating the equation on the slice is not the safest think to do. I would like to understand where the spurius shifts that you have discovered come from, though. It looks like the reduced space has a branch cut and as one integrates the equations around the singularity he finds oneself on a different leaf.
 
 There is something I don't understand in the procedure you describe here. Does the need to add or subtract $\pi$ come from the fact that most
 implementations of $arg$ or $arctan$ functions do not distinguish quadrants? I do not understand how else it is connected to crossing through $r_1 = 0$ or why
@@ -489,11 +502,11 @@ you do need another ``coordinate chart'' to cover the space.
 {\bf Ruslan:} No. You don't need more than one coordinate system.  Just use the Fourier modes as reduced coordinates, with the phase of the 1st mode fixed.  The phase of the 1st mode will be the reconstruction shift.\\
 {\bf Vaggelis:} Even if this doesn't bother us, I am afraid that we will get projections that are not more informative than Figure 42 in todays version of my thesis, where the singularity was dealt with but $E_2$ and $E_3$ collapse to the same point.\\
 {\bf Ruslan:} I cannot guarantee that the pictures we get will be nice and simple.  Of course, since the reduced space is a semi-space (because $r_1 \geq 0$), the reduced orbits may not always look pretty and smooth: They will have sharp turns when they come close to, or hit, the $r_1 = 0$ subspace.  But at least when I look at orbits projected onto Fourier modes, I know how to interpret them.  When I'm looking at the projections onto some exotic curvilinear coordinates, the pictures make no sense to me.\\
-{\bf Vaggelis:} \ESedit{On the utility of Fourier modes as a representation I disagre in two levels. I anyway find that Fourier modes projection tell us very little about dynamics. Wasn't this the reason to use different coordinate systems in the KS paper? So as long we can construct dynamically meaningfull projections in the new variables I do not worry how we got them.
+{\bf Vaggelis:} \ESedit{On the utility of Fourier modes as a representation I disagree in two levels. I anyway find that Fourier modes projection tell us very little about dynamics. Wasn't this the reason to use different coordinate systems in the KS paper? So as long we can construct dynamically meaningfull projections in the new variables I do not worry how we got them.
 
 Furthermore, what you describe above is equivalent to using the invariants of Table 3 in Chapter 8 in my thesis. The new coordinates are exactly the Fourier modes rotated back to the slice defined by $Im(c_1)=0$, this is how they were obtained. The difference is that in Table 3 the singularity is explicit. The important point though is that what you like to see as a linear transformation is in fact a nonlinear transformation through the dependance of the angle on the point in space in which it is evaluated. Whereas in a linear transformation all points in space are rotated by the same angle. Therefore without knowing it you use exotic curvilinear coordinates. The connection to the original Fourier modes is that the magnitude in each Fourier plane stays invariant. Of course things get even more exotic in my thesis, but the motivation behind that was to get projections that provide more information about the dynamics.
 
-As a general comment, it appears that when we try to see the reduced space as embedded in the original space, no matter how we go from $N$ to $N-1$ dimensions we impose a conservation law that did not exist in the original system (as it was allowed to have motion in the direction of group action) that restricts the motion to an $N-1$ dimensional space which cannot in general be given a nice structure. 
+As a general comment, it appears that when we try to see the reduced space as embedded in the original space, no matter how we go from $N$ to $N-1$ dimensions we impose a conservation law that did not exist in the original system (as it was allowed to have motion in the direction of group action) that restricts the motion to an $N-1$ dimensional space which cannot in general be given a nice structure.
 }%end ESedit
 
 
@@ -525,14 +538,83 @@ Marsdenites did not note this problem as they only applied the method to
 I agree that if one is to fix the \slice\ by one Fourier mode, \refeq{RLDfix} is
 the most natural choice, and would be easiest to explain in a publication.
 Unfortunately, we ran into singularities when we tried it for
-\CLe\ in \refref{SiminosThesis} and Rebecca's summer project. But do give it
-a try.
+\CLe\ in Siminos thesis\rf{SiminosThesis} and Rebecca's summer project. But Ruslan,
+do give it a try.
 
-\noindent{\bf Predrag} to Vaggelis: when you tried my initial proposal to
-project velocity locally (not on a global slice), the method that when fixed will
-probably be called ``method of connections'' - are you sure that the
-extra geometrical phases gained by relative periodic orbits were not rational
+\noindent{\bf Ruslan:}
+Actually, not really on strike, just reluctant to participate
+in your, what I believe to be, futile efforts to apply all
+kinds of fixes and patches to the approach which, I believe,
+is fundamentally incurable when it comes to systems like KS
+in a fully developed chaotic regime. [\dots]
+
+\noindent{\bf Predrag:} Fair enough - way too many fixes and
+patches. We need to quotient the symmetry in order to figure
+out the symbolic dynamics for KS and for plane Couette and
+pipe flows. If something like \refeq{RLDfix} works it would
+be nicer. The reason why we think it will not is that when we
+use the polar coordinates-inspired \slice\ fixing point
+$\ssp^{*}=(0+i,0, \cdots)$, $\Re\ssp_1=0,\;\Im\ssp_2>0$
+(which I believe for $U(1)$ version corresponds to fixing the
+phase of the first Fourier mode) the \reducedsp\ equations
+are given by
+\beq
+\dot{\ssp} = v - \frac{\Im v_1}{\Re\ssp_1} t(\ssp)
+\,.
+\ee{EqMotionMovFrame}
+Trajectories shown in %\reffig{fig:PCunrot1}
+Siminos thesis\rf{SiminosThesis} and Rebecca's summer project
+exhibit jumps by $\pi$. With $\ssp^{*}$ on \reqv\ orbit we
+were luckier, and got a strange attractor which encountered
+no $\dot{\theta}$ singularity. But unhappy, as we did not
+understand why we were lucky.
+
+\noindent{\bf Predrag} to Vaggelis: when you tried my initial
+proposal to project velocity locally (not on a global slice),
+the method that when fixed will probably be called ``method
+of connections'' - are you sure that the extra geometrical
+phases gained by relative periodic orbits were not rational
 fractions of $\pi$?
+
+
+\subsection{2009-08-27 Maslov trick}
+
+\noindent{\bf Predrag:}  The Maslov trick is described in
+\HREF{http://chaosbook.org/version12/chapters/WKB.pdf}
+{ChaosBook vers. 12, Chapter 31 - WKB quantization}.
+Now I realize I give no references to Maslov paper or other
+relevant sources - if you find them, please let me know so we can
+write up the remark on the Maslov approach. Citing from this
+chapter:
+
+A simple physical picture, due to Maslov, is illustrated by quantization
+of harmonic oscillator. Semi-classical propagator has
+a factor $1/$(velocity$)^{1/2}$ reminiscent of our $\dot{\theta}$, and
+that blows up at the turning points, points where the particle as viewed
+from the $q$ coordinate frame reverses velocity.
+
+In the $q$ coordinate, the turning points are defined by the
+zero kinetic energy condition,
+and the motion appears singular.
+This is not so in the full phase space: the trajectory in a smooth confining
+1-dimensional potential is always a smooth loop,
+with the ``special'' role of the turning points $q_L, q_R$ seen to be an
+artifact of a particular choice of the $(q,p)$ coordinate frame
+(in our application, choice of a slice). Maslov's
+idea was to proceed from the initial point
+$(q',p')$ to a point $(q_{A},p_A)$ preceding the turning
+point in the $\psi(q)$
+representation, then switch
+to the momentum representation (in our application, use a slice turned by
+$90^o$)
+continue from $(q_A, p_A)$ to $(q_B, p_B)$, switch back to the coordinate
+representation (in our application, use a slice turned by
+$90^o$), and so on.
+
+In other word, as slices are local, switch to the next one whenever
+convenient, and for recurrent orbits, make sure you are in the original
+slice when you come back, in order to get a return map and hopefully sensible
+symbolic dynamics.
 
 
 
