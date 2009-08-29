@@ -34,7 +34,7 @@ can be written as
 where
 $\gSpace \cdot \Lg = \sum \theta_a \Lg_a,\; a=1,2, \cdots, N$
 is a Lie algebra element, $\Lg_a$ is a basis set of
-antihermitean Lie algebra generators, and $\theta_a$ are the
+anti-hermitian Lie algebra generators, and $\theta_a$ are the
 parameters of the transformation. For an infinitesimal
 transformation,
 % $\theta \ll 1$,
@@ -51,13 +51,15 @@ the equivariance condition \refeq{eq:FiniteRot} becomes
 \,.
 \]
 The $\dot{x}$ and $\vel(x)$ cancel, and $\theta_a$ are
-arbitrary. We are left with the infinitesimal transformations
+arbitrary. Denote the group flow tangent field at \ssp\ by
+$\groupTan_a(\ssp)_{i}= (\Lg_a)_{ij} \ssp_j$.
+We are left with the infinitesimal transformations
 version of the equivariance condition \refeq{eq:FiniteRot}:
 \beq
   \left(
-    \Lg_a  - (\Lg_a \ssp) \cdot \frac{\partial}{\partial \ssp}
+    \Lg_a  - \groupTan_a(\ssp) \cdot \frac{\partial}{\partial \ssp}
   \right) \vel(\ssp) =
-  (\Lg_a)_{ij} \vel_j(\ssp) - \Mvar_{ik} (\Lg_a)_{kj} \ssp_j =0
+  \groupTan_a(\vel)  - \Mvar \, \groupTan_a(\ssp) =0
   \,.
 \ee{inftmInv}
 where $\Mvar = {\pde \vel}/{\pde \ssp}$ is the \stabmat\ \refeq{stabMat}.
@@ -122,3 +124,38 @@ finite angle rotations \refeq{eq:FiniteRot}, especially so
 for non-trivial Lie groups.
 
     } %end \PCedit{
+
+\PublicPrivate{}{
+\subsection{Integral of the equivariance condition}
+
+    \PCedit{
+Here is a suspect attempt to derive a connection formula.
+Integrate the equivariance condition \refeq{inftmInv}:
+\bea
+{const} &=& (\Lg_a)_{kj}
+          \int_0^t d\tau \left(
+  \delta_{ik}\vel_j(\ssp) - \Mvar_{ik}(\ssp)\, \ssp_j
+           \right)
+  \continue
+  &=& (\Lg_a)_{ij} (\ssp_j(t)-\ssp_j(0))
+    - (\Lg_a)_{kj} \int_0^t d\tau \Mvar_{ik}(\ssp(\tau))\, \ssp_j(\tau)
+    \continue
+  &=& t(\ssp) - t(\ssp_0) - \int_0^t d\tau \Mvar (\ssp(\tau))\, t(\ssp)
+  \,.
+\label{integralInv}
+\eea
+If $const=0$, this is a formula for the transport of the group
+tangent field,
+\[
+t(\ssp) = t(\ssp_0) + \int_0^t d\tau \Mvar (\ssp(\tau)) \, t(\ssp(\tau))
+\,,
+\]
+which is not simply the multiplication by \jacobianM\ $\jMps$.
+For a linear flow, this looks a bit unfamiliar:
+\[
+t(\ssp) = t(\ssp_0) + \Mvar\,\Lg_a \int_0^t d\tau \, \ssp(\tau)
+\,.
+\]
+
+    } %end \PCedit{
+    } %end \PublicPrivate{}{
