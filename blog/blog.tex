@@ -1,4 +1,4 @@
-% siminos/blog/rpo.tex
+% siminos/blog/blog.tex
 % $Author$ $Date$
 
 \documentclass[letter,10pt]{article}
@@ -1237,7 +1237,7 @@ now that I have become your fan - I just love all those
 banished into their neurotic transitory world off the
 inertial manifold -  I'm entering following references to
 your papers:
-\refrefs{PoGiYaMa06,ginelli-2007-99,YaTaGiChRa08,YaTaGiChRa08}
+\refrefs{PoGiYaMa06,ginelli-2007-99,YaTaGiChRa08,TaGiCh09}
 in the final final edits of to be published in SIADS (part I;
 part II is still being penned - 60,000 relative periodic
 orbits and no place to go). Let me know if these are the
@@ -1265,23 +1265,34 @@ phase transition between frozen puffs and turbulent puffs would make plumbers ha
 
 \noindent{\bf Predrag, to us:} Here are the relevant articles.
 
-\noindent{\bf Hyperbolicity and the effective dimension of
-           spatially-extended dissipative systems}\rf{YaTaGiChRa08}:
+\begin{description}
+\item[Hyperbolicity and the effective dimension of
+           spatially-extended dissipative systems]\rf{YaTaGiChRa08}:
+  This paper is a fairly rigorous demonstration of what we
+  have observed numerically, that a finite number of Fourier modes
+  captures most of the dynamics of KS.
  They show, using covariant Lyapunov vectors, that
-  the chaotic solutions of spatially extended dissipative
-  systems evolve within a manifold spanned by a finite number
+  the chaotic solutions of two spatially extended dissipative
+  systems, \KS\ and complex Landau-Ginzburg,
+  evolve within a manifold spanned by a finite number
   of physical modes hyperbolically isolated from a set of
   residual degrees of freedom, themselves individually
-  isolated from each other. In the context of dissipative
-  partial differential equations, the results imply that a
-  faithful numerical integration needs to incorporate at
+  isolated from each other. The number grows linearly with
+  $L$ and is twice as large as the Kaplan-Yorke dimesnion estimates.
+  The results imply that a
+  faithful numerical integration of dissipative
+  partial differential equations needs to incorporate at
   least all physical modes and that increasing the resolution
+  beyond that
   merely increases the number of isolated modes.
 
-\noindent{\bf Lyapunov analysis and the collective dynamics of
-           large chaotic systems}\rf{TaGiCh09}:
-  They show, using generic globally-coupled
-  systems, that the collective dynamics of large chaotic
+\item[Lyapunov analysis and the collective dynamics of
+           large chaotic systems]\rf{TaGiCh09}:
+  Not as directly relevant to us as \refref{YaTaGiChRa08}.
+  They show, using globally-coupled 
+  (a) limit-cycle oscillators
+  (b) noisy logistic maps,
+  that the collective dynamics of large chaotic
   systems is encoded in their Lyapunov spectra: most modes
   are typically localized on a few degrees of freedom, but
   some are delocalized, acting collectively on the
@@ -1289,12 +1300,22 @@ phase transition between frozen puffs and turbulent puffs would make plumbers ha
   quantitative correspondence between the collective modes
   and some of the so-called Perron-Frobenius dynamics.
 
-\noindent{\bf Characterizing dynamics with covariant Lyapunov
-              vectors}\rf{ginelli-2007-99}
+\item[Characterizing dynamics with covariant Lyapunov
+              vectors]\rf{ginelli-2007-99}
+They show, using covariant Lyapunov vectors, that
+  the chaotic solutions of four spatially-coupled maps,
+(a) chaotic tent maps,
+(b) chaotic symplectic maps,
+(c) continuous time rotator model, and
+(d) Fermi-Pasta-Ulam chain
+  evolve within a manifold spanned by a finite number
+  of physical modes 
 
-\noindent{\bf From synchronization to Lyapunov exponents and
-              back}\rf{PoGiYaMa06}:
-In the first part we discuss a general approach to determine
+\item[From synchronization to Lyapunov exponents and
+              back]\rf{PoGiYaMa06}:
+The early paper in this series on 
+`covariant Lyapunov vectors.'
+In the first part they discuss a general approach to determine
 Lyapunov exponents from ensemble- rather than time-averages.
 The approach passes through the identification of locally
 stable and unstable manifolds (the Lyapunov vectors), thereby
@@ -1305,15 +1326,80 @@ associated to the phase dynamics increases quadratically with
 the coupling strength and it is therefore different from zero
 already below the onset of phase-synchronization. The
 analytical calculations are carried out for a model, the
-generalized special flow, that we construct as a simplified
+generalized special flow, that they construct as a simplified
 version of the periodically forced R\"ossler oscillator.
+\end{description}
 
-\RLDedit{\noindent{\bf Ruslan:} Here's the expanded list of Lyapunov exponents for KS with $L = 22$:
+\subsection{2009-09-13 Lyapunov exponents for KS}
+
+\begin{figure}
+ (c)~\includegraphics[width=0.40\textwidth]{eigenvalues.ps}
+ (b)~\includegraphics[width=0.50\textwidth]{lyapSpec}
+\caption{
+(a)
+Lyapunov exponents $\lambda_k$ versus $k$ for the
+periodic orbit $\overline{1}$ compared with  the stability eigenvalues
+of the $u(x,t)=0$ stationary solution $k^2- \nu k^4$.
+$\lambda_k$ for $k \geq 8$ fall below the numerical accuracy of integration
+and are not meaningful.
+$N=16$ real Fourier modes, $\nu=0.029924$, chaotic regime.  One needs to
+rescale the time to compare this to 2nd figure.
+(from \refref{Christiansen97}).
+(b)
+ First 14 Lyapunov exponents $\lambda_j$ for KS for $L=22$, 
+ from a 128 complex (256 real)
+ Fourier modes long-time simulation .
+(from \refref{SCD07}).
+}
+\label{fig:lyapSpec}
+\end{figure}
+
+
+\begin{description}
+\item[Ruslan:]
+ Here's the expanded list of Lyapunov exponents for KS with $L = 22$:
  0.048,    0.0,    0.0,   -0.003,   -0.189,   -0.256,   -0.290,   -0.310,
 -1.963,   -1.967,   -5.605,   -5.605,  -11.923,  -11.923...
 So, there appears to be 8 'physically relevant' exponents and the rest are pairs of hyperbolically separated ones.  I read the papers about these covariant Lyapunov vectors and I'm not sure I understand how they are related to eigenvectors at periodic orbits: are they aligned?  I suspect that not quite, apart from the most expanding and the most contracting direction, the rest are sitting somewhere within the subspaces spanned by the $k$ most expanding, or $m$ most contracting eigendirections, but not quite aligned with the eigendirections themselves.  That's probably why they are more appropriately called 'Lyapunov vectors'.
 
-}
+\item[Predrag:]
+Sure looks persuasive, see \reffig{fig:lyapSpec}. 
+I have also added stability of a periodic orbit from
+\refref{Christiansen97}, for KS on
+the periodic b.c., antisymmetric
+subspace, system size $\tilde{L} = 5.8$ close to the onset
+of chaos, 16 real
+Fourier modes. As (perhaps?) discussed in \refref{lanCvit07}, one
+has to be careful about defining the effective system size $\tilde{L}$ for the
+antisymmetric subspace, so these computations are done on $L=36.31$
+(or $L = 18.155$ if one consider the fundamental $[0,L/2]$ domain only).
+Going from $(L,\nu) = (2\pi,0.029910)$ of \refref{Christiansen97} to
+$(L,\nu) = (L,1)$ convention used here requires that the time be rescaled as
+$t \to \nu t$, and the Lyapunov exponents as $\lambda_i \to \lambda_i/ \nu = \lambda_i/ 0.029910 $,
+so -60 in the Lyapunov scale of \reffig{fig:lyapSpec}\,(a) corresponds to
+approx. -1.8 on the scale of \reffig{fig:lyapSpec}\,(b). Which looks
+wrong, we have to rethink this - this 60 might be the exponet in basis 10,
+not the natural logarithm.
+
+In \refref{lanCvit07} computations
+are done at $L = 38.5$, but we listed only 4 eigenvalues per periodic orbit,
+and considering hopeless organizational skills on the Lan astral
+plane, I doubt that the full spectra can be rescued from Lan's
+calculations.
+\begin{itemize}
+ \item 
+is the caption correct? Ruslan, can you describe your Lyapunov exponents/eigenvectors 
+calculation, how is it the same/different from the `covariant  Lyapunov eigenvectors'?
+ \item 
+can you get all 256 eigenvalues?
+\item
+can you check orthogonality between physical and isolated eigenvectors? 
+ \item
+Is it OK if I email Hong-liu Yang\rf{YaTaGiChRa08}, ask him
+to rerun his covariant Lyapunov vector spectrum for $L=22$, see whether he agrees with you?
+{\bf Ruslan:} It's OK / It's not OK. 
+\end{itemize}
+\end{description}
 
 
 % \input flotsam      %% PC moved to thesis/chapters      26 jun 2008
