@@ -11,8 +11,7 @@ set term postscript eps enhanced color solid "Times-Roman" 22
 # set output "lyapSpec.fig"
 
 set title "KS L=22 Lyapunov spectrum" font "Times-Roman,24"
-set output "lyapSpec.eps" # in j/L scale
-# set output "lyapSpecRscld.eps" # in j 2 \pi/L scale
+set output "lyapSpecRscld.eps" # in j 2 \pi/L scale
 
 # color size 20 10 metric solid fontsize 16 textnormal thickness 2k depth 30
 # {pointsmax <max_points>}
@@ -20,20 +19,25 @@ set output "lyapSpec.eps" # in j/L scale
 # set label "f_0" at 0.5,0.3
 set size 1,1
 set border 15
-set xrange [0:0.7]
+set xrange [0:2.1]
 set yrange [-12.5:0.95]
-set xlabel "j/L"
+set xlabel "2{/Symbol p}j/L"
 # PC: this is postscriptese for \lambda_j:
 set ylabel "{/Symbol l}_{j}"
 set pointsize 2
 # PC: points -> circles is obtained by point_type 6
+#            -> + is obtained by point_type 1
+
+g1(x)=x**2-x**4
+#PC example:  g1(x)=exp(-(x-a)*(x-a)/g/g/2.0)/sqrt(pi)/g
 
 L=22  # PC: plot in `extensive,' discretization independent scale
-tildeL = L/(2*pi)      #     I would prefer L/2\pi rescaling
-plot "lyapSpec.dat" using ($1/L):($2) notitle with points pointtype 6
-#			 "??.dat" using (log($1)):($2) with points,\
+tildeL = L/(2*pi) 
+#PC: in lyapSpecRscld.dat j runs over pairs of eigenvalues
 
-# g1(x)=exp(-(x-a)*(x-a)/g/g/2.0)/sqrt(pi)/g
+plot g1(x) notitle, \
+"lyapSpecRscld.dat" using ($1/tildeL):($2) notitle with points pointtype 1
+
 
 # set style line 1 lt 1 lw 3
 # set style line 2 lt 1 lw 1

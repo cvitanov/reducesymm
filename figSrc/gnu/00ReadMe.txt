@@ -7,12 +7,14 @@ Siminos gnuplot source programs for figures
 -----------------------------------------------------------------
 					Predrag Sep 13 2009
 
-source for
-   	figs/lyapSpec.eps
+sources for
+   	siminos/figs/lyapSpec.eps
+   	siminos/figs/lyapSpecRscld.eps
 used in
 	siminos/blog/blog.tex
-is 
-	ksBifDiag.gnu
+are 
+   	lyapSpec.gnu
+   	lyapSpecRscld.gnu
 -----------------------------------------------------------------
 
 NOTES
