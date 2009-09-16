@@ -50,6 +50,18 @@ there are problems with fonts, eg mathematica fonts. The output
 has to be a different file. Not sure whether the fix is universal.
 
 -----------------------------------------------------------------
+                                        Predrag Sep 13 2009
+
+sources for
+        siminos/figs/lyapSpec.eps
+        siminos/figs/lyapSpecRscld.eps
+used in
+        siminos/blog/blog.tex
+are
+        lyapSpec.gnu
+        lyapSpecRscld.gnu
+
+
 					Predrag Feb 10 2007
 
 source for
