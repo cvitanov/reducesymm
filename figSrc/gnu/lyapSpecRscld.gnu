@@ -36,7 +36,8 @@ tildeL = L/(2*pi)
 #PC: in lyapSpecRscld.dat j runs over pairs of eigenvalues
 
 plot g1(x) notitle, \
-"lyapSpecRscld.dat" using ($1/tildeL):($2) notitle with points pointtype 1
+"lyapSpecRscld.dat" using ($1/tildeL):($2) notitle with points pointtype 1, \
+"lyapSpecEQ3.dat" using ($1/tildeL):($2) notitle with points pointtype 1
 
 
 # set style line 1 lt 1 lw 3
