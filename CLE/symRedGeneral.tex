@@ -1,0 +1,225 @@
+%Discussion of symmetry reduction methods
+% extracted from siminos/thesis/chapters/symODEs.tex
+
+\section{Symmetry reduction}
+\label{sec:symRed}
+
+The purpose of symmetry reduction in differential equations is to project the dynamics to a space
+in which the symmetry group $G$ acts trivially. Such a space is called \emph{orbit space} because each
+group orbit of a point in original space is mapped to a single point in orbit space, or \emph{quotient
+space} because the symmetry has been ``divided out'' or simply \emph{reduced space}. If the original
+space is a manifold $\Manif$ it is then customary to write the quotient space as $\Manif/\Group$.
+The resulting dynamical system is called \emph{image} of the original.
+
+The stratification of $\Manif$ induced by the group action is carried over to the quotient space with each disconnected set in a stratum mapped to the same manifold in quotient space.
+Yet, a fundamental problem with symmetry reduction is that the orbit space is in general not a manifold.
+Unless the action of the group is free, group orbits do not have the same dimension and different
+strata are mapped to manifolds of different dimension. We will see this property of quotient space
+manifest itself in different ways depending on the reduction method but always introducing some
+singularity even though there is nothing singular about $\Manif$ or the flow of the dynamical system
+on it.
+
+
+\subsection{Hilbert basis approach}
+
+
+The most common approach to symmetry reduction is through the use of a Hilbert basis of invariant
+polynomials. One computes a (non-unique) basis of linearly independent polynomials, invariant under the action
+of the symmetry group (\cf \refref{gatermannHab} for a discussion of methods) and either rewrites
+the dynamics in this basis or maps the solutions to the polynomials.
+We will describe how this approach works for the example of \CLe\ in \refsect{sec:CLe}.
+The reader is referred to the book of Gilmore and
+Lettelier\rf{GL-Gil07b} for a very detailed discussion of
+symmetry reduction. For the action \refeq{eq:SO2act} of
+$\SOn{2}$ on \Rls{5} a Hilbert basis\rf{GL-Gil07b}  is
+\beq
+\begin{split}
+	u_1 &= x_1^2+x_2^2 \cont
+	u_2 &= y_1^2+y_2^2 \cont
+	u_3 &= x_1 y_2-x_2 y_1\cont
+	u_4 &= x_1 y_1+x_2 y_2\cont
+	u_5 &= z\,.
+	\label{eq:ipLaser}
+\end{split}
+\eeq
+The polynomials in a Hilbert basis are linearly independent, but functionally dependent through
+relations called \emph{syzygies}. For polynomials \refeq{eq:ipLaser} the syzygy is
+\beq
+ 	u_1u_2 -u_3^2-u_4^2 =0\,.
+	\label{eq:syzLaser}
+\eeq
+
+When one takes syzygies into account in rewriting the dynamical
+system, singularities are introduced. Moreover when one
+\emph{lifts} the dynamics from the quotient space $\Manif/G$ to
+the original space $\Manif$ the transformations have
+singularities at the \fixedsp s of the isotropy subgroups in
+$\Manif$, in the optimal case, \cf \refref{GL-Gil07b}. Those
+singularities do not seem to restrict our ability to use
+invariant polynomials to obtain symmetry reduced projections of
+the dynamics as we will see in \refchap{chap:lasers}.
+
+What restricts the utility of Hilbert basis methods is that the
+determination of a Hilbert basis becomes computationally
+prohibitive as the dimension of the system or of the group
+increases\rf{gatermannHab,ChossLaut00} and typically
+computations are constrained to dimension smaller than ten. As
+our goal is to quotient continuous symmetries of
+high-dimensional flows, specifically those arising from
+truncations of the \KS\ and Navier-Stokes flows
+and thus we need an efficient framework.
+
+
+\subsection{Moving frames}
+\label{sec:mf}
+
+In this section we present the method of moving frames of
+Cartan\rf{CartanMF} in the formulation of Fels and
+Olver\rf{FelsOlver98,FelsOlver99}, also \cf~\refref{OlverInv}
+for a pedagogical exposition and the proofs of theorems
+listed here. Its purpose is to generate functionally
+independent invariants for the action of a group $\Group$ on
+a manifold $\Manif$ under certain assumptions, and is not
+restricted to reduction problems.
+
+In the following let $\Group$ be $r$-dimensional and act on a $n$-dimensional manifold $\Manif$.
+\begin{definition}
+ A moving frame is a smooth $\Group$-equivariant mapping $\rho:\,\Manif \rightarrow \Group$.
+\end{definition}
+One distinguishes between left moving frames for which the equivariance condition is $\rho(\gamma x)=\gamma\rho(x)\,,\ x\in\Manif\,,\ \gamma\in\Group$ and right moving frames for which the equivariance condition is $\rho(\gamma x)=\rho(x)\gamma^{-1}\,,\ x\in\Manif\,,\ \gamma\in\Group$.
+
+The following existence theorem for moving frames will be very important.
+
+\begin{theorem}
+ A moving frame exists in a neighborhood of a point $x\in \Manif$ if and
+ only if $\Group$ acts freely and regularly near x.
+\end{theorem}
+
+For groups acting regularly we can define a {\csection} for the group orbits.
+    \PublicPrivate{}{
+We follow \refrefs{Mostow57,Pal61,GuiSte90,DuiKol00,rowley_reconstruction_2000}
+in referring to a local group-orbit section as a `slice.'
+\refRefs{Bredon72,GuiSte90} and others refer to global
+group-orbit sections as `cross-sections,' a term that
+already has a different and well established meaning in
+physics.
+    \PC{I am probably wrong in giving up on `cross-sections.'
+    Duistermaat\rf{DuiKol00} refers to `slices' on p. 103,
+    but it goes back at least to Guillemin\rf{GuiSte90} in
+    1984 and Palais\rf{Pal61} in 1961. Tends to be discussed
+    in much more difficult context than ours - symplectic
+    groups, sections in absence of global charts, etc..
+    Palais\rf{Pal61} seems to imply problems arise for
+    non-compact Lie groups - ours are compact, should be easier.
+    He refers to \rf{Mostow57}. Bredon\rf{Bredon72} discusses
+    both cross-sections and slices.
+    Guillemin\rf{GuiSte90} is in the CNS library. They define
+    `cross-section' say that finding it is very rare. On p.
+    200 they say ``existence of a global section is a very
+    stringent condition on a group action. The notion of
+    `slice' is weaker but has a much broader range of
+    existence.'' A submanifold $S$ containing $x$ is called a
+    {\em slice} through $x$ if it is invariant under isotropy
+    $G_x(S)=S$ plus some other conditions. If $x$ is a fixed
+    point of $G$, than slice is invariant under the whole
+    group.
+    The slice theorem is explained in
+    \HREF{http://eom.springer.de/S/s120150.htm}
+    {Encyclopaedia of Mathematics}.
+    I cannot find anyplace in the thesis your sources
+    for term `cross-section'; please complete references
+    here if you have better ones.}
+    }
+\index{slice}\index{cross-section}
+
+
+\begin{proposition}%[\rf{OlverInv}]
+ \label{pro:crossExists}
+ Let $\Group$ act regularly on a $n$-dimensional manifold
+ $\Manif$ with $r$-dimensional orbits. Define a (local)
+ \emph{{\csection}} to be an $(n-r)$-dimensional submanifold $K$
+ of $\Manif$ such that $K$ intersects each orbit
+ transversally and at most once. If a Lie group $\Group$ acts
+ regularly on a manifold $\Manif$, then one can construct a
+ local {\csection} passing through any point $x\in \Manif$.
+\end{proposition}
+
+\ES{Is this {\csection} related to a cross-section in a $\Group$-bundle?
+In other words, can we interpret
+the latter as a submanifold in total space \tSp\ of a $\Group$-bundle $(\tSp,\pi,\tSp/\Group)$? }
+
+
+\begin{theorem}
+ Assume the conditions of \refPro{pro:crossExists} hold and
+ let $K\subset\Manif$ be a {\csection}. For $x\in \Manif$, let
+ $\gamma=\rho(x)$ be the unique group element that maps $x$
+ to the {\csection}: $g x = \rho(x) x\, \in K$. Then
+ $\rho:\Manif\rightarrow \Group$ is a right moving frame.
+\end{theorem}
+
+A {\csection} $K$ can be defined by means of level sets of
+functions $K_i(x)=c_i$, where $x\in V$ and $i=1,\ldots,r$. If
+the $K_i(x)$ coincide with the local coordinates $x_i$ on the
+manifold $V$, \ie~$K_i(x)=x_i$, then we call $K$ a
+\emph{coordinate \csection}.
+
+\begin{example}
+Consider the standard action of $\SOn{2}$ on \Rls{2}:
+\beq
+	(x,y) \mapsto (x\cos\theta -y \sin\theta,\,x\sin\theta +y \cos\theta )
+\eeq
+which is regular on $\Rls{2}\backslash\{0\}$. Thus we can define
+a {\csection} by, for instance, the
+positive $y$ axis: $x=0,\,y>0$.
+We can now construct a moving frame as follows. We write out
+explicitly the group transformations:
+\begin{subequations}
+\begin{align}
+ 	\overline{x} &= x \cos\theta - y \sin\theta\label{eq:explSO2stnd1}\cont
+	\overline{y} &= x \sin\theta + y \cos\theta\label{eq:explSO2stnd2}\,.
+\end{align}
+\end{subequations}
+Then set $\overline{x}=0$ and solve \refeq{eq:explSO2stnd1} for the group
+parameter to obtain the moving frame
+\beq
+	\theta=\tan^{-1}\frac{x}{y}
+	\label{eq:SO2stndMF}
+\eeq
+which brings any point  back to the {\csection}.\footnote{Implementation note: Here it is important that $\tan^{-1}$
+distinguishes quadrants on the $(x,y)$ plane so that we get the correct geometric operation.} Substituting \refeq{eq:SO2stndMF} in the remaining equation, we get
+the $\SOn{2}$-invariant expression
+\beq
+	\overline{y} = \sqrt{x^2+y^2}\,.
+\eeq
+\end{example}
+
+The above \emph{normalization} procedure for the computation of
+invariants applied in the example of $\SOn{2}$ can be applied
+in much more general situations as follows. Assume $\Group$
+acts (locally) freely
+    \ES{The condition of free action can be
+    relaxed\rf{OlverInv}.}
+on \Manif\  and thus $\Group$-orbits have the same dimension,
+say $r$, as $\Group$.  Choose a coordinate {\csection}
+$K=\{x_1=c_1,\ldots,x_r=c_r\}$ defined by the first $r$
+coordinates (relabel coordinates as necessary). Introduce
+local coordinates $g=(g_1,\ldots,g_r)$ on $\Group$ in the
+neighborhood of the identity. The group transformations are
+\beq
+	\overline{x}= g \cdot x = w(g,x)\,.
+	\label{eq:transNorm}
+\eeq
+Equating the first $r$ components of the function $w$ to the constants in the definition
+of the {\csection} $K_i(x)=c_i$ yields the \emph{normalization equations} for $K$:
+\beq
+	\overline{x}_1=w_1(g,x)=c_1,\ldots,\overline{x}_r=w_r(g,x)=c_r\,.
+	\label{eq:normalization}
+\eeq
+From the definition of {\csection} and the Implicit Function Theorem the normalization equations
+\refeq{eq:normalization} can always be solved for the group parameters in terms of $x$,
+yielding the moving frame associated with $K$: $g=\gamma(x)$. Substitution
+of the moving frame equation back in \refeq{eq:transNorm} will yield the $n-r$
+\emph{fundamental invariants}, in the sense that any other invariant can be expressed
+as a function of $\overline{x}_{r+1}\ldots\overline{x}_n$ and they are functionally independent.
+Thus they serve to distinguish orbits in the neighborhood of the {\csection}, \ie~two points lie on the same group
+orbit if and only if all the fundamental invariants agree. For proof \cf~\refrefs{FelsOlver98,FelsOlver99}.
