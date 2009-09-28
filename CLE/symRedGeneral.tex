@@ -8,7 +8,7 @@ space} because the symmetry has been ``divided out'' or simply \emph{reduced spa
 space is a manifold $\Manif$ it is then customary to write the quotient space as $\Manif/\Group$.
 The resulting dynamical system is called \emph{image} of the original.
 
-The stratification of $\Manif$ induced by the group action is carried over to the quotient space with each disconnected set in a stratum mapped to the same manifold in quotient space.
+The stratification\ES{define?: stratum} of $\Manif$ induced by the group action is carried over to the quotient space with each disconnected set in a stratum mapped to the same manifold in quotient space.
 Yet, a fundamental problem with symmetry reduction is that the orbit space is in general not a manifold.
 Unless the action of the group is free, group orbits do not have the same dimension and different
 strata are mapped to manifolds of different dimension. We will see this property of quotient space
@@ -22,12 +22,13 @@ on it.
 
 The most common approach to symmetry reduction is through the use of a Hilbert basis of invariant
 polynomials. One computes a (non-unique) basis of linearly independent polynomials, invariant under the action
-of the symmetry group (\cf \refref{gatermannHab} for a discussion of methods) and either rewrites
+of the symmetry group (\cf \refref{gatermannHab,ChossLaut00} for a discussion of methods) and either rewrites
 the dynamics in this basis or maps the solutions to the polynomials.
 We will describe how this approach works for the example of \CLe\ in \refsect{sec:CLe}.
 The reader is referred to the book of Gilmore and
 Lettelier\rf{GL-Gil07b} for a very detailed discussion of
-symmetry reduction. For the action \refeq{eq:SO2act} of
+symmetry reduction, through the use of invariant polynomials. 
+For the action \refeq{eq:SO2act} of
 $\SOn{2}$ on \Rls{5} a Hilbert basis\rf{GL-Gil07b}  is
 \beq
 \begin{split}
@@ -39,18 +40,95 @@ $\SOn{2}$ on \Rls{5} a Hilbert basis\rf{GL-Gil07b}  is
 	\label{eq:ipLaser}
 \end{split}
 \eeq
-The polynomials in a Hilbert basis are linearly independent, but functionally dependent through
+The polynomials in a Hilbert basis are linearly independent, but often functionally dependent through
 relations called \emph{syzygies}. For polynomials \refeq{eq:ipLaser} the syzygy is
 \beq
  	u_1u_2 -u_3^2-u_4^2 =0\,.
 	\label{eq:syzLaser}
 \eeq
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[ht]
+\begin{center}
+  (\textit{a})\includegraphics[width=0.35\textwidth]{../figs/CLEip1}
+~~~~(\textit{b})\includegraphics[width=0.36\textwidth]{../figs/CLEip2}
+\end{center}
+\caption[Orbit space projection of Complex Lorenz flow:
+Invariant polynomials basis]{ \Statesp\ portraits of \CLe\
+dynamics for $e=1/10$, $\ImrCLor=0$ in \reducedsp,
+invariant polynomials basis \refeq{eq:ipLaser}.
+    }
+\label{fig:CLEip}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The first approach we try is by use of invariant polynomials
+\refeq{eq:ipLaser}, following Gilmore and
+Letellier\rf{GL-Gil07b} who compute an invariant polynomials
+basis for the same action of $\SOn{2}$ and use them for
+symmetry reduction of a system conjugate to \CLe, with
+$e=-\ImrCLor$.
+\PCedit{
+We use the chain rule
+}%end PCedit
+\[
+ \dot{\overline{x}}_i=\frac{\partial \overline{x}_i}{\partial x_j}\dot{x}_j
+ \,,
+\]
+and express the result in invariant polynomials:
+    \ES{mathematica notebook:CLEtransfJac.nb
+    {\bf PC:} Changed $z$ to $u_5$; have not checked the algebra}
+\beq
+\begin{split}
+\dot{u}_1 &=2\,\sigma\,(u_3-u_1)\,,\\
+\dot{u}_2 &=-2\,u_2 -2\,u_3\,(u_5-\rho_1 )\,,\\
+\dot{u}_3 &=\sigma\,  u_2-(\sigma\,  -1)\,u_3-e\,u_4+u_1\,(\rho_1-u_5)\,,\\
+\dot{u}_4 &=e\, u_3-(\sigma\, +1)\,u_4\,,\\
+\dot{u}_5 &=u_3-b\, u_5\,.
+\end{split}
+\label{eq:CLEip}
+\eeq
+For visualization purposes, rather than \ESedit{integrating
+\refeq{eq:CLEip}, we map solutions of \refeq{eq:CLe} to the
+$u_i$'s}, \reffig{fig:CLEip}. In most projections the folding
+mechanism is hiden from view since the dynamics is squeezed
+near the $z$-axis.
+%     \PC{not sure "tearing mechanism" of Gilmore is a good term - nothing is
+%         torn, it is continuously stretched and then folded with sharp heteroclinic
+%         connection edge. {\bf ES:} Agree.}
+
+Nevertheless we can now easily identify a suitable Poincar\'e section, guided
+by the Lorenz equations example \refchap{chap:Lorenz}, as one that contains the $z$-axis and the \reqv,
+here defined by the condition $u_1=u_4$. Repeating the procedure followed in \refsect{exmp:LorenzRetM}
+we construct the first return map using as coordinate the Euclidean length along the intersection
+of the unstable manifold of \REQB{1} with the Poincar\'e surface of section, measured from \REQB{1}, see \reffig{fig:CLEipRM}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[ht]
+\begin{center}
+%   (\textit{a})\includegraphics[width=0.35\textwidth]{../figs/CLEipRMu1}
+%  ~~~~(\textit{b})
+\includegraphics[width=0.35\textwidth]{../figs/CLEipRM}
+\end{center}
+\caption[Return map for Complex Lorenz flow, invariant polynomials]
+{Return map to the \Poincare\
+surface of section $u_1=u_4$ for \CLe\ with $e=1/10$, $\ImrCLor=0$,
+projected on invariant polynomials \refeq{eq:ipLaser}.
+% (a) The return map coordinate is $u_1$, (b)
+The return map coordinate is the Euclidean
+length along the \Poincare\ section of the unstable manifold of $E_1$.
+    }
+\label{fig:CLEipRM}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 When one takes syzygies into account in rewriting the dynamical
 system, singularities are introduced. Moreover when one
 \emph{lifts} the dynamics from the quotient space $\Manif/G$ to
 the original space $\Manif$ the transformations have
-singularities at the \fixedsp s of the isotropy subgroups in
+singularities at the \fixedsp s\ES{define: \fixedsp} of the isotropy subgroups in
 $\Manif$, in the optimal case, \cf \refref{GL-Gil07b}. Those
 singularities do not seem to restrict our ability to use
 invariant polynomials to obtain symmetry reduced projections of
@@ -65,6 +143,8 @@ our goal is to quotient continuous symmetries of
 high-dimensional flows, specifically those arising from
 truncations of the \KS\ and Navier-Stokes flows
 and thus we need an efficient framework.
+
+
 
 
 \subsection{Moving frames}
@@ -220,3 +300,225 @@ of the moving frame equation back in \refeq{eq:transNorm} will yield the $n-r$
 as a function of $\overline{x}_{r+1}\ldots\overline{x}_n$ and they are functionally independent.
 Thus they serve to distinguish orbits in the neighborhood of the {\csection}, \ie~two points lie on the same group
 orbit if and only if all the fundamental invariants agree. For proof \cf~\refrefs{FelsOlver98,FelsOlver99}.
+
+\subsubsection{Moving frame}
+\label{sec:CLeMF}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[ht]
+\begin{center}
+  (\textit{a})\includegraphics[width=0.35\textwidth]{../figs/CLEmfXYZ}
+~~~~(\textit{b})\includegraphics[width=0.35\textwidth]{../figs/CLEmfYYZ}
+\end{center}
+\caption[Orbit space projection of Complex Lorenz flow: Moving frame]{ \Statesp\
+portraits of \CLe\ dynamics for $e=1/10$, $\ImrCLor=0$
+in \reducedsp. Projecting on invariants given in \refeq{eq:invLaser}.
+    }
+\label{fig:CLEmf}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+As the next choice we explore the invariants generated by
+the moving frame method.
+The action \refeq{eq:SO2act} of $\SOn{2}$ on \Rls{5},
+is regular on $\Rls{5}\backslash\{x_1=x_2=y_1=y_2=0\}$. Thus we can define
+a {\csection} by, for instance $x_1=0,\,x_2>0$.
+We can now construct a moving frame for the action
+\refeq{eq:SO2act} of $\SOn{2}$ as follows. We write out
+explicitly the group transformations:
+\begin{subequations}
+\begin{align}
+ 	\overline{x}_1 &= x_1 \cos\theta - x_2 \sin\theta\label{eq:CLEexplSO2a}\cont
+	\overline{x}_2 &= x_1 \sin\theta + x_2 \cos\theta\label{eq:CLEexplSO2b}\cont
+	\overline{y}_1 &= y_1 \cos\theta - y_2 \sin\theta\label{eq:CLEexplSO2c}\cont
+	\overline{y}_2 &= y_1 \sin\theta + y_2 \cos\theta\label{eq:CLEexplSO2d}\cont	
+	\overline{z} &= z\,.
+\end{align}
+\end{subequations}
+Then set $\overline{x}_1=0$ and solve
+\refeq{eq:CLEexplSO2a} for the group parameter to obtain the moving frame
+\beq
+	\theta=\tan^{-1}\frac{x_1}{x_2}
+	\label{eq:CLEmf}
+\eeq
+which brings any point  back to the {\csection}.\footnote{Implementation note: Here it is important that $\tan^{-1}$
+distinguishes quadrants on the $(x_1,x_2)$ so the transformation results to the correct geometric
+interpretation.} Substituting \refeq{eq:CLEmf} in the remaining equations we get the invariants
+\beq
+\begin{split}
+	\overline{x}_2 &= \sqrt{x_1^2+x_2^2} \cont
+	\overline{y}_1 &= \frac{x_2 y_1-x_1 y_2}{\sqrt{x_1^2+x_2^2}}\cont
+	\overline{y}_2 &=\frac{x_1 y_1+x_2 y_2}{\sqrt{x_1^2+x_2^2}}\,.
+	\label{eq:invLaser}
+\end{split}
+\eeq
+\ES{The solution $\theta = 2
+\tan^{-1}\frac{-x_2+\sqrt{x_1^2+x_2^2}}{x_1}$ was returned by
+Mathematica. If we use $\theta = \tan^{-1}\frac{x_2}{x_1}$
+without taking care of the quadrant our results are
+multiplied by $sgn(x_2)$.}
+Note the relation to the invariant polynomials
+\refeq{eq:ipLaser} and also that no syzygy is present.
+
+On the other hand observe that the denominator is singular on
+the subspace $U_S$ defined by $x_1=x_2=0$ even though the
+group action is non-regular only in a subset of $U_S$, the
+$z$-axis $x_1=x_2=y_1=y_2=0$. The transformations
+\refeq{eq:invLaser} can thus be characterized as
+non-optimal, in the sense that we have singularity in a
+proper superset of $\Fix{\SOn{2}}$. The reason the
+transformations fail on $U_S$ and not only on the $z$-axis
+can be traced back to the way we construct them. The action
+of the group can be thought of as a direct sum of irreducible
+actions and the corresponding invariant (irreducible)
+subspaces are the $(x_1,\,x_2)$ and $(y_1,\,y_2)$
+planes.
+%PC OK \ES{Not sure if planes is acceptable term here.}.
+The
+fact the group acts on each irreducible subspace (that is, it
+leaves it invariant as a set) implies that we could define a
+moving frame in any one of them independently and the
+singular subspace would only depend on the points on which
+the action is not regular on this irreducible subspace. By
+choosing an angle in the $(x_1,\,x_2)$ irreducible subspace
+as the moving frame map, the singular set is the point
+$x_1=x_2=0$ in this irreducible subspace, since the group
+action is not regular, or alternatively, a polar
+angle is not defined at that point. Going back to the full
+$5$-dimensional space the singular set of the transformations
+is still given by $x_1=x_2=0$.
+%}
+
+  %PC approved \ESedit{
+It is instructive to write \CLe~\refeq{eq:CLe} in the variables \refeq{eq:invLaser}.
+This is achieved by using the chain rule
+\[
+ \dot{\overline{x}}_i=\frac{\partial \overline{x}_i}{\partial x_j}\dot{x}_j
+\]
+and expressing the result in the variables \refeq{eq:invLaser}. The equations
+now read
+\beq
+\begin{split}
+\dot{\overline{x}}_1 &= 0\,\\
+\dot{\overline{x}}_2 &=-\sigma  \left(\overline{x}_2-\overline{y}_2 \right)\,,\\
+\dot{\overline{y}}_1 &=-\overline{y}_1- \left(e+\sigma\frac{\overline{y}_1}{\overline{x}_2} \right)\overline{y}_2\,,\\
+\dot{\overline{y}}_2 &=(\RerCLor -z)\overline{x}_2+\left(e+\frac{\sigma  \overline{y}_1}{\overline{x}_2}
+\right) \overline{y}_1-\overline{y}_2\,,\\
+\dot{z} &=\overline{x}_2 \overline{y}_2-b z\,.
+\end{split}
+\eeq
+We again observe the singularity as $\overline{x}_2\rightarrow 0$.
+    %}%end ESedit
+\ES{We have done the same for ZM system long time ago when we heuristically
+rederived Cartan's method. It has been moved to a footnote in Jonathan's
+blog (eq. 5.37) and became one the things that never found their way back to my thesis.
+One also gets the same system by using invariant
+polynomials and taking the syzygy into account, see discussion preceding 5.46 in
+Jonathan's blog.
+\\{\bf PC:} what was 'heuristic' about it? It was an obvious idea that follows
+from interpretation of dynamics in the fundamental domain for discrete symmetries,
+we just did not know that it could be tracked back at least to Poincar\'e.
+BTW, I never checked the Poincar\'e reference, so I do not know whether the
+credit is indeed due to him.
+   }
+
+The projections in \reffig{fig:CLEmf} reveal more about the
+topology of the attractor but also present large ``jumps." Note that
+the invariants \refeq{eq:invLaser} are related to the invariant polynomials \refeq{eq:ipLaser}
+by division by $\sqrt{x_1^2+x_2^2}$. This is the
+reason we get a clearer visualization of the dynamics: All invariants have the same
+``dimensions" as the original coordinates. At the same time division by $\sqrt{x_1^2+x_2^2}$
+causes the jumps in the $\overline{y}$ components whenever the magnitude of $x$ comes close to zero.
+The fact that we do not go through $x=0$ is coincidental and specific to the problem
+at hand.
+% Notice that we cannot have $x=0$ for dynamics away the $z$-axis due to the syzygy \refeq{eq:syzLaser}. For, if
+% $x=0$ then we would also have $y=0$ and thus we would cross the $z$-axis. This cannot happen
+% since the $z$ axis is the fixed point subspace of \SOn{2} and is therefore flow-invariant.
+
+\PublicPrivate{}{
+Geometrically we can interpret the jumps in the $\overline{y}$ coordinates as follows: We
+have chosen to measure angle on one of the irreducible subspaces of \SOn{2}, the $x$-plane, and project
+the dynamics on orbit space by counter-rotating in both irreducible subspaces (the $x$- and $y$-plane.)
+As long as a trajectory traces one lobe of the Lorenz attractor the angle varies slowly and no
+problem occurs. When a trajectory changes quadrant in the $x$-plane to visit the almost opposite lobe (due to detuning
+we do not visit the lobe related by rotation by $\pi$, in reality no such thing exists) we get a rapid
+change in angle as the trajectory passes close to the origin. In the $y$-plane we do not necessarily change
+quadrant. Call $\Delta \theta_x$ and $\Delta\theta_y$ the change in angle
+in the $x$- and $y$-plane respectively, when the trajectory changes quadrant in the $x$ plane.
+We always reduce to \reducedsp\ by correcting by $-\Delta\theta_x$ instead of correcting by the smallest angle\ES{I tried
+implementing this directly. No luck.}.
+}%end \PublicPrivate.
+
+% Since $x$ cannot vanish
+The problem is mostly aesthetical in the present case,
+but for \KS\ system it will be important to prevent
+the denominator from vanishing.
+\ES{Here I have a hunch that the denominator cannot vanish
+but I can't prove it}
+We observe that generic dynamics cannot enter $\Fix{\SOn{2}}$, \ie\
+the $z$-axis, since {\fixedsp s} are flow invariant.
+Since \SOn{2} representation in the \CLe\ example is a direct sum of irreducible representations
+we cannot take more than one irreducible subspace into account
+when setting up the normalization equations, at least not in a convenient way.
+We can however restore democracy
+between modes and extend validity of the transformations to any point where
+the group acts freely, by modifying the invariants as follows:
+    \PC{replaced ES version
+\[\begin{split}
+	\overline{x}_2 &= \frac{x_1^2+x_2^2}{\sqrt{x_1^2+x_2^2+y_1^2+y_2^2}} \cont
+	\overline{y}_1 &= -\frac{x_2 y_1-x_1 y_2}{\sqrt{x_1^2+x_2^2+y_1^2+y_2^2}}\cont
+	\overline{y}_2 &=\frac{x_1 y_1+x_2 y_2}{\sqrt{x_1^2+x_2^2+y_1^2+y_2^2}}\cont
+	\overline{z} &=z\,.
+\end{split}
+\]
+    }
+\beq
+\begin{split}
+	\overline{x}_2 &= (x_1^2+x_2^2)/r \cont
+	\overline{y}_1 &= -(x_2 y_1-x_1 y_2)/r\cont
+	\overline{y}_2 &=(x_1 y_1+x_2 y_2)/r\cont
+	\overline{z} &=z\cont
+	r &= \sqrt{x_1^2+x_2^2+y_1^2+y_2^2}
+    \,.
+	\label{eq:invLaser2}
+\end{split}
+\eeq
+This set of invariants lacks a geometric interpretation\ES{or does it?} but results in much cleaner phase portraits,
+\cf \reffig{fig:CLEinv}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[ht]
+\begin{center}
+  (\textit{a})\includegraphics[width=0.35\textwidth]{../figs/CLEinvXYZ}
+~~~~(\textit{b})\includegraphics[width=0.35\textwidth]{../figs/CLEinvYYZ}
+\end{center}
+\caption[Orbit space projection of Complex Lorenz flow: Modified moving frame]{ \Statesp\
+portraits of \CLe\ dynamics for $e=1/10$, $\ImrCLor=0$
+in \reducedsp. Projecting on invariants given in \refeq{eq:invLaser2}.
+    }
+\label{fig:CLEinv}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[ht]
+\begin{center}
+%   (\textit{a})\includegraphics[width=0.35\textwidth]{../figs/CLEinvRMx2}
+%  ~~~~(\textit{b})
+\includegraphics[width=0.35\textwidth]{../figs/CLEinvRM}
+\end{center}
+\caption[Return map for Complex Lorenz flow]{
+Return map to the \Poincare\ surface of section
+$\overline{x}_2=\overline{y}_2$ for \CLe\ with $e=1/10$,
+$\ImrCLor=0$, projecting on invariants given in
+\refeq{eq:invLaser2}. The return map coordinate is the
+Euclidean length along the \Poincare\ section of the unstable
+manifold of $E_1$.
+    }
+\label{fig:CLEinvRM}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
