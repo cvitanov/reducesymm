@@ -50,6 +50,19 @@ there are problems with fonts, eg mathematica fonts. The output
 has to be a different file. Not sure whether the fix is universal.
 
 -----------------------------------------------------------------
+					Vaggelis Oct 1 2009
+
+source for
+	siminos/rpo_ks/figs_pst/splitting.eps
+used in 
+	figSrc/rpo_ks_figs/ks22E2-E3hetero.tex
+is in
+	[local slow backup]/home/vasimos/sandbox/PropIntEquilDet/
+files:	
+	integrNew.nb
+	equilFamily.f90 
+	main.f90
+
                                         Predrag Sep 13 2009
 
 sources for
