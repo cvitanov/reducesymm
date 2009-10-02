@@ -1,5 +1,5 @@
-rpo_ks/arxiv-v1/00ReadMe.txt
-$Author: predrag $ $Date: 2007-05-30 12:53:02 -0400 (Wed, 30 May 2007) $
+siminos/rpo_ks/current/00ReadMe.txt
+$Author$ $Date$
 ===========================================================
                     started writing: Predrag Jun 20 2006
 

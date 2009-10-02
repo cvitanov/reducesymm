@@ -120,3 +120,5 @@ FIXED:
 -- made hyperlinks active
 -- made figure references [..], not (..) as is GaTech default
    by option \usepackage[square]{natbib}
+					Predrag Oct  2 2009
+-- moved flotsam.tex and other unused text back to siminos/blog
