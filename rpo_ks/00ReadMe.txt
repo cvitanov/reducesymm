@@ -1,7 +1,7 @@
 siminos/rpo_ks/00ReadMe.txt
 $Author$ $Date$
 ===========================================================
-On state space geometry of
+On the state space geometry of
 the Kuramoto-Sivashinsky flow in a periodic  domain
 Predrag Cvitanovi\'c, Ruslan L. Davidchack and Evangelos Siminos
                     started writing: Predrag    Jun 20 2006
