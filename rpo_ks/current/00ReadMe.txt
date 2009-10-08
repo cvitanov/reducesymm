@@ -3,6 +3,12 @@ $Author$ $Date$
 ===========================================================
                     started writing: Predrag Jun 20 2006
 
+guess what: even this directory is called "current," it is not
+current. The final, current for ever versin is in the directory
+
+	siminos/rpo_ks/SIADS-v3
+
+===========================================================
 arXiv:0709.2944      (revised v2): 11 Apr 2009  (1098kb)
 
 On state space geometry of

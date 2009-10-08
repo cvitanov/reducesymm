@@ -1,17 +1,44 @@
-rpo_ks/00ReadMe.txt
+siminos/rpo_ks/00ReadMe.txt
 $Author$ $Date$
 ===========================================================
-
-arXiv:0709.2944
-                    Date (revised v2): 11 Apr 2009  (1098kb)
-
 On state space geometry of
-the Kuramoto-Sivashinsky flow in a periodic
+the Kuramoto-Sivashinsky flow in a periodic  domain
+Predrag Cvitanovi\'c, Ruslan L. Davidchack and Evangelos Siminos
+                    started writing: Predrag    Jun 20 2006
+                    final submission: Vaggelis  Oct  5 2009
 
-                    Date: 19 Sep 2007    (318kb)
-State space geometry of a spatio-temporally chaotic
-Kuramoto-Sivashinsky flow
-    Ruslan L. Davidchack, Evangelos Siminos and Predrag Cvitanovi\'c
+SIADS manuscript #070562RR
+arXiv.org/abs/0709.2944
+
+From:  <haines@siam.org>                        Oct  5 2009
+Received your revised manuscript, will be in touch as soon as
+this revision has been evaluated. For the status of your paper,
+"Check Manuscript Status" link:
+http://siads.siam.org/cgi-bin/main.plex?el=A1B4Gpv5C5Qkp6F1A9knPBsEa6ovEBWfbxPvhUAZ
+    siminos/rpo_ks/SIADS-v3/ contains the final version
+    siminos/rpo_ks/SIADS-v3/reviews 2. round of referee edits
+
+arXiv:0709.2944 (revised v3):                    5 Oct 2009
+    siminos/rpo_ks/arxiv-v3/ contains the final version
+                             low resolution figs
+
+arXiv:0709.2944 (revised v2):                   11 Apr 2009
+    siminos/rpo_ks/arxiv-v2/
+final title:
+"On state space geometry of
+the Kuramoto-Sivashinsky flow in a periodic  domain"
+
+arXiv:0709.2944 (submitted v1):                 19 Sep 2007
+    siminos/rpo_ks/arxiv-v1/
+"State space geometry of a spatio-temporally chaotic
+Kuramoto-Sivashinsky flow"
+Predrag Cvitanovi\'c, Ruslan L. Davidchack and Evangelos Siminos
+
+previous titles:
+"Relative periodic orbits in Kuramoto-Sivashinsky equation"
+"Topology of a spatio-temporally chaotic Kuramoto-Sivashinsky system"
+
+
 
 Processing
 ----------
@@ -27,9 +54,8 @@ Submission
     [X] check here when done, enter date: Sept 19 2007
 
 
-=== submit SIADS  - see SIADS/00ReadMe.txt
+=== submit SIADS  - see SIADS-v?/00ReadMe.txt
     [ ] check here when done, enter date: Sept ? 2007
-
 
     SIAM Journal on Applied Dynamical Systems
     www.siam.org/journals/siads.php
