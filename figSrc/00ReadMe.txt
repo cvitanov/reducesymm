@@ -49,6 +49,18 @@ The crucial option is -dEPSCrop, -dEmbedAllFonts=true can help if
 there are problems with fonts, eg mathematica fonts. The output
 has to be a different file. Not sure whether the fix is universal.
 
+
+-----------------------------------------------------------------
+                                        Vaggelis Oct 9 2009
+
+Lorenz sources
+
+source for
+	siminos/figs/lorenzAttr.eps
+is in
+	vaggelis/testing/flows/lorenzPoincFlow.nb
+
+
 -----------------------------------------------------------------
 					Vaggelis Oct 1 2009
 
