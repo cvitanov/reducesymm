@@ -56,7 +56,7 @@ has to be a different file. Not sure whether the fix is universal.
 Lorenz sources
 
 source for
-	siminos/figs/lorenzAttr.eps
+	siminos/figs/lorenzAttr.eps (lorenzAttrChaosbook.eps is Chaosbook version with EQ_i instead of E_i)
 is in
 	vaggelis/testing/flows/lorenzPoincFlow.nb
 
