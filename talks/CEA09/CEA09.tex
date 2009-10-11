@@ -42,17 +42,21 @@
 \author{Evangelos Siminos}
 \author[Siminos, Cvitanovi\'c, Davidchack]
 {
-  \textcolor{green!50!black}{Evangelos~Siminos}\inst{1} \and
-  {Predrag~Cvitanovi\'c}\inst{1} \and
-  {Ruslan~L.~Davidchack}\inst{2}
+  \textcolor{green!50!black}{Evangelos~Siminos}\inst{1,2} \and
+  {Predrag~Cvitanovi\'c}\inst{2} \and
+  {Ruslan~L.~Davidchack}\inst{3}
 }
 \institute
 {
-  \inst{1}%
-  Georgia Institute of Technology, USA
+  \inst{1}
+  CEA/DAM/DIF %/DPTA/SPPE/LIRM
   \and
   \vskip-2mm
   \inst{2}%
+  Georgia Institute of Technology, USA
+  \and
+  \vskip-2mm
+  \inst{3}%
   University of Leicester, United Kingdom
 }
 \date{October 12, 2009}
@@ -70,6 +74,7 @@
 
 \section[KSe]{\KSe}
 
+\subsection{\KSe and its solutions}
 \begin{frame}{\KSe}
 \[
   u_t = F(u) = -{\textstyle\frac{1}{2}}(u^2)_x-u_{xx}-u_{xxxx}
@@ -132,21 +137,6 @@ Appears in study of many extended systems including
 
 
 
-\subsection{PDE's as dynamical systems}
-
-\begin{frame}
-
-\begin{block}{State space}
- \begin{itemize}
-	\item The space in which all solutions $u(x,t)$ for given boundary conditions live
-	\item $\inf$-dimensional: A point $\phi(x)$ is a function of $x$ that needs to specified
-		over an interval
-	\item In practice: a high but finite dimensional space (e.g. through a spectral discretization)
- \end{itemize}
-\end{block}
-
-\end{frame}
-
 \subsection{Lorenz equations example}
 
 \begin{frame}{From Lorenz attractor to a unimodal map}
@@ -180,16 +170,86 @@ Appears in study of many extended systems including
 		          \dot{\ssp}=\pVeloc(\ssp)=0
 		         \]
 			\end{block}
+		}
+		\only<2,3>{
+			\begin{block}{Linear stability of equilibria}
+			 \[
+			  A_{ij}=\frac{\partial \pVeloc_i}{\partial \ssp_j}(x_{E_m})
+			 \]
+			\only<3>{
+				Eigenvalues of A: $\eigExp[j]= \eigRe[j] \pm i\eigIm[j]$
+				\begin{itemize}
+				\item Linearly stable if $\eigRe[j]<0$
+				\item Linearly unstable if $\eigRe[j]>0$
+				\end{itemize}
+			}
+			\end{block}
+			}
+		\only<4>{
+			\begin{block}{}
+			$E_{0}:~
+				\begin{array}{lcr}
+					\eigExp[1] &=&11.83\\
+					\eigExp[2] &=&-2.66\\
+					\eigExp[3] &=&-22.83
+				\end{array}
+			$
+			 \hspace{-0.2\textwidth}\includegraphics[width=1.2\textwidth,clip=true]{../../figs/lorenzSaddle0}
+			\end{block}
+		}
+		\only<5>{
+			\begin{block}{$E_{1}$}
+			$\begin{array}{rcl}
+					\eigExp[1,2]&=&0.094\pm10.19\\
+					\eigExp[3] &=&-13.85
+			\end{array}
+			$
+			 \hspace{-0.2\textwidth}\includegraphics[width=1.2\textwidth,clip=true]{../../figs/lorenzPolarManifDetail1}
+			\end{block}
+		}
+		\only<6>{
+			\begin{block}{Poincar\'e section}
+				$\mathcal{P}:$ (N-1)-dimensional hypersurface.
+			\end{block}
+			\begin{block}{Poincar\'e map}
+			 \includegraphics[width=\textwidth,clip=true]{../../figs/plorenz_retmap2}	
+			\end{block}
 			}
 	\column{.55\textwidth}
 		\begin{exampleblock}{Lorenz attractor}
-			\includegraphics[width=\textwidth,clip=true]{../../figs/lorenzAttr}
+			\only<1-5>{\includegraphics[width=\textwidth,clip=true]{../../figs/lorenzAttr}}
+			\only<6>{\includegraphics[width=\textwidth,clip=true]{../../figs/lorenz2Poinc}}
 		\end{exampleblock}
 	\end{columns}
 \end{frame}
 
 
+\subsection{PDE's as dynamical systems}
+
+\begin{frame}
+
+\begin{block}{State space}
+ \begin{itemize}
+	\item The space in which all solutions $u(x,t)$ for given boundary conditions live
+	\item $\inf$-dimensional: A point $\phi(x)$ is a function of $x$ that needs to specified
+		over an interval
+	\item In practice: a high but finite dimensional space (e.g. through a spectral discretization)
+ \end{itemize}
+\end{block}
+
+\begin{block}{Intrinsic dimensionality}
+ \begin{itemize}
+  \item Dynamics are often captured by fewer variables than needed to numerically resolve the PDE.
+  \item e.g. inertial manifold theory for dissipative PDEs.
+  \item How do we exploit such low dimensionality to obtain dynamical systems description.
+ \end{itemize}
+\end{block}
+
+\end{frame}
+
+
 \begin{frame}{{\KSe} reduced to discrete maps}
+  \begin{block}{Take the hint from low dimensional systems}
   \begin{columns}
   \column{0.5\textwidth}
 	\includegraphics[width=\textwidth,clip=true]{../../figs/sPoincarePlot.eps}\\
@@ -198,6 +258,7 @@ Appears in study of many extended systems including
 	\includegraphics[width=\textwidth,clip=true]{../../figs/lanRM}\\
 	Y. Lan and Cvitanovi\'c (2004)
  \end{columns}
+ \end{block}
 \end{frame}
 
 
@@ -247,6 +308,8 @@ skeleton of the dynamics?}
 
 \section[KSe, $L=22$]{\KS, $L=22$, phase space }
 
+\subsection{$L=22$ solutions}
+
 \begin{frame}{L=22}
 \begin{center}
   \includegraphics[width=0.9\textwidth,clip=true]{../../figs/ks_L22_long_orbit}
@@ -255,7 +318,7 @@ skeleton of the dynamics?}
 \begin{block}{} 
  \begin{itemize}
   \item Lyapunov exponents: \\
-	$(\lambda_i) = (0.048,$ 0, 0, $-0.003$, $-0.189$, $-0.256$, $-0.290$, $\cdots)$
+	$(\lambda_i) = (0.048,$ 0, 0, $-0.003$, $-0.189$, $-0.256$, $-0.290$, $-0.310$, $\cdots)$
   \item Non trivial but tractable.	
  \end{itemize}
 
@@ -306,44 +369,15 @@ where $q_k = 2\pi\,k/L$.
 \end{tabular}
 
 \begin{itemize}
+ \item $\EQV{0}:\,u(x,t)=0$.
  \item All live in subspace $\bbU$ of antisymmetric functions, 
   pointwise invariant under $\Refl$: $\Refl u(x)=-u(-x)=u(x)$.
  \item $\EQV{2}$ invariant under $\Shift_{1/2}$.
  \item $\EQV{3}$ invariant under $\Shift_{1/3}$.
  \item For any $\EQV{i}$ we have a continuous family of equilibria under rotations $\Shift_{\shift/L}\,\EQV{i}$.
- \item The copies live in $\Shift_{\shift/L}\,\bbU$.
+   that live in $\Shift_{\shift/L}\,\bbU$.
 \end{itemize}
 
-\end{frame}
-
-\begin{frame}{Local stability}
-
- \begin{columns}
-  \column{0.5\textwidth}
-  Linear stability of equilibria is determined by the eigenvalues of
-  \[
-   A_{ij}(x)=\frac{\partial v_i(x)}{\partial x_j}	
-  \]
-\begin{center} \footnotesize
-\begin{tabular}{cccc}
-\EQV{1}& $\Re{\lambda}$ & $\Im{\lambda}$ & Symmetry \\\hline
-   & $\ \ 0.1308$& $0.3341$ & -  \\
-   & $\ \ 0.0824$& $0.3402$ & $\bbU$  \\
-\EQV{2}&  &  & \\\hline
-   & $\ \ 0.1390$& $0.2384$ & $\bbU$         \\
-\EQV{3}&  &   \\\hline
-     &$\ \ 0.0933$&          & $\bbU$     \\
-     &$\ \ 0.0933$&          & -           \\
-$\REQV{\pm}{1}$&  &   \\\hline
-   & $\ \ 0.1156$ & $0.8173$ & -  \\
-   & $\ \ 0.0337$ & $0.4189$ & -  \\
-$\REQV{\pm}{2}$&  &   \\\hline
-     & $\ \ 0.3370$ &          & -  \\
-\end{tabular}
-\end{center}
-  \column{0.5\textwidth}
-  \includegraphics[width=\textwidth,clip=true]{../../figs/lorenzPolarManifDetail1.eps}
- \end{columns}
 \end{frame}
 
 
@@ -386,14 +420,23 @@ $\REQV{\pm}{2}$&  &   \\\hline
   u(x+\shift_p,\period{p}) = u(x,0) = u_p(x)\,.
 \]
 \Po s satisfy:
+% \[
+%    \Refl u(x+\shift,\period{p}) =
+%   -u(-x-\shift,\period{p}) = u(x+\shift,0) = u_p(x)
+% \]
 \[
-   \Refl u(x+\shift,\period{p}) =
-  -u(-x-\shift,\period{p}) = u(x+\shift,0) = u_p(x)
+   u(x,\period{p}) = u(x,0)=u_p(x)
 \]
+
 
 For \KSe\ bifurcation branches of \rpo s have been studied in detail by Brown and Kevrekidis (1996).
 
 \end{frame}
+
+\begin{frame}{A \rpo}
+\includegraphics[width=0.8\textwidth,clip=true]{../../figs/rpo} 
+\end{frame}
+
 
 \begin{frame}{Unstable \rpo s}
 
@@ -685,9 +728,10 @@ $\REQV{\pm}{2}$&  &   \\\hline
 
 \begin{block}{Future work}
 \begin{itemize}
-  \item Construct Poincar\'e sections and return maps from section to section.
+  \item Construct Poincar\'e sections and return maps.
   \item Find all (relative) periodic orbits up to a given period.
   \item Use the information quantitatively (periodic orbit theory).
+  \item Control
 \end{itemize}
 \end{block}
 
