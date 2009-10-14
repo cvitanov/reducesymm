@@ -6,9 +6,35 @@ the Kuramoto-Sivashinsky flow in a periodic  domain
 Predrag Cvitanovi\'c, Ruslan L. Davidchack and Evangelos Siminos
                     started writing: Predrag    Jun 20 2006
                     final submission: Vaggelis  Oct  5 2009
+		    accepted: 			Oct 14 2009	
 
 SIADS manuscript #070562RR
 arXiv.org/abs/0709.2944
+
+
+
+D.Barkley@warwick.ac.uki 			Oct 14 2009
+ to siminos, evangelos.simi., haines, tasso
+	
+show details 10:18 PM (0 minutes ago)
+	
+Dear Dr. Siminos,
+
+We are pleased to accept "On the state space geometry of the Kuramoto-Sivashinsky flow in a periodic domain" for publication in SIADS. No additional revision is needed. The accepted manuscript has been forwarded to the production staff and you will hear from them shortly with a request for your TeX file. You will also receive additional information about SIAM's publication process.
+
+In the absence of information from you to the contrary, you confirm that all authors listed on the manuscript concur with publication in its final accepted form and that neither this manuscript nor any of its essential components have been published previously or submitted to another journal.
+
+Thanks again for your contribution to SIADS.
+
+Sincerely,
+
+Dwight Barkley
+Associate Editor
+SIAM Journal on Applied Dynamical Systems
+
+
+-----------------------------------------------------
+
 
 From:  <haines@siam.org>                        Oct  5 2009
 Received your revised manuscript, will be in touch as soon as
