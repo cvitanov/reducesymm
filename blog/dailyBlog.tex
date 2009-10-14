@@ -1551,6 +1551,15 @@ I don't know how much we should care about this, but this
 tells me that, no matter how we construct the reduced space,
 we will not be able to retain the simple structure of the KS
 invariant subspaces within the reduced space.
+
+\RLDedit{
+\item[Ruslan: 2009-10-14]
+{\em Preamble: I was hoping that Predrag would engage in the above discussion, but since he's currently switched his attention to 'separating the women from girls', I'm going to continue talking to myself (and maybe to Vaggelis) here.}
+
+I still don't see how to reconcile this: On the one hand, it would appear natural that the antisymmetric subspace should be a part of $M/$SO(2), but, on the other hand, the antisymmetric subspace contains two distinct images of $\EQV{2}$, while, in the reduced representation of the full KS flow, we would hope that there would be only one point for $\EQV{2}$ in $M/$SO(2).  I can see only two possibilities here: either we introduce discontinuities of the flow in $M/$SO(2) (like it is happening with my Fourier modes representation), or we collapse the dynamics to a subspace that completely ignores the phase information (e.g., like in the energy transfer representation).
+
+Since I don't like collapsing things (I would like to have a representation where I can keep track of the phase shift $\theta$, which will allow me to reconstruct the original dynamics if I wish to do so), and since I don't know how to get rid of the discontinuities otherwise, I'm going to go crazy and embrace them.  So, my plan here is as follows:  I'll try to construct a reduced representation (and hopefully a Poincar\'e map) for the dynamics in the vicinity of the unstable manifold of $\EQV{2}$. I think that if I manage to do it here, then there is hope that it can be done for the KS flow elsewhere as well.  I may continue using the Fourier modes, or I might try something else, like using the real-space representation (remember those $u$-$u_x$-$u_{xx}$ plots?).
+}
 \end{description}
 
 
@@ -2327,6 +2336,13 @@ within the subspace $\pS^{[j]}$. \emph{Presto:} Increase the dimension of the
 subspace by one, and you get the next $\ExpaEig^{(j+1)}$. Repeat, and
 you get all eigenvalues and eigenvectors, even those insanely contacting ones,
 like $\ExpaEig^{(j)} \approx 10^{-137}$.
+
+\RLDedit{
+\noindent {\bf Ruslan: 2009-10-14} I'm sorry to ruin your optimism here, but I don't think this procedure is numerically stable: The round-off errors will spill outside $\pS^{[j]}$ and then $1/\ExpaEig^{(k)}$ multipliers for $k > j$ will stretch these errors.
+
+Another thing that you have noticed is that they don't say anything about complex eigenvalues.  This is because in the construction of the algorithm they assume that all Lyapunov exponents are distinct, which implies that all Floquet multipliers of periodic orbits are real and distinct as well (Even though they write $\lambda_1 \geq \lambda_2 \cdots$ instead of $>$, this is mentioned in one of the papers you discussed above, but I don't remember which one).  I just hope that, if we do have a pair of complex conjugate eigenvalues, the corresponding two Lyapunov vectors will span the same subspace as the real and imaginary parts of the corresponding eigenvector.  But this needs to be verified.
+}
+
 \end{enumerate}
 \emph{Bonus points:}
 \begin{enumerate}
@@ -2339,6 +2355,11 @@ the ergodic component of the \statesp\ hierarchically, their linearized
 stable / unstable manifolds tessellate the asymptotic, `Lyapunov'
 stable / unstable foliation with exponentially increasing accuracy.
 No need to do mindless numerics, starting with a random initial point.
+
+\RLDedit{
+\noindent {\bf Ruslan: 2009-10-14} This may be the best algorithm we have for determining Lyapunov vectors along a typical chaotic orbit, but if we want to determine them for a PO or a RPO, then I think that the best way to do this is to find out how to solve the eigen-problem for a very badly conditioned matrix $J$ which can be represented as a product $J = J_{n}J_{n-1}\cdots J_1$ of not-so-badly conditioned matrices $J_j$.  You seem to have something along these lines in the extract 'Transport of vector fields' above, but I would prefer to see this construction done for maps, since \emph{computers don't do flows}.
+}
+
   \item
 \emph{Unexpected bonus:}
 Near-orthogonality of these eigenvectors appears to separate the women from
