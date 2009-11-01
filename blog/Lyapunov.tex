@@ -4,12 +4,12 @@
 \chapter{Lyapunov vectors}
 \label{s:LyapunovVec}
 
-This part of the blog focuses on use of `covariant Lyapunov
+This part of the blog focuses on the use of `covariant Lyapunov
 vectors' (CLV) to identify the number of degrees of freedom
 that capture the physics of a `turbulent' PDE on a spatial
 domain. Currently that number seems to be proportional to the
 system size, for \KSe\ roughly four times the number of
-marginally positive/negative Lyapunov exponents, and twice it's
+ positive/marginal Lyapunov exponents, and twice its
 Kaplan-Yorke estimate.
 
 As material is written up, parts of it will migrate from its
@@ -64,13 +64,32 @@ PS - for something more "physical," check out
 You'll find them inspirational. Probably the same story as KS, but explaining the
 phase transition between frozen puffs and turbulent puffs would make plumbers happy.
 
+\section{Reading assignments}
+
 \noindent{\bf Predrag, to us:} Here are the relevant articles.
 
 \begin{description}
+\item[Characterizing dynamics with covariant Lyapunov
+              vectors], by
+Ginelli, Poggi, Turchi, Chat\'{e}, Livi and Politi\rf{ginelli-2007-99}
+is the main reference on the
+`covariant Lyapunov vectors.' They describe the QR algorithm for
+computing Gram-Schmidt vectors (GSV) and recovering
+the covariant Lyapunov vectors (CLV) from them.
+They show, using covariant Lyapunov vectors, that
+  the chaotic solutions of four spatially-coupled maps,
+(a) chaotic tent maps,
+(b) chaotic symplectic maps,
+(c) continuous time rotator model, and
+(d) Fermi-Pasta-Ulam chain
+  evolve within a manifold spanned by a finite number
+  of physical modes.
+
 \item[Hyperbolicity and the effective dimension] of
     spatially-extended dissipative
-    systems\rf{YaTaGiChRa08}:
-  This paper is a fairly rigorous demonstration of what we
+    systems, by Yang, Takeuchi, Ginelli, Chat\'{e}
+    and Radons\rf{YaTaGiChRa08},
+ is a demonstration of what we
   have observed numerically, that a finite number of Fourier modes
   captures most of the dynamics of KS, and most relevant to our research.
  They show, using covariant Lyapunov vectors, that
@@ -88,6 +107,57 @@ phase transition between frozen puffs and turbulent puffs would make plumbers ha
   beyond that
   merely increases the number of isolated modes.
 
+\noindent{\bf 2009-09-16 Lyapunov vectors, illustrated}
+In order to spare you from reading the source literature, I'm including here
+those figures from Yang \etal\rf{YaTaGiChRa08} that I find most striking.
+The main advance of using Lyapunov vectors instead of eigenvalues alone
+is that the approximate orthogonality of the 'isolated' ones provides a clear
+threshold between the 'physical' and the rest.
+
+You might be unimpressed by the KS example, as the $-k^4$ hyper-diffusion
+term kills all higher Fourier modes very effectively. For that reason the
+complex Ginzburg-Landau equation, \reffig{fig:lyapSpecCLG}
+is very persuasive; the nonlinearity is
+of $u(x)^3$ variety (instead of $u \partial u$ of Navier-Stokes and
+KS), but there is only a $-k^2$ diffusive term, and nevertheless there
+is a clear threshold for the 'isolated' Lyapunov vectors. Furthermore,
+the system exhibits left and right traveling waves, which is more like
+fluids than the rigid wave patterns of KS.
+
+\begin{figure}
+ (a)~\includegraphics[width=0.45\textwidth]{../figs/YaTaGiChRa08fig2}
+ (b)~\includegraphics[width=0.45\textwidth]{../figs/YaTaGiChRa08fig3}
+\caption{
+(left panel)
+Fig.~2 of Yang \etal\rf{YaTaGiChRa08}:
+Properties of covariant Lyapunov vectors for the KS system
+($L = 96$, $k_{\rm cut} = 42 \cdot 2\pi/L$, and PBC).
+(a) Spatiotemporal plot of a typical vector in the isolated region
+($j=46$, total time $100$).
+(b) Spatial power spectra of vectors of indices
+$j = 1$, $16$, $32$, $38$, $44$, $52$, $60$, $68$, $76$, $84$
+(from left to right in peak position).
+(c) Top panel: peak wavenumber in the power spectra (red circles)
+and $k = [j/2] \cdot 2\pi/L$ (black line).
+Bottom panel: DOS violation fraction $\nu^{(j,j+1)}_\tau$ for pairs of
+neighboring vectors (pairs within the same step are omitted).
+(d) Angle distributions between pairs of vectors.
+(e) Same as (d) but with a different abscissa.
+(right panel)
+Fig.~3 of Yang \etal\rf{YaTaGiChRa08}:
+Complex Ginzburg-Landau equation in the amplitude turbulence regime
+($L = 64$, $k_{\rm cut} = 31 \cdot 2\pi/L$, and PBC).
+(a,b) Spatiotemporal plots of the phase component of a typical vector $j = 91$ in the isolated region
+(same trajectory, but at two distant periods of time, during a total time of $20$ for each plot).
+(c) Lyapunov spectrum; inset: close-up around threshold.
+(d) Time fraction $\nu^{(j,j+1)}_\tau$ of DOS violation, as a function of $\tau$
+($j=78$, 82, 86, 90, 94, from top to bottom).
+}
+\label{fig:lyapSpecCLG}
+\end{figure}
+
+
+
 \item[Lyapunov analysis and the collective dynamics of
            large chaotic systems]\rf{TaGiCh09}:
   Not as directly relevant to us as \refref{YaTaGiChRa08}.
@@ -102,23 +172,9 @@ phase transition between frozen puffs and turbulent puffs would make plumbers ha
   quantitative correspondence between the collective modes
   and some of the so-called Perron-Frobenius dynamics.
 
-\item[Characterizing dynamics with covariant Lyapunov
-              vectors]\rf{ginelli-2007-99}:
-This is the main reference on the
-`covariant Lyapunov vectors.' They describe the QR algorithm for
-computing Gram-Schmidt vectors (GSV) and recovering
-the covariant Lyapunov vectors (CLV) from them.
-They show, using covariant Lyapunov vectors, that
-  the chaotic solutions of four spatially-coupled maps,
-(a) chaotic tent maps,
-(b) chaotic symplectic maps,
-(c) continuous time rotator model, and
-(d) Fermi-Pasta-Ulam chain
-  evolve within a manifold spanned by a finite number
-  of physical modes.
 
-\item[An efficient method for recovering Lyapunov vectors from
-singular vectors]\rf{WoSa07}: {\bf Predrag 2009-10-15} Wolfe
+\item[An efficient method for recovering Lyapunov vectors] from
+singular vectors\rf{WoSa07}: {\bf Predrag 2009-10-15} Wolfe
 and Samelson seem to be the most important article to
 understand. If Ginelli \etal\rf{ginelli-2007-99} say the key
 thing (how to compute covariant eigenvectors, actually) they
@@ -194,11 +250,68 @@ attractor can be found in the subspace of the leading
 Lyapunov vectors.
     ''
 
-\item[On the concept of stationary {L}yapunov basis:]
-    Ershov and Potapov\rf{ErshPot98}. Alex Potapov papers
-    are available on
-    \HREF{http://www.math.ualberta.ca/~apotapov/Publications.htm}
-    {http://www.math.ualberta.ca/$\sim$apotapov}.
+\item[On the concept of stationary {L}yapunov basis] by Ershov
+and Potapov\rf{ErshPot98}, available on
+\HREF{http://www.math.ualberta.ca/~apotapov/Publications.htm}
+{http://www.math.ualberta.ca/$\sim$apotapov}. They establish
+existence of `stationary {L}yapunov basis'
+$\{\jEigvec[1],\cdots,\jEigvec[d]\}$ (called elsewhere `covariant
+Lyapunov vectors') such that the Lyapunov
+exponents are given by
+\beq
+    \eigExp[j] = \lim_{N \to \infty} \frac{1}{N}
+         \sum_{n=1}^{N} \ln
+    |\jEigvecT[j](\ssp_n) \cdot \jMps(\ssp_n) \jEigvec[j](\ssp_n)|
+\ee{ErshPotMap}
+for a map, and
+\beq
+    \eigExp[j] = \lim_{T \to \infty} \frac{1}{T}
+         \int_0^{T}
+    \jEigvecT[j](\ssp_n) \cdot \Mvar(\ssp_n) \jEigvec[j](\ssp_n)
+\ee{ErshPotFlow}
+for a flow. They say Goldhirsch, Sulem and Orszag\rf{GoSuOr87}
+did the same thing, but for ODEs rather than maps. We should also
+talk with Dieci\rf{DiEl08,DiRuVl97,DiVl02}
+as he is at GaTech and seems to have
+worked on closely related problem, the singular value decomposition
+(SVD) to approximate Lyapunov spectra.
+
+
+\item[Computing {L}yapunov spectra] with continuous
+         {Gram-Schmidt} orthonormalization.
+Christiansen and Rugh\rf{ChRu97},
+present a
+  continuous method for computing the Lyapunov
+  spectrum for a PDE dynamical. They introduce a
+  stability parameter and augment system with
+  an orthonormal $k$-dimensional frame and a Lyapunov vector such
+  that the frame is continuously Gram-Schmidt orthonormalized
+  and at most linear growth of the dynamical variables is
+  involved. We prove that the method is strongly stable when
+  where is the $k$th Lyapunov exponent in descending order and we
+  show through examples how the method is implemented.
+
+\item[Improved Numerical Floquet
+Multipliers]\rf{Lust01} by
+\HREF{https://perswww.kuleuven.be/~u0006235/}
+     {Kurt Lust}.  {\bf 2009-09-14 Ruslan}:
+Looks like  in this paper {Lust} has proposed a method. If you
+could get it for me, it would be great. {\bf 2009-09-14 Predrag
+to Ruslan}: You probably do not need to read this paper.
+But - for future reference - his
+     code for these calculations is
+\HREF{https://perswww.kuleuven.be/~u0006235/ACADEMIC/r_psSchur.html}
+     {available here}, and
+\HREF{https://perswww.kuleuven.be/~u0006235/ACADEMIC/r_PDEcont.html}
+     {PDEcont library}  for continuation and bifurcation analysis
+      of large scale systems might be of interest.
+Their ``A numerical and analytical study of Floquet
+        multipliers of periodic solutions near
+        a homoclinic orbit''\rf{ZhLuRo01}
+might also come in handy.
+He used to be a part of the Keller, Doedel, Wulff, Krauskopf,
+Hinke crowd.
+
 
 \item[Are bred vectors the same as
     {L}yapunov vectors?]\rf{KaCoCa02}: {\bf Predrag
@@ -219,11 +332,217 @@ are very significant in a very large dynamical system.''
 
 \end{description}
 
-\subsection{2009-09-13 Lyapunov exponents for KS}
+\section{QR decomposition}
+
+\begin{description}
+\item[2009-10-10 Sara and Predrag] Understood
+    \refref{ginelli-2007-99} (might want to check
+    \refref{PoGiYaMa06} as well). Still need to copy
+    relevant definitions from ChaosBook.org here.
+\end{description}
+
+Consider a $d$-dimensional discrete-time dynamical system. Let
+$\ssp_{n}\in \pS \subset \reals^d$ denote the \statesp\ point
+at time $t_{n}$ and let $\{{\bf g}_{n}^{(\ell)}\}$, $\ell=1,
+\ldots d$, be a set of $d$ orthogonal vectors, ${\bf
+g}_{n}^{(\ell)} \cdot {\bf g}_{n}^{(k)} = \delta_{\ell k}$,
+that span the tangent space $T\pS$ of the flow at time $t_{n}$.
+Collect these into the $n$th \emph{GS basis} (or GS fundamental
+matrix), written as the orthogonal matrix
+\[
+{\bf G}_n = ({\bf g}_n^{(1)} , \ldots ,  {\bf g}_n^{(d)})
+\]
+whose columns are the basis vectors $\{{\bf g}_{n}^{(\ell)}\}$.
+Start now at $t_{n-1}$. Iterating the evolution equations once
+maps the ${\bf G}_{n-1}$ orthogonal basis into a set of
+non-orthogonal, non-unit basis vectors $\overline{\bf G}_n =
+(\overline {\bf g}_n^{(1)} , \ldots , \overline {\bf
+g}_n^{(d)})$,
+\[
+\overline {\bf g}_n^{(\ell)} =\jMps_{n-1}
+            \, {\bf g}_{n-1}^{(\ell)}
+\,,
+\]
+where $\jMps_{n-1}$ is the \jacobianM\ of the
+transformation evaluated at time $t_{n-1}$.
+The $n$th GS basis is now obtained by applying the
+Gram-Schmidt orthogonalization to the vectors
+$\overline {\bf g}_n^{(\ell)}$. Pick
+$\overline{\bf g}_n^{(1)}$ as the direction of the first
+Gram-Schmidt vector,
+${\bf g}_n^{(1)} = \overline{\bf g}_n^{(1)}/|\overline{\bf g}_n^{(1)}|$.
+Pick the component of
+$\overline{\bf g}_n^{(2)}$ normal to ${\bf g}_n^{(1)}$
+as the direction of the second
+Gram-Schmidt vector, normalize to the unit eigenvector,
+\bea
+{\bf g}_n^{(2)} &=& \frac{1}{|\cdots|}
+            \left(\overline{\bf g}_n^{(2)}
+                  - (\overline{\bf g}_n^{(2)} \cdot {\bf g}_n^{(1)})
+                      \, {\bf g}_n^{(1)}
+            \right) \,,
+\continue
+{\bf g}_n^{(3)} &=& \frac{1}{|\cdots|}
+            \left(\overline{\bf g}_n^{(3)}
+                  - (\overline{\bf g}_n^{(3)} \cdot {\bf g}_n^{(2)})
+                      \, {\bf g}_n^{(2)}
+                  - (\overline{\bf g}_n^{(3)} \cdot {\bf g}_n^{(1)})
+                      \, {\bf g}_n^{(1)}
+            \right) \,,
+\nnu
+\eea
+and so on.
+Thus the Gram-Schmidt orthogonalization  amounts to the $\overline{\bf G} =
+{\bf Q}{\bf R}$ decomposition, where
+\[
+\overline{\bf G}_n =
+ {\bf G}_n ({\bf G}_n^T \overline{\bf G}_n) =
+ {\bf Q}_n {\bf R}_n \,.
+\]
+The columns of the orthogonal matrix ${\bf Q}_n = {\bf G}_n$
+are the elements of the $n$th GS basis, while ${\bf R}_n= {\bf
+G}_n^T \overline{\bf G}_n$ is an upper-triangular matrix whose
+nonzero elements are obtained by projecting each vector
+$\overline {\bf g}_n^{(j)}$ onto the subspace spanned by $\{
+{\bf g}_n^{(k)}\}$ with $k \leq j$.
+        \PC{${\bf R}_n= {\bf
+G}_n^T \overline{\bf G}_n$ formula is reminiscent of the
+expression for the \jacobianM\ in terms of fundamental ones,
+$\jMps_n= {\bf G}_n {\bf G}_{n-1}^{-1}$.}
+        \PC{the reminder of this entry is clippings from \refref{PoGiYaMa06},
+        still needs to be edited; there is more QR algebra to fill in. Apologies.
+        }
+
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\SFIG{GinelliFrames} {}{ \JacobianM\ transports initial
+orthogonal frame into a non-orthogonal one. This frame is then
+QR decomposed into an $R$-matrix and the next Gram-Schmidt
+frame, which is then transported by the next \jacobianM, and so
+on. A vector that starts within the subspace spanned by such
+finite Gram-Schmidt basis stays within the subspace spanned by
+the successive orthogonal frames.
+}{fig:GinelliFrames}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+
+What we have is a succession of co-moving re-orthogonalized
+frames, \reffig{fig:GinelliFrames},
+\[
+{\bf G}_{n-1} \to \overline{\bf G}_n =
+ {\bf G}_n {\bf R}_n
+ \to
+{\bf G}_{n+1} {\bf R}_{n+1}{\bf R}_n
+\]
+where ${\bf G}_n$ is an orthogonal frame spanning the tangent
+space at $\ssp_n$, and
+ \[
+{\bf R}_n{\bf R}_{n-1} {\bf R}_{n-1}\cdots {\bf R}_1
+ \]
+ is the \jacobianM\ computed within the
+co-moving frame. It keeps track of stretching along
+eigen-directions, but not rotations of the frame, that
+information is contained in the imaginary parts of
+eigen-exponents of the linearized flow. At each iteration
+the linearized flow stretches and squashes the hypercube
+whose edges are the $n$th GS basis into a parallelepiped
+whose edges are the vectors forming the columns of
+$\overline{\bf G}_{n+1}$. Projections of these
+vectors onto the $(n\!+\!)$th GS hypercube form
+the upper-triangular co-moving frame representation
+of the \jacobianM\ $R_{n+1}$.
+
+Ershov and Potapov have shown\rf{ErshPot98} that, by repeating
+the above procedure up to a time $t_m$ for $m$ much larger than
+$n$,  the GS basis converges to an orthogonal set of vectors
+$\{{\bf e}_m^{(k)}\}$, $k=1,\ldots, d$ - the $m$th Gram-Schmidt
+vectors - which solely depend on the \statesp\ point
+$\ssp_{m}$. Thus the covariant Lyapunov vectors are independent
+of where the backward evolution is started along a given
+trajectory, provided that it is sufficiently far in the future.
+    \PC{For \po s, we need no Ershov and
+    Potapov\rf{ErshPot98}. Oseledec arguments are only
+    needed for a random long-time ergodic trajectory}
+
+The Lyapunov exponents $\lambda_1 \geq \lambda_2 \geq \ldots
+\geq \lambda_d$ are the time-averaged values of the logarithms
+of the diagonal elements of ${\bf R}_n$.
+        \PC{Ginelli's talk shows that that diagonal elements of ${\bf R}_n$
+            are the eigenvalues of the \jacobianM\ $\jMps_n$.}
+
+Assume that a set of Gram-Schmidt vectors at $\ssp_m$ has been
+generated by iterating the generic initial condition $\ssp_0$.
+Let ${\bf u}_m^{[j]}$ be a generic vector inside the subspace
+$\pS^{[j]}$ spanned by $\{{\bf g}_m^{(k)}\}$, $k=1,\ldots, j$,
+\ie, by the first $j$ Gram-Schmidt vectors at time $t_m$. This
+vector can be iterated backward in time by inverting the
+upper-triangular matrix ${\bf R}_m$: if the $c_m^{i}=({\bf
+g}_m^{(i)} \cdot {\bf u}_m^{[j]} )$ are the coefficients
+expressing ${\bf u}_m^{[j]}$ in terms of the Gram-Schmidt
+vectors at $\ssp_m$, then $c_{m-1}^{i}= \sum_k [{\bf
+R}_m^{-1}]_{ik} c_m^{k}$. Since ${\bf R}_m$ is
+upper-triangular, it is easy to verify that ${\bf u}_n^{[j]}
+\in T\pS^{[j]}_n$ at all times $t_n$.
+
+
+Iterating ${\bf u}_m^{[j]}$ backward for a sufficiently large
+number $(m-n)$ of times, it eventually aligns with the
+(backward) most expanding direction within $T\pS^{[j]}$. This
+defines  ${\bf e}_n^{(j)}$, our intrinsic $j$-th (forward)
+expanding direction at the \statesp\ point $\ssp_n$.
+
+In order to verify that ${\bf e}_n^{(j)}$ is covariant, define
+the matrix $[{\bf C}_m]_{ij} = c_m^{ij}$,
+\[
+{\bf C}_m = {\bf R}_m {\bf C}_{m-1}
+\,.
+\]
+By multiplying both sides by ${\bf Q}_m$ and substituting
+$\overline {\bf G}_m$ for its QR decomposition on the resulting
+right hand side, one is left with ${\bf
+e}_{m}^{(j)}=\jMps_{m-1} {\bf e}_{m-1}^{(j)}$ for $j=1,\ldots,
+d$.
+
+Covariant Lyapunov vectors $\{{\bf v}_{m}^k\}$ constitute an
+intrinsic, covariant basis defining expanding/contracting
+directions in \statesp.
+In the presence of degeneracies covariant Lyapunov vectors
+have to be grouped according to the multiplicity of the
+corresponding Lyapunov exponent.
+
+The $i$th Lyapunov exponent is the average of the growth rate
+of the $i$th the covariant Lyapunov vector. For 2\dmn\ maps and
+3\dmn\ flows this has been shown by B. Eckhardt, D. Yao,
+Physica D {\bf 65}, 100 (1993); G. Froyland, K. Judd and A. I.
+Mees, Phys. Rev. E {\bf 51}, 2844 (1995); and A. Politi
+\etal\rf{PoGiYaMa06}.
+
+Evidence of the validity of the approach was given in
+\refref{PoToLe98}, where covariant Lyapunov vectors were
+introduced to characterize time periodic orbits in a 1D
+lattice of coupled maps. There, it was found that the number
+of nodes (changes of sign) in a covariant Lyapunov vectors is
+directly connected to the position of the corresponding
+Lyapunov exponent within the Lyapunov spectrum.
+
+
+The covariant Lyapunov vectors are also well defined for
+non-invertible dynamics, since it is necessary and sufficient
+to follow backward a trajectory previously generated forward in
+time. The determination of the covariant Lyapunov vectors is
+very efficient. The main computational bottleneck is the memory
+required to store the matrices ${\bf R}_n$ and the $n$-time
+Gram-Schmidt vectors during the forward integration. The memory
+required can be substantially reduced by occasionally storing
+the instantaneous configuration in real and tangent space and
+re-generating the rest when needed.
+
+
+\section{2009-09-13 Lyapunov exponents for KS}
 
 % PC 2009-09-12: (b) generated by siminos/figSrc/gnu/lyapSpec.gnu
 \begin{figure}
- (c)~\includegraphics[width=0.40\textwidth]{../figs/eigenvalues.ps}
+ (a)~\includegraphics[width=0.40\textwidth]{../figs/eigenvalues.ps}
  (b)~\includegraphics[width=0.50\textwidth]{../figs/lyapSpec}
 \caption{
 (a)
@@ -232,7 +551,8 @@ orbit $\overline{1}$ compared with  the stability eigenvalues
 of the $u(x,t)=0$ stationary solution $k^2- \nu k^4$ (from
 \refref{Christiansen97}). $\lambda_k$ for $k \geq 8$ fall
 below the numerical accuracy of integration and are not
-meaningful. Antisymmetric subspace, $N=16$ real Fourier
+meaningful. Antisymmetric subspace,
+hence no \SOn{2}\ pairing of eigenvalues, $N=16$ real Fourier
 modes, $L=36.31$. One needs to rescale the time to compare
 this to figure (b); -60 in the Lyapunov scale of figure (a)
 corresponds to approx. -1.8 in figure (b).
@@ -246,22 +566,6 @@ modes long-time simulation (from \refref{SCD07}).
 
 
 \begin{description}
-\item[Ruslan]
- Here's the expanded list of Lyapunov exponents for KS with $L = 22$:
- 0.048,    0.0,    0.0,   -0.003,   -0.189,   -0.256,   -0.290,   -0.310,
--1.963,   -1.967,   -5.605,   -5.605,  -11.923,  -11.923...
-So, there appears to be 8 `physically relevant' exponents and
-the rest are pairs of hyperbolically separated ones.  I read
-the papers about these covariant Lyapunov vectors and I'm not
-sure I understand how they are related to eigenvectors at
-periodic orbits: are they aligned?  I suspect that not quite,
-apart from the most expanding and the most contracting
-direction, the rest are sitting somewhere within the
-subspaces spanned by the $k$ most expanding, or $m$ most
-contracting eigendirections, but not quite aligned with the
-eigendirections themselves.  That's probably why they are
-more appropriately called `Lyapunov vectors'.
-
 \item[Predrag]
 Sure looks persuasive, see \reffig{fig:lyapSpec}. I have also
 added stability of a periodic orbit from
@@ -294,6 +598,30 @@ plane, I doubt that the full spectra can be rescued from
 Lan's calculations. And, as explained above, probably we cannot
 compute them for periodic orbits.
 
+\item[Ruslan]
+ Here's the expanded list of Lyapunov exponents for KS with $L = 22$:
+ 0.048,    0.0,    0.0,   -0.003,   -0.189,   -0.256,   -0.290,   -0.310,
+-1.963,   -1.967,   -5.605,   -5.605,  -11.923,  -11.923...
+So, there appears to be 8 `physically relevant' exponents and
+the rest are pairs of hyperbolically separated ones.
+
+I read
+the papers about these covariant Lyapunov vectors and I'm not
+sure I understand how they are related to eigenvectors at
+periodic orbits: are they aligned?  I suspect that not quite,
+apart from the most expanding and the most contracting
+direction, the rest are sitting somewhere within the
+subspaces spanned by the $k$ most expanding, or $m$ most
+contracting eigendirections, but not quite aligned with the
+eigendirections themselves.  That's probably why they are
+more appropriately called `Lyapunov vectors'.
+
+\item[2009-09-14 Predrag]
+The `covariant Lyapunov vectors' are indeed the (right,
+non-orthogonal) eigenvectors of the \jacobianM\ \jMps, as
+defined in ChaosBook, and coincide with Floquet eigenvectors
+for a periodic orbit.
+
  \item[Ruslan] I use 32 complex Fourier modes, so the
 truncated system has 62 degrees of freedom.  The Lyapunov
 exponent calculation is standard (using Gram-Schmidt).  The
@@ -311,10 +639,9 @@ with us.
 
  \item[Ruslan]
 I have the 62 eigenvalues/eigenvectors for all the RPO/PPO
-I've detected, but the highly contracting eigenvalues are
- numerical noise. As Predrag mentioned above,
-the straightforward calculation of highly contracting
-eigenvalues may suffer from the numerical noise. We need a
+I've detected, but for the highly contracting eigenvalues
+the straightforward calculation
+suffers from the numerical noise. We need a
 better method to compute Floquet multipliers. I have now
 checked:   Looks like {Kurt Lust} has proposed one, but I
 cannot get his paper on ``Improved Numerical Floquet
@@ -347,30 +674,13 @@ storing it is trivial, no underflow problems one would get if
 one worked with the Floquet {\em multiplier}. So we should be able
 to keep track of all 62 eigenvectors, redo it for 126 eigenvectors,
 and compare with plots in \refref{YaTaGiChRa08}.
-Ginelli \etal\rf{ginelli-2007-99} seems to be the main
+Ginelli \etal\rf{ginelli-2007-99} are the main
 reference on the `covariant Lyapunov vectors.' They describe
 the QR algorithm for computing Gram-Schmidt vectors (GSV) and
 recovering the covariant Lyapunov vectors (CLV) from them.
 What confuses me is that so far all papers refer to $\Lyap_j
 = \eigRe_j + i \, \eigIm_j$ as purely real, and list only
 $\eigRe_j$, but I guess that will be explained somewhere.
-
-\item[2009-09-14 Predrag] You probably do not need to read
-\HREF{https://perswww.kuleuven.be/~u0006235/}
-     {Kurt Lust}'s paper on ``Improved Numerical Floquet
-Multipliers''\rf{Lust01}. But - for future reference - his
-     code for these calculations is
-\HREF{https://perswww.kuleuven.be/~u0006235/ACADEMIC/r_psSchur.html}
-     {available here}, and
-\HREF{https://perswww.kuleuven.be/~u0006235/ACADEMIC/r_PDEcont.html}
-     {PDEcont library}  for continuation and bifurcation analysis
-      of large scale systems might be of interest.
-Their ``A numerical and analytical study of Floquet
-        multipliers of periodic solutions near
-        a homoclinic orbit''\rf{ZhLuRo01}
-might also come in handy.
-He used to be a part of the Keller, Doedel, Wulff, Krauskopf,
-Hinke crowd.
 
 \item[2009-09-14 Predrag]
 My initial \reffig{fig:lyapSpec} was not optimal; I have now
@@ -426,12 +736,12 @@ $(j/\tildeL)^2- (j/\tildeL)^4$, for arbitrary system size $L$.
 \end{figure}
 
 
-
 We also see
 that the `physical' modes are split into a less contracting 1/2
-and more contracting 1/2 (different slopes in the Fig 4). We
+and more contracting 1/2 (different slopes in the
+\reffig{fig:lyapSpecRscld}\,(a)). We
 used to think the first 1/2 is the physically important one,
-and say so in the current arXiv version of the article.
+and say so in the arXiv version 2 of the article.
 We stand corrected.
 
 The Floquet eigenvectors of our (relative) periodic orbits are
@@ -450,62 +760,6 @@ $L$'s.
 I see prospects of a long and happy marriage here.
 
 \end{description}
-
-\section{2009-09-16 Lyapunov vectors, illustrated}
-\label{sect:2009-09-16}
-
-\begin{description}
-\item[Predrag]
-In order to spare you from reading the source literature, I'm including here
-those figures from Yang \etal\rf{YaTaGiChRa08} that I find most striking.
-The main advance of using Lyapunov vectors instead of eigenvalues alone
-is that the approximate orthogonality of the 'isolated' ones provides a clear
-threshold between the 'physical' and the rest.
-
-You might be unimpressed by the KS example, as the $-k^4$ hyper-diffusion
-term kills all higher Fourier modes very effectively. For that reason the
-complex Ginzburg-Landau equation, \reffig{fig:lyapSpecCLG}
-is very persuasive; the nonlinearity is
-of $u(x)^3$ variety (instead of $u \partial u$ of Navier-Stokes and
-KS), but there is only a $-k^2$ diffusive term, and nevertheless there
-is a clear threshold for the 'isolated' Lyapunov vectors. Furthermore,
-the system exhibits left and right traveling waves, which is more like
-fluids than the rigid wave patterns of KS.
-
-\begin{figure}
- (a)~\includegraphics[width=0.45\textwidth]{../figs/YaTaGiChRa08fig2}
- (b)~\includegraphics[width=0.45\textwidth]{../figs/YaTaGiChRa08fig3}
-\caption{
-(left panel)
-Fig.~2 of Yang \etal\rf{YaTaGiChRa08}:
-Properties of covariant Lyapunov vectors for the KS system
-($L = 96$, $k_{\rm cut} = 42 \cdot 2\pi/L$, and PBC).
-(a) Spatiotemporal plot of a typical vector in the isolated region
-($j=46$, total time $100$).
-(b) Spatial power spectra of vectors of indices
-$j = 1$, $16$, $32$, $38$, $44$, $52$, $60$, $68$, $76$, $84$
-(from left to right in peak position).
-(c) Top panel: peak wavenumber in the power spectra (red circles)
-and $k = [j/2] \cdot 2\pi/L$ (black line).
-Bottom panel: DOS violation fraction $\nu^{(j,j+1)}_\tau$ for pairs of
-neighboring vectors (pairs within the same step are omitted).
-(d) Angle distributions between pairs of vectors.
-(e) Same as (d) but with a different abscissa.
-(right panel)
-Fig.~3 of Yang \etal\rf{YaTaGiChRa08}:
-Complex Ginzburg-Landau equation in the amplitude turbulence regime
-($L = 64$, $k_{\rm cut} = 31 \cdot 2\pi/L$, and PBC).
-(a,b) Spatiotemporal plots of the phase component of a typical vector $j = 91$ in the isolated region
-(same trajectory, but at two distant periods of time, during a total time of $20$ for each plot).
-(c) Lyapunov spectrum; inset: close-up around threshold.
-(d) Time fraction $\nu^{(j,j+1)}_\tau$ of DOS violation, as a function of $\tau$
-($j=78$, 82, 86, 90, 94, from top to bottom).
-}
-\label{fig:lyapSpecCLG}
-\end{figure}
-
-\end{description}
-
 
 \section{2009-09-17  Covariant `transport of vector fields,' a trace formula}
 
@@ -726,13 +980,13 @@ g({u}+\delta{u})=g({u})=1 \quad \Longrightarrow \quad
 %\label{constra}
 \]
 so the allowed variations are of form
-\[
+\beq
 \delta {u} = \sum_{k\neq i}
 		\left( \jEigvec[k] -\jEigvec[i]
               \frac{\partial g(\jEigvec[i])}{\partial u_k}\right)c_k
     \,, \quad |c_k| \ll 1
 \, ,
-\]
+\ee{eigvNormalz}
 and in the neighborhood of the $\jEigvec[i]$ eigenvector
 the $\int d{u}$ integral can be expressed as
 \[
@@ -762,6 +1016,20 @@ Inserting these variations into the $\int d{u}$ integral we obtain
 \, .
 \nonumber
 \end{eqnarray}
+Ershov and Potapov\rf{ErshPot98} use the more customary
+$\jEigvecT[j] \cdot \jEigvec[j] =1$ norm. That replaces
+\refeq{eigvNormalz} by a more familiar looking formula
+\beq
+\delta \jEigvec[j] = \sum_{k\neq j}
+		\frac{\jEigvecT[k] \cdot \delta {\bf M} \, \jEigvec[j]}
+              {\alpha^{(k)} - \alpha^{(j)}}
+       \jEigvec[k]
+\, ,
+\ee{eigvNormalzEP}
+${\bf M} = \jMps^T \jMps$, with eigenvalues $\alpha^{(j)}$,
+where everything is evaluated at time $t$. They credit Landau
+and Lifshitz
+{\em Quantum Mechanics}\rf{Landau59c} for this formula.
 
 \section{2009-10-10  Covariant Lyapunov vectors, an algorithm}
 
@@ -942,205 +1210,7 @@ eigenvalues.
 \end{description}
 
 
-\subsection{QR decomposition}
-
-\begin{description}
-\item[2009-10-10 Sara and Predrag] Understood
-    \refref{ginelli-2007-99} (might want to check
-    \refref{PoGiYaMa06} as well). Still need to copy
-    relevant definitions from ChaosBook.org here.
-\end{description}
-
-Consider a $d$-dimensional discrete-time dynamical system. Let
-$\ssp_{n}\in \pS \subset \reals^d$ denote the \statesp\ point
-at time $t_{n}$ and let $\{{\bf g}_{n}^{(\ell)}\}$, $\ell=1,
-\ldots d$, be a set of $d$ orthogonal vectors, ${\bf
-g}_{n}^{(\ell)} \cdot {\bf g}_{n}^{(k)} = \delta_{\ell k}$,
-that span the tangent space $T\pS$ of the flow at time $t_{n}$.
-Collect these into the $n$th \emph{GS basis} (or GS fundamental
-matrix), written as the orthogonal matrix
-\[
-{\bf G}_n = ({\bf g}_n^{(1)} , \ldots ,  {\bf g}_n^{(d)})
-\]
-whose columns are the basis vectors $\{{\bf g}_{n}^{(\ell)}\}$.
-Start now at $t_{n-1}$. Iterating the evolution equations once
-maps the ${\bf G}_{n-1}$ orthogonal basis into a set of
-non-orthogonal, non-unit basis vectors $\overline{\bf G}_n =
-(\overline {\bf g}_n^{(1)} , \ldots , \overline {\bf
-g}_n^{(d)})$,
-\[
-\overline {\bf g}_n^{(\ell)} =\jMps_{n-1}
-            \, {\bf g}_{n-1}^{(\ell)}
-\,,
-\]
-where $\jMps_{n-1}$ is the \jacobianM\ of the
-transformation evaluated at time $t_{n-1}$.
-The $n$th GS basis is now obtained by applying the
-Gram-Schmidt orthogonalization to the vectors
-$\overline {\bf g}_n^{(\ell)}$. Pick
-$\overline{\bf g}_n^{(1)}$ as the direction of the first
-Gram-Schmidt vector,
-${\bf g}_n^{(1)} = \overline{\bf g}_n^{(1)}/|\overline{\bf g}_n^{(1)}|$.
-Pick the component of
-$\overline{\bf g}_n^{(2)}$ normal to ${\bf g}_n^{(1)}$
-as the direction of the second
-Gram-Schmidt vector, normalize to the unit eigenvector,
-\bea
-{\bf g}_n^{(2)} &=& \frac{1}{|\cdots|}
-            \left(\overline{\bf g}_n^{(2)}
-                  - (\overline{\bf g}_n^{(2)} \cdot {\bf g}_n^{(1)})
-                      \, {\bf g}_n^{(1)}
-            \right) \,,
-\continue
-{\bf g}_n^{(3)} &=& \frac{1}{|\cdots|}
-            \left(\overline{\bf g}_n^{(3)}
-                  - (\overline{\bf g}_n^{(3)} \cdot {\bf g}_n^{(2)})
-                      \, {\bf g}_n^{(2)}
-                  - (\overline{\bf g}_n^{(3)} \cdot {\bf g}_n^{(1)})
-                      \, {\bf g}_n^{(1)}
-            \right) \,,
-\nnu
-\eea
-and so on.
-Thus the Gram-Schmidt orthogonalization  amounts to the $\overline{\bf G} =
-{\bf Q}{\bf R}$ decomposition, where
-\[
-\overline{\bf G}_n =
- {\bf G}_n ({\bf G}_n^T \overline{\bf G}_n) =
- {\bf Q}_n {\bf R}_n \,.
-\]
-The columns of the orthogonal matrix ${\bf Q}_n = {\bf G}_n$
-are the elements of the $n$th GS basis, while ${\bf R}_n= {\bf
-G}_n^T \overline{\bf G}_n$ is an upper-triangular matrix whose
-nonzero elements are obtained by projecting each vector
-$\overline {\bf g}_n^{(j)}$ onto the subspace spanned by $\{
-{\bf g}_n^{(k)}\}$ with $k \leq j$.
-        \PC{${\bf R}_n= {\bf
-G}_n^T \overline{\bf G}_n$ formula is reminiscent of the
-expression for the \jacobianM\ in terms of fundamental ones,
-$\jMps_n= {\bf G}_n {\bf G}_{n-1}^{-1}$.}
-        \PC{the reminder of this entry is clippings from \refref{PoGiYaMa06},
-        still needs to be edited; there is more QR algebra to fill in. Apologies.
-        }
-
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\SFIG{GinelliFrames} {}{ \JacobianM\ transports initial
-orthogonal frame into a non-orthogonal one. This frame is then
-QR decomposed into an $R$-matrix and the next Gram-Schmidt
-frame, which is then transported by the next \jacobianM, and so
-on. A vector that starts within the subspace spanned by such
-finite Gram-Schmidt basis stays within the subspace spanned by
-the successive orthogonal frames.
-}{fig:GinelliFrames}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-
-What we have is a succession of co-moving re-orthogonalized
-frames, \reffig{fig:GinelliFrames},
-\[
-{\bf G}_{n-1} \to \overline{\bf G}_n =
- {\bf G}_n^T {\bf R}_n
- \to
-{\bf G}_{n+1}^T {\bf R}_{n+1}{\bf R}_n
-\]
-where ${\bf G}_n$ is an orthogonal frame spaning the tangent
-space at $\ssp_n$, and
- \[
-{\bf R}_n{\bf R}_{n-1} {\bf R}_{n-1}\cdots {\bf R}_1
- \]
- is the \jacobianM\ computed within the
-co-moving frame. It keeps track of stretching along
-eigen-directions, but not rotations of the frame, that
-information is contained in the imaginary parts of
-eigen-exponents of the linearized flow.
-
-Ershov and Potapov have shown\rf{ErshPot98} that, by repeating
-the above procedure up to a time $t_m$ for $m$ much larger than
-$n$,  the GS basis converges to an orthogonal set of vectors
-$\{{\bf e}_m^{(k)}\}$, $k=1,\ldots, d$ - the $m$th Gram-Schmidt
-vectors - which solely depend on the \statesp\ point
-$\ssp_{m}$. Thus the covariant Lyapunov vectors are independent
-of where the backward evolution is started along a given
-trajectory, provided that it is sufficiently far in the future.
-    \PC{For \po s, we need no Ershov and
-    Potapov\rf{ErshPot98}. Oseledec arguments are only
-    needed for a random long-time ergodic trajectory}
-
-The Lyapunov exponents $\lambda_1 \geq \lambda_2 \geq \ldots
-\geq \lambda_d$ are the time-averaged values of the logarithms
-of the diagonal elements of ${\bf R}_n$.
-        \PC{Ginelli's talk shows that that diagonal elements of ${\bf R}_n$
-            are the eigenvalues of the \jacobianM\ $\jMps_n$.}
-
-Assume that a set of Gram-Schmidt vectors at $\ssp_m$ has been
-generated by iterating the generic initial condition $\ssp_0$.
-Let ${\bf u}_m^{[j]}$ be a generic vector inside the subspace
-$\pS^{[j]}$ spanned by $\{{\bf g}_m^{(k)}\}$, $k=1,\ldots, j$,
-\ie, by the first $j$ Gram-Schmidt vectors at time $t_m$. This
-vector can be iterated backward in time by inverting the
-upper-triangular matrix ${\bf R}_m$: if the $c_m^{i}=({\bf
-g}_m^{(i)} \cdot {\bf u}_m^{[j]} )$ are the coefficients
-expressing ${\bf u}_m^{[j]}$ in terms of the Gram-Schmidt
-vectors at $\ssp_m$, then $c_{m-1}^{i}= \sum_k [{\bf
-R}_m^{-1}]_{ik} c_m^{k}$. Since ${\bf R}_m$ is
-upper-triangular, it is easy to verify that ${\bf u}_n^{[j]}
-\in T\pS^{[j]}_n$ at all times $t_n$.
-
-
-Iterating ${\bf u}_m^{[j]}$ backward for a sufficiently large
-number $(m-n)$ of times, it eventually aligns with the
-(backward) most expanding direction within $T\pS^{[j]}$. This
-defines  ${\bf e}_n^{(j)}$, our intrinsic $j$-th (forward)
-expanding direction at the \statesp\ point $\ssp_n$.
-
-In order to verify that ${\bf e}_n^{(j)}$ is covariant, define
-the matrix $[{\bf C}_m]_{ij} = c_m^{ij}$,
-\[
-{\bf C}_m = {\bf R}_m {\bf C}_{m-1}
-\,.
-\]
-By multiplying both sides by ${\bf Q}_m$ and substituting
-$\overline {\bf G}_m$ for its QR decomposition on the resulting
-right hand side, one is left with ${\bf
-e}_{m}^{(j)}=\jMps_{m-1} {\bf e}_{m-1}^{(j)}$ for $j=1,\ldots,
-d$.
-
-Covariant Lyapunov vectors $\{{\bf v}_{m}^k\}$ constitute an
-intrinsic, covariant basis defining expanding/contracting
-directions in \statesp.
-In the presence of degeneracies covariant Lyapunov vectors
-have to be grouped according to the multiplicity of the
-corresponding Lyapunov exponent.
-
-The $i$th Lyapunov exponent is the average of the growth rate
-of the $i$th the covariant Lyapunov vector. For 2\dmn\ maps and
-3\dmn\ flows this has been shown by B. Eckhardt, D. Yao,
-Physica D {\bf 65}, 100 (1993); G. Froyland, K. Judd and A. I.
-Mees, Phys. Rev. E {\bf 51}, 2844 (1995); and A. Politi
-\etal\rf{PoGiYaMa06}.
-
-Evidence of the validity of the approach was given in
-\refref{PoToLe98}, where covariant Lyapunov vectors were
-introduced to characterize time periodic orbits in a 1D
-lattice of coupled maps. There, it was found that the number
-of nodes (changes of sign) in a covariant Lyapunov vectors is
-directly connected to the position of the corresponding
-Lyapunov exponent within the Lyapunov spectrum.
-
-
-The covariant Lyapunov vectors are also well defined for
-non-invertible dynamics, since it is necessary and sufficient
-to follow backward a trajectory previously generated forward in
-time. The determination of the covariant Lyapunov vectors is
-very efficient. The main computational bottleneck is the memory
-required to store the matrices ${\bf R}_n$ and the $n$-time
-Gram-Schmidt vectors during the forward integration. The memory
-required can be substantially reduced by occasionally storing
-the instantaneous configuration in real and tangent space and
-re-generating the rest when needed.
-
-\subsection{Separate the women from girls: Hyperbolicity}
+\section{Separate the women from girls: Hyperbolicity}
 \begin{description}
 \item[2009-10-10 Predrag]
 \end{description}
@@ -1297,10 +1367,12 @@ ocean data available.
   \item A. Trevisan and O. Talagrand, {\em On the
       existence of an optimal subspace dimension for
         4DVar }
-  \item M. Ghil, {\em Data assimilation and
-      predictability in climate models} explained
-      Kalman filters in detail that might be useful for
-      including into Lippolis thesis.
+  \item M. Ghil, {\em Data assimilation and predictability
+      in climate models} explained Kalman filters in detail
+      that might be useful for including into Lippolis
+      thesis. While I am at it; we both heard
+      Abarbanel\rf{ACFK09} talk about that, it might be a
+      better reference.
   \item G. Lapeyre, {\em Nonlinear singular vectors and
       atmospheric predictability }
   \end{itemize}
@@ -1375,7 +1447,7 @@ trajectory.
 The very dramatic drop between decaying and entangled modes is
 seen in the Domination of Oseledec Splitting (DOS), a figure in
 Yang \etal\rf{YaTaGiChRa08} that I did not include in
-\refsect{sect:2009-09-16}. The idea is this: there is always a
+\reffig{fig:lyapSpecCLG}. The idea is this: there is always a
 long finite time $\tau$ Lyapunov exponent time for which
 eigenvalues are correctly ordered. For short a time $\tau$
 `physical' ones violate the ordering -\ie, nearby finite time
