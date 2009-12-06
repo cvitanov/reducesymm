@@ -656,6 +656,8 @@ FUNCTION {article}
 collaboration output
 format.authors "author" output.check
 new.block
+format.title "title" output.check
+new.block
 crossref missing$
 { journal field.or.null
 format.vol.num.pages 
