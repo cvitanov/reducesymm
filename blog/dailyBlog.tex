@@ -1077,6 +1077,7 @@ happens - strange attractor is safely away from the $u(x)=1$
 explain above.
 
 Of course, the real challenge is: who will be the first to read the
+\\
 \HREF{ChaosBook.org/projects/siminos/thesis.pdf}
       {Thesis that Nobody Reads} first?
 
@@ -1837,5 +1838,197 @@ that it accrues 'geometrical phase.' And who the hell needs that.
 For the life of me I cannot understand Marsden 'adjoint action' formulation of the 'method
 of connections.' Andreas might, he seems comfortable with the lingo.
 
+\renewcommand{\gSpace}{\ensuremath{\theta}}   % group rotation parameters
+
+\item[2009-12-06 Predrag] 
+Went to Bielefeld, talked to 
+\HREF{http://www.math.uni-bielefeld.de/~beyn}{Wolf-J\"urgen Beyn}.
+Beyn and his former PhD student Vera Th\"ummler\rf{BeTh04,Thum05} 
+`freeze' traveling waves.
+All their papers are available under `Preprints' linkson Beyn website.
+They are mathematical, proving existence of spectra etc., but also
+applied to numerical examples. Scalar Nagumo equation is a good
+testing ground, as one of the traveling waves is known analytically.
+
+Beyn did his `freezing' at the same time
+as Rowley and Marsden\rf{rowley_reduction_2003}, but they published first
+(a year earlier?), so \refref{BeTh04} cites their `reconstruction
+equation.' Beyn does not understand the `method of connections,'
+either.
+
+Their research focuses on the numerical computation 
+and stability of traveling wave solutions
+(and more generally relative equilibria) 
+of reaction-diffusion systems on unbounded domains, \ie,
+of parabolic partial differential equations (PDEs).
+On the real line they are of the form
+\beq
+u_t = A \, u_{xx} + f(u,u_x)
+	\,,\quad
+u: \reals \times [0,\infty) \to \reals
+	\,,
+A \in \reals^{d,d}
+\,.
+\ee{parabolicPDE}
+A traveling wave is a special type of 
+a relative equilibrium of equivariant evolution equations,
+where the action is given by translation, 
+\beq
+\LieEl(\velRel) \, u(x) = \hat{u}(x - \velRel t)\,,\quad  \velRel \in \reals^d
+\,,
+\ee{BeThTW}
+$\hat{u}(x)$ is the waveform and $\velRel$ the velocity. 
+In the comoving frame
+\refeq{parabolicPDE} takes form
+\beq
+\hat{u}_t  = A\, \hat{u}_{xx} + \velRel \hat{u}_x + f(\hat{u},\hat{u}_x)
+	\,,\quad
+\hat{u}_x \in \reals
+	\,,
+t \ge 0
+\,,
+\ee{comovingPDE}
+and $\hat{u}(x)$ is a stationary solution of (the 'freezing of the wave')
+\beq
+0= A \, \hat{u}^{''} + \velRel \hat{u}^{'} + f(\hat{u},\hat{u}^{'})
+\ee{BeThREQV}
+The pair $(\hat{u},\velRel$) is an equilibrium  of 
+a partial differential algebraic equation (PDAE) 
+which is constructed by inserting the co-moving frame ansatz 
+into PDE and adding an {\em additional phase condition}. 
+
+Sandstede \etal\rf{SaScWu97} use center
+manifold reduction theory to study stability of \reqva.
+The main idea is to transform the flow into a `skew product' form.
+One part is orthogonal to the group orbit of the initial field $u(0)$,
+and the other part acts
+within the group orbit and depends upon the position in the orthogonal direction.
+
+
+Beyn \etal\rf{BeTh04,Thum05} find it more convenient to 
+make use of the equivariance by extending the system rather than reducing
+it as in bifurcation analysis,
+by adding an additional parameter and a phase condition.
+They write the solution as ${u}(t) = \LieEl(t)\,\hat{u}(t)$,
+a composition of the action of a time dependent group element $\LieEl(t)$
+with a `frozen solution' $\hat{u}(t)$ in the given Banach space,
+with  $\LieEl(\gSpace(t))$, $\hat{u}(t)$ to be determined.
+They keep the `frozen solution' as constant as
+possible%
+\PC{`As constant as
+possible' makes sense only for \reqva, not \rpo s which they
+do not discuss.}
+by introducing a set of algebraic constraints (phase conditions) 
+$\psi(\hat{u}, \gSpace) = 0$,
+the number of which is given
+by the dimension of the Lie group, which fix the extra degrees of freedom.
+
+
+The freezing approach\rf{BeTh04} is not restricted to traveling waves,
+but it also applies to the 
+general relative equilibria\rf{ChossLaut00,SaScWu99},
+solutions which are equilibria 
+in an appropriately comoving frame. 
+They occur frequently in systems with underlying symmetry,
+such as rotating waves on the real line and spiral
+waves in two space dimensions. An example of a system
+with `rotating waves on the real line' is the
+complex Ginzburg Landau equation.
+
+Consider an evolution equation in a Banach space $\pS$  of the form
+\beq
+u_t = \vel(u)
+\ee{BeThEvEq}
+with an equivariant right hand side $\vel$, i.e. 
+$\LieEl\,\vel(u) = \vel(\LieEl\,u)$ where
+$\LieEl : \Group \to GL(\pS), \gSpace \to \LieEl(\gSpace)$ 
+denotes the action of a Lie group $\Group$ on  $\pS$. 
+Here $\vel$ is defined on a dense subspace of some Banach space (generally
+infinite dimensional) and is equivariant with respect to 
+the action of a finite dimensional (not necessarily
+compact) Lie group. In other words, PDE
+\statesp\ of waveforms $u(x)$ is of nice functional form, 
+not too kinky--in the parlance of applied mathematicians.
+
+The equation \refeq{BeThEvEq}
+can be transformed via the ansatz 
+$\hat{u}(t) = \LieEl(\gSpace(t))u(t)$ into the equivalent system
+\beq
+\hat{u}_t = \vel(\hat{u}) - \LieEl(\gSpace)^{-1} \LieEl_\gSpace(\gSpace) \, \hat{u} \lambda
+	\,,\qquad
+\lambda = \gSpace_t
+\,,
+\ee{BeThReconstr}
+where subscripted quantities imply partial derivatives with respect to the subscript.
+Then they `freeze,' by fixing a \slice, and using a dot product w.r.t. the group
+tangent at the slice point.
+The evolution of $\gSpace(t)$ describes the motion on the group manifold.
+They denote by $T_\gSpace \Group$ the tangent space of $\Group$ at  $\gSpace$.
+Introducing Lagrange parameters $\lambda(t) = \LieEl_t(t) \in T_\gSpace \Group$ 
+they impose `freezing ansatz' on the extended system of equations \refeq{BeThReconstr} 
+\beq
+\hat{u}_t = \vel(\hat{u}) - \LieEl(\gSpace)^{-1} \LieEl_\gSpace(\gSpace) \, \hat{u} \lambda
+	\,,\qquad
+0 = \pi(\hat{u},\lambda)
+\,,
+\ee{BeThSlice}
+with a ``phase condition
+$\pi : \pSRed \times T_\gSpace \Group \to \reals^N$,
+$N= \mbox{dim }\Group$,
+which has to satisfy some regularity conditions.''
+They differentiate 
+$
+h \circ \LieEl \, \hat{u}
+$
+with respect to $\LieEl$, define group tangent at unity $\groupTan \in \times T_1 \Group$,
+$\lambda = d\gSpace_l(1) \groupTan$ ($l$ for left multiplication),
+and with some algebra I'm too bored to type arrive at the extra equation(s)
+\[
+ 0= \psi(\hat{u},\groupTan) = \pi(\hat{u},d\gSpace_l(1) \groupTan)
+\,,
+\]
+which - if I've decoded it right - is the ChaosBook slice condition.
+
+``By transforming the PDE into a corresponding PDAE
+(partial differential algebraic equation) via a freezing ansatz\rf{BeTh04} 
+the relative equilibrium can be analyzed as a stationary solution of the PDAE.''
+Their `freezing ansatz'\rf{BeTh04} appears to be identical to the Rowley and
+Marsden\rf{rowley_reduction_2003} and our slicing, except that `freezing' is formulated
+as an additional constraint, just as when we compute periodic orbits of ODEs we
+add Poincar\'e section as an additional constraint, \ie, increase the dimensionality
+of the probelem by 1 for every continuous symmetry. They prefer it this way, as
+they are taking derivatives. They know that the slice is local and things can diverge.
+
+The
+illustrate `freezing' by numerical computations for 
+the quintic complex Ginzburg Landau equation (QCGL), which is
+equivariant w.r.t. the action of the group 
+$(\LieEl_r,\LieEl_t) \in \Group = S^1 \times \reals$ 
+on $u(x) \in \reals^2$. 
+The action is given by
+translation in the domain and rotation in the image, i.e.
+\bea
+\LieEl \, u(x) &=& R_{-\LieEl_r} u(x - \LieEl_t)
+	\,,\qquad 
+R_{-\LieEl_r} = 
+   \left(\barr{cc}
+   \cos\theta  &  \sin\theta   \\
+  -\sin\theta  &  \cos\theta
+   \earr\right)
+ \,,
+ \label{QCGLrotation}
+\eea
+where subscrips are now just subscrips, 
+$r$ implying rotation and $t$ implying translation.
+
+\item[2009-12-06 Predrag] 
+I finally understood why H.~Keller and the cohort\rf{GloKR85}
+like to think of periodic orbit searches
+as `2-point boundary value' problems. By rescaling the period from $\period{p}$ to $2\pi$
+and adding $\period{p}$ as an additional variable to be determined, they keep fixed discretization
+of the time interval. We ensure that the end point is on the Poincar\'e section by the
+H\'enon trick; that is not as elegant.
+
+\renewcommand{\gSpace}{\ensuremath{{\bf \theta}}}   % group rotation parameters
 
 \end{description}
