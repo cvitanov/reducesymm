@@ -115,20 +115,64 @@ and express the result in invariant polynomials:
 \end{split}
 \label{eq:CLEip}
 \eeq
-For visualization purposes, rather than \ESedit{integrating
+For visualization purposes, rather than integrating
 \refeq{eq:CLEip}, we map solutions of \refeq{eq:CLe} to the
-$u_i$'s}, \reffig{fig:CLEip}. In most projections the folding
+$u_i$'s, \reffig{fig:CLEip}. In most projections the folding
 mechanism is hidden from view since the dynamics is squeezed
-near the $z$-axis.
+near the $z$-axis, since invariant polynomials are multiplicative
+in equivariant variables.
+
+What restricts the utility of Hilbert basis methods is that the
+determination of a Hilbert basis becomes computationally
+prohibitive as the dimension of the system or of the group
+increases\rf{gatermannHab,ChossLaut00} and typically
+computations are constrained to dimension smaller than ten. As
+our goal is to quotient continuous symmetries of
+high-dimensional flows, specifically those arising from
+truncations of the \KS\ and Navier-Stokes flows
+and thus we need an efficient framework.
 
 Nevertheless we can now easily identify a suitable Poincar\'e
 section as one that contains the $z$-axis and
 the \reqv, here defined by the condition $u_1=u_4$.
-We construct the first return map using as coordinate the
+Eventhough in \cLe\ case we could use one of the $u_i$'s as
+a coordinate to construct a return map, for more general flows
+a dynamically intrisic parametrization is needed.
+Following \refref{Christiansen97} we construct the first return map using as coordinate the
 Euclidean length along the intersection of the unstable
 manifold of \REQV{}{1} with the Poincar\'e surface of section,
 measured from \REQV{}{1}, see \reffig{fig:CLEipRM}.
 
+We begin by sprinkling evenly points
+$\{\ssp^{(1)},\ssp^{(2)},\cdots,\ssp^{(N-1)}\}$ between the
+\reqv\ point $\ssp_{\REQV{}{1}}=\ssp^{(0)}$ and point  $\ssp=
+\ssp^{(N)}$, along the $1d$ intersection of \Poincare\ section and
+unstable manifold continuation $\ssp^{(k)} \in \hat{W}^u_{(j)}$ of the unstable ${\bf
+\hat{e}}^{(j)}$ eigen\-direction (we shall omit the
+eigen\-direction label ${}_{(j)}$ in what follows). Then the
+arclength in Euclidean metric (for the luck of a more natural metric) 
+from \reqv\ point $\ssp_{\REQV{}{1}}=\ssp^{(0)}$ to $\ssp=
+\ssp^{(N)}$ is given by
+% \beq
+% s^2 = \lim_{N\to\infty}
+%            \sum_{k=1}^N g_{ij} \, d\ssp^{(k)}_i d\ssp^{(k)}_j
+% \,,\qquad
+%         d\ssp^{(k)}_i = \ssp^{(k)}_i - \ssp^{(k-1)}_i
+% \,.
+% \ee{arcLength}
+% For the lack of a better idea
+% (perhaps the dynamically determined $g = \jMps^T\jMps$
+% would be a more natural metric?)
+% let us measure arclength in the Euclidian metric,
+% $g_{ij} = \delta_{ij}$, so
+\beq
+s = \lim_{N\to\infty}
+         \left(\sum_{k=1}^N \left(d\ssp^{(k)}\right)^2\right)^{1/2}
+\,.
+\ee{EuclArcl}
+By definition $f^{\tau(\ssp)}(\ssp) \in \hat{W}^u_{(j)}$, so
+$f^t(\ssp)$ induces a $1d$ map $s(s_0,\tau) =
+s(f^{\tau(\xInit)}(\xInit))$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[ht]
@@ -149,45 +193,46 @@ length along the \Poincare\ section of the unstable manifold of $E_1$.
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+{\em \Turn s} are points on the unstable
+manifold for which the local unstable manifold curvature diverges
+for forward iterates of the map, \ie, points at which the manifold
+folds back onto itself arbitrarily sharply.
+For our purposes,
+approximate \turn s suffice.
+The $1d$ curve $\hat{W}^u_{(j)}$ starts out linear at
+$\ssp_{\REQV{}{1}}$, then gently curves until it folds back sharply
+at `\turn' along a possible heteroclinic connection to \EQV{0} 
+and then nearly retraces itself. 
+% This is likely
+% to happen if there is only one unstable direction,
+% as we saw in the R\"ossler attractor
+% \refexam{exam:RosslerRetMap}, but if
+% there are several, the `{\turn}' might get stretched out in
+% the non-leading expanding directions.
+% \index{turnback point}
 
-\ES{dropped, not sure it is true and it is not important anyway: 
-When one takes syzygies into account in rewriting the
-dynamical system, singularities are introduced. For instance
-if we solve \refeq{eq:syzLaser} for $u_2$ and substitute into \refeq{eq:CLEip}
-the latter reads
-\beq
-\begin{split}
-  \dot{u}_1 &=2\,\sigma\,(u_4-u_1)\,,\\
-  \dot{u}_2 &=-2\left(\,\frac{u_3^2+u_4^2}{u_1} - \rho_2\, u_3 -\,(\rho_1-u_5)\,u_4\right)\,,\\
-  \dot{u}_3 &=-(\sigma\, +1)\,u_3+\rho_2\, u_1+e\, u_4\,,\\
-  \dot{u}_4 &=-(\sigma\, +1)\,u_4+\,(\rho_1-u_5)\,u_1+\sigma\, \frac{u_3^2+u_4^2}{u_1}-e\,u_3\,,\\
-  \dot{u}_5 &=u_4-b\, u_5\,
-\end{split}
-\label{eq:CLEipSyz}
-\eeq
-clearly singular as $u_2\rightarrow 0$. 
+The trick is to figure out a good {\em base segment} to the
+nearest {\turn} $L=[0,s_{b}]$, and after the foldback assign
+to $s(\ssp,t)>s_{b}$ the nearest point $s$ on the base
+segment. Since here the stable manifold contraction is strong, the
+2nd coordinate connecting $s(\ssp,t) \to s$ can be neglected.
 
-
-Moreover when
-one \emph{lifts} the dynamics from the quotient space
-$\Manif/G$ to the original space $\Manif$ the transformations
-have singularities at the \fixedsp s of
-the isotropy subgroups in $\Manif$, in the optimal case, \cf
-\refref{GL-Gil07b}. Those singularities do not seem to
-restrict our ability to use invariant polynomials to obtain
-symmetry reduced projections of the dynamics.
-}%end ES dropped text
-
-What restricts the utility of Hilbert basis methods is that the
-determination of a Hilbert basis becomes computationally
-prohibitive as the dimension of the system or of the group
-increases\rf{gatermannHab,ChossLaut00} and typically
-computations are constrained to dimension smaller than ten. As
-our goal is to quotient continuous symmetries of
-high-dimensional flows, specifically those arising from
-truncations of the \KS\ and Navier-Stokes flows
-and thus we need an efficient framework.
-
-
+Armed with this intrinsic curvilinear coordinate
+parametrization, we are now in a position to construct a
+1-dimensional model of the dynamics on the \nws. If
+$\hat{\ssp}_n$ is the $n$th Poincar\'e section of a
+trajectory in neighborhood of $\ssp_\stagn$, and $s_n$ is the
+corresponding curvilinear coordinate, then $s_{n+1} = f^{\tau_n}(s_n)$
+models the full \statesp\ dynamics $\hat{\ssp}_n \to
+\hat{\ssp}_{n+1}$. We approximate $f(s_n)$ by a smooth,
+continuous 1-dimensional map $f : L_\stagn \to L_\stagn$ by taking
+$\hat{\ssp}_n \in L_\stagn$, and assigning to
+$\hat{\ssp}_{n+1}$ the nearest base segment point
+$s_{n+1}=s(\hat{\ssp}_{n+1})$. The return map turns out to
+be unimodal, binary symbolic dynamics are easilly constructed
+and fixed points of the map up to length
+$7$ systematically obtained. A multiple shooting rootine is then
+used to determine the corresponding relative periodic orbits of
+\cLe\ to machine precission.
 
 
