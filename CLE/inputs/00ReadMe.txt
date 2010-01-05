@@ -2,6 +2,23 @@ siminos/CLE/inputs/00ReadMe.txt
 $Author$ $Date$
 ===========================================================
 
+							20 dec 2009
+CLE.tex now formated for Physica D, forget REVTeX macros
+==================================
+
+% \usepackage[dvips]{graphicx}  % removed due to some option class
+                                % when local copy of elsarticle was introduced
+
+\input ../inputs/def        % TEMPORARY
+\input inputs/defsCLE.tex   % eventualy merge used commanDs into inputs/defsCLE.tex
+
+% Use the next command to get Bibliography header appear. The problem is a conflict
+% between elsarticle and amsref over \bibsection command.
+\newcommand\bibsection{%
+  \section*{\bibname\markright{\MakeUppercase{\bibname}}}}
+
+------------------------------------------------------------------
+
 CLE.tex extracted from REVTeX macros:
 
 %% ****** Start of file template.aps ****** %

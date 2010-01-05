@@ -16,11 +16,11 @@ and finalize it before Dec 21, 2009.
 After that date Predrag teaches and things slow down.
 
 -----------
-APS manuscript #???
+PhysicaD manuscript #???
 arXiv.org/abs/1209.???
 
 
-arXiv:0709.2944 (submitted v1):                     2009-12-??
+arXiv:????.???? (submitted v1):                     2010-01-??
     siminos/CLE/arxiv-v1/ low resolution figs
     siminos/CLE/APS-v1/ contains the submission
     siminos/CLE/APS-v1/reviews referee edits
@@ -69,6 +69,12 @@ Submission
 
 NOTES
 -----
+                    Predrag                         Dec 29 2009
+=== acknowledge U Chicago support
+    Thomas Witten:
+    Gene will tell you about the funding acknowledgment.
+    Mention the james franck institute.
+
                     Vaggelis                        Mar 10 200?
 reformatted using APS macros
     www.???.org/journals/
