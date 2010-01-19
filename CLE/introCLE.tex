@@ -1,170 +1,78 @@
 % siminos/CLE/introCLE.tex
 % $Author$ $Date$
 
+\subsection{\label{s:introCLE} An example: \CLe}
 % introducing CLe
-% from siminos/thesis/lasersSym.tex
+% from siminos/thesis/lasersSym.tex and
+% ChaosBook chapter continuous.tex {Relativity for cyclists} 18 Jan 2010
 
-\CLe\ (henceforth CLE) were introduced by Gibbon and McGuinness\rf{GibMcCLE82} as a low-dimensional model
-of baroclinic instability in the atmosphere.
-As the name suggests they are a complex generalization
-of Lorenz equations\rf{lorenz}:
-\beq
-\index{Complex Lorenz equations}
-\begin{split}
- \dot{x} &=-\sigma x+ \sigma y \cont
- \dot{y} &=(\rLor-z)x-a y \cont
- \dot{z} &= \frac{1}{2}\left(x y^*+x^*y\right)-b z\,,
+Why worry about continuous symmetries? Here is a rather
+simple, 5-dimensional example of the effect a continuous
+symmetry has on dynamics. Consider a complex generalization
+of Lorenz equations,
+\bea
+ \dot{x} &=& -\sigma x+ \sigma y \,,\qquad
+ \dot{y} \,=\, (\rLor-z)x-a y \continue
+ \dot{z} &=& (x y^*+x^*y)/2 -b z\,,
  \label{eq:CLe}
-\end{split}
-\eeq
+\eea
 where $x,y$ are complex variables, $z$ is real, while the
 parameters $\sigma,\,b$ are real and $\rLor=\RerCLor+i
-\ImrCLor$, $a=1-i e$ are complex.
-
-It can easily be checked that \cLe\ are 
-equivariant under the one parameter rotation
-group $\Un{1}\cong\SOn{2}$ acting by
-\beq\label{eq:SO2cle}
-	(x,\,y,\,z)\mapsto (e^{i\theta}x,\,e^{i\theta}y,\,z)\,,\ \theta\in[0,2\pi]\,.
-\eeq
-
-\CLe\ with $\ImrCLor=0$ and $e \neq 0$ also appear as a truncation 
-of Maxwell-Bloch equations describing a single
-mode, detuned, ring laser in Bakasov and Abraham\rf{BakasovAbraham93}, with $e$ proportional to detuning. 
-For simplicity and without any sacrificing any symmetry properties we follow the choice $\ImrCLor=0$
-in all numerical results that follow. We also set the parameters to the Lorenz values
-$\RerCLor=28,\, b=8/3,\, \sigma=10$, with the ``detuning'' $e=1/10$.
-
-In the case of {\cLe}  the origin \EQV{0} is an \eqv\ of
-\refeq{eq:CLe} for any value of the parameters. As shown in
-\refref{FowlerCLE82} it is stable for $0<\RerCLor<\rho_{1c}$
-and unstable for $\rho_{1c}<\RerCLor$, where
-\beq
-	\rho_{1c} = 1 + \frac{(e+\ImrCLor)(e-\sigma \ImrCLor)}{(\sigma+1)^2}\,.
-\eeq
-At bifurcation a pair of eigenvalues crosses the imaginary axis with imaginary part:
-\beq
-	\omega_c = \frac{\sigma (e + \ImrCLor)}{\sigma+1}\,.
-	\label{eq:omegaCLE}
-\eeq
-and a \emph{relative equilibrium} \REQV{}{1} is born. For $e+\ImrCLor=0$ the
-relative equilibrium degenerates to an \SOn{2}-orbit of
-\eqva\rf{FowlerCLE82}, since $\omega_c =0$. Ning and Haken\rf{NingHakenCLE90}
-and Zeghlache and Mandel\rf{ZeMa85} use equations isomorphic to \cLe\ with 
-$e+\ImrCLor=0$ in their studies of detuned ring lasers.  
-From a symmetry perspective existense of a \reqv\ in a system with \SOn{2}
-symmetry is the generic situation, so
-here we will stick to the choice $\ImrCLor=0$ and $e \neq 0$ of Bakasov and 
-Abraham\rf{BakasovAbraham93}.
-
-As $\RerCLor$ is increased,  a secondary bifurcation from \REQV{}{1} 
-is expected, according to Krupa's
-theorem\rf{Krupa90}, to result in \emph{relative periodic
-orbits} that satisfy
-\beq
-	\Rot{\theta_p}x(t+T_p)=x(t)\,.
-\eeq
-A {\rpo} of {\cLe} is shown in \reffig{fig:CLE} as its iterations fill
-a torus. Therefore we see that in a system with a $1$-dimensional
-continuous symmetry we have to account for circles (\reqva) instead of points (\eqva)
-and tori (\rpo s) instead of curves (\po s) as the organizational blocks of the attractor.
-To understand the geometry of the system one can choose to look at tori or realize
-that along the direction of rotations a tori does not change and pursue symmetry
-reduction.
-
-
-\PublicPrivate{}{
-The implications  of this fact are illustrated in
-\reffig{fig:CLE}, where we project trajectories in
-$(x_1,x_2,z)$ axes, where $x=x_1+ i\, x_2\,,\ y=y_1+i\, x_2$
-with $x_i,\,y_i\in\Rls{}$. A generic trajectory slowly ``drifts''
-along the direction of rotations while tracing a Lorenz-butterfly
-like attractor.
-
-
-
- \refFig{fig:CLE} illustrates the need
- to project dynamics on \reducedsp: Dynamics is organized by
- the interplay of the stable and unstable manifolds of \eqv\
- \EQV{0} and \reqv\ \REQV{}{1} but the dynamics along the
- direction of rotation blur the picture and the notion of
- recurrence becomes relative. We will present various
- approaches to orbit space reduction in the following.
-% sections.
+\ImrCLor$, $a=1-i e$ are complex. Recast in real variables,
+this is a set of five coupled ODEs
+\bea
+	\dot{x}_1 &=& -\sigma x_1 + \sigma y_1\continue
+	\dot{x}_2 &=& -\sigma x_2 + \sigma y_2\continue
+	\dot{y}_1 &=& (\RerCLor-z) x_1 - \ImrCLor x_2 -y_1-e y_2 \continue
+	\dot{y}_2 &=& \ImrCLor x_1 + (\RerCLor-z) x_2 + e y_1- y_2\continue
+	\dot{z} \; &=& -b z + x_1 y_1 + x_2 y_2
+    \,.
+\label{eq:CLeR}
+\eea
+In all numerical examples that follow, the parameters will be
+set to $\RerCLor=28,\, \ImrCLor=0,\, b=8/3,\, \sigma=10,\, e=
+1/10$, unless explicitly stated otherwise.
+\refFig{fig:CLE} offers a visualization of typical long-time
+dynamics of the \CLf. It is a mess.
+    \PC{I would prefer to have a plot of long-time trajectory
+        without exact solutions superimposed, as in ChaosBook
+    refFig\,\{fig:CLEx1x2z\}.
     }
 
- %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}[ht]
-\begin{center}
-  \includegraphics[height=0.25\textheight]{../figs/CLE}
-\end{center}
-\caption[Complex Lorenz flow phase space]
-{ \Statesp\ portrait of \cLe\ dynamics for $e=1/10,\,
-\ImrCLor=0$. Plotted are \reqv\ \REQV{}{1} (red), its unstable
-manifold (brown), \eqv\ \EQV{0}, a representative of its
-unstable manifold (green), 3 repetitions of \rpo\
-``01''(magenta) and a generic orbit (blue).}
-\label{fig:CLE}
-\end{figure}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-\marginpar{Split: Fig1: reqb, generic trajectory, rpo. Fig2: reqb, unstable manifolds}
+\CLe\ \refeq{eq:CLe} were introduced by Gibbon and
+McGuinness\rf{GibMcCLE82,FowlerCLE82} as a
+low-dim\-ens\-ion\-al model of baroclinic instability in the
+atmosphere. Ning and Haken\rf{NingHakenCLE90} have shown that
+equations isomorphic to \cLe\ also appear as a truncation of
+Maxwell-Bloch equations describing a single mode, detuned,
+ring laser. They set $e+\ImrCLor=0$ so that a detuned \eqv\
+exists. Bakasov and Abraham\rf{BakasovAbraham93} show that
+this choice is `degenerate' (the choice of Ning and Haken
+leads to non-generic bifurcations) and show that one can use
+\cLe\ with $\ImrCLor=0$ and $e \neq 0$ to describe detuned
+lasers.
 
-To find the location of the \reqv\ it is convenient to work
-on polar coordinates defined by $x=r_1 e^{i \phi_1},\,y=r_2
-e^{i \phi_2}$. Equations \refeq{eq:CLe} take the form
-    %PC: Rebecca and I rederived these: they check.
-\beq
-\begin{split}
-	\dot{r}_1 &=-\sigma (r_1 - r_2\cos\phi) \cont
-	\dot{r}_2 &=-r_2 + r_1(\RerCLor -z)(\cos\phi-\ImrCLor\sin\phi) \cont
-	\dot{z} &=  -b z+r_1 r_2\cos\phi \cont	
-	\dot{\phi} &=-e-\frac{\sigma r_2 \sin\phi}{r_1}-\frac{r_1(\RerCLor-z) (\ImrCLor\cos\phi+\sin\phi) }{r_2}\,,
-	\label{eq:CLePolar}
-\end{split}
+\CLe\ are a dynamical system with a continuous (but no
+discrete) symmetry, equivariant under the one-parameter
+rotation group $\Un{1}\cong\SOn{2}$ acting by
+\beq\label{eq:SO2cle}
+	(x,\,y,\,z)\mapsto (
+    e^{i\theta}x,\,e^{i\theta}y,\,z)\,,\ \theta\in[0,2\pi]\,.
 \eeq
-where $\phi=\phi_1-\phi_2$ and the evolution equations for
-$\phi_1,\phi_2$ are given by
-\beq
-\begin{split}
-	\dot{\phi}_1 &=-\frac{\sigma r_2 \sin\phi}{r_1}\cont
-	\dot{\phi_2} &= e +\frac{r_1\left( (\RerCLor -z)\sin\phi+\ImrCLor\cos\phi\right)}{r_2}\,.
-	\label{eq:CLeAngl}
-\end{split}
-\eeq
+Here we are not interested in the physical
+applications of these equations; rather, we study them as a
+simple example of a dynamical system with continuous (but no
+discrete) symmetries, with a view of testing methods of
+reducing the dynamics to a lower-dimensional \reducedsp.
+    \PC{looks like one should also read \refref{Abraham95}; they
+    report on various return maps}
+We investigate
+various ways of `quotienting' its \SOn{2} symmetry, and
+reducing the dynamics to a 4-dim\-ens\-ion\-al \reducedsp. As
+we shall show, the dynamics has a nice {\stretchf}
+action, but that is totally masked by the continuous symmetry
+drifts. We shall not rest until we attain the simplicity of
+\reffig{fig:PCunrot32}, and the bliss of 1-dim\-ens\-ion\-al
+return map of \reffig{fig:CLEipRM}.
 
-For simplicity we now turn to the ``laser case''
-$e\neq0,\;\ImrCLor=0$. The condition for a \reqv\ is that all 
-time derivatives in \refeq{eq:CLePolar}, while $\dot{\phi}_1=\dot{\phi}_2\neq 0$.
-If $\dot{\phi}_1=\dot{\phi}_2=0$ we would have (a group orbit of) equilibria. We get
-% Explicit form here, simplified in terms of z component below
-% \beq
-% \begin{split}
-% 	z &= -\frac{e^2}{(\sigma +1)^2}+\RerCLor -1\cont
-% 	r_2 &= \frac{\sqrt{-b \left(e^2+(\sigma +1)^2\right)\left(e^2-(\RerCLor -1) (\sigma +1)^2\right)}}{(\sigma+1)^2}\cont
-% 	r_1 &= \frac{\sqrt{-b \left(e^2-(\RerCLor -1) (\sigma +1)^2\right)}}{\sigma +1}\cont
-% 	\Phi &= -\cos ^{-1}\left(\frac{\sigma +1}{\sqrt{e^2+(\sigma +1)^2}}\right)
-% \end{split}
-% \eeq
-\beq
-\begin{split}
-	z^{(1)} &= \frac{-e^2+(\RerCLor -1)(\sigma +1)^2}{(\sigma +1)^2}\cont
-	r_1^{(1)} &= \sqrt{b z^{(1)}}\cont
-	r_2^{(1)} &= \sqrt{b \left(e^2+(\sigma +1)^2\right)z^{(1)}}\cont
-	\phi^{(1)} &= -\cos ^{-1}\left(\frac{\sigma +1}{\sqrt{e^2+(\sigma +1)^2}}\right)\,.
-\end{split}
-\eeq
-Substituting in \refeq{eq:CLeAngl} we get $\dot{\phi}_1=\dot{\phi}_2=e \sigma/(1 + \sigma)\neq 0$ for $e\neq0$
-and thus we have indeed a \reqv, not a group orbit of \eqva.
-
-Calculation  in polar coordinates $r_1,r_2,\phi,z$ of stability eigenvalues for \REQV{}{1}
-for the set of parameters we use here yields
-\beq
-	\eigRe[1]\pm i\eigIm[1]= 0.0938\pm 10.1945i,\,
-    \eigExp[3]=-11.0009,\, \eigExp[4]= -13.8534\,.
-	\label{eq:CLeREQBstab}
-\eeq
-
-In \ref{s:StabReq} we show how to calculate stability of \reqva\ in \emph{equivariant} 
-variables without change of coordinates to polar or any other set of symmetry invariant variables.
+% \CLe\ (CLe)
