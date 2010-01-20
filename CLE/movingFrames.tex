@@ -1,7 +1,41 @@
 % siminos/CLE/movingFrames.tex
 % $Author: siminos $ $Date: 2009-12-19 02:59:14 +0100 (Sat, 19 Dec 2009) $
 
-In this section we present the {\mframes}, introduced by G. Darboux and 
+We can, at least locally, map each point along any solution
+$\ssp(\tau)$ to the unique representative $\sspRed(\tau)$ of the associated
+group orbit equivalence class, by a suitable rotation
+\beq
+\ssp(\tau) = \LieEl(\tau) \, \sspRed(\tau)
+\,.
+\ee{EquiTraj}
+Equivariance implies the two points are equivalent.
+In the `\mslices' the \reducedsp\ representative $\sspRed$
+of a group orbit equivalence class is picked by slicing across the group orbits
+by a fixed hypersurface.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[h]
+\begin{center}
+ \includegraphics[width=0.5\textwidth]{../figs/ReducTraj}
+\end{center}
+\label{fig:ReducTraj}
+\caption{
+\Slice\ \pSRed\ is a Poincar\'e section \refeq{PCsectQ} for
+group orbits (indicated by dotted lines here). The full
+\statesp\ trajectory $\ssp(t)$ and and the \reducedsp\
+trajectory $\sspRed(t)$ belong to the same group orbit
+$\pS_{\ssp(t)}$ and are equivalent up to a group rotation
+$\LieEl(t)$ \refeq{EquiTraj}.
+} 
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+We start by describing how the
+method works for a finite segment of the full \statesp\
+trajectory.
+
+
+\ES{obsolete, to be re-eject later: In this section we present the {\mframes}, introduced by G. Darboux and 
 systematized by \'E. Cartan\rf{CartanMF}. 
 Fels and Olver\rf{FelsOlver98,FelsOlver99} reformulated the method so that a
 moving frame is simply an equivariant mapping from the space on which a
@@ -15,9 +49,70 @@ exploit the geometric interpretation of moving frames for a more direct and
 efficient approach to symmetry reduction. We refer the reader to \refrefs{FelsOlver98,FelsOlver99} 
 for proof of results reviewed here and to \refref{OlverInv}
 for a pedagogical exposition.
+}
 
-In the following let $\Group$ be $N$-dimensional and act on a
-$d$-dimensional manifold $\Manif$. A moving frame is a smooth
+In the following it will be useful to introduce the
+notion of a \emph{\slice}, an $(n-r)$-dimensional submanifold $K$
+of $\Manif$ such that $K$ intersects all group orbits in an
+open neighborhood of $\ssp \in K$
+transversally and at most once.
+In other words, \slice\ is a Poincar\'e section for group
+orbits. As is the case for the dynamical Poincar\'e sections,
+in general a single \slice\ does not suffice to intersect all
+group orbits of points in \pS. Fels and Olver\rf{FelsOlver99}
+call a manifold $K$ that intersects \emph{all} group orbits a
+\emph{regular cross-section}, and refer to a \slice\ as a local
+cross-section. Here we prefer the term slice
+to cross-section as the latter has a well established usage in the physics
+literature.
+
+Loosely speaking, one can construct a local {\csection} passing
+through any point $x\in \Manif$ if the group orbits of \Group\
+have the same dimension, therefore not in the {\fixedsp}
+of a continuous subgroup of \Group. The interested reader is referred to
+\refref{FelsOlver99} for rigorous treatment.
+
+The simplest {\em \slice\ condition} defines a linear \slice\ as a
+$(d\!-\!N)$-dim\-ens\-ion\-al hyperplane \pSRed\ normal to
+the $N$ group rotation tangents $\sliceTan{a}$ at point $\slicep
+$:
+\beq
+(\sspRed - \slicep )^T \sliceTan{a} =0
+    \,,\qquad
+\sliceTan{a} = \groupTan_a(\slicep) = \Lg_a \, \slicep
+\,.
+\ee{PCsectQ}
+In other words, `\slice' is a Poincar\'e section
+\refeq{PSPlane} for group orbits.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% computed by PCunrot.nb, then hand-drawn
+% by dasbuch/book/FigSrc/xfig/PCunrot.fig
+% then branched to dasbuch/book/FigSrc/xfig/ESunrot.fig
+\begin{figure}
+ \begin{center}
+  \includegraphics[width=0.5\textwidth]{../figs/ESunrot}
+ \end{center}
+ \label{fig:ESunrot}
+ \caption{\Mframes\ for a flow $\SOn{2}$-equivariant under
+\refeq{CLfRots} with \slice\ through $\slicep=(0,1,0,0,0)$,
+group tangent $\sliceTan{}=(1,0,0,0,0)$. The clockwise
+orientation condition restricts the \slice\ to half-hyperplane
+$\sspRed_1=0,\;\sspRed_2>0$. A trajectory started on the
+\slice\ at $\sspRed(0)$, evolves to a \statesp\ point with a
+non-zero $\ssp_1(t_1)$. Compute the polar angle $\gSpace_1$
+of $\ssp(t_1)$ in the $(\ssp_1,\ssp_2)$ plane. Rotate $\ssp(t_1)$
+clockwise by $\gSpace_1$ to $\sspRed(t_1) =
+\LieEl(-\gSpace_1)\,\ssp(t_1)$, so that the equivalent point
+on the circle lies on the \slice, $\sspRed_1(t_1) =0$. Repeat
+for all sample points $\ssp(t_i)$ along the trajectory.}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\ES{repeated?: In the following let $\Group$ be $N$-dimensional and act on a
+$d$-dimensional manifold $\Manif$.} 
+A moving frame is a smooth
 $\Group$-equivariant mapping $\rho$ from $\Manif$ to the
 $\Group$, that is to the group parameters. \ES{perharps not
 needed: One distinguishes between left moving frames for which
@@ -29,14 +124,86 @@ x)=\rho(x)\LieEl^{-1}\,,\ x\in\Manif\,,\ \LieEl\in\Group$. }
 in a neighborhood of a point $x\in\Manif$ if and only if
 $\Group$ acts freely and regularly near x.} For the practical
 construction of a moving frame for an $N-$dimensional Lie group
-$\Group$ we will need to define a slice, introduced in \refsect{s:symDyn}.
+$\Group$ we will need to define a slice.
 Therefore the existense of a moving frame depends on 
 group orbits having the same dimension.
 
-To construct a moving frame, let $K\subset\Manif$ be a {\csection}. For $x\in \Manif$, let
+As $\slicep^T \sliceTan{a} =0$ by the antisymmetry of
+$\Lg_a$, the \slice\ condition \refeq{PCsectQ} fixes
+$\gSpace$ for a given $\ssp$ by
+    \index{post-processing}
+\beq
+0 = \sspRed^T  \sliceTan{a}
+  %= \LieEl(\gSpace) \cdot \hat{\ssp}   \cdot \Lg \cdot \slicep
+	=\ssp^T  \LieEl(\gSpace)^T \sliceTan{a}
+\,,
+\ee{PCsectQ1}
+where $\LieEl^T$ denotes the transpose of $\LieEl$.
+%    \PC{dropped ``
+%    with the total shift $\gSpace(\tau)$ given by the sum
+%    of stepwise rotations $\gSpace_j$.
+%    }
+
+\Mframes\ can be interpreted as a change of variables
+\beq
+\sspRed(\tau) = \LieEl^{-1}(\tau) \, \ssp(\tau)
+\,,
+\ee{EquiTrajInvrs}
+that is passing to a frame of reference in which condition
+\refeq{PCsectQ1} is identically satisfied, see
+\refexam{exam:SO2movFram}. Therefore the name `moving frame.'
+
+The \mframes\ is a post-processing method; trajectories are
+computed in the full \statesp, then rotated into the \slice\
+whenever desired, with the \slice\ condition easily
+implemented. The \slice\ group tangent \sliceTan\ \, is a given
+vector, and $\LieEl(\gSpace)\,\ssp$ is
+another vector, linear in $\ssp$ and a function of group
+parameters $\gSpace$. Rotation parameters $\gSpace$ are
+determined numerically, by a Newton method, through the \slice\
+condition \refeq{PCsectQ1}.
+
+\refFig{fig:PCunrot} illustrates the \mframes\ for an
+$\SOn{2}$ \slice\ normal to the $\ssp_2$ axis.
+\index{SO(2)@\SOn{2}}
+Looks innocent, except there is nothing to
+prevent a trajectory from going through $(x_1,x_2)=(0,0)$,
+and what $\gSpace$ is one to use then? We can always chose a
+finite time step that hops over this singularity, but in the
+continuous time formulation we will not be so lucky.
+    \PC{add example here}
+
+How does one pick a \slice\ point $\slicep$? A generic point
+$\slicep $ not in an invariant subspace (on the \cLe\ $z$
+axis, for example) should suffice to fix a \slice.
+% for example a point on an \reqv\ group orbit,
+% $\slicep  = \ssp_{\REQV{}1}$.
+The rules of thumb are much like the ones for picking
+Poincar\'e sections, \refsect{s:bestPoinc}. The intuitive
+idea is perhaps best visualized in the context of fluid
+flows. Suppose the flow exhibits an unstable coherent
+structure that --approximately-- recurs often at different
+spatial dispositions. One can fit a `template' to one
+recurrence of such structure, and describe other recurrences
+as its translations. A well chosen \slice\ point belongs to
+such dynamically important equivalence class (\ie, group
+orbit).
+% We shall show in \refsect{sect:MovFrameODE} that
+A \slice\ is locally isomorphic to $\pS/\Group$, in an open
+neighborhood of $\slicep$. As is the case for the dynamical
+Poincar\'e sections, in general a single \slice\ does not
+suffice to reduce $\pS \to \pS/\Group$ globally.
+
+\ES{re-insert?: To construct a moving frame, let $K\subset\Manif$ be a {\csection}. For $x\in \Manif$, let
 $\LieEl=\rho(x)$ be the unique group element that maps $x$
 to the {\csection}: $g x = \rho(x) x\, \in K$. Then
 $\rho:\Manif\rightarrow \Group$ is a right moving frame\rf{FelsOlver98}.
+}
+
+\subsection{Coordinate {\csection s} and explicit invariants}
+
+By proper choice of the {\csection} condition it is possible to
+explicitly generate invariant variables for the group action.
 
 A {\csection} $K$ can be defined by means of level sets of
 functions $K_i(x)=c_i$, where $x\in V$ and $i=1,\ldots,r$. If
@@ -86,7 +253,7 @@ choice for common actions of \SOn{2} on truncations of PDEs, such as in the \cLe
 
 
 
-\subsection{\label{sec:CLeMF}Moving frame for \cLe}
+\subsection{\label{sec:CLeMF}Moving frame invariants for \cLe}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
