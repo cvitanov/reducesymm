@@ -69,8 +69,7 @@ details.
 
 The simplest {\em \slice\ condition} defines a linear \slice\ as a
 $(d\!-\!N)$-dim\-ens\-ion\-al hyperplane \pSRed\ normal to
-the $N$ group rotation tangents $\sliceTan{a}$ at point $\slicep
-$:
+the $N$ group rotation tangents $\sliceTan{a}$ at point $\slicep$:
 \beq
 (\sspRed - \slicep )^T \sliceTan{a} =0
     \,,\qquad
@@ -147,19 +146,16 @@ whenever desired, with the \slice\ condition easily
 implemented. The \slice\ group tangent \sliceTan\ \, is a given
 vector, and $\LieEl(\gSpace)\,\ssp$ is
 another vector, linear in $\ssp$ and a function of group
-parameters $\gSpace$. Rotation parameters $\gSpace$ are
+parameters $\gSpace$. Rotation parameters $\gSpace$ are 
 determined numerically, by a Newton method, through the \slice\
 condition \refeq{PCsectQ1}.
 
-\refFig{fig:PCunrot} illustrates the \mframes\ for an
-$\SOn{2}$ \slice\ normal to the $\ssp_2$ axis.
-\index{SO(2)@\SOn{2}}
-Looks innocent, except there is nothing to
-prevent a trajectory from going through $(x_1,x_2)=(0,0)$,
-and what $\gSpace$ is one to use then? We can always chose a
-finite time step that hops over this singularity, but in the
-continuous time formulation we will not be so lucky.
-    \PC{add example here}
+
+Through the definition of a moving frame map, a \slice\ is 
+locally identified with $\pS/\Group$, in an open
+neighborhood of $\slicep$. As is the case for the dynamical
+Poincar\'e sections, in general a single \slice\ does not
+suffice to reduce $\pS \to \pS/\Group$ globally.
 
 How does one pick a \slice\ point $\slicep$? A generic point
 $\slicep $ not in an invariant subspace (on the \cLe\ $z$
@@ -167,7 +163,7 @@ axis, for example) should suffice to fix a \slice.
 % for example a point on an \reqv\ group orbit,
 % $\slicep  = \ssp_{\REQV{}1}$.
 The rules of thumb are much like the ones for picking
-Poincar\'e sections, \refsect{s:bestPoinc}. The intuitive
+Poincar\'e sections. The intuitive
 idea is perhaps best visualized in the context of fluid
 flows. Suppose the flow exhibits an unstable coherent
 structure that --approximately-- recurs often at different
@@ -177,29 +173,138 @@ as its translations. A well chosen \slice\ point belongs to
 such dynamically important equivalence class (\ie, group
 orbit).
 % We shall show in \refsect{sect:MovFrameODE} that
-A \slice\ is locally isomorphic to $\pS/\Group$, in an open
-neighborhood of $\slicep$. As is the case for the dynamical
-Poincar\'e sections, in general a single \slice\ does not
-suffice to reduce $\pS \to \pS/\Group$ globally.
 
-\ES{re-insert?: To construct a moving frame, let $K\subset\Manif$ be a {\csection}. For $x\in \Manif$, let
-$\LieEl=\rho(x)$ be the unique group element that maps $x$
-to the {\csection}: $g x = \rho(x) x\, \in K$. Then
-$\rho:\Manif\rightarrow \Group$ is a right moving frame\rf{FelsOlver98}.
-}
+In the following two subsections we illustrate the effect the choice
+of \slice\ point has by using our \cLe\ example.
 
 \subsection{Coordinate {\csection s} and explicit invariants}
 
-By proper choice of the {\csection} condition it is possible to
-explicitly generate invariant variables for the group action.
+Special choices of {\csection} fixing point can lead to a {\slice} fixing
+condition \refeq{PCsectQ} which we can solve to obtain
+the moving frame map and the invariant coordinates explicitly.
 
-A {\csection} $K$ can be defined by means of level sets of
-functions $K_i(x)=c_i$, where $x\in V$ and $i=1,\ldots,r$. If
-the $K_i(x)$ coincide with the local coordinates $x_i$ on the
-manifold $V$, \ie~$K_i(x)=x_i$, then we call $K$ a
-\emph{coordinate \csection}.
+Choose \slice\ point in one of the irreducible subspaces of
+$\SOn{2}$ action \refeq{CLfRots}. The group-tangent is then
+$\sliceTan{}=(1,0,0,0,0)$ and the slice fixing condition
+becomes simply
+\beq
+    \overline{x}_1 = x_1 \cos\gSpace + x_2 \sin\gSpace = 0\,
+\ee{cLeCoordSlice}
+The clockwise orientation condition restricts the \slice\ to half-hyperplane
+$\overline{x}_1=0,\;\overline{x}_2>0$. 
+
+In general, when a \csection\ $K$ is defined through a relation of the form
+$\overline{x}_i=0$ then we call $K$ a \emph{coordinate \csection}.
+
+Solving \refeq{cLeCoordSlice}
+for the polar angle $\gSpace$ in $(\ssp_1,\ssp_2)$ we get the moving
+frame
+\beq
+  	\gSpace=-\tan^{-1}\frac{x_1}{x_2}
+\ee{cLeCoordMF}
+The transformation that rotates $\ssp$ clockwise by $\gSpace$ 
+to $\overline{\ssp} = \LieEl(\gSpace)\,\ssp)$ on the \slice is found by inserting
+\refeq{cLeCoordMF} into the explicit expression for the action of \SOn{2}
+on $\ssp$
+\begin{subequations}\label{eq:CLEnorm}
+\begin{align}
+ 	\overline{x}_1 &= x_1 \cos\gSpace - x_2 \sin\gSpace\label{eq:CLEexplSO2a}\cont
+	\overline{x}_2 &= x_1 \sin\gSpace + x_2 \cos\gSpace\label{eq:CLEexplSO2b}\cont
+	\overline{y}_1 &= y_1 \cos\gSpace - y_2 \sin\gSpace\label{eq:CLEexplSO2c}\cont
+	\overline{y}_2 &= y_1 \sin\gSpace + y_2 \cos\gSpace\label{eq:CLEexplSO2d}\cont	
+	\overline{z} &= z\,,
+\end{align}
+\end{subequations}
+to get the transformations
+\beq
+\begin{split}
+	\overline{x}_2 &=  r_1 = \sqrt{x_1^2+x_2^2} \cont
+	\overline{y}_1 &= {(x_2 y_1-x_1 y_2)}/{r_1}\cont
+	\overline{y}_2 &= {(x_1 y_1+x_2 y_2)}/{r_1}\cont	
+	\overline{z} &= z\,.
+	\label{eq:invLaser}
+\end{split}
+\eeq
+
+Transformations \refeq{eq:invLaser} map points $\ssp$ into 
+the slice $\overline{\ssp}$. Alternativelly, they can be viewed
+as providing invariant variables on which to project dynamics,
+as we did in Hilbert basis case. Note the relation to the invariant polynomials
+\refeq{eq:ipLaser} and also that no syzygy is present.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[ht]
+\begin{center}
+  (\textit{a})\includegraphics[width=0.35\textwidth]{../figs/CLEmfXYZ}
+~~~~(\textit{b})\includegraphics[width=0.35\textwidth]{../figs/CLEmfYYZ}
+\end{center}
+\caption{ \Statesp\
+portraits of \cLe\ dynamics for $e=1/10$, $\ImrCLor=0$
+in \reducedsp. Projecting on invariants given in \refeq{eq:invLaser}.
+    }
+\label{fig:CLEmf}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+\refFig{fig:ESunrot} illustrates \mframes\ for slice fixed by
+\refeq{cLeCoordSlice}.
+Looks innocent, except there is nothing to
+prevent a trajectory from going through $(x_1,x_2)=(0,0)$,
+and what $\gSpace$ is one to use then? We can always chose a
+finite time step that hops over this singularity, but in the
+continuous time formulation we will not be so lucky.
+
+Alternatively, note that the invariants are not well defined
+in the $x=x_1+i x_2 \to 0$ limit.
+Using $x=r_1\, e^{i\phi_1}\,,\, y=r_2\, e^{i\phi_2}$ we can write
+\ES{dropped: for instance, $x_2 y_1-x_1 y_2 = r_1 r_2 \sin(\phi_1-\phi_2)$
+and thus}
+\beq
+  \begin{split}
+	  \overline{x}_2 &= r_1 \cont
+	  \overline{y}_1 &= r_2\sin(\phi_1-\phi_2)\cont
+	  \overline{y}_2 &= r_2\cos(\phi_1-\phi_2)\cont	
+	  \overline{z} &= z\,.
+	  \label{eq:invLaserPolar}
+  \end{split}
+\eeq
+Therefore, for any given $y$ (therefore also for given $\phi_2$),
+the limit of $\overline{y}$ for $x \rightarrow 0$
+does not exist, as the above expression depends on the direction
+on the complex $x$-plane along which we approach zero.
+
+It is instructive to write \cLe~\refeq{eq:CLe} in the
+variables \refeq{eq:invLaser}. This is achieved by using the
+chain rule \refeq{ChainRul} and expressing the result in
+terms of variables \refeq{eq:invLaser}. The equations now
+read
+\beq
+\begin{split}
+\dot{\overline{x}}_1 &= 0\,\\
+\dot{\overline{x}}_2 &=-\sigma  \left(\overline{x}_2-\overline{y}_2 \right)\,,\\
+\dot{\overline{y}}_1 &=-\overline{y}_1- \left(e+\sigma\frac{\overline{y}_1}{\overline{x}_2} \right)\overline{y}_2\,,\\
+\dot{\overline{y}}_2 &=(\RerCLor -z)\overline{x}_2+\left(e+\frac{\sigma  \overline{y}_1}{\overline{x}_2}
+\right) \overline{y}_1-\overline{y}_2\,,\\
+\dot{z} &=\overline{x}_2 \overline{y}_2-b z\,.
+\end{split}
+\eeq
+We again observe the singularity as
+$\overline{x}_2=r_1\rightarrow 0$.
+
+The projections in \reffig{fig:CLEmf} reveal more about the
+topology of the attractor but also present large ``jumps."
+Note that the invariants \refeq{eq:invLaser} are related to
+the invariant polynomials \refeq{eq:ipLaser} by division by
+$\sqrt{x_1^2+x_2^2}$. This is the reason we get a clearer
+visualization of the dynamics: All invariants scale
+dimensionally as the original coordinates. At the same time
+division by $\sqrt{x_1^2+x_2^2}$ causes the jumps in the
+$\overline{y}$ components whenever the magnitude of $x$ comes
+close to zero.
+
+\PublicPrivate{}{
+\ES{No sure where to move this general theory on coordinate \csection s.}
 Once a coordinate cross-section
 $K=\{x_1=c_1,\ldots,x_r=c_r\}$ is defined by the first $r$
 coordinates (relabel coordinates as necessary),
@@ -236,167 +341,15 @@ of \Group\ but, as we have seen in \refsect{s:symDyn}, {\fixedsp s} are flow-inv
 Therefore, one can always hope to cover the reduced space with properly chosen {\csection s}.
 Nevertheless, as we will see in next section, coordinate {\csection s} are not an optimal
 choice for common actions of \SOn{2} on truncations of PDEs, such as in the \cLe\ example.
+}% end PublicPrivate
 
 
 
 
+% \subsection{\label{sec:CLeMF}Moving frame invariants for \cLe}
 
-\subsection{\label{sec:CLeMF}Moving frame invariants for \cLe}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}[ht]
-\begin{center}
-  (\textit{a})\includegraphics[width=0.35\textwidth]{../figs/CLEmfXYZ}
-~~~~(\textit{b})\includegraphics[width=0.35\textwidth]{../figs/CLEmfYYZ}
-\end{center}
-\caption{ \Statesp\
-portraits of \cLe\ dynamics for $e=1/10$, $\ImrCLor=0$
-in \reducedsp. Projecting on invariants given in \refeq{eq:invLaser}.
-    }
-\label{fig:CLEmf}
-\end{figure}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-In this section we illustrate symmetry reduction through
-the use of invariants computed
-with the moving frame method in the example of \cLe.
-The $z$-axis is the \fixedsp\ of \SOn{2} acting by
-\refeq{eq:SO2act} on \Rls{5}. Therefore we can define
-a coordinate {\csection} on $\Rls{5}\backslash\{x_1=x_2=y_1=y_2=0\}$
-by, for instance,
-\beq\label{eq:CLEsliceSO2}
-x_1=0,\,x_2>0\,.
-\eeq
-We can now construct a moving frame for the action
-\refeq{eq:SO2act} of $\SOn{2}$ as follows. We write out
-explicitly the group transformations:
-\begin{subequations}\label{eq:CLEnorm}
-\begin{align}
- 	\overline{x}_1 &= x_1 \cos\theta - x_2 \sin\theta\label{eq:CLEexplSO2a}\cont
-	\overline{x}_2 &= x_1 \sin\theta + x_2 \cos\theta\label{eq:CLEexplSO2b}\cont
-	\overline{y}_1 &= y_1 \cos\theta - y_2 \sin\theta\label{eq:CLEexplSO2c}\cont
-	\overline{y}_2 &= y_1 \sin\theta + y_2 \cos\theta\label{eq:CLEexplSO2d}\cont	
-	\overline{z} &= z\,.
-\end{align}
-\end{subequations}
-We set $\overline{x}_1=0$ and solve
-\refeq{eq:CLEexplSO2a} for the group parameter to obtain the moving frame
-\beq
-	\theta=\tan^{-1}\frac{x_1}{x_2}
-	\label{eq:CLEmf}
-\eeq
-which brings any point  back to the {\csection}.
-Here it is important that
-$\tan^{-1}$ distinguishes quadrants in the $(x_1,x_2)$ plane to ensure that the
-transformation results in the correct geometric
-interpretation, \ie\ to ensure $x_2>0$.
-Substituting \refeq{eq:CLEmf} in the remaining equations \refeq{eq:CLEnorm} we
-get the invariants
-\beq
-\begin{split}
-	\overline{x}_2 &=  r_1 = \sqrt{x_1^2+x_2^2} \cont
-	\overline{y}_1 &= {(x_2 y_1-x_1 y_2)}/{r_1}\cont
-	\overline{y}_2 &= {(x_1 y_1+x_2 y_2)}/{r_1}\cont	
-	\overline{z} &= z\,.
-	\label{eq:invLaser}
-\end{split}
-\eeq
-    \ES{The solution $\theta = 2
-    \tan^{-1}\frac{-x_2+\sqrt{x_1^2+x_2^2}}{x_1}$ was
-    returned by Mathematica. If we use $\theta =
-    \tan^{-1}\frac{x_2}{x_1}$ without taking care of the
-    quadrant our results are multiplied by $sgn(x_2)$.}
-Note the relation to the invariant polynomials
-\refeq{eq:ipLaser} and also that no syzygy is present.
-
-Note that the invariants are not well defined
-in the $x=x_1+i x_2 \to 0$ limit.
-Using $x=r_1\, e^{i\phi_1}\,,\, y=r_2\, e^{i\phi_2}$ we can write
-\ES{dropped: for instance, $x_2 y_1-x_1 y_2 = r_1 r_2 \sin(\phi_1-\phi_2)$
-and thus}
-\beq
-  \begin{split}
-	  \overline{x}_2 &= r_1 \cont
-	  \overline{y}_1 &= r_2\sin(\phi_1-\phi_2)\cont
-	  \overline{y}_2 &= r_2\cos(\phi_1-\phi_2)\cont	
-	  \overline{z} &= z\,.
-	  \label{eq:invLaserPolar}
-  \end{split}
-\eeq
-Therefore, for any given $y$ (therefore also for given $\phi_2$),
-the limit of $\overline{y}$ for $x \rightarrow 0$
-does not exist, as the above expression depends on the direction
-on the complex $x$-plane along which we approach zero.
-\ES{does not belong here:
-In terms of projecting dynamics
-on variables \refeq{eq:invLaser} (or applying the equivalent
-procedure of rotating points back to the \slice) this means that
-we need to take into account the direction along which
-we approach zero and use the `angle
-of descent' as the angle with which we rotate points back to the \slice, if such
-points have exactly $x=0$.
-	}
-Note that the invariants are not defined on
-the subspace $U_S$ defined by $x_1=x_2=0$ even though the
-group action is non-regular only in a subset of $U_S$, the
-$z$-axis $x_1=x_2=y_1=y_2=0$ which is the \fixedsp\ of \SOn{2}.
-In the spirit of \refref{GL-Gil07b} the transformations \refeq{eq:invLaser}
-can therefore be characterized as non-optimal, in the sense
-that we have singularity in a proper superset of $\Fix{\SOn{2}}$.
-    \PC{``proper superset''? Il cano no parla questa lingua}
-The reason the transformations fail on $U_S$ and not only on the $z$-axis
-can be traced back to the way we construct the moving frame. The action
-of the group can be thought of as a direct sum of irreducible
-actions and the corresponding invariant (linearly irreducible)
-subspaces are the $(x_1,\,x_2)$ and $(y_1,\,y_2)$
-planes.
-%PC OK \ES{Not sure if planes is acceptable term here.}.
-Since irreducible subspaces are by definition group-invariant
-implies that we could define a moving frame in any one of them
-independently. The singular subspace would then be determined
-by the fixed points of group action in this subspace alone.
-For instance, by choosing an angle in the $(x_1,\,x_2)$ irreducible subspace
-as the moving frame map, the singular set is the point
-$x_1=x_2=0$ in this irreducible subspace. Going back to the full
-$5$-dimensional space the singular set of the transformations
-is still given by $x_1=x_2=0$.
-%}
-
-While a singularity in $\Fix{\SOn{2}}$ cannot be reached by generic orbits
-as {\fixedsp s} are flow invariant, the same is not true for {\fixedsp s}
-of irreducible representations of the group action\ES{make sure!!!}.
-The fact that trajectories of \cLf\ in \reffig{fig:CLEmf} stay away from $r_1=0$ is therefore
-fortuitous.
-
-It is instructive to write \cLe~\refeq{eq:CLe} in the
-variables \refeq{eq:invLaser}. This is achieved by using the
-chain rule \refeq{ChainRul} and expressing the result in
-terms of variables \refeq{eq:invLaser}. The equations now
-read
-\beq
-\begin{split}
-\dot{\overline{x}}_1 &= 0\,\\
-\dot{\overline{x}}_2 &=-\sigma  \left(\overline{x}_2-\overline{y}_2 \right)\,,\\
-\dot{\overline{y}}_1 &=-\overline{y}_1- \left(e+\sigma\frac{\overline{y}_1}{\overline{x}_2} \right)\overline{y}_2\,,\\
-\dot{\overline{y}}_2 &=(\RerCLor -z)\overline{x}_2+\left(e+\frac{\sigma  \overline{y}_1}{\overline{x}_2}
-\right) \overline{y}_1-\overline{y}_2\,,\\
-\dot{z} &=\overline{x}_2 \overline{y}_2-b z\,.
-\end{split}
-\eeq
-We again observe the singularity as
-$\overline{x}_2=r_1\rightarrow 0$.
-
-The projections in \reffig{fig:CLEmf} reveal more about the
-topology of the attractor but also present large ``jumps."
-Note that the invariants \refeq{eq:invLaser} are related to
-the invariant polynomials \refeq{eq:ipLaser} by division by
-$\sqrt{x_1^2+x_2^2}$. This is the reason we get a clearer
-visualization of the dynamics: All invariants scale
-dimensionally as the original coordinates. At the same time
-division by $\sqrt{x_1^2+x_2^2}$ causes the jumps in the
-$\overline{y}$ components whenever the magnitude of $x$ comes
-close to zero.
 
 \PublicPrivate{}{
 \ES{I think I might drop this part of the section, as it is a simple but
