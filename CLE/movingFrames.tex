@@ -1,15 +1,27 @@
 % siminos/CLE/movingFrames.tex
 % $Author: siminos $ $Date: 2009-12-19 02:59:14 +0100 (Sat, 19 Dec 2009) $
 
-We can, at least locally, map each point along any solution
-$\ssp(\tau)$ to the unique representative $\sspRed(\tau)$ of the associated
+The \mframes, introduced by G. Darboux and systematized by \'E. Cartan\rf{CartanMF},
+can be thought of as generalization of the Frenet-Serret comoving frame.
+The \Mframes\ can be used to generate functionally independent invariant coordinates
+for the action of a group $\Group$ on a manifold $\Manif$ under
+very general assumptions.  Here we will describe how, and to what extend,
+the invariants thus generated can be utilized for symmetry reduction in 
+high-dimensional flows. Our presentation draws from the reformulation of the method 
+by Fels and Olver\rf{FelsOlver98,FelsOlver99} but our emphasis is on straightforward
+and efficient numerical implementation in high dimensions, rather than explicit determination
+of invariant functions as in \refref{FelsOlver98,FelsOlver99}.
+
+The main idea behind \mframes\ is that we can, at least locally, 
+map each point along any solution $\ssp(\tau)$ to a unique 
+representative $\sspRed(\tau)$ of the associated
 group orbit equivalence class, by a suitable rotation
 \beq
 \ssp(\tau) = \LieEl(\tau) \, \sspRed(\tau)
 \,.
 \ee{EquiTraj}
 Equivariance implies the two points are equivalent.
-In the `\mslices' the \reducedsp\ representative $\sspRed$
+In the `\mframes' the \reducedsp\ representative $\sspRed$
 of a group orbit equivalence class is picked by slicing across the group orbits
 by a fixed hypersurface.
 %
@@ -30,33 +42,16 @@ $\LieEl(t)$ \refeq{EquiTraj}.
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-We start by describing how the
+\ES{move elsewhere: We start by describing how the
 method works for a finite segment of the full \statesp\
-trajectory.
-
-
-\ES{obsolete, to be re-eject later: In this section we present the {\mframes}, introduced by G. Darboux and
-systematized by \'E. Cartan\rf{CartanMF}.
-Fels and Olver\rf{FelsOlver98,FelsOlver99} reformulated the method so that a
-moving frame is simply an equivariant mapping from the space on which a
-group acts to the group parameter. The utility of a moving frame is
-that it can be used to generate functionally independent invariant coordinates
-for the action of a group $\Group$ on a manifold $\Manif$ under
-very general assumptions. Here we will describe how, and to what extend,
-the invariants thus generated can be utilized for
-symmetry reduction in high-dimensional flows. In \refsect{s:mfReqb} we will
-exploit the geometric interpretation of moving frames for a more direct and
-efficient approach to symmetry reduction. We refer the reader to \refrefs{FelsOlver98,FelsOlver99}
-for proof of results reviewed here and to \refref{OlverInv}
-for a pedagogical exposition.
-}
+trajectory.}
 
 In the following it will be useful to introduce the
 notion of a \emph{\slice}, an $(n-r)$-dimensional submanifold $K$
 of $\Manif$ such that $K$ intersects all group orbits in an
-open neighborhood of $\ssp \in K$
-transversally and at most once.
-As is the case for the dynamical Poincar\'e sections,
+open neighborhood of $\ssp \in K$ transversally and at most once. 
+In other words, `\slice' is a Poincar\'e section
+for group orbits. As is the case for the dynamical Poincar\'e sections,
 in general a single \slice\ does not suffice to intersect all
 group orbits of points in \pS. Fels and Olver\rf{FelsOlver99}
 call a manifold $K$ that intersects \emph{all} group orbits a
@@ -67,9 +62,9 @@ literature.
 
 Loosely speaking, one can construct a local {\csection} passing
 through any point $x\in \Manif$ if the group orbits of \Group\
-have the same dimension, therefore not in the {\fixedsp}
-of a continuous subgroup of \Group. The interested reader is referred to
-\refref{FelsOlver99} for rigorous treatment.
+have the same dimension, \ie\ away from {\fixedsp s}
+of continuous subgroups of \Group, see \refref{FelsOlver99} for
+details.
 
 The simplest {\em \slice\ condition} defines a linear \slice\ as a
 $(d\!-\!N)$-dim\-ens\-ion\-al hyperplane \pSRed\ normal to
@@ -81,8 +76,6 @@ $:
 \sliceTan{a} = \groupTan_a(\slicep) = \Lg_a \, \slicep
 \,.
 \ee{PCsectQ}
-In other words, `\slice' is a Poincar\'e section
-for group orbits.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % computed by PCunrot.nb, then hand-drawn
@@ -111,21 +104,16 @@ for all sample points $\ssp(t_i)$ along the trajectory.}
 
 \ES{repeated?: In the following let $\Group$ be $N$-dimensional and act on a
 $d$-dimensional manifold $\Manif$.}
-A moving frame is a smooth
-$\Group$-equivariant mapping $\rho$ from $\Manif$ to the
-$\Group$, that is to the group parameters. \ES{perharps not
-needed: One distinguishes between left moving frames for which
-the equivariance condition is $\rho(\LieEl x)=\LieEl\rho(x)\,,\
-x\in\Manif\,,\ \LieEl\in\Group$ and right moving frames for
-which the equivariance condition is $\rho(\LieEl
-x)=\rho(x)\LieEl^{-1}\,,\ x\in\Manif\,,\ \LieEl\in\Group$. }
-\ES{rephrased proposition: As shown in \refref{FelsOlver99} a moving frame exists
-in a neighborhood of a point $x\in\Manif$ if and only if
-$\Group$ acts freely and regularly near x.} For the practical
-construction of a moving frame for an $N-$dimensional Lie group
-$\Group$ we will need to define a slice.
-Therefore the existense of a moving frame depends on
-group orbits having the same dimension.
+\ES{dropped: Assume that for a given $\ssp\in\pS$ and a given \slice\
+$\pSRed$ there exists} 
+
+For group orbits intersected by a slice we can identify the unique group element
+$\LieEl=\LieEl(\ssp)$ that rotates $\ssp$ into the slice,
+$\LieEl\ssp = \sspRed \in \pSRed$. The map that
+associates to a \statesp\ point $\ssp$ a Lie group action
+$\LieEl(\ssp)$ is called a \emph{moving frame}.
+
+
 
 As $\slicep^T \sliceTan{a} =0$ by the antisymmetry of
 $\Lg_a$, the \slice\ condition \refeq{PCsectQ} fixes
@@ -145,10 +133,10 @@ where $\LieEl^T$ denotes the transpose of $\LieEl$.
 
 \Mframes\ can be interpreted as a change of variables
 \beq
-\sspRed(\tau) = \LieEl^{-1}(\tau) \, \ssp(\tau)
+\sspRed = \LieEl^{-1} \, \ssp
 \,,
 \ee{EquiTrajInvrs}
-that is passing to a frame of reference in which condition
+to a frame of reference in which condition
 \refeq{PCsectQ1} is identically satisfied. Therefore the name
 `moving frame.'
 
