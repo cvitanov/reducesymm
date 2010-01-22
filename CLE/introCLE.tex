@@ -6,10 +6,7 @@
 % from siminos/thesis/lasersSym.tex and
 % ChaosBook chapter continuous.tex {Relativity for cyclists} 18 Jan 2010
 
-Why worry about continuous symmetries? Here is a rather
-simple, 5-dimensional example of the effect a continuous
-symmetry has on dynamics. Consider a complex generalization
-of Lorenz equations,
+Consider a complex generalization of Lorenz equations,
 \bea
  \dot{x} &=& -\sigma x+ \sigma y \,,\qquad
  \dot{y} \,=\, (\rLor-z)x-a y \continue
@@ -31,16 +28,90 @@ this is a set of five coupled ODEs
 \eea
 In all numerical examples that follow, the parameters will be
 set to $\RerCLor=28,\, \ImrCLor=0,\, b=8/3,\, \sigma=10,\, e=
-1/10$, unless explicitly stated otherwise.
-\refFig{fig:CLE} offers a visualization of typical long-time
-dynamics of the \CLf. It is a mess.
+1/10$, unless explicitly stated otherwise. Why worry about
+continuous symmetries? This simple, 5-dimensional example
+suffices to illustrate the effect a continuous symmetry has
+on dynamics. \refFig{fig:CLE} offers a visualization of
+typical long-time dynamics of the \CLf. It is a mess.
     \PC{I would prefer to have a plot of long-time trajectory
         without exact solutions superimposed, as in ChaosBook
     refFig\,\{fig:CLEx1x2z\}.
     }
 
-\CLe\ \refeq{eq:CLe} were introduced by Gibbon and
-McGuinness\rf{GibMcCLE82,FowlerCLE82} as a
+\CLe\ are a dynamical system with a continuous (but no
+discrete) symmetry, equivariant under the one-parameter
+rotation group $\Un{1}\cong\SOn{2}$ acting by
+\beq\label{eq:SO2cle}
+	(x,\,y,\,z)\mapsto (
+    e^{i\theta}x,\,e^{i\theta}y,\,z)\,,\ \theta\in[0,2\pi]
+\,.
+\eeq
+Substituting the Lie algebra generator
+    \PC{is the sign standard?}
+\beq
+ \Lg \,=\,   \left(\barr{ccccc}
+    0  &  1 & 0  &  0 & 0  \\
+   -1  &  0 & 0  &  0 & 0 \\
+    0  &  0 & 0  &  1 & 0  \\
+    0  &  0 &-1  &  0 & 0 \\
+    0  &  0 & 0  &  0 & 0
+    \earr\right)
+\ee{CLfLieGen}
+acting on a 5-dim\-ens\-ion\-al space \refeq{eq:CLeR} into
+\refeq{FiniteRot} yields a finite angle action
+\refeq{eq:SO2cle} of $\SOn{2}$ on $\Rls{5}$
+\beq
+\LieEl(\gSpace) \,=\,  \left(\barr{ccccc}
+  \cos \gSpace  & \sin \gSpace  & 0 & 0 & 0 \\
+ -\sin \gSpace  & \cos \gSpace  & 0 & 0 & 0 \\
+ 0 & 0 &  \cos \gSpace & \sin \gSpace   & 0 \\
+ 0 & 0 & -\sin \gSpace & \cos \gSpace   & 0 \\
+ 0 & 0 & 0             & 0              & 1
+    \earr\right)
+\,.
+\ee{CLfRots}
+We see that the linear action of \SOn{2}\
+on the \cLe\ \statesp\ decomposes into the $m=0$ \Group-invariant
+subspace ($z$-axis) and  the $m=1$ subspace of multiplicity 2.
+
+The generator $\Lg$ is indeed anti-hermitian,
+$\Lg^\dagger = - \Lg$, and the group is compact, its
+elements parametrized by $\gSpace \mbox{ mod } 2\pi$. Locally, at
+$\ssp \in \pS$, the infinitesimal action of the group is
+given by the group tangent field $\groupTan(\ssp) = \Lg \ssp
+= (x_2,-x_1,y_2,-y_1,0)$. In other words, the flow induced by
+the group action is normal to the radial direction in the
+$(x_1,x_2)$ and $(y_1,y_2)$ planes, while the $z$-axis is left
+invariant.
+
+That \cLf\ \refeq{eq:CLeR} is equivariant
+under $\SOn{2}$ rotations \refeq{CLfRots} can be checked
+by substituting the Lie algebra generator
+\refeq{CLfLieGen} and the \stabmat\ for \cLf\ \refeq{eq:CLeR},
+  \beq
+\Mvar =
+  \left(\barr{ccccc}
+    -\sigma    	& 0 		& \sigma & 0    &  0 \\
+	0 	& -\sigma       & 0      & \sigma   &  0 \\
+	\RerCLor-z  &     -\ImrCLor      & -1     & -e & -x_1 \\
+	\ImrCLor     & \RerCLor-z       	& e  	& -1       & -x_2 \\
+	y_1     & y_2           & x_1    & x_2      & -b
+    \earr\right)
+\,,
+  \ee{CLeStabMat}
+into the equivariance condition \refeq{inftmInv}.
+For the parameter values \refeq{eq:CLeR} the flow
+is strongly volume contracting,
+\beq
+\pde_i \pVeloc_i
+ = \sum_{i=1}^{5} \Lyap_i(\ssp,t)
+= -b -2(\sigma + 1)
+= -24 - 2/3
+    \,,
+\ee{trA-ZM}
+
+Originally, the \cLe\ \refeq{eq:CLe} were introduced by
+Gibbon and McGuinness\rf{GibMcCLE82,FowlerCLE82} as a
 low-dim\-ens\-ion\-al model of baroclinic instability in the
 atmosphere. Ning and Haken\rf{NingHakenCLE90} have shown that
 equations isomorphic to \cLe\ also appear as a truncation of
@@ -52,14 +123,7 @@ leads to non-generic bifurcations) and show that one can use
 \cLe\ with $\ImrCLor=0$ and $e \neq 0$ to describe detuned
 lasers.
 
-\CLe\ are a dynamical system with a continuous (but no
-discrete) symmetry, equivariant under the one-parameter
-rotation group $\Un{1}\cong\SOn{2}$ acting by
-\beq\label{eq:SO2cle}
-	(x,\,y,\,z)\mapsto (
-    e^{i\theta}x,\,e^{i\theta}y,\,z)\,,\ \theta\in[0,2\pi]\,.
-\eeq
-Here we are not interested in the physical
+Here, however, we are not interested in the physical
 applications of these equations; rather, we study them as a
 simple example of a dynamical system with continuous (but no
 discrete) symmetries, with a view of testing methods of
