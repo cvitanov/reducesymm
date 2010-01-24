@@ -111,7 +111,15 @@ For group orbits intersected by a slice we can identify the unique group element
 $\LieEl=\LieEl(\ssp)$ that rotates $\ssp$ into the slice,
 $\LieEl\ssp = \sspRed \in \pSRed$. The map that
 associates to a \statesp\ point $\ssp$ a Lie group action
-$\LieEl(\ssp)$ is called a \emph{moving frame}.
+$\LieEl(\ssp)$ is called a \emph{moving frame}. \Mframes\ 
+can be interpreted as a change of variables
+\beq
+\sspRed = \LieEl^{-1} \, \ssp
+\,,
+\ee{EquiTrajInvrs}
+to a frame of reference in which condition
+\refeq{PCsectQ1} is identically satisfied. Therefore the name
+`moving frame.'
 
 
 
@@ -131,14 +139,7 @@ where $\LieEl^T$ denotes the transpose of $\LieEl$.
 %    of stepwise rotations $\gSpace_j$.
 %    }
 
-\Mframes\ can be interpreted as a change of variables
-\beq
-\sspRed = \LieEl^{-1} \, \ssp
-\,,
-\ee{EquiTrajInvrs}
-to a frame of reference in which condition
-\refeq{PCsectQ1} is identically satisfied. Therefore the name
-`moving frame.'
+
 
 The \mframes\ is a post-processing method; trajectories are
 computed in the full \statesp, then rotated into the \slice\
@@ -155,7 +156,9 @@ Through the definition of a moving frame map, a \slice\ is
 locally identified with $\pS/\Group$, in an open
 neighborhood of $\slicep$. As is the case for the dynamical
 Poincar\'e sections, in general a single \slice\ does not
-suffice to reduce $\pS \to \pS/\Group$ globally.
+suffice to reduce $\pS \to \pS/\Group$ globally as 
+for general group actions one cannot expect the group orbit
+of any in $\pS$ to intersect a given slice.
 
 How does one pick a \slice\ point $\slicep$? A generic point
 $\slicep $ not in an invariant subspace (on the \cLe\ $z$
@@ -175,6 +178,44 @@ orbit).
 % We shall show in \refsect{sect:MovFrameODE} that
 We discuss, in the context of our \cLe\ example, some simple slice fixing
 choices in \refsects{s:cleCoordSlice}{s:mfReqb}.
+
+\section{\CLe\ moving frame}
+
+In case of \cLe\ we can, due to equivariance, rotate any slice point so that it is written as 
+$\slicep=(\slicepComp{x}{1},\,0,\,\slicepComp{y}{1},\,\slicepComp{y}{2},\,\slicepComp{z}{})$.
+The group orbit tangent then becomes  
+$\sliceTan{}=(0,\,\slicepComp{x}{1},\,-\slicepComp{y}{2},\,\slicepComp{y}{1},\,0)$
+and slice condition \refeq{PCsectQ1} leads to 
+\beq
+  \theta=\tan^{-1}\frac{-\slicepComp{x}{1}x_2+\slicepComp{y}{2}y_1-\slicepComp{y}{1}y_2}{\slicepComp{x}{1}x_1+\slicepComp{y}{1}y_1+\slicepComp{y}{2}y_2}\,.
+\ee{cLeMF}
+In practical implementation it is important that $\tan^{-1}\frac{y}{x}$ distinguishes quadrants 
+in the $x-y$ plane so that \refeq{cLeMF}, when substituted back to representation \refeq{CLfRots} of \SOn{2}  
+results to the correct geometric operation of mapping points back to the slice.
+Therefore the range of $\tan^{-1}$ here is $-\pi<\theta\leq\pi$. We observe that \refeq{cLeMF}, 
+is undefined when 
+\begin{subequations}\label{cLeMFsing}
+  \begin{align}
+    -\slicepComp{x}{1}x_2+\slicepComp{y}{2}y_1-\slicepComp{y}{1}y_2 &=0 \label{cLeMFsingOnSlice}\cont 
+    \slicepComp{x}{1}x_1+\slicepComp{y}{1}y_1+\slicepComp{y}{2}y_2 &=0 \label{cLeMFsingPerpTan}\,.
+  \end{align}  
+\end{subequations}
+are both satisfied. We will refer to this $3$-dimensional linear subspace as the \emph{\sset} of the moving
+frame associated with \refeq{cLeMF}\ES{I follow Gilmore, he uses the term for singularities arising in Hilbert basis
+transformation problems.}. Condition \refeq{cLeMFsingOnSlice} implies that point \ssp\ is already 
+on the slice, $\ssp^T\slicep=0$. Condition \refeq{cLeMFsingPerpTan} implies that the group tangent 
+at point \ssp\ is perpendicular to group tangent at slice fixing point, 
+$\groupTan{}(\ssp)^T\sliceTan{}=-\ssp^T\slicep=0$, where we have used the antisymmetry of $\Lg$.
+It would appear that such a singularity in the moving frame transformation does not affect us, 
+since \ssp\ that satisfy \refeq{cLeMFsing} are already on the \slice. The problem lies on the fact 
+that the limit of \refeq{cLeMFsing} as we approach the \sset\ does not exist. 
+For instance, consider points for which \refeq{cLeMFsingPerpTan}
+holds; as we approach the \sset\ with positive values of the numerator in \refeq{cLeMF} 
+we have $\theta=\pi/2$, while for negative values $\theta=-\pi/2$. A $\pi$-jump occurs as 
+we cross the \sset. In general such crossings are expected to occur as the \sset\ is not
+flow invariant. Even worse, the neighborhood the singularity distorts the way trajectories
+are mapped onto the slice, even if they merely approach it rather than crossing it, as we
+will see in the next two sections.
 
 \subsection{\label{s:cleCoordSlice}Coordinate {\csection s} and explicit invariants}
 
@@ -196,14 +237,13 @@ In general, when a \csection\ $K$ is defined through relations of the form
 $\overline{x}_i=0$, $i=1,\ldots,r$ then we call $K$ a \emph{coordinate \csection}.
 
 Solving \refeq{cLeCoordSlice}
-for the polar angle $\gSpace$ in $(\ssp_1,\ssp_2)$ we get the moving
-frame
+for the polar angle $\gSpace$ in $(\ssp_1,\ssp_2)$ we get 
 \beq
   	\gSpace=-\tan^{-1}\frac{x_1}{x_2}
-\ee{cLeCoordMF}
+\ee{cLeCoordTheta}
 The transformation that rotates $\ssp$ clockwise by $\gSpace$ 
 to $\overline{\ssp} = \LieEl(\gSpace)\,\ssp)$ on the \slice is found by inserting
-\refeq{cLeCoordMF} into the explicit expression for the action of \SOn{2}
+\refeq{cLeCoordTheta} into the explicit expression for the action of \SOn{2}
 on $\ssp$
 \begin{subequations}\label{eq:CLEnorm}
 \begin{align}
