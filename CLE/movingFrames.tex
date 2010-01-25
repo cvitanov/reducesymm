@@ -6,15 +6,15 @@ can be thought of as generalization of the Frenet-Serret comoving frame.
 The \Mframes\ can be used to generate functionally independent invariant coordinates
 for the action of a group $\Group$ on a manifold $\Manif$ under
 very general assumptions.  Here we will describe how, and to what extend,
-the invariants thus generated can be utilized for symmetry reduction in 
-high-dimensional flows. Our presentation draws from the reformulation of the \mframes\ 
+the invariants thus generated can be utilized for symmetry reduction in
+high-dimensional flows. Our presentation draws from the reformulation of the \mframes\
 by Fels and Olver\rf{FelsOlver98,FelsOlver99} but our emphasis is on the implementation
 of the method as a geometrical, and therefore linear, operation that can be efficiently
-implemented even in higher-dimensional flows, rather than in the explicit 
-determination of invariant functions as in \refref{FelsOlver98,FelsOlver99}. 
+implemented even in higher-dimensional flows, rather than in the explicit
+determination of invariant functions as in \refref{FelsOlver98,FelsOlver99}.
 
-The main idea behind \mframes\ is that we can, at least locally, 
-map each point along any solution $\ssp(\tau)$ to a unique 
+The main idea behind \mframes\ is that we can, at least locally,
+map each point along any solution $\ssp(\tau)$ to a unique
 representative $\sspRed(\tau)$ of the associated
 group orbit equivalence class, by a suitable rotation
 \beq
@@ -29,7 +29,7 @@ by a fixed hypersurface.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[h]
 \begin{center}
- \includegraphics[width=0.5\textwidth]{../figs/ReducTraj}
+ \includegraphics[width=0.5\textwidth]{../Fig/ReducTraj1}
 \end{center}
 \label{fig:ReducTraj}
 \caption{
@@ -50,7 +50,7 @@ trajectory.}
 In the following it will be useful to introduce the
 notion of a \emph{\slice}, an $(n-r)$-dimensional submanifold $K$
 of $\Manif$ such that $K$ intersects all group orbits in an
-open neighborhood of $\ssp \in K$ transversally and at most once. 
+open neighborhood of $\ssp \in K$ transversally and at most once.
 In other words, `\slice' is a Poincar\'e section
 for group orbits. As is the case for the dynamical Poincar\'e sections,
 in general a single \slice\ does not suffice to intersect all
@@ -105,13 +105,13 @@ for all sample points $\ssp(t_i)$ along the trajectory.}
 \ES{repeated?: In the following let $\Group$ be $N$-dimensional and act on a
 $d$-dimensional manifold $\Manif$.}
 \ES{dropped: Assume that for a given $\ssp\in\pS$ and a given \slice\
-$\pSRed$ there exists} 
+$\pSRed$ there exists}
 
 For group orbits intersected by a slice we can identify the unique group element
 $\LieEl=\LieEl(\ssp)$ that rotates $\ssp$ into the slice,
 $\LieEl\ssp = \sspRed \in \pSRed$. The map that
 associates to a \statesp\ point $\ssp$ a Lie group action
-$\LieEl(\ssp)$ is called a \emph{moving frame}. \Mframes\ 
+$\LieEl(\ssp)$ is called a \emph{moving frame}. \Mframes\
 can be interpreted as a change of variables
 \beq
 \sspRed = \LieEl^{-1} \, \ssp
@@ -147,16 +147,16 @@ whenever desired, with the \slice\ condition easily
 implemented. The \slice\ group tangent \sliceTan\ \, is a given
 vector, and $\LieEl(\gSpace)\,\ssp$ is
 another vector, linear in $\ssp$ and a function of group
-parameters $\gSpace$. Rotation parameters $\gSpace$ are 
+parameters $\gSpace$. Rotation parameters $\gSpace$ are
 determined numerically, by a Newton method, through the \slice\
 condition \refeq{PCsectQ1}.
 
 
-Through the definition of a moving frame map, a \slice\ is 
+Through the definition of a moving frame map, a \slice\ is
 locally identified with $\pS/\Group$, in an open
 neighborhood of $\slicep$. As is the case for the dynamical
 Poincar\'e sections, in general a single \slice\ does not
-suffice to reduce $\pS \to \pS/\Group$ globally as 
+suffice to reduce $\pS \to \pS/\Group$ globally as
 for general group actions one cannot expect the group orbit
 of any in $\pS$ to intersect a given slice.
 
@@ -179,40 +179,41 @@ orbit).
 We discuss, in the context of our \cLe\ example, some simple slice fixing
 choices in \refsects{s:cleCoordSlice}{s:mfReqb}.
 
-\section{\label{s:cLeMF}\CLe\ moving frame}
 
-In case of \cLe\ we can, due to equivariance, rotate any slice point so that it is written as 
+\section{\label{sec:CLeMovFr}\CLe\ moving frame}
+
+In case of \cLe\ we can, due to equivariance, rotate any slice point so that it is written as
 $\slicep=(0,\,\slicepComp{x}{1},\,\slicepComp{y}{1},\,\slicepComp{y}{2},\,\slicepComp{z}{})$.
-The group orbit tangent then becomes  
+The group orbit tangent then becomes
 $\sliceTan{}=(-\slicepComp{x}{2},\,0,\,-\slicepComp{y}{2},\,\slicepComp{y}{1},\,0)$
-and slice condition \refeq{PCsectQ1} leads to 
+and slice condition \refeq{PCsectQ1} leads to
 \beq
   \theta=\tan^{-1}\frac{\slicepComp{x}{2}x_1+\slicepComp{y}{2}y_1-\slicepComp{y}{1}y_2}
 			  {\slicepComp{x}{2}x_2+\slicepComp{y}{1}y_1+\slicepComp{y}{2}y_2}\,.
 \ee{cLeMF}
-In practical implementation it is important that $\tan^{-1}\frac{y}{x}$ distinguishes quadrants 
-in the $x-y$ plane so that \refeq{cLeMF}, when substituted back to representation \refeq{CLfRots} of \SOn{2}  
+In practical implementation it is important that $\tan^{-1}\frac{y}{x}$ distinguishes quadrants
+in the $x-y$ plane so that \refeq{cLeMF}, when substituted back to representation \refeq{CLfRots} of \SOn{2}
 results to the correct geometric operation of mapping points back to the slice.
-Therefore the range of $\tan^{-1}$ here is $-\pi<\theta\leq\pi$. We observe that \refeq{cLeMF}, 
-is undefined when 
+Therefore the range of $\tan^{-1}$ here is $-\pi<\theta\leq\pi$. We observe that \refeq{cLeMF},
+is undefined when
 \begin{subequations}\label{cLeMFsing}
   \begin{align}
-    \slicepComp{x}{2}x_1+\slicepComp{y}{2}y_1-\slicepComp{y}{1}y_2 &=0 \label{cLeMFsingOnSlice}\cont 
+    \slicepComp{x}{2}x_1+\slicepComp{y}{2}y_1-\slicepComp{y}{1}y_2 &=0 \label{cLeMFsingOnSlice}\cont
     \slicepComp{x}{2}x_2+\slicepComp{y}{1}y_1+\slicepComp{y}{2}y_2 &=0 \label{cLeMFsingPerpTan}\,.
-  \end{align}  
+  \end{align}
 \end{subequations}
 are both satisfied. We will refer to this $3$-dimensional linear subspace as the \emph{\sset} of the moving
 frame associated with \refeq{cLeMF}\ES{I follow Gilmore, he uses the term for singularities arising in Hilbert basis
-transformation problems.}. Condition \refeq{cLeMFsingOnSlice} implies that point \ssp\ is already 
-on the slice, $\ssp^T\slicep=0$. Condition \refeq{cLeMFsingPerpTan} implies that the group tangent 
-at point \ssp\ is perpendicular to group tangent at slice fixing point, 
+transformation problems.}. Condition \refeq{cLeMFsingOnSlice} implies that point \ssp\ is already
+on the slice, $\ssp^T\slicep=0$. Condition \refeq{cLeMFsingPerpTan} implies that the group tangent
+at point \ssp\ is perpendicular to group tangent at slice fixing point,
 $\groupTan{}(\ssp)^T\sliceTan{}=-\ssp^T\slicep=0$, where we have used the antisymmetry of $\Lg$.
-It would appear that such a singularity in the moving frame transformation does not affect us, 
-since \ssp\ that satisfy \refeq{cLeMFsing} are already on the \slice. The problem lies on the fact 
-that the limit of \refeq{cLeMFsing} as we approach the \sset\ does not exist. 
+It would appear that such a singularity in the moving frame transformation does not affect us,
+since \ssp\ that satisfy \refeq{cLeMFsing} are already on the \slice. The problem lies on the fact
+that the limit of \refeq{cLeMFsing} as we approach the \sset\ does not exist.
 For instance, consider points for which \refeq{cLeMFsingPerpTan}
-holds; as we approach the \sset\ with positive values of the numerator in \refeq{cLeMF} 
-we have $\theta=\pi/2$, while for negative values $\theta=-\pi/2$. A $\pi$-jump occurs as 
+holds; as we approach the \sset\ with positive values of the numerator in \refeq{cLeMF}
+we have $\theta=\pi/2$, while for negative values $\theta=-\pi/2$. A $\pi$-jump occurs as
 we cross the \sset. In general such crossings are expected to occur as the \sset\ is not
 flow invariant. Even worse, the singularity distorts the way trajectories
 are mapped onto the slice, even if they merely approach it rather than crossing it, as we
@@ -224,24 +225,24 @@ In this section we use a special choice of slice point that will lead
 to simple analytical expressions for the transformation to invariant variables.
 
 We choose \slice\ point in one of the irreducible subspaces of
-$\SOn{2}$ action \refeq{CLfRots}, for instance $\slicep=(0,-1,0,0,0)$. 
-The group-tangent is then $\sliceTan{}=(1,0,0,0,0)$ and the 
+$\SOn{2}$ action \refeq{CLfRots}, for instance $\slicep=(0,-1,0,0,0)$.
+The group-tangent is then $\sliceTan{}=(1,0,0,0,0)$ and the
 slice fixing condition becomes simply
 \beq
     \overline{x}_1 = x_1 \cos\gSpace - x_2 \sin\gSpace = 0\,
 \ee{cLeCoordSlice}
 The clockwise orientation condition restricts the \slice\ to half-hyperplane
-$\overline{x}_1=0,\;\overline{x}_2>0$. 
+$\overline{x}_1=0,\;\overline{x}_2>0$.
 
 In general, when a \csection\ $K$ is defined through relations of the form
 $\overline{x}_i=0$, $i=1,\ldots,N$ then we call $K$ a \emph{coordinate \csection}.
 
 Solving \refeq{cLeCoordSlice}
-for the polar angle $\gSpace$ in $(\ssp_1,\ssp_2)$ we get 
+for the polar angle $\gSpace$ in $(\ssp_1,\ssp_2)$ we get
 \beq
   	\gSpace=\tan^{-1}\frac{x_1}{x_2}
 \ee{cLeCoordTheta}
-The transformation that rotates $\ssp$ clockwise by $\gSpace$ 
+The transformation that rotates $\ssp$ clockwise by $\gSpace$
 to $\overline{\ssp} = \LieEl(\gSpace)\,\ssp$ onto the \slice\ is found by inserting
 \refeq{cLeCoordTheta} into the explicit expression for the action of \SOn{2}
 on $\ssp$
@@ -265,7 +266,7 @@ to get the transformations
 \end{split}
 \eeq
 
-Transformations \refeq{eq:invLaser} map points $\ssp$ into 
+Transformations \refeq{eq:invLaser} map points $\ssp$ into
 the slice $\overline{\ssp}$. Alternativelly, they can be viewed
 as providing invariant variables on which to project dynamics,
 as we did in Hilbert basis case. Note the relation to the invariant polynomials
@@ -295,7 +296,7 @@ finite time step that hops over this singularity, but in the
 continuous time formulation we will not be so lucky.
 }
 
-In connection to the discussion of \refsect{s:cLeMF} note that the invariants 
+In connection to the discussion of \refsect{sec:CLeMovFr} note that the invariants
 are not well defined in the $x_1,\,x_2 \to 0$ limit.
 Using $x=r_1\, e^{i\phi_1}\,,\, y=r_2\, e^{i\phi_2}$ we can write
 \ES{dropped: for instance, $x_2 y_1-x_1 y_2 = r_1 r_2 \sin(\phi_1-\phi_2)$
@@ -314,11 +315,11 @@ the limit of $\overline{y}$ for $x \rightarrow 0$
 does not exist, as the above expression depends on the direction
 on the complex $x$-plane along which we approach zero.
 
-From another perspective we may say that group orbits of 
+From another perspective we may say that group orbits of
 points in the $x_1=x_2=0$ subspace fail to intersect the slice
 $\overline{x}_1=0,\;\overline{x}_2>0$. In \reffig{fig:CLEmf} this
-becomes apparent by the trajectories in reduced space being 
-stretched as they come closer to $x_1=x_2=0$ subspace where 
+becomes apparent by the trajectories in reduced space being
+stretched as they come closer to $x_1=x_2=0$ subspace where
 transverse intersection would eventually fail. In \cLe\ example no
 trajectories enter the $x_1=x_2=0$ subspace, but this is a fortuitous
 event\ES{point to next section after fixing discussion there.}.
@@ -346,11 +347,11 @@ topology of the dynamics but also present large ``jumps."
 Note that the invariants \refeq{eq:invLaser} are related to
 the invariant polynomials \refeq{eq:ipLaser} by division by
 $\sqrt{x_1^2+x_2^2}$. This is the reason we get a clearer
-visualization of the dynamics than with invariant polynomials: 
-All invariants scale as the original coordinates. 
+visualization of the dynamics than with invariant polynomials:
+All invariants scale as the original coordinates.
 At the same time division by $\sqrt{x_1^2+x_2^2}$ causes the jumps in the
 $\overline{y}$ components whenever the magnitude of $x$ comes
-close to zero. 
+close to zero.
 
 \PublicPrivate{}{
 \ES{No sure where to move this general theory on coordinate \csection s.}
