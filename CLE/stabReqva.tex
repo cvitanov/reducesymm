@@ -23,23 +23,22 @@ to that of Chossat and Lauterbach\rf{ChossLaut00} but we obtain
 expressions that allow one to compute stability in reduced space
 from the equivariant vector field in a straightforward manner.
 
-For a point $x$ on a \reqv\ that lies on {\slice}
-${\pSRed}$ we decompose $\vel(x)$
-in \refeq{eq:difeq} in a part $\vel_\shortparallel$ parallel
-to the group action and a part $\vel_\perp$ transverse to it,
-\beq
-	\vel(\ssp)=\vel_\shortparallel(\ssp)+\vel_\perp(\ssp)\,,
-\ee{flowSplit}
+In similar manner to our decomposition of vector field in \refsect{sec:MovFrameODE}
+we decompose $\vel(\ssp)$ for a point $\ssp$ on a \reqv\ into
+a part along the group action tangent and a part $\velRed$ transverse to it,
+% \beq
+% 	\vel(\ssp)=\vel_\shortparallel(\ssp)+\velRed(\ssp)\,,
+% \ee{flowSplit}
 using the projection operator
 \beq
  	\PperpOp_{ij}(\ssp)=\delta_{ij}-
-    \frac{(\Lg \ssp)_i (\Lg \ssp)_j}{(\Lg \ssp)^2}
+    \frac{\groupTan(\ssp)_i \groupTan(\ssp)_j}{\groupTan(\ssp)^2}
 \ee{transvProj}
 that projects a $d$-dimensional flow $v(\ssp)$ onto
 flow
 \beq
-	\dot{\ssp}_\perp = \vel_\perp(\ssp) = \vel(\ssp)
-    - \Lg \ssp \frac{(\Lg\ssp)\cdot \vel(\ssp)}{(\Lg \ssp)^2}
+	\dot{\sspRed} = \velRed(\ssp) = \vel(\ssp)
+    - \groupTan(\ssp) \frac{\groupTan(\ssp)^T \vel(\ssp)}{\groupTan(x)^2}
 \ee{transvFlowSlice}
 in a $(d\!-\!1)$-dimensional {\slice} transverse to the
 direction fixed by the point $\ssp$.
@@ -49,9 +48,14 @@ direction fixed by the point $\ssp$.
     because its additional \emph{geometric phase}. They prove
     a theorem
     - as well as probably Beyn - that it is OK for \reqva.
+    {\bf ES:} Yes, this is why we only use it for stability of \reqva. 
+	      I will have to try rpo stability using projection we use
+	      for integration on the slice, but it is too late for this paper.
+	      I had the well known problem back then, I did not understand
+	      derivation of Rowley and Marsden.
     }
 To compute stability eigenvalues of \reqv\
-we only need to consider the linearization of $\vf_\perp$
+we only need to consider the linearization of $\velRel$
 which is identified with the restriction of $\vf$ in reduced space.
 The {\stabmat} $\bar{\Mvar}_{ij}$ is then given by
     \PC{Here the projection operator \refeq{transvProj} is OK,
@@ -59,20 +63,21 @@ The {\stabmat} $\bar{\Mvar}_{ij}$ is then given by
     Not sure...
     }
  \beq
-	\bar{\Mvar}_{ij} = \frac{\partial}{\partial x_j}(\PperpOp \cdot  \vf)_i
+	\bar{\Mvar}_{ij} = \frac{\partial}{\partial x_j}(\PperpOp  \vf)_i
 		= \Pperp_{ik}\frac{\partial  \vf_k}{\partial x_j}
           +\frac{\partial \Pperp_{ik}}{\partial x_j} \vf_k
 		\label{eq:stabreqvdef}
  \eeq
 Now
-\beq
-	\Pperp_{ik}	= \delta_{ik}-\frac{(\Lg \cdot x)_i(\Lg \cdot x)_k}{(\Lg \cdot x)^2}
-			= \delta_{ik}-\frac{\Lg_{im} x_m \Lg_{k\ell} x_\ell}{(\Lg \cdot x)^2}
-\eeq
-and
+% ES: Useless, what was I thinking?
+% \beq
+% 	\Pperp_{ik}	= \delta_{ik}-\frac{(\Lg \cdot x)_i(\Lg \cdot x)_k}{(\Lg \cdot x)^2}
+% 			= \delta_{ik}-\frac{\Lg_{im} x_m \Lg_{k\ell} x_\ell}{(\Lg \cdot x)^2}
+% \eeq
+% and
 \bea
-	\frac{\partial \Pperp_{in}}{\partial x_j}  &=&  -\frac{\partial}{\partial x_j}\left(\frac{\Lg_{iq} \cdot x_q \Lg_{n\ell} \cdot x_\ell}{(\Lg \cdot x)^2}\right)\continue
-			&=& -\left(\frac{\Lg_{iq}\delta_{jq} \Lg_{n\ell}x_\ell}{(\Lg \cdot x)^2}+\frac{\Lg_{iq}x_q \Lg_{n\ell}\delta_{j\ell}}{(\Lg \cdot x)^2}-\frac{\Lg_{iq}x_q \Lg_{n\ell}x_\ell}{(\Lg \cdot x)^4}\frac{\partial}{\partial x_j}(\Lg \cdot x)^2 \right)\continue
+	\frac{\partial \Pperp_{in}}{\partial x_j}  &=&  -\frac{\partial}{\partial x_j}\left(\frac{\groupTan(x)_i \groupTan(x)_n}{\groupTan(x)^2}\right)\continue
+			&=& -\left(\frac{\Lg_{iq}\delta_{jq} \groupTan(x)_n}{\groupTan(x)^2}+\frac{\groupTan(x)_i \Lg_{n\ell}\delta_{j\ell}}{\groupTan(x)^2}-\frac{\groupTan(x)_i \groupTan(x)_n}{\groupTan(x)^4}\frac{\partial}{\partial x_j}\groupTan(x)^2 \right)\continue
 			&=& -\left(\frac{\Lg_{ij} \Lg_{n\ell}x_\ell}{(\Lg \cdot x)^2}+\frac{\Lg_{iq}x_q \Lg_{nj}}{(\Lg \cdot x)^2}-2\frac{\Lg_{iq}x_q \Lg_{n\ell} x_\ell}{(\Lg \cdot x)^4}\Lg_{mj}\Lg_{mp}x_p \right)\continue
 % 			&=& -\frac{1}{(\Lg \cdot x)^2}\left(\Lg_{ij}\Lg_{n\ell}x_\ell+\Lg_{iq}x_q \Lg_{nj}-2\frac{\Lg_{iq}x_q \Lg_{n\ell} x_\ell}{(\Lg \cdot x)^2}\Lg_{mj}\Lg_{mp}x_p \right)\continue
 			&=& -\frac{1}{(\Lg \cdot x)^2}\left(\Lg_{n\ell}x_\ell\left(\Lg_{ij}-\frac{\Lg_{iq}x_q }{(\Lg \cdot x)^2}\Lg_{mj}\Lg_{mp}x_p\right)+\Lg_{iq}x_q\left( \Lg_{nj}-\frac{ \Lg_{n\ell} x_\ell}{(\Lg \cdot x)^2}\Lg_{mj}\Lg_{mp}x_p\right) \right)\continue
@@ -86,13 +91,13 @@ Therefore \refeq{eq:stabreqvdef} takes the form
 \eeq
 or in matrix form
 \beq
-	\mathbf{\bar{\Mvar}}=\PperpOp \mathbf{A}-\frac{1}{(\Lg \cdot  x)^2}\left( \left[\vf \cdot \left(\Lg \cdot x\right)\right] \left(\PperpOp \Lg\right) +\left(\Lg \cdot x\right) \otimes \left[\vf \cdot \left( \PperpOp \Lg\right)\right] \right)\,,
+	\mathbf{\bar{\Mvar}}=\PperpOp \mathbf{A}-\frac{1}{\groupTan(x)^2}\left( \left[\vf \cdot \groupTan(x)\right] \left(\PperpOp \Lg\right) +\groupTan(x) \otimes \left[\vf \cdot \left( \PperpOp \Lg\right)\right] \right)\,,
 	\label{eq:reqvStab}
 \eeq
 where $A_{ij}=\frac{\partial \vf_i}{\partial x_j}$. This
-expression allows to calculate stability of \reqva\ working
+expression allows to calculate \reducedsp\ stability of \reqva\ working
 in the equivariant variables, without explicit knowledge of
-the vector field  $\vf_\perp$ in reduced space. Applying
+the vector field  $\velRed$ in reduced space. Applying
 \refeq{eq:reqvStab} for \reqv\ \REQV{}{1} of \cLe\ we obtain
 \beq
 	\eigRe[1]\pm i\eigIm[1]= 0.0938\pm 10.1945i,\,
