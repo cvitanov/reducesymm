@@ -1,19 +1,18 @@
 % siminos/CLE/symRedGeneral.tex
 % $Author$ $Date$
 
-%Discussion of symmetry reduction methods
-% extracted from siminos/thesis/chapters/symODEs.tex
-
-Given Lie group \Group\ acting smoothly on a $C^\infty$
-manifold \pS, we can think of each group orbit as an
-equivalence class. {\em Symmetry reduction} is the
-identification of a unique point on a group orbit as the
-representative of its equivalence class.
-
-We shall refer to this space as the {\em \reducedsp}.
-In the literature this is alternatively called the
+Action of a symmetry group \Group\ on \pS\ stratifies
+the \statesp\ into a set of group orbits,
+ each group orbit an
+equivalence class. The goal of {\em symmetry reduction} is the
+identification of a unique point as the
+representative of a group orbit, and the replacement
+of the original \statesp\ by
+the space of such points, the {\em \reducedsp}.
+In the literature this space is alternatively called
 \emph{desymmetrized \statesp},
- the \emph{orbit space}, or \emph{quotient space}
+\emph{symmetry-reduced space},
+\emph{orbit space}, or \emph{quotient space}
 $\pS/\Group$ because symmetry has been `divided out.'
 Symmetry group \Group\ of equivariant dynamics acts trivially
 in reduced space, and the resulting dynamical system, called
@@ -24,8 +23,7 @@ The mapping equivariant dynamics to invariant dynamics is
 implemented
 by methods such as
 {\em \mframes},
-{\em \csection s},
-{\em \mslices},
+{\em \mslices} ov {\em \csection s},
 {\em Hilbert bases},
 \etc.
 %
@@ -39,88 +37,68 @@ then identified them in earlier papers, as is what usually happens
 }
     \PC{Cite literature that uses each of the above}
 
+In atomic physics, geophysics and other
+low-dimensional physical problems with spatial symmetries,
+the symmetry reduction is customarily implemented just as we
+did it in \refeq{eq:CartToPol}, by going to the `natural'
+coordinate system (polar, cylindrical, \etc). That works well
+for linear systems, but not so well for nonlinear flows;
+note, for example, that these coordinate transformations
+introduce non-physical singularities
+in \refeq{eq:PolarCLeTheta}at $r_1=0$ and $r_2=0$.
 
-As the systems that we study here are not associated with a
-variational principle, Noether's theorem does not
-apply, and in general no conserved
-quantities are associated with continuous symmetries of
-such systems.
-    \PC{include discussion, references from the blog here.}
-    \PC{not sure about this: ``
-Such a conserved quantity would restrict dynamical
-trajectories to an invariant manifold locally transverse to
-the direction of group action. In the contrary here the
-system also evolves along the direction of group action.
-    ''
-Being on a constant energy surface does not mean we do
-not evolve in time, for example.
-{\bf ES:} You are right, this statement is not correct in
-general. What I had in mind was cases such as
-conservation of angular momentum in central force 		
-problems fixes the plane of motion.
-}
-
-
-\PublicPrivate{}{
-The stratification
-of $\pS$ induced by the group action is carried over to
-the quotient space with each disconnected set in a stratum
-mapped to the same manifold in quotient space. Yet, a
-fundamental problem with symmetry reduction is that the orbit
-space is in general not a manifold. Unless the action of the
-group is free, group orbits do not have the same dimension
-and different strata are mapped to manifolds of different
-dimension. We will see this property of quotient space
-manifest itself in different ways depending on the reduction
-method but always introducing some singularity even though
-there is nothing singular about $\pS$ or the flow of the
-dynamical system on it.
-        \ES{Either define stratum, or simplify the discussion
-		here.}
-}
-
-
-Perhaps the most appealing approach to symmetry reduction is
-through the use of a Hilbert basis of invariant polynomials.
-According to the Hilbert-Weyl theorem,
-for a compact group $\Group$ there exists a finite
-$\Group${-invariant} homogenous polynomial basis
-$\{u_1,u_2, \dots,u_m\}$, $ m \geq d$,
-such that any $\Group${-invariant} polynomial
-can be written as a multinomial
+What are we really doing when redefining dynamics in terms of
+such invariant coordinates? We are recasting equivariant
+dynamics of $(\ssp_1,\ssp_2,\cdots)$ coordinates in terms of
+rotationally invariant lengths
+$(r_1=(\ssp_1^2+\ssp_2^2)^2,\cdots)$, volumes and other
+invariant quantities. Indeed, the problem of symmetry
+reduction had been elegantly solved nearly a century ago.
+Physical laws should have the same form in
+symmetry-equivalent coordinate frames, so they are often
+formulated in terms of functions (Hamiltonians, Lagrangians,
+$\cdots$) invariant under a given set of symmetries. Given a
+symmetry, what is the most general functional form of such
+law? According to the Hilbert-Weyl theorem, for a compact
+group $\Group$ there exists a finite $\Group${-invariant}
+Hilbert polynomial basis $\{u_1,u_2, \dots,u_m\}$, $ m \geq
+d$, such that any $\Group${-invariant} polynomial can be
+written as a multinomial
 \beq
 h(\ssp) = p(u_1(\ssp),u_2(\ssp), \dots,u_m(\ssp))
     \,,\qquad \ssp \in \pS
 \,.
 \ee{HilbWeyl}
-These polynomials are linearly
-independent, but can be functionally dependent through
-nonlinear relations called \emph{syzygies}.
-
-The dynamical
-equations follow from the chain rule
-\index{image space}
+The dynamical equations then follow from the chain rule
 \beq
  \dot{ u}_i=\frac{\partial u_i}{\partial x_j} \, \dot{x}_j
  \,,
 \ee{HilbChainRl}
-upon substitution
-$\{x_1,x_2,\cdots,x_d\}$ $\to$ $\{u_1,u_2,\cdots,u_m\}$.
-One can either rewrite the dynamics in this basis or
-plot the `image' of solutions computed in the original, equivariant
-basis in terms of these invariant polynomials.
+upon substitution $\{x_1,x_2,\cdots,x_d\}$ $\to$
+$\{u_1,u_2,\cdots,u_m\}$. One can either rewrite the dynamics
+in this basis, or one can simply plot the `image' of
+solutions computed in the original, equivariant basis in
+terms of these invariant polynomials.
 
+Unfortunately, while the idea is elegant, an explicit
+construction of $\Group${-invariant} basis can in practice be
+a laborious undertaking. One trades in the equivariant
+\statesp\ coordinates $\{x_1,x_2,\cdots,x_d\}$ for a
+non-unique set  of $m \geq d$ invariant polynomials
+$\{u_1,u_2,\cdots,u_m\}$. These polynomials are linearly
+independent, but functionally dependent through $m - d + N$
+nonlinear relations called \emph{syzygies}. Their
+determination becomes quickly computationally prohibitive as
+the dimension of the system and/or group
+increases\rf{gatermannHab,ChossLaut00}, and in practice
+typical computations are confined to dimensions smaller than
+ten. As our goal is to quotient continuous symmetries of
+high-dimensional flows (high = $10^2$-$10^6$ coupled ODEs),
+such as those arising from truncations of the \KS\ and
+Navier-Stokes flows, the Hilbert basis at present are not a
+feasible option.
 
-In practice, explicit construction of $\Group${-invariant} basis
-can be a laborious undertaking and their determination becomes
-computationally prohibitive as the dimension of the system and/or group
-increases\rf{gatermannHab,ChossLaut00}. Typical
-computations are constrained to dimension smaller than ten.
-As our goal is to quotient continuous symmetries of
-high-dimensional flows, specifically those arising from
-truncations of the \KS\ and Navier-Stokes flows,
-we need an efficient framework and we will not take the Hilbert basis
-path except to illustrate the method in the context of \cLe.
-The reader is referred to \rf{GL-Gil07b,gatermannHab,ChossLaut00}
-for introduction to symmetry reduction through
-the use of invariant polynomials.
+Nevertheless, symmetry reduction of moderate-dimension flows
+by the method invariant polynomials offers an interesting
+benchmark for other approaches symmetry-reduction, so we
+start by showing how it works of \cLf.
