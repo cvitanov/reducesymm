@@ -1,17 +1,68 @@
 % siminos/CLE/movingFrames.tex
 % $Author: siminos $ $Date: 2009-12-19 02:59:14 +0100 (Sat, 19 Dec 2009) $
 
-The \mframes, introduced by G. Darboux and systematized by \'E. Cartan\rf{CartanMF},
-can be thought of as generalization of the Frenet-Serret comoving frame.
-The \mframes\ can be used to generate functionally independent invariant coordinates
-for the action of a group $\Group$ on a manifold $\pS$ under
-very general assumptions.  Here we will describe how, and to what extend,
-the invariants thus generated can be utilized for symmetry reduction in
-high-dimensional flows. Our presentation draws from the reformulation of the \mframes\
-by Fels and Olver\rf{FelsOlver98,FelsOlver99} but our emphasis is on the implementation
-of the method as a geometrical, and therefore linear, operation that can be efficiently
-implemented even in higher-dimensional flows, rather than in the explicit
-determination of invariant functions as in \refref{FelsOlver98,FelsOlver99}.
+\PublicPrivate{
+          }{ % switch to private
+The notion of a {\em moving frame} as a map from a manifold
+to a Lie group was introduced by Cartan\rf{CartanMF}. Fels
+and Olver view the method as an alternative to the Gr\"obner
+bases methods for computing Hilbert polynomials, to compute
+functionally independent fundamental invariant bases for
+general group actions (with no explicit connection to
+dynamics, differential equations or symmetry reduction).
+`Fundamental' here means that they can be used to generate
+all other invariants. Olver's monograph\rf{OlverInv} is
+pedagogical, but does not describe the original Cartan's
+method. Fels and Olver papers\rf{FelsOlver98,FelsOlver99} are
+lengthy and technical. They refer to Cartan's method as
+method of `moving frames' and view it as a special and less
+rigorous case of their `moving coframe' method. The name
+`moving coframes' arises through the use of Maurer-Cartan
+form which is a coframe on the Lie group $\Group$, \ie, they
+form a pointwise basis for the cotangent space. In
+\refrefs{SiminosThesis,SiCvi10} the invariant bases generated
+by the moving frame method are used as a basis to project a
+full \statesp\ trajectory to the slice (\ie, the
+$\pS/\Group$ \reducedsp).
+    } %end \PublicPrivate{
+%%%%%%%%%%%%%%%%%%%%%
+
+The notion of a {\em moving frame} as a map from a manifold
+to a Lie group was introduced by Cartan\rf{CartanMF}. Fels
+and Olver view the method as an alternative to the Gr\"obner
+bases methods for computing Hilbert polynomials, to compute
+functionally independent fundamental invariant bases for
+general group actions (with no explicit connection to
+dynamics, differential equations or symmetry reduction).
+`Fundamental' here means that they can be used to generate
+all other invariants. Olver's monograph\rf{OlverInv} is
+pedagogical, but does not describe the original Cartan's
+method. Fels and Olver papers\rf{FelsOlver98,FelsOlver99} are
+lengthy and technical. They refer to Cartan's method as
+method of `moving frames' and view it as a special and less
+rigorous case of their `moving coframe' method. The name
+`moving coframes' arises through the use of Maurer-Cartan
+form which is a coframe on the Lie group $\Group$, \ie, they
+form a pointwise basis for the cotangent space. In
+\refrefs{SiminosThesis,SiCvi10} the invariant bases generated
+by the moving frame method are used as a basis to project a
+full \statesp\ trajectory to the slice (\ie, the
+$\pS/\Group$ \reducedsp).
+
+The \mframes, introduced by G. Darboux and systematized by
+\'E. Cartan\rf{CartanMF}, can be thought of as generalization
+of the Frenet-Serret comoving frame. The \mframes\ can be
+used to generate functionally independent invariant
+coordinates for the action of a group $\Group$ on a manifold
+$\pS$.  Here we will describe how, and to what extend, the
+invariants thus generated can be utilized for symmetry
+reduction in high-dimensional flows. Our presentation draws
+from the reformulation of the \mframes\ by Fels and
+Olver\rf{FelsOlver98,FelsOlver99} but our emphasis is on the
+implementation of the method as an operation that can be
+efficiently implemented for high-dimensional flows, rather
+than in the explicit determination of invariant functions as
+in \refref{FelsOlver98,FelsOlver99}.
 
 The main idea behind \mframes\ is that we can, at least locally,
 map each point along any solution $\ssp(\tau)$ to a unique
@@ -66,25 +117,24 @@ for all sample points $\ssp(t_i)$ along the trajectory.
 method works for a finite segment of the full \statesp\
 trajectory.}
 
-In the following it will be useful to introduce the
-notion of a \emph{\slice}, an $(n-r)$-dimensional submanifold $K$
-of $\pS$ such that $K$ intersects all group orbits in an
-open neighborhood of $\ssp \in K$ transversally and at most once.
-In other words, `\slice' is a Poincar\'e section
-for group orbits. As is the case for the dynamical Poincar\'e sections,
-in general a single \slice\ does not suffice to intersect all
+In the following it will be useful to introduce the notion of
+a \emph{\slice}, an $(d-N)$-dimensional submanifold
+$\pSRed\subset\pS$ such that $\pSRed$ intersects all group
+orbits in an open neighborhood of $\slicep \in \pSRed$
+transversally and at most once. In other words, `\slice' is
+the analogue of a Poincar\'e section, but for group orbits.
+As is the case for the dynamical Poincar\'e sections, in
+general a single \slice\ does not suffice to intersect all
 group orbits of points in \pS. Fels and Olver\rf{FelsOlver99}
-call a manifold $K$ that intersects \emph{all} group orbits a
-\emph{regular cross-section}, and refer to a \slice\ as a local
-cross-section. Here we prefer the term slice
-to cross-section as the latter has a well established usage in the physics
-literature.
-
-Loosely speaking, one can construct a local {\slice} passing
-through any point $x\in \pS$ if the group orbits of \Group\
-have the same dimension, \ie\ away from {\fixedsp s}
-of continuous subgroups of \Group, see \refref{FelsOlver99} for
-details.
+call a manifold $\pSRed$ that intersects \emph{all} group
+orbits a \emph{regular cross-section}, and refer to a \slice\
+as a local cross-section. Here we prefer the term `slice' to
+`cross-section' as the latter has a well established usage in
+the physics literature. One can construct a local {\slice}
+passing through any point $x\in \pS$ if the group orbits of
+\Group\ have the same dimension, \ie\ away from {\fixedsp s}
+of continuous subgroups of \Group, see \refref{FelsOlver99}
+for details.
 
 The simplest {\em \slice\ condition} defines a linear \slice\ as a
 $(d\!-\!N)$-dim\-ens\-ion\-al hyperplane \pSRed\ normal to
@@ -95,34 +145,28 @@ the $N$ group rotation tangents $\sliceTan{a}$ at point $\slicep$:
 \sliceTan{a} = \groupTan_a(\slicep) = \Lg_a \, \slicep
 \,.
 \ee{PCsectQ}
-As the group orbit will in general intersect a group orbit more than
-once, for example in the case of $\SOn{2}$ in two $\pi$-separated point
-we need to impose further conditions on the slice, either in the form of
-inequalities or of orientation conditions, so as to ensure unique intersection.
-This restriction is rather arbitrary, the only requirement being that
-$pSRed$ remains a connected manifold.
-We illustrate this point in \cLf\ example in \refsect{sec:CLeMovFr}.
+As the group orbit will in general intersect a group orbit
+more than once, for example in the case of $\SOn{2}$ in two
+$\pi$-separated point we need to impose further conditions on
+the slice, either in the form of inequalities or of
+orientation conditions, so as to ensure unique intersection.
+This restriction is rather arbitrary, the only requirement
+being that $\pSRed$ remains a connected manifold. We
+illustrate this point in \cLf\ example in
+\refsect{sec:CLeMovFr}.
 
-
-
-\ES{repeated?: In the following let $\Group$ be $N$-dimensional and act on a
-$d$-dimensional manifold $\pS$.}
-\ES{dropped: Assume that for a given $\ssp\in\pS$ and a given \slice\
-$\pSRed$ there exists}
-
-For group orbits intersected by a slice we can identify the unique group element
-$\LieEl=\LieEl(\ssp)$ that rotates $\ssp$ into the slice,
-$\LieEl\ssp = \sspRed \in \pSRed$. The map that
-associates to a \statesp\ point $\ssp$ a Lie group action
-$\LieEl(\ssp)$ is called a \emph{moving frame}. \Mframes\
-can be interpreted as a change of variables
+For group orbits intersected by a slice we can identify the
+unique group element $\LieEl=\LieEl(\ssp)$ that rotates
+$\ssp$ into the slice, $\LieEl\ssp = \sspRed \in \pSRed$. The
+map that associates to a \statesp\ point $\ssp$ a Lie group
+action $\LieEl(\ssp)$ is called a \emph{moving frame}.
+\Mframes\ can be interpreted as a change of variables
 \beq
 \sspRed = \LieEl^{-1} \, \ssp
 \,,
 \ee{EquiTrajInvrs}
-to a frame of reference in which condition
-\refeq{PCsectQ1} is identically satisfied. Therefore the name
-`moving frame.'
+to a frame of reference in which condition \refeq{PCsectQ1}
+is identically satisfied. Therefore the name `moving frame.'
 
 
 
@@ -231,33 +275,33 @@ flow invariant. Even worse, the singularity distorts the way trajectories
 are mapped onto the slice, even if they merely approach it rather than crossing it, as we
 will see in the next two sections.
 
-\subsection{\label{s:cleCoordSlice}Coordinate {\slice s} and explicit invariants}
+\subsection{\label{s:cleCoordSlice}Linear {\slice s} and explicit invariants}
 
-In this section we use a special choice of slice point that will lead
-to simple analytical expressions for the transformation to invariant variables.
+We now show how a particular choice of slice point enables us
+to express for the transformation to invariant variables in a
+simple analytic form.
 
-We choose \slice\ point in one of the irreducible subspaces of
-$\SOn{2}$ action \refeq{CLfRots}, for instance $\slicep=(0,-1,0,0,0)$.
-The group-tangent is then $\sliceTan{}=(1,0,0,0,0)$ and the
-slice fixing condition becomes simply
+We place the \slice\ point in one of the linearly irreducible
+subspaces of $\SOn{2}$ action \refeq{CLfRots}, for instance
+$\slicep=(0,-1,0,0,0)$. The group-tangent at the \slice\
+point is then $\sliceTan{}=(1,0,0,0,0)$ and the slice fixing
+condition is
 \beq
-    \overline{x}_1 = x_1 \cos\gSpace - x_2 \sin\gSpace = 0\,
+    \overline{x}_1 = x_1 \cos\gSpace - x_2 \sin\gSpace = 0
+\,.
 \ee{cLeCoordSlice}
 The clockwise orientation condition restricts the \slice\ to half-hyperplane
 $\overline{x}_1=0,\;\overline{x}_2\ge 0$.
-
-In general, when a \slice\ $K$ is defined through relations of the form
-$\overline{x}_i=0$, $i=1,\ldots,N$ then we call $K$ a \emph{coordinate \slice}.
-
 Solving \refeq{cLeCoordSlice}
 for the polar angle $\gSpace$ in $(\ssp_1,\ssp_2)$ we get
 \beq
-  	\gSpace=\tan^{-1}\frac{x_1}{x_2}
+  	\gSpace=\tan^{-1}({x_1}/{x_2})
+\,.
 \ee{cLeCoordTheta}
 The transformation that rotates $\ssp$ clockwise by $\gSpace$
 to $\overline{\ssp} = \LieEl(\gSpace)\,\ssp$ onto the \slice\ is found by inserting
-\refeq{cLeCoordTheta} into the explicit expression for the action of \SOn{2}
-on $\ssp$
+\refeq{cLeCoordTheta} into the expression for the action of \SOn{2}
+on $\ssp$,
 \bea
  	\overline{x}_1 &=& x_1 \cos\gSpace - x_2 \sin\gSpace
         \,,\quad
@@ -266,29 +310,26 @@ on $\ssp$
 	\overline{y}_1 &=& y_1 \cos\gSpace - y_2 \sin\gSpace
         \,,\quad
 	\overline{y}_2 = y_1 \sin\gSpace + y_2 \cos\gSpace
-                    \continue
-	\overline{z} &=& z\,,
                     \nnu
 \eea
-to get the transformations
-\beq
-\begin{split}
-	\overline{x}_2 &=  r_1 = \sqrt{x_1^2+x_2^2} \cont
-	\overline{y}_1 &= {(x_2 y_1-x_1 y_2)}/{r_1}\cont
-	\overline{y}_2 &= {(x_1 y_1+x_2 y_2)}/{r_1}\cont	
-	\overline{z} &= z\,.
+yielding the transformations in analytic form:
+\bea
+	\overline{x}_2 &=&  r_1 = \sqrt{x_1^2+x_2^2}
+                \continue
+	\overline{y}_1 &=& {(x_2 y_1-x_1 y_2)}/{r_1}
+                \,,\quad
+	\overline{y}_2 \,=\, {(x_1 y_1+x_2 y_2)}/{r_1}
+                \continue
+	\overline{z} &=& z\,.
 	\label{eq:invLaser}
-\end{split}
-\eeq
-
-Transformations \refeq{eq:invLaser} map points $\ssp$ into
-the slice $\overline{\ssp}$. Alternativelly, they can be viewed
-as providing invariant variables on which to project dynamics,
-as we did in Hilbert basis case.\ES{In thesis and here Hilbert
-polynomials are used as an introduction to this use of moving
-frames. It used to be more important in previous versions.}
-Note the relation to the invariant polynomials
-\refeq{eq:ipLaser} and also that no syzygy is present.
+\eea
+This transformation rotates point $\ssp$ into the slice point
+$\sspRed$. Alternatively, they can be viewed as providing
+invariant variables on which to project dynamics, as we did
+in Hilbert basis case. Note the relation to the invariant
+polynomials \refeq{eq:ipLaser}, and observe that as the
+rotational degree of freedom has been explicitly  used, the
+\mframes\ requires no syzygies.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[ht]
@@ -375,8 +416,8 @@ close to zero.
 
 \PublicPrivate{}{
 \ES{No sure where to move this general theory on coordinate \slice s.}
-Once a coordinate \slice\
-$K=\{x_1=c_1,\ldots,x_r=c_N\}$ is defined by the first $N$
+Once a linear \slice\
+$\pSRed=\{x_1=c_1,\ldots,x_r=c_N\}$ is defined by the first $N$
 coordinates (relabel coordinates as necessary),
 we write the group transformations as
 \beq
@@ -384,33 +425,38 @@ we write the group transformations as
 	\label{eq:transNorm}
 \eeq
 Equating the first $N$ components of the function $w$ to the
-constants in the definition of the {\slice} $K_i(x)=c_i$
-yields the \emph{normalization equations} for $K$:
+constants in the definition of the {\slice} $\pSRed_i(x)=c_i$
+yields the \emph{slice conditions} for $\pSRed$:
 \beq
 	\overline{x}_1=w_1(g,x)=c_1,\ldots,\overline{x}_N=w_N(g,x)=c_N\,.
 	\label{eq:normalization}
 \eeq
-The normalization equations \refeq{eq:normalization}
-can always be solved\rf{FelsOlver99} for the group parameters in terms of
-$x$, yielding the moving frame associated with $K$:
-$\LieEl=\LieEl(x)$. Substitution of the moving frame equation back
-in \refeq{eq:transNorm} will yield the $n-r$
-\emph{fundamental invariants}, that is functionally independent
-invariants that can be used as a basis in which any other invariant
-can be expressed. Thus the fundamental invariants serve to distinguish
-group orbits in the neighborhood of the {\slice}, \ie, two points
-lie on the same group orbit if and only if all fundamental invariants
-agree. For proof \cf~\refrefs{FelsOlver98,FelsOlver99}.
+The slice conditions \refeq{eq:normalization} can always be
+solved\rf{FelsOlver99} for the group parameters in terms of
+$x$, yielding the moving frame associated with $\pSRed$:
+$\LieEl=\LieEl(x)$. Substitution of the moving frame equation
+back in \refeq{eq:transNorm} will yield the $d-N$
+functionally independent \emph{fundamental invariants} that
+can be used as a basis in which any other invariant can be
+expressed. Thus the fundamental invariants serve to
+distinguish group orbits in the neighborhood of the {\slice},
+\ie, two points lie on the same group orbit if and only if
+all fundamental invariants agree. For proof
+\cf~\refrefs{FelsOlver98,FelsOlver99}.
 
-Invariants generated by \mframes\ can be used in the same manner as a Hilbert
-polynomial basis for symmetry reduction, by projecting $d$-dimensional trajectories
-to $(d-N)$-dimensional variables. The fact that a moving frame exists
-only where group orbits have the same dimension is not as severe a restriction
-as it might seem. This condition fails on a \fixedsp\ of a continuous subgroup
-of \Group\ but, as we have seen in \refsect{s:symDyn}, {\fixedsp s} are flow-invariant.
-Therefore, one can always hope to cover the reduced space with properly chosen {\slice s}.
-Nevertheless, as we will see in next section, coordinate {\slice s} are not an optimal
-choice for common actions of \SOn{2} on truncations of PDEs, such as in the \cLe\ example.
+Invariants generated by \mframes\ can be used in the same
+manner as a Hilbert polynomial basis for symmetry reduction,
+by projecting $d$-dimensional trajectories to
+$(d-N)$-dimensional variables. The fact that a moving frame
+exists only where group orbits have the same dimension is not
+as severe a restriction as it might seem. This condition
+fails on a \fixedsp\ of a continuous subgroup of \Group\ but,
+as we have seen in \refsect{s:symDyn}, {\fixedsp s} are
+flow-invariant. Therefore, one can always hope to cover the
+reduced space with properly chosen {\slice s}. Nevertheless,
+as we will see in next section, linear {\slice s} are not an
+optimal choice for common actions of \SOn{2} on truncations
+of PDEs, such as in the \cLe\ example.
 }% end PublicPrivate
 
 
@@ -457,7 +503,7 @@ the $z$-axis, since {\fixedsp s} are flow invariant. Since
 \SOn{2} representation in the \cLe\ example is a direct sum
 of irreducible representations we cannot take more than one
 irreducible subspace into account when setting up the
-normalization equations, at least not in a convenient way. We
+slice conditions, at least not in a convenient way. We
 can however restore democracy between modes and extend
 validity of the transformations to any point where the group
 acts freely, by modifying the invariants as follows:
