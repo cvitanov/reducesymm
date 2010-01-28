@@ -1,42 +1,42 @@
 % Evangelos 2009/12/19
 
-\subsection{\label{s:mfReqb}\CLe\  general \slice}
+\subsection{\label{s:mfReqb}\CLe\  general linear \slice}
 
-As became clear in \refsect{s:cleCoordSlice}, the use of a coordinate \slice\ \refeq{cLeCoordSlice}
-allowed explicit determination of invariant variable \refeq{eq:invLaser} and straightforward
-determination of invariant variables \refeq{eq:invLaser}. Unfortunately the moving frame
-method introduced artificial singularities in \reducedsp, that as we've seen in \refsect{sec:CLeMovFr}
-depends on the choice of slice point.
-% On the other hand \slice\ \refeq{cLeCoordSlice} is defined to be orthogonal
-% to the group tangent of \SOn{2} restricted in the $x$-irreducible subspace of \SOn{2}
-% and this introduces singularities in the transformations \refeq{eq:invLaser}.
-Therefore we examine in this section a different choice of slice fixing point that appears natural.
-% In hope to remove these singularities, in this section we construct a moving frame
-Since \REQB{1} organizes reduced space dynamics around it but also sets the
-scale of angular velocity of symmetry induced rotations in the system, we
-pick $\slicep=\ssp_{\REQB{1}}$ as the slice fixing point.
-The price to pay is that it won't be convenient to explicitly write out
-transformations to invariant variables
-as we did in \refsect{sec:mf}; we will instead implement the moving frame map numerically,
+The use of the simple, irreducible subspace \slice\ condition in \refsect{s:cleCoordSlice},  
+\refeq{cLeCoordSlice} allowed explicit and straightforward determination of invariant 
+variables \refeq{eq:invLaser}. Unfortunately the moving frame method introduced artificial 
+singularities in \reducedsp, the location of which depends on the choice of slice point,
+as we've seen in \refsect{sec:CLeMovFr}.
+Therefore we examine in this section how different, less restrictive choices of slice fixing 
+point affect the singular set. The price to pay is that it won't be convenient (although not
+impossible for our simple example) to explicitly write out transformations 
+to invariant variables as we did in \refsect{sec:mf}; 
+we will instead implement the moving frame map numerically,
 mapping computed trajectories to the \slice.
-This is by no means a drawback. Even though computation of invariants with the
-{\mframes} is efficient, it is still
+This is not a serious limitation. Even though analytical computation 
+of invariants with the {\mframes} is efficient, it is still
 prohibitive for very high dimensional flows. For, one has
 to compute the invariants with computer algebra, a proccess
 that works\rf{SiminosThesis} for moderate system dimension of the order of $100$,
 as required for instance in truncations of \KSe\ studied in \refref{SCD07},
 but does not scale well for problems with truncations of order $10,000$ as
 a fully resolved $3$-D fluid simulation would easily require\rf{GibsonPhD}.
+Furthermore, in order to analyze the singularities present in the system, \refeq{cLeMFsing}
+describing the singular subspace is all we need to know. 
 
-We choose slice-fixing point $\slicep=(0,\,1,\,y_1^{o}/x_2^{o},\,x_1^{o}/x_2^{o},\,y_2^{o}/x_2^{o},\,0)$ 
-with $\ssp^{o}= \ssp_{\REQB{1}}=$\ES{Fill this in.} on the group orbit of \reqv.
-We can use \refeq{cLeMF} to compute $\theta$ for any point $\ssp$, or keeping up
-with the numerical approach of this section, use a Newton's method with initial
-guess the angle from previous point along the trajectory and with first point
-satisfying orientation condition that results in minimum distance from \slicep.
-Projections of \cLe\ dynamics to the slice defined in this way are
-shown in \reffig{fig:CLEmfReqb1}. Singularities of the same nature as the ones 
-in \refsect{s:cleCoordSlice} are also present here.
+Since \REQB{1} organizes reduced space dynamics around it, but also sets the
+scale of angular velocity of symmetry induced rotations in the system, we
+find natural to choose slice-fixing point $\slicep=(0,\,1,\,y_1^{o}/x_2^{o},\,x_1^{o}/x_2^{o},\,y_2^{o}/x_2^{o},\,0)$ 
+with $\ssp^{o}= \ssp_{\REQB{1}}=$\ES{Fill this in.}, \ie\ on the group orbit of \reqv.
+We can use \refeq{cLeMF} to compute $\theta$ for any point $\ssp$, but keeping up
+with the numerical approach of this section, we use a Newton's method. As initial
+guess we use the angle from previous point along the trajectory, while for the 
+first point we choose among the two possible solutions by demanding that the rotation
+results to a point at minimum distance from \slicep.
+Projections of \cLe\ dynamics to the slice defined in this manner are
+shown in \reffig{fig:CLEmfReqb1}. The figures again present large flights induced
+by the moving frame angle $\pi$-jumps.
+
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %computed with vaggelis/testing/flows/CLEfinalTmp.nb
@@ -55,21 +55,32 @@ for clarity.
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-In \reffig{CLEmfSingSet}(a) we observe that with slice fixed by
-$\slicep=\ssp_{\REQB{1}}$ the attractor meets the \sset\ head
-on and becomes deformed. Choosing the slice fixing point as
-$\slicep=\ssp_{\REQB{1}}+(0,-5,0,0,0)$ we can tilt the \sset\
-so that trajectories approach it in a smoother manner, see
-\reffig{fig:CLEmfSingSet}(b), \reffig{fig:CLEmfAdHoc}.
+
+To visualize the \sset\ we eliminate $x_2$ in \refeq{cLeMFsing} to obtain
+\beq
+	\slicepComp{y}{1}x_2+\slicepComp{y}{2}x_1+\left(\slicepComp{y}{2}+\slicepComp{y}{1}^2\right)y_1\,.
+\ee{cLeMFsingElim}
+We plot the projection of \sset\ in $3$-dimensions $(x_1,x_2,y_1)$ in \reffig{CLEmfsset}(a)
+\ES{Axes are wrong in figure, I'll fix this.
+	}.
+We observe the attractor meet the \sset\ head on and become deformed. 
+
+Linear relation \refeq{cLeMFsingElim} and \reffig{CLEmfsset} suggest that we can manipulate the \sset\ 
+so that the attractor avoids the singularity by increasing the ratio $\slicepComp{y}{2}/\slicepComp{y}{1}$.
+Choosing slice fixing point as $\slicep=\ssp_{\REQB{1}}+(0,-5,0,0,0)$\ES{With updated notation this choice
+of \slicep\ does not make sense but I will have to replot the figures before I can update it.} 
+we can therefore ``tilt'' the \sset\ so that trajectories approach it in a smoother manner, see
+\reffig{fig:CLEmfsset}(b), \reffig{fig:CLEmfAdHoc}(b). 
     \ES{I've updated figure \reffig{fig:CLEmfAdHoc}
 	to compare $(x_1,y_1,z)$ projection with the two different choices.
 	I'm not sure that the plot of the singular set is accurate in this
 	projection though. To me the difference is clear here, the image
 	system in the second case is as smooth as with invariant polynomials.
        }
+     \ES{I want to keep this example section in the paper, improve on the presentation.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %computed with vaggelis/testing/flows/CLEfinalTmp.nb
-\begin{figure}[ht] \label{fig:CLEmfSingSet}
+\begin{figure}[ht] \label{fig:CLEmfsset}
 \begin{center}
   (\textit{a})\includegraphics[width=0.35\textwidth,clip=true]{CLEmfReqb123}
 ~~~~(\textit{b})\includegraphics[width=0.35\textwidth,clip=true]{CLEmfAdHoc123}
@@ -101,7 +112,7 @@ at  (a) $\slicep  = \ssp_{\REQB{1}}$, (b) $\slicep  =
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-
+\ES{move to discussion:
 Rotation of $\ssp$ by angle $\theta$
 to the slice defined by \refeq{PCsectQ1} is a linear operation
 for any given point and can be applied efficiently
@@ -112,8 +123,9 @@ representations and one is not force to store large matrices.
 Of course, the transformation is still non-linear
 through the dependence on the angle and equivalent to the
 explicit transformations \refeq{eq:invLaser}.
+}
 
-
+\ES{Now mentioned in slice section, merge:
 Since rotations commute with time integration, one can take a
 different approach: starting with a point on the slice
 integrate for small but finite time and then map the
@@ -126,4 +138,4 @@ further practical advantages. Nevertheless, in the limit of
 infinitesimal time steps this procedure reveals the
 connection of \mframes\ method to its continuous time
 counterpart of \refsect{sec:MovFrameODE}.
-    \ES{Now mentioned in slice section, merge.}
+}
