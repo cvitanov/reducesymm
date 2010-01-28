@@ -46,8 +46,8 @@ group orbits by a fixed hypersurface.
 % then branched to dasbuch/book/FigSrc/xfig/ESunrot.fig
 \begin{figure}[ht] \label{fig:ReducTraj}
 \begin{center}
-(\textit{a})\includegraphics[width=0.43\textwidth]{ReducTraj1}
-~~~~(\textit{b})\includegraphics[width=0.43\textwidth]{ESunrot}
+(\textit{a})\includegraphics[width=0.43\textwidth,clip=true]{ReducTraj1}
+~~~~(\textit{b})\includegraphics[width=0.43\textwidth,clip=true]{ESunrot}
 \end{center}
 \caption{
 (a)
@@ -193,51 +193,18 @@ choices in \refsects{s:cleCoordSlice}{s:mfReqb}.
 
 \section{\label{sec:CLeMovFr}An example: Moving frame for \CLe}
 
-In case of \cLe\ we can, due to equivariance, rotate any
-slice point so that it is written as
-$\slicep=(0,\,\slicepComp{x}{1},\,\slicepComp{y}{1},\,\slicepComp{y}{2},\,\slicepComp{z}{})$.
+In case of \cLe\ we can, due to equivariance, rotate any 
+slice fixing point in \refeq{PCsectQ1} so that we have $\slicepComp{x}{1}=0$. 
+Furthermore, since only the group tangent direction matters we can write the
+most general slice fixing point as $\slicep=(0,\,1,\,\slicepComp{y}{1},\,\slicepComp{y}{2},\,0)$
+\footnote{That is, a slice that goes through point (0,\,\slicepComp{x}{2},\,\slicepComp{y}{1},\,\slicepComp{y}{2},\,\slicepComp{z}{})
+can be defined through slice fixing point (0,\,1,\,\slicepComp{y}{1}/\slicepComp{x}{2},\,\slicepComp{y}{2}/\slicepComp{x}{2},\,0).}.
 The group orbit tangent then becomes
-$\sliceTan{}=(-\slicepComp{x}{2},\,0,\,-\slicepComp{y}{2},\,\slicepComp{y}{1},\,0)$
+$\sliceTan{}=(-1,\,0,\,-\slicepComp{y}{2},\,\slicepComp{y}{1},\,0)$
 and slice condition \refeq{PCsectQ1} leads to
-    \PC{Emphasize; the most general form of a linear slice condition for
-    \cLe. The point of my rescaling was to show that one needs only 2 numbers,
-    not three ($\slicepComp{x}{1},\,\slicepComp{y}{1},\,\slicepComp{y}{2}$)
-    to fix the slice. Was I wrong?
-    \\
-    {\bf ES}: It's a matter of taste. If you rescale
-    you need to provide as with the scale factor, so you need once again three numbers.
-    It's a linear slice so even when deriving something I don't mind multiplying with
-    a constant rather than with $1$. So I prefer to use what I also use in numerics,
-    three numbers.
-    \\
-    {\bf PC}: look at \refeq{cLeMFsing}. Slice fixing point
-    appears linearly in both the numerator and denominator,
-    so you are free to rescale it as you wish, ie. there is
-    no need for 3 numbers. This will be true also for situations where
-    you have many Fourier modes. The point is that the slice
-    hyperplane includes the origin, so slice point only
-    provides its direction, the distance to the origin is
-    irrelevant.
-    \\
-    {\bf ES}: I think you were wrong concerning dimension of singular subspace
-    in slices and moving frames, it is 3-dimensional not 4-dimensional. You have two
-    conditions \refeq{cLeMFsing}, one being that you are on the slice, also true
-    for method of slice, other being that the group tangents become perpendicular.
-    \\
-    {\bf PC}: You are right, a typo. Clearly one dimension less than the slice itself.
-    \\
-    {\bf PC}: make `coordinate slice' (stupid name) a `linear slice' or `hyperplane slice'
-    everywhere.  I agree about the name being stupid but coordinate slices are special
-    among linear slices because they only involve ONE coordinate. For us they are
-    also restricted to irreducible representations.
-    Of course we might not need to elaborate that much, so we might get away with
-    calling everything linear slice.
-        \\
-    {\bf PC}: OK, never mind.
-    }
 \beq
-  \theta=\tan^{-1}\frac{\slicepComp{x}{2}x_1+\slicepComp{y}{2}y_1-\slicepComp{y}{1}y_2}
-			  {\slicepComp{x}{2}x_2+\slicepComp{y}{1}y_1+\slicepComp{y}{2}y_2}\,.
+  \theta=\tan^{-1}\frac{x_1+\slicepComp{y}{2}y_1-\slicepComp{y}{1}y_2}
+			  {x_2+\slicepComp{y}{1}y_1+\slicepComp{y}{2}y_2}\,.
 \ee{cLeMF}
 To ensure a unique intersection with the slice we have to further restrict $\pSRed$
 by choosing a representative out of the two group orbit points that intersect the slice.
@@ -245,15 +212,15 @@ We can impose an orientation condition, for example choosing the angle that
 results in the smallest clockwise rotation. Another choice is to pick as group
 orbit representative the point that is at minimum distance from $\slicep$. Or we
 can define our inverse tangent function $\tan^{-1}\frac{b}{a}$ so that it distinguishes quadrants
-in the $a-b$ plane.
+in the $(a,b)$ plane.
 We have found that all three conditions work equally well, resulting in the same image dynamical
 system.
 
 We observe that \refeq{cLeMF}, is undefined when
 \begin{subequations}\label{cLeMFsing}
   \begin{align}
-    \slicepComp{x}{2}x_1+\slicepComp{y}{2}y_1-\slicepComp{y}{1}y_2 &=0 \label{cLeMFsingOnSlice}\cont
-    \slicepComp{x}{2}x_2+\slicepComp{y}{1}y_1+\slicepComp{y}{2}y_2 &=0 \label{cLeMFsingPerpTan}\,.
+    x_1+\slicepComp{y}{2}y_1-\slicepComp{y}{1}y_2 &=0 \label{cLeMFsingOnSlice}\cont
+    x_2+\slicepComp{y}{1}y_1+\slicepComp{y}{2}y_2 &=0 \label{cLeMFsingPerpTan}\,.
   \end{align}
 \end{subequations}
 are both satisfied. We will refer to this $3$-dimensional linear subspace as the \emph{\sset} of the moving
@@ -341,8 +308,8 @@ rotational degree of freedom has been explicitly  used, the
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[ht]
 \begin{center}
-  (\textit{a})\includegraphics[width=0.35\textwidth]{CLEmfXYZ}
-~~~~(\textit{b})\includegraphics[width=0.35\textwidth]{CLEmfYYZ}
+  (\textit{a})\includegraphics[width=0.35\textwidth,clip=true]{CLEmfXYZ}
+~~~~(\textit{b})\includegraphics[width=0.35\textwidth,clip=true]{CLEmfYYZ}
 \end{center}
 \caption{
 \Statesp\ portraits of \cLe\ dynamics in \reducedsp,.
@@ -421,110 +388,4 @@ At the same time division by $\sqrt{x_1^2+x_2^2}$ causes the jumps in the
 $\overline{y}$ components whenever the magnitude of $x$ comes
 close to zero.
 
-\PublicPrivate{}{
-\ES{No sure where to move this general theory on coordinate \slice s.}
-Once a linear \slice\
-$\pSRed=\{x_1=c_1,\ldots,x_r=c_N\}$ is defined by the first $N$
-coordinates (relabel coordinates as necessary),
-we write the group transformations as
-\beq
-	\overline{x}= g \cdot x = w(g,x)\,.
-	\label{eq:transNorm}
-\eeq
-Equating the first $N$ components of the function $w$ to the
-constants in the definition of the {\slice} $\pSRed_i(x)=c_i$
-yields the \emph{slice conditions} for $\pSRed$:
-\beq
-	\overline{x}_1=w_1(g,x)=c_1,\ldots,\overline{x}_N=w_N(g,x)=c_N\,.
-	\label{eq:normalization}
-\eeq
-The slice conditions \refeq{eq:normalization} can always be
-solved\rf{FelsOlver99} for the group parameters in terms of
-$x$, yielding the moving frame associated with $\pSRed$:
-$\LieEl=\LieEl(x)$. Substitution of the moving frame equation
-back in \refeq{eq:transNorm} will yield the $d-N$
-functionally independent \emph{fundamental invariants} that
-can be used as a basis in which any other invariant can be
-expressed. Thus the fundamental invariants serve to
-distinguish group orbits in the neighborhood of the {\slice},
-\ie, two points lie on the same group orbit if and only if
-all fundamental invariants agree. For proof
-\cf~\refrefs{FelsOlver98,FelsOlver99}.
 
-Invariants generated by \mframes\ can be used in the same
-manner as a Hilbert polynomial basis for symmetry reduction,
-by projecting $d$-dimensional trajectories to
-$(d-N)$-dimensional variables. The fact that a moving frame
-exists only where group orbits have the same dimension is not
-as severe a restriction as it might seem. This condition
-fails on a \fixedsp\ of a continuous subgroup of \Group\ but,
-as we have seen in \refsect{s:symDyn}, {\fixedsp s} are
-flow-invariant. Therefore, one can always hope to cover the
-reduced space with properly chosen {\slice s}. Nevertheless,
-as we will see in next section, linear {\slice s} are not an
-optimal choice for common actions of \SOn{2} on truncations
-of PDEs, such as in the \cLe\ example.
-}% end PublicPrivate
-
-
-\PublicPrivate{}{
-We observe that dynamics cannot enter $\Fix{\SOn{2}}$, \ie\
-the $z$-axis, since {\fixedsp s} are flow invariant. Since
-\SOn{2} representation in the \cLe\ example is a direct sum
-of irreducible representations we cannot take more than one
-irreducible subspace into account when setting up the
-slice conditions, at least not in a convenient way. We
-can however restore democracy between modes and extend
-validity of the transformations to any point where the group
-acts freely, by modifying the invariants as follows:
-\beq
-\begin{split}
-	\overline{x}_2 &= (x_1^2+x_2^2)/r \cont
-	\overline{y}_1 &= -(x_2 y_1-x_1 y_2)/r\cont
-	\overline{y}_2 &=(x_1 y_1+x_2 y_2)/r\cont
-	\overline{z} &=z\cont
-	r &= \sqrt{x_1^2+x_2^2+y_1^2+y_2^2}
-    \,.
-	\label{eq:invLaser2}
-\end{split}
-\eeq
-This set of invariants lacks a geometric interpretation
-    \ES{or does it?}
-but results in much cleaner phase portraits, \cf\
-\reffig{fig:CLEinv}.
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}[ht]
-\begin{center}
-  (\textit{a})\includegraphics[width=0.35\textwidth]{CLEinvXYZ}
-~~~~(\textit{b})\includegraphics[width=0.35\textwidth]{CLEinvYYZ}
-\end{center}
-\caption{
-\Statesp\ portraits of \cLe\ dynamics  in \reducedsp,
-projected on invariant coordinates \refeq{eq:invLaser2}.
-    }
-\label{fig:CLEinv}
-\end{figure}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\ES{Fetch return map figure using unmodified invariants.}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}[ht]
-\begin{center}
-%   (\textit{a})\includegraphics[width=0.35\textwidth]{CLEinvRMx2}
-%  ~~~~(\textit{b})
-\includegraphics[width=0.35\textwidth]{CLEinvRM}
-\end{center}
-\caption[Return map for Complex Lorenz flow]{
-Return map to the \Poincare\ surface of section
-$\overline{x}_2=\overline{y}_2$ for \cLe\ with $e=1/10$,
-$\ImrCLor=0$, projecting on invariants given in
-\refeq{eq:invLaser2}. The return map coordinate is the
-Euclidean length along the \Poincare\ section of the unstable
-manifold of $E_1$.
-    }
-\label{fig:CLEinvRM}
-\end{figure}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-} %end PublicPrivate
