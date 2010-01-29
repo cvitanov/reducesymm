@@ -1,12 +1,13 @@
 siminos/CLE/00ReadMe.txt
 $Author$ $Date$
 ===========================================================
-Towards continuous symmetry reduction in high dimensional flows
+Continuous symmetry reduction
+      and return maps for higher-dimensional flows
 Evangelos Siminos and Predrag Cvitanovi\'c
                     started writing: Vaggelis       2009-09-21
-                    final submission: Vaggelis      2012-12-21
+                    final submission: Vaggelis      2010-01-30
 
-					Predrag	    2009-12-02
+					Predrag                         2009-12-02
 To get a move on this article, I propose that we respond to
 the invitation, submit it to
 
@@ -16,24 +17,23 @@ and finalize it before Dec 21, 2009.
 After that date Predrag teaches and things slow down.
 
 -----------
+            submission DEADLINE                     2010-01-31
+for submission, read and enter all details in
+    siminos/CLE/PhysD-v1/00ReadMe.txt
+
 PhysicaD manuscript #???
+
 arXiv.org/abs/1209.???
-
-
-arXiv:????.???? (submitted v1):                     2010-01-??
-    siminos/CLE/arxiv-v1/ low resolution figs
-    siminos/CLE/APS-v1/ contains the submission
-    siminos/CLE/APS-v1/reviews referee edits
+arXiv:????.???? (submitted v1):                     2010-02-??
+    siminos/CLE/arxiv-v1/   low resolution figs
+    siminos/CLE/PhysD-v1/   contains the submission
+    siminos/CLE/PhysD-v1/reviews/   referee edits
 
 Directories
 -----------
 until submission
     ../figs
-    ../inputs/defs.tex
-    inputs/defCLE.tex   redefinitions specific to CLE.tex.
-                        At submission, merge with
-                        defs.tex, prune
-
+    defCLE.tex   redefinitions specific to CLE.tex.
     ../bibtex/siminos   submit only rpo.bib file
 
 please do not create a `current' subdirectory; work here,
@@ -107,6 +107,7 @@ Fix these:
 FORMERLY OUTSTANDING ITEMS, NOW DISPOSED OFF:
 
 = DONE:
+  At submission, merge with defs.tex, prune
 
 = DONE: - Use next command to get References header appear.
   The problem is a conflict between elsarticle and amsref
