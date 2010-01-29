@@ -90,10 +90,12 @@ When submitting, remember to
        line thickness.
 
 
-Notes
------
+							
+CLE.tex now formated for Physica D          20 dec 2009
+==================================
 
-- blah
+------------------------------------------------------------------
+
 
 
 Fix these:
@@ -105,4 +107,13 @@ Fix these:
 FORMERLY OUTSTANDING ITEMS, NOW DISPOSED OFF:
 
 = DONE:
-= DONE:
+
+= DONE: - Use next command to get References header appear.
+  The problem is a conflict between elsarticle and amsref
+  over \bibsection command.
+    \newcommand\bibsection{%
+    \section*{\bibname\markright{\MakeUppercase{\bibname}}}}
+
+= DONE: \input ../inputs/def        % TEMPORARY
+        \input inputs/defsCLE.tex
+ % eventually merge used commanDs into inputs/defsCLE.tex
