@@ -18,16 +18,15 @@ submission notes
         siminos/CLE/PhysD-v1/03PhysicaD.txt
         entered relevant notes into this files
 
-copy all source files and figs from rpo_ks/current to  PhysD/
-    [x] mark here when done [ES 14 Oct 2007]
+copy all source files and figs from CLE to  PhysD/
+    [ ] mark here when done 
 
 when submitting PhysD  prepare double spaced pdf
-    [?] mark here when done
-    (was not in PhysD instructions so didn't do that)
+    [?] check PhysD instructions 
 
 recheck AMS codes pacs-ams.txt
 35B05, 35B10, 37L05, 37L20, 76F20, 65H10, 90C53
-    [x] AMS codes rechecked, ES Sept 18 2007
+    [] Different paper?
 
 remove all footnotes and "edits" from the submission copy
     [ ] mark here when done
@@ -49,12 +48,11 @@ Set bibstyle to alphabetical order, temporarily,
     [ ] mark here when done
 
 siam.bst as the bibliographic,  hyperref version, with eprint
-    [ ] mark here when done
+    [ ] different paper, update
 
 at submission DO NOT generate pruned file rpo.bib
 \bibliography{rpo}  % in rpo.tex
     [?] rpo.bbl added to repository
-(we didn't submit source yet and didn't need to touch bibliography at all)
 
 does PhysD want spaces between the initials?
 PC fixed that once by using   bibclean fluid.bib; redo:
@@ -64,18 +62,20 @@ Consistent use of $\ldots$, (I)/(a)/(1)/itemize, others?
     [ ] mark here when done
 
 PostScript figures generated with sufficient line thickness?
-    [?] ES: Cannot find any specific instructions
+    [ ] ES: will check instructions
 
 svn copy all used and cleaned-up source files and figs from
 rpo_ks,rpo_ks/figs to  PhysD/
     [ ] mark here when done
 
+specify up to 5 reviewers
+    [ ] mark here when done
+
 submit to PhysD
-    [ ] created rpo.tex for PhysD submission
-    arxiv-v?/*.tex *.bst *.cls figs/*.eps rpo.bbl [NO rpo.bib! please]
-    [ ] rpo_ks/PhysD/reviews/response2.1.txt
-    [ ] coverLettResubm.tex
-    [ ] 2007-10-17 mark here and date when done
+    [ ] created CLE.tex for PhysD submission
+    arxiv-v?/*.tex *.bst *.cls figs/*.eps CLE.bbl [NO rpo.bib! please]
+    [ ] coverLett.tex
+    [ ] mark here and date when done
 
 Revisions PhysD; when referees incorporated,
 update arXiv.org with the revised version
@@ -87,11 +87,6 @@ update arXiv.org with the revised version
 
 NOTES
 -----
-
--- add comment about high-resolution link at
-   http://ChaosBook.org/~predrag/papers/preprints.html#rpo
-
-
 
 Preparation of figures
 ----------------------
