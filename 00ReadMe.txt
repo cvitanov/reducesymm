@@ -13,6 +13,11 @@ rpo_ks/
     "State space geometry of a spatio-temporally chaotic
      Kuramoto-Sivashinsky flow"
 
+CLE/00ReadMe.txt
+    Siminos and Cvitanovi\'c
+    "Continuous symmetry reduction
+        and return maps for higher-dimensional flows"
+
 bibtex/siminos.bib
 	one bibliography for all projects
 
@@ -34,12 +39,12 @@ figsSrc/
 inputs/
 	one directory for all Siminos specific macros
 
---------------------------------------------------------------------------
+---------------------------------------------------------------
 TO FIX:
 
 --
 
---------------------------------------------------------------------------
+---------------------------------------------------------------
 NOTES:
 
 -- maths classification for a paper about Lorenz system:
