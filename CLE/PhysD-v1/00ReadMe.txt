@@ -2,7 +2,7 @@ siminos/CLE/PhysD-v1/00ReadMe.txt
 $Author$ $Date$
 ===========================================================
 Continuous symmetry reduction
-      and return maps for higher-dimensional flows
+      and return maps for high-dimensional flows
 Evangelos Siminos and Predrag Cvitanovi\'c
                     started writing: Vaggelis       2009-09-21
                     final submission: Vaggelis      2010-01-30
