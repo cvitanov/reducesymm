@@ -35,7 +35,7 @@ remove all % commented and incriminating text from the submission copy
     [x] mark here when done
 
 remove extraneous macros from defs.tex before submission
-    [ ] mark here when done (leave ifdraft etc?)
+    [x] mark here when done (move ifdraft etc to defCLE.tex)
     [x] Predrag 2010-01-28
 
 svn rm  [all unused *.tex and other files]
@@ -78,7 +78,7 @@ submit to PhysD
     [x] created CLE.tex for PhysD submission
     arxiv-v?/*.tex *.bst *.cls figs/*.eps CLE.bbl [NO rpo.bib! please]
     [x] coverLetter.tex
-    [ ] mark here and date when done
+    [x] ES 2010-01-31 
 
 Revisions PhysD; when referees incorporated,
 update arXiv.org with the revised version
