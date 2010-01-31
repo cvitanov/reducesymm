@@ -14,7 +14,7 @@ Evangelos Siminos and Predrag Cvitanovi\'c
 submission notes
 ----------------
 
-    [ ] mark when read submission instructions,
+    [x] mark when read submission instructions,
         siminos/CLE/PhysD-v1/03PhysicaD.txt
         entered relevant notes into this files
 
@@ -50,9 +50,8 @@ Set bibstyle to alphabetical order, temporarily,
 siam.bst as the bibliographic,  hyperref version, with eprint
     [ ] different paper, update
 
-at submission DO NOT generate pruned file rpo.bib
-\bibliography{rpo}  % in rpo.tex
-    [?] rpo.bbl added to repository
+at submission DO NOT generate pruned file 
+    [x] CLE.bbl added to repository
 
 does PhysD want spaces between the initials?
 PC fixed that once by using   bibclean fluid.bib; redo:
