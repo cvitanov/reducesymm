@@ -26,11 +26,7 @@ when submitting PhysD  prepare double spaced pdf
     [x] check PhysD instructions: no info given 
 
 recheck AMS codes pacs-ams.txt
-<<<<<<< .mine
-    [x] 
-=======
     [x] Predrag 2010-01-30
->>>>>>> .r1572
 
 remove all footnotes and "edits" from the submission copy
     [x] mark here when done
@@ -39,11 +35,8 @@ remove all % commented and incriminating text from the submission copy
     [x] mark here when done
 
 remove extraneous macros from defs.tex before submission
-<<<<<<< .mine
     [ ] mark here when done (leave ifdraft etc?)
-=======
     [x] Predrag 2010-01-28
->>>>>>> .r1572
 
 svn rm  [all unused *.tex and other files]
     [x] mark here when done
@@ -55,24 +48,18 @@ Set bibstyle to alphabetical order, temporarily,
         and check for double entries.
     [x] mark here when done
 
-<<<<<<< .mine
-=======
-appropriate .bst as the bibliographic,  hyperref version, with eprint
-    [ ] different paper, update
-
->>>>>>> .r1572
 at submission DO NOT generate pruned file 
     [x] CLE.bbl added to repository
 
 does PhysD want spaces between the initials?
 PC fixed that once by using   bibclean fluid.bib; redo:
-    [ ] mark here when done
+    [] mark here when done
 
 Consistent use of $\ldots$, (I)/(a)/(1)/itemize, others?
     [x] mark here when done
 
 PostScript figures generated with sufficient line thickness?
-    [x ]  
+    [x]  
 
 svn copy all used and cleaned-up source files and figs from
 siminos/figs to  PhysD/
@@ -82,13 +69,13 @@ specify up to 5 reviewers
     [X] mark here when done
 
 Color figures are clearly marked as being intended for color reproduction on the Web (free of charge) and in print or to be reproduced in color on the Web (free of charge) and in black-and-white in print
-    [ ] ES: unsure about this
+    [x] ES: unsure about this
 
 If only color on the Web is required, black and white versions of the figures are also supplied for printing purposes 
-    [ ] ES: trouble?  no, only at the final submission Predrag 2010-01-28
+    [x] ES: trouble?  no, only at the final submission Predrag 2010-01-28
 
 submit to PhysD
-    [ ] created CLE.tex for PhysD submission
+    [x] created CLE.tex for PhysD submission
     arxiv-v?/*.tex *.bst *.cls figs/*.eps CLE.bbl [NO rpo.bib! please]
     [x] coverLetter.tex
     [ ] mark here and date when done
