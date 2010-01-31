@@ -68,7 +68,13 @@ rpo_ks,rpo_ks/figs to  PhysD/
     [ ] mark here when done
 
 specify up to 5 reviewers
-    [ ] mark here when done
+    [X] mark here when done
+
+Color figures are clearly marked as being intended for color reproduction on the Web (free of charge) and in print or to be reproduced in color on the Web (free of charge) and in black-and-white in print
+    [ ] ES: unsure about this
+
+If only color on the Web is required, black and white versions of the figures are also supplied for printing purposes 
+    [ ] ES: trouble?
 
 submit to PhysD
     [ ] created CLE.tex for PhysD submission
