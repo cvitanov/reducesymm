@@ -26,7 +26,7 @@ when submitting PhysD  prepare double spaced pdf
     [?] check PhysD instructions 
 
 recheck AMS codes pacs-ams.txt
-    [] 
+    [x] Predrag 2010-01-30
 
 remove all footnotes and "edits" from the submission copy
     [x] mark here when done
@@ -35,7 +35,7 @@ remove all % commented and incriminating text from the submission copy
     [x] mark here when done
 
 remove extraneous macros from defs.tex before submission
-    [ ] mark here when done
+    [x] Predrag 2010-01-28
 
 svn rm  [all unused *.tex and other files]
     [ ] mark here when done
@@ -47,7 +47,7 @@ Set bibstyle to alphabetical order, temporarily,
         and check for double entries.
     [ ] mark here when done
 
-siam.bst as the bibliographic,  hyperref version, with eprint
+appropriate .bst as the bibliographic,  hyperref version, with eprint
     [ ] different paper, update
 
 at submission DO NOT generate pruned file 
@@ -64,7 +64,7 @@ PostScript figures generated with sufficient line thickness?
     [ ] ES: will check instructions
 
 svn copy all used and cleaned-up source files and figs from
-rpo_ks,rpo_ks/figs to  PhysD/
+siminos/figs to  PhysD/
     [ ] mark here when done
 
 specify up to 5 reviewers
@@ -74,7 +74,7 @@ Color figures are clearly marked as being intended for color reproduction on the
     [ ] ES: unsure about this
 
 If only color on the Web is required, black and white versions of the figures are also supplied for printing purposes 
-    [ ] ES: trouble?
+    [ ] ES: trouble?  no, only at the final submission Predrag 2010-01-28
 
 submit to PhysD
     [ ] created CLE.tex for PhysD submission
