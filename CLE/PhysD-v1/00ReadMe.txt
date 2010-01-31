@@ -23,10 +23,14 @@ copy all source files and figs from CLE to  PhysD/
     [x] mark here when done 
 
 when submitting PhysD  prepare double spaced pdf
-    [?] check PhysD instructions 
+    [x] check PhysD instructions: no info given 
 
 recheck AMS codes pacs-ams.txt
+<<<<<<< .mine
+    [x] 
+=======
     [x] Predrag 2010-01-30
+>>>>>>> .r1572
 
 remove all footnotes and "edits" from the submission copy
     [x] mark here when done
@@ -35,21 +39,28 @@ remove all % commented and incriminating text from the submission copy
     [x] mark here when done
 
 remove extraneous macros from defs.tex before submission
+<<<<<<< .mine
+    [ ] mark here when done (leave ifdraft etc?)
+=======
     [x] Predrag 2010-01-28
+>>>>>>> .r1572
 
 svn rm  [all unused *.tex and other files]
-    [ ] mark here when done
+    [x] mark here when done
 
 svn rm  [all unused figures and all *.pdf]
-    [ ] mark here when done
+    [x] mark here when done
 
 Set bibstyle to alphabetical order, temporarily,
         and check for double entries.
-    [ ] mark here when done
+    [x] mark here when done
 
+<<<<<<< .mine
+=======
 appropriate .bst as the bibliographic,  hyperref version, with eprint
     [ ] different paper, update
 
+>>>>>>> .r1572
 at submission DO NOT generate pruned file 
     [x] CLE.bbl added to repository
 
@@ -58,14 +69,14 @@ PC fixed that once by using   bibclean fluid.bib; redo:
     [ ] mark here when done
 
 Consistent use of $\ldots$, (I)/(a)/(1)/itemize, others?
-    [ ] mark here when done
+    [x] mark here when done
 
 PostScript figures generated with sufficient line thickness?
-    [ ] ES: will check instructions
+    [x ]  
 
 svn copy all used and cleaned-up source files and figs from
 siminos/figs to  PhysD/
-    [ ] mark here when done
+    [x] mark here when done
 
 specify up to 5 reviewers
     [X] mark here when done
@@ -79,7 +90,7 @@ If only color on the Web is required, black and white versions of the figures ar
 submit to PhysD
     [ ] created CLE.tex for PhysD submission
     arxiv-v?/*.tex *.bst *.cls figs/*.eps CLE.bbl [NO rpo.bib! please]
-    [ ] coverLett.tex
+    [x] coverLetter.tex
     [ ] mark here and date when done
 
 Revisions PhysD; when referees incorporated,
