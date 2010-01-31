@@ -19,20 +19,19 @@ submission notes
         entered relevant notes into this files
 
 copy all source files and figs from CLE to  PhysD/
-    [ ] mark here when done 
+    [x] mark here when done 
 
 when submitting PhysD  prepare double spaced pdf
     [?] check PhysD instructions 
 
 recheck AMS codes pacs-ams.txt
-35B05, 35B10, 37L05, 37L20, 76F20, 65H10, 90C53
-    [] Different paper?
+    [] 
 
 remove all footnotes and "edits" from the submission copy
-    [ ] mark here when done
+    [x] mark here when done
 
 remove all % commented and incriminating text from the submission copy
-    [ ] mark here when done
+    [x] mark here when done
 
 remove extraneous macros from defs.tex before submission
     [ ] mark here when done
