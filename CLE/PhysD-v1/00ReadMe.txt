@@ -78,7 +78,10 @@ submit to PhysD
     [x] created CLE.tex for PhysD submission
     arxiv-v?/*.tex *.bst *.cls figs/*.eps CLE.bbl [NO rpo.bib! please]
     [x] coverLetter.tex
-    [x] ES 2010-01-31 
+    [x] ES 2010-01-31 (Paris) 2010-01-30 (EST)
+
+PhysD manuscript number
+     [x] PHYSD-D-10-00070 (Assigned 2010-02-01)
 
 Revisions PhysD; when referees incorporated,
 update arXiv.org with the revised version
