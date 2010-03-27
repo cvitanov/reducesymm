@@ -39,6 +39,9 @@ figsSrc/
 inputs/
 	one directory for all Siminos specific macros
 
+talks/
+    Tufts10/    Predrag seminar, 2010-04-02
+
 ---------------------------------------------------------------
 TO FIX:
 
