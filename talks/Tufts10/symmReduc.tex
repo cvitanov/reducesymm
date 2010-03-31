@@ -33,33 +33,31 @@
 
 
 % % Setup TikZ
-% 
+%
 % \usepackage{tikz}
 % \usetikzlibrary{arrows}
 % \tikzstyle{block}=[draw opacity=0.7,line width=1.4cm]
 
-\title{State-space geometry of a continuous symmetry reduced Kuramoto-Sivashinsky system.}
+\title{Continuous symmetry reduction for high-dimensional flows}
 \author{Evangelos Siminos}
 \author[Siminos, Cvitanovi\'c, Davidchack]
 {
-  \textcolor{green!50!black}{Evangelos~Siminos}\inst{1,2} \and
-  {Predrag~Cvitanovi\'c}\inst{2} \and
-  {Ruslan~L.~Davidchack}\inst{3}
+  \textcolor{green!50!black}{
+  {Predrag~Cvitanovi\'c}\inst{1}
+  and
+  {Evangelos~Siminos}\inst{1,2}
+  }
 }
 \institute
 {
-  \inst{1}
-  CEA/DAM/DIF %/DPTA/SPPE/LIRM
+  \inst{1}%
+  Georgia Institute of Technology
   \and
   \vskip-2mm
-  \inst{2}%
-  Georgia Institute of Technology, USA
-  \and
-  \vskip-2mm
-  \inst{3}%
-  University of Leicester, United Kingdom
+  \inst{2}
+  CEA/DAM/DIF, Paris
 }
-\date{October 12, 2009}
+\date{April 2, 2010}
 
 \begin{document}
 
@@ -74,14 +72,18 @@
 
 \section[KSe]{\KSe}
 
-\subsection{\KSe\ as a convenient system}
+\subsection{\KSe\ as a baby Navier-Stokes}
 \begin{frame}{\KSe}
+
+\begin{block}{1-dimensional ``Navier-Stokes''}
 \[
-  u_t = F(u) = -{\textstyle\frac{1}{2}}(u^2)_x-u_{xx}-u_{xxxx}
+  u_t + u \triangledown u \,=\, -\triangledown^2 u- \triangledown^4 u
     \,,\qquad   x \in [-L/2,L/2]
-    \,, 
+    \,,
 \]
-Appears in study of many extended systems including
+\end{block}
+
+describes extended systems such as
 \begin{itemize}
  \item reaction-diffusion systems
  \item combustion problems (flame fronts)
@@ -99,42 +101,25 @@ Appears in study of many extended systems including
 \end{center}
 
 \begin{itemize}
-\item Turbulence-like behavior
-\item Much simpler physical, mathematical and computational setting than Navier-Stokes  
+\item turbulent behavior
+\item simpler physical, mathematical and computational setting than Navier-Stokes
 \end{itemize}
 
 \end{frame}
 
 
-\section[Dynamicist's view of turbulence]{Dynamical systems approach to spatially extended systems}
+\section[Dynamicist's view of turbulence]
+{Dynamical systems approach to spatially extended systems}
 
 \begin{frame}{}
  \begin{itemize}
-  \item Understanding of chaotic dynamics: Rely on compact invariant objects.
-  \item Low dimensional systems: Equilibria and periodic orbits organize the long time dynamics.
-  \item Is this true in extended systems?
+  \item understanding of chaotic dynamics: Rely on compact invariant objects.
+  \item low dimensional systems: Equilibria and periodic
+  orbits organize the long time dynamics.
+  \item is this true in extended systems?
  \end{itemize}
 
 \end{frame}
-
-% \subsection{Low dimensional systems of ODE's}
-
-% \begin{frame}
-% 	\begin{block}{}
-% 		Consider a system of \ode s of the form
-% 		\[
-% 			\dot{\ssp} = \vf(\ssp,\lambda)\,,
-% 		\]
-% 		where $\vf: \Rls{n}\times\Rls{r} \rightarrow \Rls{n}$.
-% 	\end{block}
-% 	\begin{block}{}
-% 		\begin{itemize}
-% 			\item 
-% 			\item 
-% 		\end{itemize}
-% 	\end{block}
-% \end{frame}
-
 
 
 \subsection{Lorenz equations example}
@@ -145,7 +130,7 @@ Appears in study of many extended systems including
 		\only<1>{
 			\begin{exampleblock}{Lorenz equations}
 					\[
-% 	 			\dot{\ssp}=\pVeloc(\ssp)
+% 	 			\dot{\ssp}=\vel(\ssp)
 % 				=
 				\left[
 					\begin{array}{c}
@@ -167,14 +152,14 @@ Appears in study of many extended systems including
 		\only<2>{
 			 \begin{block}{Equilibria}
 			 \[
-		          \dot{\ssp}=\pVeloc(\ssp)=0
+		          \dot{\ssp}=\vel(\ssp)=0
 		         \]
 			\end{block}
 		}
 		\only<2,3>{
 			\begin{block}{Linear stability of equilibria}
 			 \[
-			  A_{ij}=\frac{\partial \pVeloc_i}{\partial \ssp_j}(x_{E_m})
+			  A_{ij}=\frac{\partial \vel_i}{\partial \ssp_j}(x_{E_m})
 			 \]
 			\only<3>{
 				Eigenvalues of A: $\eigExp[j]= \eigRe[j] \pm i\eigIm[j]$
@@ -230,18 +215,20 @@ Appears in study of many extended systems including
 
 \begin{block}{State space}
  \begin{itemize}
-	\item The space in which all solutions $u(x,t)$ for given boundary conditions live
+	\item the space in which all possible states $\ssp$ live
 	\item $\infty$-dimensional: A point $\phi(x)$ is a function of $x$ to be specified
 		over an interval in $x$.
-	\item In practice: a high but finite dimensional space (e.g. through a spectral discretization)
+	\item In practice: a high but finite dimensional space
+     (e.g. through a spectral discretization)
  \end{itemize}
 \end{block}
 
 \begin{block}{Intrinsic dimensionality}
  \begin{itemize}
-  \item Dynamics are often captured by fewer variables than needed to numerically resolve the PDE.
-  \item e.g. inertial manifold theory for dissipative PDEs.
-  \item How do we exploit such low dimensionality to obtain dynamical systems description.
+  \item dynamics are often captured by fewer variables than
+        needed to numerically resolve the PDE.
+  \item how do we exploit such low dimensionality to obtain
+  dynamical systems description?
  \end{itemize}
 \end{block}
 
@@ -253,10 +240,10 @@ Appears in study of many extended systems including
   \begin{columns}
   \column{0.5\textwidth}
 	\includegraphics[width=\textwidth,clip=true]{../../figs/sPoincarePlot.eps}\\
-	after Christiansen et. al. (1996)
+	Christiansen et. al. (1996)
   \column{0.5\textwidth}
 	\includegraphics[width=\textwidth,clip=true]{../../figs/lanRM}\\
-	Y. Lan and Cvitanovi\'c (2004)
+	Lan and Cvitanovi\'c (2004)
  \end{columns}
  \end{block}
 \end{frame}
@@ -273,38 +260,21 @@ Impose periodic boundary conditions:
 
 Symmetry group $\On{2}$:
 \begin{itemize}
-%  \item Galilean invariance: if $u(x,t)$ is a solution, then $u(x-ct,t)-c$, with $c$ an arbitrary constant
-% 	speed, is also a solution.
-% 	\begin{itemize}
-% 		\item The mean $u_0=\int_{-L/2}^{L/2} u dx$ is a constant of the motion. \\
-% 		\item Setting $u_0=0$ corresponds to choosing $c=0$ therefore eliminating Galilean invariance.
-% 	\end{itemize}
  \item Translations: $\Shift_{\shift/L}\, u(x,t) = u(x+\shift,t)\,,\qquad \shift\in\left[-L/2,L/2\right]\,,$
  \item Reflections:  $\Refl \, u(x) = -u(-x)\,.$
 \end{itemize}
 
 Due to translational symmetry: traveling wave solutions.
 
-\begin{block}{Question} 
-What are the invariant objects that organize phase space in a spatially extended system 
+\begin{block}{Question}
+What are the invariant objects that organize phase space in a spatially extended system
 with translational symmetry and \textcolor{green}{how do they fit together to form a
 skeleton of the dynamics?}
 \end{block}
 
-% \begin{block}{Subspace of antisymmetric functions} 
-% Pointwise invariant under $\Refl$: $\Refl u(x)=-u(-x)=u(x)$.\\
-% (Christiansen et. al, Lan and Cvitanovi\'c) 
-% \end{block}
-
 \end{frame}
 
 
-
-% \begin{frame}{Bifurcations}
-% \begin{center}
-%   \includegraphics[width=0.5\textwidth,clip=true]{../../figs/ksBifDiag}
-% \end{center}
-% \end{frame}
 
 \section[KSe, $L=22$]{\KS, $L=22$, state space }
 
@@ -315,7 +285,7 @@ skeleton of the dynamics?}
   \includegraphics[width=0.9\textwidth,clip=true]{../../figs/ks_L22_long_orbit}
 \end{center}
 
-\begin{block}{} 
+\begin{block}{}
  \begin{itemize}
   \item Lyapunov exponents: \\
 	$(\lambda_i) = (0.048,$ 0, 0, $-0.003$, $-0.189$, $-0.256$, $-0.290$, $-0.310$, $\cdots)$
@@ -323,40 +293,6 @@ skeleton of the dynamics?}
  \end{itemize}
 
 \end{block}
- 
-\end{frame}
-
-\begin{frame}{Fourier space}
-Use
-\[
-  u(x,t)=\sum_{k=-\infty}^{+\infty} a_k (t) e^{ i q_k x }
-\]
-where
-\[
- q_k = 2\pi\,k/L.
-\]
-Get
-\[
- \dot{a}_k
-     = ( q_k^2 - q_k^4 )\, a_k
-    - i \frac{q_k}{2} \sum_{m=-\infty}^{+\infty} a_m a_{k-m}\,,
-\]
-with $a_{k}=a^\ast_{-k}$ since $u(x,t)$ is real.
-
-Truncate to finite order $N$. Here $N=64$.
-\end{frame}
-
-\begin{frame}{Symmetry in Fourier space}
-
-Symmetry acts as
-\[
-  \Shift_{\shift/L}\, a_k = e^{i q_k\, \shift} \, a_k \,,
-  \label{eq:shiftF}
-\]
-\[
-   \Refl \, a_k = -a_k^\ast
-\]
-where $q_k = 2\pi\,k/L$.
 
 \end{frame}
 
@@ -370,19 +306,17 @@ where $q_k = 2\pi\,k/L$.
 
 \begin{itemize}
  \item $\EQV{0}:\,u(x,t)=0$.
- \item All live in subspace $\bbU$ of antisymmetric functions, 
-  pointwise invariant under $\Refl$: $\Refl u(x)=-u(-x)=u(x)$.
- \item $\EQV{2}$ invariant under $\Shift_{1/2}$.
  \item $\EQV{3}$ invariant under $\Shift_{1/3}$.
- \item For any $\EQV{i}$ we have a continuous family of equilibria under rotations $\Shift_{\shift/L}\,\EQV{i}$.
-   that live in $\Shift_{\shift/L}\,\bbU$.
+ \item For any $\EQV{i}$ we have a continuous family of
+ equilibria under rotations $\Shift_{\shift/L}\,\EQV{i}$.
+ that live in $\Shift_{\shift/L}\,\bbU$.
 \end{itemize}
 
 \end{frame}
 
 
 
-\begin{frame}{Traveling Waves}
+\begin{frame}{Traveling waves}
  \begin{columns}
  \column{0.5\textwidth}
 %  \begin{tabular}{cc}
@@ -394,21 +328,11 @@ where $q_k = 2\pi\,k/L$.
  \column{0.5\textwidth}
  \begin{itemize}
  \item Invariant (as a set) under rotations: relative equilibria.
- \item Come in counter-traveling pairs related by reflections.
  \item They live in full space.
 \end{itemize}
 
  \end{columns}
 \end{frame}
-
-% \begin{frame}{Unstable manifolds: \EQV{1}}
-%  \begin{tabular}{cc}
-%  \includegraphics[width=0.3\textwidth,clip=true]{../../figs/ks22_E1_plane1_manifold_c} &
-%  \includegraphics[width=0.2\textwidth,clip=true]{../../figs/ks22_E1_plane1_orbits_c}\\
-%  \includegraphics[width=0.3\textwidth,clip=true]{../../figs/ks22_E1_plane2_manifold_c} &
-%  \includegraphics[width=0.32\textwidth,clip=true]{../../figs/ks22_E1_plane2_orbits_c}
-%  \end{tabular}
-% \end{frame}
 
 
 \begin{frame}{Unstable \rpo s}
@@ -428,25 +352,22 @@ where $q_k = 2\pi\,k/L$.
    u(x,\period{p}) = u(x,0)=u_p(x)
 \]
 
-
-For \KSe\ bifurcation branches of \rpo s have been studied in detail by Brown and Kevrekidis (1996).
-
 \end{frame}
 
 \begin{frame}{A \rpo}
-\includegraphics[width=0.8\textwidth,clip=true]{../../figs/rpo} 
+\includegraphics[width=0.8\textwidth,clip=true]{../../figs/rpo}
 \end{frame}
 
 
 \begin{frame}{Unstable \rpo s}
 
 \scriptsize
- \begin{tabular}{ccccc} 
+ \begin{tabular}{ccccc}
 ~~~$\period{p} = 16.3$, & ~~~$\period{p} = 33.5$,  & ~~~$\period{p} = 47.6$,  &
-%                          ~~~$\period{p} = 71.7$,  & 
+%                          ~~~$\period{p} = 71.7$,  &
 ~~~$\period{p} = 10.3$ & ~~~$\period{p} = 33.4$\\
-~~~$\shift_p = 2.86$ & ~~~$\shift_p = 4.04$ & ~~~$\shift_p = 5.68$ & 
-% ~~~$\shift_p = 5.503$ & 
+~~~$\shift_p = 2.86$ & ~~~$\shift_p = 4.04$ & ~~~$\shift_p = 5.68$ &
+% ~~~$\shift_p = 5.503$ &
 &\\
 \includegraphics[width=0.15\textwidth,clip=true]{../../figs/ks22rpo016.3-02.86.eps}\hspace{-3ex} &
 \includegraphics[width=0.15\textwidth,clip=true]{../../figs/ks22rpo033.5-04.04.eps}\hspace{-3ex} &
@@ -470,7 +391,7 @@ For \KSe\ bifurcation branches of \rpo s have been studied in detail by Brown an
  \item How are they organized?
 \end{itemize}
 
- 
+
 \end{frame}
 
 \begin{frame}{Linear stability of {\eqva} and \reqva.}
@@ -495,37 +416,6 @@ $\REQV{\pm}{2}$&  &   \\\hline
 %   \includegraphics[width=\textwidth, clip=true]{../../figs/lorenzPolarManifDetail1.eps}
 \end{frame}
 
-
-\begin{frame}{Unstable manifolds: \EQV{2}}
- \begin{columns}
-  \column{0.5\textwidth}
-	\includegraphics[width=\textwidth,height=0.6\textheight]{../../figs/ks22_E2_manifold_c}\\
-	\includegraphics[width=0.8\textwidth,height=0.3\textheight]{../../figs/ks22_E2_orbits_c}		
- \column{0.5\textwidth}
- \begin{itemize}
-  \item Heteroclinic connections in \KSe\ are robust (Kevrekidis et. al. (1990), Armbruster et. al. (1989)).
-  \item Unstable manifolds stay in $\bbU$ (but with rotated copies in $\Shift_{\shift/L}\bbU$.
-  \item For visualization we project to the leading stability eigenvectors (inspired by Gibson et. al. 2008).
- \end{itemize}
- \end{columns}
-	
-\end{frame}
-
-% \begin{frame}{Unstable manifolds: \EQV{3}}
-%  \begin{tabular}{cc}
-%  \includegraphics[width=0.45\textwidth,clip=true]{../../figs/ks22_E3_manifold}
-%  \includegraphics[width=0.5\textwidth,clip=true]{../../figs/ks22_E3_orbits_c}	
-%  \end{tabular}
-% \end{frame}
-
-\begin{frame}{Dynamics in antisymmetric subspace}
- \begin{centering}
-         \includegraphics[width=0.6\textwidth,clip=true]{../../figs/KS22hetero} \\
-	Projection from $128$ dimensions onto the plane given by the vectors 
-	$\EQV{2}-\Shift_{1/4}\EQV{2}$ and $\EQV{3}-\Shift_{1/2}\EQV{3}$ (inspired by Gibson et. al. 2008).
- \end{centering}
-\end{frame}
-
 \section{Symmetry reduction}
 
 \subsection{Reduction methods}
@@ -542,7 +432,8 @@ $\REQV{\pm}{2}$&  &   \\\hline
 \begin{frame}{Reduction methods}
 
 \begin{itemize}
-	\item Integrate in directions transverse to the direction of group action at a point $x_0$. \textcolor{red}{Local.}\\
+	\item Integrate in directions transverse to the direction
+of group action at a point $x_0$. \textcolor{red}{Local.}\\
 	(Rowley and Marsden (2000)).
 \end{itemize}
 
@@ -551,10 +442,10 @@ $\REQV{\pm}{2}$&  &   \\\hline
 \begin{frame}{Reduction methods}
 
 \begin{itemize}
- \item<alert@2-> Rewrite the equations in variables invariant under the symmetry transformation
-%  \only<2->{\item<alert@1> Rewrite the equations in variables that do not change (are invariant) under the symmetry transformation.}
+ \item<alert@2-> rewrite the equations in variables invariant
+ under the symmetry transformation
  \only<2->{\item or compute solutions in original space and map them to invariant variables.}
- \only<3->{\item How do we find those variables?
+ \only<3->{\item how do we find those variables?
 	\begin{itemize}
 	\item<alert@4-> Invariant polynomials (Hilbert basis)\only<3>{.}\only<4->{: computationaly prohibitive for high-dimensional flows.}
 	\only<5->{\item<alert@6-> Moving frame method by Cartan, reformulated by Fels and Olver (1999)\only<5>{.}}\only<6->{: singularities.}
@@ -573,7 +464,7 @@ $\REQV{\pm}{2}$&  &   \\\hline
 % 			needed to bring $x$ to the cross-section. This is called a moving frame.
 % 	\end{itemize}
 %  \end{block}
-% 
+%
 %  \begin{block}{For \CLe}
 % 	\begin{description}
 %  		\item{Cross-section} $x_1=0$, $x_2>0$.
@@ -582,11 +473,11 @@ $\REQV{\pm}{2}$&  &   \\\hline
 %   	
 %  \end{block}
 
- 
+
 % \end{frame}
 
 % \begin{frame}{Moving frame method}
-% 
+%
 % % \[
 % % 	\left(\barr{cc} \overline{b}_k \\ \overline{c}_k\earr \right)=\left(\barr{cc}
 % % 			    			\cos(k\theta) & -\sin(k\theta)\\
@@ -625,16 +516,16 @@ $\REQV{\pm}{2}$&  &   \\\hline
 \only<1>{
 	\[
 	\begin{array}{ll}
-	u_1=r_1=\sqrt{b_1^2+c_1^2}&  \\ 
+	u_1=r_1=\sqrt{b_1^2+c_1^2}&  \\
 	u_3=\frac{b_2 \left(b_1^2-c_1^2\right)+2 b_1 c_1 c_2}{r_1^2}& \\
 	u_4=\frac{-2
-	b_1 b_2 c_1+\left(b_1^2-c_1^2\right) c_2}{r_1^2} & \\ 
+	b_1 b_2 c_1+\left(b_1^2-c_1^2\right) c_2}{r_1^2} & \\
 	u_5=\frac{b_1 b_3 \left(b_1^2-3 c_1^2\right)-c_1 \left(-3
-	b_1^2+c_1^2\right) c_3}{r_1^3}& \\ 
+	b_1^2+c_1^2\right) c_3}{r_1^3}& \\
 
-	u_6=\frac{-3 b_1^2 b_3 c_1+b_3 c_1^3+b_1^3 c_3-3 b_1 c_1^2 c_3}{r_1^3} & \\ 
+	u_6=\frac{-3 b_1^2 b_3 c_1+b_3 c_1^3+b_1^3 c_3-3 b_1 c_1^2 c_3}{r_1^3} & \\
 	u_7=\frac{b_4
- 	\left(b_1^4-6 b_1^2 c_1^2+c_1^4\right)+4 b_1 c_1 \left(b_1^2-c_1^2\right) c_4}{r_1^4}& \\ 
+ 	\left(b_1^4-6 b_1^2 c_1^2+c_1^4\right)+4 b_1 c_1 \left(b_1^2-c_1^2\right) c_4}{r_1^4}& \\
 	u_8=\frac{4 b_1
  	b_4 c_1 \left(-b_1^2+c_1^2\right)+\left(b_1^4-6 b_1^2 c_1^2+c_1^4\right) c_4}{r_1^4}
 % \\ u_9=\frac{b_1
@@ -645,81 +536,19 @@ $\REQV{\pm}{2}$&  &   \\\hline
 	\end{array}
 	\]
 }
-\only<2>{
-	\[
-	\begin{array}{ll}
-	u_1=r_1=\sqrt{b_1^2+c_1^2}&  \\ 
-	u_3=\frac{b_2 \left(b_1^2-c_1^2\right)+2 b_1 c_1 c_2}{\textcolor{green}{r}^2}& \\
-	u_4=\frac{-2
-	b_1 b_2 c_1+\left(b_1^2-c_1^2\right) c_2}{\textcolor{green}{r}^2} & \\ 
-	u_5=\frac{b_1 b_3 \left(b_1^2-3 c_1^2\right)-c_1 \left(-3
-	b_1^2+c_1^2\right) c_3}{\textcolor{green}{r}^3}& \\ 
-	u_6=\frac{-3 b_1^2 b_3 c_1+b_3 c_1^3+b_1^3 c_3-3 b_1 c_1^2 c_3}{\textcolor{green}{r}^3} & \\ 
-	u_7=\frac{b_4
- 	\left(b_1^4-6 b_1^2 c_1^2+c_1^4\right)+4 b_1 c_1 \left(b_1^2-c_1^2\right) c_4}{\textcolor{green}{r}^4}& \\ 
-	u_8=\frac{4 b_1
- 	b_4 c_1 \left(-b_1^2+c_1^2\right)+\left(b_1^4-6 b_1^2 c_1^2+c_1^4\right) c_4}{\textcolor{green}{r}^4}
-% \\ u_9=\frac{b_1
-% 	b_5 \left(b_1^4-10 b_1^2 c_1^2+5 c_1^4\right)+c_1 \left(5 b_1^4-10 b_1^2 c_1^2+c_1^4\right) c_5}{r_1^5}&u_{10}=\frac{-b_5
-% 	c_1 \left(5 b_1^4-10 b_1^2 c_1^2+c_1^4\right)+b_1 \left(b_1^4-10 b_1^2 c_1^2+5 c_1^4\right) c_5}{r_1^5}\\ u_{11}=\frac{b_6
-% 	\left(b_1^6-15 b_1^4 c_1^2+15 b_1^2 c_1^4-c_1^6\right)+2 b_1 c_1 \left(3 b_1^4-10 b_1^2 c_1^2+3 c_1^4\right) c_6}{r_1^6}&u_{12}=\frac{-2
-% 	b_1 b_6 c_1 \left(3 b_1^4-10 b_1^2 c_1^2+3 c_1^4\right)+\left(b_1^6-15 b_1^4 c_1^2+15 b_1^2 c_1^4-c_1^6\right) c_6}{r_1^6}\\
-	\end{array}
-	\]
-}
-\only<3>{
-	\[
-	\begin{array}{ll}
-	u_1=r_1=\sqrt{b_1^2+c_1^2}&  \\ 
-	u_3=\frac{b_2 \left(b_1^2-c_1^2\right)+2 b_1 c_1 c_2}{\textcolor{green}{r}^2}& \\
-	u_4=\textcolor{green}{\sqrt{b_2^2+c_2^2}}+\frac{-2
-	b_1 b_2 c_1+\left(b_1^2-c_1^2\right) c_2}{\textcolor{green}{r}^2} & \\ 
-	u_5=\textcolor{green}{\sqrt{b_3^2+c_3^2}}+\frac{b_1 b_3 \left(b_1^2-3 c_1^2\right)-c_1 \left(-3
-	b_1^2+c_1^2\right) c_3}{\textcolor{green}{r}^3}& \\ 
-	u_6=\frac{-3 b_1^2 b_3 c_1+b_3 c_1^3+b_1^3 c_3-3 b_1 c_1^2 c_3}{\textcolor{green}{r}^3} & \\ 
-	u_7=\frac{b_4
- 	\left(b_1^4-6 b_1^2 c_1^2+c_1^4\right)+4 b_1 c_1 \left(b_1^2-c_1^2\right) c_4}{\textcolor{green}{r}^4}& \\ 
-	u_8=\textcolor{green}{\sqrt{b_4^2+c_4^2}}+\frac{4 b_1
- 	b_4 c_1 \left(-b_1^2+c_1^2\right)+\left(b_1^4-6 b_1^2 c_1^2+c_1^4\right) c_4}{\textcolor{green}{r}^4}
-% \\ u_9=\frac{b_1
-% 	b_5 \left(b_1^4-10 b_1^2 c_1^2+5 c_1^4\right)+c_1 \left(5 b_1^4-10 b_1^2 c_1^2+c_1^4\right) c_5}{r_1^5}&u_{10}=\frac{-b_5
-% 	c_1 \left(5 b_1^4-10 b_1^2 c_1^2+c_1^4\right)+b_1 \left(b_1^4-10 b_1^2 c_1^2+5 c_1^4\right) c_5}{r_1^5}\\ u_{11}=\frac{b_6
-% 	\left(b_1^6-15 b_1^4 c_1^2+15 b_1^2 c_1^4-c_1^6\right)+2 b_1 c_1 \left(3 b_1^4-10 b_1^2 c_1^2+3 c_1^4\right) c_6}{r_1^6}&u_{12}=\frac{-2
-% 	b_1 b_6 c_1 \left(3 b_1^4-10 b_1^2 c_1^2+3 c_1^4\right)+\left(b_1^6-15 b_1^4 c_1^2+15 b_1^2 c_1^4-c_1^6\right) c_6}{r_1^6}\\
-	\end{array}
-	\]
-}
   \end{block}
 
-\only<2-3>{\begin{block}{}
-	\scriptsize
-	\[
-          r=\sqrt{\sum_{i=1}^N b_i^2+c_i^2}
-	\]
-         \end{block}
-}
-
-\end{frame}
-
-\subsection{\KS\ reduced}
-
-\begin{frame}[t]
-\begin{columns}
- \column{0.5\textwidth}
-	\includegraphics[width=0.9\textwidth, height=0.95\textheight,clip=true]{../../figs/ks22tw1umInv}
-\column{0.5\textwidth}
-	\only<1>{\includegraphics[width=\textwidth,height=0.95\textheight,clip=true]{../../figs/ks22tw1umInv2}}
-	\only<2>{\includegraphics[width=\textwidth,height=0.95\textheight,clip=true]{../../figs/ks22-2wUMInv}} 
-\end{columns}
 \end{frame}
 
 \section[Conclusions]{Conclusions-Future work}
- 
+
  \begin{frame}{Conclusions and future work}
- 
+
 \begin{block}{Conclusion}
   \begin{itemize}
-   \item Symmetry reduction: efficient implimentation allows exploration of high-dimensional flows with continuous symmetry.
+   \item Symmetry reduction: efficient implementation allows
+   exploration of high-dimensional flows with continuous
+   symmetry.
    \item We develop an understanding of how the stretching and folding
   	of unstable manifolds in \KSe\ organizes the flow.
   \end{itemize}
@@ -731,19 +560,9 @@ $\REQV{\pm}{2}$&  &   \\\hline
   \item Construct Poincar\'e sections and return maps.
   \item Find all (relative) periodic orbits up to a given period.
   \item Use the information quantitatively (periodic orbit theory).
-  \item Control
 \end{itemize}
 \end{block}
 
 \end{frame}
-
-% \begin{frame}{}
-% 
-% % \begin{block}{}
-% %  Application to Navier-Stokes is left as an exercise to the audience!
-% % \end{block}
-% 
-% \end{frame}
-
 
 \end{document}
