@@ -1,18 +1,38 @@
-siminos/figSrc/00ReadMe.txt
+% siminos/figSrc/00ReadMe.txt
 % $Author$ $Date$
 
 Siminos source programs for figures
 ===================================
 
+[read also halcrow/figSrc/00ReadMe.txt]
+
+-----------------------------------------------------------------
+                                        Predrag 2010-04-02
+
+talked to Zbigniew Nitecki,  www.tufts.edu/~znitecki who is
+writing a honors calculus texbook. He does everything in
+pstricks, says, use
+
+http://tug.org/PSTricks/
+http://en.wikipedia.org/wiki/PSTricks
+http://www.ctan.org/tex-archive/help/Catalogue/entries/pst-3d.html
+
+and for 3D with shadows:
+http://melusine.eu.org/syracuse/pstricks/
+
+also, get the German edition of
+http://www.amazon.com/PSTricks-Graphics-PostScript-TeX-LaTeX/dp/1906860130/
+
+
 					Vaggelis Mar 28 2009
 
-To have latex correctly display figures with white space extending 
-beyond the bounding box use the option clip=true in the \includegraphics 
+To have latex correctly display figures with white space extending
+beyond the bounding box use the option clip=true in the \includegraphics
 command:
 
 \includegraphics[width=w, clip=true]{file}
 
-Works with the graphicx package, the same should be achieved 
+Works with the graphicx package, the same should be achieved
 with use of \includegraphics* in graphics package.
 
 					Predrag Feb  9 2009
@@ -66,13 +86,13 @@ is in
 
 source for
 	siminos/rpo_ks/figs_pst/splitting.eps
-used in 
+used in
 	figSrc/rpo_ks_figs/ks22E2-E3hetero.tex
 is in
 	[local slow backup]/home/vasimos/sandbox/PropIntEquilDet/
 files:	
 	integrNew.nb
-	equilFamily.f90 
+	equilFamily.f90
 	main.f90
 
                                         Predrag Sep 13 2009
