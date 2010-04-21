@@ -1,0 +1,1273 @@
+\svnkwsave{$RepoFile: siminos/froehlich/exerFlow.tex $}
+\svnidlong {$HeadURL$}
+{$LastChangedDate$}
+{$LastChangedRevision$} {$LastChangedBy$}
+\svnid{$Id$}
+
+
+\chapter{Exercises}
+\label{sect:exerFlow}
+
+\section{\CLf}
+
+\exercise{Visualizations of the 5-dimensional \cLf:}{ \label{exer:PlotCLf}
+Plot \cLf\ projected on any three of the five $\{x_1, x_2,
+y_1, y_2, z\}$ axes. Experiment with different
+visualizations.
+    %
+    \Private{ % subversion label pages
+$\footnotemark\footnotetext{{\tt \svnkw{RepoFile}}, rev. \svnfilerev:
+ last edit by \svnFullAuthor{\svnfileauthor},
+ \svnfilemonth/\svnfileday/\svnfileyear}$
+    } % end \Private{
+    } % end \exercise{Visualizations of the 5-dimensional \cLf
+
+\solution{exer:PlotCLf}{Visualizations of the 5-dimensional \cLf.}{
+A numerical solution of the set of ODEs \refeq{eq:CLeR} is
+obtained by using the \texttt{Mathematica} \texttt{NDSolve} function,
+for $t$ from 0 to 100 and setting the initial $(x_1, x_2,
+y_1, y_2, z)$ to some arbitrary  value. We set
+\texttt{MaxSteps} $\to$ \texttt{Infinity} in order to resolve the fine
+structure of the flow. The solution is then plotted by means
+of \texttt{ParametricPlot3D}, in any three of the five
+$\{x_1, x_2, y_1, y_2, z\}$ axes. \refFig{fig:CLEx1x2z}
+illustrates the shape of the attractor projected onto the
+$\{x_1,x_2,z\}$ subspace, with parameters set to the Siminos
+ values \refeq{SiminosPrmts}.
+Projections onto $\{y_1,y_2,z\}$ and other subspaces are
+visually similar, and seem not to offer additional insights into dynamics
+of this system.
+
+Here is a \texttt{Mathematica} program that generates a
+long-time plot of \cLe, such as \reffig{fig:CLEx1x2z},
+initiated from a point on the attractor (after this
+integration, the initial condition ic is the final point of
+the preceding integration):
+
+\begin{quote}
+\texttt{
+v[t$\_$]=\{-$\sigma$ x1[t] + $\sigma$ y1[t], -$\sigma$ x2[t] + $\sigma$ y2[t],\\
+           (r1 - z[t])x1[t] - r2x2[t] - y1[t] - ey2[t],\\
+           {r2}{x1}[t] + ({r1} - z[t]){x2}[t] + e{y1}[t] - {y2}[t],\\
+           -b z[t] + {x1}[t]{y1}[t] + {x2}[t]{y2}[t]\};\\
+x[{t$\_$}] = \{{x1}[t], {x2}[t], {y1}[t], {y2}[t], z[t]\};\\
+d={Length}[x[t]];\\
+{eqns}={Table}[D[x[t][[i]],t]==v[t][[i]],\{i,1,d\}];\\
+{xde}=\{{x1}, {x2}, {y1}, {y2}, z\};\\
+\\
+\noindent
+r1= 28; r2=0; b=8/3; e=1/10; $\sigma$=10;\\
+tf= 80;\\
+ic=\{x1[0]==0.867, x2[0]==-0.455, y1[0]==-0.552, y2[0]==0.453, z[0]==22.4\};\\
+\\\\
+sol=NDSolve[\{eqns,ic\}, {xde}, \{t,0,tf\}, {MaxSteps} $\to  \infty$]{//}{Flatten};\\
+traj[{t\_}]=x[t]/.sol;\\
+p1=ParametricPlot3D[\{traj[t][[1]],\ traj[t][[2]],\ traj[t][[5]]\},\ \{t,0,tf\},\ PlotPoints $\to$
+ 400,\ PlotRange $\to$  All]\\
+ic=Table[x[0][[i]]==traj[tf][[i]],\ \{i,1,d\}];
+}
+\end{quote}
+
+\authorRW{Jun 17 2009}
+    } %end solution{exer:PlotCLf}
+
+\section{Linear stability}
+
+\exercise{\Stabmat\ of \cLf:}{ \label{exer:StabmatCLf}
+Find the \stabmat\ of \cLe\ \refeq{eq:CLeR}.
+    }
+
+\solution{exer:StabmatCLf}{\Stabmat\ of \cLf.}{
+Substituting  \refeq{eq:CLeR} into \refeq{5x5stabMat}, \texttt{Mathematica} program
+
+     \begin{quote}
+$
+\text{v}[t] = \left\{\text{x1}'[t],\text{x2}'[t],\text{y1}'[t],\text{y2}'[t],z'[t]\right\};
+\\
+x[t] = \{\text{x1}[t],\text{x2}[t],\text{y1}[t],\text{y2}[t],z[t]\};
+\\
+\Mvar = D[\text{v}[t],\{x[t],1\}]
+    $
+    \end{quote}
+we find
+  \beq
+  \Mvar =\left(\barr{ccccc}
+    -\sigma    	& 0 		& \sigma & 0    &  0 \\
+	0 	& -\sigma       & 0      & \sigma   &  0 \\
+	r_1-z  &     -r_2      & -1     & -e & -x_1 \\
+	r_2     & r_1-z       	& e  	& -1       & -x_2 \\
+	y_1     & y_2           & x_1    & x_2      & -b
+    \earr\right)
+\,.
+  \ee{CLeStabMat}
+\authorRWPC{Jun 19 2009}
+    }
+
+\section{\Eqva}
+
+\exercise{\Eqva\ of \cLe:}{\label{exer:EquiCLe}
+Find all \eqva\ of \cLe.
+    }
+
+\solution{exer:EquiCLe}{\Eqva\ of \cLe.}{
+To find
+these points for \cLe, I used the \texttt{Solve} function in
+\texttt{Mathematica}, with
+\[
+\left(
+\begin{array}{c}
+ \dot{x}_1(t) \\
+ \dot{x}_2(t) \\
+ \dot{y}_1(t) \\
+ \dot{y}_2(t) \\
+ \dot{z}(t)
+\end{array}
+\right)=\left(
+\begin{array}{c}
+ \sigma  \text{y}_1(t)-\sigma  \text{x}_1(t) \\
+ \sigma  \text{y}_2(t)-\sigma  \text{x}_2(t) \\
+ -\text{r}_2 \text{x}_2(t)-\text{y}_1(t)-e \text{y}_2(t)+\text{x}_1(t) (\text{r}_1-z(t)) \\
+ \text{r}_2 \text{x}_1(t)+e \text{y}_1(t)-\text{y}_2(t)+\text{x}_2(t) (\text{r}_1-z(t)) \\
+ \text{x}_1(t) \text{y}_1(t)+\text{x}_2(t) \text{y}_2(t)-b z(t)
+\end{array}
+\right)
+=\left(
+\begin{array}{c}
+ 0 \\
+ 0 \\
+ 0 \\
+ 0 \\
+ 0
+\end{array}
+\right)
+\]
+as the equations defining the system, and then solved for
+$x_1(t), x_2(t), y_1(t), y_2(t)$, and $z(t)$.
+    \PC{no need for two equations, one suffices - that's how
+    I did it in PC.nb}
+\texttt{Mathematica} returns the point $(0, 0, 0, 0, 0)$ as the only
+solution, and thus (we hope, we do not have a proof) the only
+equilibrium point.
+\authorRW{Jun 22 2009}
+    } %end \solution{exer:EquiCLe}{\Eqva\ of \cLe.}
+
+    % \subsection{Eigenvalues and eigenvectors of the \stabmat}
+
+\exercise{Eigenvalues and eigenvectors of $\EQV{0}$ \stabmat:}
+         {\label{exer:EigenE0}
+Find the eigenvalues and the eigenvectors of the \stabmat\
+$\Mvar$ at $\EQV{0}=(0,0,0,0,0)$ determined in
+\refexer{exer:EquiCLe}.
+}
+
+\solution{exer:EigenE0}{Eigenvalues and eigenvectors of $\EQV{0}$ \stabmat.}{
+Using the Mathematica function \texttt{Eigensytem} and
+setting $(x_1, x_2, y_1, y_2, z)=(0,0,0,0,0)$ at $t=0$ we
+obtain
+\beq
+\begin{split}
+\lambda_{1,2} &=11.8277 \pm 0.062985 i\\
+\lambda_{3,4} &=-22.8277 \pm 0.037015 i\\
+\lambda_5 &=-2.66667\\
+\end{split}
+\eeq
+as the eigenvalues of the system, with the associated eigenvectors:
+    \PC{replace the complex eigenvectors by their Re, Im parts.}
+\beq
+\begin{split}
+e_{1} &= e_2^* =(0.00132196+0.458131 i, 0.458131-0.00132196 i, i, 1, 0)
+\\
+e_3 &= e_4^* = (0.00224947-0.779559 i, -0.779559-0.00224947 i, 2.842171+i, 1, 0)
+\\
+e_5 &=(0, 0, 0, 0, 1)
+\,.
+\end{split}
+\eeq
+\authorRW{Jun 26 2009}
+} % end \solution{exer:EigenE0}{eigenvectors of $\EQV{0}$ \stabmat
+
+\exercise{The eigen-system of the \stabmat\ at $\EQV{0}$:}
+{\label{exer:PlotEigenE0}
+Plot the eigenvectors of $\Mvar$ at $\EQV{0}$ and the \cLf\
+at values very close to $\EQV{0}$.
+}
+
+\solution{exer:PlotEigenE0}
+         {The eigen-system of the \stabmat\ at $\EQV{0}$.}{
+In order to plot the complex eigenvectors, we split them into
+their real and complex parts and plot each separately (so
+that one complex eigenvector becomes two, defining a plane).
+Using the same method as in the previous plotting exercises
+(\refexer{exer:PlotCLf}, \refexer{exer:PlotPolEqu}, \refexer{exer:PlotRelEqu}
+) we arrive at \reffig{fig:CLEE0}.
+As the eigenvalues are nearly real, the stable/unstable 2$d$
+manifolds barely spiral, and are not very illuminating.
+\authorRW{Jul 01 2009}
+} % end \solution{exer:PlotEigenE0}{The eigen-system of the stability matrix at $\EQV{0}$
+
+\section{Symmetries of dynamics}
+
+% \subsection{Rotational equivariance of \cLe}
+
+\exercise{\SOn{2} rotations in a plane:}{ \label{exer:FinRot2d}
+Show by exponentiation \refeq{FiniteRot} that the \SOn{2} Lie algebra
+element $\Lg$ generates rotation $\mathbb{G}$ in a plane,
+\beq
+\mathbb{G}(\theta) = e^{\Lg \theta}
+ = \cos\theta
+   \left(\barr{cc}
+    1  &  0   \\
+    0  &  1
+    \earr\right)
+ + \sin\theta
+   \left(\barr{cc}
+    0  &  1   \\
+   -1  &  0
+    \earr\right)
+ =   \left(\barr{cc}
+    \cos\theta  &  \sin\theta   \\
+   -\sin\theta  &  \cos\theta
+    \earr\right)
+ \,.
+\label{SO2gener2d}
+\eeq
+    } %end \exercise{\SOn{2} rotations in a plane}{
+
+\solution{exer:FinRot2d}{\SOn{2} rotations in a plane.}{
+    \PC{(note to Predrag)
+    also refer to example exmp:InOutSprl, if this exercise makes it
+    to ChaosBook.org}
+Expand $\exp(\theta\Lg)$ as a power series, noting that
+\[
+\Lg^2 = {\MatrixII{ 0}{ 1}
+                 {-1}{ 0}
+         }^2 = - \unit
+\,.
+\]
+\authorPC{Jul 10 2009}
+    } %end \solution{exer:FinRot2d}{\SOn{2} rotations in a plane
+
+\exercise{Rotational equivariance of \cLe\ for infinitesimal angles.}
+   { \label{exer:InfinRotInvari}
+Show that \cLe\ are equivariant under infinitesimal \SOn{2} rotations.
+    }
+
+\solution{exer:InfinRotInvari}
+         {Rotational equivariance of \cLe\ for infinitesimal angles.}{
+Now that we have the \stabmat\ \refeq{5x5stabMat}, we can
+ check the equivariance condition \refeq{eq:InfnmslRot},
+$0=- \Lg v(x)+\Mvar \Lg x$,
+where $\Mvar=\frac{\pde v}{\pde x}$ is the \stabmat, by explicit substitution.
+The matrix $ \Lg $ is
+\beq
+ \Lg =\left(\barr{ccccc}
+0&1&0&0&0\\
+-1&0&0&0&0\\
+0&0&0&1&0\\
+0&0&-1&0&0\\
+0&0&0&0&0
+\earr\right)
+\,.
+\ee{SO2generCLe}
+
+Plugging these into \refeq{eq:InfnmslRot}, as well as using
+\refeq{eq:CLeR} for $v(x)$, the result is indeed 0, as expected. Then
+the system is rotationally equivariant for infinitesimal
+angles.
+\authorRW{Jun 21 2009}
+    } % end \solution{exer:InfinRotInvari}
+
+\exercise{\Un{1} equivariance of \cLe\ for finite angles:}{ \label{exer:FinRotInvarCmplx}
+Show that \cLe\ \refeq{eq:CLe} are equivariant under finite angle rotation
+\refeq{FiniteRot}.
+    }
+
+\solution{exer:FinRotInvarCmplx}{\Un{1} equivariance of \cLe\ for finite angles.}{
+Multiply the coordinates by a complex phase:
+$x \to e^{\theta}x$, $y \to e^{\theta}y$. Equivariance of \refeq{eq:CLe} follows
+by inspection. If all coefficients are real, there is also a discrete
+\Zn{1} symmetry under complex conjugation of the three equations. However, we shall
+consider here the cases where one or both of the parameters $r$ and $a$ are complex,
+breaking this discrete symmetry.
+\authorPC{Jul 9 2009}
+    } % end \solution{exer:FinRotInvarCmplx}{\Un{1} equivariance
+
+\exercise{\SOn{2} equivariance of \cLe\ for finite angles:}{ \label{exer:FinRotInvari}
+Show that \cLe\ \refeq{eq:CLeR} are equivariant under rotation for finite angles.
+    }
+
+\solution{exer:FinRotInvari}{\SOn{2} equivariance of \cLe\ for finite angles.}{
+For this problem, the operation is rotation and $v(x)$ is
+given by \refeq{eq:CLeR}. Rotation can be defined using the
+matrix
+\beq
+\begin{split}
+\mathbb{G}(\theta) = \left(
+\begin{array}{ccccc}
+ \cos (\theta ) & \sin (\theta ) & 0 & 0 & 0 \\
+ -\sin (\theta ) & \cos (\theta ) & 0 & 0 & 0 \\
+ 0 & 0 & \cos (\theta ) & \sin (\theta ) & 0 \\
+ 0 & 0 & -\sin (\theta ) & \cos (\theta ) & 0 \\
+ 0 & 0 & 0 & 0 & 1
+\end{array}
+\right)
+\label{eq:rotate}
+\end{split}
+\eeq
+where $\theta$ is the angle of rotation. We need to verify that
+\beq
+v(x)=\mathbb{G}^{-1} \cdot v(\mathbb{G} \cdot x)
+\,.
+\eeq
+First, the system is rotated as
+\beq
+\left(
+\begin{array}{ccccc}
+ \cos (\theta ) & \sin (\theta ) & 0 & 0 & 0 \\
+ -\sin (\theta ) & \cos (\theta ) & 0 & 0 & 0 \\
+ 0 & 0 & \cos (\theta ) & \sin (\theta ) & 0 \\
+ 0 & 0 & -\sin (\theta ) & \cos (\theta ) & 0 \\
+ 0 & 0 & 0 & 0 & 1
+\end{array}
+\right).
+\left(
+\begin{array}{c}
+ {x}_1(t) \\
+ {x}_2(t) \\
+ {y}_1(t) \\
+ {y}_2(t) \\
+ {z}(t)
+\end{array}
+\right)
+\,.
+\eeq
+The time derivative of the resulting matrix is taken, and then it
+is multiplied on the left by the inverse of the rotation
+matrix, giving
+\beq
+\mathbb{G}^{-1} \cdot v(\mathbb{G} \cdot x) = \left(
+\begin{array}{c}
+ \sigma  y_1(t)-\sigma  x_1(t) \\
+ \sigma  y_2(t)-\sigma  x_2(t) \\
+ -r_2 x_2(t)-y_1(t)-e y_2(t)+x_1(t) (r_1-z(t)) \\
+ r_2 x_1(t)+e y_1(t)-y_2(t)+x_2(t) (r_1-z(t)) \\
+ x_1(t) y_1(t)+x_2(t) y_2(t)-b z(t)
+\end{array}
+\right)
+\,,
+\eeq
+which is the same as the original system of ODEs, so that the
+system is rotationally equivariant for all finite angle
+rotations.
+
+When doing this in \texttt{Mathematica}, I
+could not find how to set $\frac{d\theta}{dt}$ equal to 0, so
+that the \texttt{Mathematica} output did not exactly match the
+expected output. Knowing that $\frac{d\theta}{dt}$ does, in
+fact, equal 0, one can ignore the additional terms I found.
+\authorRW{Jun 19 2009}
+    }
+
+\section{\Reqva}
+
+% \subsection{Coordinate changes}
+
+\exercise{Harmonic oscillator in polar coordinates:}{\label{exer:HarmOscPolar}
+Given a harmonic oscillator that follows $\dot{p}=-q$ and
+$\dot{q}=p$, rewrite the system in polar coordinates
+and find equations for $r$ and $\theta$.
+}
+\solution{exer:HarmOscPolar}{Harmonic oscillator in polar coordinates.}{
+Harmonic oscillator equations in
+Cartesian coordinates are
+\beq
+\dot{p}=-q\,,\qquad
+\dot{q}=p \,.
+\label{eq:HarmOscDE}
+\eeq
+In polar form, we  write
+\beq
+q=r\cos \theta \,,\qquad
+p=r\sin \theta
+\,.
+\eeq
+The inverse of the Jacobian
+$\frac{\partial\{q,p\}}{\partial\{r,\theta\}}$ of this
+transformation is
+\beq
+\frac{\partial\{r,\theta\}}{\partial\{q,p\}} =
+\left(
+\begin{array}{cc}\medskip
+\cos \theta &\sin \theta \\
+-\frac{1}{r}\sin \theta &\frac{1}{r} \cos \theta
+\end{array}
+\right)
+\,,
+\eeq
+leading to
+\beq
+\left(
+\begin{array}{c}\medskip
+\dot{r}\\
+\dot{\theta}
+\end{array}
+\right)=
+\left(
+\begin{array}{cc}\medskip
+\cos \theta &\sin \theta \\
+-\frac{1}{r}\sin \theta &\frac{1}{r} \cos \theta
+\end{array}
+\right) \cdot
+\left(
+\begin{array}{c}\medskip
+\dot{q}\\
+\dot{p}
+\end{array}
+\right)
+=\left(
+\begin{array}{c}\medskip
+0\\
+-1
+\end{array}
+\right)
+\eeq
+\authorRW{Jun 23 2009}
+    } % end \solution{exer:HarmOscPolar}{Harmonic oscillator in polar coordinates
+
+\exercise{\CLe\ in polar coordinates.}{\label{exer:polarCLe}
+Rewrite \cLe\ from Cartesian to polar coordinates,
+\beq
+(x_1,x_2,y_1,y_2,z) =
+    (\rho_1 \cos\theta_1,\rho_1\sin\theta_1,
+     \rho_2\cos\theta_2,\rho_2\sin\theta_2,z)
+\,,
+\label{eq:CartToPol}
+\eeq
+where $\rho_1 \geq 0 \,,\rho_2 \geq 0$.
+    }
+
+\solution{exer:polarCLe}{\CLe\ in polar coordinates.}{
+We use the same method here as in
+\refexer{exer:HarmOscPolar}. The Jacobian of this
+transformation can be written as
+\beq
+\frac{\partial\{\rho_1,\theta_1,\rho_2,\theta_2,z\}}
+     {\partial\{x_1,x_2,y_1,y_2,z\}} =
+\left(
+\begin{array}{ccccc}
+\cos(\theta_1) & \sin(\theta_1) & 0 & 0 & 0 \\
+ -\frac{\sin(\theta_1)}{\rho_1} & \frac{\cos(\theta_1)}{\rho_1} & 0 & 0 & 0 \\
+ 0 & 0 & \cos(\theta_2) & \sin(\theta_2) & 0 \\
+ 0 & 0 & -\frac{\sin(\theta_2)}{\rho_2} & \frac{\cos(\theta_2)}{\rho_2} & 0 \\
+ 0 & 0 & 0 & 0 & 1
+\end{array}
+\right)
+\,.
+\label{eq:PolarJacob}
+\eeq
+Multiplying the velocity matrix on the left by the Jacobian
+\refeq{eq:PolarJacob}, we get
+\[ %\beq
+\left(
+\begin{array}{c}
+\dot{\rho}_1\\
+\dot{\theta}_1\\
+\dot{\rho}_2\\
+\dot{\theta}_2\\
+\dot{z}
+\end{array}
+\right)
+=
+\left(
+\begin{array}{c}
+ -\sigma\left(\rho_1 - \rho_2\cos\theta\right) \\
+ -\sigma\frac{\rho_2}{\rho_1}\sin \theta  \\
+ -\rho_2 + \rho_1\left((r_1-z)\cos \theta - r_2 \sin\theta\right)\\
+  e  + \frac{\rho_1}{\rho_2}\left((r_1-z)\sin\theta +r_2 \cos\theta\right)\\
+ -b z + \rho_1\rho_2\cos\theta
+\end{array}
+\right)
+,
+\] %\ee{eq:PolarCLe}
+where $\theta = \theta_1-\theta_2$. Following \refref{SiminosThesis},
+we set $r_2=0$ in what follows.
+It is convenient to rewrite this as 4 coupled equations
+\beq
+\left(
+\begin{array}{c}
+\dot{\rho}_1\\
+\dot{\rho}_2\\
+\dot{\theta}\\
+\dot{z}
+\end{array}
+\right)
+=
+\left(
+\begin{array}{c}
+ -\sigma\left(\rho_1 - \rho_2\cos\theta\right) \\
+ -\rho_2 + (r_1-z)\rho_1\cos \theta\\
+  -e -\left(\sigma\frac{\rho_2}{\rho_1}
+ +(r_1-z)\frac{\rho_1}{\rho_2}\right)\sin\theta\\
+ -b z + \rho_1\rho_2\cos\theta
+\end{array}
+\right)
+\,,
+\label{eq:PolarCLeTheta}
+\eeq
+and two driven ones for the two angles,
+\beq
+\left(
+\begin{array}{c}
+\dot{\theta}_1\\
+\dot{\theta}_2
+\end{array}
+\right)
+=
+\left(
+\begin{array}{c}
+-\sigma\frac{\rho_2}{\rho_1}\sin\theta  \\
+ e + (r_1-z)\frac{\rho_1}{\rho_2}\sin\theta
+\end{array}
+\right)
+\,,
+\label{eq:PolarCLeAngles}
+\eeq
+in agreement with \refref{SiminosThesis}.
+% PC: agrees with the Siminos thesis
+\authorRWPC{Jun 23 2009}
+} % end \solution{exer:polarCLe}{\CLe\ in polar coordinates
+
+\exercise{Visualizations of the \cLf\ in polar coordinates:}{
+\label{exer:PlotPolarCLf}
+Plot \cLf\ projected on any three of the $\{{\rho}_1, {\rho}_2,
+\theta, z\}$ coordinates. Experiment with different
+visualizations. The flow \refeq{eq:PolarCLeTheta} is singular
+as ${\rho}_j \to 0$, with angle $\theta_j$ going through a rapid
+change there: is that a problem? (See also \refexer{exer:CLEsmall-x1x2}.)
+Does it make sense to insist on $\rho_1 \geq 0 \,,\rho_2 \geq 0$,
+or should one let them have either sign in order that the
+$\theta$ trajectory be continuous?
+    } % end {Visualizations of the \cLf\ in polar coordinates
+
+\solution{exer:PlotPolarCLf}{Visualizations of the \cLf\ in polar coordinates.}{
+(solution not available)
+    } %end \solution{Visualizations of the \cLf\ in polar coordinates
+
+% \subsection{Computing and plotting the relative equilibrium $\REQB{1}$}
+
+\exercise{Computing the \reqv\ $\REQB{1}$:}{\label{exer:CompRelEqu}
+Find the \reqva\ of the \cLe\ by finding the \eqva\ of the
+system in polar coordinates \refeq{eq:PolarCLeTheta}.
+Compute the velocity of such \reqv.
+}
+
+\solution{exer:CompRelEqu}{Computing the \reqv\  $\REQB{1}$.}{
+A relative equilibrium point occurs when the derivatives
+\refeq{eq:PolarCLeTheta} are equal to zero (so that the
+difference between the two angles $\theta_1$ and $\theta_2$
+is constant, but the angles themselves are not constant). We
+use the \texttt{Solve} function (or the \texttt{Reduce}
+function) in \texttt{Mathematica} to find these points.
+
+We define the system in \texttt{Solve} by setting all time
+derivatives in \refeq{eq:PolarCLeTheta} to zero.
+\texttt{Mathematica} returns eight solutions of the form
+\beq
+\begin{split}
+z(t) &\to r_1-1-\frac{e^2}{(\sigma +1)^2}\medskip\\
+\rho_2(t) &\to \pm \frac{\sqrt{e^2+(\sigma +1)^2} \sqrt{-b
+   \left(e^2-(r_1-1) (\sigma +1)^2\right)}}{(\sigma +1)^2}\medskip\\
+\rho_1(t) &\to \pm \frac{\sqrt{-b \left(e^2-(r_1-1) (\sigma
+   +1)^2\right)}}{\sqrt{(\sigma +1)^2}}\medskip\\
+\theta (t) &\to \pm \cos ^{-1}\left(\pm\frac{\sqrt{(\sigma +1)^2}}
+                                  {\sqrt{e^2+(\sigma +1)^2}}\right)
+\end{split}
+\label{eq:E1}
+\eeq
+The solutions differ by combinations of negative and positive
+$\rho_1,\ \rho_2,\ \theta$. A negative $\rho_i$ solution
+corresponds to the same group orbit of solutions, related to
+the positive $\rho_i$ solution by a rotation by $\pi$. The
+$\rho_1 \geq 0 \,,\rho_2 \geq 0$ condition in
+\refeq{eq:CartToPol} reduces these solutions to two,
+differing by the sign of $\cos ^{-1}$ term. Defining $d=1 +
+{e^2}/{(\sigma +1)^2}$, we can write them compactly
+as\rf{SiminosThesis}
+\beq
+(\rho_1,\rho_2,\theta,z) =
+\left(\sqrt{b \,(r_1-d)},\sqrt{b d \,({r_1}-d}),
+      \pm \cos^{-1}\left({1}/{\sqrt{d}}\right),
+      r_1-d\right)
+\label{eq:E1-PC}
+\eeq
+%    \PC{disagree with this text, removed it:
+%``Only the solution given in \refeq{eq:E1} is listed in
+%\refref{SiminosThesis}, and that is the only one that is used
+%in further calculations. All of these eight solutions are
+%valid, but because we are only looking for a relative
+%equilibrium, only one is needed to represent them all.''
+%    }
+%    \PC{please plot the solution \refeq{eq:E1-PC}, not
+%    the one picked by Siminos\rf{SiminosThesis}; negative
+%    radius in polar coordinate makes no sense
+%    }
+%    \ES{No negative
+%	radius appears in Siminos\rf{SiminosThesis}, Predrag
+%	please read the thesis! There is only one \reqv\, the
+%	two choices of sign will still give you two different
+%	points on the cycle of equivalent points as you observe
+%	later on.
+%    {\bf PC} I trusted Rebecca to compare the signs. The youth.
+%    }
+As will be further shown in \refexer{exer:PlotRelEqu},
+these two solutions are equivalent.
+For the Siminos parameter
+values \refeq{SiminosPrmts}, the \reqv\ is at
+\beq
+\ssp_{\REQB{}1} = (\rho_1,\rho_2,\theta,z) =
+     (8.48527,
+      8.48562,
+      0.00909066,
+      26.9999)
+\,.
+\label{eq:Q1}
+\eeq
+The angular velocity of \reqv\ $\REQB{1}$ follows from
+\refeq{eq:PolarCLeAngles}. Both angles move with the same
+velocity
+\beq
+\dot{\theta}_{i}
+= \frac{\sigma e}{\sigma + 1}
+\,,
+\label{eq:REQB1veloc}
+\eeq
+and period $\period{{\REQB{}1}}= 2\pi (\sigma +
+1)/\sigma e$. $\period{{\REQB{}1}}= 69.115\cdots$ for the
+Siminos parameter values \refeq{SiminosPrmts}. That implies that
+the simulation has to be run up to time of order 35 or higher for
+the strange attractor in \reffig{fig:CLEx1x2z} to start filling in.
+\authorRWPC{Jul 7 2009, Aug 7 2009}
+} % end \solution{exer:CompRelEqu}{Computing the Relative Equilibrium $\REQB{1}$
+
+\exercise{\Reqv\ $\REQB{1}$ in polar coordinates:}{\label{exer:PlotPolEqu}
+Plot the equilibrium $\REQB{1}$ in polar coordinates.
+}
+
+\solution{exer:PlotPolEqu}{\Reqv\ $\REQB{1}$ in polar coordinates.}{
+The same method as in exercise \refeq{exer:PlotCLf} can be
+used here. First, a numerical solution is found with
+\texttt{NDSolve} for $t$ going 0 to 10 and initial point
+$\REQB{1}$. We again set \texttt{MaxSteps} $\to$ \texttt{Infinity}
+in order to resolve the structure of the flow. Using
+\texttt{ParametricPlot3D} to plot the flow in $\{\rho_1,
+\rho_2, z\}$ axes, \refFig{fig:CLEPolEqui} illustrates the
+shape of the flow with parameters set to the Siminos
+values\rf{SiminosThesis} \refeq{SiminosPrmts}.
+    \PC{$\backslash$label should be within the $\backslash$end\{figure\}
+    environment, not outside of it}
+
+\authorRW{Jun 26 2009}
+} % end \solution{exer:PlotPolEqu}{\Reqv\ $\REQB{1}$ in Polar Coordinates
+
+\exercise{\Reqv\  $\REQB{1}$ in Cartesian coordinates:}{\label{exer:PlotRelEqu}
+Plot the relative equilibrium $\REQB{1}$ in Cartesian coordinates.
+}
+
+\solution{exer:PlotRelEqu}{\Reqv\ $\REQB{1}$ in Cartesian coordinates.}{
+Using the same method as in \refexer{exer:PlotPolEqu} and in
+\refexer{exer:PlotCLf}, we can plot the relative equilibrium
+in Cartesian coordinates. However, the Cartesian system is
+five-dimensional and our polar system has only four dimensions. To
+resolve this, we set $\theta_2$ to an arbitrary value and set
+$\theta_1=\theta+\theta_2$.
+    \PC{what arbitrary value of $\theta_2$? Would'nt it be better
+        to set $\theta_1=0$, to agree with what follows?}
+With this, we can find the
+numerical value of $\REQB{1}$ in Cartesian coordinates using
+\refeq{eq:CartToPol}:
+\beq
+\ssp_{\REQB{}1} =
+(x_1,x_2,y_1,y_2,z) = (8.48492,0.0771356,8.48562,0,26.9999)
+\,.
+\label{eq:Q1Cart}
+\eeq
+Using \texttt{Mathematica} to plot the system as before, but
+with $t$ going from 0 to 100, \reffig{fig:CLERelEqui}\,(a) shows
+the \cLf\ at $\REQB{1}$ projected onto the $\{x_1, x_2, z\}$
+subspace.
+
+Note that the for a \reqv\ the flow is along a circle,
+\ie, the group-orbit of any point on it, but due to finite precision
+of the initial point and the integration, the trajectory eventually
+spirals away in a "horn" shape. This
+circle cuts through the middle of the \cLe\ strange attractor, as
+shown in \reffig{fig:CLERelEqui}\,(b).
+    \PC{state the velocity of relative equilibrium,
+        compare with the imaginary part of the complex
+        stability eigenvalue, and explain the two time scales
+        visible in the `horn', as well as the expansion rate
+        per turn of the spiral.}
+
+As noted in the solution to \refexer{exer:CompRelEqu},
+\texttt{Mathematica} returns eight relative equilibria, but
+they are all equivalent.
+    \PC{need to rewrite this - you have implicitly chosen
+    $\theta_2[0]=0$ (or similar) when you started drawing
+    this, so you always get a circle, just from the freedom of
+    choosing the initial angle. Perhaps mark the eight
+    solutions by fat points on the circle, merge
+    \reffig{fig:FourRelEquil} and \reffig{fig:CLEPolEqui} into
+    one.}
+\refFig{fig:FourRelEquil} shows the \cLf\ starting near four
+of these eight points. Each of the points lies on the $\REQB{1}$
+orbit, and each spirals away in the same way.
+
+
+\authorRW{Jun 26 2009}
+    } % end \solution{exer:PlotRelEqu}
+
+\exercise{Eigenvalues and eigenvectors of $\REQB{1}$ \stabmat:}{\label{exer:EigenQ1}
+Compute the eigenvalues and eigenvectors of the stability
+matrix evaluated at $\REQB{1}$ and using the Siminos parameter
+values \refeq{SiminosPrmts}.
+}
+
+\solution{exer:EigenQ1}{Eigenvalues and eigenvectors of $\REQB{1}$ \stabmat.}{
+Using the Mathematica function \texttt{Eigensytem} and
+setting $(\rho_1, \rho_2, \theta, z)(0)$ to the values in
+\refeq{eq:Q1} we obtain
+\[
+(\lambda_{1,2},\lambda_3,\lambda_4)
+= (0.0938179 \pm 10.1945 i,-11.0009,-13.8534)
+\]
+as the eigenvalues of the system with the associated eigenvectors:
+    \PC{Rebecca, please recheck my replacement of
+     the complex eigenvectors by their Re, Im parts.}
+\bea
+\Re e_{1} &=& (0.266121, -0.0321133, 0.00034139, 0.719222)
+\continue
+\Im e_{1}  &=& (0.295017, 0.569063, 0.000551886,0)
+\continue
+e_3 &=& (-0.0883591, -0.0851485, -0.989135, -0.0809553)
+\continue
+e_4 &=& (-0.855586, -0.329912, -0.00273531, -0.398902)
+\label{eigVecQ1}
+\eea
+The spiral-out instability appears very slow, but with a
+short period $\period{spiral}=0.6163$, about 112 turns for one
+period of the $\REQB{1}$. Actually, as the \reqv\ velocity
+\refeq{eq:REQB1veloc} is slow, an initial deviation from
+$\ssp_{\REQB{}1}$ is multiplied by the factor
+$\ExpaEig_{radial}=535$, and the \reqv\ is quite unstable.
+This is illustrated by \reffig{fig:CLERelEqui}\,(b). It would
+be sweet if we could eliminate the detuning drift time scale
+$\approx 70$ and focus just on the oscillatory time scale of
+$\approx 0.6$. That is one of the motivations for
+reformulating dynamics in a \reducedsp.
+                \authorRWPC{Jun 26 2009, Aug 7 2009}
+} % end \solution{exer:EigenQ1}{Finding the eigenvalues and eigenvec
+
+\exercise{The eigen-system of $\REQB{1}$ \stabmat\ in polar coordinates:}
+{\label{exer:PlotPolEigenQ1}
+Plot the eigenvectors of \Mvar\ at $\REQB{1}$ in polar
+coordinates, as well as the \cLf\ at values very near
+$\REQB{1}$.
+}
+
+\solution{exer:PlotPolEigenQ1}
+{The eigen-system of $\REQB{1}$ \stabmat\ in polar coordinates.}{
+In order to plot the complex eigenvectors, we split them into
+their real and complex parts as in
+\refexer{exer:PlotEigenE0}. Using the same method as in the
+previous plotting exercises (\refexer{exer:PlotCLf},
+\refexer{exer:PlotRelEqu}, \refexer{exer:PlotPolEqu}) we
+constructed \refFig{fig:CLEQ1}\,(a) and
+\reffig{fig:CLEQ1}\,(b).
+
+
+\authorRW{Jul 01 2009}
+} % end \solution{exer:PlotPolEigenE1}{The eigen-system
+
+\section{\Reducedsp}
+
+\exercise{$\SOn{2}$ or harmonic oscillator \slice:}{ \label{exer:SO2cSect}
+Construct a moving frame {\slice} for action of $\SOn{2}$ on \Rls{2}
+\beq
+	(x,y) \mapsto (x\cos\theta -y \sin\theta,\,x\sin\theta +y \cos\theta )
+\eeq
+by, for instance, the positive $y$ axis: $x=0,\,y>0$. Write
+out explicitly the group transformations that bring any point
+back to the {\slice}. What invariant is preserved by this
+construction?
+\authorES{Jun 26 2009}
+    } %end \exercise{$\SOn{2}$ \slice.
+
+\solution{exer:SO2cSect}{$\SOn{2}$ or harmonic oscillator \slice:}{
+We can now construct a moving frame as follows. We write out
+explicitly the group transformations:
+\begin{subequations}
+\begin{align}
+ 	\overline{x} &= x \cos\theta - y \sin\theta\label{eq:explSO2stnd1}\cont
+	\overline{y} &= x \sin\theta + y \cos\theta\label{eq:explSO2stnd2}\,.
+\end{align}
+\end{subequations}
+Then set $\overline{x}=0$ and solve \refeq{eq:explSO2stnd1} for the group
+parameter to obtain the moving frame
+\beq
+	\theta=\tan^{-1}\frac{x}{y}
+	\label{eq:SO2stndMF}
+\eeq
+which brings any point  back to the {\slice}. Substituting
+\refeq{eq:SO2stndMF} in the remaining equation, we get the
+$\SOn{2}$-invariant expression
+\[
+	\overline{y} = \sqrt{x^2+y^2}\,.
+\]
+\authorES{Jun 26 2009}
+    } %end \solution{exer:SO2cSect}
+
+\exercise{\Statesp\ reduction by a \slice, finite time segments:}
+{\label{exer:csectionCLe}
+Replace integration of the \cLe\ by a sequence of short time steps,
+each followed by a rotation such that the next segment initial point
+is in the {\slice} $x_2=0,\,x_1>0$.
+    }
+
+\solution{exer:csectionCLe}{\Statesp\ reduction by a \slice.}{
+We start by setting the initial point and the time step that
+will be used during the integration. Using
+\texttt{Mathematica}, we first remove the $z$ component of
+the initial point so that we have $x(0)-x(0) \cdot
+\hat{z}=\{x_1(0),x_2(0),y_1(0),y_2(0),0\}$. In order to
+rotate each of the points, we must construct a matrix
+\beq
+\begin{split}
+\mathbb{G}=
+\left(
+\begin{array}{ccccc}
+\cos(\theta) & \sin(\theta) & 0 & 0 & 0\\
+-\sin(\theta) & \cos(\theta) & 0 & 0 & 0\\
+0 & 0 & \cos(\theta) & \sin(\theta) & 0\\
+0 & 0 & -\sin(\theta) & \cos(\theta) & 0\\
+0 & 0 & 0 & 0 & 1
+\end{array}
+\right)
+\end{split}
+\eeq
+where $\theta$ is the angle between the new point (minus the
+$z$ component) and the positive $x_1$ axis ($\hat{x_1}=\{1,
+0, 0, 0, 0\}$). From \refexer{exer:FinRotInvarCmplx}, we know
+that the \cLe\ are invariant for this kind of rotation, so
+that when we reduce the \cLf\ it contains the same
+information as the 5-dimensional system. We do not need to
+determine the angles themselves, we need only their cosines
+and sines. The cosine is found by a dot product as:
+\beq
+\cos(\theta)=\frac{x \cdot \hat{x}_1}{\lvert x \rvert}
+\,
+\eeq
+Sines can be found by rotating each point by $\frac{\pi}{2}$
+and then taking the dot product as with cosine. Taking the
+first point, we first rotate it with $\mathbb{G}$, and
+starting with this rotated point, we integrate over the
+defined time step. We then take the last point from the
+integration, find its $\mathbb{G}$ and rotate it, then use it
+at the beginning of the next integration from $t=timestep$ to
+$t=2 \cdot timestep$. This process continues (using a
+\texttt{For} loop in \texttt{Mathematica}) until the end of
+the integration (at an arbitrary time). The resulting list of
+rotated points is then plotted. Using this method, we
+produced \reffig{fig:CLEUnrotated}\,(a) and
+\reffig{fig:CLEUnrotated}\,(b).
+    \ES{It would be
+very instructive to also include the $\{x_1, y_1, z\}$ plot and
+increase the integration time to $t=200$ to discover that you
+still have to deal with a two eared attractor. Do you get any kink? }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% computed by unrotate.nb
+\begin{figure}[h]
+\begin{center}
+(a)~\includegraphics[width=0.35\textwidth]{CLEUnrotatedPnts}
+(b)~\includegraphics[width=0.35\textwidth]{CLEUnrotatedLine}
+\end{center}
+\caption{
+(a) $\{x_1, x_2, z\}$ plot of the \cLf\ as each point is
+rotated back to the plane. The time step used to make this
+plot was 0.01 and the integration went from $t=0$ to $t=50$.
+(b) With the points connected into a curve.
+    }
+\label{fig:CLEUnrotated}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\authorRW{Jul 14 2009}
+    } %end \solution{\Statesp\ reduction by a \slice}
+
+\exercise{Probability of hitting $(x_1,x_2) =(0,0)$:}{
+\label{exer:CLEsmall-x1x2}
+Investigate by simulation (and - that is extra cost -
+perhaps by thinking) how close does a strange attractor
+trajectory of \cLf\ come to
+hitting $(x_1,x_2) =(0,0)$ and/or  $(y_1,y_2) =(0,0)$?
+%    \authorPC{Jul 14 2009}
+    } %end\exercise{Probability of hitting $(x_1,x_2) =(0,0)$
+
+\solution{exer:CLEsmall-x1x2}
+{Probability of hitting $(x_1,x_2) =(0,0)$.}{
+%
+%%%%%%%%%%%%% PC generated by PCsimul.nb
+\SFIG{ProblemsPill} %CLEsmall-x1x2}
+{}{
+A very long time ($t=5000$) simulation of \cLf. $\{x_1,x_2\}$ plot indicates
+that probability of hitting $(x_1,x_2) =(0,0)$ is for all practical purposes
+equal to zero, and $\sqrt{x_1^2+x_2^2} > 0.02$.
+\authorPC{Jul 14 2009}
+%(The initial point is on the strange attractor).
+}
+{fig:CLEsmall-x1x2}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+A very long time ($t=5000$) simulation of \cLf, plot of
+$\{x_1,x_2\}$  neighborhood in \reffig{fig:CLEsmall-x1x2},
+indicates that probability of hitting $(x_1,x_2) =(0,0)$ is
+for all practical purposes equal to zero, and
+$\rho_1(t)=\sqrt{x_1^2+x_2^2} > 0.02$. Plots of $\{y_1,y_2\}$
+neighborhood look similar.
+Hence reduction of \statesp\ to 4-dimensional $x_2=0$ \reducedsp\ by rotating successive trajectory increments back
+to the $x_1>0$ semi-axis should not run into an $x_1 =0$
+singularity in determining the rotation angle $\cos\theta$.
+\ES{I certainly agree with this and I think it is clear in
+section 4.1.4.2 of the \emph{thesis no one wants to read} that
+the singularity of the transformations does not pose a problem
+for reduction in the case of \cLe\ as we do not encounter it
+numerically (I've tried to pay the extra price and produce a proof
+that the denominator cannot vanish but failed).
+The reason that the singularity is annoying for me (beyond
+visualization problems) is that in the \KS\ case dynamics goes
+through zeros in the denominator.}
+    \authorPC{Jul 14 2009}
+    } %end \solution{Probability of hitting $(x_1,x_2) =(0,0)$.}{
+
+
+\exercise{\Statesp\ reduction by a \slice, ODE formulation:}
+{\label{exer:csectionCLeODE}
+Reconsider \refeq{exer:csectionCLe} in the sequence of
+infinitesimal time steps limit, each followed by an
+infinitesimal rotation such that the next segment initial
+point is in the {\slice} $x_2=0,\,x_1>0$. Derive the
+corresponding 4$d$ \reducedsp\ ODE for the \cLf.
+    } %end \solution{\Statesp\ reduction by a \slice, ODE formulation}
+
+\solution{exer:csectionCLeODE}
+         {\Statesp\ reduction by a \slice, ODE formulation:}{
+Infinitesimal time version of the moving frames
+symmetry reduction is attained by taking small time steps
+in \reffig{fig:PCunrot} and dropping the higher order terms,
+as in \refsect{sect:SymmDyn}:
+\[
+d\ssp^{(n)} = d t \, v(\ssp^{(n)})
+                    + d \theta_1^{(n)} \, \Lg \cdot \ssp^{(n)}
+\,.
+\]
+The infinitesimal angle is proportional to the time step,
+\[
+\theta_1^{(n)} \approx \sin \theta_1^{(n)}
+             = - d t \, \frac{\hat{{\bf e}}_{1} \cdot v(\ssp^{(n)})}
+                    {\rho_1^{(n)}}
+             \approx - d t \, v_1(\ssp^{(n)})/\ssp_2^{(n)}
+\,,
+\]
+where $(\rho_1,\theta_1)$ are polar coordinates,
+$\rho_1 = \sqrt{\ssp_1^{ 2} + \ssp_2^{2}}$,
+see \refeq{eq:CartToPol}. Our \slice\ condition is $x_1=0,\;x_2>0$,
+so the \reducedsp\ equations are given by
+\beq
+\dot{\ssp} = v - \frac{v_1}{\ssp_2} \Lg \cdot \ssp
+\,.
+\ee{ExerMotionMovFrame}
+The motion stays in the $(d\!-\!1)$-\slice, as $\dot{\ssp}_1 = 0$ due to
+the orthogonal action of $\Lg$ to the direction $\ssp$.
+
+Moving frames symmetry reduced \cLe\ are a 4-dimensional
+first order ODE system
+\beq
+\begin{split}
+	\dot{x}_2 &= -\sigma  (x_2 - y_2) \\
+	\dot{y}_1 &= - y_1 + r_2 x_2 - \left(e + {\sigma y_1}/{x_2}\right) y_2\\
+	\dot{y}_2 &=  - y_2 + (r_1-z) x_2 + \left(e + {\sigma y_1}/{x_2}\right) y_1 \\
+	\dot{z}\; &= -b z + x_2 y_2
+\,.
+\end{split}
+\ee{eq:rdcdCLeR}
+The resulting trajectory is illustrated in
+\reffig{fig:PCunrot1}. It agrees with trajectories reported
+by Siminos (there the simulation is in the full \statesp, and
+the \reducedsp\ dynamics is obtained by a coordinate change).
+\ES{\refeq{eq:rdcdCLeR} follows from
+\cLe\ expressed in the invariant coordinates obtained by the moving frame
+method. Since this blog is not explicit transformation
+friendly I've added this calculation in my thesis (sec. 4.1.4).
+({\bf PC:} I fixed the errors in my rewrite - we agree).
+We have done the same
+for ZM system long time ago when we heuristically
+rederived Cartan's method. It has been moved to a footnote in Jonathan's
+blog (eq. 5.37) and became one the things that never found their way back to my thesis.
+({\bf PC:} I never understood why ZM system was junked {\bf ES:} We've agreed to
+junk it when we realized it has no relative equilibria. Also see Sec. 4.1 of my thesis.).
+One also gets the same system by using invariant
+polynomials and taking the syzygy into account, see discussion preceding 5.46 in
+Jonathan's blog. {\bf PC:} please write this up in your thesis - will need it for
+the planned publication.}
+
+\noindent
+- Checked that it agrees with finite step + rotation of \reffig{fig:PCunrot}\\
+- $x_2$ and $y_2$ seem locked, oscillate the same way with amplitude up to 20\\
+- $y_1$ is very small, mostly below 0.1\\
+- $( x_2 , y_2 ,z)$ plot looks discontinuous in $y_2$ whenever $x_2$ small,
+across the $z$-axis (indicated in red).
+\authorRW{Jul 28 2009}
+    } %end \solution{\Statesp\ reduction by a \slice, ODE formulation}
+
+\exercise{Accumulated phase shift in \slice\ \reducedsp:}
+{\label{exer:csectionPhase}
+Derive the 1$d$ equation for the accumulated phase shift
+$\theta$ associated with the 4\dmn\ \reducedsp\ ODE of
+\refexer{exer:csectionCLeODE}.
+    } %end \solution{Accumulated phase shift in \slice\ reduced \states
+
+\solution{exer:csectionPhase}{Accumulated phase shift in \slice\ \reducedsp:}{
+(not available)
+% \authorRW{Aug ?? 2009}
+    } %end \solution{Accumulated phase shift in \slice\ reduced \states
+
+\exercise{The moving frame flow stays in the \reducedsp:}
+{\label{exer:csectionReduced}
+Show that the flow \refeq{EqMotionMovFramePC} stays in a
+$(d\!-\!1)$-dimensional \slice.
+\authorPC{Aug 10 2009}
+    } %end \exercise{The moving frame flow stays
+
+\solution{exer:csectionReduced}
+{The moving frame flow stays in the \reducedsp:}
+{The motion stays in the $(d\!-\!1)$-dimensional \slice, as
+the flow along the group action direction vanishes,
+    \ES{I don't understand this statement.
+%In fact, if I try to calculate $\dot{\ssp} \cdot \Lg \cdot \ssp^{*}$
+%explicitly for \cLe\ I get
+%\[
+% \dot{\ssp} \cdot \Lg \cdot \ssp^{*}
+% = (-\sigma\,  x_2^{*} y_1+e\, y_1^{*}y_1+y_2 y_1-y_1^{*} y_2+\sigma\,
+% x_1^{*} (y_2-x_2)+e\, y_2 y_2^{*}+x_2 y_2^{*} (r_1 -z)+x_1
+%(\sigma  x_2^{*}+y_2^{*} (z-r_1 )))
+%\]
+%(note that I always take $r_2=0$) an expression that is not in general
+%equal to zero.
+Can you explain the general argument and/or show
+that $\dot{\ssp} \cdot \Lg \cdot \ssp^{*}=0$
+by explicit calculation?
+    {\bf PC:} Mhm... wonders of \texttt{Mathematica}. Is this
+    verification explicit enough? Used $T^2=-1$ on the
+    4-dimensional subspace. {\bf ES:} This referred to the
+    previous, incorrect version. Now I see the argument. Except 	
+    you should use $T^{T}\cdot T=1$ instead of making sign errors
+    an even number of times. {\bf PC:} No, it was also correct
+    for the previous formulation. And the generators of any rotation
+    group are antisymmetric, $ \Lg^{-1} =-  \Lg$, magical fact I
+    used correctly even number of times.
+    }
+\[
+\dot{\ssp} \cdot \Lg \cdot \ssp^{*} = v  \cdot \Lg \cdot \ssp^{*}
+- \frac{(v \cdot \Lg \cdot \ssp^{*})}{(\ssp \cdot\ssp^{*})_4}
+                 \, (\Lg \cdot \ssp) \cdot \Lg \cdot \ssp^{*} = 0
+\,.
+\]
+\authorPC{Aug 10 2009}
+    } %end \solution{exer:csectionReduced}
+
+\exercise{Integration on a {\csection}:}{\label{exer:SiminosSlice}
+Siminos\rf{SiminosThesis} replaces \cLe\ with the system
+\beq
+	\frac{dx}{dt}=\PperpOp(\ssp^{*}) v(x)\,,\qquad
+ 	\PperpOp_{ij}(\ssp^{*})=\delta_{ij}-
+    \frac{(\Lg \cdot \ssp^{*})_i (\Lg \cdot \ssp^{*})_j}{(\Lg \cdot \ssp^{*})^2}
+	\label{eq:difeqTransvII}
+\eeq
+where $x^{*}$ a point on the {\csection}, solutions will stay on
+the {\csection} $\mathcal{K}$ for any initial condition on
+$\mathcal{K}$ as there is no component of $\PperpOp(x_o)
+v(x)$ in the direction of the continuous symmetry.
+Reproduce Siminos \reffig{fig:CLEtransvII}\,(a). Explain the similarity
+to the classical 2-eared Lorenz attractor (note that
+dynamics on the slice are equivariant under rotations by
+$\pi$).
+    \PC{define, explain $\PperpOp(x_o)$ in this section}
+    } %\end \exercise{Integration on the {\slice}:
+
+\solution{exer:SiminosSlice}{Integration on a {\csection}.}{
+Siminos \rf{SiminosThesis} gives the new equation as
+
+\beq
+\dot x_{\perp} = v(x)-\mathbb{T}x^{*} \frac{\mathbb{T}x^{*}\cdot v(x)}{(\mathbb{T}x^{*})^{2}}
+\label{eq:IntSlice}
+\eeq
+Using $\Lg =\left(\barr{ccccc}
+0&1&0&0&0\\
+-1&0&0&0&0\\
+0&0&0&1&0\\
+0&0&-1&0&0\\
+0&0&0&0&0
+\earr\right)$
+and $x^{*}=x_{\REQB{}1}$, we can reproduce \reffig{fig:CLEtransvII}\,(a) by using the integration and plotting methods described in previous exercises. Our result is shown in \reffig{fig:CLEtransvII}\,(b).
+
+
+\authorRW{Aug 07 2009}
+    } %end \solution{Integration on the {\slice}}
+
+    \PublicPrivate{}{
+
+\exercise{\Statesp\ reduction by a locally transverse \slice:}
+{\label{exer:PClocSectCLe}
+Decompose $\vf(\ssp)$
+in $\dot{\ssp}= \vf(\ssp)$ in a part $\vf_\shortparallel$ parallel
+to the group action and a part $\vf_\perp$ transverse to it,
+\beq
+	\vf(\ssp)=\vf_\shortparallel(\ssp)+\vf_\perp(\ssp)\,,
+\ee{flowSplit}
+using the projection operator
+\beq
+ 	\PperpOp_{ij}(\ssp)=\delta_{ij}-
+    \frac{(\Lg \cdot \ssp)_i (\Lg \cdot \ssp)_j}{(\Lg \cdot \ssp)^2}
+\ee{transvProj}
+that projects a $d$-dimensional flow $\vf(\ssp)$ onto
+flow
+\beq
+	\dot{\ssp}_\perp = \vf_\perp(\ssp) = \vf(\ssp)
+    - \frac{(\Lg\cdot\ssp)\cdot\vf(\ssp)}{(\Lg\cdot\ssp)^2} \Lg\cdot\ssp
+\ee{transvFlow}
+in a $(d\!-\!1)$-dimensional {\slice} transverse to the
+direction fixed by the point $\ssp$.
+By ignoring
+the flow component that can be compensated for by an
+$\SOn{2}$ rotation we quotient the flow by $\SOn{2}$. The
+idea is presumably very old; for example, it is stated as the
+problem 1. of Sect. 6.2 of Arnol'd {\em Ordinary Differential
+Equations}\rf{arnold92}. Note, however, that a choice of
+$\ssp_0$ fixes only a direction, so the \reducedsp\ flow is still
+equivariant under the action of discrete cyclic group $\Ztwo
+= \{e,D(\pi)\}$ on $\ssp$, $\vf(\ssp)$ and the reference
+point $\ssp_0$, just as was the case for the
+Lorenz flow. % \refeq{Lorenz}.
+    \PC{\emph{Mea culpa}: Here I screwed up. I forgot that rotation
+    moves $v$ and counter-moves $\ssp$ in $v(\ssp)$, \ie,
+    acts by the Lie derivative \refeq{inftmInv}. I could never
+    understand why we do not see a translational zero eigenvalue
+    everywhere (the Lie group acts globally and commutatively
+    right?), but only on \eqva, \reqva\ and \rpo s. Presumably
+    the projection operator \refeq{transvProj} is OK for the
+    \reqv\ calculation, % of \refeq{sect:StabEq},
+    as the action of the group on $\ssp_{\REQB{1}}$ is trivial?
+    Not sure how to rewrite the decomposition induced by
+    \refeq{transvProj} correctly, in
+    terms of the full Lie derivative action, and not only the $\Lg$
+    action.
+    }
+
+\refeq{transvFlow} differs from \refeq{EqMotionMovFramePC}
+only by replacement of the \slice\ fixed by an arbitrary
+point $\ssp^{*}$ by \slice\ fixed by the instantaneous
+state itself, $\ssp^{*} \to \ssp$. It does not work for us;
+\rpo s do not reduce to \po s, and the strange attractor remains
+embedded in 4 dimensions. Explain what is wrong with \refeq{transvFlow}.
+\authorPC{Aug 7 2008}
+    } %end \exercise{\Statesp\ reduction by a locally transverse \slice:}
+
+\solution{exer:PClocSectCLe}
+         {\Statesp\ reduction by a locally transverse \slice:}{
+(not available)
+    } %end \solution{\Statesp\ reduction by a locally transverse \csection:}
+
+\exercise{Velocity field within \slice\ can diverge:}{
+\label{exer:PCsectionCLe}
+Apparent lack of singularities in \reffig{fig:CLEpcSect} appears
+fortuitous or perhaps even a programming error.
+This is a 4\dmn\ subspace, and indeed simulations do encounter
+this subspace very, with \reducedsp\ velocity going off to infinity.
+For example, take \cLf, with
+(a) $\ssp^* \approx  \ssp_{\REQB{}1} = (8.48,0.077,8.48,0,26.99)$
+on \reqv\ \REQB{1} group orbit,
+and initial point
+$\ssp(0) \approx  (4.81,0.154,7.59,0.281,15.9)$
+      (taken from a long run on the strange attractor). How
+far in time can you integrate the \reducedsp\ trajectory?
+This, however, is perhaps a bad example, as the initial point is
+not on the \slice. (b) Rotate  $\ssp(0)$ into the slice, use that
+point as the initial point. How far can you integrate?
+(c) Could \reducedsp\ \cLf\ flow run into a singularity
+for other choices of $\ssp^*$? (d) For what
+\slice s is the strange attractor of \cLf\
+singularity-free?
+    } %end \exercise{Velocity field within \slice\ can diverge
+
+
+\solution{exer:PCsectionCLe}
+{Velocity field within \slice\ can diverge:}{
+(a) The denominator
+$(\ssp(t) \cdot\ssp^{*})_4$ vanishes at $t \approx 1.217\cdots$.
+(b) Apparently forever.
+(c) The \reducedsp\ \cLf\ flow runs into a singularities in the
+\slice\ choice of \reffig{fig:PCunrot1}.
+(d) We have no idea...
+\authorPC{Aug 7 2009}
+    } %end \solution Velocity field within \slice\ can diverge
+
+\exercise{\Statesp\ reduction by a \reqv\ $\REQB{1}$ \csection:}
+{\label{exer:PCsectionCLe}
+Replace integration of the \cLe\ by a sequence of short time steps,
+each followed by a rotation such that the next segment initial point
+is in the \reqv\ $\REQB{1}$ {\csection}
+\beq
+(\hat{\ssp}- \ssp_{\REQB{}1}) \cdot t_{\REQB{}1}=0
+    \,,\qquad
+t_{\REQB{}1} = \Lg \cdot \ssp_{\REQB{}1}
+\,,
+\ee{PCsect}
+where for any $\ssp$, $\hat{\ssp} = \mathbb{G}(\theta) \cdot \ssp$
+is the rotation that
+lies in the \csection.
+    } %end \exercise{\Statesp\ reduction by a \reqv\ $\REQB{1}$
+
+\solution{exer:PCsectionCLe}
+         {\Statesp\ reduction by a \reqv\ $\REQB{1}$ \csection.}{
+We note that $\ssp_{\REQB{}1} \cdot t_{\REQB{}1}=0$ by the
+antisymmetry of $\Lg$, so \refeq{PCsect} is a linear
+condition $\hat{\ssp} \cdot \Lg \cdot \ssp_{\REQB{}1} = \ssp
+\cdot \mathbb{G}(\theta) \cdot \Lg \cdot \ssp_{\REQB{}1} =0$
+that determines $\theta$. Substituting \refeq{SO2gener2d} and
+\refeq{SO2generCLe} yields a formula
+\beq
+\tan \theta = \frac{x_1 x^{\REQB{}1}_2 -x_1 x^{\REQB{}1}_2
+                    +y_1 y^{\REQB{}1}_2 -y_1 y^{\REQB{}1}_2}
+                   {x_1 x^{\REQB{}1}_1 + x_2 x^{\REQB{}1}_2
+                   +y_1 y^{\REQB{}1}_1 + y_2 y^{\REQB{}1}_2}
+\ee{PCsectTan}
+for the rotation angle $\hat{\ssp} = \mathbb{G}(\theta) \cdot
+\ssp$ (actually, there are two solutions, separated by $\pi$)
+that rotates $\ssp$ into the \csection. In contrast to fixing one of
+the polar angles as in the method of moving frames of
+\refsect{sect:MovFrame}, this \csection\ introduces no
+singularities, as $x_1^2 + x_2^2+y_1^2 + y_2^2>0$.
+To compute $\sin \theta$, $\cos \theta$ needed by $\mathbb{G}(\theta)$
+rewrite \refeq{PCsectTan} as
+\bea
+\cos \theta &=& (x_1 x^{\REQB{}1}_1 + x_2 x^{\REQB{}1}_2
+                   +y_1 y^{\REQB{}1}_1 + y_2 y^{\REQB{}1}_2)/N
+    \continue
+\sin \theta &=& (x_1 x^{\REQB{}1}_2 -x_1 x^{\REQB{}1}_2
+                    +y_1 y^{\REQB{}1}_2 -y_1 y^{\REQB{}1}_2)/N
+\,,
+\label{PCsectCos}
+\eea
+with $N$ fixed by $sin^2+cos^2=1$.
+\authorPC{Aug 7 2009}
+    } %end \solution{\Statesp\ reduction by a \reqv\ $\REQB{1}$ \csection
+    } %end \PublicPrivate

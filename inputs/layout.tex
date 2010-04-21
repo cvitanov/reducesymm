@@ -1,0 +1,172 @@
+% inputs/layout.tex
+% $Author$ $Date$
+
+% from ChaosBook                        Predrag          5jun2008
+
+\newcommand{\authorSFPC}[1] % Date 6 Jun 2009, for example
+     {\hfill (S. Froehlich and P. Cvitanovi\'c, #1)}
+\newcommand{\authorSF}[1]
+     {\hfill (S. Froehlich, #1)}
+\newcommand{\authorES}[1]
+     {\hfill (E. Siminos, #1)}
+\newcommand{\authorPC}[1]
+     {\hfill (P. Cvitanovi\'c, #1)}
+
+
+%%%%%%%% for figure layouts:
+%% fine tuning floatingfigure \usepackage[nooneline] captions %%%%%
+%        \renewcommand{\captionfont}{\footnotesize} % \sffamily}
+%        \renewcommand{\captionlabelfont}{\footnotesize \bfseries \rmfamily}
+%        % \renewcommand{\captionlabeldelim}{.\quad}
+%        % \setlength{\captionmargin}{10pt}
+
+% \FIG{#1}    % \includegraphics[width=0.40\textwidth]{Fig/f_name.ps}  ...
+%     {#2}    % short caption text omitted here
+%     {#3}    % full caption text
+%     {#4}    % f-figure-label
+\newcommand{\FIG}[4]{\begin{widefigure}[t]{#4}
+    \widefigparts{\begin{minipage}[b]{0.98\textwidth}
+                    #1\end{minipage}}{#3}\end{widefigure}}
+
+\newcommand{\FFIG}[5]{\begin{floatingfigure}[v]{0.40\textwidth}
+                      \noindent
+                      \includegraphics[#1]{#2}
+                      \caption[#3]{#4}
+                      \label{#5}
+              \end{floatingfigure} }
+
+%   \BFIG{#1}   % width=#1\textwidth
+%        {#2}   % f_name.ps
+%    {#3}   % short caption text
+%    {#4}   % full caption text
+%    {#5}   % f-figure-label
+%       defined here:
+\newcommand{\BFIG}[5]{\begin{figure}
+              \hspace*{0.10\textwidth}%
+              \begin{minipage}[b]{1.00\textwidth}
+              \centering{
+                      \includegraphics[width=#1\textwidth]{Fig/#2}
+                     }
+                      \caption[#3]{#4}
+                      \label{#5}
+              \end{minipage}
+              \end{figure} }
+
+%  \SFIG{#1}    % f_name.png (or .pdf)
+%       {#2}    % short caption text
+%       {#3}    % full caption text
+%       {#4}    % f-figure-label
+\newcommand{\SFIG}[4]{\begin{figure}[h]
+              %\hspace*{-0.10\textwidth}
+              \hspace*{0.10\textwidth}
+              \begin{minipage}[b]{0.55\textwidth}
+                      \caption[#2]{#3}
+                      \label{#4}
+              \end{minipage}~~~~~%
+              \begin{minipage}[b]{0.40\textwidth}
+                      \includegraphics[width=1.00\textwidth]{#1}
+              \end{minipage}
+              %\hfill
+              \end{figure} }
+
+%%%%%%%%%%%%%%% FORMATING: PAGINATION FOR bin/mkbook %%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Resume}{\section*{\textsf{\textbf{R\'esum\'e}}}
+    %   \addcontentsline{toc}{section}{{~~~~Resum\'e}}
+                \addtocontents{toc}{{\small r\'esum\'e \thepage ~}} }
+\newcommand{\ResumeEnd}{}
+
+\newcommand{\Remarks}{\section*{\textsf{\textbf{Commentary}}}
+        \addtocontents{toc}{{\small commentary \thepage ~ }} }
+\newcommand{\RemarksEnd}{\ifOUP   %\end{enumerate}
+        \end{reading} \else  \fi}
+
+\newcommand{\Problems}[2]{
+                \renewcommand{\inputfile}{#1 -  #2}
+    \ifboyscout \begin{exercisesBS} \else \begin{exercises} \fi
+    \begin{enumerate}}
+\newcommand{\ProblemsEnd}{\end{enumerate}
+    \ifboyscout \end{exercisesBS} \else \end{exercises} \fi}
+
+\newcommand{\Solution}[4]{
+        \section*{Chapter~\ref{c-#1}. #4}
+                \renewcommand{\inputfile}{#2 -  #3}
+        % PC:  modified 28 may 2000
+                %         \renewcommand{\chapName}{#1}
+                %        \setcounter{startSect}{\thepage}
+                        }
+\newcommand{\Solutions}{
+        \section{\textsf{\textbf{Solutions}}}
+        %\addcontentsline{toc}{section}{{~~~~Solutions}}
+                        }
+
+
+%%%%%%%%%%%%%%% NUMBERED ENVIRONMENTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% REPLACE {13.5cm} by \textwidth counter in these environments
+\newtheorem{exerc}{\textsf{\textbf{Exercise}}}[chapter]
+% \newtheorem{exerc}{}[chapter]
+% \newtheorem{exerc}{{$\bullet$}}[chapter]
+ \newcommand{\exercise}[2]{
+        %\vskip -13mm
+         \noindent
+         \begin{exerc}{
+\renewcommand{\theenumi}{\alph{enumi}}
+\renewcommand{\labelenumi}{\textbf{(\alph{enumi})\ }}
+    {\noindent\small
+         ~~\textsf{\textbf{#1}} ~
+           \slshape\sffamily{#2}  } % \textsl would not work...
+    }
+         \vskip -1mm
+% removed the line: % \noindent\rule[.1mm]{\linewidth}{.5mm}
+         \end{exerc}
+                          }
+
+\newcommand{\Exercise}[2]{      %environment for obligatory problems
+        %\vskip -13mm
+        \noindent
+        \begin{exerc}{
+\renewcommand{\theenumi}{\alph{enumi}}
+\renewcommand{\labelenumi}
+    {\textsf{\textbf{ (\alph{enumi})\ }}}
+        {\noindent
+         ~~\textsf{\textbf{\underline{#1}}} ~
+           \slshape\sffamily{#2}  } % \textsl would not work...
+        }
+         \vskip -1mm
+        \end{exerc}
+                          }
+
+\newcommand{\solution}[3]{
+        {\noindent\small
+         \textsf{\textbf{Solution \ref{#1}~-~#2}} %LABEL - TITLE
+         \slshape\sffamily{#3}                    %TEXT
+         }
+         \vskip  1ex  %4mm
+% removed the line: % \noindent\rule[.1mm]{\linewidth}{.5mm}
+                        }
+\newcommand{\exerbox}[1]
+{\marginpar[{\color{red}\sf\footnotesize\hfill exercise \ref{#1} }]
+               {\color{red}\sf\footnotesize exercise \ref{#1} \hfill}}
+
+\newtheorem{exmple}{\noindent\small\textsf{\textbf{Example}}}[chapter]
+\newcommand{\example}[2]{
+    \vskip -13mm
+        %\begin{offset}
+        \begin{exmple}
+           \noindent\small
+           \textsf{\textbf{#1}} ~
+       \slshape\sffamily{#2}
+       % \textsl would not work...
+    \end{exmple}
+    %\end{offset}
+        \vskip -1mm
+             }
+
+\newtheorem{rmark}{{\small\textsf{\textbf{Remark}}}}[chapter]
+\newcommand{\remark}[2]{
+        % \begin{quotation}
+        \begin{rmark}
+        {\small\em\noindent {\small\sf \underline{ #1} ~} #2 }
+    \end{rmark}
+    % \end{quotation}
+              }
