@@ -7,3 +7,6 @@ ls *.php | while read i
 do
 	        curl -O  http://127.0.0.1/siminos/www/src/$i 
 done
+
+# needed to work on cns server
+cp index.php index.html 
