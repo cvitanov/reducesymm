@@ -13,28 +13,14 @@
 
     <tr>
 
-      <td colspan="2" valign="top"> <a href="http://www.gatech.edu/"> <img src="images/logofooter.jpg" align="middle"></a></td>
-
-      <td width="416">
-      <div class="description" align="right"><a href="http://www.cns.gatech.edu"><strong> Center for
-Nonlinear Science</strong><br>
-
-School of Physics, 837 State Street<br>
-
-Atlanta, Georgia 30332-0430<br>
-
-Phone 404.894.5200 - Fax 404.385-2506</a></div>
-
-      </td>
+      <?php include("include/gatech-CNS.php"); ?>
 
     </tr>
 
     <tr>
 
-      <td colspan="3">
-      <div id="banner"><img src="images/bannerTurb0.png" alt="turbulent sea" height="104" width="738"></div>
+      <?php include("include/banner.php"); ?>
 
-      </td>
 
     </tr>
 
@@ -45,14 +31,10 @@ Phone 404.894.5200 - Fax 404.385-2506</a></div>
 &nbsp;
       <p align="center"> <a href="images/siminos_large.jpg"><img style="border: 0px solid ; width: 214px;" alt="Evangelos Siminos photo" src="images/siminos_small.jpg"></a></p>
 
-      <div class="sidetitle"> <a href="#research">research</a></div>
 
-      <div class="sidetitle"> <a href="papers/index.html">publications</a></div>
+      <?php include("include/menu.php"); ?>
 
-      <div class="sidetitle"> <a href="calendar/index.html">calendar</a></div>
-
-      <div class="sidetitle"> <a href="#links">links</a></div>
-
+ 
       </td>
 
       <td width="113">&nbsp;</td>
@@ -68,16 +50,9 @@ Phone 404.894.5200 - Fax 404.385-2506</a></div>
 
       <p class="main-title"><br>
 
-<p>Ph.D., Georgia Tech 2009</p>
+<p>Ph.D. Georgia Tech 2009</p>
 
-      <div class="description" align="right">Present address:<br>
-<br>&nbsp; D&#233;partement de Physique Th&#233;orique et Appliqu&#233;e<br>
-CEA/Bruy&#232;res-Le-Ch&#226;tel<br>
-91297 Arpajon Cedex<br>
-France<br>
-<br>
-
-EMail: <a href="mailto:siminos%20%5Bsnail%5D%20gatech.edu">siminos [at] gatech.edu</a> </div>
+      <?php include("include/address.php"); ?>
 
       <h4 class="title2"> <a name="research"></a>Research</h4>
 
@@ -107,7 +82,7 @@ dynamics of Kuramoto-Sivashinsky equation.</p>
       <h4 class="title2"> <a name="links"></a>Links</h4>
 
       <blockquote>
-        <pre><a href="http://www.cns.gatech.edu/" class="checkers">Center for Nonlinear Science</a> - <a href="http://www.cns.gatech.edu/people.html" class="checkers">CNS people</a>	<br><a href="http://ChaosBook.org" class="checkers">ChaosBook.org</a></pre>
+        <pre><a href="http://www.cns.gatech.edu/" class="checkers">Center for Nonlinear Science</a> - <a href="http://www.cns.gatech.edu/people.html" class="checkers">CNS people</a> - <a href="http://ChaosBook.org" class="checkers">ChaosBook.org</a></pre>
 
       </blockquote>
 
