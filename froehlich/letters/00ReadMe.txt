@@ -28,7 +28,11 @@ semester".
 But a little more detail is better.
 
 --------------------------------------------------------------------------
-NOTES:
+NOTES: I did a summer REU for the math department here 2 years
+ago and then continued the research into the fall. I did a
+summer REU for the math department at cornell last summer. I
+have won the undergraduate award for top non-graduating math
+student the past 2 years. I have a 3.98 GPA.
 
 --------------------------------------------------------------------------
 TO FIX:
