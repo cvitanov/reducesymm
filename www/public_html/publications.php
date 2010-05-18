@@ -113,7 +113,7 @@
 	  <span class="refauthor">P. Cvitanovi&#263;, R.L. Davidchack, and E. Siminos</span></br>
 	  <span class="reftitle"> On the State Space Geometry of the Kuramoto-Sivashinsky Flow in a Periodic Domain</span></br>
 	    <a href="http://dx.doi.org/10.1137/070705623"><span class=journal>SIAM J. Appl. Dyn. Syst. <strong>9</strong></span>, 1-33 (2010)</a></br>
-	    <img src="images/acroread16.png" alt="reprint"><a href="CDS10.pdf"> reprint</a>
+	    <img src="images/acroread16.png" alt="reprint"><a href="./papers/CDS10.pdf"> reprint</a>
 	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 	      <span class="dsphead">+</span> abstract</a>
 		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
@@ -144,7 +144,7 @@
 	  <span class="reftitle"> Continuous symmetry reduction and return maps for high-dimensional flows</span></br> 
 	    submitted to <span class="journal">Physica D </span>(2010)</br> 
     <!-- 	<a href="http://dx.doi.org/10.1137/070705623">Phys. D ???</a> -->
-	    <img src="images/acroread16.png" alt="preprint"><a href="SiCvi10.pdf"> preprint</a>
+	    <img src="images/acroread16.png" alt="preprint"><a href="./papers/SiCvi10.pdf"> preprint</a>
  	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 	    <span class="dsphead">+</span> abstract</a>
 		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
