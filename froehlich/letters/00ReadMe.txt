@@ -25,19 +25,24 @@ Guidelines say that it should at least say something like
 and to provide a student summary to PURA at the end of the
 semester".
 
-But a little more detail is better.
+-----------------------------------------------------------------
+                                    Stefan 2010-05-17
+Submitted PURA proposal (the text below)
 
---------------------------------------------------------------------------
-NOTES: I did a summer REU for the math department here 2 years
-ago and then continued the research into the fall. I did a
-summer REU for the math department at cornell last summer. I
+-----------------------------------------------------------------
+                                    Predrag 2010-05-18
+emailed text from 100517PURArecPC.txt to urop@gatech.edu
+(the above link did not work)
+
+-----------------------------------------------------------------
+SF NOTES: I did a summer REU for the math department here 2
+years ago and then continued the research into the fall. I did
+a summer REU for the math department at cornell last summer. I
 have won the undergraduate award for top non-graduating math
 student the past 2 years. I have a 3.98 GPA.
 
---------------------------------------------------------------------------
-TO FIX:
---------------------------------------------------------------------------
-Final Proposal:
+-----------------------------------------------------------------
+The submitted proposal:
 
 Symmetry reduction of shear turbulent flows in pipe and planes
 geometries
@@ -99,3 +104,8 @@ Couette and pipe flows, where recent experimental progress has
 been made. The challenges and what I hope to learn fit
 perfectly into the goals and the skill-set of my double major
 in Mathematics and Physics.
+
+---------------------------------
+
+-----------------------------------------------------------------
+TO FIX:
