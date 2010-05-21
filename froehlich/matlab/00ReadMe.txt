@@ -1,3 +1,8 @@
+siminos/froehlich/matlab/00ReadMe.txt
+$Author$
+$Date:2010-04-21 18:36:47 -0400 (Wed, 21 Apr 2010) $
+----------------------------------------------------------------------------
+
 ComplexLorenz.m is just the function for the complex Lorenz
 equations used for ode45 in PlotCL.m and FiniteTimeStep.m.
 

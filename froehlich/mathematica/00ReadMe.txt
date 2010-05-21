@@ -1,3 +1,8 @@
+siminos/froehlich/mathematica/00ReadMe.txt
+$Author$
+$Date$
+----------------------------------------------------------------------------
+
 PlotCL.nb plots any trajectory of the complex Lorenz flow.
 
 Infinitesimal.nb plots the trajectory when the calculation is
