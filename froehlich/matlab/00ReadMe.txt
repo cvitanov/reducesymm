@@ -22,3 +22,13 @@ Infinitesimal.m takes in the initial value and length of time
 you want to integrate over. It rotates the initial point into
 the x1=0 hyperplane and then calculates the trajectory using
 the reduced equations you get in the method of moving frames.
+
+HilbEq.m is the function used in ode45 for a Hilbert basis
+version of the system.
+
+Hilbert1.m calculates the trajectory of the flow in the
+coordinates of a Hilbert basis.
+
+Hilbert2.m calculated the trajectory of the flow in standard
+coordinates then converts the resulting flow into the
+coordinates of a Hilbert basis.

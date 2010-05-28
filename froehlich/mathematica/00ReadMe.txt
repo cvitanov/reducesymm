@@ -17,3 +17,10 @@ PlotCL.nb plots any trajectory of the complex Lorenz flow.
 
 Infinitesimal.nb plots the trajectory when the calculation is
 done using the method of moving frames for the hyperplane x1=0.
+
+Hilbert1.nb calculates the trajectory of the flow in the
+coordinates of a Hilbert basis.
+
+Hilbert2.nb calculates the trajectory of the flow in standard
+coordinates then converts the resulting flow into the
+coordinates of a Hilbert basis.
