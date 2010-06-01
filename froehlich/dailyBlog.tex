@@ -130,4 +130,42 @@ the section \emph{Tips for Integration} might be helpful.
 
     When I use this system of equations I don't have any difficulties with stiffness. I also checked the two sets of equilibrium points for when $e+\rho_2 = 0$. They are equilibrium points for this new system, but they were not for the old. So I think this new system is the correct system, and the $\sigma-1$ was somehow causing the stiffness. I can change the formula in the book if you want, but I wanted this system to be checked before I did that.
 
+\item[2010-06-01 ES] Stefan, thanks for catching this. The funny thing is that I had found this error in the
+    past, corrected it in CLE paper, I copy here from \emph{revision 1449}:
+
+==========================
+    \beq
+    \begin{split}
+	    u_1 &= x_1^2+x_2^2 \cont
+	    u_2 &= y_1^2+y_2^2 \cont
+	    u_3 &= x_1 y_2-x_2 y_1\cont
+	    u_4 &= x_1 y_1+x_2 y_2\cont
+	    u_5 &= z\,.
+	    \label{eq:ipLaser}
+    \end{split}
+    \eeq
+
+    \ES{mathematica notebook:CLEtransfJac.nb
+    {\bf PC:} Changed $z$ to $u_5$; have not checked the algebra}\
+    \ES{Rechecked algebra by hand, keeping $\rho_2\neq 0$. $u_3$ and $u_4$ where permuted. I will have to check
+		the figures for consistency.}
+\beq
+\begin{split}
+  \dot{u}_1 &=2\,\sigma\,(u_4-u_1)\,,\\
+  \dot{u}_2 &=-2\left(\,u_2 - \rho_2\, u_3 -\,(\rho_1-u_5)\,u_4\right)\,,\\
+  \dot{u}_3 &=-(\sigma\, +1)\,u_3+\rho_2\, u_1+e\, u_4\,,\\
+  \dot{u}_4 &=-(\sigma\, +1)\,u_4+\,(\rho_1-u_5)\,u_1+\sigma\, u_2-e\,u_3\,,\\
+  \dot{u}_5 &=u_4-b\, u_5\,.
+\end{split}
+\label{eq:CLEip}
+\eeq
+===================================
+
+I think it was Predrag who didn't like the formating and copied 
+the Chaosbook expressions back (interchanging $u_3$ and $u_4$ one
+can fit two lines in one). Anyway, my mistake, I should have immediately 
+corrected Chaosbook as well.
+
+Stefan, you do use basis \refeq{eq:ipLaser}, right?
+
 \end{description}
