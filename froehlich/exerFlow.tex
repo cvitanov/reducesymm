@@ -23,52 +23,7 @@ $\footnotemark\footnotetext{{\tt \svnkw{RepoFile}}, rev. \svnfilerev:
     } % end \exercise{Visualizations of the 5-dimensional \cLf
 
 \solution{exer:PlotCLf}{Visualizations of the 5-dimensional \cLf.}{
-A numerical solution of the set of ODEs \refeq{eq:CLeR} is
-obtained by using the \texttt{Mathematica} \texttt{NDSolve} function,
-for $t$ from 0 to 100 and setting the initial $(x_1, x_2,
-y_1, y_2, z)$ to some arbitrary  value. We set
-\texttt{MaxSteps} $\to$ \texttt{Infinity} in order to resolve the fine
-structure of the flow. The solution is then plotted by means
-of \texttt{ParametricPlot3D}, in any three of the five
-$\{x_1, x_2, y_1, y_2, z\}$ axes. \refFig{fig:CLEx1x2z}
-illustrates the shape of the attractor projected onto the
-$\{x_1,x_2,z\}$ subspace, with parameters set to the Siminos
- values \refeq{SiminosPrmts}.
-Projections onto $\{y_1,y_2,z\}$ and other subspaces are
-visually similar, and seem not to offer additional insights into dynamics
-of this system.
-
-Here is a \texttt{Mathematica} program that generates a
-long-time plot of \cLe, such as \reffig{fig:CLEx1x2z},
-initiated from a point on the attractor (after this
-integration, the initial condition ic is the final point of
-the preceding integration):
-
-\begin{quote}
-\texttt{
-v[t$\_$]=\{-$\sigma$ x1[t] + $\sigma$ y1[t], -$\sigma$ x2[t] + $\sigma$ y2[t],\\
-           (r1 - z[t])x1[t] - r2x2[t] - y1[t] - ey2[t],\\
-           {r2}{x1}[t] + ({r1} - z[t]){x2}[t] + e{y1}[t] - {y2}[t],\\
-           -b z[t] + {x1}[t]{y1}[t] + {x2}[t]{y2}[t]\};\\
-x[{t$\_$}] = \{{x1}[t], {x2}[t], {y1}[t], {y2}[t], z[t]\};\\
-d={Length}[x[t]];\\
-{eqns}={Table}[D[x[t][[i]],t]==v[t][[i]],\{i,1,d\}];\\
-{xde}=\{{x1}, {x2}, {y1}, {y2}, z\};\\
-\\
-\noindent
-r1= 28; r2=0; b=8/3; e=1/10; $\sigma$=10;\\
-tf= 80;\\
-ic=\{x1[0]==0.867, x2[0]==-0.455, y1[0]==-0.552, y2[0]==0.453, z[0]==22.4\};\\
-\\\\
-sol=NDSolve[\{eqns,ic\}, {xde}, \{t,0,tf\}, {MaxSteps} $\to  \infty$]{//}{Flatten};\\
-traj[{t\_}]=x[t]/.sol;\\
-p1=ParametricPlot3D[\{traj[t][[1]],\ traj[t][[2]],\ traj[t][[5]]\},\ \{t,0,tf\},\ PlotPoints $\to$
- 400,\ PlotRange $\to$  All]\\
-ic=Table[x[0][[i]]==traj[tf][[i]],\ \{i,1,d\}];
-}
-\end{quote}
-
-\authorRW{Jun 17 2009}
+\authorSF{Jun ?? 2010}
     } %end solution{exer:PlotCLf}
 
 \section{Linear stability}
@@ -78,29 +33,7 @@ Find the \stabmat\ of \cLe\ \refeq{eq:CLeR}.
     }
 
 \solution{exer:StabmatCLf}{\Stabmat\ of \cLf.}{
-Substituting  \refeq{eq:CLeR} into \refeq{5x5stabMat}, \texttt{Mathematica} program
-
-     \begin{quote}
-$
-\text{v}[t] = \left\{\text{x1}'[t],\text{x2}'[t],\text{y1}'[t],\text{y2}'[t],z'[t]\right\};
-\\
-x[t] = \{\text{x1}[t],\text{x2}[t],\text{y1}[t],\text{y2}[t],z[t]\};
-\\
-\Mvar = D[\text{v}[t],\{x[t],1\}]
-    $
-    \end{quote}
-we find
-  \beq
-  \Mvar =\left(\barr{ccccc}
-    -\sigma    	& 0 		& \sigma & 0    &  0 \\
-	0 	& -\sigma       & 0      & \sigma   &  0 \\
-	r_1-z  &     -r_2      & -1     & -e & -x_1 \\
-	r_2     & r_1-z       	& e  	& -1       & -x_2 \\
-	y_1     & y_2           & x_1    & x_2      & -b
-    \earr\right)
-\,.
-  \ee{CLeStabMat}
-\authorPC{Jun 19 2009}
+\authorSF{Jun ?? 2010}
     }
 
 \section{\Eqva}
@@ -149,33 +82,13 @@ The alternate solution to the previous exercise showed that the origin was the o
          {\label{exer:EigenE0}
 Find the eigenvalues and the eigenvectors of the \stabmat\
 $\Mvar$ at $\EQV{0}=(0,0,0,0,0)$ determined in
-\refexer{exer:EquiCLe}.
-}
+\refexer{exer:EquiCLe}. Replace the complex eigenvectors by
+their real, imaginary parts so you can plot them in (real)
+\statesp.
+ }
 
 \solution{exer:EigenE0}{Eigenvalues and eigenvectors of $\EQV{0}$ \stabmat.}{
-Using the Mathematica function \texttt{Eigensytem} and
-setting $(x_1, x_2, y_1, y_2, z)=(0,0,0,0,0)$ at $t=0$ we
-obtain
-\beq
-\begin{split}
-\lambda_{1,2} &=11.8277 \pm 0.062985 i\\
-\lambda_{3,4} &=-22.8277 \pm 0.037015 i\\
-\lambda_5 &=-2.66667\\
-\end{split}
-\eeq
-as the eigenvalues of the system, with the associated eigenvectors:
-    \PC{replace the complex eigenvectors by their Re, Im parts.}
-\beq
-\begin{split}
-e_{1} &= e_2^* =(0.00132196+0.458131 i, 0.458131-0.00132196 i, i, 1, 0)
-\\
-e_3 &= e_4^* = (0.00224947-0.779559 i, -0.779559-0.00224947 i, 2.842171+i, 1, 0)
-\\
-e_5 &=(0, 0, 0, 0, 1)
-\,.
-\end{split}
-\eeq
-\authorRW{Jun 26 2009}
+\authorSF{Jun ?? 2010}
 } % end \solution{exer:EigenE0}{eigenvectors of $\EQV{0}$ \stabmat
 
 \exercise{The eigen-system of the \stabmat\ at $\EQV{0}$:}
@@ -186,15 +99,7 @@ at values very close to $\EQV{0}$.
 
 \solution{exer:PlotEigenE0}
          {The eigen-system of the \stabmat\ at $\EQV{0}$.}{
-In order to plot the complex eigenvectors, we split them into
-their real and complex parts and plot each separately (so
-that one complex eigenvector becomes two, defining a plane).
-Using the same method as in the previous plotting exercises
-(\refexer{exer:PlotCLf}, \refexer{exer:PlotPolEqu}, \refexer{exer:PlotRelEqu}
-) we arrive at \reffig{fig:CLEE0}.
-As the eigenvalues are nearly real, the stable/unstable 2$d$
-manifolds barely spiral, and are not very illuminating.
-\authorRW{Jul 01 2009}
+\authorSF{Jun ?? 2010}
 } % end \solution{exer:PlotEigenE0}{The eigen-system of the stability matrix at $\EQV{0}$
 
 \section{Symmetries of dynamics}
@@ -362,366 +267,13 @@ fact, equal 0, one can ignore the additional terms I found.
 
 \section{\Reqva}
 
-% \subsection{Coordinate changes}
-
-\exercise{Harmonic oscillator in polar coordinates:}{\label{exer:HarmOscPolar}
-Given a harmonic oscillator that follows $\dot{p}=-q$ and
-$\dot{q}=p$, rewrite the system in polar coordinates
-and find equations for $r$ and $\theta$.
-}
-\solution{exer:HarmOscPolar}{Harmonic oscillator in polar coordinates.}{
-Harmonic oscillator equations in
-Cartesian coordinates are
-\beq
-\dot{p}=-q\,,\qquad
-\dot{q}=p \,.
-\label{eq:HarmOscDE}
-\eeq
-In polar form, we  write
-\beq
-q=r\cos \theta \,,\qquad
-p=r\sin \theta
-\,.
-\eeq
-The inverse of the Jacobian
-$\frac{\partial\{q,p\}}{\partial\{r,\theta\}}$ of this
-transformation is
-\beq
-\frac{\partial\{r,\theta\}}{\partial\{q,p\}} =
-\left(
-\begin{array}{cc}\medskip
-\cos \theta &\sin \theta \\
--\frac{1}{r}\sin \theta &\frac{1}{r} \cos \theta
-\end{array}
-\right)
-\,,
-\eeq
-leading to
-\beq
-\left(
-\begin{array}{c}\medskip
-\dot{r}\\
-\dot{\theta}
-\end{array}
-\right)=
-\left(
-\begin{array}{cc}\medskip
-\cos \theta &\sin \theta \\
--\frac{1}{r}\sin \theta &\frac{1}{r} \cos \theta
-\end{array}
-\right) \cdot
-\left(
-\begin{array}{c}\medskip
-\dot{q}\\
-\dot{p}
-\end{array}
-\right)
-=\left(
-\begin{array}{c}\medskip
-0\\
--1
-\end{array}
-\right)
-\eeq
-\authorRW{Jun 23 2009}
-    } % end \solution{exer:HarmOscPolar}{Harmonic oscillator in polar coordinates
-
-\exercise{\CLe\ in polar coordinates.}{\label{exer:polarCLe}
-Rewrite \cLe\ from Cartesian to polar coordinates,
-\beq
-(x_1,x_2,y_1,y_2,z) =
-    (\rho_1 \cos\theta_1,\rho_1\sin\theta_1,
-     \rho_2\cos\theta_2,\rho_2\sin\theta_2,z)
-\,,
-\label{eq:CartToPol}
-\eeq
-where $\rho_1 \geq 0 \,,\rho_2 \geq 0$.
-    }
-
-\solution{exer:polarCLe}{\CLe\ in polar coordinates.}{
-We use the same method here as in
-\refexer{exer:HarmOscPolar}. The Jacobian of this
-transformation can be written as
-\beq
-\frac{\partial\{\rho_1,\theta_1,\rho_2,\theta_2,z\}}
-     {\partial\{x_1,x_2,y_1,y_2,z\}} =
-\left(
-\begin{array}{ccccc}
-\cos(\theta_1) & \sin(\theta_1) & 0 & 0 & 0 \\
- -\frac{\sin(\theta_1)}{\rho_1} & \frac{\cos(\theta_1)}{\rho_1} & 0 & 0 & 0 \\
- 0 & 0 & \cos(\theta_2) & \sin(\theta_2) & 0 \\
- 0 & 0 & -\frac{\sin(\theta_2)}{\rho_2} & \frac{\cos(\theta_2)}{\rho_2} & 0 \\
- 0 & 0 & 0 & 0 & 1
-\end{array}
-\right)
-\,.
-\label{eq:PolarJacob}
-\eeq
-Multiplying the velocity matrix on the left by the Jacobian
-\refeq{eq:PolarJacob}, we get
-\[ %\beq
-\left(
-\begin{array}{c}
-\dot{\rho}_1\\
-\dot{\theta}_1\\
-\dot{\rho}_2\\
-\dot{\theta}_2\\
-\dot{z}
-\end{array}
-\right)
-=
-\left(
-\begin{array}{c}
- -\sigma\left(\rho_1 - \rho_2\cos\theta\right) \\
- -\sigma\frac{\rho_2}{\rho_1}\sin \theta  \\
- -\rho_2 + \rho_1\left((r_1-z)\cos \theta - r_2 \sin\theta\right)\\
-  e  + \frac{\rho_1}{\rho_2}\left((r_1-z)\sin\theta +r_2 \cos\theta\right)\\
- -b z + \rho_1\rho_2\cos\theta
-\end{array}
-\right)
-,
-\] %\ee{eq:PolarCLe}
-where $\theta = \theta_1-\theta_2$. Following \refref{SiminosThesis},
-we set $r_2=0$ in what follows.
-It is convenient to rewrite this as 4 coupled equations
-\beq
-\left(
-\begin{array}{c}
-\dot{\rho}_1\\
-\dot{\rho}_2\\
-\dot{\theta}\\
-\dot{z}
-\end{array}
-\right)
-=
-\left(
-\begin{array}{c}
- -\sigma\left(\rho_1 - \rho_2\cos\theta\right) \\
- -\rho_2 + (r_1-z)\rho_1\cos \theta\\
-  -e -\left(\sigma\frac{\rho_2}{\rho_1}
- +(r_1-z)\frac{\rho_1}{\rho_2}\right)\sin\theta\\
- -b z + \rho_1\rho_2\cos\theta
-\end{array}
-\right)
-\,,
-\label{eq:PolarCLeTheta}
-\eeq
-and two driven ones for the two angles,
-\beq
-\left(
-\begin{array}{c}
-\dot{\theta}_1\\
-\dot{\theta}_2
-\end{array}
-\right)
-=
-\left(
-\begin{array}{c}
--\sigma\frac{\rho_2}{\rho_1}\sin\theta  \\
- e + (r_1-z)\frac{\rho_1}{\rho_2}\sin\theta
-\end{array}
-\right)
-\,,
-\label{eq:PolarCLeAngles}
-\eeq
-in agreement with \refref{SiminosThesis}.
-% PC: agrees with the Siminos thesis
-\authorSFPC{Jun 23 2009}
-} % end \solution{exer:polarCLe}{\CLe\ in polar coordinates
-
-\exercise{Visualizations of the \cLf\ in polar coordinates:}{
-\label{exer:PlotPolarCLf}
-Plot \cLf\ projected on any three of the $\{{\rho}_1, {\rho}_2,
-\theta, z\}$ coordinates. Experiment with different
-visualizations. The flow \refeq{eq:PolarCLeTheta} is singular
-as ${\rho}_j \to 0$, with angle $\theta_j$ going through a rapid
-change there: is that a problem? (See also \refexer{exer:CLEsmall-x1x2}.)
-Does it make sense to insist on $\rho_1 \geq 0 \,,\rho_2 \geq 0$,
-or should one let them have either sign in order that the
-$\theta$ trajectory be continuous?
-    } % end {Visualizations of the \cLf\ in polar coordinates
-
-\solution{exer:PlotPolarCLf}{Visualizations of the \cLf\ in polar coordinates.}{
-(solution not available)
-    } %end \solution{Visualizations of the \cLf\ in polar coordinates
-
-% \subsection{Computing and plotting the relative {\eqv} $\REQB{1}$}
-
-\exercise{Computing the \reqv\ $\REQB{1}$:}{\label{exer:CompRelEqu}
-Find the \reqva\ of the \cLe\ by finding the \eqva\ of the
-system in polar coordinates \refeq{eq:PolarCLeTheta}.
-Compute the velocity of such \reqv.
-}
-
-\solution{exer:CompRelEqu}{Computing the \reqv\  $\REQB{1}$.}{
-A relative {\eqv} point occurs when the derivatives
-\refeq{eq:PolarCLeTheta} are equal to zero (so that the
-difference between the two angles $\theta_1$ and $\theta_2$
-is constant, but the angles themselves are not constant).
-This gives us the set of equations:
-
-\beq
-\begin{split}
- -\sigma\left(\rho_1 - \rho_2\cos\theta\right)=0 \\
- -\rho_2 + (r_1-z)\rho_1\cos \theta=0\\
-  -e -\left(\sigma\frac{\rho_2}{\rho_1}
- +(r_1-z)\frac{\rho_1}{\rho_2}\right)\sin\theta=0\\
- -b z + \rho_1\rho_2\cos\theta=0
-\end{split}
-\label{eq:E1}
-\eeq
-
-The first and second equations give us that $\frac{\rho_2}{\rho_1}=\frac{1}{\cos \theta}$ and $\left(r_1-z\right)=\frac{\rho_2}{\rho_1 \cos \theta}$. Plugging these into the third equation we have $0=-e-\left(\frac{\sigma}{\cos \theta}+\frac{\rho_2}{\rho_1 \cos \theta} \frac{\rho_1}{\rho_2}\right) \sin \theta$, so $-\frac{e}{\sigma +1}=\tan \theta$.
-This means $\cos \theta = \pm \sqrt \frac{1}{d}$ where $d = 1+\frac{e^2}{\left(\sigma +1\right)^2}$. If $e$ and $\sigma$ are both positive, then $\tan \theta < 0$ so  $\theta$ must be either between$\frac{\pi}{2}$ and $\pi$ or between $0$ and $-\frac{\pi}{2}$.
-
-Again using the first and second equations we get that $\frac{\rho_1}{\rho_2} \frac{\rho_2}{\rho_1} = \cos \theta \left(r_1 - z\right) \cos \theta$ so $1=\left(r_1 -z\right) \cos ^2 \theta$ so $z=r_1 -d$.
-Using the first and fourth equations we have that $b z = \rho_1 ^2$, so $\rho_1 = \pm \sqrt{b\left(r_1 -d\right)}$.
-And finally, by the first equation and the value for $\rho_1$ we get that $\rho_2 = \pm \sqrt{b d\left(r_1 -d)\right)}$, where $sign\left(\rho_1\right) = sign\left(\rho_2\right) sign\left(\cos \theta\right)$.
-
-Let $\theta_Q$ be the angle between $0$ and $-\frac{\pi}{2}$ such that $\cos \theta_Q = \sqrt \frac{1}{d}$. Note that the angle for when $\cos \theta = - \sqrt \frac{1}{d}$ is then just $\theta_Q +\pi$.
-So the \reqva for \cLe in polar coordinates are then $\left(\pm \sqrt{b \left(r_1 -d\right)},\pm \sqrt{b d \left(r_1 -d\right)},\theta_Q, r_1 -d\right)$ and $\left(\pm \sqrt{b \left(r_1 -d\right)},\mp \sqrt{b d \left(r_1 -d\right)},\theta_Q +\pi, r_1 -d \right)$. The solutions of the first pair are actually the same point since having a negative radius is the same as rotating by $\pi$ in polar coordinates, so when both of the radii are negative you can just rotate $\theta_1$ and $\theta_2$ by $\pi$ to make the radii positive again while leaving $\theta$ unchanged since both angles where rotated by the same amount. The same argument holds for both of the solutions in the second pair being the same. The first pair of solutions is equivalent to the second pair of solutions since for the second pair, this time rotate one of the angles; this causes its sign to reverse and only one of the angles to change by $\pi$ so $\theta$ is changed by $\pi$. So there is only one relative equilibrium solution, $\left(\sqrt{b \left(r_1 -d\right)},\sqrt{b d \left(r_1 -d\right)},\theta_Q, r_1 -d\right)$.
-
-
-The solutions differ by combinations of negative and positive
-$\rho_1,\ \rho_2,\ \theta$. A negative $\rho_i$ solution
-corresponds to the same group orbit of solutions, related to
-the positive $\rho_i$ solution by a rotation by $\pi$. The
-$\rho_1 \geq 0 \,,\rho_2 \geq 0$ condition in
-\refeq{eq:CartToPol} reduces these solutions to two,
-differing by the sign of $\cos ^{-1}$ term. Defining $d=1 +
-{e^2}/{(\sigma +1)^2}$, we can write them compactly
-as\rf{SiminosThesis}
-\beq
-(\rho_1,\rho_2,\theta,z) =
-\left(\sqrt{b \,(r_1-d)},\sqrt{b d \,({r_1}-d}),
-      \pm \cos^{-1}\left({1}/{\sqrt{d}}\right),
-      r_1-d\right)
-\label{eq:E1-PC}
-\eeq
-%    \PC{disagree with this text, removed it:
-%``Only the solution given in \refeq{eq:E1} is listed in
-%\refref{SiminosThesis}, and that is the only one that is used
-%in further calculations. All of these eight solutions are
-%valid, but because we are only looking for a relative
-%{\eqv}, only one is needed to represent them all.''
-%    }
-%    \PC{please plot the solution \refeq{eq:E1-PC}, not
-%    the one picked by Siminos\rf{SiminosThesis}; negative
-%    radius in polar coordinate makes no sense
-%    }
-%    \ES{No negative
-%	radius appears in Siminos\rf{SiminosThesis}, Predrag
-%	please read the thesis! There is only one \reqv\, the
-%	two choices of sign will still give you two different
-%	points on the cycle of equivalent points as you observe
-%	later on.
-%    {\bf PC} I trusted Rebecca to compare the signs. The youth.
-%    }
-As will be further shown in \refexer{exer:PlotRelEqu},
-these two solutions are equivalent.
-For the Siminos parameter
-values \refeq{SiminosPrmts}, the \reqv\ is at
-\beq
-\ssp_{\REQB{}1} = (\rho_1,\rho_2,\theta,z) =
-     (8.48527,
-      8.48562,
-      0.00909066,
-      26.9999)
-\,.
-\label{eq:Q1}
-\eeq
-The angular velocity of \reqv\ $\REQB{1}$ follows from
-\refeq{eq:PolarCLeAngles}. Both angles move with the same
-velocity
-\beq
-\dot{\theta}_{i}
-= \frac{\sigma e}{\sigma + 1}
-\,,
-\label{eq:REQB1veloc}
-\eeq
-and period $\period{{\REQB{}1}}= 2\pi (\sigma +
-1)/\sigma e$. $\period{{\REQB{}1}}= 69.115\cdots$ for the
-Siminos parameter values \refeq{SiminosPrmts}. That implies that
-the simulation has to be run up to time of order 35 or higher for
-the strange attractor in \reffig{fig:CLEx1x2z} to start filling in.
-\authorPC{Jul 7 2009, Aug 7 2009}
-} % end \solution{exer:CompRelEqu}{Computing the Relative Equilibrium $\REQB{1}$
-
-\exercise{\Reqv\ $\REQB{1}$ in polar coordinates:}{\label{exer:PlotPolEqu}
-Plot the {\eqv} $\REQB{1}$ in polar coordinates.
-}
-
-\solution{exer:PlotPolEqu}{\Reqv\ $\REQB{1}$ in polar coordinates.}{
-The same method as in exercise \refeq{exer:PlotCLf} can be
-used here. First, a numerical solution is found with
-\texttt{NDSolve} for $t$ going 0 to 10 and initial point
-$\REQB{1}$. We again set \texttt{MaxSteps} $\to$ \texttt{Infinity}
-in order to resolve the structure of the flow. Using
-\texttt{ParametricPlot3D} to plot the flow in $\{\rho_1,
-\rho_2, z\}$ axes, \refFig{fig:CLEPolEqui} illustrates the
-shape of the flow with parameters set to the Siminos
-values\rf{SiminosThesis} \refeq{SiminosPrmts}.
-    \PC{$\backslash$label should be within the $\backslash$end\{figure\}
-    environment, not outside of it}
-
-\authorRW{Jun 26 2009}
-} % end \solution{exer:PlotPolEqu}{\Reqv\ $\REQB{1}$ in Polar Coordinates
 
 \exercise{\Reqv\  $\REQB{1}$ in Cartesian coordinates:}{\label{exer:PlotRelEqu}
-Plot the relative {\eqv} $\REQB{1}$ in Cartesian coordinates.
+Plot the relative {\eqv} $\REQB{1}$ in Cartesian coordinates. State the velocity of relative {\eqv}, compare with the imaginary part of the complex stability eigenvalue, and explain the two time scales visible in the `horn', as well as the expansion rate per turn of the spiral.
 }
 
 \solution{exer:PlotRelEqu}{\Reqv\ $\REQB{1}$ in Cartesian coordinates.}{
-Using the same method as in \refexer{exer:PlotPolEqu} and in
-\refexer{exer:PlotCLf}, we can plot the relative {\eqv}
-in Cartesian coordinates. However, the Cartesian system is
-five-dimensional and our polar system has only four dimensions. To
-resolve this, we set $\theta_2$ to an arbitrary value and set
-$\theta_1=\theta+\theta_2$.
-    \PC{what arbitrary value of $\theta_2$? Would'nt it be better
-        to set $\theta_1=0$, to agree with what follows?}
-With this, we can find the
-numerical value of $\REQB{1}$ in Cartesian coordinates using
-\refeq{eq:CartToPol}:
-\beq
-\ssp_{\REQB{}1} =
-(x_1,x_2,y_1,y_2,z) = (8.48492,0.0771356,8.48562,0,26.9999)
-\,.
-\label{eq:Q1Cart}
-\eeq
-Using \texttt{Mathematica} to plot the system as before, but
-with $t$ going from 0 to 100, \reffig{fig:CLERelEqui}\,(a) shows
-the \cLf\ at $\REQB{1}$ projected onto the $\{x_1, x_2, z\}$
-subspace.
-
-Note that the for a \reqv\ the flow is along a circle,
-\ie, the group-orbit of any point on it, but due to finite precision
-of the initial point and the integration, the trajectory eventually
-spirals away in a "horn" shape. This
-circle cuts through the middle of the \cLe\ strange attractor, as
-shown in \reffig{fig:CLERelEqui}\,(b).
-    \PC{state the velocity of relative {\eqv},
-        compare with the imaginary part of the complex
-        stability eigenvalue, and explain the two time scales
-        visible in the `horn', as well as the expansion rate
-        per turn of the spiral.}
-
-As noted in the solution to \refexer{exer:CompRelEqu},
-\texttt{Mathematica} returns eight relative equilibria, but
-they are all equivalent.
-    \PC{need to rewrite this - you have implicitly chosen
-    $\theta_2[0]=0$ (or similar) when you started drawing
-    this, so you always get a circle, just from the freedom of
-    choosing the initial angle. Perhaps mark the eight
-    solutions by fat points on the circle, merge
-    \reffig{fig:FourRelEquil} and \reffig{fig:CLEPolEqui} into
-    one.}
-\refFig{fig:FourRelEquil} shows the \cLf\ starting near four
-of these eight points. Each of the points lies on the $\REQB{1}$
-orbit, and each spirals away in the same way.
-
-
-\authorRW{Jun 26 2009}
+\authorSF{Jun ?? 2010}
     } % end \solution{exer:PlotRelEqu}
 
 \exercise{Eigenvalues and eigenvectors of $\REQB{1}$ \stabmat:}{\label{exer:EigenQ1}
@@ -765,64 +317,7 @@ reformulating dynamics in a \reducedsp.
                 \authorPC{Jun 26 2009, Aug 7 2009}
 } % end \solution{exer:EigenQ1}{Finding the eigenvalues and eigenvec
 
-\exercise{The eigen-system of $\REQB{1}$ \stabmat\ in polar coordinates:}
-{\label{exer:PlotPolEigenQ1}
-Plot the eigenvectors of \Mvar\ at $\REQB{1}$ in polar
-coordinates, as well as the \cLf\ at values very near
-$\REQB{1}$.
-}
-
-\solution{exer:PlotPolEigenQ1}
-{The eigen-system of $\REQB{1}$ \stabmat\ in polar coordinates.}{
-In order to plot the complex eigenvectors, we split them into
-their real and complex parts as in
-\refexer{exer:PlotEigenE0}. Using the same method as in the
-previous plotting exercises (\refexer{exer:PlotCLf},
-\refexer{exer:PlotRelEqu}, \refexer{exer:PlotPolEqu}) we
-constructed \refFig{fig:CLEQ1}\,(a) and
-\reffig{fig:CLEQ1}\,(b).
-
-
-\authorRW{Jul 01 2009}
-} % end \solution{exer:PlotPolEigenE1}{The eigen-system
-
 \section{\Reducedsp}
-
-\exercise{$\SOn{2}$ or harmonic oscillator \slice:}{ \label{exer:SO2cSect}
-Construct a moving frame {\slice} for action of $\SOn{2}$ on \Rls{2}
-\beq
-	(x,y) \mapsto (x\cos\theta -y \sin\theta,\,x\sin\theta +y \cos\theta )
-\eeq
-by, for instance, the positive $y$ axis: $x=0,\,y>0$. Write
-out explicitly the group transformations that bring any point
-back to the {\slice}. What invariant is preserved by this
-construction?
-\authorES{Jun 26 2009}
-    } %end \exercise{$\SOn{2}$ \slice.
-
-\solution{exer:SO2cSect}{$\SOn{2}$ or harmonic oscillator \slice:}{
-We can now construct a moving frame as follows. We write out
-explicitly the group transformations:
-\begin{subequations}
-\begin{align}
- 	\overline{x} &= x \cos\theta - y \sin\theta\label{eq:explSO2stnd1}\cont
-	\overline{y} &= x \sin\theta + y \cos\theta\label{eq:explSO2stnd2}\,.
-\end{align}
-\end{subequations}
-Then set $\overline{x}=0$ and solve \refeq{eq:explSO2stnd1} for the group
-parameter to obtain the moving frame
-\beq
-	\theta=\tan^{-1}\frac{x}{y}
-	\label{eq:SO2stndMF}
-\eeq
-which brings any point  back to the {\slice}. Substituting
-\refeq{eq:SO2stndMF} in the remaining equation, we get the
-$\SOn{2}$-invariant expression
-\[
-	\overline{y} = \sqrt{x^2+y^2}\,.
-\]
-\authorES{Jun 26 2009}
-    } %end \solution{exer:SO2cSect}
 
 \exercise{\Statesp\ reduction by a \slice, finite time segments:}
 {\label{exer:csectionCLe}
@@ -1042,44 +537,12 @@ $\theta$ associated with the 4\dmn\ \reducedsp\ ODE of
 {\label{exer:csectionReduced}
 Show that the flow \refeq{EqMotionMovFramePC} stays in a
 $(d\!-\!1)$-dimensional \slice.
-\authorPC{Aug 10 2009}
     } %end \exercise{The moving frame flow stays
 
 \solution{exer:csectionReduced}
 {The moving frame flow stays in the \reducedsp:}
-{The motion stays in the $(d\!-\!1)$-dimensional \slice, as
-the flow along the group action direction vanishes,
-    \ES{I don't understand this statement.
-%In fact, if I try to calculate $\dot{\ssp} \cdot \Lg \cdot \ssp^{*}$
-%explicitly for \cLe\ I get
-%\[
-% \dot{\ssp} \cdot \Lg \cdot \ssp^{*}
-% = (-\sigma\,  x_2^{*} y_1+e\, y_1^{*}y_1+y_2 y_1-y_1^{*} y_2+\sigma\,
-% x_1^{*} (y_2-x_2)+e\, y_2 y_2^{*}+x_2 y_2^{*} (r_1 -z)+x_1
-%(\sigma  x_2^{*}+y_2^{*} (z-r_1 )))
-%\]
-%(note that I always take $r_2=0$) an expression that is not in general
-%equal to zero.
-Can you explain the general argument and/or show
-that $\dot{\ssp} \cdot \Lg \cdot \ssp^{*}=0$
-by explicit calculation?
-    {\bf PC:} Mhm... wonders of \texttt{Mathematica}. Is this
-    verification explicit enough? Used $T^2=-1$ on the
-    4-dimensional subspace. {\bf ES:} This referred to the
-    previous, incorrect version. Now I see the argument. Except 	
-    you should use $T^{T}\cdot T=1$ instead of making sign errors
-    an even number of times. {\bf PC:} No, it was also correct
-    for the previous formulation. And the generators of any rotation
-    group are antisymmetric, $ \Lg^{-1} =-  \Lg$, magical fact I
-    used correctly even number of times.
-    }
-\[
-\dot{\ssp} \cdot \Lg \cdot \ssp^{*} = v  \cdot \Lg \cdot \ssp^{*}
-- \frac{(v \cdot \Lg \cdot \ssp^{*})}{(\ssp \cdot\ssp^{*})_4}
-                 \, (\Lg \cdot \ssp) \cdot \Lg \cdot \ssp^{*} = 0
-\,.
-\]
-\authorPC{Aug 10 2009}
+{
+\authorSF{Jun ?? 2010}
     } %end \solution{exer:csectionReduced}
 
 \exercise{Integration on a {\csection}:}{\label{exer:SiminosSlice}
@@ -1102,23 +565,7 @@ $\pi$).
     } %\end \exercise{Integration on the {\slice}:
 
 \solution{exer:SiminosSlice}{Integration on a {\csection}.}{
-Siminos \rf{SiminosThesis} gives the new equation as
-
-\beq
-\dot x_{\perp} = v(x)-\mathbb{T}x^{*} \frac{\mathbb{T}x^{*}\cdot v(x)}{(\mathbb{T}x^{*})^{2}}
-\label{eq:IntSlice}
-\eeq
-Using $\Lg =\left(\barr{ccccc}
-0&1&0&0&0\\
--1&0&0&0&0\\
-0&0&0&1&0\\
-0&0&-1&0&0\\
-0&0&0&0&0
-\earr\right)$
-and $x^{*}=x_{\REQB{}1}$, we can reproduce \reffig{fig:CLEtransvII}\,(a) by using the integration and plotting methods described in previous exercises. Our result is shown in \reffig{fig:CLEtransvII}\,(b).
-
-
-\authorRW{Aug 07 2009}
+\authorSF{Jun ?? 2010}
     } %end \solution{Integration on the {\slice}}
 
     \PublicPrivate{}{
