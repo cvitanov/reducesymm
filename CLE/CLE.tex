@@ -145,9 +145,9 @@ suitable return maps for arbitrarily high-dimensional but
 strongly dissipative flows in presence of continuous
 symmetries. Our exposition is based in part on
 \refrefs{SiminosThesis,DasBuch,Wilczak09}. The reader is
-referred to the monographs of Golubitsky and
+referred to Golubitsky and
 Stewart\rf{golubitsky2002sp}, Hoyle\rf{hoyll06},
-Olver\rf{OlverInv}, Bredon\rf{Bredon72}, and \ESedit{the article of}
+Olver\rf{OlverInv}, Bredon\rf{Bredon72}, and
 Krupa\rf{Krupa90} for more depth and rigor than would be wise
 to wade into here.
 
@@ -190,30 +190,30 @@ with time integration restricted to a slice fixed by a given
 \section{\label{s:symDyn} Symmetries of dynamical systems}
 % former siminos/CLE/symDyn.tex
 
-\ESedit{
+\edit{
 Here we are interested in the role continuous symmetries
 play in dynamics.
-Translational symmetries of PDEs such as \KS\ 
-and \pCf\ arise naturally in either an infinite
-or periodic domain. In the former case the noncompact, Euclidean symmetry groups
-appear, while the latter case amounts to restricting attention
-to their compact, orthogonal subgroups. In computational practice 
+The methods we develop
+are in principle applicable to
+to translational and rotational symmetries of ODEs and
+PDEs, described by compact or noncompact Lie groups.
+We have in mind applications to PDEs such as \KS\
+and \pCf\ which exhibit translational symmetries in either infinite
+or periodic domains. In the former case the group of symmetries
+is a Euclidean and noncompact, and in the latter case
+orthogonal and compact.
+In numerical computations
 the periodic setting is usually considered and, though Fourier analysis,
-translations can be represented by the action of the 1-parameter Lie \SOn{2} group 
-on its irreducible subspaces, the Fourier modes.
-Therefore, the key concepts and methods we develop here will
-be illustrated by the \SOn{2} group acting
-on a four-dimensional state space that will turn out to have
-the structure of a direct sum of irreducible subspaces of \SOn{2}.
-Yet they are in principle applicable to any Lie group, compact or noncompact, 
-and the generalization to translational and rotational symmetries of
-PDEs is immediate.
+a translation is represented by the action of the 1-parameter Lie \SOn{2} group
+on its linearly irreducible subspaces, the Fourier modes.
+Through truncation (for example spectral discretization),
+PDEs are transformed to high- but finite-dimensional systems of \ode s.
+The key concepts will thus
+be illustrated by a specific ODE example, the \SOn{2} group acting
+on a five-dimensional state space, linearly decomposable into
+a direct sum of irreducible subspaces of \SOn{2}.
 }
 
-\ESedit{Through truncation (for example spectral discretization), 
-dissipative PDEs are transformed to a high- but finite-dimensional system of \ode s,
-a setting in which it is more convenient to illustrate the basic concepts.
-}
 Consider a system of \ode s of the form
 \beq
 	\dot{\ssp} = \vf(\ssp)
@@ -277,13 +277,26 @@ transformations, are a set of $N$ linearly independent
 $[d\!\times\!d]$ anti-hermitian matrices, $(\Lg_a)^\dagger =
 - \Lg_a$, acting linearly on the $d$-dim\-ens\-ion\-al \statesp\
 $\pS$.
-The flow
-at the \statesp\ point $\ssp$ induced by the action of the group
+    \PCedit{
+For $\Group \subset \On{n}$ the generators can
+always be brought to real, antisymmetric form
+$\Lg^T=-\Lg$.
+The flow induced by the action of the group
+on the \statesp\ point $\ssp$ 
+    }
 is given by the set of $N$ tangent fields
 \beq
 \groupTan_a(\ssp)_{i}= (\Lg_a){}_{ij} \ssp_j
 \,.
 \ee{GroupTangField}
+    \PCedit{
+These tangent fields are always normal to the
+`radial' vector $\ssp$,
+\beq
+\ssp^T \groupTan_a(\ssp)= 0
+\,.
+\ee{TangFieldNormal}
+    }
 
 For an infinitesimal transformation \refeq{intsmLieTransf}
 the $\Group$-equivariance condition \refeq{eq:equiv}
@@ -296,9 +309,12 @@ becomes
              + \frac{d\vel}{d\ssp} \,\gSpace \cdot \Lg \, \ssp
 \,.
 \]
+    \PC{dropped this" ``
 Denote
 the group flow tangent field at \ssp\ by
-$\groupTan_a(\ssp)_{i}= (\Lg_a){}_{ij} \ssp_j$. Thus the
+$\groupTan_a(\ssp)_{i}= (\Lg_a){}_{ij} \ssp_j$. 
+    ''}
+Thus the
 infinitesimal, Lie algebra $\Group$-equivariance condition is
 \beq
   \groupTan_a(\vel)  - \Mvar(\ssp) \, \groupTan_a(\ssp) =0
@@ -327,6 +343,9 @@ Any representation of a compact Lie group $\Group$ is fully
 reducible, and in\-vari\-ant tensors constructed by contractions
 of $\Lg_a$ are useful for identifying irreducible
 representations. The simplest such in\-vari\-ant is
+    \PCedit{
+bilinear,
+    }
 \beq
 \Lg^T \cdot \Lg = \sum_\alpha C_2^{(\alpha)} \, \id^{(\alpha)}
 \,,
@@ -341,8 +360,13 @@ is thus a sum weighted by Casimirs,
    = \sum_\alpha C_2^{(\alpha)} \ssp_i\, \delta_{ij}^{(\alpha)} \ssp'_j
 \,.
 \ee{dotProd}
-
-
+    \PCedit{
+If $\ssp$ is not invariant (fixed under group actions), 
+$\groupTan(\ssp)^T  \cdot \groupTan(\ssp)$ is strictly positive. 
+$\groupTan(\ssp)^T  \cdot \groupTan(\ssp')$, however, can take either sign, or even
+vanish.
+    }
+    
 \subsection{\label{s:introCLE} An example: \CLe}
 % former siminos/CLE/introCLE.tex
 % from siminos/thesis/lasersSym.tex and
@@ -386,7 +410,7 @@ set to $\RerCLor=28,\, \ImrCLor=0,\, b=8/3,\, \sigma=10,\, e=
 \end{center}
 \caption{
 \Statesp\ portrait of \cLf. Plotted are a generic chaotic trajectory (blue),
-the \EQV{0} \eqv, 
+the \EQV{0} \eqv,
 a representative of its unstable manifold (green),
 the \REQV{}{1} \reqv\ (red), its unstable manifold (brown), and
 one repeat of the \cycle{01} \rpo (black).
@@ -438,8 +462,12 @@ on the \statesp\ of the \cLe\
 decomposes into the $m\!=\!0$ \Group-in\-vari\-ant
 subspace ($z$-axis) and  the $m=1$ subspace of multiplicity 2.
 
-The generator $\Lg$ is anti-hermitian,
-$\Lg^\dagger = - \Lg$, and the group is compact, its
+The generator $\Lg$ is
+     \PCedit{
+anti-symmetric,
+$\Lg^T = - \Lg$, 
+    }
+and the group is compact, its
 elements parametrized by $\gSpace \mbox{ mod } 2\pi$. Locally, at
 $\ssp \in \pS$, the infinitesimal action of the group is
 given by the group tangent field $\groupTan(\ssp) = \Lg \ssp
@@ -468,6 +496,9 @@ For the parameter values \refeq{eq:CLeR} the flow
 is strongly volume contracting,
 \beq
 \pde_i \pVeloc_i
+     \PCedit{
+ = \tr \Mvar
+    }
  = \sum_{i=1}^{5} \Lyap_i(\ssp,t)
 = -b -2(\sigma + 1)
 = -24 - 2/3
@@ -590,8 +621,9 @@ rotation of the initial point by $\LieEl_p$.
 In contrast to \emph{\eqv} solutions that satisfy
 $f^\tau(\ssp)  =  \ssp$, \emph{\reqva} (or \emph{traveling
 waves}) satisfy $f^\tau(\ssp) = \LieEl( \tau) \, \ssp$ for
-any $\tau$, \ESedit{where the group has been reparameterized by
-time, $\theta=\theta(\tau)$}. In a co-moving frame moving along the group orbit
+any $\tau$, \edit{where the group has been reparameterized by
+time, $\theta=\theta(\tau)$}.
+In a co-moving frame moving along the group orbit
 with velocity $\vel(\ssp) = \velRel \cdot \groupTan(\ssp)$,
 the \reqv\ appears as an \eqv. Here $\groupTan$ is the
 group tangent field \refeq{GroupTangField}.
@@ -735,7 +767,7 @@ in polar coordinates
 \eeq
 where $r_1 \geq 0 \,,r_2 \geq 0$.
 The \cLe\ \refeq{eq:CLe} take the form
-\[ 
+\[
 \left(
 \begin{array}{c}
 \dot{r}_1\\
@@ -756,7 +788,7 @@ The \cLe\ \refeq{eq:CLe} take the form
 \end{array}
 \right)
 ,
-\] 
+\]
 For
 rotationally in\-vari\-ant flows the dynamics depends only
 on the relative angle $\theta = \theta_1-\theta_2$
@@ -1074,6 +1106,10 @@ section of the unstable manifold of $\REQB{1}$.
 \label{fig:CLEip}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\edit{Vladimirov, Toronov and Derbov\rf{VlToDe98}
+use a different invariant polynomial basis to study bounding
+manifolds of the symmetry reduced \cLf\ and its homoclinic bifurcations.
+}
 
 Application of the chain rule \refeq{HilbChainRl} brings the
 equi\-vari\-ant \cLe\ \refeq{eq:CLeR} to the in\-vari\-ant form
@@ -1099,10 +1135,6 @@ in \reffig{fig:CLEip}\,(a). A minor drawback of the Hilbert
 polynomial basis projections is that the folding mechanism is
 harder to view since the dynamics is squeezed near the
 $z$-axis.
-\ESedit{We note that Vladimirov, Toronov and Derbov\rf{VlToDe98}
-use a different invariant polynomial basis to study bounding
-manifolds of the reduced \cLf\ and its homoclinic bifurcations.
-}
 
 \subsection{\label{s:Poincare}Symmetry reduced return map}
 
@@ -1111,7 +1143,7 @@ section}, a $(d-1)$-dim\-ens\-ion\-al manifold or a set of
 manifolds $\PoincS$ embedded in the $d$-dim\-ens\-ion\-al
 {\statesp} $\pS$, define the {\em Poincar\'e return map}
 $\PoincM({\ssp})$, a $(d-1)$-dim\-ens\-ion\-al map of form
-    \PC{draw figure}
+%   \PC{draw figure}
 \beq
 \ssp' = \PoincM({\ssp})
           =  \flow{\tau(\ssp)}{\ssp}
@@ -1121,9 +1153,9 @@ $\PoincM({\ssp})$, a $(d-1)$-dim\-ens\-ion\-al map of form
 \ee{PoincMap}
 Here the {\em first return function} $\tau(\ssp)$, sometimes
 referred to as the {\em ceiling function}, is the time of
-flight to the next \ESedit{Poincar\'e} section for a trajectory starting at
-$\ssp$. A good choice of the \ESedit{Poincar\'e} section manifold $\PoincS$ 
-\ESedit{in high-dimensional ($d>3$) flows}
+flight to the next {Poincar\'e} section for a trajectory starting at
+$\ssp$. A good choice of the {Poincar\'e} section manifold $\PoincS$
+\edit{in high-dimensional ($d>3$) flows}
 is basically a dark art. We chose a Poincar\'e section which contains the $z$-axis and
 the \reqv, here defined by the condition $u_1=u_4$.
 Even though in the \cLe\ case we could use one of the $u_i$'s
@@ -1199,9 +1231,9 @@ of the \cLe\ to machine precision.
 
 The \mframes, introduced by G. Darboux and systematized by
 \'E. Cartan\rf{CartanMF}, is interpreted by Fels and
-Olver\rf{FelsOlver98,FelsOlver99} as a map from a 
-\ESedit{$d$-dimensional} manifold
-to a \ESedit{$N$-dimensional} Lie group acting on it. 
+Olver\rf{FelsOlver98,FelsOlver99} as a map from a
+\edit{$d$-dimensional} manifold
+to a \edit{$N$-dimensional} Lie group acting on it.
 Moving frames are then used to
 compute $d-N$ functionally independent \emph{fundamental
 in\-vari\-ants} for general group actions in relation to general
@@ -1213,13 +1245,13 @@ the same group orbit if and only if all fundamental
 in\-vari\-ants agree. For an introduction to the method we
 recommend Olver's pedagogical monograph\rf{OlverInv}. Here we
 emphasize the application of the method to dynamical symmetry
-reduction\ESedit{, and focus in particular to groups
-acting on spaces with the structure of a direct sum of 
-irreducible subspaces, a case which is not to our knowledge
-explored in the literature}. We are not 
+reduction\edit{, and focus in particular on groups
+acting on spaces with the structure of a direct sum of
+irreducible subspaces, an application which is not to our knowledge
+explored in the literature}. We are not
 concerned with the explicit
 determination of the fundamental in\-vari\-ants as in
-\refref{FelsOlver98,FelsOlver99}, \ESedit{except for illustrative
+\refref{FelsOlver98,FelsOlver99}, \edit{except for illustrative
 purposes}; instead we focus on
 implementation of a moving frame transformation as a
 numerically fast and efficient linear map of the full
@@ -1252,8 +1284,8 @@ group orbits by a fixed manifold.
 \end{center}
 \caption{
 (a)
-\Slice\ \pSRed\ is a hyperplane \refeq{PCsectQ} 
-passing through the slice-fixing point $\slicep$, 
+\Slice\ \pSRed\ is a hyperplane \refeq{PCsectQ}
+passing through the slice-fixing point $\slicep$,
 and normal to the group tangent $\sliceTan{}$ at $\slicep$.
 It intersects all
 group orbits (indicated by dotted lines here) in an open
@@ -1685,7 +1717,7 @@ Instead of post-processing a full \statesp\ trajectory, we
 can proceed as follows: Split up the integration into a
 sequence of short time steps, each followed by a rotation of
 the final point such that the next segment's initial point is
-in the {\em \slice} fixed by a point $\slicep $. 
+in the {\em \slice} fixed by a point $\slicep $.
 In the infinitesimal steps limit
 this leads to the \emph{\mslices}, a differential form of the
 \mframes\ for which the trajectory never leaves the
@@ -1903,8 +1935,8 @@ This avoids the spurious \slice\ singularities, but it is not
 clear what the method of connections buys us otherwise. It
 does not reduce the dimensionality of the \statesp, and it
 accrues geometric phases which prevent \rpo s from closing
-into \po s.  
-\ESedit{Geometric phase in laser equations, including \cLe\
+into \po s.
+\edit{Geometric phase in laser equations, including \cLe,
 has been studied in \refref{ToDe94,ToDe94a,NiHa91,NiHa92,NiHa92a}.
 }
 
@@ -1973,7 +2005,7 @@ of {even very high-dimensional}
 dissipative flows to local return maps:
 one runs the dynamics in the full \statesp\ and
 post-processes the trajectory by the \mframes.
-Importantly, from a numerical point of  view, 
+Importantly, from a numerical point of  view,
 there is no need to
 actually recast the dynamics in the new coordinates or
 write new code. Either
@@ -1999,7 +2031,7 @@ be extracted by constructing a return map through a
 \Poincare\ section that does not intersect the singular set.
 The trick is to
 construct a good set of symmetry in\-vari\-ant Poincar\'e
-sections, and that is a dark art \ESedit{for systems of
+sections, and that is a dark art \edit{for systems of
 dimension higher than three}, with or without a
 symmetry.
 In higher-dimensional flows, with more involved symmetry
@@ -2040,10 +2072,4 @@ E.S. was supported by NSF grant DMS-0807574 and G.~Robinson,~Jr.
 \bibliographystyle{elsarticle-num}
 \bibliography{../bibtex/siminos}
 
-\ifdraft
-% remove this from PhysD-v*/ copies, keep in the main directory.
-    \newpage
-    \input 05fixMe
-    \input flotsam
-\fi
 \end{document}
