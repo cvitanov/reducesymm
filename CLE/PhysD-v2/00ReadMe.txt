@@ -86,7 +86,7 @@ PhysD manuscript number
 Revisions PhysD; when referees incorporated,
 update arXiv.org with the revised version
     [ ] mark here when done
-    [ ] mark final, revised submission, date:
+    [x] mark final, revised submission, date: ES 2010-06-07
 
 !!! then DO NOT TOUCH PhysD-v2/* again, edit only CLE/
 ===============================================================
