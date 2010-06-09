@@ -130,11 +130,30 @@
 	    <span class="dspcont">We present two continuous symmetry reduction methods for reducing high-dimensional dissipative flows to local return maps. In the Hilbert polynomial basis approach, the equivariant dynamics is rewritten in terms of invariant coordinates. In the method of moving frames (or method of slices) the state space is sliced locally in such a way that each group orbit of symmetry-equivalent points is represented by a single point. In either approach, numerical computations can be performed in the original state-space representation, and the solutions are then projected onto the symmetry-reduced state space. The two methods are illustrated by reduction of the complex Lorenz system, a 5-dimensional dissipative flow with rotational symmetry. While the Hilbert polynomial basis approach appears unfeasible for high-dimensional flows, symmetry reduction by the method of moving frames offers hope.
 	    </span>
 	</p>
-
+<!--      -->
+	<p class="ref"> 
+	  <span class="refauthors"> D. B&eacute;nisti, O. Morice, L. Gremillet, E. Siminos, and D.J. Strozzi</span></br>
+	  <span class="reftitle"> Self-organization and threshold of stimulated Raman scattering</span></br> 
+	    to appear in <span class="journal">Phys. Rev. Lett. </span>(2010)</br> 
+    <!-- 	<a href="http://dx.doi.org/10.1137/070705623">Phys. D ???</a> -->
+<!-- 	    <img src="images/acroread16.png" alt="preprint"><a href="SiCvi10.pdf"> preprint</a> -->
+ 	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
+	    <span class="dsphead">+</span> abstract</a>
+<!--		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
+		    <span class="dsphead">+</span> bibtex</a>
+		  </span>
+		  <span class="dspcont">
+		      <?php include("./bib/SiCvi10.bib");?> 
+		  </span>-->
+	    </span>
+	    <span class="dspcont">We derive, both theoretically and using an envelope code, threshold intensities for stimulated Raman scattering which compare well with results from Vlasov simulations. To do so, we account for the nonlinear decrease of Landau damping and for the detuning induced by, both, the nonlinear wave number shift &delta;k and frequency shift  &delta;&omega; of the plasma wave. In particular, we show that the effect of &delta;k may cancel out that of &delta;&omega;, but only in that plasma region where the laser intensity decreases along the direction of propagation of the scattered wave. Elsewhere, &delta;k enhances the detuning effect of &delta;&omega;. 
+	    </span>
+	</p>
 <!--  -->
       <h4 class="title2"> <a name="thesis"></a>Thesis</h4>
 
 	<p class="ref">
+	  <span class="refauthors">E. Siminos</span></br>
 	  <span class=reftitle> Recurrent spatio-temporal structures in presence of continuous symmetries</span></br> 
 	    <span class=thesis-school>Ph.D. Thesis, School of Physics, Georgia Institute of Technology, Atlanta, GA, May 2009</br> 
 	    <img src="images/acroread16.png" alt="preprint"><a  href="http://www.chaosbook.org/projects/Siminos/thesis.pdf"> pdf</a>&nbsp;&nbsp;
