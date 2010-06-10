@@ -170,7 +170,7 @@
 	  <span class="reftitle"> Self-organization and threshold of stimulated Raman scattering</span></br> 
 	    to appear in <span class="journal">Phys. Rev. Lett. </span>(2010)</br> 
     <!-- 	<a href="http://dx.doi.org/10.1137/070705623">Phys. D ???</a> -->
-<!-- 	    <img src="images/acroread16.png" alt="preprint"><a href="SiCvi10.pdf"> preprint</a> -->
+	    <img src="images/acroread16.png" alt="preprint"><a href="./papers/threshold.pdf"> preprint</a>
  	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 	    <span class="dsphead">+</span> abstract</a>
 <!--		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
