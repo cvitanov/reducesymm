@@ -17,36 +17,36 @@ Submission
 arXiv submission notes
 ----------------------
 
-PACS replaced by AMS codes (in KS paper, stick with PACS here?)
-    [] AMS codes rechecked
+PACS replaced by AMS codes (ES: in KS paper, stick with PACS here?)
+    [] 
 
 remove all footnotes and "edits" from the submission copy
-    [] mark here when done
-
-remove all % commented and incriminating text from the submission copy
-    [] mark here when done
-
-remove extraneous macros from defsCLE.tex before submission
     [x] mark here when done
 
+remove all % commented and incriminating text from the submission copy
+    [x] mark here when done
+
+remove extraneous macros from defsCLE.tex before submission
+    [x] mark here when done (ES: do we have a script for this? I've tried but its not easy.)
+
 svn rm  [all unused *.tex and other files]
-    [] mark here when done 
+    [x] mark here when done 
 
 svn rm  [all unused figures and all *.pdf]
-    [] mark here when done 
+    [x] mark here when done 
 
 Set bibstyle to alphabetical order, temporarily,
         and check for double entries.
-    [] mark here when done
+    [x] mark here when done
 
 does PhysD want spaces between the initials?
 PC fixed that once by using   bibclean fluid.bib; redo:
-    [] mark here when done
+    [x] mark here when done (ES just let space be)
 
 at submission do not submit the {\tt .bib} file, 
 submit the completed CLE.bbl file, having used appropriate bibliographic
 style file. [or the hyperref version, with eprint]
-    [] mark here when done
+    [x] mark here when done
 
 Consistent use of $\ldots$, (I)/(a)/(1)/itemize, others?
     [x] mark here when done
@@ -62,7 +62,7 @@ submit to arXiv.org
     [x] created CLE.tex for arXiv submission
     arxiv-v1/*.tex *.bst *.cls figs/*.eps CLE.bbl
 	  ES: Do we really need *.bst, *.cls?
-    [] mark here and date when done:
+    [x] mark here and date when done: ES June-11-2010
 
 
 !!! then DO NOT TOUCH arxiv-v1/* again, do all edits in CLE/
