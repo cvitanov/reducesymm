@@ -5,6 +5,8 @@ Continuous symmetry reduction
     and return maps for higher-dimensional flows
     Evangelos Siminos and Predrag Cvitanovi\'c
 
+Physica D manuscript PHYSD-D-10-00070
+
 % Predrag, Evangelos, John last push        2010-01-30
 % Predrag reorganized siminos/CLE/          2009-10-09
 % Vaggelis created siminos/CLE/CLE.tex      2009-09-21
@@ -26,13 +28,15 @@ After that date Predrag teaches and things slow down.
 for submission, read and enter all details in
     siminos/CLE/PhysD-v1/00ReadMe.txt
 
-PhysicaD manuscript #???
-
-arXiv.org/abs/1209.???
-arXiv:????.???? (submitted v1):                     2010-02-??
-    siminos/CLE/arxiv-v1/   low resolution figs
     siminos/CLE/PhysD-v1/   contains the submission
-    siminos/CLE/PhysD-v1/reviews/   referee edits
+    siminos/CLE/PhysD-v1/reviews/   referee reports
+    siminos/CLE/PhysD-v2/   contains the resubmission
+    siminos/CLE/PhysD-v2/reviews/   responses to referees
+
+arXiv.org/abs/1006.2362
+arXiv:1006.2362 (submitted v1):                     2010-06-14
+The paper password for this article is: jyt7q
+    siminos/CLE/arxiv-v1/   the same as CLE/PhysD-v2/
 
 Processing
 ----------
