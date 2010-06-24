@@ -29,6 +29,9 @@ version of the system.
 Hilbert1.m calculates the trajectory of the flow in the
 coordinates of a Hilbert basis.
 
-Hilbert2.m calculated the trajectory of the flow in standard
+Hilbert2.m calculates the trajectory of the flow in standard
 coordinates then converts the resulting flow into the
 coordinates of a Hilbert basis.
+
+reqstability.m calculates the stability matrix when a slice is
+used to restrict the flow to a 4D hyperplane.

@@ -24,3 +24,6 @@ coordinates of a Hilbert basis.
 Hilbert2.nb calculates the trajectory of the flow in standard
 coordinates then converts the resulting flow into the
 coordinates of a Hilbert basis.
+
+Eig.nb calculates the eigensystem of the relative equilibrium
+of the complex Lorenz system in the usual state space.
