@@ -164,7 +164,7 @@
 	    <span class="dspcont">We present two continuous symmetry reduction methods for reducing high-dimensional dissipative flows to local return maps. In the Hilbert polynomial basis approach, the equivariant dynamics is rewritten in terms of invariant coordinates. In the method of moving frames (or method of slices) the state space is sliced locally in such a way that each group orbit of symmetry-equivalent points is represented by a single point. In either approach, numerical computations can be performed in the original state-space representation, and the solutions are then projected onto the symmetry-reduced state space. The two methods are illustrated by reduction of the complex Lorenz system, a 5-dimensional dissipative flow with rotational symmetry. While the Hilbert polynomial basis approach appears unfeasible for high-dimensional flows, symmetry reduction by the method of moving frames offers hope.
 	    </span>
 	</p>
-<!--      -->
+<!--     -->
 	<p class="ref"> 
 	  <span class="refauthors"> D. B&eacute;nisti, O. Morice, L. Gremillet, E. Siminos, and D.J. Strozzi</span></br>
 	  <span class="reftitle"> Self-organization and threshold of stimulated Raman scattering</span></br> 
@@ -190,7 +190,52 @@
 	    <span class="dspcont">We derive, both theoretically and using an envelope code, threshold intensities for stimulated Raman scattering which compare well with results from Vlasov simulations. To do so, we account for the nonlinear decrease of Landau damping and for the detuning induced by, both, the nonlinear wave number shift &delta;k and frequency shift  &delta;&omega; of the plasma wave. In particular, we show that the effect of &delta;k may cancel out that of &delta;&omega;, but only in that plasma region where the laser intensity decreases along the direction of propagation of the scattered wave. Elsewhere, &delta;k enhances the detuning effect of &delta;&omega;. 
 	    </span>
 	</p>
-<!--  -->
+<!--     -->
+	<p class="ref"> 
+	  <span class="refauthors"> D. B&eacute;nisti, O. Morice, L. Gremillet, E. Siminos, and D.J. Strozzi</span></br>
+	  <span class="reftitle"> Nonlinear group velocity of an electron plasma wave</span></br> 
+	    to appear in <span class="journal">Phys. Plasmas. </span>(2010)</br> 
+    <!-- 	<a href="http://dx.doi.org/10.1137/070705623">Phys. D ???</a> -->
+<!-- 	    <img src="images/acroread16.png" alt="preprint"><a href="./papers/threshold.pdf"> preprint</a> -->
+ 	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
+	    <span class="dsphead">+</span> abstract</a>
+<!--		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
+		    <span class="dsphead">+</span> bibtex</a>
+		  </span>
+		  <span class="dspcont">
+		      <pre>
+@Unpublished{SiCvi10,
+    author = "Siminos, E. and Cvitanovi{\'c}, P.",
+    title = "Continuous symmetry reduction and return maps for high-dimensional flows",
+    year = "2010",
+    note = "{Physica D}, submitted"
+}
+</pre> 
+		  </span>-->
+	    </span>
+	    <span class="dspcont">The nonlinear group velocity of an electron plasma wave is investigated numerically using a Vlasov code, and is found to assume values which agree very well with those predicted by a recently published theory [Phys. Rev. Lett., 103, 155002, (2009)], which we further detail here. In particular we show that, once Landau damping has been substantially reduced due to trapping, the group velocity of an electron plasma wave is not the derivative of its frequency with respect to its wave number. This result is moreover discussed physically, together with its implications in the saturation of stimulated Raman scattering.
+	    </span>
+	</p>
+<!--     -->
+	<p class="ref"> 
+	  <span class="refauthors"> G. S&aacute;nchez-Arriaga, E. Siminos, and E. Lefebvre</span></br>
+	  <span class="reftitle"> Solitary waves with nonvanishing boundary conditions in relativistic plasmas</span></br> 
+	    submitted to <span class="journal">Phys. Rev. E </span>(2010)</br> 
+    <!-- 	<a href="http://dx.doi.org/10.1137/070705623">Phys. D ???</a> -->
+	    <img src="images/acroread16.png" alt="preprint"><a href="./papers/SSL10.pdf"> preprint</a>
+ 	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
+	    <span class="dsphead">+</span> abstract</a>
+<!--		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
+		    <span class="dsphead">+</span> bibtex</a>
+		  </span>
+		  <span class="dspcont">
+		       
+		  </span>-->
+	    </span>
+	    <span class="dspcont">The existence of solitary waves in relativistic plasmas with nonvanishing boundary conditions and their possible applications to particle acceleration through laser-plasma interaction is discussed. These solutions are homoclinic (grey solitons) or heteroclinic (dark solitons) orbits to fixed points of a Hamiltonian system derived from the 1-dimensional relativistic fluid plasma model, under the assumption of traveling wave solutions with velocity $V$ and vector potential frequency $\omega$. By using a dynamical systems description of the Hamiltonian system and an iterative spectral method, we locate a great variety of new solutions, including asymmetric ones, discuss their disappearance for certain parameters, and classify them according to: (i) grey or dark character, (ii) the number of humps of the vector potential and (iii) their symmetries. The solutions come in continuous families in the parametric $V-\omega$ plane and extend up to velocities that approach the speed of light. The ion energy within the solitary waves reaches values of the order of tens of MeV therefore suggesting applications for particle acceleration.
+	    </span>
+	</p>
+<!--     -->
       <h4 class="title2"> <a name="thesis"></a>Thesis</h4>
 
 	<p class="ref">
@@ -222,7 +267,7 @@
 	</p>
       
 
-      <p class="posted">last updated May 09 2010</p>
+      <p class="posted">last updated June 29 2010</p>
 
       </div>
 
