@@ -26,4 +26,4 @@ coordinates then converts the resulting flow into the
 coordinates of a Hilbert basis.
 
 Eig.nb calculates the eigensystem of the relative equilibrium
-of the complex Lorenz system in the usual state space.
+of the complex Lorenz system in the co-moving frame.

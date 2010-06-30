@@ -125,19 +125,14 @@ $(x_1, x_2, y_1, y_2, z) = (1, 0, 0, 1, 1)$.
 %\\
 %\wwwcb{/chapters/stability.pdf}
 %    }
-In our first attempt to understand the dynamics of the flow, we examine its stability by finding the \stabmat\ $\Mvar$. This is the matrix of partial derivatives of $v(x)$,
+When studying the trajectories of a flow, it is useful to know how small neighborhoods of points are transported by the flow. Understanding this allows us to under
+
+Consider the displacement of an infinitesimally close neighbor $x+\delta x$. Taylor expanding the flow equation $\dot x = v\left(x\right)$ we find that
 \beq
-\Mvar = \frac{\pde v}{\pde x}=
-\left(\barr{ccccc}\medskip
-\frac{\pde\dot{x}_1}{\pde x_1} & \frac{\pde\dot{x}_1}{\pde x_2} &\frac{\pde\dot{x}_1}{\pde y_1} & \frac{\pde\dot{x}_1}{\pde y_2} & \frac{\pde\dot{x}_1}{\pde z}\\\medskip
-\frac{\pde\dot{x}_2}{\pde x_1} & \frac{\pde\dot{x}_2}{\pde x_2} &\frac{\pde\dot{x}_2}{\pde y_1} & \frac{\pde\dot{x}_2}{\pde y_2} & \frac{\pde\dot{x}_2}{\pde z}\\\medskip
-\frac{\pde\dot{y}_1}{\pde x_1} & \frac{\pde\dot{y}_1}{\pde x_2} &\frac{\pde\dot{y}_1}{\pde y_1} & \frac{\pde\dot{y}_1}{\pde y_2} & \frac{\pde\dot{y}_1}{\pde z}\\\medskip
-\frac{\pde\dot{y}_2}{\pde x_1} & \frac{\pde\dot{y}_2}{\pde x_2} &\frac{\pde\dot{y}_2}{\pde y_1} & \frac{\pde\dot{y}_2}{\pde y_2} & \frac{\pde\dot{y}_2}{\pde z}\\
-\frac{\pde\dot{z}}{\pde x_1} & \frac{\pde\dot{z}}{\pde x_2} &\frac{\pde\dot{z}}{\pde y_1} & \frac{\pde\dot{z}}{\pde y_2} & \frac{\pde\dot{z}}{\pde z}\\
-\earr\right)
-\label{5x5stabMat}
+\dot x + \dot{\delta x}=v_i\left(x+\delta x\right) \approx v_i\left(x\right)+\Mvar \delta x
 \eeq
-For the \cLe\ it is the $[5\!\times\!5]$ matrix,
+where $A_{ij}\left(x\right)=\frac{\partial v_i\left(x\right)}{\partial x_j}$ is known as the \stabmat.
+In our first attempt to understand the dynamics of the flow, we examine its stability by finding this \stabmat\ $\Mvar$. For the \cLe\ it is the $[5\!\times\!5]$ matrix,
                                                     \exerbox{exer:StabmatCLf}
 \beq
   \Mvar =\left(\barr{ccccc}
@@ -156,6 +151,17 @@ diverge away from it in time. It is the matrix of
 velocity gradients. This matrix $\Mvar$ is also an important
 tool which we will use later on.
 
+\subsection{Jacobian}
+
+Now, consider the trajectory of the infinitesimally close neighbor. Taylor expanding a finite time flow, we find that
+\beq
+f^t\left(x_0 +\delta x\right) \approx f^t\left(x_0\right)+J^t\left(x_0\right)\delta x,
+\eeq
+where $J^t\left(x\right)_{ij}=\frac{\partial x_i\left(t\right)}{\partial x_j}$ is the Jacobian. This means that up to the linear term the neighborhood is transported by $\delta x\left(t\right)=J^t\left(x_0\right)\delta x_0$. This means that how nearby trajectories separate or approach each other is dependent on the eigenvectors and values of the Jacobian.
+
+The Jacobian also maps the initial, Lagrangian coordinate frame to the Eulerian coordinate from at time t. To see this, consider two points that are an infinitesimal time apart along a trajectory: $\delta x_0 = f^{\delta t}\left(x_0\right)-x_0=v\left(x_0\right)\delta t$. We also know $f^t\left{f^{\delta t}\left(x_0\right)\right)=f^{\delta t}\left(f^t\left(x+0\right)\right)$, where $f^{\delta t}\left(f^t\left(x_0\right)\right)=f^{\delta t}\left(x\left(t\right)\right)=x\left(t\right) + v\left(x\left(t\right)\right) \delta t$ and $f^t\left(f^{\delta t}\left(x_0\right)\right)=f^t\left(x_0+v\left(x_0\right) \delta t\right) \approx f^t\left(x_0\right) + J^t\left(x_0\right) v\left(x_0\right) \delta t$. Putting these two equations together we get the desired result, $v\left(x\left(t\right)\right)=J^t\left(x_0\right)v\left(x_0\right)$
+
+If the equations of motion is all that is known about the system then it is simple to calculate the stability matrix but the trajectories are not known so it is not possible to calculate the Jacobian using the given formula. Thankfully there are other methods of calculating the Jacobian; in ChaosBook.org\rf{DasBuch} it is shown that the Jacobian matrix is related to the stability matrix by $\frac{d}{dt} J^t\left(x\right)=\Mvar \left(x\right) J^t\left(x\right)$ or equivalently $J^t\left(x_0\right)=e^{\int^t_0 d\tau \Mvar \left(x\left(\tau\right)\right)}$. When using a numerical routine to integrate the equations of motion, using a discrete approximation of either of these two formulas requires minimal additional programming effort.
 
 \section{\Eqva}
 
@@ -439,7 +445,7 @@ For any $\hat{\ssp}$, $\ssp =
 rotation of $\hat{\ssp}$ that lies in the \slice. Such a
 map from a point in space to the group action is called a
 \emph{moving frame} in the formulation of Fels and
-Olver\rf{FelsOlver98,FelsOlver99,OlverInv}. 
+Olver\rf{FelsOlver98,FelsOlver99,OlverInv}.
 
 [...]
                                                     \exerbox{exer:PCsectionCLe}
@@ -485,7 +491,7 @@ I made a wrong mistake.
 Infinitesimal time version of the moving frames symmetry
 reduction is attained by taking small time steps in
 \reffig{fig:PCunrot} and dropping the higher order terms, as
-in \refsect{sect:SymmDyn}. 
+in \refsect{sect:SymmDyn}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % File: infMF.xfig
@@ -670,17 +676,17 @@ where $v(y)$ is the velocity of the full \statesp\ flow, $t(y)$ is the tangent t
 \beq
 M_{ij} = A_{ij}-c I_{ij} -(Tx)_i\,(\frac{\frac{\partial v}{\partial x_i}\cdot t'}{Tx \cdot t'} - c \frac{\frac{\partial (Tx)}{\partial x_j}\cdot t'}{Tx \cdot t'})
 \eeq
-                                                    \exerbox{exer:Reducedstab} 
-                                                    
+                                                    \exerbox{exer:Reducedstab}
+
                                                     \section{Conclusions}
 
 Both the {\mslices} (or the \mframes) integration within the
 \slice\ are still under development.\PC{to Stefan: keep
 editing this every so often}
 
-Future work should investigate in more depth [...]. 
+Future work should investigate in more depth [...].
 New methods [...] In this project I have discussed, understood,
-and tested [...] as applied to \cLe\. 
+and tested [...] as applied to \cLe\.
 Much work still remains before these are viable
 methods for higher-dimensional flows.
 
