@@ -134,17 +134,16 @@
 	<p class="ref"> 
 	  <span class="refauthors"> D. B&eacute;nisti, O. Morice, L. Gremillet, E. Siminos, and D.J. Strozzi</span></br>
 	  <span class="reftitle"> Self-organization and threshold of stimulated Raman scattering</span></br> 
-	    to appear in <span class="journal">Phys. Rev. Lett. </span>(2010)</br> 
-    <!-- 	<a href="http://dx.doi.org/10.1137/070705623">Phys. D ???</a> -->
-	    <img src="images/acroread16.png" alt="preprint"><a href="./papers/threshold.pdf"> preprint</a>
+	    <a href="http://dx.doi.org/10.1103/PhysRevLett.105.015001"><span class=journal>Phys. Rev. Lett. <strong>105</strong></span>, 015001 (2010)</a></br>
+	    <img src="images/acroread16.png" alt="reprint"><a href="./papers/PhysRevLett.105.015001.pdf"> reprint</a>
  	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 	    <span class="dsphead">+</span> abstract</a>
-<!--		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
+		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 		    <span class="dsphead">+</span> bibtex</a>
 		  </span>
 		  <span class="dspcont">
-		      <?php include("./bib/SiCvi10.bib");?> 
-		  </span>-->
+		      <?php include("./bib/benistiThreshold10.bib");?> 
+		  </span>
 	    </span>
 	    <span class="dspcont">We derive, both theoretically and using an envelope code, threshold intensities for stimulated Raman scattering which compare well with results from Vlasov simulations. To do so, we account for the nonlinear decrease of Landau damping and for the detuning induced by, both, the nonlinear wave number shift &delta;k and frequency shift  &delta;&omega; of the plasma wave. In particular, we show that the effect of &delta;k may cancel out that of &delta;&omega;, but only in that plasma region where the laser intensity decreases along the direction of propagation of the scattered wave. Elsewhere, &delta;k enhances the detuning effect of &delta;&omega;. 
 	    </span>
@@ -153,7 +152,7 @@
 	<p class="ref"> 
 	  <span class="refauthors"> D. B&eacute;nisti, O. Morice, L. Gremillet, E. Siminos, and D.J. Strozzi</span></br>
 	  <span class="reftitle"> Nonlinear group velocity of an electron plasma wave</span></br> 
-	    to appear in <span class="journal">Phys. Plasmas. </span>(2010)</br> 
+	    to appear in <span class="journal">Phys. Plasmas </span>(2010)</br> 
     <!-- 	<a href="http://dx.doi.org/10.1137/070705623">Phys. D ???</a> -->
 <!-- 	    <img src="images/acroread16.png" alt="preprint"><a href="./papers/threshold.pdf"> preprint</a> -->
  	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
