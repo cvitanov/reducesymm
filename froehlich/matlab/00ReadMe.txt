@@ -35,3 +35,23 @@ coordinates of a Hilbert basis.
 
 reqstability.m calculates the stability matrix when a slice is
 used to restrict the flow to a 4D hyperplane.
+
+Jacobian.m takes in the initial value and time and then
+calculates the Jacobian of the trajectory at that time by
+multiplying the infinitesimal Jacobians between successive
+points and using the approximation I + dt A(x_n) for the
+infinitesimal Jacobians
+
+Jacobian2.m takes in the initial value and time and then
+calculates the Jacobian of the trajectory at that time by
+multiplying the infinitesimal Jacobians between successive
+points and using the approximation e ^(dt A(x_n)) for the
+infinitesimal Jacobians
+
+Jacobian3.m takes in the initial value and time and then
+calculates the Jacobian of the trajectory at that time by using
+the system of differential equations, d/dt J^t(x) = A(x) J^t(x)
+with initial condition J^0(x) = I.
+
+JacEq.m calculates the derivatives of the Jacobian and
+trajectory for use by the ode45 function used in Jacobian3.m
