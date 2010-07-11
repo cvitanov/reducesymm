@@ -162,21 +162,69 @@ f^t(\xInit +\delta x) \approx f^t(\xInit)+J^t(\xInit)\delta x,
 \eeq
 where $J^t(x)_{ij}=\frac{\partial x_i(t)}{\partial x_j}$ is the \jacobianM. This means that up to the linear term the neighborhood is transported by $\delta x(t)=J^t(\xInit)\delta \xInit$. This means that how nearby trajectories separate or approach each other is dependent on the eigenvectors and values of the \jacobianM.
 
-The \jacobianM\ also maps the initial, Lagrangian coordinate frame to the Eulerian coordinate from at time $t$. To see this, consider two points that are an infinitesimal time apart along a trajectory: 
-$\delta \xInit 
-  = \flow{\timeStep}{\xInit}-\xInit \approx \velField{\xInit}\timeStep$. 
-We also know $\map^t \circ \flow{\timeStep}{\xInit}=\map^{\timeStep} \circ \flow{t}{\xInit}$, 
-where $\flow{\timeStep}{\map^t(\xInit)}=\flow{\timeStep}{\ssp(t)}
-\approx x(t) + \velField{\ssp(t)} \timeStep$ and 
+The \jacobianM\ also maps the initial, Lagrangian coordinate frame to the Eulerian coordinate at time $t$,
+\beq
+\velField{\ssp(t)}=\jMps^t(\xInit) \velField{\xInit}
+\,,
+\ee{JacobVeloc}
+see \refexer{traLocEigFr}.
+    \PC{remember to move \refexer{traLocEigFr} 
+    and its solution into ChaosBook. Currently it
+    appears too early, search for ``traLocEigFr.''
+    }
+
+If the equations of motion is all that is known about the system then it is simple to calculate the stability matrix but the trajectories are not known so it is not possible to calculate the \jacobianM\ using the given formula. Thankfully there are other methods of calculating the \jacobianM; in ChaosBook.org\rf{DasBuch} it is shown that the \jacobianM\ matrix is related to the stability matrix by 
+$\frac{d}{dt} \jMps^t(x)=\Mvar (x) \jMps^t(x)$ 
+or equivalently
+$\jMps^t(\xInit)= \texttt{T} e^{\int^t_0 d\tau \Mvar (x(\tau))}$,
+where \texttt{T} stands for a time-ordered product.
+When using a numerical routine to integrate the equations of motion, using a discrete approximation of either of these two formulas requires minimal additional programming effort.
+
+% PC 13jul2010
+\exercise{Transport of local eigenframes.}{     \label{traLocEigFr}
+\noindent (a)
+Derive \refeq{JacobVeloc}.
+(b)
+More generally, consider the
+eigen\-vectors $\jEigvec[j]$ of $\jMps^t(\ssp)$
+(sometimes referred to as `covariant Lyapunov vectors,'
+or, for \po s, as `Floquet vectors')
+\index{covariant Lyapunov vector}
+\index{Lyapunov!covariant vector}
+\beq
+\jMps^t(\ssp)\, \jEigvec[j](\ssp(t))
+   = \ExpaEig_{j}(t) \,\jEigvec[j] (\ssp(t))
+\,,
+\ee{finTimeEigs}
+and show that a time $t'$ later they are transported into
+eigenvectors $\jEigvec[j](\ssp(t+t'))$ of
+$\jMps^{t+t'}(\ssp)$.
+\authorPC{2010-07-12}
+    }% end \exercise{Transport of local eigenframes.
+
+
+\solution{traLocEigFr}{Transport of local eigenframes.}{
+\noindent (a) 
+Consider two points that are an infinitesimal time apart along a trajectory:
+$\delta \xInit
+  = \flow{\timeStep}{\xInit}-\xInit \approx \velField{\xInit}\timeStep$.
+As $\flow{t+\timeStep}{\xInit} =
+\map^t \circ \flow{\timeStep}{\xInit}=\map^{\timeStep} \circ \flow{t}{\xInit}$,
+we have
+$\flow{\timeStep}{\map^t(\xInit)}=\flow{\timeStep}{\ssp(t)}
+\approx x(t) + \velField{\ssp(t)} \timeStep$ and
 $\flow{t}{\flow{\timeStep}{\xInit}}
 =\flow{t}{\xInit+\velField{\xInit} \timeStep}
-\approx \flow{t}{\xInit} + \jMps^t(\xInit) \velField{\xInit} \timeStep$. 
-Putting these two equations together we get the desired result, $\velField{\ssp(t)}=\jMps^t(\xInit) \velField{\xInit}$.
+\approx \flow{t}{\xInit} + \jMps^t(\xInit) \velField{\xInit} \timeStep$.
+Putting these two equations together we get the desired
+\refeq{JacobVeloc}.
 
-If the equations of motion is all that is known about the system then it is simple to calculate the stability matrix but the trajectories are not known so it is not possible to calculate the \jacobianM\ using the given formula. Thankfully there are other methods of calculating the \jacobianM; in ChaosBook.org\rf{DasBuch} it is shown that the \jacobianM\ matrix is related to the stability matrix by $\frac{d}{dt} \jMps^t(x)=\Mvar (x) \jMps^t(x)$ or equivalently 
-$\jMps^t(\xInit)= \texttt{T} e^{\int^t_0 d\tau \Mvar (x(\tau))}$,
-where \texttt{T} stands for a time-ordered product. 
-When using a numerical routine to integrate the equations of motion, using a discrete approximation of either of these two formulas requires minimal additional programming effort.
+\noindent (b)
+Predrag: I am not sure that this statement is correct, please
+prove or disprove.
+\authorSF{2010-07-??}
+    }% end
+
 
 \section{\Eqva}
 
@@ -334,27 +382,27 @@ verify that the \cLe\ are rotationally equivariant.
 
 \section{\Reqva}
 
-A \reqv\ of dynamical flow is a trajectory that stays 
+A \reqv\ of dynamical flow is a trajectory that stays
 within a single group orbit of the symmetry group.
 
-In order for a trajectory to stay in the group orbit, its velocity must always point in the tangent direction to the group action, so we must have $\vel(\ssp) = \velRel(\tau) \cdot \groupTan(\ssp)$ 
-where $\velRel(\tau)_a$ is a scalar function in terms of time. 
+In order for a trajectory to stay in the group orbit, its velocity must always point in the tangent direction to the group action, so we must have $\vel(\ssp) = \velRel(\tau) \cdot \groupTan(\ssp)$
+where $\velRel(\tau)_a$ is a scalar function in terms of time.
     \PC{scalar? $\velRel(\tau)_a$ is an $N$-dimensional vector for
     $N$-dimensional group $\Group$. You are showing that
-    for a compact Lie group $\velRel(\tau)_a = \velRel_a$ is constant 
+    for a compact Lie group $\velRel(\tau)_a = \velRel_a$ is constant
     independent of time, but the proof feels a bit clumsy.}
 We also know that $x(\tau) = \LieEl(\tau) x(0)$ for some element $\LieEl(\tau)$ of the symmetry group. Plugging this into the first equation, we get that
 \bea
-v(\LieEl(\tau) \xInit) &=& 
+v(\LieEl(\tau) \xInit) &=&
     \velRel(\tau)\cdot \groupTan(\LieEl(\tau) \xInit)
     \continue
-\LieEl(\tau) v(\xInit) &=& 
+\LieEl(\tau) v(\xInit) &=&
     \LieEl(\tau) \, \velRel(\tau) \cdot \groupTan(\xInit)
     \continue
 v(\xInit) &=& \velRel(\tau) \cdot \groupTan(\xInit)
 \eea
-both $\vel(\xInit)$ and 
-$\groupTan(\xInit)$ are independent of time, and we have $\velRel(\tau) = \velRel(0) = \velRel$ for all $\tau$, 
+both $\vel(\xInit)$ and
+$\groupTan(\xInit)$ are independent of time, and we have $\velRel(\tau) = \velRel(0) = \velRel$ for all $\tau$,
 so $\velRel$ is constant. If \SOn{n} is a rotational symmetry,
 $\velRel$ is called the `angular' velocity of the {\reqv}.
 
@@ -759,7 +807,7 @@ A_{ij}-c I_{ij} -(Tx)_i\,(\frac{\frac{\partial v}{\partial x_i}\cdot t'}{Tx \cdo
 
     \PC{Stefan, please write up your ``three programs for approximating the \jacobianM\ along any trajectory.'' Derive here \rpo\ {\monodromyM} in the \reducedsp, test it on some of the Evangelos \rpo s for \cLe.
     }
-                                                    
+
 \section{Conclusions}
 
 Both the {\mslices} (or the \mframes) integration within the
