@@ -146,8 +146,8 @@ describes the instantaneous rate of shearing of the
 infinitesimal neighborhood of $x(t)$ by the flow. That is, it
 describes how quickly points initially very near to $x(t)$ will
 diverge away from it in time. It is the matrix of
-velocity gradients. This matrix $\Mvar$ is also an important
-tool which we will use later on.
+velocity gradients. Matrix $\Mvar$ is an important
+tool which we will use in what follows.
 
 \subsection{\jacobianM}
 
@@ -162,9 +162,21 @@ f^t(\xInit +\delta x) \approx f^t(\xInit)+J^t(\xInit)\delta x,
 \eeq
 where $J^t(x)_{ij}=\frac{\partial x_i(t)}{\partial x_j}$ is the \jacobianM. This means that up to the linear term the neighborhood is transported by $\delta x(t)=J^t(\xInit)\delta \xInit$. This means that how nearby trajectories separate or approach each other is dependent on the eigenvectors and values of the \jacobianM.
 
-The \jacobianM\ also maps the initial, Lagrangian coordinate frame to the Eulerian coordinate from at time $t$. To see this, consider two points that are an infinitesimal time apart along a trajectory: $\delta \xInit = f^{\delta t}(\xInit)-\xInit=v(\xInit)\delta t$. We also know $f^t\left\{f^{\delta t}(\xInit)\right\}=f^{\delta t}(f^t(x+0))$, where $f^{\delta t}(f^t(\xInit))=f^{\delta t}(x(t))=x(t) + v(x(t)) \delta t$ and $f^t(f^{\delta t}(\xInit))=f^t(\xInit+v(\xInit) \delta t) \approx f^t(\xInit) + J^t(\xInit) v(\xInit) \delta t$. Putting these two equations together we get the desired result, $v(x(t))=J^t(\xInit)v(\xInit)$.
+The \jacobianM\ also maps the initial, Lagrangian coordinate frame to the Eulerian coordinate from at time $t$. To see this, consider two points that are an infinitesimal time apart along a trajectory: 
+$\delta \xInit 
+  = \flow{\timeStep}{\xInit}-\xInit \approx \velField{\xInit}\timeStep$. 
+We also know $\map^t \circ \flow{\timeStep}{\xInit}=\map^{\timeStep} \circ \flow{t}{\xInit}$, 
+where $\flow{\timeStep}{\map^t(\xInit)}=\flow{\timeStep}{\ssp(t)}
+\approx x(t) + \velField{\ssp(t)} \timeStep$ and 
+$\flow{t}{\flow{\timeStep}{\xInit}}
+=\flow{t}{\xInit+\velField{\xInit} \timeStep}
+\approx \flow{t}{\xInit} + \jMps^t(\xInit) \velField{\xInit} \timeStep$. 
+Putting these two equations together we get the desired result, $\velField{\ssp(t)}=\jMps^t(\xInit) \velField{\xInit}$.
 
-If the equations of motion is all that is known about the system then it is simple to calculate the stability matrix but the trajectories are not known so it is not possible to calculate the \jacobianM\ using the given formula. Thankfully there are other methods of calculating the \jacobianM; in ChaosBook.org\rf{DasBuch} it is shown that the \jacobianM\ matrix is related to the stability matrix by $\frac{d}{dt} J^t(x)=\Mvar (x) J^t(x)$ or equivalently $J^t(\xInit)=e^{\int^t_0 d\tau \Mvar (x(\tau))}$. When using a numerical routine to integrate the equations of motion, using a discrete approximation of either of these two formulas requires minimal additional programming effort.
+If the equations of motion is all that is known about the system then it is simple to calculate the stability matrix but the trajectories are not known so it is not possible to calculate the \jacobianM\ using the given formula. Thankfully there are other methods of calculating the \jacobianM; in ChaosBook.org\rf{DasBuch} it is shown that the \jacobianM\ matrix is related to the stability matrix by $\frac{d}{dt} \jMps^t(x)=\Mvar (x) \jMps^t(x)$ or equivalently 
+$\jMps^t(\xInit)= \texttt{T} e^{\int^t_0 d\tau \Mvar (x(\tau))}$,
+where \texttt{T} stands for a time-ordered product. 
+When using a numerical routine to integrate the equations of motion, using a discrete approximation of either of these two formulas requires minimal additional programming effort.
 
 \section{\Eqva}
 
@@ -249,8 +261,8 @@ quickly.
 \label{sect:SymmDyn}
 
          \Private{
-\noindent{\bf Rebecca -
-Jun 18 2009}:\\
+\noindent{\bf Stefan -
+Jul ?? 2010}:\\
 \medskip\noindent
          }
 In order to eventually remove the rotational symmetry in the
@@ -262,12 +274,12 @@ taking time derivatives.\RW{I plan on writing more here, just
 haven't thought of what else I want to say yet.}
 
 We begin by defining `equivariance.'
-A flow $\dot{x}= v(x)$ is equivariant under an operation $\LieEl$ when
+A flow $\dot{x}= \vel(x)$ is equivariant under an operation $\LieEl$ when
 \beq
-\LieEl \cdot v(x)=v(\LieEl \cdot x)
+\LieEl \, \vel(x)=v(\LieEl \, x)
 \,.
 \ee{eq:FiniteRot}
-This means that if $f(x)$ is a solution to the dynamical equations, then so is $\mathbb{G}\,f(x)$.
+This means that if $f(x)$ is a solution to the dynamical equations, then so is $\LieEl\,f(x)$.
 
 In many flows, such as the \cLe, the equivariant operations will form a Lie group that can be used to reduce the dynamics.
 
@@ -309,7 +321,8 @@ rotations} version of the equivariance condition
 \,,
 \label{eq:InfnmslRot}
 \eeq
-where $\Mvar = \frac{\pde v}{\pde x}$ is the \stabmat\ \refeq{5x5stabMat}.
+where $\Mvar = \frac{\pde v}{\pde x}$ is the \stabmat.
+% \refeq{5x5stabMat}.
 
 We have used both this infinitesimal rotation condition and
 the finite angle rotation condition \refeq{eq:FiniteRot}, to
@@ -321,15 +334,29 @@ verify that the \cLe\ are rotationally equivariant.
 
 \section{\Reqva}
 
-A \reqva\ of dynamical flow is a trajectory that stays in a single group orbit of the symmetry group.
+A \reqv\ of dynamical flow is a trajectory that stays 
+within a single group orbit of the symmetry group.
 
-In order for a trajectory to stay in the group orbit, its velocity must always point in the tangent direction to the group action, so we must have $v(x) = c (t)\, T\cdot x(t)$ where $c(t)$ is a scalar function in terms of time. We also know that $x(t) = g(t) x(0)$ for some element $g(t)$ of the symmetry group. Plugging this into the first equation, we get that
+In order for a trajectory to stay in the group orbit, its velocity must always point in the tangent direction to the group action, so we must have $\vel(\ssp) = \velRel(\tau) \cdot \groupTan(\ssp)$ 
+where $\velRel(\tau)_a$ is a scalar function in terms of time. 
+    \PC{scalar? $\velRel(\tau)_a$ is an $N$-dimensional vector for
+    $N$-dimensional group $\Group$. You are showing that
+    for a compact Lie group $\velRel(\tau)_a = \velRel_a$ is constant 
+    independent of time, but the proof feels a bit clumsy.}
+We also know that $x(\tau) = \LieEl(\tau) x(0)$ for some element $\LieEl(\tau)$ of the symmetry group. Plugging this into the first equation, we get that
 \bea
-v(g(t) \xInit) = c(t)\, T\cdot g(t) \xInit \cont
-g(t) v(\xInit) = g(t) c(t) \, T\cdot \xInit\cont
-v(\xInit) = c(t)\, T\cdot \xInit
+v(\LieEl(\tau) \xInit) &=& 
+    \velRel(\tau)\cdot \groupTan(\LieEl(\tau) \xInit)
+    \continue
+\LieEl(\tau) v(\xInit) &=& 
+    \LieEl(\tau) \, \velRel(\tau) \cdot \groupTan(\xInit)
+    \continue
+v(\xInit) &=& \velRel(\tau) \cdot \groupTan(\xInit)
 \eea
-both $v$ and $T\cdot \xInit$ are independent of time and we also have that $c = c(0)$ at $\xInit$, so $c(t) = c(0)$ for all $t$, so $c$ is constant. $c$ is called the 'angular' velocity of the {\reqv}.
+both $\vel(\xInit)$ and 
+$\groupTan(\xInit)$ are independent of time, and we have $\velRel(\tau) = \velRel(0) = \velRel$ for all $\tau$, 
+so $\velRel$ is constant. If \SOn{n} is a rotational symmetry,
+$\velRel$ is called the `angular' velocity of the {\reqv}.
 
 To further visualize the drifting of the flow around the
 $z$-axis, we next find and plot the relative equilibria of
@@ -614,7 +641,7 @@ The \cLe\ in the Hilbert basis are:
 \end{split}
 \label{eq:CLEip}
 \eeq
-The {\reqv} in polar coordinates is 
+The {\reqv} in polar coordinates is
 \[
 ( \rho_1 , \rho_2 , \theta , z ) = (\sqrt{b (r_1 -d)},\sqrt{b d (r_1 -d)},\theta_Q, r_1 -d)
 \]
@@ -669,12 +696,13 @@ r_2 & 0 & -(\sigma +1 ) & e & 0\\
 \end{split}
 \eeq
 
-\subsection{Stability in \reducedsp}
+\subsection{\Reqva\ stability in \reducedsp}
 %SF June 22 2010
-Using the usual parameters, we get the eigenvalues 
+
+Using the usual parameters, we get the eigenvalues
 \[
 0.0938 \pm 10.1945i,-22.0000,-13.8534,-11.009
-\] 
+\]
 with corresponding eigenvectors
         \PC{ChaosBook convention is to order eigenvalues
         from most positive (unstable) to the most negative.
@@ -700,17 +728,39 @@ These are the same as the eigenvalues found using polar coordinates with the add
 
 The equations of motion for trajectory kept in a hyperplane by rotation under the symmetry group are:
 \bea
-    \dot{\gSpace}_a (y)=\frac{v(y)^T \sliceTan{a}}{t(y)^T \sliceTan{}}
+    \dot{\gSpace}_a (\sspRed) &=&
+    \frac{v(\sspRed)^T \sliceTan{a}}
+         {\groupTan(\sspRed)^T \cdot \sliceTan{}}
     \continue
-    u(y)=v(y)-\dot{\gSpace} (y) t(y)
+    u(\sspRed) &=& v(\sspRed)-\dot{\gSpace}(\sspRed)  \cdot \groupTan(\sspRed)
 \eea
-where $v(y)$ is the velocity of the full \statesp\ flow, $t(y)$ is the tangent to the group action, and $\sliceTan{}$ is the vector normal to the hyperplane of the slice. Using this equation we get that the {\stabmat} $M$ for the system in reduced state space is given by:
+where $v(\sspRed)$ is the velocity of the full \statesp\ flow, $\groupTan(\sspRed)$ is the tangent to the group action, and $\sliceTan{}$ is the vector normal to the hyperplane of the slice. Using this equation we get that the {\stabmat} $\MvarRed$ for the system in reduced state space is given by:
+    \PC{Stefan's version was
+\[
+M_{ij} =
+A_{ij}-c I_{ij} -(Tx)_i\,(\frac{\frac{\partial v}{\partial x_i}\cdot t'}{Tx \cdot t'} - c \frac{\frac{\partial (Tx)}{\partial x_j}\cdot t'}{Tx \cdot t'})
+\]
+    hopefully no errors introduced in my rewrite
+    }
 \beq
-M_{ij} = A_{ij}-c I_{ij} -(Tx)_i\,(\frac{\frac{\partial v}{\partial x_i}\cdot t'}{Tx \cdot t'} - c \frac{\frac{\partial (Tx)}{\partial x_j}\cdot t'}{Tx \cdot t'})
-\eeq
+{\MvarRed}(\sspRed)_{ij} = \Mvar(\sspRed)_{ij}-\velRel \cdot \Lg_{ij}
+     -\groupTan(\sspRed)_i\,\left(
+     \frac{\frac{\partial v}
+     {\partial x_j}\cdot \sspRed}{\groupTan(\sspRed) \cdot \sliceTan{}}
+     - \velRel \frac{\frac{\partial (\groupTan(\sspRed))}
+              {\partial x_j}\cdot \sliceTan{}
+              }{\groupTan(\sspRed) \cdot \sliceTan{}}
+              \right)
+\ee{SF:redJacob1}
+
                                                     \exerbox{exer:Reducedstab}
 
-                                                    \section{Conclusions}
+\subsection{\Rpo\ stability in \reducedsp}
+
+    \PC{Stefan, please write up your ``three programs for approximating the \jacobianM\ along any trajectory.'' Derive here \rpo\ {\monodromyM} in the \reducedsp, test it on some of the Evangelos \rpo s for \cLe.
+    }
+                                                    
+\section{Conclusions}
 
 Both the {\mslices} (or the \mframes) integration within the
 \slice\ are still under development.\PC{to Stefan: keep
