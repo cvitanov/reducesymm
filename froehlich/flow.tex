@@ -168,13 +168,13 @@ The \jacobianM\ also maps the initial, Lagrangian coordinate frame to the Euleri
 \,,
 \ee{JacobVeloc}
 see \refexer{traLocEigFr}.
-    \PC{remember to move \refexer{traLocEigFr} 
+    \PC{remember to move \refexer{traLocEigFr}
     and its solution into ChaosBook. Currently it
     appears too early, search for ``traLocEigFr.''
     }
 
-If the equations of motion is all that is known about the system then it is simple to calculate the stability matrix but the trajectories are not known so it is not possible to calculate the \jacobianM\ using the given formula. Thankfully there are other methods of calculating the \jacobianM; in ChaosBook.org\rf{DasBuch} it is shown that the \jacobianM\ matrix is related to the stability matrix by 
-$\frac{d}{dt} \jMps^t(x)=\Mvar (x) \jMps^t(x)$ 
+If the equations of motion is all that is known about the system then it is simple to calculate the stability matrix but the trajectories are not known so it is not possible to calculate the \jacobianM\ using the given formula. Thankfully there are other methods of calculating the \jacobianM; in ChaosBook.org\rf{DasBuch} it is shown that the \jacobianM\ matrix is related to the stability matrix by
+$\frac{d}{dt} \jMps^t(x)=\Mvar (x) \jMps^t(x)$
 or equivalently
 $\jMps^t(\xInit)= \texttt{T} e^{\int^t_0 d\tau \Mvar (x(\tau))}$,
 where \texttt{T} stands for a time-ordered product.
@@ -204,7 +204,7 @@ $\jMps^{t+t'}(\ssp)$.
 
 
 \solution{traLocEigFr}{Transport of local eigenframes.}{
-\noindent (a) 
+\noindent (a)
 Consider two points that are an infinitesimal time apart along a trajectory:
 $\delta \xInit
   = \flow{\timeStep}{\xInit}-\xInit \approx \velField{\xInit}\timeStep$.
@@ -224,6 +224,30 @@ Predrag: I am not sure that this statement is correct, please
 prove or disprove.
 \authorSF{2010-07-??}
     }% end
+
+\subsection{Periodic orbits}{
+
+We can extend this analysis of linear stability to not only work for single points, but also allow us to study the dynamics of the system near periodic orbits.
+
+
+
+Let p be a prime cycle, $\ssp \in M_p$ be any point on the cycle, $T_p$ the period of the cycle and
+$\jMps_p\left(\ssp\right) = \jMps^{T_p}\left(\ssp\right)$ be the Jacobian matrix for a single transversal of the cycle. The Jacobian matrix for the rth repeat of the cycle is then $\jMps^{r T_p}\left(\ssp\right)=\jMps^{T_p}\left(f^{\left(r-1\right) T_p}\left(\ssp\right)\right) \cdots \jMps^{T_p}\left(f^{T_p}\left(\ssp\right)\right)\jMps^{T_p}\left(\ssp\right)=\jMps_p\left(\ssp\right)^r$
+This means that it suffices to only look at prime cycles when considering the Jacobian of periodic orbits.
+
+Next consider the Jacobian of a prime cycle p.
+Using what we know from Jacobians, $\delta \ssp \left(t+T_p\right)=\jMps_p\left(\ssp\right)\delta \ssp\left(t\right)$ so after traveling once around the cycle, it contracts along the directions of the Floquet vectors with Floquet multipliers of magnitude less than 1 and expand in the directions of Floquet vectors with Floquet multipliers of magnitude greater than 1.
+
+Now this only tells us the rate of contraction and expansion as the cycle is traversed, starting at a point $\ssp$, it would be nice to now how it behaves as it traverses every part of the cycle.
+
+The value of $\jMps_p\left(\ssp\right)$ depends on the point on the periodic orbit chosen, but, as we shall show, the Floquet multipliers are independent of this selection. To see this, let $\ssp$ be any point on the cycle and $\jEigvec[j]\left(\ssp\right)$ be a Floquet vector of $\jMps_p\left(\ssp\right)$ with Floquet multiplier
+$\Lambda_j$. Consider $\ssp'=f^t\left(\ssp\right)$, another point on the periodic orbit. $\jMps^{T_p +t}=\jMps^{t+T_p}$ and using that Jacobian matrices are multiplicative along the flow:
+
+$\jMps^{T_p +t}\left(\ssp\right)=\jMps^{T_p}\left(f^t\left(\ssp\right)\right)\jMps^t\left(\ssp\right)=\jMps_p\left(\ssp'\right)\jMps^t\left(\ssp\right)$
+and $\jMps^{t+T_p}\left(\ssp\right)=\jMps^t\left(f^{T_p}\left(\ssp\right)\right)\jMps^{T_p}\left(\ssp\right)=\jMps^t\left(\ssp\right)\jMps_p\left(\ssp\right)$
+so $\jMps_p\left(\ssp'\right)\jMps^t\left(\ssp\right)\jEigvec[j]\left(\ssp\right)=\jMps^t\left(\ssp\right)\jMps_p\left(\ssp\right)\jEigvec[j]\left(\ssp\right)=\jMps^t\left(\ssp\right) \left(\Lambda_j \jEigvec[j]\left(\ssp\right)\right)=\Lambda_j \jMps^t\left(\ssp\right) \jEigvec[j]\left(\ssp\right)$ so $\jMps_p\left(\ssp'\right) \jEigvec[j]\left(\ssp'\right)=\Lambda_j \jEigvec[j]\left(\ssp'\right)$
+where $\jEigvec[j]\left(\ssp'\right)=\jMps^t\left(\ssp\right)\jEigvec[j]\left(\ssp\right)$. So $\Lambda_j$ is a Floquet multiplier for $\jMps_p\left(\ssp'\right)$ too.
+
 
 
 \section{\Eqva}
@@ -304,6 +328,38 @@ we can see that for the vectors with a very small imaginary
 part and a positive real part, the flow does not spiral
 noticeably and that it diverges away from the equilibrium very
 quickly.
+
+\section{Periodic Orbits}
+
+We have already seen how knowing periodic orbits and their stability can help us to understand the dynamics of the system, but there still is the question of how to actually find periodic orbits.
+
+Suppose we are trying to find the periodic orbits of a system. This means we want to find x and T such that $\ssp = f^T\left(\ssp\right) \Rightarrow 0 = \ssp-f^T\left(\ssp\right)$ (where $f^T$ is the trajectory at time $T$). We are looking for zeros of the function $F\left(\ssp,T\right) = \ssp - f^T\left(\ssp\right)$, so we can use Newton's method to find the zeros. Let $\left(\ssp,T\right)$ be an initial guess for Newton's method close to an actual solution $\left(\ssp + \Delta x,T + \Delta T\right)$. Then $0 = \ssp +\Delta \ssp - f^{T+\Delta T}\left(\ssp + \Delta \ssp\right)$. Taking the Taylor series to linear order we get the Newton iteration $0 \approx \ssp- f^T\left(\ssp\right) + \left(I - \jMps\left(\ssp\right)\right)\Delta \ssp - v\left(f^T\left(\ssp\right)\right)\Delta T$.
+
+
+We already know that if $\ssp$ is on a periodic orbit then $\jMps\left(\ssp\right) v\left(\ssp\right) = v\left(\ssp\right) \Rightarrow \left(I-\jMps\left(\ssp\right)\right) v\left(\ssp\right) = 0$. This means that $I-\jMps\left(\ssp\right)$ is non-invertible so as $\ssp$ approaches the periodic orbit $\left(I-\jMps\left(\ssp\right)\right) v\left(\ssp\right) \approx 0$. If $\Delta x$ is in the direction of $v\left(\ssp\right)$ then $\left(I-\jMps\left(\ssp\right)\right) \Delta \ssp \approx 0$ so the equation becomes very costly to solve accurately. This means that we need to constrain the $\Delta \ssp$ to be transverse to the flow during Newton's method. We can do this by requiring $\Delta x$ satisfy something like $v\left(\ssp\right) \cdot \Delta \ssp = 0$.
+
+We then get the system 
+\beq
+    \begin{pmatrix}
+        I-\jMps(\ssp)& \partial v(\ssp)\\
+        v(\ssp)& 0
+    \end{pmatrix}
+    \begin{pmatrix}
+        \Delta \ssp\\
+        \Delta t
+    \end{pmatrix}
+    =-
+    \begin{pmatrix}
+        \ssp - f(\ssp)\\
+        0
+    \end{pmatrix}
+\eeq
+
+This problem was caused by the velocity vector being an eigenvector of the Jacobian matrix with unit Floquet multiplier. So very every unit Floquet multiplier we have this difficult and need to add another constraint. It was already shown that for every dimension of a continuous symmetry there is a unit Floquet multiplier. For each of these symmetry dimensions you can just add a constraint similar to the one above.
+
+Next consider the same situation, but instead we will use a cost (or error) function $I\left(\Delta \ssp\right) = \left(\ssp + \Delta \ssp - f\left(\ssp + \Delta \ssp\right)\right)^2/2$. If $\ssp+\Delta \ssp$ is on a periodic orbit then both $I\left(\delta \ssp\right)$ and its linear in $\Delta x$ approximation  $\left(\ssp + \Delta \ssp - f\left(\ssp+ \delta \ssp\right)\right)\left(I-\jMps\left(\ssp\right)\right)$ are both equal to 0. This cost function in a sense measures how far the point $\ssp+ \Delta \ssp$ is from being a zero of the function $F(\ssp, \Delta \ssp) = \ssp - f(\ssp)$. The cost function gives a non-negative value, and its zeros are the points on periodic orbits, so if we can find a way to minimize the function then we would either find a periodic orbit or learn that there aren't any near our initial guess (if the local minimum is not zero then there is no zero nearby).
+
+The linear approximation of the cost function is zero at a periodic orbit, so the cost function is dominated by the second order term near the orbits. Expanding $I(\Delta \ssp)$ to the second order, we get that $I \approx \tilde{\Delta \ssp}^2/2 + (\ssp - f(\ssp)) \tilde{\Delta \ssp} + (\ssp-f(\ssp))^2/2$ where $\tilde{\Delta \ssp} = (I-\jMps(\ssp))\Delta \ssp$.
 
 \section{Symmetries of dynamics}
 \label{sect:SymmDyn}
