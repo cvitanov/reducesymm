@@ -242,11 +242,17 @@ Now this only tells us the rate of contraction and expansion as the cycle is tra
 
 The value of $\jMps_p\left(\ssp\right)$ depends on the point on the periodic orbit chosen, but, as we shall show, the Floquet multipliers are independent of this selection. To see this, let $\ssp$ be any point on the cycle and $\jEigvec[j]\left(\ssp\right)$ be a Floquet vector of $\jMps_p\left(\ssp\right)$ with Floquet multiplier
 $\Lambda_j$. Consider $\ssp'=f^t\left(\ssp\right)$, another point on the periodic orbit. $\jMps^{T_p +t}=\jMps^{t+T_p}$ and using that Jacobian matrices are multiplicative along the flow:
-
 $\jMps^{T_p +t}\left(\ssp\right)=\jMps^{T_p}\left(f^t\left(\ssp\right)\right)\jMps^t\left(\ssp\right)=\jMps_p\left(\ssp'\right)\jMps^t\left(\ssp\right)$
 and $\jMps^{t+T_p}\left(\ssp\right)=\jMps^t\left(f^{T_p}\left(\ssp\right)\right)\jMps^{T_p}\left(\ssp\right)=\jMps^t\left(\ssp\right)\jMps_p\left(\ssp\right)$
 so $\jMps_p\left(\ssp'\right)\jMps^t\left(\ssp\right)\jEigvec[j]\left(\ssp\right)=\jMps^t\left(\ssp\right)\jMps_p\left(\ssp\right)\jEigvec[j]\left(\ssp\right)=\jMps^t\left(\ssp\right) \left(\Lambda_j \jEigvec[j]\left(\ssp\right)\right)=\Lambda_j \jMps^t\left(\ssp\right) \jEigvec[j]\left(\ssp\right)$ so $\jMps_p\left(\ssp'\right) \jEigvec[j]\left(\ssp'\right)=\Lambda_j \jEigvec[j]\left(\ssp'\right)$
 where $\jEigvec[j]\left(\ssp'\right)=\jMps^t\left(\ssp\right)\jEigvec[j]\left(\ssp\right)$. So $\Lambda_j$ is a Floquet multiplier for $\jMps_p\left(\ssp'\right)$ too.
+
+\subsection{Marginal Eigenvalues}
+
+The Jacobian of a periodic orbit has marginal eigenvalues when there is either a continuous symmetry (which can use to reduce the problem) or a non-hyperbolicity in the flow (which is not as easy to deal with).
+
+To see that continuous symmetries have a corresponding marginal eigenvalue, let $\ssp$ be any point on a periodic orbit p with period $T_p$. If $\Group$ is any element in the Lie group for the continuous symmetry, then $f^t(\Group \ssp) = \Group f^t(\ssp)$. We already know that $\jMps^t(\ssp) \delta \ssp = \delta f^t(\ssp)$. If we let $\Group = 1+\delta \theta \Lg$ be any infinitesimal Lie group element and $\delta \ssp = \ssp - \Group \ssp = \ssp - (1+\delta \theta \Lg) \ssp = \ssp-(\ssp + \delta \theta \Lg \ssp =\delta \theta \Lg \ssp$ then $\delta f^{T_p}(\ssp) = f^{T_p}(\ssp) - f^{T_p}(\Group \ssp)= f^{T_p}(\ssp) - \Group f^{T_p}(\ssp) = \ssp - \Group \ssp = \delta \theta \Lg \ssp$.
+This gives us $\jMps_p(\ssp) \delta \theta \Lg \ssp = \delta \theta \Lg \ssp \Rightarrow \jMps_p(\ssp) \groupTan(\ssp) = \groupTan(\ssp)$ where $\groupTan(\ssp)$ is the group tangent at $\ssp$. 
 
 
 
@@ -338,7 +344,7 @@ Suppose we are trying to find the periodic orbits of a system. This means we wan
 
 We already know that if $\ssp$ is on a periodic orbit then $\jMps\left(\ssp\right) v\left(\ssp\right) = v\left(\ssp\right) \Rightarrow \left(I-\jMps\left(\ssp\right)\right) v\left(\ssp\right) = 0$. This means that $I-\jMps\left(\ssp\right)$ is non-invertible so as $\ssp$ approaches the periodic orbit $\left(I-\jMps\left(\ssp\right)\right) v\left(\ssp\right) \approx 0$. If $\Delta x$ is in the direction of $v\left(\ssp\right)$ then $\left(I-\jMps\left(\ssp\right)\right) \Delta \ssp \approx 0$ so the equation becomes very costly to solve accurately. This means that we need to constrain the $\Delta \ssp$ to be transverse to the flow during Newton's method. We can do this by requiring $\Delta x$ satisfy something like $v\left(\ssp\right) \cdot \Delta \ssp = 0$.
 
-We then get the system 
+We then get the system
 \beq
     \begin{pmatrix}
         I-\jMps(\ssp)& \partial v(\ssp)\\

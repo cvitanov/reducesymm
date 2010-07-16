@@ -12,7 +12,7 @@ function [ M ] = reqstability(  )
     G = [[cos(-theta),sin(-theta),0,0,0];[-sin(-theta),cos(-theta),0,0,0];
         [0,0,cos(-theta),sin(-theta),0];[0,0,-sin(-theta),cos(-theta),0];
         [0,0,0,0,1]];
-    x = G*x;
+    x = G*x
     A = [[-s 0 s 0 0];[0 -s 0 s 0];[r1-x(5) -r2 -1 -e -x(1)];[r2 r1-x(5) e -1 -x(2)];[x(3) x(4) x(1) x(2) -b]];
     %v = [-s*x(1)+s*x(3);-s*x(2)+s*x(4);(r1-x(5))*x(1)-r2*x(2)-x(3)-e*x(4);r2*x1+(r1-x(5))*x(2)+e*x(3)-x(4);-b*x(5)+x(1)*x(3)+x(2)*x(4)];
     T = [[0 1 0 0 0];[-1 0 0 0 0];[0 0 0 1 0];[0 0 -1 0 0];[0 0 0 0 0]];

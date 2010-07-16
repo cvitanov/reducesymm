@@ -56,3 +56,8 @@ infinitesimal Jacobians
 
 JacEq.m calculates the derivatives of the Jacobian and
 trajectory for use by the ode45 function used in Jacobian.m
+
+ReducedAttractor.m takes in an initial point and length of
+time, It calculates the trajectory for 2* the length of time
+given, and then rotates the second half of the trajectory into
+the slice and plots it.

@@ -1,4 +1,4 @@
-function [ x,J ] = Jacobian3( x0, t )
+function [ x,J ] = Jacobian( x0, t )
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
     r1 = 28;
