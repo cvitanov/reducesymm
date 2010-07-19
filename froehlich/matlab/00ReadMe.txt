@@ -33,8 +33,15 @@ Hilbert2.m calculates the trajectory of the flow in standard
 coordinates then converts the resulting flow into the
 coordinates of a Hilbert basis.
 
-reqstability.m calculates the stability matrix when a slice is
-used to restrict the flow to a 4D hyperplane.
+reqstability.m calculates the stability matrix of the relative
+equilibrium when a slice is used to restrict the flow to the 4D
+hyperplane perpendicular to the vector [1 0 0 0 0].
+
+reqstability2.m takes in a theta value and calculates the
+stability of the relative equilibrium when the flow is
+restricted to a 4D hyperplane. The slice used is the hyperplane
+normal to the group tangent at the point in the relative
+equilibrium orbit that is rotated by theta from a set point.
 
 Jacobian.m takes in the initial value and time and then
 calculates the Jacobian of the trajectory at that time by using
