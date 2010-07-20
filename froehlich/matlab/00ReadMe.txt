@@ -68,3 +68,7 @@ ReducedAttractor.m takes in an initial point and length of
 time, It calculates the trajectory for 2* the length of time
 given, and then rotates the second half of the trajectory into
 the slice and plots it.
+
+rpoNewton.m takes in an initial guess for the angular shift,
+period, and point on a relative periodic orbit, then performs
+Newton's method to find one.
