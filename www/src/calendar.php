@@ -96,6 +96,7 @@
 
 <p class="posted">last updated July 24 2008</p>
 
+<?php include("include/counter.js");  ?>
 
 </body>
 </html>

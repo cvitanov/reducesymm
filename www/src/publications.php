@@ -220,6 +220,8 @@
   </tbody>
 </table>
 
+<?php include("include/counter.js");  ?>
+
 
 </body>
 </html>

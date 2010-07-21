@@ -99,4 +99,7 @@ dynamics of Kuramoto-Sivashinsky equation.</p>
 
 <p class="posted">last updated April 13 2010</p>
 
+<?php include("include/counter.js");  ?>
+
+
 </body></html>

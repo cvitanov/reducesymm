@@ -176,19 +176,7 @@
 		    <span class="dsphead">+</span> bibtex</a>
 		  </span>
 		  <span class="dspcont">
-		      <pre>
-@Article{benisti10-1,
-  title = {Self-Organization and Threshold of Stimulated Raman Scattering},
-  author = {B\'enisti, D. and Morice, O.  and Gremillet, L.  and Siminos, E.  and Strozzi, D.J.},
-  journal = {Phys. Rev. Lett.},
-  volume = {105},
-  number = {1},
-  pages = {015001},
-  numpages = {4},
-  year = {2010},
-  doi = {10.1103/PhysRevLett.105.015001},
-}
-</pre> 
+		       
 		  </span>
 	    </span>
 	    <span class="dspcont">We derive, both theoretically and using an envelope code, threshold intensities for stimulated Raman scattering which compare well with results from Vlasov simulations. To do so, we account for the nonlinear decrease of Landau damping and for the detuning induced by, both, the nonlinear wave number shift &delta;k and frequency shift  &delta;&omega; of the plasma wave. In particular, we show that the effect of &delta;k may cancel out that of &delta;&omega;, but only in that plasma region where the laser intensity decreases along the direction of propagation of the scattered wave. Elsewhere, &delta;k enhances the detuning effect of &delta;&omega;. 
@@ -283,6 +271,21 @@
   </tbody>
 </table>
 
+<!-- Start of StatCounter Code -->
+<script type="text/javascript">
+var sc_project=1002169; 
+var sc_invisible=1; 
+var sc_security="9d512e23"; 
+</script>
+
+<script type="text/javascript"
+src="http://www.statcounter.com/counter/counter.js"></script><noscript><div
+class="statcounter"><a title="visit tracker on tumblr"
+href="http://www.statcounter.com/tumblr/"
+target="_blank"><img class="statcounter"
+src="http://c.statcounter.com/1002169/0/9d512e23/1/"
+alt="visit tracker on tumblr" ></a></div></noscript>
+<!-- End of StatCounter Code -->
 
 </body>
 </html>
