@@ -27,3 +27,6 @@ coordinates of a Hilbert basis.
 
 Eig.nb calculates the eigensystem of the relative equilibrium
 of the complex Lorenz system in the co-moving frame.
+
+rpoNewton.nb uses Newton's Method to find relative periodic
+orbits for the complex Lorenz equations.
