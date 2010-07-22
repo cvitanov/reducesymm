@@ -8,7 +8,7 @@
 
 
 \chapter{\CLf}
-\label{chap:blog}
+\label{chap:CLF}
 
      \Private{
 \noindent{\bf Stefan -
@@ -116,6 +116,96 @@ $(x_1, x_2, y_1, y_2, z) = (1, 0, 0, 1, 1)$.
     }{fig:CLEx1x2z}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\section{Symmetries of dynamics}
+\label{sect:SymmDyn}
+
+         \Private{
+\noindent{\bf Stefan -
+Jul ?? 2010}:\\
+\medskip\noindent
+         }
+In order to eventually remove the rotational symmetry in the
+\cLf\, we need to show that the flow is rotationally
+equivariant. By showing this, we will then be able to apply
+algorithms to remove the symmetry. Rotational equivariance in
+this situation will let us commute a rotation operator with
+taking time derivatives.\RW{I plan on writing more here, just
+haven't thought of what else I want to say yet.}
+
+We begin by defining `equivariance.'
+A flow $\dot{x}= \vel(x)$ is equivariant under an operation $\LieEl$ when
+\beq
+\LieEl \, \vel(x)=v(\LieEl \, x)
+\,.
+\ee{eq:FiniteRot}
+This means that if $f(x)$ is a solution to the dynamical
+equations, then so is $\LieEl\,f(x)$.
+
+In many flows, such as the \cLe, the equivariant operations
+will form a Lie group that can be used to reduce the
+dynamics.
+
+\subsection{Lie groups}
+
+A Lie group is a group which (1) is a differential manifold
+and (2) the composition map $G \times G \rightarrow G : (g,h)
+\rightarrow g h^{-1}$ is $\mathbb{C}^\infty$.
+
+An element of a compact Lie group that is continuously
+connected to the identity can be expressed as
+\beq
+\LieEl(\gSpace)=e^{{\gSpace} \cdot \Lg },\quad \gSpace \cdot \Lg
+   = \sum \gSpace_a \Lg_a , a = 1,2,\cdots,N
+\ee{FiniteRot}
+where $\gSpace \cdot \Lg$ is a \emph{Lie algebra} element,
+and the $\gSpace_a$ are the parameters of the transformation.
+                                                    \exerbox{exer:FinRot2d}
+
+Using the Taylor polynomial for $e^{x}$, one finds that
+rotation by an infinitesimal amount, $|\delta \gSpace| \ll
+1$, can be expressed as
+\[
+\LieEl(\delta \gSpace)=
+ 1+\delta \gSpace \cdot \Lg  + \cdots \cong 1 + \delta \gSpace \cdot \Lg
+\,,
+\]
+where the $\Lg_a$ are a set of N linearly independent
+$[d\times d]$anti-hermitian matrices acting linearly on the
+state space. They are called the \emph{generators} of
+infinitesimal transformations.
+
+The statement of equivariance
+$
+\dot{x}=\LieEl^{(-1)} v(\LieEl x)
+$
+for infinitesimal rotations is then
+\[
+\dot{x}=(1-\gSpace \cdot \Lg ) v(x+\gSpace \cdot \Lg  x)
+       =v(x)-\gSpace \cdot \left(
+            \Lg v(x) - \frac{dv}{dx} \Lg x
+                     \right)
+\,.
+\]
+We then get the {\em infinitesimal
+rotations} version of the equivariance condition
+\refeq{eq:FiniteRot}:
+\beq
+0=- \Lg_a v(x)+\Mvar \Lg_a x
+\,,
+\label{eq:InfnmslRot}
+\eeq
+where $\Mvar$ is
+the \stabmat\ \refeq{SF:stabMat}.
+% \refeq{5x5stabMat}.
+
+We have used both this infinitesimal rotation condition and
+the finite angle rotation condition \refeq{eq:FiniteRot}, to
+verify that the \cLe\ are rotationally equivariant.
+                                                    \exerbox{exer:InfinRotInvari}
+                                                    \exerbox{exer:FinRotInvarCmplx}
+                                                    \exerbox{exer:FinRotInvari}
+
+
 
 \section{Linear stability}
 \label{sect:stability}
@@ -123,14 +213,25 @@ $(x_1, x_2, y_1, y_2, z) = (1, 0, 0, 1, 1)$.
 %\\
 %\wwwcb{/chapters/stability.pdf}
 %    }
-When studying the trajectories of a flow, it is useful to know how small neighborhoods of points are transported by the flow. Understanding this gives us a better idea of how
 
-Consider the displacement of an infinitesimally close neighbor $x+\delta x$. Taylor expanding the flow equation $\dot x = v(x)$ we find that
+When studying the trajectories of a flow, it is useful to
+know how small neighborhoods of points are transported by the
+flow. Understanding this gives us a better idea of how
+
+Consider the displacement of an infinitesimally close
+neighbor $x+\delta x$. Taylor expanding the flow equation
+$\dot x = v(x)$ we find that
 \beq
 \dot x + \dot{\delta x}=v_i(x+\delta x) \approx v_i(x)+\Mvar \delta x
 \eeq
-where $A_{ij}(x)=\frac{\partial v_i (x)}{\partial x_j}$ is known as the \stabmat.
-In our first attempt to understand the dynamics of the flow, we examine the \eqv\ of the system by finding this \stabmat\ $\Mvar$. For the \cLe\ it is the $[5\!\times\!5]$ matrix,
+where
+\beq
+\Mvar_{ij}(x)=\frac{\partial v_i (x)}{\partial x_j}
+\ee{SF:stabMat}
+is known as the \stabmat.
+In our first attempt to understand the dynamics of the flow,
+we examine the \eqv\ of the system by finding this \stabmat\
+$\Mvar$. For the \cLe\ it is the $[5\!\times\!5]$ matrix,
                                                     \exerbox{exer:StabmatCLf}
 \beq
   \Mvar =\left(\barr{ccccc}
@@ -157,12 +258,22 @@ quintessentially continuous symmetry effects, to \refsect{SF:relStab}.
 
 Consider the trajectory of a  neighbor infinitesimally close
 to $\xInit$. Taylor expanding a finite time flow, we find that
+\[
+f^t(\xInit +\delta x) \approx f^t(\xInit)+\jMps^t(\xInit)\delta x,
+\]
+where
 \beq
-f^t(\xInit +\delta x) \approx f^t(\xInit)+J^t(\xInit)\delta x,
-\eeq
-where $J^t(x)_{ij}=\frac{\partial x_i(t)}{\partial x_j}$ is the \jacobianM. This means that up to the linear term the neighborhood is transported by $\delta x(t)=J^t(\xInit)\delta \xInit$. This means that how nearby trajectories separate or approach each other is dependent on the eigenvectors and values of the \jacobianM.
+\jMps^t(x)_{ij}=\frac{\partial x_i(t)}{\partial x_j}
+\ee{SF:jacMat}
+ is
+the \jacobianM. This means that up to the linear term the
+neighborhood is transported by $\delta x(t)=\jMps^t(\xInit)\delta
+\xInit$. This means that how nearby trajectories separate or
+approach each other is dependent on the eigenvectors and
+values of the \jacobianM.
 
-The \jacobianM\ also maps the initial, Lagrangian coordinate frame to the Eulerian coordinate at time $t$,
+The \jacobianM\ also maps the initial, Lagrangian coordinate
+frame to the Eulerian coordinate at time $t$,
 \beq
 \velField{\ssp(t)}=\jMps^t(\xInit) \velField{\xInit}
 \,,
@@ -173,15 +284,24 @@ see \refexer{traLocEigFr}.
     appears too early, search for ``traLocEigFr.''
     }
 
-If the equations of motion is all that is known about the system then it is simple to calculate the stability matrix but the trajectories are not known so it is not possible to calculate the \jacobianM\ using the given formula. Thankfully there are other methods of calculating the \jacobianM; in ChaosBook.org\rf{DasBuch} it is shown that the \jacobianM\ matrix is related to the stability matrix by
+If the equations of motion is all that is known about the
+system then it is simple to calculate the stability matrix
+but the trajectories are not known so it is not possible to
+calculate the \jacobianM\ using the given formula. Thankfully
+there are other methods of calculating the \jacobianM; in
+ChaosBook.org\rf{DasBuch} it is shown that the \jacobianM\
+matrix is related to the stability matrix by
 $\frac{d}{dt} \jMps^t(x)=\Mvar (x) \jMps^t(x)$
 or equivalently
 $\jMps^t(\xInit)= \texttt{T} e^{\int^t_0 d\tau \Mvar (x(\tau))}$,
 where \texttt{T} stands for a time-ordered product.
-When using a numerical routine to integrate the equations of motion, using a discrete approximation of either of these two formulas requires minimal additional programming effort.
+When using a numerical routine to integrate the equations of
+motion, using a discrete approximation of either of these two
+formulas requires minimal additional programming effort.
 
 % PC 13jul2010
 \exercise{Transport of local eigenframes.}{     \label{traLocEigFr}
+    \toCB
 \noindent (a)
 Derive \refeq{JacobVeloc}.
 (b)
@@ -221,39 +341,154 @@ Putting these two equations together we get the desired
 
 \noindent (b)
 Predrag: I am not sure that this statement is correct, please
-prove or disprove.
+prove or disprove. Basically, check that \refeq{SF:transpEigPO}
+is true for any orbit, not only \po s.
 \authorSF{2010-07-??}
     }% end
 
 \subsection{Periodic orbits}{
 
-We can extend this analysis of linear stability to not only work for single points, but also allow us to study the dynamics of the system near periodic orbits.
+We can extend this analysis of linear stability to not only
+work for single points, but also allow us to study the
+dynamics of the system near periodic orbits.
+
+Let p be a prime cycle, $\ssp \in M_p$ be any point on the
+cycle, $T_p$ the period of the cycle and
+$\jMps_p\left(\ssp\right) = \jMps^{T_p}(\ssp)$ be
+the {\jacobianM} for a single transversal of the cycle.
+The {\jacobianM} for the $r$th repeat of the cycle is then
+$\jMps^{r
+T_p}\left(\ssp\right)=\jMps^{T_p}\left(f^{\left(r-1\right)
+T_p}\left(\ssp\right)\right) \cdots
+\jMps^{T_p}\left(f^{T_p}\left(\ssp\right)\right)\jMps^{T_p}\left(\ssp\right)
+=\jMps_p\left(\ssp\right)^r$
+This means that it suffices to only look at prime cycles when
+considering the {\jacobianMs} of periodic orbits.
+
+Next consider the {\jacobianM} of a prime cycle $p$.
+Using what we know from Jacobians,
+$\delta \ssp \left(t+T_p\right)
+=\jMps_p\left(\ssp\right)\delta \ssp\left(t\right)$
+so after traveling once around the cycle, it contracts along
+the directions of the Floquet vectors with Floquet
+multipliers of magnitude less than 1 and expand in the
+directions of Floquet vectors with Floquet multipliers of
+magnitude greater than 1.
+
+Now this only tells us the rate of contraction and expansion
+as the cycle is traversed, starting at a point $\ssp$, it
+would be nice to now how it behaves as it traverses every
+part of the cycle.
+
+The value of $\jMps_p\left(\ssp\right)$ depends on the point
+on the periodic orbit chosen, but, as we shall show, the
+Floquet multipliers are independent of this selection. To see
+this, let $\ssp$ be any point on the cycle and
+$\jEigvec[j]\left(\ssp\right)$ be a Floquet vector of
+$\jMps_p\left(\ssp\right)$ with Floquet multiplier
+$\ExpaEig_j$. Consider $\ssp'=f^t\left(\ssp\right)$, another
+point on the periodic orbit. $\jMps^{T_p +t}=\jMps^{t+T_p}$
+and {\jacobianMs} are multiplicative along the
+flow:
+\bea
+\jMps^{T_p+t}\left(\ssp\right)
+&=&\jMps^{T_p}\left(f^t\left(\ssp\right)\right)\jMps^t\left(\ssp\right)
+=\jMps_p\left(\ssp'\right)\jMps^t\left(\ssp\right)
+\continue
+\jMps^{t+T_p}\left(\ssp\right)
+&=&\jMps^t\left(f^{T_p}\left(\ssp\right)\right)\jMps^{T_p}\left(\ssp\right)
+=\jMps^t\left(\ssp\right)\jMps_p\left(\ssp\right)
+\,,
+\nnu
+\eea
+and
+\bea
+\jMps_p\left(\ssp'\right)\jMps^t\left(\ssp\right)\jEigvec[j]\left(\ssp\right)
+&=&\jMps^t\left(\ssp\right)\jMps_p\left(\ssp\right)\jEigvec[j]\left(\ssp\right)
+    \continue
+&=&\jMps^t\left(\ssp\right)\left(\ExpaEig_j \jEigvec[j]\left(\ssp\right)\right)
+=\ExpaEig_j \left(\jMps^t(\ssp) \jEigvec[j](\ssp)\right)
+\continue
+\jMps_p\left(\ssp'\right) \jEigvec[j]\left(\ssp'\right)
+&=& \ExpaEig_j
+\jEigvec[j]\left(\ssp'\right)
+\,,
+\label{SF:transpEigPO}
+\eea
+where
+$\jEigvec[j]\left(\ssp'\right)=\jMps^t\left(\ssp\right)\jEigvec[j]\left(\ssp\right)
+.$
+So $\ExpaEig_j$ is a Floquet multiplier for $\jMps_p\left(\ssp'\right)$ too.
+
+\subsection{\Rpo s}
+
+\paragraph{Definition:
+           \Rpo}
+$p$ is an orbit $\pS_p$ in {\statesp} $\pS$
+which exactly recurs
+\beq
+\ssp_p (0) = \LieEl_p \ssp_p (\period{p} )
+    \,,\qquad
+\ssp_p (\tau) \in \pS_p
+    \,,
+\label{RPOrelper1}
+\eeq
+at a fixed {\em relative period} $\period{p}$, but
+shifted by a fixed group action ${\LieEl_p}$
+which brings the endpoint $\ssp_p (\period{p} ) $
+back into the initial point $\ssp_p (0) $, see \reffig{f:rpo}.
+The group action ${\LieEl_p}$ parameters
+$\gSpace = (\gSpace_1,\gSpace_2,\cdots\gSpace_N)$
+are referred to as ``phases,'' or ``shifts.''
+%
+In contrast to the pre-periodic \refeq{preperiodic}, the
+phase here are irrational, and the trajectory sweeps out
+ergodically the group orbit without ever closing into a \po.
+
+In presence of a continuous symmetry we define the
+{\FloquetM} for a \rpo\ as the {\jacobianM} evaluated
+at the period $\period{p}$ and rotated back into a \po\ by the
+group action $\LieEl(\gSpace_p)$:
+    \toCB
+\beq
+ \jMps_p(\ssp) = \LieEl(\gSpace_p)\jMps^\period{p}(\ssp)
+\groupTan(\ssp)
+\,,
+\ee{SF:symJacop}
 
 
+\subsection{Marginal eigenvalues}
 
-Let p be a prime cycle, $\ssp \in M_p$ be any point on the cycle, $T_p$ the period of the cycle and
-$\jMps_p\left(\ssp\right) = \jMps^{T_p}\left(\ssp\right)$ be the Jacobian matrix for a single transversal of the cycle. The Jacobian matrix for the rth repeat of the cycle is then $\jMps^{r T_p}\left(\ssp\right)=\jMps^{T_p}\left(f^{\left(r-1\right) T_p}\left(\ssp\right)\right) \cdots \jMps^{T_p}\left(f^{T_p}\left(\ssp\right)\right)\jMps^{T_p}\left(\ssp\right)=\jMps_p\left(\ssp\right)^r$
-This means that it suffices to only look at prime cycles when considering the Jacobian of periodic orbits.
+The {\jacobianM} of a periodic orbit has marginal eigenvalues
+when there is either a continuous symmetry (which can use to
+reduce the problem) or a non-hyperbolicity in the flow (which
+is not as easy to deal with).
 
-Next consider the Jacobian of a prime cycle p.
-Using what we know from Jacobians, $\delta \ssp \left(t+T_p\right)=\jMps_p\left(\ssp\right)\delta \ssp\left(t\right)$ so after traveling once around the cycle, it contracts along the directions of the Floquet vectors with Floquet multipliers of magnitude less than 1 and expand in the directions of Floquet vectors with Floquet multipliers of magnitude greater than 1.
-
-Now this only tells us the rate of contraction and expansion as the cycle is traversed, starting at a point $\ssp$, it would be nice to now how it behaves as it traverses every part of the cycle.
-
-The value of $\jMps_p\left(\ssp\right)$ depends on the point on the periodic orbit chosen, but, as we shall show, the Floquet multipliers are independent of this selection. To see this, let $\ssp$ be any point on the cycle and $\jEigvec[j]\left(\ssp\right)$ be a Floquet vector of $\jMps_p\left(\ssp\right)$ with Floquet multiplier
-$\Lambda_j$. Consider $\ssp'=f^t\left(\ssp\right)$, another point on the periodic orbit. $\jMps^{T_p +t}=\jMps^{t+T_p}$ and using that Jacobian matrices are multiplicative along the flow:
-$\jMps^{T_p +t}\left(\ssp\right)=\jMps^{T_p}\left(f^t\left(\ssp\right)\right)\jMps^t\left(\ssp\right)=\jMps_p\left(\ssp'\right)\jMps^t\left(\ssp\right)$
-and $\jMps^{t+T_p}\left(\ssp\right)=\jMps^t\left(f^{T_p}\left(\ssp\right)\right)\jMps^{T_p}\left(\ssp\right)=\jMps^t\left(\ssp\right)\jMps_p\left(\ssp\right)$
-so $\jMps_p\left(\ssp'\right)\jMps^t\left(\ssp\right)\jEigvec[j]\left(\ssp\right)=\jMps^t\left(\ssp\right)\jMps_p\left(\ssp\right)\jEigvec[j]\left(\ssp\right)=\jMps^t\left(\ssp\right) \left(\Lambda_j \jEigvec[j]\left(\ssp\right)\right)=\Lambda_j \jMps^t\left(\ssp\right) \jEigvec[j]\left(\ssp\right)$ so $\jMps_p\left(\ssp'\right) \jEigvec[j]\left(\ssp'\right)=\Lambda_j \jEigvec[j]\left(\ssp'\right)$
-where $\jEigvec[j]\left(\ssp'\right)=\jMps^t\left(\ssp\right)\jEigvec[j]\left(\ssp\right)$. So $\Lambda_j$ is a Floquet multiplier for $\jMps_p\left(\ssp'\right)$ too.
-
-\subsection{Marginal Eigenvalues}
-
-The Jacobian of a periodic orbit has marginal eigenvalues when there is either a continuous symmetry (which can use to reduce the problem) or a non-hyperbolicity in the flow (which is not as easy to deal with).
-
-To see that continuous symmetries have a corresponding marginal eigenvalue, let $\ssp$ be any point on a periodic orbit p with period $T_p$. If $\Group$ is any element in the Lie group for the continuous symmetry, then $f^t(\Group \ssp) = \Group f^t(\ssp)$. We already know that $\jMps^t(\ssp) \delta \ssp = \delta f^t(\ssp)$. If we let $\Group = 1+\delta \theta \Lg$ be any infinitesimal Lie group element and $\delta \ssp = \ssp - \Group \ssp = \ssp - (1+\delta \theta \Lg) \ssp = \ssp-(\ssp + \delta \theta \Lg \ssp =\delta \theta \Lg \ssp$ then $\delta f^{T_p}(\ssp) = f^{T_p}(\ssp) - f^{T_p}(\Group \ssp)= f^{T_p}(\ssp) - \Group f^{T_p}(\ssp) = \ssp - \Group \ssp = \delta \theta \Lg \ssp$.
-This gives us $\jMps_p(\ssp) \delta \theta \Lg \ssp = \delta \theta \Lg \ssp \Rightarrow \jMps_p(\ssp) \groupTan(\ssp) = \groupTan(\ssp)$ where $\groupTan(\ssp)$ is the group tangent at $\ssp$. 
-
+To see that continuous symmetries have a corresponding
+marginal eigenvalue, let $\ssp$ be any point on a periodic
+orbit p with period $T_p$. If $\LieEl$ is any element in the
+the continuous symmetry Lie group $\Group$, then $f^t(\LieEl \ssp)
+= \LieEl f^t(\ssp)$. We already know that $\jMps^t(\ssp)
+\delta \ssp = \delta f^t(\ssp)$.
+Close to identity $\LieEl = 1+\delta
+\theta \cdot \Lg$ is an infinitesimal Lie group element and
+$\delta \ssp = \ssp - \LieEl \ssp = \ssp - (1+\delta \theta
+\cdot \Lg) \ssp  = \delta \theta \cdot \Lg \ssp,$
+so
+$\delta f^{T_p}(\ssp) = f^{T_p}(\ssp) -
+f^{T_p}(\LieEl \ssp)= f^{T_p}(\ssp) - \LieEl f^{T_p}(\ssp) =
+\ssp - \LieEl \ssp = \delta \theta \cdot \Lg \ssp$.
+This gives us
+$\jMps_p(\ssp) \delta \theta \cdot \Lg \ssp = \delta
+\theta \cdot \Lg \ssp$,
+or
+\beq
+ \jMps_p(\ssp) \groupTan(\ssp) =
+\groupTan(\ssp)
+\,,
+\ee{SF:symMargEig}
+where $\groupTan(\ssp)$ is the group tangent
+at $\ssp$.
 
 
 \section{\Eqva}
@@ -262,15 +497,19 @@ An \eqv\ $\EQV{}$ is a point $\ssp_{\EQV{}}$ for which the
 velocity field of an ordinary differential equation
 $\dot{\ssp} = v(\ssp)$ is zero, $v(\ssp_{\EQV{}})=0$. These
 are points where the flow does not move, and if it reaches an
-equilibrium, the flow remains there. For the \cLe\, the origin $\EQV{0}=(0, 0, 0, 0,
-0)$ is always an equilibrium point, but there are two more families of equilibrium when both $r_2 + e=0$ and $r_1>1$. If we could set on of these {\em infinitely precisely} as the
-initial point of the flow, instead of seeing the messiness of
-\reffig{fig:CLEx1x2z}, we would stay at this single point for
-all times. In any simulation, for unstable \reqv\
-the (finite precision) trajectory eventually leaves this point.
+equilibrium, the flow remains there. For the \cLe\, the
+origin $\EQV{0}=(0, 0, 0, 0, 0)$ is always an equilibrium
+point, but there are two more families of equilibrium when
+both $r_2 + e=0$ and $r_1>1$. If we could set on of these
+{\em infinitely precisely} as the initial point of the flow,
+instead of seeing the messiness of \reffig{fig:CLEx1x2z}, we
+would stay at this single point for all times. In any
+simulation, for unstable \reqv\ the (finite precision)
+trajectory eventually leaves this point.
                                                     \exerbox{exer:EquiCLe}
 
 \subsection{Stability of \eqva}
+
 At an equilibrium, the flow manages to stay at a single
 point, but what if we start at points near the equilibrium? Will
 they collapse into the equilibrium, or will they diverge away
@@ -335,14 +574,44 @@ part and a positive real part, the flow does not spiral
 noticeably and that it diverges away from the equilibrium very
 quickly.
 
-\section{Periodic Orbits}
+\section{\Po s}
 
-We have already seen how knowing periodic orbits and their stability can help us to understand the dynamics of the system, but there still is the question of how to actually find periodic orbits.
+We have already seen how knowing periodic orbits and their
+stability can help us to understand the dynamics of the
+system, but there still is the question of how to actually
+find periodic orbits.
 
-Suppose we are trying to find the periodic orbits of a system. This means we want to find x and T such that $\ssp = f^T\left(\ssp\right) \Rightarrow 0 = \ssp-f^T\left(\ssp\right)$ (where $f^T$ is the trajectory at time $T$). We are looking for zeros of the function $F\left(\ssp,T\right) = \ssp - f^T\left(\ssp\right)$, so we can use Newton's method to find the zeros. Let $\left(\ssp,T\right)$ be an initial guess for Newton's method close to an actual solution $\left(\ssp + \Delta x,T + \Delta T\right)$. Then $0 = \ssp +\Delta \ssp - f^{T+\Delta T}\left(\ssp + \Delta \ssp\right)$. Taking the Taylor series to linear order we get the Newton iteration $0 \approx \ssp- f^T\left(\ssp\right) + \left(I - \jMps\left(\ssp\right)\right)\Delta \ssp - v\left(f^T\left(\ssp\right)\right)\Delta T$.
+Suppose we are trying to find the periodic orbits of a
+system. This means we want to find x and T such that $\ssp =
+f^T\left(\ssp\right) \Rightarrow 0 =
+\ssp-f^T\left(\ssp\right)$ (where $f^T$ is the trajectory at
+time $T$). We are looking for zeros of the function
+$F\left(\ssp,T\right) = \ssp - f^T\left(\ssp\right)$, so we
+can use Newton's method to find the zeros. Let
+$\left(\ssp,T\right)$ be an initial guess for Newton's method
+close to an actual solution $\left(\ssp + \Delta x,T + \Delta
+T\right)$. Then $0 = \ssp +\Delta \ssp - f^{T+\Delta
+T}\left(\ssp + \Delta \ssp\right)$. Taking the Taylor series
+to linear order we get the Newton iteration $0 \approx \ssp-
+f^T\left(\ssp\right) + \left(I -
+\jMps\left(\ssp\right)\right)\Delta \ssp -
+v\left(f^T\left(\ssp\right)\right)\Delta T$.
 
-
-We already know that if $\ssp$ is on a periodic orbit then $\jMps\left(\ssp\right) v\left(\ssp\right) = v\left(\ssp\right) \Rightarrow \left(I-\jMps\left(\ssp\right)\right) v\left(\ssp\right) = 0$. This means that $I-\jMps\left(\ssp\right)$ is non-invertible so as $\ssp$ approaches the periodic orbit $\left(I-\jMps\left(\ssp\right)\right) v\left(\ssp\right) \approx 0$. If $\Delta x$ is in the direction of $v\left(\ssp\right)$ then $\left(I-\jMps\left(\ssp\right)\right) \Delta \ssp \approx 0$ so the equation becomes very costly to solve accurately. This means that we need to constrain the $\Delta \ssp$ to be transverse to the flow during Newton's method. We can do this by requiring $\Delta x$ satisfy something like $v\left(\ssp\right) \cdot \Delta \ssp = 0$.
+We already know that if $\ssp$ is on a periodic orbit then
+$\jMps\left(\ssp\right) v\left(\ssp\right) =
+v\left(\ssp\right) \Rightarrow
+\left(I-\jMps\left(\ssp\right)\right) v\left(\ssp\right) =
+0$. This means that $I-\jMps\left(\ssp\right)$ is
+non-invertible so as $\ssp$ approaches the periodic orbit
+$\left(I-\jMps\left(\ssp\right)\right) v\left(\ssp\right)
+\approx 0$. If $\Delta x$ is in the direction of
+$v\left(\ssp\right)$ then
+$\left(I-\jMps\left(\ssp\right)\right) \Delta \ssp \approx 0$
+so the equation becomes very costly to solve accurately. This
+means that we need to constrain the $\Delta \ssp$ to be
+transverse to the flow during Newton's method. We can do this
+by requiring $\Delta x$ satisfy something like
+$v\left(\ssp\right) \cdot \Delta \ssp = 0$.
 
 We then get the system
 \beq
@@ -361,85 +630,40 @@ We then get the system
     \end{pmatrix}
 \eeq
 
-This problem was caused by the velocity vector being an eigenvector of the Jacobian matrix with unit Floquet multiplier. So very every unit Floquet multiplier we have this difficult and need to add another constraint. It was already shown that for every dimension of a continuous symmetry there is a unit Floquet multiplier. For each of these symmetry dimensions you can just add a constraint similar to the one above.
+This problem was caused by the velocity vector being an
+eigenvector of the {\jacobianM} with unit Floquet
+multiplier. So very every unit Floquet multiplier we have
+this difficult and need to add another constraint. It was
+already shown that for every dimension of a continuous
+symmetry there is a unit Floquet multiplier. For each of
+these symmetry dimensions you can just add a constraint
+similar to the one above.
 
-Next consider the same situation, but instead we will use a cost (or error) function $I\left(\Delta \ssp\right) = \left(\ssp + \Delta \ssp - f\left(\ssp + \Delta \ssp\right)\right)^2/2$. If $\ssp+\Delta \ssp$ is on a periodic orbit then both $I\left(\delta \ssp\right)$ and its linear in $\Delta x$ approximation  $\left(\ssp + \Delta \ssp - f\left(\ssp+ \delta \ssp\right)\right)\left(I-\jMps\left(\ssp\right)\right)$ are both equal to 0. This cost function in a sense measures how far the point $\ssp+ \Delta \ssp$ is from being a zero of the function $F(\ssp, \Delta \ssp) = \ssp - f(\ssp)$. The cost function gives a non-negative value, and its zeros are the points on periodic orbits, so if we can find a way to minimize the function then we would either find a periodic orbit or learn that there aren't any near our initial guess (if the local minimum is not zero then there is no zero nearby).
+Next consider the same situation, but instead we will use a
+cost (or error) function $I\left(\Delta \ssp\right) =
+\left(\ssp + \Delta \ssp - f\left(\ssp + \Delta
+\ssp\right)\right)^2/2$. If $\ssp+\Delta \ssp$ is on a
+periodic orbit then both $I\left(\delta \ssp\right)$ and its
+linear in $\Delta x$ approximation  $\left(\ssp + \Delta \ssp
+- f\left(\ssp+ \delta
+\ssp\right)\right)\left(I-\jMps\left(\ssp\right)\right)$ are
+both equal to 0. This cost function in a sense measures how
+far the point $\ssp+ \Delta \ssp$ is from being a zero of the
+function $F(\ssp, \Delta \ssp) = \ssp - f(\ssp)$. The cost
+function gives a non-negative value, and its zeros are the
+points on periodic orbits, so if we can find a way to
+minimize the function then we would either find a periodic
+orbit or learn that there aren't any near our initial guess
+(if the local minimum is not zero then there is no zero
+nearby).
 
-The linear approximation of the cost function is zero at a periodic orbit, so the cost function is dominated by the second order term near the orbits. Expanding $I(\Delta \ssp)$ to the second order, we get that $I \approx \tilde{\Delta \ssp}^2/2 + (\ssp - f(\ssp)) \tilde{\Delta \ssp} + (\ssp-f(\ssp))^2/2$ where $\tilde{\Delta \ssp} = (I-\jMps(\ssp))\Delta \ssp$.
-
-\section{Symmetries of dynamics}
-\label{sect:SymmDyn}
-
-         \Private{
-\noindent{\bf Stefan -
-Jul ?? 2010}:\\
-\medskip\noindent
-         }
-In order to eventually remove the rotational symmetry in the
-\cLf\, we need to show that the flow is rotationally
-equivariant. By showing this, we will then be able to apply
-algorithms to remove the symmetry. Rotational equivariance in
-this situation will let us commute a rotation operator with
-taking time derivatives.\RW{I plan on writing more here, just
-haven't thought of what else I want to say yet.}
-
-We begin by defining `equivariance.'
-A flow $\dot{x}= \vel(x)$ is equivariant under an operation $\LieEl$ when
-\beq
-\LieEl \, \vel(x)=v(\LieEl \, x)
-\,.
-\ee{eq:FiniteRot}
-This means that if $f(x)$ is a solution to the dynamical equations, then so is $\LieEl\,f(x)$.
-
-In many flows, such as the \cLe, the equivariant operations will form a Lie group that can be used to reduce the dynamics.
-
-\subsection{Lie groups}
-
-A Lie group is a group which (1) is a differential manifold and (2) the composition map $G \times G \rightarrow G : (g,h) \rightarrow g h^{-1}$ is $\mathbb{C}^\infty$.
-
-An element of a compact Lie group that is continuously connected to the identity can be expressed as
-\beq
-\LieEl(\gSpace)=e^{{\gSpace} \cdot \Lg },\quad \gSpace \cdot \Lg = \sum \gSpace_a \Lg_a , a = 1,2,\cdots,N
-\ee{FiniteRot}
-where $\gSpace \cdot \Lg$ is a \emph{Lie algebra} element, and the $\gSpace_a$ are the parameters of the transformation.
-                                                    \exerbox{exer:FinRot2d}
-
-Using the Taylor polynomial for $e^{x}$, one finds that rotation by an infinitesimal amount, $|\delta \gSpace| \ll 1$, can be expressed as
-\[
-\LieEl(\delta \gSpace)=1+\delta \gSpace \cdot \Lg  + \cdots \cong 1 + \delta \gSpace \cdot \Lg
-\,,
-\]
-where the $\Lg_a$ are a set of N linearly independent $[d\times d]$anti-hermitian matrices acting linearly on the state space. They are called the \emph{generators} of infinitesimal transformations.
-
-The statement of equivariance
-$
-\dot{x}=\LieEl^{(-1)} \cdot v(\LieEl \cdot x)
-$
-for infinitesimal rotations is then
-\[
-\dot{x}=(1-\gSpace \cdot \Lg ) \cdot v(x+\gSpace \cdot \Lg  x)
-       =v(x)-\gSpace \cdot \left(
-            \Lg v(x) - \frac{dv}{dx} \Lg x
-                     \right)
-\,.
-\]
-We then get the {\em infinitesimal
-rotations} version of the equivariance condition
-\refeq{eq:FiniteRot}:
-\beq
-0=- \Lg_a v(x)+\Mvar \Lg_a x
-\,,
-\label{eq:InfnmslRot}
-\eeq
-where $\Mvar = \frac{\pde v}{\pde x}$ is the \stabmat.
-% \refeq{5x5stabMat}.
-
-We have used both this infinitesimal rotation condition and
-the finite angle rotation condition \refeq{eq:FiniteRot}, to
-verify that the \cLe\ are rotationally equivariant.
-                                                    \exerbox{exer:InfinRotInvari}
-                                                    \exerbox{exer:FinRotInvarCmplx}
-                                                    \exerbox{exer:FinRotInvari}
+The linear approximation of the cost function is zero at a
+periodic orbit, so the cost function is dominated by the
+second order term near the orbits. Expanding $I(\Delta \ssp)$
+to the second order, we get that $I \approx \tilde{\Delta
+\ssp}^2/2 + (\ssp - f(\ssp)) \tilde{\Delta \ssp} +
+(\ssp-f(\ssp))^2/2$ where $\tilde{\Delta \ssp} =
+(I-\jMps(\ssp))\Delta \ssp$.
 
 
 \section{\Reqva}
@@ -575,9 +799,9 @@ $\sspRed$ {\slice}, a $(d\!-\!1)$-dimensional hyperplane
 normal to the group rotation tangent $\sliceTan{}$ at point
 $\sspRed$:
 \beq
-(\ssp- \sspRed) \cdot \sliceTan{}=0
+(\ssp - \sspRed)^T \sliceTan{a}=0
     \,,\qquad
-\sliceTan{} = \Lg \cdot \sspRed
+\sliceTan{a} = \Lg_a \sspRed
 \,.
 \ee{PCsectQ}
 For any $\hat{\ssp}$, $\ssp =
@@ -881,4 +1105,3 @@ New methods [...] In this project I have discussed, understood,
 and tested [...] as applied to \cLe\.
 Much work still remains before these are viable
 methods for higher-dimensional flows.
-
