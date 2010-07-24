@@ -435,6 +435,36 @@ quickly.
 A \reqv\ of dynamical flow is a trajectory that stays
 within a single group orbit of the symmetry group.
 
+For a \reqv\ \REQV{}{} the flow and the group tangent vectors coincide, and
+any point on the \reqv\ orbit is a fixed point in the co-moving frame,
+a frame moving with velocity
+    \toCB
+\beq
+\vel(\ssp) - \velRel \cdot \groupTan(\ssp) =0
+    \,,\qquad
+\ssp \in \pS_{\REQV{}{}}
+\,.
+\ee{SF:reqvTangent}
+Dotting 
+$
+\groupTan_a(\vel)  - \Mvar(\ssp) \, \groupTan_a(\ssp) =0
+$,
+the
+equivariance condition \refeq{eq:InfnmslRot}, by the velocity $c$,
+I get
+\beq
+( \Mvar -  \velRel \cdot \Lg) \vel =0
+\,.
+\ee{ReqvMargEig}
+(Repeated indices are summed throughout this
+report, and the dot product refers to a sum over
+Lie algebra generators. The Euclidian product of two vectors
+$x,y$ will be indicated by $x$-transpose times $y$, \ie,
+$x^T y = \sum_i^d x_i y_i$.)
+In other words, you have to be in the co-rotating
+frame for eigenvalue to be marginal, and the velocity
+be the corresponding right eigenvector. 
+
 In order for a trajectory to stay in the group orbit, its
 velocity must always point in the tangent direction to the
 group action, so we must have $\vel(\ssp) = \velRel(\tau)
@@ -471,8 +501,7 @@ similar to finding the equilibria, with one difference. As
 the flow drifts (rotates), a {\reqv} will drift as well, so
 that instead of setting all of the $v(x)=0$, we allow the
 component of $v(x)$ tangent to direction of group rotation to
-be non-zero. This tangent is not necessarily easily defined
-in the Cartesian coordinates which we have so far been using.
+be non-zero. 
 
 \subsection{Computing and plotting the {\reqv} $\REQB{1}$}
 
@@ -512,27 +541,28 @@ here on, we examine the properties of the point defined
 above as $\ssp_{\REQB{}1}$.
 
 \subsection{\Po s}{
+\label{sect:SFpos}
 
 We can extend this analysis of linear stability to not only
 work for single points, but also allow us to study the
 dynamics of the system near periodic orbits.
 
 Let p be a prime cycle, $\ssp \in M_p$ be any point on the
-cycle, $T_p$ the period of the cycle and
-$\jMps_p\left(\ssp\right) = \jMps^{T_p}(\ssp)$ be
+cycle, $\period{p}$ the period of the cycle and
+$\jMps_p\left(\ssp\right) = \jMps^{\period{p}}(\ssp)$ be
 the {\jacobianM} for a single transversal of the cycle.
 The {\jacobianM} for the $r$th repeat of the cycle is then
 $\jMps^{r
-T_p}\left(\ssp\right)=\jMps^{T_p}\left(f^{\left(r-1\right)
-T_p}\left(\ssp\right)\right) \cdots
-\jMps^{T_p}\left(f^{T_p}\left(\ssp\right)\right)\jMps^{T_p}\left(\ssp\right)
+\period{p}}\left(\ssp\right)=\jMps^{\period{p}}\left(f^{\left(r-1\right)
+\period{p}}\left(\ssp\right)\right) \cdots
+\jMps^{\period{p}}\left(f^{\period{p}}\left(\ssp\right)\right)\jMps^{\period{p}}\left(\ssp\right)
 =\jMps_p\left(\ssp\right)^r$
 This means that it suffices to only look at prime cycles when
 considering the {\jacobianMs} of periodic orbits.
 
 Next consider the {\jacobianM} of a prime cycle $p$.
 Using what we know from Jacobians,
-$\delta \ssp \left(t+T_p\right)
+$\delta \ssp \left(t+\period{p}\right)
 =\jMps_p\left(\ssp\right)\delta \ssp\left(t\right)$
 so after traveling once around the cycle, it contracts along
 the directions of the Floquet vectors with Floquet
@@ -551,17 +581,17 @@ Floquet multipliers are independent of this selection. To see
 this, let $\ssp$ be any point on the cycle and
 $\jEigvec[j]\left(\ssp\right)$ be a Floquet vector of
 $\jMps_p\left(\ssp\right)$ with Floquet multiplier
-$\ExpaEig_j$. Consider $\ssp'=f^t\left(\ssp\right)$, another
-point on the periodic orbit. $\jMps^{T_p +t}=\jMps^{t+T_p}$
-and {\jacobianMs} are multiplicative along the
-flow:
+$\ExpaEig_j$. Consider another
+point  $\ssp'=f^t\left(\ssp\right)$, $ 0 < t < \period{p} $
+on the periodic orbit. $\jMps^{\period{p} +t}=\jMps^{t+\period{p}}$,
+{\jacobianMs} are multiplicative along the flow:
 \bea
-\jMps^{T_p+t}\left(\ssp\right)
-&=&\jMps^{T_p}\left(f^t\left(\ssp\right)\right)\jMps^t\left(\ssp\right)
+\jMps^{\period{p}+t}\left(\ssp\right)
+&=&\jMps^{\period{p}}\left(f^t\left(\ssp\right)\right)\jMps^t\left(\ssp\right)
 =\jMps_p\left(\ssp'\right)\jMps^t\left(\ssp\right)
 \continue
-\jMps^{t+T_p}\left(\ssp\right)
-&=&\jMps^t\left(f^{T_p}\left(\ssp\right)\right)\jMps^{T_p}\left(\ssp\right)
+\jMps^{t+\period{p}}\left(\ssp\right)
+&=&\jMps^t\left(f^{\period{p}}\left(\ssp\right)\right)\jMps^{\period{p}}\left(\ssp\right)
 =\jMps^t\left(\ssp\right)\jMps_p\left(\ssp\right)
 \,,
 \nnu
@@ -582,7 +612,9 @@ and
 \eea
 where
 $\jEigvec[j]\left(\ssp'\right)
- = \jMps^t\left(\ssp\right)\jEigvec[j]\left(\ssp\right).$
+ = \jMps^t\left(\ssp\right)\jEigvec[j]\left(\ssp\right)$
+ is the $\jMps_p$ eigenframe transported for time $t$ 
+ along the $p$ orbit.
 So $\ExpaEig_j$ is a Floquet multiplier for
 $\jMps_p\left(\ssp'\right)$ too.
 
@@ -591,19 +623,20 @@ $\jMps_p\left(\ssp'\right)$ too.
 
 \paragraph{Definition:
            \Rpo}
-$p$ is an orbit $\pS_p$ in {\statesp} $\pS$
-which exactly recurs
+$p$ is an orbit $\pS_p$ in {\statesp} $\pS$, a set of relative periodic
+points exactly recur
+    \toCB
 \beq
-\ssp_p (0) = \LieEl_p \ssp_p (\period{p} )
+\ssp (0) = \LieEl_p \ssp (\period{p} )
     \,,\qquad
-\ssp_p (\tau) \in \pS_p
+\ssp (\tau) \in \pS_p
     \,,
 \label{RPOrelper1}
 \eeq
 at a fixed {\em relative period} $\period{p}$, but
 shifted by a fixed group action ${\LieEl_p}$
-which brings the endpoint $\ssp_p (\period{p} ) $
-back into the initial point $\ssp_p (0) $.
+which brings the endpoint $\ssp (\period{p} ) $
+back into the initial point $\ssp (0) $.
 The group action ${\LieEl_p}=\LieEl(\gSpace_p)$ parameters  \toCB
 $\gSpace = (\gSpace_1,\gSpace_2,\cdots\gSpace_N)$
 are referred to as ``phases,'' or ``shifts.''
@@ -619,9 +652,13 @@ group action $\LieEl(\gSpace_p)$:
     \toCB
 \beq
  \jMps_p(\ssp) = \LieEl(\gSpace_p)\jMps^\period{p}(\ssp)
+    \,,\qquad
+\ssp  \in \pS_p
 \,.
 \ee{SF:symPrimJac}
-
+The argument of \refsect{sect:SFpos} goes through also in  
+the presence of a group rotation,
+and \refeq{SF:transpEigPO} is correct for \rpo s as well.
 
 \subsection{Marginal eigenvalues}
 
@@ -630,29 +667,29 @@ when there is either a continuous symmetry (which can use to
 reduce the problem) or a non-hyperbolicity in the flow (which
 is not as easy to deal with).
 
-To see that continuous symmetries have a corresponding
-marginal eigenvalue, let $\ssp$ be any point on a periodic
-orbit p with period $T_p$. If $\LieEl$ is any element in
+To see that each continuous symmetry has a corresponding
+marginal eigendirection, let $\ssp$ be any point on a periodic
+orbit p with period $\period{p}$. If $\LieEl$ is any element in
 the continuous symmetry Lie group $\Group$, then $f^t(\LieEl \ssp)
-= \LieEl f^t(\ssp)$.By definiton, $\jMps^t(\ssp)
+= \LieEl f^t(\ssp)$. By definiton, $\jMps^t(\ssp)
 \delta \ssp = \delta f^t(\ssp)$.
 Close to identity $\LieEl = 1+\delta
 \theta \cdot \Lg$ is an infinitesimal Lie group element and
 $\delta \ssp = \ssp - \LieEl \ssp = \ssp - (1+\delta \theta
 \cdot \Lg) \ssp  = \delta \theta \cdot \Lg \ssp,$
 so
-$\delta f^{T_p}(\ssp) = f^{T_p}(\ssp) -
-f^{T_p}(\LieEl \ssp)= f^{T_p}(\ssp) - \LieEl f^{T_p}(\ssp) =
+$\delta f^{\period{p}}(\ssp) = f^{\period{p}}(\ssp) -
+f^{\period{p}}(\LieEl \ssp)= f^{\period{p}}(\ssp) - \LieEl f^{\period{p}}(\ssp) =
 \ssp - \LieEl \ssp = \delta \theta \cdot \Lg \ssp$.
 This gives us
 $\jMps_p(\ssp) \delta \theta \cdot \Lg \ssp = \delta
 \theta \cdot \Lg \ssp$,
-or
+\ie, a set of marginal direction eigenvectors
 \beq
  \jMps_p(\ssp) \groupTan_{a}(\ssp) =
 \groupTan_{a}(\ssp)
-\,,
 \ee{SF:symMargEig}
+with unit eigenvalues$\ExpaEig_a=1$,
 where $\groupTan_{a}(\ssp)$ is a group tangent at $\ssp$, and
 $a=1,2,\cdots,N$.
     \PC{prove this for a \rpo, using definition \refeq{SF:symPrimJac};
@@ -848,6 +885,17 @@ reduction is attained by taking small time steps in
 \reffig{fig:PCunrot} and dropping the higher order terms, as
 in \refsect{sect:SymmDyn}.
 
+Let $\sliceTan{}$ be a vector normal to the plane of the slice. Then the dynamics within the slice are given by
+\bea
+\dot{\gSpace_a}(\sspRed) &=& \frac{\vel(\sspRed)^T \sliceTan{a}}
+               {\groupTan(\sspRed)^T \cdot \sliceTan{}}
+\continue
+\velRed(\sspRed) &=& \vel(\sspRed)-\dot{\gSpace}(\sspRed) \cdot \groupTan(\sspRed)
+\label{SF:sliceEas}
+\eea
+where $\velRed(\sspRed)$ is the velocity in the slice.
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % File: infMF.xfig
 \SFIG{ProblemsPill} %infMF}
@@ -969,7 +1017,7 @@ where $v(\sspRed)$ is the velocity of the full \statesp\ flow, $\groupTan(\sspRe
     \PC{Stefan's version was
 \[
 M_{ij} =
-A_{ij}-c I_{ij} -(Tx)_i\,(\frac{\frac{\partial v}{\partial x_i}\cdot t'}{Tx \cdot t'} - c \frac{\frac{\partial (Tx)}{\partial x_j}\cdot t'}{Tx \cdot t'})
+A_{ij}-c I_{ij} -(Tx)_i\,(\frac{\frac{\partial v}{\partial x_i}\cdot \sliceTan{}}{Tx \cdot \sliceTan{}} - c \frac{\frac{\partial (Tx)}{\partial x_j}\cdot \sliceTan{}}{Tx \cdot \sliceTan{}})
 \]
     hopefully no errors introduced in my rewrite
     }
