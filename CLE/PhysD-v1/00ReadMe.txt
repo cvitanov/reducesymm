@@ -6,6 +6,7 @@ Continuous symmetry reduction
 Evangelos Siminos and Predrag Cvitanovi\'c
                     started writing: Vaggelis       2009-09-21
                     final submission: Vaggelis      2010-01-30
+                    accepted			    2010-07-22
 
 -----------------------------------------------------------
 

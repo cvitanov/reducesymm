@@ -7,11 +7,12 @@ Continuous symmetry reduction
 
 Physica D manuscript PHYSD-D-10-00070
 
+% accepted				    2010-07-22
+%           submission:       Vaggelis      2010-01-30
 % Predrag, Evangelos, John last push        2010-01-30
 % Predrag reorganized siminos/CLE/          2009-10-09
 % Vaggelis created siminos/CLE/CLE.tex      2009-09-21
 % Vaggelis created siminos/CLE              2009-02-05
-            submission:       Vaggelis      2010-01-30
 
 
 					Predrag                         2009-12-02
