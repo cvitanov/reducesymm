@@ -30,3 +30,6 @@ of the complex Lorenz system in the co-moving frame.
 
 rpoNewton.nb uses Newton's Method to find relative periodic
 orbits for the complex Lorenz equations.
+
+Rotation.nb is a program that checks how often and when a
+trajectory in a slice has its group tangent also in the slice.
