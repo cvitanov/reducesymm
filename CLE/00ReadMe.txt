@@ -2,11 +2,14 @@ siminos/CLE/00ReadMe.txt
 $Author$ $Date$
 ===========================================================
 Continuous symmetry reduction
-    and return maps for higher-dimensional flows
+    and return maps for high-dimensional flows
     Evangelos Siminos and Predrag Cvitanovi\'c
 
 Physica D manuscript PHYSD-D-10-00070
+doi: 10.1016/j.physd.2010.07.010
 
+% doi active				    2010-08-03	
+% appeared online (?)			    2010-07-30  
 % accepted				    2010-07-22
 %           submission:       Vaggelis      2010-01-30
 % Predrag, Evangelos, John last push        2010-01-30
@@ -15,7 +18,13 @@ Physica D manuscript PHYSD-D-10-00070
 % Vaggelis created siminos/CLE              2009-02-05
 
 
-					Predrag                         2009-12-02
+					Vaggelis	2010-08-03
+
+We have to be careful when we submit color-coded revisions to Elsevier
+as they publish online the referee draft eventhough I indicated how 
+to switch color-coding off.
+
+					Predrag         2009-12-02
 To get a move on this article, I propose that we respond to
 the invitation, submit it to
 
