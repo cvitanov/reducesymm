@@ -9,4 +9,7 @@ do
 done
 
 # needed to work on cns server
-cp index.php index.html 
+cp index.php index.html
+# cp auxiliary files
+cp ../src/css/*.css css/
+cp ../src/css/*.js css/

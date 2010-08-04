@@ -104,8 +104,8 @@ EMail: <a href="mailto:siminos%20%5Bsnail%5D%20gatech.edu">siminos [at] gatech.e
 
       </ul>
 
-      <p class="main"> My recent research focuses in the
-dynamics of Kuramoto-Sivashinsky equation.</p>
+<!--      <p class="main"> My recent research focuses in the
+dynamics of Kuramoto-Sivashinsky equation.</p>-->
 
 <!--      <h4 class="title2"> <a name="publications"></a>Publications
       </h4>
