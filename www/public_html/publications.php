@@ -186,7 +186,7 @@
 	<p class="ref"> 
 	  <span class="refauthors"> D. B&eacute;nisti, O. Morice, L. Gremillet, <strong>E. Siminos</strong>, and D.J. Strozzi</span></br>
 	  <span class="reftitle"> Nonlinear group velocity of an electron plasma wave</span></br> 
-	    to appear in <span class="journal">Phys. Plasmas </span>(2010)</br> 
+	    <a href="http://dx.doi.org/10.1063/1.3464467"><span class=journal>Phys. Plasmas <strong>17</strong></span>, 082301 (2010)</a></br>
     <!-- 	<a href="http://dx.doi.org/10.1137/070705623">Phys. D ???</a> -->
 <!-- 	    <img src="images/acroread16.png" alt="preprint"><a href="./papers/threshold.pdf"> preprint</a> -->
  	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
@@ -213,7 +213,7 @@
 	<p class="ref"> 
 	  <span class="refauthors"> G. S&aacute;nchez-Arriaga, <strong>E. Siminos</strong>, and E. Lefebvre</span></br>
 	  <span class="reftitle"> Solitary waves with nonvanishing boundary conditions in relativistic plasmas</span></br> 
-	    submitted to <span class="journal">Phys. Rev. E </span>(2010)</br> 
+	    submitted <span class="journal"></span>(2010)</br> 
     <!-- 	<a href="http://dx.doi.org/10.1137/070705623">Phys. D ???</a> -->
 	    <img src="images/acroread16.png" alt="preprint"><a href="./papers/SSL10.pdf"> preprint</a>
  	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
@@ -250,7 +250,7 @@
   year = "2009",
   month = "May",
   address = "Atlanta",
-  note = "avalaible online at http://www.chaosbook.org/projects/Siminos/theses.pdf"
+  note = "avalaible online at http://www.chaosbook.org/projects/Siminos/thesis.pdf"
 }
 </pre> 
 		  </span>
