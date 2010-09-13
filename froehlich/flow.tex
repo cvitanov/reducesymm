@@ -10,9 +10,16 @@
 \chapter{\CLf}
 \label{chap:CLF}
 
+\begin{quote}
+{\bf Abstract:} Stefan, write this: often! this might be the only part
+of this text that most people glance at.
+\end{quote}
+
+\section{Introduction}
+\label{sect:intro}
      \Private{
 \noindent{\bf Stefan -
-Jun - Aug 2010}:\\
+Jun - Sep 2010}:\\
      }
 This project first reproduces results reported by
 Siminos\rf{SiminosThesis}, and then investigates various ways
@@ -186,6 +193,14 @@ for infinitesimal rotations is then
                      \right)
 \,.
 \]
+Define the group action tangent at $\ssp$ as
+\beq
+ \groupTan_{a}(\ssp) = \Lg _{a} \ssp
+\,\qquad
+ a=1,2,\cdots,N.
+\ee{PC:groupTan}
+
+
 We then get the {\em infinitesimal
 rotations} version of the equivariance condition
 \refeq{eq:FiniteRot}:
@@ -725,8 +740,7 @@ $\jMps_p(\ssp) \delta \theta \cdot \Lg \ssp = \delta
 \groupTan_{a}(\ssp)
 \ee{SF:symMargEig}
 with unit eigenvalues$\ExpaEig_a=1$,
-where $\groupTan_{a}(\ssp)$ is a group tangent at $\ssp$, and
-$a=1,2,\cdots,N$.
+where $\groupTan_{a}(\ssp)$ is a group tangent \refeq{PC:groupTan}.
     \PC{prove this for a \rpo, using definition \refeq{SF:symPrimJac};
         the \po\ marginal eigenvalue should be a special case.}
 
@@ -833,11 +847,11 @@ to the second order, we get that $I \approx \tilde{\Delta
 
 Finally, we move on to the goal of the project, reducing the
 state-space of the \cLe\ to only four dimensions. We present
-two different versions of the `method of moving frames.' The
+the `{\mslices}.' The
 method can introduce singularities, as in
 \reffig{fig:PCsimulPolar}.
 
-\subsection{Method of moving frames, finite time steps}
+\subsection{\Mslices, finite time steps}
 \label{sect:MovFrame}
 
      \Private{
@@ -846,11 +860,11 @@ July 19, Aug 12 2009}: %\\
     }
 
 Siminos\rf{SiminosThesis} discusses symmetry reduction by the
-method of {\em moving frames} of Cartan\rf{CartanMF}, in the
+{\em {\mslices}} of Cartan\rf{CartanMF}, in the
 formulation of Fels and
 Olver\rf{FelsOlver98,FelsOlver99,OlverInv}.
                                                 \exerbox{exer:SO2cSect}
-The moving frames method allows the determination of (in
+The {\mslices} allows the determination of (in
 general non-polynomial) invariants of the group action by a
 simple and efficient algorithm that, as argued in
 \rf{SiminosThesis}, works well in high-dimensional \statesp s.
@@ -861,6 +875,8 @@ such that the next segment initial point is in the point
 $\sspRed$ {\slice}, a $(d\!-\!1)$-dimensional hyperplane
 normal to the group rotation tangent $\sliceTan{}$ at point
 $\sspRed$:
+    \PC{Stefan, rewrite the whole text in terms of
+        $\dotProd{.}{.}$.}
 \beq
 (\ssp - \sspRed)^T \sliceTan{a}=0
     \,,\qquad
@@ -875,13 +891,18 @@ map from a point in space to the group action is called a
 Olver\rf{FelsOlver98,FelsOlver99,OlverInv}.
 
 [...]
+    \PC{incorporate this into the text:``
+We use $\groupTan(\sspRed)_a$ notation (rather than
+$\Lg_{a}\sspRed$) to emphasize that this is the
+group \emph{tangent field} at $\sspRed$.
+    ''}
                                                     \exerbox{exer:PCsectionCLe}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % computed by PCunrot.nb
 \SFIG{ProblemsPill} %PCunrot}
 {}{
-Method of moving frames, finite time steps version: a
+{\Mslices}, finite time steps version: a
 trajectory started on the \slice, with $\ssp_1^{(0)}
 =0$, evolves for a finite time to a \statesp\ point with a
 non-zero $\hat{\ssp}_1^{(1)}$. The {\em entire} \statesp\ is then
@@ -894,14 +915,109 @@ trajectory returns to the 4$\dmn$ $\ssp_1 =0$
 {fig:PCunrot}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\refFig{fig:PCunrot} illustrates the method of moving frames,
+\refFig{fig:PCunrot} illustrates the {\mslices},
 finite time version.
     \PC{Draw your own \refFig{fig:PCunrot}
         - need to draw a longer segment of the initial trajectory,
         to make it clearer that the whole segment is rotated.
        }
 
-\subsection{Method of moving frames, differential formulation}
+\subsection{How good is your \slice?}
+\label{sect:slices}
+
+    \PC{this is a rewrite in progress of \refsect{sect:raw}}
+For the \mslices\ to be useful to us, we have to
+(1) show that a \slice\
+cuts the group orbit of every point in the full \statesp,
+(2) show how to continue an orbit through a \slice\ discontinuity,
+and
+(3) find a criterion to pick a single \po\ amongst the {\reducedsp} \po s
+arising from multiple traversal of a slice by a single  full space
+\rpo.
+
+\begin{definition}
+\label{def:slice}
+\index{slice}
+A dot product $\dotProd{\ssp_1}{\ssp_2}$,
+$\ssp_1, \ssp_2\in \pS$. The associated norm is
+$|\ssp|^2 = \dotProd{\ssp}{\ssp} \neq $
+unless $\ssp = 0$. Matrix representation $\LieEl$ of a
+compact Lie group \Group\ acts as
+$\dotProd{\ssp_1}{\LieEl\ssp_2} =
+  \dotProd{\dual{\LieEl}\ssp_1}{\ssp_2} $,
+where $\dual{\LieEl}$ is the hermitian conjugate of $\LieEl$.
+    \PC{Define these properly.
+    When we get to fluids, it's not trivial - we will
+    use `energy norm.'
+    Perhaps instead of `dot product' use `bilinear form' or ?}
+\end{definition}
+
+\begin{definition}
+\label{def:slice}
+\index{slice}
+\textbf{\Slice}:
+Pick any non-zero vector $\slicep \in \pS$.
+We call the $d-N$-dimensional hyperplane $\sspRed \in \pSRed$,
+where
+\(
+\dotProd{\sspRed - \slicep}{\sliceTan{a}}=0
+\) %ee{PCsectQ1}
+is
+normal to all group tangents
+$ \sliceTan{a}= \groupTan_{a}(\slicep) = \Lg_a \slicep$ at the
+\emph{slice-fixing point} $\slicep$ a \emph{\slice}.
+As
+$
+\dotProd{\slicep}{\sliceTan{a}}=\dotProd{\slicep}{\Lg_a \slicep} =0
+$
+by the antisymmetry/antihermiticity of \Lg, the condition that
+a point \sspRed\ lies in the \slice\ \pSRed\ is
+    \PC{I believe any \slicep\ will do, even an invariant
+        point in $\pS_\Group = \Fix{\Group}$, \refeq{dscr:InvPoints},
+        as long as $|\slicep| \neq 0$.
+        For example, a point on $z$ axis for \cLe. Recheck}
+        \PC{Note one is defining a slice-fixing \emph{ray} $const \slicep$,
+        not a point - the condition is satisfied by any multiple of
+        \sliceTan{a}.
+        }
+\beq
+\dotProd{\sspRed}{\sliceTan{a}}=0
+    \,,\qquad
+\sliceTan{a} = \Lg_a \slicep
+\,.
+\ee{PCsectQ1}
+
+\end{definition}
+Note: while in general a {\slice} need not be a hyperplane,
+we find the linear slice condition \refeq{PCsectQ1} easiest to implement.
+
+We now show that such \slice\ intersects all group orbits in $\pS$.
+
+Let $\ssp \in \pS$ be a point in the \statesp.
+By assumption the Lie group of symmetries is compact
+and connected
+    \PC{consider omitting `connected;' for a group like $\On{n}$
+        you have two connected components, proof presumably still works?}
+so we can represent any group element by $\LieEl=e^{\gSpace \cdot \Lg}$ where $\gSpace \cdot \Lg=\sum \gSpace_a \Lg_a$. We want to show that there is a point on the group orbit of $\ssp$ which lies in \pSRed, \ie\ there exists a group element $\LieEl=e^{\gSpace \cdot \Lg}$, $\sspRed= \LieEl \ssp \in \pSRed$ such that $\dotProd{\LieEl \ssp}{\sliceTan{a}}=0$ for all $a$.
+
+Consider $f(\gSpace)=\dotProd{e^{\gSpace \cdot \Lg} \ssp}{\slicep}$, the projection of the group orbit of $\ssp$ onto the slice-fixing point \slicep. As long as $\ssp$ is not in the invariant subspace \refeq{dscr:InvPoints}, the projection of its group orbit $f$ is a continuous and differentiable function of \gSpace\ (if
+$\ssp$ is invariant, its group orbit is itself, just a point). If $\gSpace_E$ is an extremum of $f$ then all of the first order partial derivatives of $f$ vanish at $\gSpace_E$, $\frac{\partial f(\gSpace_E)}{\partial \gSpace_a} =\dotProd{\Lg_a e^{\gSpace_E \cdot \Lg} \ssp}{\slicep}=0$. $\Lg_a$ is anti-hermitian, so 
+$0=\dotProd{\Lg_a e^{\gSpace_E \cdot \Lg}\ssp}{\slicep} =\dotProd{e^{\gSpace_E \cdot \Lg} \ssp}{-\Lg_a \slicep}$, and
+\[
+\dotProd{e^{\gSpace_E \cdot \Lg} \ssp}{\sliceTan{a}} =0
+\,.
+\] 
+We therefore have that $e^{\gSpace_E \cdot \Lg} \ssp$ is normal to all the group tangents of $\ssp$ so it is in \pSRed. This means that the slice condition is satisfied by $\sspRed_E = e^{\gSpace_E \cdot \Lg} \ssp$ corresponding to an extremum of the $f$, and thus $\sspRed_E$ is in the slice. All that is left to do then is to show that $f$ has extrema. But as the group is compact, group orbit of every point in \pS\ is compact, its projection on the slice-point $\slicep$ has at least two extremal points, and thus every group orbit outside the invariant subspace
+intersects the \slice.
+For example, group orbits of \SOn{2}\ are topologically circles, and their
+projections have maxima, minima and inflection points as extrema.
+    \PC{
+    Stefan, if I have removed some essential part of your proof, please restore it.
+    The narrative continues in \refsect{sect:sliceSing}.
+    }
+
+
+\subsection{\Mslices, differential formulation}
 \label{sect:MovFrameODE}
 
 
@@ -1010,6 +1126,33 @@ Our second method of symmetry reduction Siminos
 \rf{SiminosThesis} calls {\em integration on the
 \slice\ (II)}.
 
+
+\subsection{\Slice\ singularities}
+\label{sect:sliceSing}
+
+In \refsect{sect:slices} we noted that the projection $f(\gSpace)$
+can have inflection points,
+\beq
+\frac{\partial^2 f(\gSpace_E)}
+     {\partial \gSpace_a \partial \gSpace_b}
+    =
+  - \dotProd{\Lg_a e^{\gSpace_E \cdot \Lg} \ssp}{\sliceTan{b}}=
+  - \dotProd{\groupTan_a(\sspRed_E)}{\sliceTan{b}}=0
+\ee{PCinflPoint}
+What role do they play? They are non-generic, but
+if we consider projections of a successive instants of a trajectory
+$f(\gSpace)=\dotProd{e^{\gSpace(t) \cdot \Lg} \ssp(t)}{\slicep}$, coalescence of
+nearby minima, maxima pairs cannot be avoided. At the instant of coalescence
+the denominator in \refeq{SF:sliceEas} goes through a simple pole,
+and the integrated trajectory within slice jumps. Our next task is 
+to compute the size of the jump from the principal value of the integrated
+velocity field on a trajectory through this singularity.
+    \PC{Stefan, take it from here.}
+    \PC{could it be that inflections are generic only for \SOn{2}, 
+        but of higher codimension and thus not encountered
+        by 1$d$ time trajectory for higher-dimensional Lie groups?}
+
+
 \subsection{\Reqva\ stability in \reducedsp}
 %SF June 22 2010
 
@@ -1103,6 +1246,41 @@ $\REQB{1}$ along one of the eigenvectors.
 
     \PC{Stefan, please write up your ``three programs for approximating the \jacobianM\ along any trajectory.'' Derive here \rpo\ {\monodromyM} in the \reducedsp, test it on some of the Evangelos \rpo s for \cLe.
     }
+
+\section{Raw \slice s}
+\label{sect:raw}
+    \PC{this is temporary, until \refsect{sect:slices} is finalized.
+        Stefan, please compare the formulas in the two, in order to
+        improve your \LaTeX\ arts}
+
+Our goal is to show that if we choose the slice to be the hyperplane normal to the group tangents at a point, then this slice intersects all group orbits.
+
+For this proof we will assume that the Lie group is compact and connected (so we can represent any group element by $\LieEl=e^{\gSpace \cdot \Lg}$ where $\gSpace \cdot \Lg=\sum \gSpace_a \Lg_a$).\\
+\\
+\noindent Fix $\ssp' \in \pS$.\\
+We will be looking at the hyperplane $\bar{\pS}$ that is normal to all the group rotation tangents at $\ssp'$, \ie\ all points $\ssp$ with $<\ssp|\groupTan_a(\ssp')>=0$ (where $\groupTan_a(\ssp')=\Lg_a \ssp'$ are the group tangents at $\ssp'$).\\
+\\
+Let $\ssp \in \pS$ be any point in the phase space.\\
+We want to show that there is a point on the group orbit of $\ssp$ which lies in $\bar{\pS}$, \ie\ there is a group element $\LieEl=e^{\gSpace \cdot \Lg}$ such that $<\LieEl \ssp|\groupTan_a(\ssp')>=0$ for all $a$.\\
+\\
+To show this we will look at the function $f_{\ssp}(\gSpace)=<\ssp'|e^{\gSpace \cdot \Lg} \ssp>$.\\
+$f_{\ssp}$ is a continuous and differentiable function by how it was defined ($e^{\gSpace \cdot \Lg}$ is both continuous and differentiable and $f_{\ssp}$ is just the inner product of this with a constant, so it is also continuous and differentiable).\\
+This tells us that if $\gSpace_E$ is an extremum of $f_{\ssp}$ then all of the first order partial derivatives of $f_{\ssp}$ will be zero at $\gSpace_E$ since $f_{\ssp}$ is differentiable.\\
+This would mean $\frac{\partial f_{\ssp}(\gSpace_E)}{\partial \gSpace_a}=0$, so $<\ssp'|\Lg_a e^{\gSpace_E \cdot \Lg} \ssp>=0$.\\
+$\Lg_a$ is anti-hermitian, so $0=<\ssp'|\Lg_a e^{\gSpace_E \cdot \Lg} \ssp>=<-\Lg_a \ssp'|e^{\gSpace_E \cdot \Lg} \ssp>=-<\Lg_a \ssp'|e^{\gSpace_E \cdot \Lg} \ssp>$ giving us that $<\groupTan_a(\ssp')|e^{\gSpace_E \cdot \Lg} \ssp>=0$.\\
+We therefore have that $e^{\gSpace_E \cdot \Lg} \ssp$ is normal to all the group tangents of $\ssp$ so it is in $\bar{\pS}$.\\
+This means that any extrema of $f_{\ssp}$ are in the slice.\\
+All that is left to do then is to show that $f_{\ssp}$ has extrema.\\
+\\
+Define $h(y)=<\ssp'|y>$.\\
+$h$ is continuous it is the inner products with a constant.\\
+Next consider $h$ on $\pS_{\ssp}$ (the group orbit of $\ssp$).\\
+$\pS_{\ssp}$ is compact since we are working with a compact Lie group.\\
+$h$ is continuous and $\pS_{\ssp}$ is compact, so $h$ achieves its extrema on $\pS_{\ssp}$, or more specifically its minimum, \ie\ there is a point $y_{min} \in \pS_{\ssp}$ such that $h(y)\geq h(y_{min})$ for all $y\in \pS_{\ssp}$. $y_{min} \in \pS_{\ssp}$ means that $y_{min}=e^{\gSpace_{min} \cdot \Lg} \ssp$ for some $\gSpace_{min}$.\\
+\\
+For any $\gSpace$, $f_{\ssp}(\gSpace)=<\ssp'|e^{\gSpace \cdot \Lg} \ssp>=h(e^{\gSpace \cdot \Lg} \ssp)$. We also know that $e^{\gSpace \cdot \Lg} \ssp \in \pS_{\ssp}$ by the definition of group orbit, so $f_{\ssp}(\gSpace)\geq h(y_{min})$ for all $\gSpace$. We have that $y_{min}=e^{\gSpace_{min} \cdot \Lg} \ssp$, so $h(y_{min})=f_{\ssp}(\gSpace_{min})$.
+This means $\gSpace_{min}$ is such that $f_{\ssp}(\gSpace)\geq f_{\ssp}(\gSpace_{min})$ for all $\gSpace$, so it is a minimum of $f_{\ssp}$.\\
+Therefore, $e^{\gSpace_{min}\cdot \Lg} \ssp$ is in $\bar{\pS}$, so there is a point on the group orbit of $\ssp$ that is in the slice.\\
 
 
 \section{Hilbert polynomials}
@@ -1210,33 +1388,3 @@ and tested [...] as applied to \cLe\.
 Much work still remains before these are viable
 methods for higher-dimensional flows.
 
-\section{Slices}
-
-Our goal is to show that if we choose the slice to be the hyperplane normal to the group tangents at a point, then this slice interesects all group orbits.\\
-\\
-For this proof we will assume that the Lie group is compact and connected (so we can represent any group element by $\LieEl=e^{\gSpace \cdot \Lg}$ where $\gSpace \cdot \Lg=\sum \gSpace_a \Lg_a$).\\
-\\
-\noindent Fix $\ssp' \in \pS$.\\
-We will be looking at the hyperplane $\bar{\pS}$ that is normal to all the group rotation tangents at $\ssp'$, \ie\ all points $\ssp$ with $<\ssp|\groupTan_a(\ssp')>=0$ (where $\groupTan_a(\ssp')=\Lg_a \ssp'$ are the group tangents at $\ssp'$).\\
-\\
-Let $\ssp \in \pS$ be any point in the phase space.\\
-We want to show that there is a point on the group orbit of $\ssp$ which lies in $\bar{\pS}$, \ie\ there is a group element $\LieEl=e^{\gSpace \cdot \Lg}$ such that $<\LieEl \ssp|\groupTan_a(\ssp')>=0$ for all $a$.\\
-\\
-To show this we will look at the function $f_{\ssp}(\gSpace)=<\ssp'|e^{\gSpace \cdot \Lg} \ssp>$.\\
-$f_{\ssp}$ is a continuous and differentiable function by how it was defined ($e^{\gSpace \cdot \Lg}$ is both continuous and differentiable and $f_{\ssp}$ is just the inner product of this with a constant, so it is also continuous and differentiable).\\
-This tells us that if $\gSpace_E$ is an extremum of $f_{\ssp}$ then all of the first order partial derivatives of $f_{\ssp}$ will be zero at $\gSpace_E$ since $f_{\ssp}$ is differentiable.\\
-This would mean $\frac{\partial f_{\ssp}(\gSpace_E)}{\partial \gSpace_a}=0$, so $<\ssp'|\Lg_a e^{\gSpace_E \cdot \Lg} \ssp>=0$.\\
-$\Lg_a$ is anti-hermitian, so $0=<\ssp'|\Lg_a e^{\gSpace_E \cdot \Lg} \ssp>=<-\Lg_a \ssp'|e^{\gSpace_E \cdot \Lg} \ssp>=-<\Lg_a \ssp'|e^{\gSpace_E \cdot \Lg} \ssp>$ giving us that $<\groupTan_a(\ssp')|e^{\gSpace_E \cdot \Lg} \ssp>=0$.\\
-We therefore have that $e^{\gSpace_E \cdot \Lg} \ssp$ is normal to all the group tangents of $\ssp$ so it is in $\bar{\pS}$.\\
-This means that any extrema of $f_{\ssp}$ are in the slice.\\
-All that is left to do then is to show that $f_{\ssp}$ has extrema.\\
-\\
-Define $h(y)=<\ssp'|y>$.\\
-$h$ is continuous it is the inner products with a constant.\\
-Next consider $h$ on $\pS_{\ssp}$ (the group orbit of $\ssp$).\\
-$\pS_{\ssp}$ is compact since we are working with a compact Lie group.\\
-$h$ is continuous and $\pS_{\ssp}$ is compact, so $h$ achieves its extrema on $\pS_{\ssp}$, or more specifically its minimum, \ie\ there is a point $y_{min} \in \pS_{\ssp}$ such that $h(y)\geq h(y_{min})$ for all $y\in \pS_{\ssp}$. $y_{min} \in \pS_{\ssp}$ means that $y_{min}=e^{\gSpace_{min} \cdot \Lg} \ssp$ for some $\gSpace_{min}$.\\
-\\
-For any $\gSpace$, $f_{\ssp}(\gSpace)=<\ssp'|e^{\gSpace \cdot \Lg} \ssp>=h(e^{\gSpace \cdot \Lg} \ssp)$. We also know that $e^{\gSpace \cdot \Lg} \ssp \in \pS_{\ssp}$ by the definition of group orbit, so $f_{\ssp}(\gSpace)\geq h(y_{min})$ for all $\gSpace$. We have that $y_{min}=e^{\gSpace_{min} \cdot \Lg} \ssp$, so $h(y_{min})=f_{\ssp}(\gSpace_{min})$.
-This means $\gSpace_{min}$ is such that $f_{\ssp}(\gSpace)\geq f_{\ssp}(\gSpace_{min})$ for all $\gSpace$, so it is a minimum of $f_{\ssp}$.\\
-Therefore, $e^{\gSpace_{min}\cdot \Lg} \ssp$ is in $\bar{\pS}$, so there is a point on the group orbit of $\ssp$ that is in the slice.\\
