@@ -11,8 +11,11 @@
 \label{chap:CLF}
 
 \begin{quote}
-{\bf Abstract:} Stefan, write this: often! this might be the only part
+{\bf Abstract:} 
+    {\color{red}
+Stefan, write this: often! this might be the only part
 of this text that most people glance at.
+    }
 \end{quote}
 
 \section{Introduction}
@@ -89,9 +92,11 @@ bounded by pipes or planes\rf{GHCW07,GibsonMovies}.
 
 \noindent {\bf Acknowledgments.}
 This report is written in collaboration with
-E.~Siminos and P.~Cvitanovi\'c.
+% E.~Siminos and
+P.~Cvitanovi\'c.
 S.F. work was supported by the National Science Foundation
-grant DMR~0820054.
+grant DMR~0820054 and a Georgia Tech President's Undergraduate
+Research Award.
 P.C. thanks Glen Robinson Jr. for support.
 
 \subsection{Visualizing \cLf}
@@ -128,7 +133,7 @@ $(x_1, x_2, y_1, y_2, z) = (1, 0, 0, 1, 1)$.
 
          \Private{
 \noindent{\bf Stefan -
-Jul ?? 2010}:\\
+Sep ?? 2010}:\\
 \medskip\noindent
          }
 In order to eventually remove the rotational symmetry in the
@@ -136,11 +141,9 @@ In order to eventually remove the rotational symmetry in the
 equivariant. By showing this, we will then be able to apply
 algorithms to remove the symmetry. Rotational equivariance in
 this situation will let us commute a rotation operator with
-taking time derivatives.\RW{I plan on writing more here, just
-haven't thought of what else I want to say yet.}
+taking time derivatives.
 
-We begin by defining `equivariance.'
-A flow $\dot{x}= \vel(x)$ is equivariant under an operation $\LieEl$ when
+We begin by defining `equivariance.' A flow $\dot{x}= \vel(x)$ is equivariant under an operation $\LieEl$ when
 \beq
 \LieEl \, \vel(x)=v(\LieEl \, x)
 \,.
@@ -148,7 +151,8 @@ A flow $\dot{x}= \vel(x)$ is equivariant under an operation $\LieEl$ when
 This means that if $f(x)$ is a solution to the dynamical
 equations, then so is $\LieEl\,f(x)$.
 
-In many flows, such as the \cLe, the equivariant operations
+In many flows (the \cLe\ are a particularly simple example),
+the equivariant operations
 will form a Lie group that can be used to reduce the
 dynamics.
 
@@ -157,71 +161,90 @@ dynamics.
 A Lie group is a group which (1) is a differential manifold
 and (2) the composition map $G \times G \rightarrow G : (g,h)
 \rightarrow g h^{-1}$ is $\mathbb{C}^\infty$.
-
-An element of a compact Lie group that is continuously
+    \PC{Stefan, this looks like a rather unenlightening definition.
+        Can you make up a more useful one?}
+As its representations are everywhere differentiable, an element of a compact Lie group can be parameterized in exponential form.
+    \PC{Stefan wrote: ``By assumption the Lie group of symmetries is compact and connected;'' then ``we don't need connected, we just need a representation of the group elements that is differentiable, and there is one for $\On{n}$. For a group like $\On{n}$ you have two connected components, proof presumably still works? {\bf PC}: Agreed. 'Compact' is not needed, either}
+For example,
+an element of a compact Lie group that is continuously
 connected to the identity can be expressed as
 \beq
-\LieEl(\gSpace)=e^{{\gSpace} \cdot \Lg },\quad \gSpace \cdot \Lg
-   = \sum \gSpace_a \Lg_a , a = 1,2,\cdots,N
+\LieEl(\gSpace)=e^{{\gSpace} \cdot \Lg }
+\,,
 \ee{FiniteRot}
 where $\gSpace \cdot \Lg$ is a \emph{Lie algebra} element,
 and the $\gSpace_a$ are the parameters of the transformation.
+    \PC{need to generalize to groups like \On{n}}
                                                     \exerbox{exer:FinRot2d}
-
-Using the Taylor polynomial for $e^{x}$, one finds that
-rotation by an infinitesimal amount, $|\delta \gSpace| \ll
+%
+A rotation by an infinitesimal amount, $|\delta \gSpace| \ll
 1$, can be expressed as
 \[
-\LieEl(\delta \gSpace)=
- 1+\delta \gSpace \cdot \Lg  + \cdots \cong 1 + \delta \gSpace \cdot \Lg
+\LieEl(\delta \gSpace) \simeq 1 + \delta \gSpace \cdot \Lg
 \,,
 \]
 where the $\Lg_a$ are a set of N linearly independent
-$[d\times d]$anti-hermitian matrices acting linearly on the
-state space. They are called the \emph{generators} of
+$[d\times d]$ antihermitian matrices acting linearly on the
+{\statesp}. They are called the \emph{generators} of
 infinitesimal transformations.
+To see why, define the group action tangent at $\ssp$ as
+\beq
+ \groupTan_{a}(\ssp) = \Lg _{a} \ssp
+    \,,\qquad
+ a=1,2,\cdots,N,
+\ee{PC:groupTan}
+and consider a transformation induced by an infinitesimal
+time-dependent variation of group `phases'
+$\delta \gSpace_a = \timeStep \, \dot{\gSpace_a}$,
+\[
+\delta \ssp = \timeStep \dot{\gSpace} \cdot \groupTan(\ssp)
+\,.
+\]
+So $\dot{\gSpace} \cdot \groupTan(\ssp)$ is the velocity
+of the flow along the group orbit of \ssp.
+We shall use $\groupTan(\sspRed)_a$ notation (rather than
+$\Lg_{a}\sspRed$) to emphasize that this is the
+group \emph{tangent field} at $\sspRed$.
 
 The statement of equivariance
 $
-\dot{x}=\LieEl^{(-1)} v(\LieEl x)
+\dot{x}=\LieEl^{(-1)} \vel(\LieEl x)
 $
-for infinitesimal rotations is then
+for infinitesimal rotations is
 \[
-\dot{x}=(1-\gSpace \cdot \Lg ) v(x+\gSpace \cdot \Lg  x)
-       =v(x)-\gSpace \cdot \left(
-            \Lg v(x) - \frac{dv}{dx} \Lg x
+\dot{x}=(1-\gSpace \cdot \Lg ) \vel(x+\gSpace \cdot \Lg  x)
+       =\vel(x)-\gSpace \cdot \left(
+            \Lg \vel(x) - \frac{d\vel}{dx} \Lg x
                      \right)
 \,.
 \]
-Define the group action tangent at $\ssp$ as
-\beq
- \groupTan_{a}(\ssp) = \Lg _{a} \ssp
-\,\qquad
- a=1,2,\cdots,N.
-\ee{PC:groupTan}
-
-
-We then get the {\em infinitesimal
+We can now state the {\em infinitesimal
 rotations} version of the equivariance condition
-\refeq{eq:FiniteRot}:
+\refeq{eq:FiniteRot} as:
 \beq
-0=- \Lg_a v(x)+\Mvar \Lg_a x
+0 = - \groupTan_{a}(\vel)+\Mvar \groupTan_{a}(\ssp)
 \,,
 \label{eq:InfnmslRot}
 \eeq
-where $\Mvar$ is
-the \stabmat\ \refeq{SF:stabMat}.
+where $\Mvar$ is the \stabmat\ \refeq{SF:stabMat}.
 % \refeq{5x5stabMat}.
+    \PC{Stefan, you might want to learn about Jacobi derivatives,
+        explain this statement geometrically}
 
 We have used both this infinitesimal rotation condition and
 the finite angle rotation condition \refeq{eq:FiniteRot}, to
 verify that the \cLe\ are rotationally equivariant.
+    \PC{Stefan, have you done this? Yes or no.}
                                                     \exerbox{exer:InfinRotInvari}
                                                     \exerbox{exer:FinRotInvarCmplx}
                                                     \exerbox{exer:FinRotInvari}
 
-\paragraph{Definition:
-           Fixed-point subspace}
+
+%\paragraph{Definition:           Fixed-point subspace}
+\begin{definition}
+\label{def:centralizer}
+\index{slice}
+\textbf{Fixed-point subspace.}
 \index{centralizer}\index{fixed-point subspace}
 \index{G-fixed@\Group-fixed}\index{fixed point!under \Group}
 $\pS_H$ of a subgroup or a `centralizer' $H \subset \Group$,
@@ -246,7 +269,113 @@ points},
    \{ \ssp \in \pS : {g} \, \ssp = \ssp \mbox{ for all } g \in \Group \}
 \,.
 \ee{dscr:InvPoints}
+\end{definition}
 
+\subsection{Inner products}
+\label{def:innerProduct}
+\index{slice}
+
+As we shall use several kinds of inner products:
+over group manifolds, over real and complex finite-dimensional coordinates, and over function spaces, it is convenient to introduce a compact notation that subsumes them all as special cases.
+    \PC{We need to define these properly. When we get to fluids, it's not trivial - we will use `energy norm.' }
+
+Throughout this report the dot product $\gSpace \cdot \Lg$ refers to a sum over Lie algebra generators,
+\beq
+\gSpace \cdot \Lg = \sum \gSpace_a \Lg_a
+    \,,\qquad
+a = 1,2,\cdots,N
+\,.
+\ee{dotGroup}
+The inner product of two \statesp\ vectors $x, y \in \pS$ will be denoted by $\dotProd{x}{y}$. If the \statesp\ is finite dimensional and real, the inner product is the Euclidian product of two vectors $x,y$,
+\beq
+\dotProd{x}{y} = \sum_i^d {x}_i y_i
+    \,,\qquad \pS \subset \reals
+\,.
+\ee{innerR}
+If the \statesp\ is finite dimensional and complex,
+\beq
+\dotProd{x}{y} = \sum_i^d \dual{x}_i y_i
+    \,,\qquad \pS \subset \complex
+\,,
+\ee{innerC}
+where $\dual{x}$ is the complex conjugate transpose of $x$, or, more generally, the hermitian conjugate $\dual{M}$ of matrix $M$. If the \statesp\ is a function space with an $L^2$ norm (Banach, Hilbert, Sobolev, ...),
+\beq
+\dotProd{g}{f} = \int dx \, \dual{g}(x) f(x)
+\,.
+\ee{innerL2}
+The associated $L^2$ norm is
+$|\ssp|^2 = \dotProd{\ssp}{\ssp} \neq 0$, unless $\ssp = 0$.
+
+In computations the functions are expressed in terms of
+complete orthonormal basis sets $\{u_n\}$,
+\bea
+f(x) &=& \sum_0^{\infty} a_n u_n(x)
+    \continue
+\dotProd{u_n}{u_m} &=& \delta_{nm}
+\,.
+\label{basisL2}
+\eea
+A matrix $M$ acts as
+    \PC{This should probably be extended to non-selfadjoint
+        actions, explain the adjoint {\jacobianM} $\dual{\jMps}$.}
+\beq
+\dotProd{x}{M\,y} =
+  \dotProd{\dual{M}\,x}{y}\,,
+\ee{adjointG}
+where $\dual{M}$ is the hermitian conjugate of $M$.
+Unitary and orthogonal groups (as well as their subgroups) are
+defined as groups that preserve these `length' norms, and
+infinitesimally their generators induce no change in the norm,
+\[
+\dotProd{\dual{\Lg}_a\ssp}{\ssp}
+  +\dotProd{\ssp}{\Lg_a\ssp} =0
+\,,
+\]
+hence the Lie algebra generators
+$\Lg$ are antisymmetric for orthogonal (sub)groups,
+and antihermitian for unitary ones,
+\beq
+\dual{\Lg} = - \Lg
+\,.
+\ee{antiHerm}
+This implies that the action of the group on vector $\ssp$ is
+normal to it,
+\beq
+\dotProd{\groupTan_{a}(\ssp)}{\ssp} =0
+\,.
+\ee{TtimesX}
+
+A group tangent \refeq{PC:groupTan} is a vector both in the group and \statesp\ manifolds. We shall indicate by $\dotProd{\groupTan_{a}(x)}{\groupTan_{b}(y)}$  the sum over \statesp\ inner product only, and by
+\beq
+\dotProd{\groupTan(x)}{\groupTan(y)} =
+    \sum_{a=1}^N \dotProd{\groupTan_{a}(x)}{\groupTan_{a}(y)} =
+  \dotProd{x}{\dual{\Lg} \cdot {\Lg}\,y}
+\ee{innerGdot}
+the sum over both group and spatial dimensions.
+
+Any representation of a compact Lie group $\Group$ is fully
+reducible, and invariant tensors constructed by contractions
+of $\Lg_a$ are useful for identifying irreducible
+representations. The simplest such invariant is
+\beq
+\dual{\Lg} \cdot \Lg = \sum_\alpha C_2^{(\alpha)} \, \id^{(\alpha)}
+\,,
+\ee{QuadCasimir}
+where $C_2^{(\alpha)}$ is the quadratic Casimir for
+irreducible representation labeled $\alpha$, and
+$\id^{(\alpha)}$ is the identity on the $\alpha$-irreducible
+subspace, 0 elsewhere. $ C_2^{(\alpha)} =0$ if $\alpha$
+is an invariant subspace.
+The dot product of two tangent fields
+\refeq{innerGdot} is thus a sum of inner products
+weighted by Casimirs,
+\beq
+\dotProd{\groupTan(x)}{\groupTan(y)}
+   = \sum_\alpha C_2^{(\alpha)} \dual{x}_i\, \delta_{ij}^{(\alpha)} y_j
+\,.
+\ee{dotProd}
+For compact groups $C_2^{(\alpha)}$ are strictly nonnegative by
+the antihermiticity \refeq{antiHerm} of Lie algebra generators.
 
 
 \section{Linear stability}
@@ -266,14 +395,15 @@ $\dot x = v(x)$ we find that
 \beq
 \dot x + \dot{\delta x}=v_i(x+\delta x) \approx v_i(x)+\Mvar \delta x
 \eeq
-where
+where we shall refer to the matrix of velocity gradients
 \beq
 \Mvar_{ij}(x)=\frac{\partial v_i (x)}{\partial x_j}
 \ee{SF:stabMat}
-is known as the \stabmat.
+as the \stabmat.
 In our first attempt to understand the dynamics of the flow,
 we examine the \eqv\ of the system by finding this \stabmat\
-$\Mvar$. For the \cLe\ it is the $[5\!\times\!5]$ matrix,
+$\Mvar$. For the \cLe\ it is the $[5\!\times\!5]$
+matrix of velocity gradients,
                                                     \exerbox{exer:StabmatCLf}
 \beq
   \Mvar =\left(\barr{ccccc}
@@ -288,8 +418,7 @@ As explained in ChaosBook.org\rf{DasBuch}, a \stabmat\
 describes the instantaneous rate of shearing of the
 infinitesimal neighborhood of $x(t)$ by the flow. That is, it
 describes how quickly points initially very near to $x(t)$ will
-diverge away from it in time. It is the matrix of
-velocity gradients. Matrix $\Mvar$ is an important
+diverge away from / converge to it in time. Matrix $\Mvar$ is an important
 tool which we will use in what follows.
 
 \subsection{\jacobianM}
@@ -326,20 +455,7 @@ see \refexer{traLocEigFr}.
     appears too early, search for ``traLocEigFr.''
     }
 
-If the equations of motion is all that is known about the
-system then it is simple to calculate the stability matrix
-but the trajectories are not known so it is not possible to
-calculate the \jacobianM\ using the given formula. Thankfully
-there are other methods of calculating the \jacobianM; in
-ChaosBook.org\rf{DasBuch} it is shown that the \jacobianM\
-matrix is related to the stability matrix by
-$\frac{d}{dt} \jMps^t(x)=\Mvar (x) \jMps^t(x)$
-or equivalently
-$\jMps^t(\xInit)= \texttt{T} e^{\int^t_0 d\tau \Mvar (x(\tau))}$,
-where \texttt{T} stands for a time-ordered product.
-When using a numerical routine to integrate the equations of
-motion, using a discrete approximation of either of these two
-formulas requires minimal additional programming effort.
+The methods of calculating the \jacobianM\ are discussed in ChaosBook.org\rf{DasBuch} where it is shown that the \jacobianM\ matrix is related to the stability matrix by $\frac{d}{dt} \jMps^t(x)=\Mvar (x) \jMps^t(x)$ or equivalently $\jMps^t(\xInit)= \texttt{T} e^{\int^t_0 d\tau \Mvar (x(\tau))}$, where \texttt{T} stands for a time-ordered product. When using a numerical routine to integrate the equations of motion, using a discrete approximation of either of these two formulas requires minimal additional programming effort.
 
 % PC 13jul2010
 \exercise{Transport of local eigenframes.}{     \label{traLocEigFr}
@@ -413,7 +529,7 @@ simulation, for unstable \reqv\ the (finite precision)
 trajectory eventually leaves this point.
                                                     \exerbox{exer:EquiCLe}
 
-\subsection{Stability of \eqva}
+% \subsection{Stability of \eqva}
 
 At an equilibrium, the flow manages to stay at a single
 point, but what if we start at points near the equilibrium? Will
@@ -506,11 +622,6 @@ I get
 ( \Mvar -  \velRel \cdot \Lg) \vel =0
 \,.
 \ee{ReqvMargEig}
-(Repeated indices are summed throughout this
-report, and the dot product refers to a sum over
-Lie algebra generators. The Euclidian product of two vectors
-$x,y$ will be indicated by $x$-transpose times $y$, \ie,
-$x^T y = \sum_i^d x_i y_i$.)
 In other words, you have to be in the co-rotating
 frame for eigenvalue to be marginal, and the velocity
 be the corresponding right eigenvector.
@@ -525,7 +636,7 @@ function in terms of time.
     for a compact Lie group $\velRel(\tau)_a = \velRel_a$ is constant
     independent of time, but the proof feels a bit clumsy.}
 We also know that $x(\tau) = \LieEl(\tau) x(0)$ for some
-element $\LieEl(\tau)$ of the symmetry group. Plugging this
+element $\LieEl(\tau)$ of the symmetry group. Inserting this
 into the first equation, we get that
 \bea
 v(\LieEl(\tau) \xInit) &=&
@@ -597,7 +708,7 @@ We can extend this analysis of linear stability to not only
 work for single points, but also allow us to study the
 dynamics of the system near periodic orbits.
 
-Let p be a prime cycle, $\ssp \in M_p$ be any point on the
+Let $p$ be a prime cycle, $\ssp \in M_p$ be any point on the
 cycle, $\period{p}$ the period of the cycle and
 $\jMps_p\left(\ssp\right) = \jMps^{\period{p}}(\ssp)$ be
 the {\jacobianM} for a single transversal of the cycle.
@@ -739,7 +850,7 @@ $\jMps_p(\ssp) \delta \theta \cdot \Lg \ssp = \delta
  \jMps_p(\ssp) \groupTan_{a}(\ssp) =
 \groupTan_{a}(\ssp)
 \ee{SF:symMargEig}
-with unit eigenvalues$\ExpaEig_a=1$,
+with unit eigenvalues $\ExpaEig_a=1$,
 where $\groupTan_{a}(\ssp)$ is a group tangent \refeq{PC:groupTan}.
     \PC{prove this for a \rpo, using definition \refeq{SF:symPrimJac};
         the \po\ marginal eigenvalue should be a special case.}
@@ -820,7 +931,7 @@ Next consider the same situation, but instead we will use a
 cost (or error) function $I\left(\Delta \ssp\right) =
 \left(\ssp + \Delta \ssp - f\left(\ssp + \Delta
 \ssp\right)\right)^2/2$. If $\ssp+\Delta \ssp$ is on a
-periodic orbit then both $I\left(\delta \ssp\right)$ and its
+periodic orbit then $I\left(\delta \ssp\right)$ and its
 linear in $\Delta x$ approximation  $\left(\ssp + \Delta \ssp
 - f\left(\ssp+ \delta
 \ssp\right)\right)\left(I-\jMps\left(\ssp\right)\right)$ are
@@ -856,46 +967,37 @@ method can introduce singularities, as in
 
      \Private{
 \noindent{\bf Predrag -
-July 19, Aug 12 2009}: %\\
+July 19, Aug 12 2009; Sep 19 2010}
     }
 
-Siminos\rf{SiminosThesis} discusses symmetry reduction by the
-{\em {\mslices}} of Cartan\rf{CartanMF}, in the
-formulation of Fels and
-Olver\rf{FelsOlver98,FelsOlver99,OlverInv}.
+Here we briefly describe discusses symmetry reduction by the
+{\em {\mslices}} of
+Cartan\rf{CartanMF,FelsOlver98,FelsOlver99,OlverInv}.
                                                 \exerbox{exer:SO2cSect}
-The {\mslices} allows the determination of (in
-general non-polynomial) invariants of the group action by a
-simple and efficient algorithm that, as argued in
-\rf{SiminosThesis}, works well in high-dimensional \statesp s.
+                                                \exerbox{exer:mslicesInv}
 
 Split up the integration of the $\SOn{2}$-equivariant ODE into
 a sequence of short time steps, each followed by a rotation
 such that the next segment initial point is in the point
-$\sspRed$ {\slice}, a $(d\!-\!1)$-dimensional hyperplane
+$\sspRed \in$ {\slice}, a $(d\!-\!1)$-dimensional hyperplane
 normal to the group rotation tangent $\sliceTan{}$ at point
-$\sspRed$:
+$\slicep$:
     \PC{Stefan, rewrite the whole text in terms of
         $\dotProd{.}{.}$.}
 \beq
-(\ssp - \sspRed)^T \sliceTan{a}=0
+\dotProd{\sspRed - \slicep}{\sliceTan{a}}=0
     \,,\qquad
-\sliceTan{a} = \Lg_a \sspRed
+\sliceTan{a} = \Lg_a \slicep
 \,.
 \ee{PCsectQ}
-For any $\hat{\ssp}$, $\ssp =
-\LieEl(\gSpace)\cdot\hat{\ssp}$ is defined to be the
-rotation of $\hat{\ssp}$ that lies in the \slice. Such a
+For any $\ssp$, $\sspRed =
+\LieEl(\gSpace) \cdot \ssp$ is defined to be the
+rotation of $ \ssp$ that lies in the \slice. Such a
 map from a point in space to the group action is called a
 \emph{moving frame} in the formulation of Fels and
 Olver\rf{FelsOlver98,FelsOlver99,OlverInv}.
 
 [...]
-    \PC{incorporate this into the text:``
-We use $\groupTan(\sspRed)_a$ notation (rather than
-$\Lg_{a}\sspRed$) to emphasize that this is the
-group \emph{tangent field} at $\sspRed$.
-    ''}
                                                     \exerbox{exer:PCsectionCLe}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -922,6 +1024,18 @@ finite time version.
         to make it clearer that the whole segment is rotated.
        }
 
+\exercise{Determination of group invariants by the {\mslices}:
+    }{ \label{exer:mslicesInv}
+Show that the $d-N$ \reducedsp\ coordinates are determined by the {\mslices} are independent group invariants, and that the {\mslices} allows the determination of (in general non-polynomial) invariants of the group action by a simple and efficient algorithm that works well in high-dimensional \statesp s.
+    }
+
+\solution{exer:mslicesInv}
+{Determination of group invariants by the {\mslices}:}{
+(To be written by Stefan: read and understand relevant parts of Fels and
+Olver\rf{FelsOlver98,FelsOlver99,OlverInv}, Siminos\rf{SiminosThesis})
+    }
+
+
 \subsection{How good is your \slice?}
 \label{sect:slices}
 
@@ -938,50 +1052,28 @@ arising from multiple traversal of a slice by a single  full space
 \begin{definition}
 \label{def:slice}
 \index{slice}
-A dot product $\dotProd{\ssp_1}{\ssp_2}$,
-$\ssp_1, \ssp_2\in \pS$. The associated norm is
-$|\ssp|^2 = \dotProd{\ssp}{\ssp} \neq $
-unless $\ssp = 0$. Matrix representation $\LieEl$ of a
-compact Lie group \Group\ acts as
-$\dotProd{\ssp_1}{\LieEl\ssp_2} =
-  \dotProd{\dual{\LieEl}\ssp_1}{\ssp_2} $,
-where $\dual{\LieEl}$ is the hermitian conjugate of $\LieEl$.
-    \PC{Define these properly.
-    When we get to fluids, it's not trivial - we will
-    use `energy norm.'
-    Perhaps instead of `dot product' use `bilinear form' or ?}
-\end{definition}
-
-\begin{definition}
-\label{def:slice}
-\index{slice}
 \textbf{\Slice}:
-Pick any non-zero vector $\slicep \in \pS$.
-We call the $d-N$-dimensional hyperplane $\sspRed \in \pSRed$,
-where
+Pick a non-zero vector $\slicep \in \pS$.
+We call the $d-N$-dimensional hyperplane $\sspRed \in \pSRed$
+a \emph{\slice}, where
 \(
 \dotProd{\sspRed - \slicep}{\sliceTan{a}}=0
 \) %ee{PCsectQ1}
-is
-normal to all group tangents
-$ \sliceTan{a}= \groupTan_{a}(\slicep) = \Lg_a \slicep$ at the
-\emph{slice-fixing point} $\slicep$ a \emph{\slice}.
+is normal to all group tangents
+$ \sliceTan{a}= \groupTan_{a}(\slicep) = \Lg_a \slicep$ 
+at the \emph{slice-fixing point} $\slicep$. The {slice-fixing point} should lie outside the invariant subspace $\pS_\Group = \Fix{\Group}$ or any of the invariant subspaces $\pS_H$ defined in \refeq{dscr:FPsubsp}. If \slicep\ is invariant under the group, then $\sliceTan{a}=0$ and the ``\slice'' so defined would be the entire space.
+    \PC{Extend this claim to the invariant subspaces as well}
+    \PC{In constructing his return map, Lorenz, I think,
+    used projections on the invariant axes $z$ and $\dot{z}$. 
+    Is that not a \slice? Rethink}
+
 As
 $
 \dotProd{\slicep}{\sliceTan{a}}=\dotProd{\slicep}{\Lg_a \slicep} =0
 $
-by the antisymmetry/antihermiticity of \Lg, the condition that
+by \refeq{antiHerm} the antisymmetry / antihermiticity of \Lg,
+the condition that
 a point \sspRed\ lies in the \slice\ \pSRed\ is
-    \PC{I believe any \slicep\ will do, even an invariant
-        point in $\pS_\Group = \Fix{\Group}$, \refeq{dscr:InvPoints},
-        as long as $|\slicep| \neq 0$.
-        For example, a point on $z$ axis for \cLe. Recheck}
-    \SF{If \slicep\ is invariant under the group, then isn't $\sliceTan{a}=0$ so the slice is the entire
-        space?}
-        \PC{Note one is defining a slice-fixing \emph{ray} $const \slicep$,
-        not a point - the condition is satisfied by any multiple of
-        \sliceTan{a}.
-        }
 \beq
 \dotProd{\sspRed}{\sliceTan{a}}=0
     \,,\qquad
@@ -992,30 +1084,25 @@ a point \sspRed\ lies in the \slice\ \pSRed\ is
 \end{definition}
 Note: while in general a {\slice} need not be a hyperplane,
 we find the linear slice condition \refeq{PCsectQ1} easiest to implement.
+For linear case, the same slice is fixed by any
+point on the ray $const\; \slicep$ through the point \slicep.
 
 We now show that such a \slice\ intersects all group orbits in $\pS$.
+Let $\ssp \in \pS$ be a point in the \statesp, and a group element represented  by $\LieEl=e^{\gSpace \cdot \Lg}$, as in \refeq{FiniteRot}. 
+    \PC{this looks like a repeat of what is to come, dropped: `` We want to show that there is a point on the group orbit of $\ssp$ which lies in \pSRed, \ie\ there exists a group element $\LieEl=e^{\gSpace \cdot \Lg}$, $\sspRed= \LieEl \ssp \in \pSRed$ such that $\dotProd{\LieEl \ssp}{\sliceTan{a}}=0$ for all $a$.
+    ''}
 
-Let $\ssp \in \pS$ be a point in the \statesp.
-By assumption the Lie group of symmetries is compact
-and connected
-    \PC{consider omitting `connected;' for a group like $\On{n}$
-        you have two connected components, proof presumably still works?}
-    \SF{I guess we don't need connected, we just need a representation of the group elements that is differentiable,
-        and there is one for $\On{n}$ isn't there?}
-so we can represent any group element by $\LieEl=e^{\gSpace \cdot \Lg}$ where $\gSpace \cdot \Lg=\sum \gSpace_a \Lg_a$. We want to show that there is a point on the group orbit of $\ssp$ which lies in \pSRed, \ie\ there exists a group element $\LieEl=e^{\gSpace \cdot \Lg}$, $\sspRed= \LieEl \ssp \in \pSRed$ such that $\dotProd{\LieEl \ssp}{\sliceTan{a}}=0$ for all $a$.
+Consider $f(\gSpace)=\dotProd{e^{\gSpace \cdot \Lg} \ssp}{\slicep}$, the projection of the group orbit of $\ssp$ onto the slice-fixing ray through \slicep. $f$ is a continuous and differentiable function of \gSpace. If $\ssp$ is invariant, its group orbit is itself, and $f(\gSpace)$ takes a constant value.
 
-Consider $f(\gSpace)=\dotProd{e^{\gSpace \cdot \Lg} \ssp}{\slicep}$, the projection of the group orbit of $\ssp$ onto the slice-fixing point \slicep. $f$ is a continuous and differentiable function of \gSpace\ (if
-$\ssp$ is invariant, its group orbit is itself, just a point).
-
- If $\gSpace_E$ is an extremum of $f$ then all of the first order partial derivatives of $f$ vanish at $\gSpace_E$, $\frac{\partial f(\gSpace_E)}{\partial \gSpace_a} =\dotProd{\Lg_a e^{\gSpace_E \cdot \Lg} \ssp}{\slicep}=0$. $\Lg_a$ is anti-hermitian, so
-$0=\dotProd{\Lg_a e^{\gSpace_E \cdot \Lg}\ssp}{\slicep} =\dotProd{e^{\gSpace_E \cdot \Lg} \ssp}{-\Lg_a \slicep}$, and
+If $\gSpace_E$ is an extremum of $f$ then all of the first order partial derivatives of $f$ vanish at $\gSpace_E$, $\frac{\partial f(\gSpace_E)}{\partial \gSpace_a} =\dotProd{\Lg_a e^{\gSpace_E \cdot \Lg} \ssp}{\slicep}=0$. $\Lg_a$ is antihermitian, so 
+$0=\dotProd{\Lg_a e^{\gSpace_E \cdot \Lg}\ssp}{\slicep} 
+= - \dotProd{\LieEl_E \ssp}{\Lg_a  \slicep}$, 
+and
 \[
-\dotProd{e^{\gSpace_E \cdot \Lg} \ssp}{\sliceTan{a}} =0
+\dotProd{\LieEl_E \ssp}{\sliceTan{a}} =0
 \,.
 \]
-We therefore have that $e^{\gSpace_E \cdot \Lg} \ssp$ is normal to all the group tangents of $\ssp$ so it is in \pSRed. This means that the slice condition is satisfied by $\sspRed_E = e^{\gSpace_E \cdot \Lg} \ssp$ corresponding to an extremum of the $f$, and thus $\sspRed_E$ is in the slice. All that is left to do then is to show that $f$ has extrema. But as the group is compact, the group orbit of every point in \pS\ is compact, so its projection on the slice-point $\slicep$ has at least two extremal points, and thus every group orbit intersects the \slice.
-For example, group orbits of \SOn{2}\ are topologically circles, and their
-projections have maxima, minima and inflection points as extrema.
+We therefore have that $\sspRed= \LieEl_E \ssp$ is normal to all the group tangents of $\ssp$ so it is in \pSRed. This means that the slice condition is satisfied by $\sspRed_E = \LieEl_E \ssp$ corresponding to an extremum of the $f$, and thus $\sspRed_E$ is in the slice. All that is left to do then is to show that $f$ has extrema. But as the group is compact, the group orbit of every point in \pS\ is compact, so its projection on the slice-point $\slicep$ has at least two extremal points, and thus every group orbit intersects the \slice. For example, group orbits of \SOn{2}\ are topologically circles, and their projections have maxima, minima and inflection points as extrema.
     \PC{
     Stefan, if I have removed some essential part of your proof, please restore it.
     The narrative continues in \refsect{sect:sliceSing}.
@@ -1043,10 +1130,11 @@ in \refsect{sect:SymmDyn}.
 
 Let $\sliceTan{}$ be a vector normal to the plane of the slice. Then the dynamics within the slice are given by
 \bea
-\dot{\gSpace_a}(\sspRed) &=& \frac{\vel(\sspRed)^T \sliceTan{a}}
-               {\groupTan(\sspRed)^T \cdot \sliceTan{}}
+\dot{\gSpace_a}(\sspRed) &=& \frac{\dotProd{\vel(\sspRed)}{\sliceTan{a}}}
+               {\dotProd{\groupTan(\sspRed)}{\sliceTan{}}}
 \continue
-\velRed(\sspRed) &=& \vel(\sspRed)-\dot{\gSpace}(\sspRed) \cdot \groupTan(\sspRed)
+\velRed(\sspRed) &=& \vel(\sspRed)
+   -\dot{\gSpace}(\sspRed) \cdot \groupTan(\sspRed)
 \label{SF:sliceEas}
 \eea
 where $\velRed(\sspRed)$ is the velocity in the slice.
@@ -1158,10 +1246,10 @@ velocity field on a trajectory through this singularity.
         by 1$d$ time trajectory for higher-dimensional Lie groups?}
 
 
-\subsection{\Reqva\ stability in \reducedsp}
+\subsection{Stability of \reqva\ in \reducedsp}
 %SF June 22 2010
 
-Using the usual parameters, we get the eigenvalues
+Using the parameters \refeq{SiminosPrmts}, we get the eigenvalues
 \[
 0.0938 \pm 10.1945i,-22.0000,-13.8534,-11.009
 \]
@@ -1196,7 +1284,7 @@ The equations of motion for trajectory kept in a hyperplane by rotation under th
     \continue
     u(\sspRed) &=& v(\sspRed)-\dot{\gSpace}(\sspRed)  \cdot \groupTan(\sspRed)
 \eea
-where $v(\sspRed)$ is the velocity of the full \statesp\ flow, $\groupTan(\sspRed)$ is the tangent to the group action, and $\sliceTan{}$ is the vector normal to the hyperplane of the slice. Using this equation we get that the {\stabmat} $\MvarRed$ for the system in reduced state space is given by:
+where $v(\sspRed)$ is the velocity of the full \statesp\ flow, $\groupTan(\sspRed)$ is the tangent to the group action, and $\sliceTan{}$ is the vector normal to the hyperplane of the slice. Using this equation we get that the {\stabmat} $\MvarRed$ for the system in \reducedsp\ is given by:
     \PC{Stefan's version was
 \[
 M_{ij} =
@@ -1256,7 +1344,7 @@ $\REQB{1}$ along one of the eigenvectors.
 \label{sect:raw}
     \PC{this is temporary, until \refsect{sect:slices} is finalized.
         Stefan, please compare the formulas in the two, in order to
-        improve your \LaTeX\ arts}
+        improve your \LaTeX\ arts, then remove this section.}
 
 Our goal is to show that if we choose the slice to be the hyperplane normal to the group tangents at a point, then this slice intersects all group orbits.
 
