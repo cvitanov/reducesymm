@@ -505,7 +505,7 @@ So $\dot{\gSpace} \cdot \groupTan(\ssp)$ is the velocity
 of the flow along the group orbit of \ssp.
 We shall use $\groupTan_a(\sspRed)$ notation (rather than
 $\Lg_{a}\sspRed$) to emphasize that the group action
-induces the group \emph{tangent field} at $\sspRed$.
+induces a \emph{tangent field} at $\sspRed$.
 
 The statement of equivariance
 $
@@ -559,18 +559,18 @@ under subgroup action
 \ee{dscr:FPsubsp}
 % \paragraph{Definition:         Invariants.}
 \index{invariant!points}
-Points in \statesp\ subspace  $\pS_\Group$ which are fixed
-points of the full group action are called \emph{invariant
+Points in the \emph{fixed-point subspace}  $\pS_\Group$ are fixed
+points of the full group action. They are called \emph{invariant
 points},
 	\index{invariant!points}
-		%
-		\PC{to be continued...}
 \beq
 \pS_\Group = \Fix{\Group} =
    \{ \ssp \in \pS : {g} \, \ssp = \ssp \mbox{ for all } g \in \Group \}
 \,.
 \ee{dscr:InvPoints}
 \end{definition}
+		%
+		                                                  \toCB
 
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -581,20 +581,22 @@ points},
 Expand a smooth periodic function $u(\gSpace + 2\pi) =
 u(\gSpace)$ as a Fourier series
 \beq
-u(\gSpace) = a_0 + \sum_{m=1}^\infty \left(
+u(\gSpace) = \frac{a_0}{2} + \sum_{m=1}^\infty \left(
 a_m \cos m \gSpace + b_m \sin m \gSpace
                                \right)
 \,.
 \ee{FourierExp}
 The matrix representation of the \SOn{2}\ action
-%DB% \refeq{SO2LieFunct} 
+%DB% \refeq{SO2LieFunct}
 on the $m$th Fourier coefficient pair
-$(a_m,b_m)$ is
+$(a_m,b_m)$ is                                      \toCB
 \beq
 \LieEl^{(m)}(\gSpace') \,=\,  \left(\barr{cc}
  ~\cos m \gSpace'  & \sin m \gSpace' \\
  -\sin m \gSpace'  & \cos m \gSpace'
     \earr\right)
+= \cos m \gSpace' \id^{(m)} 
+  + \sin m \gSpace'\, \frac{1}{m} \Lg^{(m)}
 \,,
 \ee{SO2irrepAlg-m}
 with the Lie group generator
@@ -607,11 +609,16 @@ with the Lie group generator
     \earr\right)
 \,.
 \ee{SO2irrepAlg-Lg}
-The \SOn{2}\ group tangent  
-%DB% \refeq{GroupTangField} 
-to \statesp\ point $u(\gSpace)$ on the $m$th invariant subspace
-is
+$\id^{(m)}$ is the identity, $\Lg^{(m)}$ is the Lie
+algebra generator on the $m$-irreducible
+subspace, 0 elsewhere.
+The \SOn{2}\ group tangent $\groupTan(u)$
+%DB% \refeq{GroupTangField}
+to \statesp\ point $u(\gSpace)$ is the sum over invariant subspace
+contributions                           \toCB
 \beq
+ \groupTan(u) = \sum_{m=1}^\infty \groupTan^{(m)}(u)
+    \,,\qquad
  \groupTan^{(m)}(u)
 \,=\, m \,\left(\barr{c}
    ~b_m  \\
@@ -629,8 +636,8 @@ $C_2^{(m)} = m^2$,
 \,,
 \ee{tangL2norm}
 and converges only for sufficiently smooth $u(\gSpace)$. What
-does that mean? 
-%DB% We saw in \refeq{RPOtrans_gen} that 
+does that mean?
+%DB% We saw in \refeq{RPOtrans_gen} that
 $\Lg$ generates translations, and by \refeq{SO2irrepAlg-Lg} the
 velocity of the $m$th Fourier mode is $m$ times higher than for the $m=1$
 component. If $| u^{(m)}| $ does not fall off faster the $1/m$,
@@ -644,7 +651,7 @@ the action of \SOn{2}\ is overwhelmed by the high Fourier modes.
 \example{\SOn{2} rotations for \cLe:}{\label{exam:FinRot}
     \index{SO(2)@\SOn{2}}
 The \SOn{2} symmetry group of \cLe\ acts on the
-5-dim\-ens\-ion\-al space \refeq{eq:CLeR} 
+5-dim\-ens\-ion\-al space \refeq{eq:CLeR}
 by a finite angle \SOn{2} rotation:
 \index{generator!anti-hermitian}
 \index{anti-hermitian!generator}
@@ -713,16 +720,17 @@ If the \statesp\ is finite dimensional and complex,
     \,,\qquad \pS \subset \complex
 \,,
 \ee{innerC}
-where $\dual{x}$ is the complex conjugate transpose of vector $x$, or, more generally, the hermitian conjugate $\dual{M}$ of matrix $M$.
-A matrix $M$ acts as
+where $\dual{x}$ is the complex conjugate transpose of vector $x$, or, more generally, the hermitian conjugate $\dual{M}$ of matrix $M$. A matrix $M$ acts as
     \PC{This should probably be extended to non-selfadjoint
         actions, explain the adjoint {\jacobianM} $\dual{\jMps}$.}
 \beq
 \dotProd{x}{M\,y} =
-  \dotProd{\dual{M}\,x}{y}\,,
+  \dotProd{\dual{M}\,x}{y}
+\,.
 \ee{adjointG}
-where $\dual{M}$ is the hermitian conjugate of $M$.
+% where $\dual{M}$ is the hermitian conjugate of $M$.
 If the \statesp\ is a normed function space (Banach, Hilbert, Sobolev, ...),
+the inner product is given by the integral
 \beq
 \dotProd{g}{f} = \int dx \, \dual{g}(x) f(x)
 \,.
@@ -733,7 +741,7 @@ $|\ssp|^2 = \dotProd{\ssp}{\ssp} \neq 0$, unless $\ssp = 0$.
 In computations the functions are expressed in terms of
 complete orthonormal basis sets $\{u_n\}$,
 \bea
-f(x) &=& \sum_0^{\infty} a_n u_n(x)
+f(x) &=& \sum_{n=0}^{\infty} a_n u_n(x)
     \continue
 \dotProd{u_n}{u_m} &=& \delta_{nm}
 \,.
@@ -763,7 +771,9 @@ locally normal to it,
 \,.
 \ee{TtimesX}
 
-A group tangent \refeq{PC:groupTan} is a vector both in the group and \statesp\ manifolds. We shall indicate by $\dotProd{\groupTan_{a}(x)}{\groupTan_{b}(y)}$  the sum over \statesp\ inner product only, and by
+A group tangent \refeq{PC:groupTan} is a vector both in the group 
+tangent space and in the \statesp. 
+We shall indicate by $\dotProd{\groupTan_{a}(x)}{\groupTan_{b}(y)}$  the sum over \statesp\ inner product only, and by
 \beq
 \dotProd{\groupTan(x)}{\groupTan(y)} =
     \sum_{a=1}^N \dotProd{\groupTan_{a}(x)}{\groupTan_{a}(y)} =
@@ -801,11 +811,8 @@ the antihermiticity \refeq{antiHerm} of Lie algebra generators.
 \section{\Reducedsp}
 \label{sect:reducedStateSp}
 
-Finally, we move on to the goal of the project, reducing the
-state-space of the \cLe\ to only four dimensions. We present
-the `{\mslices}.' The
-method can introduce singularities, as in
-\reffig{fig:PCsimulPolar}.
+    \PC{Stefan explain the general concept of symmetry reduction first}
+One of our goals of this project is to reduce the \statesp\ of the \cLe\ from five to four dimensions. We propose to accomplish this by the `{\mslices}.'
 
 \subsection{\Mslices, finite time steps}
 \label{sect:MovFrame}
@@ -815,14 +822,13 @@ method can introduce singularities, as in
 July 19, Aug 12 2009; Sep 19 2010}
     }
 
-Here we briefly describe discusses symmetry reduction by the
+Here we describe symmetry reduction by the
 {\em {\mslices}} of
 Cartan\rf{CartanMF,FelsOlver98,FelsOlver99,OlverInv}.
                                                 \exerbox{exer:SO2cSect}
                                                 \exerbox{exer:mslicesInv}
-
-Split up the integration of the $\SOn{2}$-equivariant ODE into
-a sequence of short time steps, each followed by a rotation
+Split up the integration of an $\Group$-equivariant ODE into
+a sequence of short time steps, each followed by a group action
 such that the next segment initial point is in the point
 $\sspRed \in$ {\slice}, a $(d\!-\!1)$-dimensional hyperplane
 normal to the group rotation tangent $\sliceTan{}$ at point
@@ -835,29 +841,30 @@ $\slicep$:
 \sliceTan{a} = \Lg_a \slicep
 \,.
 \] %ee{PCsectQ}
-For any $\ssp$, $\sspRed =
-\LieEl(\gSpace)\ssp$ is defined to be the
-rotation of $ \ssp$ that lies in the \slice.
+For any $\ssp$, the slice condition $\sspRed =
+\LieEl(\gSpace)\ssp$ determines the group
+action $\LieEl(\gSpace)$ that brings $ \ssp$ into the \slice.
+Such a map from a point in space to the group action is called a
+\emph{moving frame} in the formulation of Fels and
+Olver\rf{FelsOlver98,FelsOlver99,OlverInv}.
 
 \begin{definition}
 \label{def:slice}
 \index{slice}
 \textbf{\Slice}:
-Pick a non-zero vector $\slicep \in \pS$.
+Pick a non-zero \emph{slice-fixing point} $\slicep \in \pS$.
 We call the $(d\!-\!N)$-dimensional hyperplane $\sspRed \in \pSRed$
 a \emph{\slice}, where
 \(
 \dotProd{\sspRed - \slicep}{\sliceTan{a}}=0
 \) %ee{PCsectQ1}
-is normal to all group tangents
-$ \sliceTan{a}= \groupTan_{a}(\slicep) = \Lg_a \slicep$
-at the \emph{slice-fixing point} $\slicep$. The {slice-fixing point} should lie outside the invariant subspace $\pS_\Group = \Fix{\Group}$ or any of the invariant subspaces $\pS_H$ defined in \refeq{dscr:FPsubsp}. Were \slicep\ invariant under the group, then $\sliceTan{a}=0$ and the ``\slice'' so defined would be the entire space.
+is normal to all group tangents $ \sliceTan{a}= \Lg_a \slicep$ at $\slicep$. The {slice-fixing point} should lie outside the invariant subspace $\pS_\Group = \Fix{\Group}$ or any of the invariant subspaces $\pS_H$ defined in \refeq{dscr:FPsubsp}. Were \slicep\ invariant under the group, then $\sliceTan{a}=0$ and the ``\slice'' so defined would be the entire space.
     \PC{Extend this claim to the invariant subspaces as well}
     \PC{In constructing his return map, Lorenz, I think,
     used projections on the invariant axes $z$ and $\dot{z}$.
     Is that not a \slice? Rethink}
 
-As $ \dotProd{\slicep}{\sliceTan{a}}=\dotProd{\slicep}{\Lg_a \slicep} =0 $ by \refeq{antiHerm} the antisymmetry / antihermiticity of \Lg, the condition that a point \sspRed\ lies in the \slice\ \pSRed\ is
+As $ \dotProd{\slicep}{\sliceTan{a}}=\dotProd{\slicep}{\Lg_a \slicep} =0 $ by \refeq{antiHerm} the antihermiticity of \Lg, the condition that a point \sspRed\ lies in the \slice\ \pSRed\ is
 \beq
 \dotProd{\sspRed}{\sliceTan{a}}=0
     \,,\qquad
@@ -870,10 +877,6 @@ we find the linear slice condition \refeq{PCsectQ1} easiest to implement.
 For linear case, the same slice is fixed by any
 point on the ray $const\; \slicep$ through the point \slicep.
 
-Such a map from a point in space to the group action is called a
-\emph{moving frame} in the formulation of Fels and
-Olver\rf{FelsOlver98,FelsOlver99,OlverInv}.
-
 \example{\CLe\ rotation angle.}{\label{exam:CLErotAngle}
 To show how the rotation into the \slice\ is computed, consider first the \cLe. There is only one infinitesimal generator for the \SOn{2} symmetry group, so the \reducedsp\ trajectory is given by $\sspRed=\LieEl(\gSpace) \ssp$ where $\gSpace$ is such that $\dotProd{\sspRed}{\sliceTan{}}=0$. Substituting the \SOn{2}\ Lie algebra generator \refeq{CLfLieGen} and  a finite angle \SOn{2} rotation \refeq{CLfRots} acting on a 5-dim\-ens\-ion\-al space \refeq{eq:CLeR} into the slice condition \refeq{PCsectQ1} yields the explicit formula for $\gSpace$:
 \beq
@@ -885,10 +888,16 @@ To show how the rotation into the \slice\ is computed, consider first the \cLe. 
 \]
 \[
     (x_1 x_2'-x_2 x_1'+y_1 y_2' -y_2 y_1')\cos\gSpace
-    + (x_1 x'_1+xp_2 x'_2+y_1 y'_1+y_2 y'_2)\sin\gSpace
+    + (x_1 x'_1+x_2 x'_2+y_1 y'_1+y_2 y'_2)\sin\gSpace
 =0
 \,.
 \]
+    \PC{Stefan, I think you have to explain that, just as in the
+    case of Poincar\'e sections, one keeps track of only oriented
+    crossings, \ie, a circle has only on section in a \slice,
+    not two. That should give you a precise $\pi$ rotation rule
+    for singularity crossing.}
+Note that if \gSpace\ is a solution, so is $\gSpace+\pi$.
 This formula is particularly simple, as in this example the group
 acts only through $m=0$ and $m=1$ representations; in general
 the `phases' $\gSpace_a$ have to be computed numerically.
@@ -897,6 +906,7 @@ the `phases' $\gSpace_a$ have to be computed numerically.
 
 [...]
                                                     \exerbox{exer:PCsectionCLe}
+                                                    \exerbox{exer:SO2rotAngle}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % computed by PCunrot.nb
@@ -924,16 +934,14 @@ finite time version.
 
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\exercise{\SOn{2}  rotation angle:}{\label{exam:SO2rotAngle}
-Continue the discussion of \refexam{exam:SO2irrepst} and write down 
-the formula for $\gSpace$ for a Fourier expansion of a periodic function.
-Show that now that, depending on the convergence of the Fourier series,
-the group orbit may traverse a slice arbitrarily many times.
+\exercise{\SOn{2}  rotation angle:}{\label{exer:SO2rotAngle}
+Continue the discussion of \refexam{exam:SO2irrepst} and write down the formula for $\gSpace$ for a Fourier expansion of a periodic function. Show that now the \slice\ condition is a polynomial in $\cos\gSpace$, $\sin\gSpace$, and that, depending on the magnitudes of the Fourier series terms, the group orbit may traverse a slice arbitrarily many times.
+    \PC{is it still true that the rotation is by $\pi$?}
     } %end \SOn{2}  rotation angle.
 
 \exercise{Determination of group invariants by the {\mslices}:
     }{ \label{exer:mslicesInv}
-Show that the $d-N$ \reducedsp\ coordinates determined by the {\mslices} are independent group invariants, and that the {\mslices} allows the determination of (in general non-polynomial) invariants of the group action by a simple and efficient algorithm that works well in high-dimensional \statesp s.
+Show that the $d-N$ \reducedsp\ coordinates determined by the {\mslices} are independent group invariants, and that the {\mslices} allows the determination of (in general non-polynomial) invariants of the group action by a simple  algorithm that works well in high-dimensional \statesp s.
     }
 
 \solution{exer:mslicesInv}
@@ -1093,6 +1101,15 @@ Our second method of symmetry reduction Siminos
 
 In \refsect{sect:slices} we noted that the projection $f(\gSpace)$
 can have inflection points,
+    \PC{Are we only interested in Laplace-Beltrami operator on the
+    group manifold 
+    \\
+    \(
+    \frac{\partial^2 ~~}{\partial \gSpace^2} f(\gSpace) =
+    - \dotProd{\groupTan(\sspRed)}{\sliceTan{}} =
+    \dotProd{\sspRed}{\dual{\Lg} \cdot {\Lg}\,\slicep}
+    \)
+    }
 \beq
 \frac{\partial^2 f(\gSpace_E)}
      {\partial \gSpace_a \partial \gSpace_b}
@@ -1125,6 +1142,18 @@ If at least one of $f_1(\tau)=\dotProd{\ssp}{\Lg \ssp'}$ and $f_2(\tau)=\dotProd
 If both $f_1$ and $f_2$ are zero at $\tau_0$, then note that $\ssp(\tau)$ is a smooth trajectory since it is the solution to a system of ODEs, and both $f_1$ and $f_2$ are the compositions of inner products, linear transformations, and a smooth trajectory so they are both $C^{\infty}$. This means they both have a Taylor series around $\tau_0$. Let $a_1 (\tau-\tau_0)^{k_1}$ be the first nonzero term in the Taylor series for $f_1$ and $a_2 (\tau-\tau_0)^{k_2}$ be the same thing for $f_2$ (Note: this does not work if all the terms in one of the Taylor series are zero, but then that function equals zero, so the trajectory never leaves a hyperplane and this should not happen in nonlinear ODEs). This means that as $\tau \rightarrow \tau_0$, $f_1(\tau)\cos\gSpace+f_2(\tau)\sin\gSpace \rightarrow a_1 (\tau-\tau_0)^{k_1}\cos\gSpace+a_2 (\tau-\tau_0)^{k_2}\sin\gSpace$. If $k_1 \geq k_2$ then $a_1 (\tau-\tau_0)^{k_1}\cos\gSpace+a_2 (\tau-\tau_0)^{k_2}\sin\gSpace=0$ means that $a_1 (\tau-\tau_0)^{k_1-k_2}\cos\gSpace+a_2\sin\gSpace=0$ so again $\gSpace$ approaches one of two values (where the values are separated by $\pi$). If $k_1 < k_2$ than we can use the same idea and get again that $\gSpace$ approaches one of two values. This again means that when the trajectory passes through a singularity, it either remains unchanged or gets rotated by $\pi$.
 
 \subsection{Singularities of $\SOn{2} \times \SOn{2}$}
+
+                                                    \toCB
+% PC cribbed from Penrose p. 254:
+If \Group\ and H are any two groups, than they can be combined in
+what is called the {\em product group} $\Group \times H$, whose
+elements are pairs $(\LieEl,h)$, where $\LieEl$ belongs to \Group, and 
+$h$ belongs to $H$, with the group multiplication rule
+\[
+(\LieEl_1,h_1)(\LieEl_2,h_2)=(\LieEl_1 \LieEl_2,h_1 h_2)
+\,.
+\]
+
 
 Suppose that the state space is the product of two spaces, $\mathbb{X}=\mathbb{A} \times \mathbb{B}$,
 Let $\Group$ be a Lie group with two infinitesimal generators, $\Lg_1$ and $\Lg_2$, such that the $e^{\gSpace_1 \Lg_1}$ action on $\mathbb{X}$ fixes the $\mathbb{B}$ coordinates and $e^{\gSpace_2 \Lg_2}$ fixes the $\mathbb{A}$ coordinates (so $\Group$ the direct product of two $\SOn{2}$ groups which act on different coordinates of $\mathbb{X}$).
@@ -1349,7 +1378,7 @@ where $\groupTan_{a}(\ssp)$ is a group tangent \refeq{PC:groupTan}.
 \subsection{Stability of \reqva\ in \reducedsp}
 %SF June 22 2010
 
-Using the parameters \refeq{SiminosPrmts}, we get the 
+Using the parameters \refeq{SiminosPrmts}, we get the
  $\REQB{1}$ stability eigenvalues
 \[
 0.0938 \pm 10.1945i,-22.0000,-13.8534,-11.009
@@ -1390,7 +1419,7 @@ where $v(\sspRed)$ is the velocity of the full \statesp\ flow, $\groupTan(\sspRe
 \[
 M_{ij} =
 A_{ij}-c I_{ij} -(Tx)_i\,(\frac{\frac{\partial v}{\partial x_i}\cdot \sliceTan{}}
-        {Tx \cdot \sliceTan{}} 
+        {Tx \cdot \sliceTan{}}
       - c \frac{\frac{\partial (Tx)}{\partial x_j}\cdot \sliceTan{}}{Tx \cdot \sliceTan{}})
 \]
     hopefully no errors introduced in my rewrite
@@ -1581,7 +1610,7 @@ The {\reqv} in polar coordinates is
 \[
 ( \rho_1 , \rho_2 , \theta , z ) = (\sqrt{b (r_1 -d)},\sqrt{b d (r_1 -d)},\theta_Q, r_1 -d)
 \]
-where $d = 1+ \frac{e^2}{(\sigma +1 )^2}$ and $\theta_Q$ is the angle such that 
+where $d = 1+ \frac{e^2}{(\sigma +1 )^2}$ and $\theta_Q$ is the angle such that
 \[
 \cos \theta_Q = \sqrt \frac{1}{d}
     \,,\qquad
