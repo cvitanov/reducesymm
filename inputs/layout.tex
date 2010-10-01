@@ -105,6 +105,12 @@
 
 %%%%%%%%%%%%%%% NUMBERED ENVIRONMENTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % REPLACE {13.5cm} by \textwidth counter in these environments
+
+    \ifarticle
+\newcommand{\exerbox}[1]{}
+\newcommand{\exercise}[2]{}{}
+\newcommand{\solution}[3]{}{}{}
+    \else
 \newtheorem{exerc}{\textsf{\textbf{Exercise}}}[chapter]
 % \newtheorem{exerc}{}[chapter]
 % \newtheorem{exerc}{{$\bullet$}}[chapter]
@@ -149,7 +155,32 @@
 \newcommand{\exerbox}[1]
 {\marginpar[{\color{red}\sf\footnotesize\hfill exercise \ref{#1} }]
                {\color{red}\sf\footnotesize exercise \ref{#1} \hfill}}
+    \fi %end of article switch
 
+
+    \ifarticle
+\newtheorem{exmple}{\noindent\small\textsf{\textbf{Example}}}[section]
+\newcommand{\example}[2]{
+    \vskip -13mm
+        %\begin{offset}
+        \begin{exmple}
+           \noindent\small
+           \textsf{\textbf{#1}} ~
+       \slshape\sffamily{#2}
+       % \textsl would not work...
+    \end{exmple}
+    %\end{offset}
+        \vskip -1mm
+             }
+    \else
+\newtheorem{rmark}{{\small\textsf{\textbf{Remark}}}}[chapter]
+\newcommand{\remark}[2]{
+        % \begin{quotation}
+        \begin{rmark}
+        {\small\em\noindent {\small\sf \underline{ #1} ~} #2 }
+    \end{rmark}
+    % \end{quotation}
+              }
 \newtheorem{exmple}{\noindent\small\textsf{\textbf{Example}}}[chapter]
 \newcommand{\example}[2]{
     \vskip -13mm
@@ -163,12 +194,4 @@
     %\end{offset}
         \vskip -1mm
              }
-
-\newtheorem{rmark}{{\small\textsf{\textbf{Remark}}}}[chapter]
-\newcommand{\remark}[2]{
-        % \begin{quotation}
-        \begin{rmark}
-        {\small\em\noindent {\small\sf \underline{ #1} ~} #2 }
-    \end{rmark}
-    % \end{quotation}
-              }
+    \fi %end of article switch
