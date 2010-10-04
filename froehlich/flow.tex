@@ -160,7 +160,7 @@ flow. Understanding this gives us a better idea of how
 
 Consider the displacement of an infinitesimally close
 neighbor $x+\delta x$. Taylor expanding the flow equation
-$\dot x = v(x)$ we find that
+$\dot x = \vel(x)$ we find that
 \beq
 \dot x + \dot{\delta x}=v_i(x+\delta x) \approx v_i(x)+\Mvar \delta x
 \eeq
@@ -190,6 +190,8 @@ describes how quickly points initially very near to $x(t)$ will
 diverge away from / converge to it in time. Matrix $\Mvar$ is an important
 tool which we will use in what follows.
 
+    \ifarticle
+    \else
 \subsection{\jacobianM}
 
 We start by a discussion of the stability of \eqva\ and \po s,
@@ -285,7 +287,7 @@ are co-moving with the tangent flow.
 
 An \eqv\ $\EQV{}$ is a point $\ssp_{\EQV{}}$ for which the
 velocity field of an ordinary differential equation
-$\dot{\ssp} = v(\ssp)$ is zero, $v(\ssp_{\EQV{}})=0$. These
+$\dot{\ssp} = \vel(\ssp)$ is zero, $\vel(\ssp_{\EQV{}})=0$. These
 are points where the flow does not move, and if it reaches an
 equilibrium, the flow remains there. For the \cLe\, the
 origin $\EQV{0}=(0, 0, 0, 0, 0)$ is always an equilibrium
@@ -442,26 +444,21 @@ $\jEigvec[j]\left(\ssp'\right)
  along the $p$ orbit.
 So $\ExpaEig_j$ is a Floquet multiplier for
 $\jMps_p\left(\ssp'\right)$ too.
+    \fi %end of article switch
+
 
 \section{Symmetries of dynamics}
 \label{sect:SymmDyn}
 
-         \Private{
-\noindent{\bf Stefan -
-Sep ?? 2010}:\\
-\medskip\noindent
-         }
-In order to eventually remove the rotational symmetry in the
-\cLf\, we need to show that the flow is rotationally
-equivariant. By showing this, we will then be able to apply
-algorithms to remove the symmetry. Rotational equivariance in
-this situation will let us commute a rotation operator with
-taking time derivatives.
+In order to quotient the rotational symmetry in the
+\cLf\, we first need to show that the flow is rotationally
+equivariant. If a flow is equivariant we can apply algorithms
+algorithms to reduce the symmetry.
 
 We begin by defining the notion of `equivariance.'
 A flow $\dot{x}= \vel(x)$ is \emph{equivariant} under an operation $\LieEl$ when
 \beq
-\LieEl \, \vel(x)=v(\LieEl \, x)
+\LieEl \, \vel(x)=\vel(\LieEl \, x)
 \,.
 \ee{eq:FiniteRot}
 This means that if $f(x)$ is a solution to the dynamical
@@ -770,7 +767,7 @@ defined as groups that preserve these `length' norms,
 $\dotProd{\LieEl x}{\LieEl x} =  \dotProd{x}{x}$, and
 infinitesimally their generators induce no change in the norm,
 \[
-\dotProd{\dual{\Lg}_a\ssp}{\ssp}
+\dotProd{ \Lg_a\ssp}{\ssp}
   +\dotProd{\ssp}{\Lg_a\ssp} =0
 \,,
 \]
@@ -859,12 +856,6 @@ $\slicep$:
 \sliceTan{a} = \Lg_a \slicep
 \,.
 \] %ee{PCsectQ}
-For any $\ssp$, the slice condition $\sspRed =
-\LieEl(\gSpace)\ssp$ determines the group
-action $\LieEl(\gSpace)$ that brings $ \ssp$ into the \slice.
-Such a map from a point in space to the group action is called a
-\emph{moving frame} in the formulation of Fels and
-Olver\rf{FelsOlver98,FelsOlver99,OlverInv}.
 
 \begin{definition}
 \label{def:slice}
@@ -882,7 +873,7 @@ is normal to all group tangents $ \sliceTan{a}= \Lg_a \slicep$ at $\slicep$. The
     used projections on the invariant axes $z$ and $\dot{z}$.
     Is that not a \slice? Rethink}
 
-As $ \dotProd{\slicep}{\sliceTan{a}}=\dotProd{\slicep}{\Lg_a \slicep} =0 $ by \refeq{antiHerm} the antihermiticity of \Lg, the condition that a point \sspRed\ lies in the \slice\ \pSRed\ is
+As $ \dotProd{\slicep}{\sliceTan{a}}=\dotProd{\slicep}{\Lg_a \slicep} =0 $ by \refeq{antiHerm}, the antihermiticity of \Lg, the condition that a point \sspRed\ lies in the \slice\ \pSRed\ is
 \beq
 \dotProd{\sspRed}{\sliceTan{a}}=0
     \,,\qquad
@@ -890,6 +881,38 @@ As $ \dotProd{\slicep}{\sliceTan{a}}=\dotProd{\slicep}{\Lg_a \slicep} =0 $ by \r
 \,.
 \ee{PCsectQ1}
 \end{definition}
+
+As we shall show in \refsect{sect:slices}, a given group orbit intersects a slice at
+least twice, and potentially arbitrarily many times, so we need a prescription for
+how to pick a unique \reducedsp\ point as the representative of the entire group orbit.
+We shall eliminate half of the slice crossings as we do for
+\Poincare\ sections, by fixing the orientation of the crossing. 
+The choice of which of the remaining crossing is the representative 
+is more arbitrary.
+
+\begin{definition}
+\label{def:movingFrame}
+\index{moving frame}
+\textbf{Moving frame}:
+For any $\ssp$, the slice condition $\sspRed =
+\LieEl(\gSpace)\ssp$ determines the group
+action $\LieEl(\gSpace)$ that brings $ \ssp$ into the \slice.
+We fix the unique \reducedsp\ be requiring that the crossing is
+oriented:
+\beq
+\dotProd{\groupTan_{}(\ssp)}{\sliceTan{}} > 0
+\ee{SF:orientedSlice}
+and, if there is a set of angles 
+$\{\gSpace_1\leq\gSpace_2\leq\cdots\leq\gSpace_k \}$ that
+satisfy the oriented slice transversal conditions 
+\refeq{PCsectQ1}, \refeq{SF:orientedSlice}, we take the
+smallest angle $\gSpace_1$.
+    \PC{problem: this makes sense only for \SOn{2}}
+Such a map from a point in the full \statesp\ to the group action 
+$\gSpace$ is called a
+\emph{moving frame}\rf{FelsOlver98,FelsOlver99,OlverInv}.
+\end{definition}
+
 Note: while in general a {\slice} need not be a hyperplane,
 we find the linear slice condition \refeq{PCsectQ1} easiest to implement.
 For linear case, the same slice is fixed by any
@@ -898,11 +921,11 @@ point on the ray $const\; \slicep$ through the point \slicep.
 \example{\CLe\ rotation angle.}{\label{exam:CLErotAngle}
 To show how the rotation into the \slice\ is computed, consider first the \cLe. There is only one infinitesimal generator for the \SOn{2} symmetry group, so the \reducedsp\ trajectory is given by $\sspRed=\LieEl(\gSpace) \ssp$ where $\gSpace$ is such that $\dotProd{\sspRed}{\sliceTan{}}=0$. Substituting the \SOn{2}\ Lie algebra generator \refeq{CLfLieGen} and  a finite angle \SOn{2} rotation \refeq{CLfRots} acting on a 5-dim\-ens\-ion\-al space \refeq{eq:CLeR} into the slice condition \refeq{PCsectQ1} yields the explicit formula for $\gSpace$:
 \beq
-    \dotProd{\ssp}{\Lg \ssp'}\cos\gSpace+\dotProd{\Lg\ssp}{\Lg \ssp'} \sin\gSpace=0
+    \dotProd{\ssp}{\sliceTan{}}\cos\gSpace+\dotProd{\groupTan_{}(\ssp)}{\sliceTan{}} \sin\gSpace=0
 \ee{SL:CLEsliceRot}
 \[
-     \tan\gSpace= - \frac{\dotProd{\ssp}{\Lg \ssp'}}
-                      {\dotProd{\Lg\ssp}{\Lg \ssp'}}
+     \tan\gSpace= - \frac{\dotProd{\ssp}{\sliceTan{}}}
+                      {\dotProd{\groupTan_{}(\ssp)}{\sliceTan{}}}
 \]
 \[
     (x_1 x_2'-x_2 x_1'+y_1 y_2' -y_2 y_1')\cos\gSpace
@@ -969,7 +992,7 @@ Olver\rf{FelsOlver98,FelsOlver99,OlverInv}, Siminos\rf{SiminosThesis})
     }
 
 
-\subsection{How good is your \slice?}
+\subsection{How good is a given \slice?}
 \label{sect:slices}
 
     \PC{this is a rewrite in progress of \refsect{sect:raw}}
@@ -1158,31 +1181,104 @@ a singularity occurs, we have to describe what happens to the \reducedsp\ trajec
 
 To answer this question, let us first look at the example of the \cLe. There is only one infinitesimal generator for the \SOn{2} symmetry group, so the rotation angle $\gSpace$ into the \reducedsp\ trajectory is given by \refeq{SL:CLEsliceRot}.
 
-If $\ssp(\tau)$ is a trajectory in full state space, then the system experiences a singularity when $\dotProd{\Lg\sspRed}{\Lg \ssp' }=0$ where $\sspRed(\tau)$ is the trajectory in \reducedsp. Suppose the trajectory experiences the singularity at time $\tau=0$. By rotating the trajectory, we may assume that $\ssp(0)$ is in the slice (then $\ssp(0)=\sspRed(0)$). The trajectory passes through a singularity at $\tau=0$, so $\dotProd{\Lg\ssp}{\Lg \ssp'}=0$.
+If $\ssp(\tau)$ is a trajectory in full state space, then the 
+ \reducedsp\ flow $\sspRed(\tau)$ goes through a singularity when 
+ $\dotProd{\groupTan_{}(\sspRed^*)}{\sliceTan{}}=0$
+at time $\tau=0$, $\sspRed^* = \sspRed(0)$.
+The angle $\gSpace^*$ for rotating a point into the slice must satisfy
+    \PC{Isn't some of this already worked out in \refexam{exam:CLErotAngle}?
+        You should refer to already derived results, rather than repeating
+        the same text}
+\bea
+0             &=& 
+\dotProd{\ssp}{\sliceTan{}}\cos(\gSpace^*) +
+\dotProd{\groupTan_{}(\ssp)}{\sliceTan{}}\sin(\gSpace^*)
+    \continue
+\tan(\gSpace^*) &=& 
+-{\dotProd{\ssp}{\sliceTan{}}}/{\dotProd{\groupTan_{}(\ssp)}{\sliceTan{}}}
+ \,.
+\label{SF:SO2angleRot}
+% \refeq{SF:SO2angleRot}
+\eea
+This equation has two solutions 
+$\{\sspRed^*=\LieEl(\gSpace^*)\ssp, \LieEl(\gSpace^*+\pi)\ssp\}$ 
+unless both $\dotProd{\sspRed^*}{\sliceTan{}}$ 
+and $\dotProd{\groupTan_{}(\sspRed^*)}{\sliceTan{}}$ are zero, 
+in which case any angle works (this is exactly the situation 
+the trajectory is in when it passes through a singularity
+$\ssp^*$).
 
-The angle for rotating a point into the slice must satisfy the equation $\dotProd{\ssp}{\Lg \ssp'}\cos(\gSpace)+
-\dotProd{\Lg\ssp}{\Lg \slicep}\sin(\gSpace)=0$. This equation has two solutions unless both $\dotProd{\ssp}{\Lg \slicep}$ and $\dotProd{\Lg\ssp}{\Lg \slicep}$ are zero, in which case any angle works (this is exactly the situation the trajectory is in when it passes through a singularity).
+Consider $\gSpace(\tau)$ approaching the singularity value
+$\gSpace^*$ as $\tau \rightarrow 0$.
+The trajectory is smooth, so it can be approximated by the linear
+term in the Taylor expansion,
+$
+\ssp(\tau)=\sspRed^*+\vel^*\tau+O(\tau^2)
+\,,\qquad
+\vel^* = \vel(\sspRed^*)
+    \,.
+$
+    \PC{Stefan had ``
+$\ssp(\tau)=\ssp(0)+\vel(0)\tau+\Mvar(\tau^*)\frac{\tau^2}{2}$ where $\Mvar$ is the stability matrix and $\tau^*$ is between $0$ and $\tau$. 
+    '' This looks wrong to me. In any case, the oredr ${\tau^2}{2}$ term is
+    not used.
+% -\frac{\dotProd{\ssp(0)+\vel(0)\tau
+% +\Mvar(\tau^*)\frac{\tau^2}{2}}{\sliceTan{a}}}{
+% \dotProd{\Lg(\ssp(0)+\vel(0)\tau+\Mvar(\tau^*)\frac{\tau^2}{2})}{\sliceTan{}}}
+    }
+Hence as $\tau \rightarrow 0$, 
+\bea
+\tan(\gSpace)
+% = -\frac{\dotProd{\ssp}{\sliceTan{}}}{\dotProd{\groupTan_{}(\ssp)}{\sliceTan{}}}
+&\rightarrow&
+-\frac{\dotProd{\sspRed^*+\vel^*\tau}{\sliceTan{}}}
+{\dotProd{\Lg(\sspRed^*+\vel^*\tau)}{\sliceTan{}}}
+    \continue
+\tan(\gSpace^*) &=&    
+     -\frac{\dotProd{\vel^*}{\sliceTan{}}}
+      {\dotProd{\groupTan_{}(\vel^*)}{\sliceTan{}}}
+\,.
+\label{SF:snglrAngl}
+\eea
+So at the singular point the slice-rotation angle $\gSpace^*$ is computed as in
+\refeq{SF:SO2angleRot}, but using $\vel^*$ rather than $\ssp^*$; as
+$\ssp$ and  $\vel(\ssp)$ rotate rigidly together, that is OK.
 
-Consider $\gSpace(\tau)$ as $\tau \rightarrow 0$. At any point it satisfies $\dotProd{\ssp}{\Lg \slicep}\cos(\gSpace)+\dotProd{\Lg\ssp}{\Lg \slicep}\sin(\gSpace)=0$ so $\tan(\gSpace)=-\frac{\dotProd{\ssp}{\Lg \slicep}}{\dotProd{\Lg\ssp}{\Lg \slicep}}$
-The trajectory is smooth, so it can be approximated by Taylor polynomials, $\ssp(\tau)=\ssp(0)+\vel(0)\tau+\Mvar(\tau^*)\frac{\tau^2}{2}$ where $\Mvar$ is the stability matrix and $\tau^*$ is between $0$ and $\tau$. This means that as $\tau \rightarrow 0$, $\tan(\gSpace)=-\frac{\dotProd{\ssp}{\Lg \slicep}}{\dotProd{\Lg\ssp}{\Lg \slicep}}\rightarrow -\frac{\dotProd{\ssp(0)+\vel(0)\tau+\Mvar(\tau^*)\frac{\tau^2}{2}}{\Lg \slicep}}{\dotProd{\Lg(\ssp(0)+\vel(0)\tau+\Mvar(\tau^*)\frac{\tau^2}{2})}{\Lg \slicep}}\rightarrow -\frac{\dotProd{\vel(0)+\Mvar(\tau^*)\frac{\tau}{2}}{\Lg \slicep}}{\dotProd{\Lg(\vel(0)+\Mvar(\tau^*)\frac{\tau}{2})}{\Lg \slicep}}\rightarrow -\frac{\vel(0){\Lg \slicep}}{\dotProd{\Lg(\vel(0))}{\Lg \slicep}}$. So $\gSpace$ approaches an angle necessary to rotate $\vel(0)$ into the slice.
-
-If we add on the restriction $\dotProd{\Lg\ssp}{\Lg \slicep}$ be nonnegative so that we get a unique representative from each trajectory, then as the trajectory approaches the singularity $\dotProd{\Lg\ssp}{\Lg \slicep}\approx \tau \dotProd{\Lg\vel(0)}{\Lg \slicep}$. As $\tau$ goes from positive to negative, this expression goes from positive to negative, so when the trajectory goes through the slice, we must rotate the trajectory by $\pi$ in order for it to satisfy the restriction.
+If we add on the restriction $\dotProd{\groupTan_{}(\ssp)}{\sliceTan{}}$ be nonnegative so that we get a unique representative from each trajectory, then as the trajectory approaches the singularity $\dotProd{\groupTan_{}(\ssp)}{\sliceTan{}}\approx \tau \dotProd{\Lg\vel^*}{\sliceTan{}}$. As $\tau$ goes from negative to positive, this expression changes sign, so when the trajectory goes through the slice,
+according to the \refdef{def:movingFrame}
+%definition 
+of the moving frame 
+we must rotate the trajectory by $\pi$ in order for it to satisfy the restriction.
 
 \subsection{Passing through singularity in $\SOn{2}$}
 
-We can generalize this result on pasing through a singularity from \cLe\ to any $\SOn{2}$ symmetry using the same reasoning.
+We can generalize this result on passing through a singularity from 
+\cLe\ to any $\SOn{2}$-equivariant dynamical system by using the same reasoning.
 
-Suppose we have a dynamical system given by $\dot{\ssp}=\vel(\ssp)$, and that there is an $\SOn{2}$ group acting on the state space with infinitesimal generator $\Lg$. Let $\slicep$ be our slice fixing point, and $\gSpace(\tau)$ be the angle needed to rotate the trajectory into the slice at time $\tau$.
+Suppose we have a smooth dynamical system given by $\dot{\ssp}=\vel(\ssp)$, and that there is an $\SOn{2}$ group acting on the state space with infinitesimal generator $\Lg$. Let $\slicep$ be our slice fixing point, and $\gSpace(\tau)$ be the angle needed to rotate the trajectory into the slice at time $\tau$.
 
-Our goal is to understand the behavior of $\gSpace(\tau)$  so that we can understand the nature of the trajectory in the \reducedsp\ at anytime, and specifically when it passes through a singularity.
+Our goal is to understand the behavior of $\gSpace(\tau)$  so that we can understand the nature of the trajectory in the \reducedsp\ for all times, and specifically when it passes through a singularity.
 
-$\ssp(\tau)$ is $C^{\infty}$ since we can explicitly calculate any derivative using $\dot{\ssp}=\vel(\ssp)$. This means that we can use taylor polynomials to approximate the trajectory at any time $\tau_0$, so $\ssp(\tau)=\ssp(\tau_0)+\vel(\ssp(\tau_0)) (\tau-\tau_0)+\Mvar(\ssp(\tau^*))\vel(\tau^*) \frac{(\tau^*-\tau_0)^2}{2}$ for some $\tau^*$ between $\tau$ and $\tau_0$, where $\Mvar$ is the \stabmat. $\gSpace(\tau)$ must satisfy $\dotProd{e^{\gSpace \Lg}\ssp}{\groupTan(\slicep)}=\dotProd{e^{\gSpace \Lg}(\ssp(\tau_0)+\vel(\ssp(\tau_0)) (\tau-\tau_0)+\Mvar(\ssp(\tau^*))\vel(\tau^*) \frac{(\tau^*-\tau_0)^2}{2})}{\groupTan(\slicep)}=0$. We can rotate the trajectory in the full state space so that $\ssp(\tau_0)$ is in the slice. If in addition we know that small changes in $\ssp$ result in only small changes in the $\gSpace$ necessary to rotate $\ssp$ into the slice (this was the case for the \cLe), then this means that as $\tau$ approaches $\tau_0$, $\dotProd{e^{\gSpace \Lg}(\ssp(\tau_0)+\vel(\ssp(\tau_0)) (\tau-\tau_0)+\Mvar(\ssp(\tau^*))\vel(\tau^*) \frac{(\tau^*-\tau_0)^2}{2})}{\groupTan(\slicep)} \approx \dotProd{e^{\gSpace \Lg}\ssp(\tau_0)+ e^{\gSpace \Lg}\vel(\ssp(\tau_0)) (\tau-\tau_0)}{\groupTan(\slicep)}\approx \dotProd{e^{\gSpace \Lg}\vel(\ssp(\tau_0)) (\tau-\tau_0)}{\groupTan(\slicep)}\approx (\tau-\tau_0)\dotProd{e^{\gSpace \Lg}\vel(\ssp(\tau_0))}{\groupTan(\slicep)}\approx 0$. This means as $\tau$ approaches $\tau_0$, $\gSpace$ is such that
+$\ssp(\tau)$ is $C^{\infty}$ since we can explicitly calculate any derivative using $\dot{\ssp}=\vel(\ssp)$. This means that we can use Taylor expansions to approximate the trajectory at any time $\tau_0$, so $\ssp(\tau)=\ssp(\tau_0)+\vel(\ssp(\tau_0)) (\tau-\tau_0)+O(\tau^2)$. $\gSpace(\tau)$ must satisfy $\dotProd{e^{\gSpace \Lg}\ssp}{\groupTan(\slicep)}=\dotProd{e^{\gSpace \Lg}(\ssp(\tau_0)+\vel(\ssp(\tau_0)) (\tau-\tau_0)+O(\tau^2))}{\groupTan(\slicep)}=0$. We can rotate the trajectory in the full state space so that $\ssp(\tau_0)$ is in the slice. If in addition we know that small changes in $\ssp$ result in only small changes in the $\gSpace$ necessary to rotate $\ssp$ into the slice (this was the case for the \cLe), 
+then this means that as $\tau$ approaches $\tau_0$, 
+    \PC{seems you are repeating stuff here - should combine with the
+        earlier text}
+\bea
+&&\dotProd{e^{\gSpace \Lg}(\ssp(\tau_0)+\vel(\ssp(\tau_0)) (\tau-\tau_0)+O(\tau^2))}{\groupTan(\slicep)} 
+    \continue
+&\approx& \dotProd{e^{\gSpace \Lg}\ssp(\tau_0)+ e^{\gSpace \Lg}\vel(\ssp(\tau_0)) (\tau-\tau_0)}{\groupTan(\slicep)}
+    \continue
+&\approx&  \dotProd{e^{\gSpace \Lg}\vel(\ssp(\tau_0)) (\tau-\tau_0)}{\groupTan(\slicep)}
+    \continue
+&\approx&  (\tau-\tau_0)\dotProd{e^{\gSpace \Lg}\vel(\ssp(\tau_0))}{\groupTan(\slicep)}\approx 0
+\,.
+\eea This means as $\tau$ approaches $\tau_0$, $\gSpace$ is such that
 $\dotProd{e^{\gSpace \Lg}\vel(\ssp(\tau_0))}{\groupTan(\slicep)}\approx 0$ so $\gSpace$ approaches an angle that rotates $\vel(\ssp(\tau_0))$ into the slice.
 
 So all we need to show is that small changes in $\ssp$ only result in small changes for $\gSpace$ when dealing with $\SOn{2}$.
 
 We know that $\dotProd{e^{\gSpace \Lg}\ssp}{\groupTan(\slicep)}=\dotProd{\ssp}{e^{-\gSpace \Lg}\groupTan(\slicep)}=0$.
-Using the general form for an $\SOn{2}$ group action we have $\dotProd{\ssp}{e^{-\gSpace \Lg}\groupTan(\slicep)}=\dotProd{\ssp}{(\sum\limits_m (\cos{-m\gSpace} \id^{(m)}+\sin{-m\gSpace} \frac{1}{m}\Lg^{(m)})) \Lg \slicep}=\dotProd{\ssp}{(\sum\limits_m (\cos{m\gSpace} \Lg^{(m)}-\sin{m\gSpace} \id^{(m)})) \slicep}=\sum\limits_m(\cos{m\gSpace} \dotProd{\ssp}{\Lg^{(m)} \slicep}-\sin{m\gSpace} \dotProd{\ssp}{\id^{(m)} \slicep})$. Both $\cos(m\gSpace)$ and $\sin(m\gSpace)$ are expressible as polynomials in $\cos(\gSpace)$ and $\sin(\gSpace)$ with the highest power of both $\sin(\gSpace)$ and $\cos(\gSpace)$ being $m$.
+Using the general form for an $\SOn{2}$ group action we have $\dotProd{\ssp}{e^{-\gSpace \Lg}\groupTan(\slicep)}=\dotProd{\ssp}{(\sum\limits_m (\cos{-m\gSpace} \id^{(m)}+\sin{-m\gSpace} \frac{1}{m}\Lg^{(m)})) \sliceTan{}}=\dotProd{\ssp}{(\sum\limits_m (\cos{m\gSpace} \Lg^{(m)}-\sin{m\gSpace} \id^{(m)})) \slicep}=\sum\limits_m(\cos{m\gSpace} \dotProd{\ssp}{\Lg^{(m)} \slicep}-\sin{m\gSpace} \dotProd{\ssp}{\id^{(m)} \slicep})$. Both $\cos(m\gSpace)$ and $\sin(m\gSpace)$ are expressible as polynomials in $\cos(\gSpace)$ and $\sin(\gSpace)$ with the highest power of both $\sin(\gSpace)$ and $\cos(\gSpace)$ being $m$.
 
 
 \subsection{Singularities of $\SOn{2} \times \SOn{2}$}
@@ -1214,7 +1310,7 @@ Suppose we are rotating a trajectory $\ssp(\tau)$ into the slice normal to the g
 \end{equation*}
 so when we restrict it to a \slice\ normal to $\groupTan_1(\slicep)$ we get that
 
-$\dotProd{vel(\sspRed)-\dot{\gSpace}(\sspRed) \cdot \groupTan(\sspRed)}{\groupTan_1(\slicep)}=$
+$\dotProd{\vel(\sspRed)-\dot{\gSpace}(\sspRed) \cdot \groupTan(\sspRed)}{\groupTan_1(\slicep)}=$
 
 $\dotProd{\vel(\sspRed)}{\groupTan_1(\slicep)}-\dotProd{\dot{\gSpace_1} \groupTan_1(\sspRed)}{\groupTan_1(\slicep)}-\dotProd{\dot{\gSpace_2} \groupTan_2(\sspRed)}{\groupTan_1(\slicep)}=0$.
 
@@ -1232,6 +1328,8 @@ This argument is easily extended to a product of arbitrarily many $\SOn{2}$ acti
 
 This type symmetry group shows up often in dynamical systems; cylindrical pipe flow, the \KS\, and the plane-couette flow have continuous symmetries with 'independent' generators.
 
+    \ifarticle
+    \else
 \section{Relative stability}
 \label{sect:relStab}
 %\PC{Write up here stability of relative solutions following \refref{DasBuch},
@@ -1283,13 +1381,13 @@ We also know that $x(\tau) = \LieEl(\tau) x(0)$ for some
 element $\LieEl(\tau)$ of the symmetry group. Inserting this
 into the first equation, we get that
 \bea
-v(\LieEl(\tau) \xInit) &=&
+\vel(\LieEl(\tau) \xInit) &=&
     \velRel(\tau)\cdot \groupTan(\LieEl(\tau) \xInit)
     \continue
-\LieEl(\tau) v(\xInit) &=&
+\LieEl(\tau) \vel(\xInit) &=&
     \LieEl(\tau) \, \velRel(\tau) \cdot \groupTan(\xInit)
     \continue
-v(\xInit) &=& \velRel(\tau) \cdot \groupTan(\xInit)
+\vel(\xInit) &=& \velRel(\tau) \cdot \groupTan(\xInit)
 \eea
 both $\vel(\xInit)$ and $\groupTan(\xInit)$ are independent
 of time, and we have $\velRel(\tau) = \velRel(0) = \velRel$
@@ -1304,8 +1402,8 @@ stationary in a frame rotating at the appropriately chosen
 constant angular velocity. We find these points in a manner
 similar to finding the equilibria, with one difference. As
 the flow drifts (rotates), a {\reqv} will drift as well, so
-that instead of setting all of the $v(x)=0$, we allow the
-component of $v(x)$ tangent to direction of group rotation to
+that instead of setting all of the $\vel(x)=0$, we allow the
+component of $\vel(x)$ tangent to direction of group rotation to
 be non-zero.
 
 \subsection{Computing and plotting the {\reqv} $\REQB{1}$}
@@ -1456,12 +1554,12 @@ These are the same as the eigenvalues found using polar coordinates with the add
 The equations of motion for trajectory kept in a hyperplane by rotation under the symmetry group are:
 \bea
     \dot{\gSpace}_a (\sspRed) &=&
-    \frac{\dotProd{v(\sspRed)}{\sliceTan{a}}}
+    \frac{\dotProd{\vel(\sspRed)}{\sliceTan{a}}}
          {\dotProd{\groupTan(\sspRed)}{\sliceTan{}}}
     \continue
-    u(\sspRed) &=& v(\sspRed)-\dot{\gSpace}(\sspRed)  \cdot \groupTan(\sspRed)
+    u(\sspRed) &=& \vel(\sspRed)-\dot{\gSpace}(\sspRed)  \cdot \groupTan(\sspRed)
 \eea
-where $v(\sspRed)$ is the velocity of the full \statesp\ flow, $\groupTan(\sspRed)$ is the tangent to the group action, and $\sliceTan{}$ is the vector normal to the hyperplane of the slice. Using this equation we get that the {\stabmat} $\MvarRed$ for the system in \reducedsp\ is given by:
+where $\vel(\sspRed)$ is the velocity of the full \statesp\ flow, $\groupTan(\sspRed)$ is the tangent to the group action, and $\sliceTan{}$ is the vector normal to the hyperplane of the slice. Using this equation we get that the {\stabmat} $\MvarRed$ for the system in \reducedsp\ is given by:
     \PC{Stefan's version was
 \[
 M_{ij} =
@@ -1549,7 +1647,7 @@ $(\Delta \ssp,\Delta T)$
 
 We already know that if $\ssp$ is on a periodic orbit then
 $
-% \jMps\left(\ssp\right) v(\ssp) = v\left(\ssp\right) \Rightarrow
+% \jMps\left(\ssp\right) \vel(\ssp) = v\left(\ssp\right) \Rightarrow
 \left(I-\jMps\left(\ssp\right)\right) v\left(\ssp\right) =
 0$, so $I-\jMps\left(\ssp\right)$ becomes
 non-invertible as $\ssp$ approaches a periodic orbit.
@@ -1568,8 +1666,8 @@ v (\ssp)^T \Delta \ssp = 0
 We then get the system
 \beq
     \begin{pmatrix}
-        I-\jMps(\ssp)& \partial v(\ssp)\\
-        v(\ssp)& 0
+        I-\jMps(\ssp)& \partial \vel(\ssp)\\
+        \vel(\ssp)& 0
     \end{pmatrix}
     \begin{pmatrix}
         \Delta \ssp\\
@@ -1615,6 +1713,8 @@ to the second order, we get that $I \approx \tilde{\Delta
 \ssp}^2/2 + (\ssp - f(\ssp)) \tilde{\Delta \ssp} +
 (\ssp-f(\ssp))^2/2$ where $\tilde{\Delta \ssp} =
 (I-\jMps(\ssp))\Delta \ssp$.
+    \fi %end of article switch
+
 
 \section{Hilbert polynomials}
 \label{SF:relStab}
