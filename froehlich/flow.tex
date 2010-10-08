@@ -89,7 +89,7 @@ first order ODE system\rf{SiminosThesis}
 \end{split}
 \eeq
 In all numerical calculations that follow we shall set the
-parameters to the Siminos values\rf{SiminosThesis},
+parameters to Siminos's values\rf{SiminosThesis},
 \beq
 r_1=28,\; b=\frac{8}{3},\;
 \sigma=10,\; e=\frac{1}{10},\quad \mbox{and} \quad r_2=0
@@ -138,14 +138,16 @@ four.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % computed by graphs.nb
-\SFIG{CLEx1x2z}
+\SFIG{CLEx2y1z}
 {}{
-A typical $\{x_1,x_2,z\}$ plot of the \cLf\ strange attractor,
+A typical $\{x_2,y_1,z\}$ plot of the \cLf\ strange attractor,
 with initial point
-$(x_1, x_2, y_1, y_2, z) = (1, 0, 0, 1, 1)$.
-    }{fig:CLEx1x2z}
+$(x_1, x_2, y_1, y_2, z) = (1, 2, 3, 1, 2)$.
+    }{fig:CLEx2y1z}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+    \ifarticle
+    \else
 
 \section{Linear stability}
 \label{sect:stability}
@@ -190,8 +192,6 @@ describes how quickly points initially very near to $x(t)$ will
 diverge away from / converge to it in time. Matrix $\Mvar$ is an important
 tool which we will use in what follows.
 
-    \ifarticle
-    \else
 \subsection{\jacobianM}
 
 We start by a discussion of the stability of \eqva\ and \po s,
@@ -450,31 +450,29 @@ $\jMps_p\left(\ssp'\right)$ too.
 \section{Symmetries of dynamics}
 \label{sect:SymmDyn}
 
-In order to quotient the rotational symmetry in the
-\cLf\, we first need to show that the flow is rotationally
-equivariant. If a flow is equivariant we can apply algorithms
-algorithms to reduce the symmetry.
+Before we can begin to investigate how a 'symmetry' in a dynamical system can be used to better understand the system, we first must define what a 'symmetry' is.
 
 We begin by defining the notion of `equivariance.'
-A flow $\dot{x}= \vel(x)$ is \emph{equivariant} under an operation $\LieEl$ when
+A flow $\dot{x}= \vel(x)$ is \emph{equivariant} under an operation $\LieEl$ if
 \beq
 \LieEl \, \vel(x)=\vel(\LieEl \, x)
 \,.
 \ee{eq:FiniteRot}
-This means that if $f(x)$ is a solution to the dynamical
+Notice that this means that if $f(x)$ is a solution to the dynamical
 equations, then so is $\LieEl\,f(x)$.
 
+The equivariant operations of dynamical system form a group under composition, and this group is what we call the symmetry of the dynamics.
+
 In many flows (the \cLe\ are a particularly simple example),
-the equivariant operations
-will form a Lie group that can be used to reduce the
-dynamics.
+this symmetry group will form a Lie group. When the symmetry group does form a Lie group, Cartan's method of 'moving frames' can be used to replace the system with a lower dimensional version.
 
 \subsection{Lie groups}
 
 A theory of Lie groups is a vast subject. This report follows the notational conventions of ChaosBook.org\rf{DasBuch}. We found Roger Penrose\rf{Penr04} introduction to the subject both enjoyable and understandable.
     \PC{to PC - remember to copy \refref{Penr04} to ChaosBook.org.}
 
-A Lie group is a group which (1) is a differential manifold
+A Lie group is a group which some additional properties that are convinient to work with:
+(1) it is a differential manifold
 and (2) the composition map $G \times G \rightarrow G : (g,h)
 \rightarrow g h^{-1}$ is $\mathbb{C}^\infty$.
     \PC{Stefan, this looks like a rather unenlightening definition.
@@ -488,7 +486,7 @@ connected to the identity can be expressed as
 \LieEl(\gSpace)=e^{{\gSpace} \cdot \Lg }
 \,,
 \ee{FiniteRot}
-where $\gSpace \cdot \Lg$ is a \emph{Lie algebra} element,
+where $\gSpace \cdot \Lg = \sum_a \gSpace_a \Lg_a$ is a \emph{Lie algebra} element,
 and the $\gSpace_a$ are the parameters of the transformation.
     \PC{need to generalize to groups like \On{n}}
                                                     \exerbox{exer:FinRot2d}
@@ -566,7 +564,7 @@ verify that the \cLe\ are rotationally equivariant.
 $\pS_H$ of a subgroup or a `centralizer' $H \subset \Group$,
 $\Group$ a symmetry of dynamics, is the set of all \statesp\
 points left \emph{$H$-fixed}, \emph{point-wise} invariant
-under subgroup action
+under action of the subgroup
 \beq
 \pS_H = \Fix{H} =
    \{ \ssp \in \pS : {h} \, \ssp = \ssp \mbox{ for all } h \in H \}
@@ -827,40 +825,32 @@ the antihermiticity \refeq{antiHerm} of Lie algebra generators.
 \label{sect:reducedStateSp}
 
     \PC{Stefan explain the general concept of symmetry reduction first}
+Now that we know what a symmetry of a dynamical system is, how can it actually be used? The basic idea behind symmetry reduction is to define an equivalence relation on the \statesp\ where two points are equivalent if they are in the same group orbit of the symmetry group. With any trajectory in the full \statesp\, $\ssp(\tau)$, we can associate with it a \reducedsp\ trajectory, $\sspRed(\tau)$, which is just the equivalence class of the full trajectory at any time (\ie\ $\ssp(\tau) \in \sspRed(\tau)$ for all $\tau$). It is not possible to reconstruct the full space trajectory if all that is known is the \reducedsp\ trajectory; if we want to do this then we must keep track of some additional information.
+
+If we choose a unique representative from an equivalence class, then we can express every point in the equivalence class as a group element acting on this unique representative. If we then choose a unique representative from all the equivalence classes, then to recover the full space trajectory from the \reducedsp\ trajectory, we just need to keep track of $\LieEl(\tau)$, the group element needed to rotate the representative of $\sspRed(\tau)$ to $\ssp(\tau)$ (\ie\ $\ssp(\tau)=\LieEl(\tau) \sspRed(\tau)$).
 One of our goals of this project is to reduce the \statesp\ of the \cLe\ from five to four dimensions. We propose to accomplish this by the `{\mslices}.'
 
-\subsection{\Mslices, finite time steps}
-\label{sect:MovFrame}
-
-     \Private{
-\noindent{\bf Predrag -
-July 19, Aug 12 2009; Sep 19 2010}
-    }
+\subsection{\Mslices}
 
 Here we describe symmetry reduction by the
 {\em {\mslices}} of
 Cartan\rf{CartanMF,FelsOlver98,FelsOlver99,OlverInv}.
                                                 \exerbox{exer:SO2cSect}
                                                 \exerbox{exer:mslicesInv}
-Split up the integration of an $\Group$-equivariant ODE into
-a sequence of short time steps, each followed by a group action
-such that the next segment initial point is in the point
-$\sspRed \in$ {\slice}, a $(d\!-\!1)$-dimensional hyperplane
-normal to the group rotation tangent $\sliceTan{}$ at point
-$\slicep$:
-    \PC{Stefan, rewrite the whole text in terms of
-        $\dotProd{.}{.}$.}
-\[ %beq
-\dotProd{\sspRed - \slicep}{\sliceTan{a}}=0
-    \,,\qquad
-\sliceTan{a} = \Lg_a \slicep
-\,.
-\] %ee{PCsectQ}
+
+The \mslices\ is when the \reducedsp\ representative of a group orbit equivalence class is chosen to be the point where the group orbit intersects a fixed hypersurface (the representatives are where the hypersurface 'slices' the group orbits). We begin by describing how the method works near a point on the \statesp\ trajectory.
+
+\begin{definition}
+\textbf{\Slice}
+If $\mathbb{G}$ acts 'regularly' on a d-dimensional manifold $\pS$, \ie\ all its group orbits are $N$ dimensional, then we define a \emph{slice} through a point $\slicep$ to be a $(d\!-\!N)$ dimensional submanifold $\pSRed$ such that all group orbits in an open neighborhood of $\slicep$ intersect $\pSRed$ transversally and only once.
+\end{definition}
+
+If we are working in a subspace of $\mathbb{R}^d$, then the simplest hypersurface through $\slicep$ one can construct is a hyperplane. We want the hyperplane to intersect the group orbits in an open neighborhood of $\slicep$ transversally; the naive way to achieve this is to choose the hyperplane normal to the group actions. This leads us to the definition:
 
 \begin{definition}
 \label{def:slice}
 \index{slice}
-\textbf{\Slice}:
+\textbf{Linear \slice}:
 Pick a non-zero \emph{slice-fixing point} $\slicep \in \pS$.
 We call the $(d\!-\!N)$-dimensional hyperplane $\sspRed \in \pSRed$
 a \emph{\slice}, where
@@ -882,12 +872,14 @@ As $ \dotProd{\slicep}{\sliceTan{a}}=\dotProd{\slicep}{\Lg_a \slicep} =0 $ by \r
 \ee{PCsectQ1}
 \end{definition}
 
+In this paper, whenever we use the term \slice\ it will be a hyperplane like in the definition. The goal of this paper is to understand how to use these linear slices in the \cLe\ equations and extend that to more general dynamical systems.
+
 As we shall show in \refsect{sect:slices}, a given group orbit intersects a slice at
 least twice, and potentially arbitrarily many times, so we need a prescription for
 how to pick a unique \reducedsp\ point as the representative of the entire group orbit.
 We shall eliminate half of the slice crossings as we do for
-\Poincare\ sections, by fixing the orientation of the crossing. 
-The choice of which of the remaining crossing is the representative 
+\Poincare\ sections, by fixing the orientation of the crossing.
+The choice of which of the remaining crossing is the representative
 is more arbitrary.
 
 \begin{definition}
@@ -902,13 +894,13 @@ oriented:
 \beq
 \dotProd{\groupTan_{}(\ssp)}{\sliceTan{}} > 0
 \ee{SF:orientedSlice}
-and, if there is a set of angles 
+and, if there is a set of angles
 $\{\gSpace_1\leq\gSpace_2\leq\cdots\leq\gSpace_k \}$ that
-satisfy the oriented slice transversal conditions 
+satisfy the oriented slice transversal conditions
 \refeq{PCsectQ1}, \refeq{SF:orientedSlice}, we take the
 smallest angle $\gSpace_1$.
     \PC{problem: this makes sense only for \SOn{2}}
-Such a map from a point in the full \statesp\ to the group action 
+Such a map from a point in the full \statesp\ to the group action
 $\gSpace$ is called a
 \emph{moving frame}\rf{FelsOlver98,FelsOlver99,OlverInv}.
 \end{definition}
@@ -944,6 +936,36 @@ acts only through $m=0$ and $m=1$ representations; in general
 the `phases' $\gSpace_a$ have to be computed numerically.
 
     }%end \example{\CLe\ rotation angle
+
+\SFIG{CLErx2y1z}
+{}{
+A typical $\{x_2,y_1,z\}$ plot of the reduced \cLf\ strange attractor
+with initial point
+$(x_1, x_2, y_1, y_2, z) = (1, 2, 3, 1, 2)$ in the slice normal to $\sliceTan{}=(1,0,0,0,0)$. Notice how figure \refFig{fig:CLEx2y1z} looks like this except rotated around the z-axis
+    }{fig:CLErx2y1z}
+
+\subsection{\Mslices, finite time steps}
+\label{sect:MovFrame}
+
+     \Private{
+\noindent{\bf Predrag -
+July 19, Aug 12 2009; Sep 19 2010}
+    }
+
+Split up the integration of an $\Group$-equivariant ODE into
+a sequence of short time steps, each followed by a group action
+such that the next segment initial point is in the point
+$\sspRed \in$ {\slice}, a $(d\!-\!1)$-dimensional hyperplane
+normal to the group rotation tangent $\sliceTan{}$ at point
+$\slicep$:
+    \PC{Stefan, rewrite the whole text in terms of
+        $\dotProd{.}{.}$.}
+\[ %beq
+\dotProd{\sspRed - \slicep}{\sliceTan{a}}=0
+    \,,\qquad
+\sliceTan{a} = \Lg_a \slicep
+\,.
+\] %ee{PCsectQ}
 
 [...]
                                                     \exerbox{exer:PCsectionCLe}
@@ -1012,7 +1034,7 @@ Let $\ssp \in \pS$ be a point in the \statesp, and a group element represented  
     ''}
 
 Consider $f(\gSpace)=\dotProd{e^{\gSpace \cdot \Lg} \ssp}{\slicep}$, the projection of the group orbit of $\ssp$
-onto the slice-fixing ray through \slicep\ (note: this differs by a constant from $\|[e^{\gSpace \cdot \Lg}\ssp - \slicep]\|$, which is what Olver and ... use in [paper] to find a point in the slice they are taking).
+onto the slice-fixing ray through \slicep\ (note: If we are dealing with real numbers, this differs by a constant from $\|e^{\gSpace \cdot \Lg}\ssp - \slicep\|$, which is what Olver and ... use in [paper] to find a point in the slice they are taking).
 \ES{} $f$ is a continuous and differentiable function of \gSpace. If $\ssp$ is invariant, its group orbit is itself, and $f(\gSpace)$ takes a constant value.
 
 If $\gSpace_E$ is an extremum of $f$ then all of the first order partial derivatives of $f$ vanish at $\gSpace_E$, $\frac{\partial f(\gSpace_E)}{\partial \gSpace_a} =\dotProd{\Lg_a e^{\gSpace_E \cdot \Lg} \ssp}{\slicep}=0$. $\Lg_a$ is antihermitian, so
@@ -1023,7 +1045,7 @@ and
 \dotProd{\LieEl_E \ssp}{\sliceTan{a}} =0
 \,.
 \]
-We therefore have that $\sspRed= \LieEl_E \ssp$ is normal to all the group tangents of $\ssp$ so it is in \pSRed. This means that the slice condition is satisfied by $\sspRed_E = \LieEl_E \ssp$ corresponding to an extremum of the $f$, and thus $\sspRed_E$ is in the slice (note: this is equivalent to looking for the extrema of $\|[e^{\gSpace \cdot \Lg}\ssp - \slicep]\|$, so we are saying that any points that are locally the closest or the farthest from a our slice fixing point will be in the slice). All that is left to do then is to show that $f$ has extrema. But as the group is compact, the group orbit of every point in \pS\ is compact, so its projection on the slice-point $\slicep$ has at least two extremal points, and thus every group orbit intersects the \slice. For example, group orbits of \SOn{2}\ are topologically circles, and their projections have maxima, minima and inflection points as extrema.
+We therefore have that $\sspRed= \LieEl_E \ssp$ is normal to all the group tangents of $\ssp$ so it is in \pSRed. This means that the slice condition is satisfied by $\sspRed_E = \LieEl_E \ssp$ corresponding to an extremum of the $f$, and thus $\sspRed_E$ is in the slice (note: this is equivalent to looking for the extrema of $\|e^{\gSpace \cdot \Lg}\ssp - \slicep\|$, so we are saying that any points that are locally the closest or the farthest from a our slice fixing point will be in the slice). All that is left to do then is to show that $f$ has extrema. But as the group is compact, the group orbit of every point in \pS\ is compact, so its projection on the slice-point $\slicep$ has at least two extremal points, and thus every group orbit intersects the \slice. For example, group orbits of \SOn{2}\ are topologically circles, and their projections have maxima, minima and inflection points as extrema.
     \PC{
     Stefan, if I have removed some essential part of your proof, please restore it.
     The narrative continues in \refsect{sect:sliceSing}.
@@ -1133,12 +1155,16 @@ subsets of \statesp\rf{SiminosThesis}.
                                                     \exerbox{exer:csectionCLe}
 A typical trajectory is shown in \reffig{fig:PCunrot1}.
 
+    \ifarticle
+    \else
+
 \subsection{Integration on the \slice}
 
 Our second method of symmetry reduction Siminos
 \rf{SiminosThesis} calls {\em integration on the
 \slice\ (II)}.
 
+    \fi
 
 \subsection{\Slice\ singularities}
 \label{sect:sliceSing}
@@ -1181,8 +1207,8 @@ a singularity occurs, we have to describe what happens to the \reducedsp\ trajec
 
 To answer this question, let us first look at the example of the \cLe. There is only one infinitesimal generator for the \SOn{2} symmetry group, so the rotation angle $\gSpace$ into the \reducedsp\ trajectory is given by \refeq{SL:CLEsliceRot}.
 
-If $\ssp(\tau)$ is a trajectory in full state space, then the 
- \reducedsp\ flow $\sspRed(\tau)$ goes through a singularity when 
+If $\ssp(\tau)$ is a trajectory in full state space, then the
+ \reducedsp\ flow $\sspRed(\tau)$ goes through a singularity when
  $\dotProd{\groupTan_{}(\sspRed^*)}{\sliceTan{}}=0$
 at time $\tau=0$, $\sspRed^* = \sspRed(0)$.
 The angle $\gSpace^*$ for rotating a point into the slice must satisfy
@@ -1190,21 +1216,21 @@ The angle $\gSpace^*$ for rotating a point into the slice must satisfy
         You should refer to already derived results, rather than repeating
         the same text}
 \bea
-0             &=& 
+0             &=&
 \dotProd{\ssp}{\sliceTan{}}\cos(\gSpace^*) +
 \dotProd{\groupTan_{}(\ssp)}{\sliceTan{}}\sin(\gSpace^*)
     \continue
-\tan(\gSpace^*) &=& 
+\tan(\gSpace^*) &=&
 -{\dotProd{\ssp}{\sliceTan{}}}/{\dotProd{\groupTan_{}(\ssp)}{\sliceTan{}}}
  \,.
 \label{SF:SO2angleRot}
 % \refeq{SF:SO2angleRot}
 \eea
-This equation has two solutions 
-$\{\sspRed^*=\LieEl(\gSpace^*)\ssp, \LieEl(\gSpace^*+\pi)\ssp\}$ 
-unless both $\dotProd{\sspRed^*}{\sliceTan{}}$ 
-and $\dotProd{\groupTan_{}(\sspRed^*)}{\sliceTan{}}$ are zero, 
-in which case any angle works (this is exactly the situation 
+This equation has two solutions
+$\{\sspRed^*=\LieEl(\gSpace^*)\ssp, \LieEl(\gSpace^*+\pi)\ssp\}$
+unless both $\dotProd{\sspRed^*}{\sliceTan{}}$
+and $\dotProd{\groupTan_{}(\sspRed^*)}{\sliceTan{}}$ are zero,
+in which case any angle works (this is exactly the situation
 the trajectory is in when it passes through a singularity
 $\ssp^*$).
 
@@ -1219,14 +1245,14 @@ $
     \,.
 $
     \PC{Stefan had ``
-$\ssp(\tau)=\ssp(0)+\vel(0)\tau+\Mvar(\tau^*)\frac{\tau^2}{2}$ where $\Mvar$ is the stability matrix and $\tau^*$ is between $0$ and $\tau$. 
+$\ssp(\tau)=\ssp(0)+\vel(0)\tau+\Mvar(\tau^*)\frac{\tau^2}{2}$ where $\Mvar$ is the stability matrix and $\tau^*$ is between $0$ and $\tau$.
     '' This looks wrong to me. In any case, the oredr ${\tau^2}{2}$ term is
     not used.
 % -\frac{\dotProd{\ssp(0)+\vel(0)\tau
 % +\Mvar(\tau^*)\frac{\tau^2}{2}}{\sliceTan{a}}}{
 % \dotProd{\Lg(\ssp(0)+\vel(0)\tau+\Mvar(\tau^*)\frac{\tau^2}{2})}{\sliceTan{}}}
     }
-Hence as $\tau \rightarrow 0$, 
+Hence as $\tau \rightarrow 0$,
 \bea
 \tan(\gSpace)
 % = -\frac{\dotProd{\ssp}{\sliceTan{}}}{\dotProd{\groupTan_{}(\ssp)}{\sliceTan{}}}
@@ -1234,7 +1260,7 @@ Hence as $\tau \rightarrow 0$,
 -\frac{\dotProd{\sspRed^*+\vel^*\tau}{\sliceTan{}}}
 {\dotProd{\Lg(\sspRed^*+\vel^*\tau)}{\sliceTan{}}}
     \continue
-\tan(\gSpace^*) &=&    
+\tan(\gSpace^*) &=&
      -\frac{\dotProd{\vel^*}{\sliceTan{}}}
       {\dotProd{\groupTan_{}(\vel^*)}{\sliceTan{}}}
 \,.
@@ -1246,25 +1272,25 @@ $\ssp$ and  $\vel(\ssp)$ rotate rigidly together, that is OK.
 
 If we add on the restriction $\dotProd{\groupTan_{}(\ssp)}{\sliceTan{}}$ be nonnegative so that we get a unique representative from each trajectory, then as the trajectory approaches the singularity $\dotProd{\groupTan_{}(\ssp)}{\sliceTan{}}\approx \tau \dotProd{\Lg\vel^*}{\sliceTan{}}$. As $\tau$ goes from negative to positive, this expression changes sign, so when the trajectory goes through the slice,
 according to the \refdef{def:movingFrame}
-%definition 
-of the moving frame 
+%definition
+of the moving frame
 we must rotate the trajectory by $\pi$ in order for it to satisfy the restriction.
 
 \subsection{Passing through singularity in $\SOn{2}$}
 
-We can generalize this result on passing through a singularity from 
+We can generalize this result on passing through a singularity from
 \cLe\ to any $\SOn{2}$-equivariant dynamical system by using the same reasoning.
 
 Suppose we have a smooth dynamical system given by $\dot{\ssp}=\vel(\ssp)$, and that there is an $\SOn{2}$ group acting on the state space with infinitesimal generator $\Lg$. Let $\slicep$ be our slice fixing point, and $\gSpace(\tau)$ be the angle needed to rotate the trajectory into the slice at time $\tau$.
 
 Our goal is to understand the behavior of $\gSpace(\tau)$  so that we can understand the nature of the trajectory in the \reducedsp\ for all times, and specifically when it passes through a singularity.
 
-$\ssp(\tau)$ is $C^{\infty}$ since we can explicitly calculate any derivative using $\dot{\ssp}=\vel(\ssp)$. This means that we can use Taylor expansions to approximate the trajectory at any time $\tau_0$, so $\ssp(\tau)=\ssp(\tau_0)+\vel(\ssp(\tau_0)) (\tau-\tau_0)+O(\tau^2)$. $\gSpace(\tau)$ must satisfy $\dotProd{e^{\gSpace \Lg}\ssp}{\groupTan(\slicep)}=\dotProd{e^{\gSpace \Lg}(\ssp(\tau_0)+\vel(\ssp(\tau_0)) (\tau-\tau_0)+O(\tau^2))}{\groupTan(\slicep)}=0$. We can rotate the trajectory in the full state space so that $\ssp(\tau_0)$ is in the slice. If in addition we know that small changes in $\ssp$ result in only small changes in the $\gSpace$ necessary to rotate $\ssp$ into the slice (this was the case for the \cLe), 
-then this means that as $\tau$ approaches $\tau_0$, 
+$\ssp(\tau)$ is $C^{\infty}$ since we can explicitly calculate any derivative using $\dot{\ssp}=\vel(\ssp)$. This means that we can use Taylor expansions to approximate the trajectory at any time $\tau_0$, so $\ssp(\tau)=\ssp(\tau_0)+\vel(\ssp(\tau_0)) (\tau-\tau_0)+O(\tau^2)$. $\gSpace(\tau)$ must satisfy $\dotProd{e^{\gSpace \Lg}\ssp}{\groupTan(\slicep)}=\dotProd{e^{\gSpace \Lg}(\ssp(\tau_0)+\vel(\ssp(\tau_0)) (\tau-\tau_0)+O(\tau^2))}{\groupTan(\slicep)}=0$. We can rotate the trajectory in the full state space so that $\ssp(\tau_0)$ is in the slice. If in addition we know that small changes in $\ssp$ result in only small changes in the $\gSpace$ necessary to rotate $\ssp$ into the slice (this was the case for the \cLe),
+then this means that as $\tau$ approaches $\tau_0$,
     \PC{seems you are repeating stuff here - should combine with the
         earlier text}
 \bea
-&&\dotProd{e^{\gSpace \Lg}(\ssp(\tau_0)+\vel(\ssp(\tau_0)) (\tau-\tau_0)+O(\tau^2))}{\groupTan(\slicep)} 
+&&\dotProd{e^{\gSpace \Lg}(\ssp(\tau_0)+\vel(\ssp(\tau_0)) (\tau-\tau_0)+O(\tau^2))}{\groupTan(\slicep)}
     \continue
 &\approx& \dotProd{e^{\gSpace \Lg}\ssp(\tau_0)+ e^{\gSpace \Lg}\vel(\ssp(\tau_0)) (\tau-\tau_0)}{\groupTan(\slicep)}
     \continue
