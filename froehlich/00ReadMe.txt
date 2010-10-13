@@ -1,5 +1,5 @@
 siminos/froehlich/00ReadMe.txt
-$Author$ 
+$Author$
 $Date$
 ---------------------------------------------------------------
 
@@ -10,7 +10,7 @@ Stefan Froehlich dynamical systems blog
 
 pdflatex blog.tex
 
-../bibtex/siminos.bib 
+../bibtex/siminos.bib
 	one bibliography for all projects
 
 ../figs
@@ -19,7 +19,7 @@ pdflatex blog.tex
 ../figsSrc
 	one directory for source programs for all figures
 	(or .txt files explain how to regenerate them if needed)
-../Fig 
+../Fig
 	figures from dasbuch/book/Fig/ (do not edit these)
 
 ----------------------------------------------------------------
@@ -28,7 +28,11 @@ pdflatex blog.tex
 SAIC Student Paper Competition
 From: 	O'Neal, Molly <Molly.ONeal@dev.gatech.edu>
 
-Now in its 21st year at Georgia Tech, the SAIC Student Paper Competition is a great opportunity to recognize and reward outstanding Georgia Tech student researchers at the Undergraduate, Masters, and PhD levels.  SAIC annual competition is detailed in 
+Now in its 21st year at Georgia Tech, the SAIC Student Paper
+Competition is a great opportunity to recognize and reward
+outstanding Georgia Tech student researchers at the
+Undergraduate, Masters, and PhD levels. SAIC annual competition
+is detailed in
 
 	letters/101015SAICpaperRules.pdf
 To print the article rather than the blog, uncomment
@@ -36,9 +40,11 @@ To print the article rather than the blog, uncomment
 beginning of the
 	siminos/froehlich/blog.tex
 
-Paper submissions should be made to saicpaper@dev.gatech.edu by 
-			4PM on Wednesday, October 13th.  
-Finalists will be announced by the end of October, and the awards banquet will be held on the evening of Thursday, November 18th.
+Paper submissions should be made to saicpaper@dev.gatech.edu by
+			4PM on Wednesday, October 13th.
+Finalists will be announced by the end of October, and the
+awards banquet will be held on the evening of Thursday,
+November 18th.
 
 ---------------------------------------------------------------
                         Predrag Apr 12, 2010
@@ -49,5 +55,3 @@ NOTES:
 
 ---------------------------------------------------------------
 TO FIX:
-
-
