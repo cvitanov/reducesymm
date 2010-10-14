@@ -23,6 +23,15 @@ pdflatex blog.tex
 	figures from dasbuch/book/Fig/ (do not edit these)
 
 ----------------------------------------------------------------
+                        Stefan  Oct 12, 2010
+submitted
+"Reducing continuous symmetries with linear slice"
+ChaosBook.org/projects/Froehlich/Froeh10.pdf
+	contained within
+blog.tex
+	\ifarticle ... \else ... \fi %article switch
+
+
                         Predrag Sep 15, 2010
 
 SAIC Student Paper Competition
