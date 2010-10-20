@@ -2186,3 +2186,35 @@ Linear slices are a very simplistic condition to use for a subspace and are prac
 
 While we have demonstrated that linear slices can be implemented in the \mslices, work remains to be done before they can be used in more general systems. We were able to impose a simple restriction for the \cLe\ \rf{GibMcCLE82} to choose a unique representative from the hyperplane, but unfortunately it does not generalize to more advanced systems. In addition, fluid flows, such as the plane-couette and cylindrical pipe flow, can also exhibit a discrete symmetry that the \mslices\ does not handle. More has to be done to reduce a system with a discrete symmetry before the \mslices\ can be used for the continuous symmetry.
 
+\section{Template Fitting}
+
+In \rf{rowley_reconstruction_2000}, the authors use a technique called template fitting to reduce the dynamics of translationally equivariant systems.
+
+The strategy behind template fitting is to shift the data so that at any time it matches as closely as possible with a preselected template function. Let $f:\mathbb{R}\rightarrow\mathbb{R}$ be a $2\pi$ periodic function that we are fitting to a $2\pi$ periodic template function $f_0$. The goal is then to find the value of $c$ that minimizes the square of the norm of the difference of the two functions:
+\bea
+&&\int_0^{2\pi} [f(\ssp-c)-f_0(\ssp)]^2 d\ssp
+\continue
+&=& \int_0^{2\pi} [f(\ssp)-f_0(\ssp+c)]^2 d\ssp
+\continue
+&=& \int_0^{2\pi} f^2(\ssp)-2 f(\ssp) f_0(\ssp+c)+f_0^2(\ssp+c) d\ssp
+\continue
+&=& \int_0^{2\pi} f^2(\ssp) d\ssp+\int_0^{2\pi}f_0^2(\ssp+c)d\ssp-\int_0^{2\pi} f(\ssp)f_0(\ssp+c)d\ssp
+\continue
+&=& \int_0^{2\pi} f^2(\ssp) d\ssp+\int_0^{2\pi}f_0^2(\ssp)d\ssp-\int_0^{2\pi} f(\ssp)f_0(\ssp+c)d\ssp
+\eea
+where we use the fact that both functions have period $2\pi$ to shift the intregrals by $c$. The first two integrals are independent of the choice of $c$, so finding this minimum is the same minimizing $-\int_0^{2\pi} f(\ssp)f_0(\ssp+c)d\ssp$. This is the same as maximizing $\dotProd{f(\ssp)}{f_0(\ssp+c)}$, where the inner product is the standard inner product on $L^2[0,2\pi]$ \refeq{innerL2}.
+
+If $c$ maximizes $\dotProd{f(\ssp)}{f_0(\ssp+c)}$, then assuming differentiablilty it must be a critical point
+\beq
+\partial_c \dotProd{f(\ssp)}{f_0(\ssp+c)}=0
+\eeq
+which is equivalent to $\dotProd{f(\ssp)}{f_0'(\ssp+c)}=0$. Shifting the integral by $c$ we get the condition
+\beq
+\dotProd{f(\ssp-c)}{f'_0(\ssp)}=0.
+\eeq
+
+Suppose we are working with a translational equivariant dynamical system. Let $\LieEl_c$ be the group element that corresponds to translating by $c$. Let $u(\ssp,\tau)$ be a solution to the system. When we fit $u(\ssp,\tau)$ to the template $u_0(\ssp)$ we are finding $c(\tau)$ such that $\dotProd{\bar{u}}{u'_0}=0$, where $\bar{u}(\ssp,\tau)=u(\ssp-c(\tau),\tau)=\LieEl_{c(\tau)}u(\ssp,\tau)$. We are finding an equivalent trajectory to $u$ that is normal to $u_0'$.
+
+Consider an infinitesimal translation by $\delta c$. $u_0(\ssp+\delta c,\tau)=u_0(\ssp,\tau)+\delta c \, u'_0(\ssp,\tau)$, so from \refeq{eq:infinitesimal} we know that the group tangent at $u_0$ is $u'_0$.
+
+This means that template fitting is simply translating the trajectory to get a reduced trajectory normal to the group tangent of the template function. This is the same as taking a linear slice \refeq{def:slice} with slice fixing point $u_0$. The reduced trajectory is found by maximizing $\dotProd{f(\ssp)}{f_0(\ssp+c)}$, which is the function used in \refsect{sect:slices}. 
