@@ -33,3 +33,6 @@ orbits for the complex Lorenz equations.
 
 Rotation.nb is a program that checks how often and when a
 trajectory in a slice has its group tangent also in the slice.
+
+Poincare.nb calculates a poincare return map using the Hilbert
+polynomial coordinate frame and the slice u1=u4.
