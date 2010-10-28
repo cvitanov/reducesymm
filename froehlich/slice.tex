@@ -19,28 +19,66 @@ I made a wrong mistake.
 Now that we know what a symmetry of a dynamical system is, how
 (or why) can it actually be used?
 
-Suppose you are staring at turbulence in a pipe flow, or your defibrillator has a mesh of sensors measuring electrical currents that cross your heart. Here you see a pattern, and there you see a pattern that seems much like the first one. Think of the first pattern as a `template'\rf{rowley_reconstruction_2000} (a point {\slicep} in the \statesp) and use the symmetries of the flow to slide and rotate the second pattern (act with the group element ${\LieEl}$ on the point $\ssp \to {\LieEl}\ssp$) until the distance between the two patterns
-\beq
-|\LieEl\ssp - \slicep|^2=\braket{\LieEl\ssp - \slicep}{\LieEl\ssp - \slicep}
-\ee{minDistance}
-is minimized. Instead of blindly sliding one pattern over the other until this distance is minimized,
-we shall determine the group rotation `angles' by the extremum condition
+Suppose you are observing turbulence in a pipe flow, or your defibrillator has a mesh of sensors measuring electrical currents that cross your heart. Here you see a pattern, and there you see a pattern that seems much like the first one. How ``much like the first one?'' Think of the first pattern (\ie, a point {\slicep} in the \statesp) as a `template'\rf{rowley_reconstruction_2000} 
+or a `reference state' and use the symmetries of the flow to slide and rotate the second pattern (act with the group element ${\LieEl}$ on the point $\ssp \to \sspRed = {\LieEl}\ssp$) until the distance between the two patterns, measured in a bilinear norm of \refsect{def:innerProduct},
+    \PC{recheck, is it $2 \Re \,\braket{\sspRed}{\slicep}$?}
+\bea
+|\sspRed - \slicep|^2
+    &=& \braket{\sspRed - \slicep}{\sspRed - \slicep}
+    \label{minDistance}\\
+    &=& |\ssp|^2 - 2\,\braket{\sspRed}{\slicep} +|\slicep|^2
+\,,
+\nnu
+\eea
+is minimized. Instead of blindly sliding one pattern over the other until this distance is minimized, we shall determine the group rotation `angles' $\gSpace = (\gSpace_1,\gSpace_2,\cdots\gSpace_N)$ by the extremum condition
 	\PC{to select minima, need 2nd partials}
 \beq
-\frac{\partial ~~}{\partial \gSpace_a} |\LieEl(\gSpace_E)\ssp - \slicep|^2 =
--2 \braket{\LieEl(\gSpace_E)\ssp}{\slicep}
+\frac{\partial ~~}{\partial \gSpace_a} |\LieEl(\gSpace)\ssp - \slicep|^2 
+ = -2 \braket{\Lg_a\sspRed}{\slicep}
  = 0
 \,.
 \ee{minDistCond}
-$\Lg_a$ is antihermitian, so
-$0=\braket{\Lg_a e^{\gSpace_E \cdot \Lg}\ssp}{\slicep}
-= - \braket{\LieEl_E \ssp}{\Lg_a  \slicep}$,
-and
-\[
-\braket{\LieEl_E \ssp}{\sliceTan{a}} =0
+By \refeq{antiHerm} the Lie algebra generator $\Lg_a$ is antihermitian, so
+$\braket{\Lg_a \sspRed}{\slicep}
+= - \braket{\sspRed}{\Lg_a  \slicep}$,
+and the symmetry transformation(s) $\LieEl(\gSpace)$ for which
+the state $\ssp$ is closest to the template $\slicep$ is given
+by
+\beq
+\braket{\sspRed}{\sliceTan{a}} =0
+    \,\qquad
+\sspRed = \LieEl(\gSpace) \ssp
 \,.
-\]
+\ee{PCsectQ0}
+As a group orbit is some curve in the state space, depending on the choice of the distance norm several values of $\gSpace$ might be local extrema of the distance function \refeq{minDistance}; physically the most interesting one is presumably the closest one, the absolute minimum of \refeq{minDistance}. It does not matter whether the group is compact, for example $\On{n}$, or noncompact, for example the Euclidean group that underlies the generation of spiral patterns; in either case the group orbit has locally closest passages to the template state. In order to ensure that we are looking at local minima, we will have to check the local curvature, \ie., the eigenvalues and eigenvectors of the symmetric matrix of second derivates of distance.
 
+    \PC{edit this paragraph}
+We therefore have that $\sspRed= \LieEl_E \ssp$ is normal to all the group tangents of $\ssp$ so it is in \pSRed. This means that the slice condition is satisfied by $\sspRed_E = \LieEl_E \ssp$ corresponding to an extremum of $f$, and thus $\sspRed_E$ is in the slice (for $\mathbb{R}^n$ this is equivalent to looking for the extrema of $\|e^{\gSpace \cdot \Lg}\ssp - \slicep\|$\rf{rowley_reconstruction_2000,rowley_reduction_2003}, so this says that any points that are locally the closest or the farthest from a our slice fixing point will be in the slice). All that is left to do then is to show that $f$ has extrema. But as the group is compact, the group orbit of every point in \pS\ is compact, so its projection on the slice-point $\slicep$ has at least two extremal points, and thus every group orbit intersects the \slice. For example, group orbits of \SOn{2}\ are topologically circles, and their projections have maxima, minima and inflection points as extrema.
+
+The projection $f(\gSpace)$
+can have inflection points,
+    \PC{Are we only interested in Laplace-Beltrami operator on the
+    group manifold
+    \\
+    \(
+    \frac{\partial^2 ~~}{\partial \gSpace^2} f(\gSpace) =
+    - \braket{\groupTan(\sspRed)}{\sliceTan{}} =
+    \braket{\sspRed}{\dual{\Lg} \cdot {\Lg}\,\slicep}
+    \)
+    }
+\beq
+\frac{\partial^2 f(\gSpace_E)}
+     {\partial \gSpace_a \partial \gSpace_b}
+    =
+  - \braket{\Lg_a e^{\gSpace_E \cdot \Lg} \ssp}{\sliceTan{b}}=
+  - \braket{\groupTan_a(\sspRed_E)}{\sliceTan{b}}=0
+\ee{PCinflPoint}
+What role do they play? They are non-generic, but
+if we consider projections of a successive instants of a trajectory
+$f(\gSpace)=\braket{e^{\gSpace(t) \cdot \Lg} \ssp(t)}{\slicep}$, coalescence of
+nearby minima, maxima pairs cannot be avoided. At the instant of coalescence
+the denominator in \refeq{SF:sliceEas} goes through a simple pole,
+and the integrated trajectory within slice jumps. 
 
 The basic idea behind symmetry reduction is to define an equivalence relation on the \statesp\ where two points are equivalent if they are in the same group orbit of the symmetry group. With any trajectory in the full \statesp\, $\ssp(\tau)$, we can associate with it a new `\reducedsp' trajectory, $\bar{\sspRed}(\tau)$, which is the equivalence class of the full trajectory at any time (\ie\ $\ssp(\tau) \in \bar{\sspRed}(\tau)$ for each $\tau$). Knowing only the \reducedsp\ trajectory, it is not possible to reconstruct the full space trajectory; additional information is needed to determine which point of the group orbit is in the original trajectory.
 
@@ -65,7 +103,7 @@ If $\Group$ acts `regularly' on a d-dimensional manifold $\pS$, \ie\ all its gro
 \end{definition}
 
 If we are working in a subspace of $\mathbb{R}^d$, then the simplest hypersurface through $\slicep$ one can construct is a hyperplane. The restriction that the slice intersect the group orbits in an open neighborhood of $\slicep$ transversally guarantees locally that there is a unique representative of a group orbit in the \slice. The easiest way to have the hyperplane be transverse to the group orbits is to require the hyperplane be normal to the group action.
-Being able to choose a hyperplane normal to the group action requires that the state space have an inner product. For the rest of this paper we will assume that the state space has an inner product denoted by $\braket{x}{y}$ (for $\mathbb{R}^d$ the inner product is the usual Euclidean product, \ie\ the dot product $\braket{x}{y}=\sum_{i=1}^d x_i y_i$).
+Being able to choose a hyperplane normal to the group action requires that the {\statesp} have an inner product. For the rest of this paper we will assume that the {\statesp} has an inner product denoted by $\braket{x}{y}$ (for $\mathbb{R}^d$ the inner product is the usual Euclidean product, \ie\ the dot product $\braket{x}{y}=\sum_{i=1}^d x_i y_i$).
 This leads us to the definition of a linear slice.
 
 \begin{definition}
@@ -256,7 +294,7 @@ Let $\ssp \in \pS$ be a point in the \statesp, and $\Group$ be Lie group with gr
     \PC{this looks like a repeat of what is to come, dropped: `` We want to show that there is a point on the group orbit of $\ssp$ which lies in \pSRed, \ie\ there exists a group element $\LieEl=e^{\gSpace \cdot \Lg}$, $\sspRed= \LieEl \ssp \in \pSRed$ such that $\braket{\LieEl \ssp}{\sliceTan{a}}=0$ for all $a$.
     ''}
 
-Consider $f(\gSpace)=\braket{e^{\gSpace \cdot \Lg} \ssp}{\slicep}$, the projection of the group orbit of $\ssp$ onto the slice-fixing ray through \slicep\ (If the state space is real, this differs by a constant from $\|e^{\gSpace \cdot \Lg}\ssp - \slicep\|$, the function used in\rf{rowley_reconstruction_2000,rowley_reduction_2003} to find a point in a slice).
+Consider $f(\gSpace)=\braket{e^{\gSpace \cdot \Lg} \ssp}{\slicep}$, the projection of the group orbit of $\ssp$ onto the slice-fixing ray through \slicep\ (If the {\statesp} is real, this differs by a constant from $\|e^{\gSpace \cdot \Lg}\ssp - \slicep\|$, the function used in\rf{rowley_reconstruction_2000,rowley_reduction_2003} to find a point in a slice).
 $f$ is a continuous and differentiable function of \gSpace. If $\ssp$ is the invariant subspace \refeq{def:centralizer}, its group orbit is itself and $f(\gSpace)$ takes a constant value.
 
 If $\gSpace_E$ is an extremum of $f$ then all of the first order partial derivatives of $f$ vanish at $\gSpace_E$, $\frac{\partial f(\gSpace_E)}{\partial \gSpace_a} =\braket{\Lg_a e^{\gSpace_E \cdot \Lg} \ssp}{\slicep}=0$. $\Lg_a$ is antihermitian, so
@@ -267,6 +305,7 @@ and
 \braket{\LieEl_E \ssp}{\sliceTan{a}} =0
 \,.
 \]
+    \PC{drop this text eventually}
 We therefore have that $\sspRed= \LieEl_E \ssp$ is normal to all the group tangents of $\ssp$ so it is in \pSRed. This means that the slice condition is satisfied by $\sspRed_E = \LieEl_E \ssp$ corresponding to an extremum of $f$, and thus $\sspRed_E$ is in the slice (for $\mathbb{R}^n$ this is equivalent to looking for the extrema of $\|e^{\gSpace \cdot \Lg}\ssp - \slicep\|$\rf{rowley_reconstruction_2000,rowley_reduction_2003}, so this says that any points that are locally the closest or the farthest from a our slice fixing point will be in the slice). All that is left to do then is to show that $f$ has extrema. But as the group is compact, the group orbit of every point in \pS\ is compact, so its projection on the slice-point $\slicep$ has at least two extremal points, and thus every group orbit intersects the \slice. For example, group orbits of \SOn{2}\ are topologically circles, and their projections have maxima, minima and inflection points as extrema.
     \PC{
     Stefan, if I have removed some essential part of your proof, please restore it.
@@ -277,7 +316,7 @@ We therefore have that $\sspRed= \LieEl_E \ssp$ is normal to all the group tange
 \subsection{Dynamics in the slice}
 \label{sect:MovFrameODE}
 
-Now that we have shown these slices can be used for the entire state space, our next objective is to investigate
+Now that we have shown these slices can be used for the entire {\statesp}, our next objective is to investigate
 what the equations of motion look like for the \reducedsp\ trajectories.
 
 The \reducedsp\ trajectory is given by $\ssp(\tau)=\LieEl(\tau) \sspRed(\tau)$. Differentiating both sides with respect to time and setting $\velRed=\frac{d \, \sspRed}{d \, \tau}$ we find that,
@@ -287,9 +326,9 @@ The \reducedsp\ trajectory is given by $\ssp(\tau)=\LieEl(\tau) \sspRed(\tau)$. 
 \vel(\LieEl \, \sspRed)=\dot{\LieEl} \, \sspRed+\LieEl \, \velRed(\sspRed) \]
 \[
 \vel=\velRed + \LieEl^{-1} \, \dot{\LieEl} \, \sspRed
-\,. 
+\,.
 \]
-The product of the inverse of the Lie group element and its time derivative give the group tangent at the point: 
+The product of the inverse of the Lie group element and its time derivative give the group tangent at the point:
 $\LieEl^{-1}\dot{\LieEl}=e^{-\gSpace \cdot \Lg} \,
 \frac{d ~~}{d \, \tau} e^{\gSpace \cdot \Lg}=\dot{\gSpace}\cdot \Lg$, leaving us with the equation for the velocity of the reduced flow in the slice:
 \beq
@@ -417,11 +456,11 @@ A typical trajectory is shown in \reffig{fig:PCunrot1}.
 \section{\Slice\ singularities}
 \label{sect:sliceSing}
 
-Looking back at equation \refeq{eq:so2reduced}, we see that the \mslices\ potentially introduces singularities to the flow. When the group tangent of a point is in the slice, $\braket{\groupTan(\sspRed)}{\sliceTan{}}$ is zero. Hence  $\dot{\gSpace}(\tau)$ is not defined and as a consequence neither is the velocity in the slice. These singularities do not exist in the full space and are entirely artifacts of the \mslices. When the full space trajectory passes through one of these points the trajectory just passes through unhindered. The hope is then that these singularities do not greatly affect the trajectory in the reduced space.
+Looking back at equation \refeq{eq:so2reduced}, we see that the \mslices\ potentially introduces singularities to the flow. When the group tangent of a point is in the slice, $\braket{\groupTan(\sspRed)}{\sliceTan{}}$ is zero. Hence  $\dot{\gSpace}(\tau)$ is not defined and as a consequence neither is the velocity in the slice. These singularities do not exist in the full space and are entirely artifacts of the \mslices.
 
 	\ifarticle
 	\else
-	
+	\PC{text to be eliminated}
 In \refsect{sect:slices} we noted that the projection $f(\gSpace)$
 can have inflection points,
     \PC{Are we only interested in Laplace-Beltrami operator on the
@@ -453,7 +492,9 @@ to compute the size of the jump.
         by 1$d$ time trajectory for higher-dimensional Lie groups?}
 
 Once we determine the trajectory point at which
-a singularity occurs, we have to describe what happens to the \reducedsp\ trajectory when it passes through the singularity. The trajectory in the \reducedsp\ is given by $\sspRed(\tau)=\LieEl^{-1}(\tau) \ssp(\tau)$, so if we know how $\LieEl(\tau)=\exp({-\gSpace(\tau) \cdot \Lg})$ behaves as the trajectory passes through a singularity, then we know how the \reducedsp\ trajectory behaves.
+a singularity occurs, we have to describe what happens to the \reducedsp\ trajectory when it passes through the singularity. The trajectory in the \reducedsp\ is given by $\sspRed(\tau)=\LieEl^{-1}(\tau) \ssp(\tau)$, so if we know how $\LieEl(\tau)=\exp({\gSpace(\tau) \cdot \Lg})$ behaves as the trajectory passes through a singularity, then we know how the \reducedsp\ trajectory behaves.
+    \PC{Stefan had $\LieEl(\tau)=\exp({-\gSpace(\tau) \cdot \Lg})$, not
+    sure why the `-' sign}
 
 
 
@@ -462,7 +503,7 @@ a singularity occurs, we have to describe what happens to the \reducedsp\ trajec
 
 %To answer this question, let us first look at the example of the \cLe. There is only one infinitesimal generator for the \SOn{2} symmetry group, so the rotation angle $\gSpace$ into the \reducedsp\ trajectory is given by \refeq{SL:CLEsliceRot}.
 
-%If $\ssp(\tau)$ is a trajectory in full state space, then the
+%If $\ssp(\tau)$ is a trajectory in full {\statesp}, then the
  %\reducedsp\ flow $\sspRed(\tau)$ goes through a singularity when
  %$\braket{\groupTan_{}(\sspRed^*)}{\sliceTan{}}=0$
 %at time $\tau=0$, $\sspRed^* = \sspRed(0)$.
@@ -537,7 +578,7 @@ a singularity occurs, we have to describe what happens to the \reducedsp\ trajec
 The behavior of the \reducedsp\ trajectory is entirely determined by the $\gSpace$ used to rotate the full space trajectory into the slice. If we can find an expression for $\gSpace$ as the trajectory approaches a singularity then we know the behavior of the \reducedsp\ trajectory as it approaches a singularity.
 
 Suppose the trajectory passes through a singularity at time $\tau=\tau_0$.
-$\ssp(\tau)$ is $C^{\infty}$ since we can explicitly calculate any order derivative using $\dot{\ssp}=\vel(\ssp)$. This allows us to use Taylor expansions to approximate the trajectory at any time $\tau_0$; $\ssp(\tau)=\ssp(\tau_0)+\vel(\ssp(\tau_0)) (\tau-\tau_0)+O((\tau-\tau_0)^2)$. Being in the linear slice imposes the condition \refeq{PCsectQ1} on $\gSpace(\tau)$ for each infinitesimal generator $\sliceTan{a}$ of the Lie group at $\slicep$. Using the results of \refsect{sect:slices} we can rotate the trajectory in the full state space so that $\ssp(\tau_0)$ is in the slice and the equivariance of the flow \refeq{eq:FiniteRot} allows us to work with this equivalent trajectory. This gives us the condition for $\gSpace$ \refeq{eq:slicecondition} in terms of the Taylor expansion:
+$\ssp(\tau)$ is $C^{\infty}$ since we can explicitly calculate any order derivative using $\dot{\ssp}=\vel(\ssp)$. This allows us to use Taylor expansions to approximate the trajectory at any time $\tau_0$; $\ssp(\tau)=\ssp(\tau_0)+\vel(\ssp(\tau_0)) (\tau-\tau_0)+O((\tau-\tau_0)^2)$. Being in the linear slice imposes the condition \refeq{PCsectQ1} on $\gSpace(\tau)$ for each infinitesimal generator $\sliceTan{a}$ of the Lie group at $\slicep$. Using the results of \refsect{sect:slices} we can rotate the trajectory in the full {\statesp} so that $\ssp(\tau_0)$ is in the slice and the equivariance of the flow \refeq{eq:FiniteRot} allows us to work with this equivalent trajectory. This gives us the condition for $\gSpace$ \refeq{eq:slicecondition} in terms of the Taylor expansion:
 \[
 \braket{e^{\gSpace \cdot \Lg}(\ssp(\tau_0)+\vel(\ssp(\tau_0)) (\tau-\tau_0)+O(\tau^2))}{\sliceTan{a}}
 \]
@@ -571,11 +612,10 @@ Rotate the trajectory so that $\ssp(\tau_0)$ is in the slice. Using the Taylor e
 \tan(\gSpace)
 &=& -\frac{\braket{\ssp_0+\vel(\ssp_0)\tau+O(\tau^2)}{\sliceTan{}}}{\braket{\groupTan(\ssp_0+\vel(\ssp_0)\tau+O(\tau^2))}{\sliceTan{}}}
 \continue
-\tan(\gSpace)
 &\rightarrow& -\frac{\braket{\ssp_0}{\sliceTan{}}+\tau\braket{\vel(\ssp_0)}{\sliceTan{}}+O(\tau^2)}{\braket{\groupTan(\ssp_0)}{\sliceTan{}}+\tau
 \braket{\vel(\ssp_0)}{\sliceTan{}}+O(\tau^2)}
 \continue
-\tan(\gSpace) &\rightarrow&
+&\rightarrow&
      -\frac{\braket{\vel(\ssp_0)}{\sliceTan{}}}
       {\braket{\groupTan_{}(\vel(\ssp_0))}{\sliceTan{}}}
 \,.
@@ -592,7 +632,7 @@ Next add on the restriction $\braket{\groupTan_{}(\ssp)}{\sliceTan{}}$ (\refdef{
 
 \example{$\SOn{2}$ singularities.}
 {\label{ex:so2singularities}
-Consider now the general from of an $\SOn{2}$ symmetry from \refexam{exam:SO2irrepst}. Plugging this into the slice condition \refeq{PCsectQ1} we find that
+Consider now the general from of an $\SOn{2}$ symmetry from \refexam{exam:SO2irrepst}. Substituting this into the slice condition \refeq{PCsectQ1} we find that
 \bea
 \braket{e^{\gSpace \Lg}\ssp}{\groupTan(\slicep)}
 =\braket{\ssp}{(\sum\limits_m (\cos(-m\gSpace) \id^{(m)}
@@ -601,7 +641,8 @@ Consider now the general from of an $\SOn{2}$ symmetry from \refexam{exam:SO2irr
 =\sum\limits_m(\cos(m\gSpace) \braket{\ssp}{\Lg^{(m)} \slicep}-\sin(m\gSpace) \braket{\ssp}{\id^{(m)} \slicep}).
 \label{eq:so2sing}
 \eea
-Both $\cos(m\gSpace)$ and $\sin(m\gSpace)$ are expressible as polynomials of degree m in $\sin(\gSpace)$ and $\cos(\gSpace)$, so \refeq{eq:so2sing} is expressible of a polynomial whose coefficients are determined by $\braket{\ssp}{\Lg^{(m)} \slicep}$ and $\braket{\ssp}{\id^{(m)}}$. $\gSpace$ corresponds to a root of this polynomial. The coefficients of the polynomial vary smoothly with $\ssp$, so its roots vary smoothly too. This means \refeq{eq:neglig} is satisfied for these $\SOn{2}$ symmetries and we can use the result of \refeq{SF:snglrAngl}.
+As both $\cos(m\gSpace)$ and $\sin(m\gSpace)$ are expressible as polynomials of degree m in $\sin(\gSpace)$ and $\cos(\gSpace)$, so \refeq{eq:so2sing} is expressible of a polynomial whose coefficients are determined by $\braket{\ssp}{\Lg^{(m)} \slicep}$ and $\braket{\ssp}{\id^{(m)}}$.
+The phase $\gSpace$ corresponds to a root of this polynomial. The coefficients of the polynomial vary smoothly with $\ssp$, so its roots vary smoothly too. This means \refeq{eq:neglig} is satisfied for these $\SOn{2}$ symmetries and we can use the result of \refeq{SF:snglrAngl}.
 }
 
 \subsection{Behavior of $\dot{\gSpace}$}
@@ -613,15 +654,15 @@ but $\gSpace_0$ is an angle which rotates $\vel(\ssp_0)$ into the slice, so this
 
 \subsection{Singularities of $\SOn{2} \times \SOn{2}$}
 
-While most systems in fluid dynamics do not exhibit a single $\SOn{2}$ symmetry, many do have continuous symmetries which are the products of $\SOn{2}$ groups, each of which act on different coordinates of the state space. The \KS\ equations\rf{ku,siv}, {\pCf}\rf{Visw07b,GHCW07,HGC08,HalcrowThesis}, and pipe flow\rf{Wk04,Kerswell05} all have continuous symmetries of this form.
+Several important fluid dynamics flows exhibit continuous symmetries which are the products of $\SOn{2}$ groups, each of which act on different coordinates of the {\statesp}. The \KS\ equations\rf{ku,siv}, {\pCf}\rf{Visw07b,GHCW07,HGC08,HalcrowThesis}, and pipe flow\rf{Wk04,Kerswell05} all have continuous symmetries of this form.
 
                                                     %\toCB
 % PC cribbed from Penrose p. 254:
 \begin{definition}
 \label{def:productGroup}
 \textbf{Product group.}
-If \Group\ and H are any two groups, then they can be combined in
-what is called the {\em product group} $\Group \times H$, whose
+If \Group\ and H are any two groups, then they can be combined into
+the {\em product group} $\Group \times H$, whose
 elements are pairs $(\LieEl,h)$, where $\LieEl$ belongs to \Group, and
 $h$ belongs to $H$, with the group multiplication rule
 \[
@@ -630,25 +671,25 @@ $h$ belongs to $H$, with the group multiplication rule
 \]
 \end{definition}
 
-Suppose that the state space is the product of two spaces,
-$\mathbb{X}=\mathbb{A} \times \mathbb{B}$. Let $\Group$ be a Lie group
+Suppose that the {\statesp} is the product of two spaces,
+$\pS=\mathbb{A} \times \mathbb{B}$. Let $\Group$ be a Lie group
 with two infinitesimal generators, $\Lg_1$ and $\Lg_2$, such that the
-$e^{\gSpace_1 \Lg_1}$ action on $\mathbb{X}$ fixes the $\mathbb{B}$
+$e^{\gSpace_1 \Lg_1}$ action on $\pS$ fixes the $\mathbb{B}$
 coordinates ($e^{\gSpace_1 \Lg_1} \, (a,b)=(a',b')$ where $b'=b$) and
 $e^{\gSpace_2 \Lg_2}$ fixes the $\mathbb{A}$ coordinates ($\Group$ is the
 product (see \refdef{def:productGroup}) of two $\SOn{2}$ groups which act on
-different coordinates of $\mathbb{X}$).
+different coordinates of $\pS$).
 
 We begin by looking at the action of infinitesimal rotations of $\Lg_1$.
 $e^{\delta \gSpace_1 \Lg_1}(a,b)=(1+\delta \gSpace_1 \Lg_1)
-(a,b)$\refeq{eq:infinitesimal}. $e^{\delta \gSpace \Lg_1}$ fixes the
+(a,b), see $\refeq{eq:infinitesimal}. $e^{\delta \gSpace \Lg_1}$ fixes the
 $\mathbb{B}$ coordinates, so $e^{\delta \gSpace \Lg_1}=(a',b)$ for some
 $a'$. This results in $(a',b)=(a,b)+\delta \gSpace_1 \Lg_1(a,b)$ so
 $\delta \gSpace_1 \Lg_1(a,b)=(a'-a,0)$. This is true for any $\delta
 \gSpace_1$, so $\Lg_1$ maps the $\mathbb{B}$ coordinates to 0. The same
 argument gives us that $\Lg_2$ maps the $\mathbb{A}$ coordinates to 0.
 Looking at $\Lg_1 \Lg_2$ we find $\Lg_1 \Lg_2 (a,b)=\Lg_1 (0,b')=(0,0)$
-for any $(a,b) \in \mathbb{X}$, which is only possible if $\Lg_1
+for any $(a,b) \in \pS$, which is only possible if $\Lg_1
 \Lg_2=0$. The same argument tells us that $\Lg_2 \Lg_1=0$ %(this also
 follows from $\Lg_1 \Lg_2=0$ and the fact that the $\Lg_i$ are
 antihermitian).
@@ -685,22 +726,22 @@ generators individually, a situation we are comfortable with.
 
 This makes sense since if a point $\sspRed$ is in the slice normal to
 $\groupTan_2(\slicep)$ then any point in the $\Lg_1$ orbit is in the
-slice since $\braket{e^{\gSpace_1
+slice,
+\[\braket{e^{\gSpace_1
 \Lg_1}\sspRed}{\groupTan_2(\slicep)}=\braket{(1+\gSpace_1
 \Lg_1+\ldots)\sspRed}{\groupTan_2(\slicep)}
 =\braket{\sspRed}{\groupTan_2(\slicep)}+\braket{\gSpace_1
-\Lg_1 \sspRed}{\groupTan_2(\slicep)}+\ldots=0$. The first inner product
-is zero because we assumed that $\sspRed$ was in the slice and the rest
-of the terms are zero because $\Lg_1 \Lg_2=0$. So the only restriction
-for the values of $\gSpace_1$ that rotate the point into the slice are
-the restrictions it gets from the $\groupTan_1(\slicep)$ condition.
+\Lg_1 \sspRed}{\groupTan_2(\slicep)}+\ldots=0
+\,.
+\]
+The first inner product is zero because we assumed that $\sspRed$ was in the slice and the rest of the terms are zero because $\Lg_1 \Lg_2=0$. So the only restriction for the values of $\gSpace_1$ that rotate the point into the slice are the restrictions it gets from the $\groupTan_1(\slicep)$ condition.
 
 This argument is easily extended to a product of arbitrarily many
-$\SOn{2}$ acting on different coordinates of the state space (any two of
+$\SOn{2}$ acting on different coordinates of the {\statesp} (any two of
 the $\SOn{2}$ act on distinct coordinates so the singularities are
 pairwise independent). In \refexam{ex:so2singularities} we found a simple
 description for what happens to the \reducedsp\ trajectory as it passes
 through singularity of a single $\SOn{2}$ symmetry group (it is rotated
 by a finite amount), so using this result we can handle the singularities
 for the product of arbitrarily many $\SOn{2}$ groups which pairwise act
-on different coordinates of the state space.
+on different coordinates of the {\statesp}.
