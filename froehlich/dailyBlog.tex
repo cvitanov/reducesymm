@@ -1,8 +1,8 @@
 \svnkwsave{$RepoFile: froehlich/dailyBlog.tex $}
-\svnidlong {$HeadURL: svn://zero.physics.gatech.edu/froehlich/blog/dailyBlog.tex $}
-{$LastChangedDate: 2009-11-21 20:25:56 -0500 (Sat, 21 Nov 2009) $}
-{$LastChangedRevision: 29 $} {$LastChangedBy: froehlich $}
-\svnid{$Id: dailyBlog.tex 29 2009-11-22 01:25:56Z froehlich $}
+\svnidlong {$HeadURL$}
+{$LastChangedDate$}
+{$LastChangedRevision$} {$LastChangedBy$}
+\svnid{$Id$}
 
 
 \chapter{Research blog on symmetry reduction}
@@ -203,8 +203,12 @@ Have more stuff we need to do, but have to run to the conference now....
 \item[2010-06-04 SF]
 I do use the basis \refeq{eq:ipLaser} for the Hilbert polynomial calculation (Sorry about just now responding, I apparently forgot to commit my changes on Wednesday).
 
-\item[2010-06-11 SF]
-When I have been calculating the eigenvalues and vectors at the \reqv\ in the full space I have not been getting 0 as an eigenvalue or the direction tangent to the group action as an eigenvector. The eigenvalue that I thought was 0 was just really small at the normal parameter values, but can be made larger. Also, the determinant of the \stabmat\ at the {\reqv} isn't 0 in general.
+\item[2010-06-11 SF] When I have been calculating the eigenvalues and
+eigenvectors at the \reqv\ in the full space I have not been getting 0 as
+an eigenvalue or the direction tangent to the group action as an
+eigenvector. The eigenvalue that I thought was 0 was just really small at
+the normal parameter values, but can be made larger. Also, the
+determinant of the \stabmat\ at the {\reqv} isn't 0 in general.
 
 \item[2010-06-12 PC]
 I cannot quite tell what you are computing, as you are not
@@ -567,13 +571,67 @@ References `fig:CLEE0' `fig:CLEE0'  `exer:SO2cSect'
 \item[2010-10-12 SF: Submitted GT competition paper]
 ``Reducing continuous symmetries with linear slice,''
 to Georgia Tech SAIC Student Paper Competition\rf{Froeh10}.
-The paper is embedded into this blog.tex, 
+The paper is embedded into this blog.tex,
 contained within the
 \begin{verbatim}
-	\ifarticle ... \else ... \fi 
+	\ifarticle ... \else ... \fi
 \end{verbatim}
 article switches.
 
 
+\item[2010-10-20 SF: Template fitting] In
+    \refref{rowley_reconstruction_2000}, the authors use a technique
+    called template fitting to reduce the dynamics of translationally
+    equivariant systems.
 
-\end{description} 
+The strategy behind template fitting is to shift the data so that at
+any time it matches as closely as possible with a preselected
+template function. Let $f:\mathbb{R}\rightarrow\mathbb{R}$ be a
+$2\pi$ periodic function that we are fitting to a $2\pi$ periodic
+template function $f_0$. The goal is then to find the value of $c$
+that minimizes the square of the norm of the difference of the two
+functions: \bea &&\int_0^{2\pi} [f(\ssp-c)-f_0(\ssp)]^2 d\ssp
+\continue &=& \int_0^{2\pi} [f(\ssp)-f_0(\ssp+c)]^2 d\ssp \continue
+&=& \int_0^{2\pi} f^2(\ssp)-2 f(\ssp) f_0(\ssp+c)+f_0^2(\ssp+c) d\ssp
+\continue &=& \int_0^{2\pi} f^2(\ssp)
+d\ssp+\int_0^{2\pi}f_0^2(\ssp+c)d\ssp-\int_0^{2\pi}
+f(\ssp)f_0(\ssp+c)d\ssp \continue &=& \int_0^{2\pi} f^2(\ssp)
+d\ssp+\int_0^{2\pi}f_0^2(\ssp)d\ssp-\int_0^{2\pi}
+f(\ssp)f_0(\ssp+c)d\ssp \eea where we use the fact that both
+functions have period $2\pi$ to shift the intregrals by $c$. The
+first two integrals are independent of the choice of $c$, so finding
+this minimum is the same minimizing $-\int_0^{2\pi}
+f(\ssp)f_0(\ssp+c)d\ssp$. This is the same as maximizing
+$\dotProd{f(\ssp)}{f_0(\ssp+c)}$, where the inner product is the
+standard inner product on $L^2[0,2\pi]$ \refeq{innerL2}.
+
+If $c$ maximizes $\dotProd{f(\ssp)}{f_0(\ssp+c)}$, then assuming
+differentiablilty it must be a critical point \beq
+\partial_c \dotProd{f(\ssp)}{f_0(\ssp+c)}=0
+\eeq which is equivalent to $\dotProd{f(\ssp)}{f_0'(\ssp+c)}=0$.
+Shifting the integral by $c$ we get the condition \beq
+\dotProd{f(\ssp-c)}{f'_0(\ssp)}=0. \eeq
+
+Suppose we are working with a translational equivariant dynamical
+system. Let $\LieEl_c$ be the group element that corresponds to
+translating by $c$. Let $u(\ssp,\tau)$ be a solution to the system.
+When we fit $u(\ssp,\tau)$ to the template $u_0(\ssp)$ we are finding
+$c(\tau)$ such that $\dotProd{\bar{u}}{u'_0}=0$, where
+$\bar{u}(\ssp,\tau)=u(\ssp-c(\tau),\tau)=\LieEl_{c(\tau)}u(\ssp,\tau)$.
+We are finding an equivalent trajectory to $u$ that is normal to
+$u_0'$.
+
+Consider an infinitesimal translation by $\delta c$. $u_0(\ssp+\delta
+c,\tau)=u_0(\ssp,\tau)+\delta c \, u'_0(\ssp,\tau)$, so from
+\refeq{eq:infinitesimal} we know that the group tangent at $u_0$ is
+$u'_0$.
+
+This means that template fitting is simply translating the trajectory
+to get a reduced trajectory normal to the group tangent of the
+template function. This is the same as taking a linear slice
+\refeq{def:slice} with slice fixing point $u_0$. The reduced
+trajectory is found by maximizing $\dotProd{f(\ssp)}{f_0(\ssp+c)}$,
+which is the function used in \refsect{sect:slices}.
+
+
+\end{description}

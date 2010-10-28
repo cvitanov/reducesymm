@@ -1,0 +1,434 @@
+%           %experimenting with svn-multi
+
+\svnkwsave{$RepoFile: siminos/froehlich/symm.tex $}
+\svnidlong {$HeadURL$}
+{$LastChangedDate$}
+{$LastChangedRevision$} {$LastChangedBy$}
+\svnid{$Id$}
+
+
+\section{Symmetries of dynamics}
+\label{sect:SymmDyn}
+
+Before we can investigate symmetries of a dynamical system, we must first develop a working definition of a what a 'symmetry' is.
+
+We begin by defining the notion of `equivariance.'
+A flow $\dot{x}= \vel(x)$ is \emph{equivariant} under an operation $\LieEl$ if
+\beq
+\vel(x)=\LieEl^{-1}\vel(\LieEl \, x)
+\,.
+\ee{eq:FiniteRot}
+If $\ssp(\tau)$ is a solution to the dynamical
+equations, then this implies $\LieEl\,\ssp(\tau)$ is also a solution.
+
+The equivariant operations of dynamical system form a group under composition, and it this group that we call the symmetry of the dynamics.
+
+In many flows (the \cLe\ are a particularly simple example), this symmetry group will form a Lie group. When the symmetry group is a Lie group, \mslices\ (see \refsect{sect:mslices}) can be applied to the system to replace it with an equivalent lower dimensional system.
+
+
+\subsection{Lie groups}
+
+A theory of Lie groups is a vast subject. This report follows the notational conventions of ChaosBook.org\rf{DasBuch}. We found Roger Penrose\rf{Penr04} introduction to the subject both enjoyable and understandable.
+	\toCB
+    \PC{to PC - remember to copy \refref{Penr04} to ChaosBook.org.}
+
+A Lie group is a group with properties: (1) it is a differential manifold and (2) the composition map $G \times G \rightarrow G : (g,h) \rightarrow g h^{-1}$ is $\mathbb{C}^\infty$. We will only be considering Lie groups which are compact.
+In studies of the \KS\ equations\rf{ku,siv,SiminosThesis}, {\pCf}\rf{Visw07b,GHCW07,HGC08,HalcrowThesis}, and cylindrical pipe flow\rf{Wk04,Kerswell05} periodic boundary conditions are imposed in  order to enforce that the symmetry group be compact.
+
+An element of a compact Lie group can be parameterized in exponential form\rf{SiminosThesis,DasBuch}.
+    \PC{Stefan wrote: ``By assumption the Lie group of symmetries is compact and connected;'' then ``we don't need connected, we just need a representation of the group elements that is differentiable, and there is one for $\On{n}$. For a group like $\On{n}$ you have two connected components, proof presumably still works? {\bf PC}: Agreed. 'Compact' is not needed, either}
+For example,
+an element of a compact Lie group that is continuously
+connected to the identity can be expressed as
+\beq
+\LieEl(\gSpace)=e^{{\gSpace} \cdot \Lg }
+\,,
+\ee{FiniteRot}
+where $\gSpace \cdot \Lg = \sum_a \gSpace_a \Lg_a$ is a \emph{Lie algebra} element, the $\gSpace_a$ are the parameters of the transformation, and the $\Lg_a$ are a set of N linearly independent
+$[d\times d]$ antihermitian matrices acting linearly on the
+{\statesp}\rf{DasBuch}.
+    \PC{need to generalize to groups like \On{n}}
+                                                    \exerbox{exer:FinRot2d}
+%
+
+A rotation by an infinitesimal amount, $|\delta \gSpace| \ll 1$, can be  expressed as\rf{DasBuch}
+\beq
+\LieEl(\delta \gSpace) \simeq 1 + \delta \gSpace \cdot \Lg.
+\ee{eq:infinitesimal}
+
+The $\Lg_a$  are called the \emph{generators} of infinitesimal rotations. To see why, define the group action tangent at $\ssp$,
+\beq
+ \groupTan_{a}(\ssp) = \Lg _{a} \ssp
+    \,,\qquad
+ a=1,2,\cdots,N,
+\ee{PC:groupTan}
+and consider a transformation induced by an infinitesimal
+time-dependent variation of group `phases'
+$\delta \gSpace_a = \timeStep \, \dot{\gSpace_a}$,
+\[
+\delta \ssp = \timeStep \, \dot{\gSpace} \cdot \groupTan(\ssp)
+\,.
+\]
+So $\dot{\gSpace} \cdot \groupTan(\ssp)$ is the velocity
+of the flow along the group orbit of \ssp.
+We shall use $\groupTan_a(\sspRed)$ notation (rather than
+$\Lg_{a}\sspRed$) to emphasize that the group action
+induces a \emph{tangent field} at $\sspRed$.
+
+The statement of equivariance
+$
+\dot{x}=\LieEl^{-1} \vel(\LieEl x)
+$
+for infinitesimal rotations is:
+\[
+\dot{x}=(1-\gSpace \cdot \Lg ) \vel(x+\gSpace \cdot \Lg  x)
+       =\vel(x)-\gSpace \cdot \left(
+            \Lg \vel(x) - \frac{d\vel}{dx} \Lg x
+                     \right)
+\,.
+\]
+We can now state the {\em infinitesimal
+rotations} version of the equivariance condition
+\refeq{eq:FiniteRot} as:
+\beq
+0 = - \groupTan_{a}(\vel)+\Mvar \groupTan_{a}(\ssp)
+\,,
+\label{eq:InfnmslRot}
+\eeq
+where $\Mvar$ is the \stabmat\ \refeq{SF:stabMat}.
+% \refeq{5x5stabMat}.
+    \PC{Stefan, you might want to learn about Jacobi derivatives,
+        explain this statement geometrically}
+
+%We have used both this infinitesimal rotation condition and
+%the finite angle rotation condition \refeq{eq:FiniteRot}, to
+%verify that the \cLe\ are rotationally equivariant.
+%    \PC{Stefan, have you done this? Yes or no.}
+%                                                    \exerbox{exer:InfinRotInvari}
+%                                                    \exerbox{exer:FinRotInvarCmplx}
+%                                                    \exerbox{exer:FinRotInvari}
+
+When dealing with symmetry groups, certain subsets of the state space play an important role in understanding the action of the group.
+
+%\paragraph{Definition:           Fixed-point subspace}
+\begin{definition}
+\label{def:centralizer}
+\index{slice}
+\textbf{Fixed-point subspace.}
+\index{centralizer}\index{fixed-point subspace}
+\index{G-fixed@\Group-fixed}\index{fixed point!under \Group}
+$\pS_H$ or a `centralizer' of a subgroup $H \subset \Group$,
+$\Group$ a symmetry of dynamics, is the set of all \statesp\
+points left \emph{$H$-fixed}, \emph{point-wise} invariant
+under action of the subgroup
+\beq
+\pS_H = \Fix{H} =
+   \{ \ssp \in \pS : {h} \, \ssp = \ssp \mbox{ for all } h \in H \}
+\,.
+\ee{dscr:FPsubsp}
+% \paragraph{Definition:         Invariants.}
+\index{invariant!points}
+Points in the \emph{fixed-point subspace}  $\pS_\Group$ are fixed
+points of the full group action. They are called \emph{invariant
+points},
+	\index{invariant!points}
+\beq
+\pS_\Group = \Fix{\Group} =
+   \{ \ssp \in \pS : {g} \, \ssp = \ssp \mbox{ for all } g \in \Group \}
+\,.
+\ee{dscr:InvPoints}
+\end{definition}
+		%
+%		                                                  \toCB
+
+If a point is an invariant point of the symmetry group, the definition of equivariance \refeq{eq:FiniteRot} tells us that the velocity at that point is also in $\pS_\Group$, so the trajectory through that point will remain in $\pS_\Group$. $\pS_\Group$ is disjoint from the rest of the state space since no trajectory can ever enter or leave $\pS_\Group$. The fixed-point subspace of the $\SOn{2}$ symmetry group of the \cLe\ is the $z$-axis (see \refexam{exam:FinRot}). The velocity\refeq{eq:CLeR} at a point in the state space points only in the $z$-direction and so the trajectory remains on the $z$-axis for all time as expected.
+
+\begin{definition}
+\label{def:grouporbit}
+\textbf{Group orbit.}
+The orbit of a point $\ssp$ under the group $\Group$ is the set of all points that $\ssp$ are mapped to under the groups elements
+\beq
+\pS_\ssp=\{{g} \, \ssp: g \in \Group\}.
+\eeq
+The points in $\pS_\Group$ are exactly those points whose group orbits consist of only itself ($\pS_\ssp=\{\ssp\}$).
+\end{definition}
+
+\begin{definition}
+\label{def:SO2}
+\textbf{\SOn{2}.} The special orthogonal group, \SOn{2}, is a group of length-preserving rotations of the state space. `Special' refers to requirement that $det \, g = 1$, in contradistinction to the orthogonal group O(n) which allows for $det \, g = \pm 1$. \SOn{2}\ is a compact Lie group with a single infinitesimal generator.
+\end{definition}
+
+$\SOn{2}$ symmetries are common amongst fluid flows. The \KS\ flow\rf{ku,siv}, {\pCf}\rf{Visw07b,GHCW07,HGC08,HalcrowThesis}, and flow through a cylindrical pipe\rf{Wk04,Kerswell05} all have symmetry groups which are products (see \refdef{def:productGroup}) of $\SOn{2}$ symmetries along with a discrete symmetry.
+
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\example{\SOn{2} irreducible representations.}{
+    \label{exam:SO2irrepst}
+    \index{SO(2)@\SOn{2}!irreducible representation}
+%DB% (continued from \refexam{exmp:contSO2rot})~~
+Expand a smooth periodic function $u(\gSpace + 2\pi) =
+u(\gSpace)$ as a Fourier series
+\beq
+u(\gSpace) = \frac{a_0}{2} + \sum_{m=1}^\infty \left(
+a_m \cos m \gSpace + b_m \sin m \gSpace
+                               \right)
+\,.
+\ee{FourierExp}
+The matrix representation of the \SOn{2}\ action
+%DB% \refeq{SO2LieFunct}
+on the $m$th Fourier coefficient pair
+$(a_m,b_m)$ is                                      %\toCB
+\beq
+\LieEl^{(m)}(\gSpace') \,=\,  \left(\barr{cc}
+ ~\cos m \gSpace'  & \sin m \gSpace' \\
+ -\sin m \gSpace'  & \cos m \gSpace'
+    \earr\right)
+= \cos m \gSpace' \id^{(m)}
+  + \sin m \gSpace'\, \frac{1}{m} \Lg^{(m)}
+\,,
+\ee{SO2irrepAlg-m}
+with the Lie group generator
+    \index{generator!anti-hermitian}
+    \index{anti-hermitian!generator}
+\beq
+ \Lg^{(m)} \,=\,   \left(\barr{cc}
+    0  &  m  \\
+   -m  &  0
+    \earr\right)
+\,.
+\ee{SO2irrepAlg-Lg}
+$\Lg^{(m)}$ is the Lie
+algebra generator and $\id^{(m)}$ is the identity on the $m$-irreducible
+subspace, 0 elsewhere.
+The \SOn{2}\ group tangent $\groupTan(u)$
+%DB% \refeq{GroupTangField}
+to \statesp\ point $u(\gSpace)$ is the sum over invariant subspace
+contributions                           %\toCB
+\beq
+ \groupTan(u) = \sum_{m=1}^\infty \groupTan^{(m)}(u)
+    \,,\qquad
+ \groupTan^{(m)}(u)
+\,=\, m \,\left(\barr{c}
+   ~b_m  \\
+   -a_m
+    \earr\right)
+\,.
+\ee{u:x:tang}
+The $L^2$ norm of $\groupTan(u)$ is weighted by
+the \SOn{2}\ quadratic Casimir,
+$C_2^{(m)} = m^2$,
+\beq
+\oint \frac{d\gSpace}{2\pi}
+     \, (\Lg u(\gSpace))^T \Lg u(2\pi-\gSpace)
+= \sum_{m=1}^\infty m^2 \left(a_m^2 + b_m^2\right)
+\,,
+\ee{tangL2norm}
+and converges only for sufficiently smooth $u(\gSpace)$. What
+does that mean?
+%DB% We saw in \refeq{RPOtrans_gen} that
+$\Lg$ generates translations, and by \refeq{SO2irrepAlg-Lg} the
+velocity of the $m$th Fourier mode is $m$ times higher than for the $m=1$
+component. If $| u^{(m)}| $ does not fall off faster the $1/m$,
+the action of \SOn{2}\ is overwhelmed by the high Fourier modes.
+    } % end \example{\SOn{2} irreps
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\example{\SOn{2} rotations for \cLe.}{\label{exam:FinRot}
+    \index{SO(2)@\SOn{2}}
+The \SOn{2} symmetry group of \cLe\ acts on the
+5-dim\-ens\-ion\-al space \refeq{eq:CLeR}
+by a finite angle \SOn{2} rotation:
+\index{generator!anti-hermitian}
+\index{anti-hermitian!generator}
+\beq
+\LieEl(\gSpace) \,=\,  \left(\barr{ccccc}
+  \cos \gSpace  & \sin \gSpace  & 0 & 0 & 0 \\
+ -\sin \gSpace  & \cos \gSpace  & 0 & 0 & 0 \\
+ 0 & 0 &  \cos \gSpace & \sin \gSpace   & 0 \\
+ 0 & 0 & -\sin \gSpace & \cos \gSpace   & 0 \\
+ 0 & 0 & 0             & 0              & 1
+    \earr\right)
+\,.
+\ee{CLfRots}
+The corresponding Lie algebra generator is
+    \PC{is the sign standard?}
+\beq
+ \Lg \,=\,   \left(\barr{ccccc}
+    0  &  1 & 0  &  0 & 0  \\
+   -1  &  0 & 0  &  0 & 0 \\
+    0  &  0 & 0  &  1 & 0  \\
+    0  &  0 &-1  &  0 & 0 \\
+    0  &  0 & 0  &  0 & 0
+    \earr\right)
+\,.
+\ee{CLfLieGen}
+%From \refeq{SO2irrepAlg-m} we see that
+The action of \SOn{2}\ on the \cLe\ \statesp\ thus decomposes into $m=0$ \Group-invariant subspace ($z$-axis) and  $m=1$ subspace with multiplicity 2.
+
+The generator $\Lg$ is indeed anti-hermitian,
+$\Lg^\dagger = - \Lg$, and the group is compact, its
+elements parameterized by $\gSpace \mbox{ mod } 2\pi$. Locally, at
+$\ssp \in \pS$, the infinitesimal action of the group is
+given by the group tangent field $\groupTan(\ssp) = \Lg \ssp
+= (x_2,-x_1,y_2,-y_1,0)$. In other words, the flow induced by
+the group action is normal to the radial direction in the
+$(x_1,x_2)$ and $(y_1,y_2)$ planes, while the $z$-axis is left
+invariant.
+    } % end \example{Finite angle \SOn{2} rotations:}{
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+
+\subsection{\Reqva\ and \rpo s}
+
+The existence of a continuous symmetry provides for the existence of trajectories analogous to \eqva\ \ref{def:eqva} and \po s \ref{def:po}.
+
+\begin{definition}
+\textbf{\Reqva.}
+A \reqv\ is a trajectory which stays in a single group orbit,
+\beq
+\ssp(\tau)=\LieEl(\tau) \ssp(0).
+\eeq
+The  velocity field at every point along a \reqv\ must point in the same direction as group tangent of the flow. It does so with a constant `angular' velocity $c$, \ie\ $\vel(\ssp)=c \cdot \groupTan(\ssp)$ everywhere along the \reqv. Up to the action of the group, a \reqv\ is the same as an \eqv.
+\end{definition}
+
+\begin{definition}
+\textbf{\Rpo.}
+A \rpo\ is trajectory that periodically returns to a point on the group orbit of its initial point
+\beq
+\ssp(\tau*)=\LieEl \, \ssp(0) \,\, for \,\,  some \,\, \LieEl \in \Group \,\, and \,\, time \,\, \tau*.
+\eeq
+Up to the action of the group, a \rpo\ is the same as a \po.
+\end{definition}
+
+The \mslices\ is used to produce a system equivalent to the original of lower dimension. The \reqva\ and \rpo s of the original system are mapped to \eqva\ and \po s in the reduced system. We can then apply the same wealth of knowledge to studying these trajectories in the \reducedsp\ that we have for \eqva\ and \po s\rf{DasBuch}.
+    \ifarticle
+    \else
+
+
+\subsection{Inner products}
+\label{def:innerProduct}
+\index{slice}
+
+One final piece of notation must be introduced before we can finally discuss the \mslices.
+The notion of an inner product on the state space is necessary to define a linear slice of the state space. We will therefore assume from now on that the state space has an inner product.
+
+As we shall use here several inner products:
+over group manifolds, over real and complex finite-dimensional coordinates, and over function spaces, it is convenient to introduce a compact notation that subsumes them all as special cases.
+    \PC{We need to define these properly. When we get to fluids, it's not trivial - we will use `energy norm.' }
+
+Here the dot product $\gSpace \cdot \Lg$ shall refer to the sum over
+the Lie algebra generators of an $N$-dimensional Lie group \Group,
+\beq
+\gSpace \cdot \Lg = \sum_{a=1}^N \gSpace_a \Lg_a
+%    \,,\qquad a = 1,2,\cdots,N
+\,.
+\ee{dotGroup}
+
+The inner product of two \statesp\ vectors $x, y \in \pS$ will be denoted by $\dotProd{x}{y}$. If the \statesp\ is $\mathbb{R}^d$, then by the inner product we mean the usual Euclidian product of two vectors $x,y$,
+\beq
+\dotProd{x}{y} = \sum_i^d {x}_i y_i
+    \,,\qquad \pS \subset \reals
+\,.
+\ee{innerR}
+
+If the \statesp\ is finite dimensional and complex,
+\beq
+\dotProd{x}{y} = \sum_i^d \dual{x}_i y_i
+    \,,\qquad \pS \subset \complex
+\,,
+\ee{innerC}
+where $\dual{x}$ is the complex conjugate transpose of vector $x$, or, more generally, the hermitian conjugate $\dual{M}$ of matrix $M$.
+
+In an inner product, a matrix $M$ acts as
+    \PC{This should probably be extended to non-selfadjoint
+        actions, explain the adjoint {\jacobianM} $\dual{\jMps}$.}
+\beq
+\dotProd{x}{M\,y} =
+  \dotProd{\dual{M}\,x}{y}
+\,.
+\ee{adjointG}
+where $\dual{M}$ is the hermitian conjugate of $M$.
+
+If the \statesp\ is a normed function space (Banach, Hilbert, Sobolev, ...),
+the inner product is given by the integral
+\beq
+\dotProd{g}{f} = \int dx \, \dual{g}(x) f(x)
+\,.
+\ee{innerL2}
+The associated $L^2$ norm is
+$|\ssp|^2 = \dotProd{\ssp}{\ssp} \neq 0$, unless $\ssp = 0$.
+
+In computations the functions are expressed in terms of
+complete orthonormal basis sets $\{u_n\}$,
+\bea
+f(x) &=& \sum_{n=0}^{\infty} a_n u_n(x)
+    \continue
+\dotProd{u_n}{u_m} &=& \delta_{nm}
+\,.
+\label{basisL2}
+\eea
+
+Unitary and orthogonal groups (as well as their subgroups) are
+defined as groups that preserve these `length' norms,
+$\dotProd{\LieEl x}{\LieEl x} =  \dotProd{x}{x}$, and
+infinitesimally their generators induce no change in the norm,
+\[
+\dotProd{ \Lg_a\ssp}{\ssp}
+  +\dotProd{\ssp}{\Lg_a\ssp} =0
+\,,
+\]
+hence the Lie algebra generators
+$\Lg$ are antisymmetric for orthogonal (sub)groups,
+and antihermitian for unitary ones,
+\beq
+\dual{\Lg} = - \Lg
+\,.
+\ee{antiHerm}
+This antisymmetry of generators
+implies that the action of the group on vector $\ssp$ is
+locally normal to it,
+\beq
+\dotProd{\groupTan_{a}(\ssp)}{\ssp} =0
+\,.
+\ee{TtimesX}
+
+A group tangent \refeq{PC:groupTan} is a vector both in the group
+tangent space and in the \statesp.
+We shall indicate by $\dotProd{\groupTan_{a}(x)}{\groupTan_{b}(y)}$  the sum over \statesp\ inner product only, and by
+\beq
+\dotProd{\groupTan(x)}{\groupTan(y)} =
+    \sum_{a=1}^N \dotProd{\groupTan_{a}(x)}{\groupTan_{a}(y)} =
+  \dotProd{x}{\dual{\Lg} \cdot {\Lg}\,y}
+\ee{innerGdot}
+the sum over both group and spatial dimensions.
+
+Any representation of a compact group $\Group$ is fully
+reducible, and for a Lie group
+the invariant tensors constructed by contractions
+of $\Lg_a$ are useful for identifying irreducible
+representations. The simplest such invariant is
+\beq
+\dual{\Lg} \cdot \Lg = \sum_\alpha C_2^{(\alpha)} \, \id^{(\alpha)}
+\,,
+\ee{QuadCasimir}
+where $C_2^{(\alpha)}$ is the quadratic Casimir for
+irreducible representation labeled $\alpha$, and
+$\id^{(\alpha)}$ is the identity on the $\alpha$-irreducible
+subspace, 0 elsewhere. $ C_2^{(\alpha)} =0$ if $\alpha$
+is an invariant subspace.
+The dot product of two tangent fields
+\refeq{innerGdot} is thus a sum of inner products
+weighted by Casimirs,
+\beq
+\dotProd{\groupTan(x)}{\groupTan(y)}
+   = \sum_\alpha C_2^{(\alpha)} \dual{x}_i\, \delta_{ij}^{(\alpha)} y_j
+\,.
+\ee{dotProd}
+For compact groups $C_2^{(\alpha)}$ are strictly nonnegative by
+the antihermiticity \refeq{antiHerm} of Lie algebra generators.
+
+    \fi %end of article switch
+
