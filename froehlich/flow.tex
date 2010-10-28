@@ -13,31 +13,30 @@
 
 We begin with a very brief discussion of dynamical systems.
 
-A deterministic dynamical system is an abstract space $\pS$, called the {\statesp}, along with a rule for how trajectories in the space progress in time. We are concerned with applications to fluid flows, and as such we will only be concerned with systems where M is a manifold (locally it looks like $\mathbb{R}^d$) and the rule is given by a system of autonomous differential equations $\dot{\ssp}=\vel(\ssp)$.
+A deterministic dynamical system is an abstract space $\pS$, called the {\statesp}, along with a rule for how trajectories in the space progress in time. We are concerned with applications to fluid flows, and as such we will only be concerned with systems where $\pS$ is a manifold (locally it looks like $\mathbb{R}^d$) and the evolution rule is given by a system of autonomous differential equations $\dot{\ssp}=\vel(\ssp)$.
 
-\Eqva\ and \po s trajectories are ubiquitous in dynamical system. These types of trajectories are well understood and provide insight into how other trajectories progress through {\statesp}\rf{DasBuch}. Finding these types of trajectories is at the core of current research in turbulent systems. Many papers, such as\rf{KawKida01,kskent92,kstroy89}, are dedicated to finding and exploiting these trajectories to better understand turbulence.
+\Eqva\ and \po s trajectories are ubiquitous in dynamical systems. These types of trajectories are well understood and provide insight into how other trajectories progress through {\statesp}\rf{DasBuch}. Finding these types of invariant solutions is at the core of current research in turbulent systems. Many papers, such as\rf{KawKida01,kskent92,kstroy89}, are dedicated to finding and exploiting such invariant solutions to better understand turbulence.
 
 \begin{definition}
-\textbf{\Eqva.}
+\textbf{\Eqv.}
 \label{def:eqva}
-An \eqv\ $\EQV{}$ is a point $\ssp_{\EQV{}}$ for which the
+An \eqv\ $\EQV{}$ is a point $\ssp=\ssp_{\EQV{}}$ for which the
 velocity field of an ordinary differential equation
 $\dot{\ssp} = \vel(\ssp)$ is zero,
 \beq
-\vel(\ssp_{\EQV{}})=0.
+\vel(\ssp)=0.
 \eeq
 The trajectory in the {\statesp} will remain in this point indefinitely.
 \end{definition}
 
-
 \begin{definition}
 \textbf{\Po.}
 \label{def:po}
-A \po\ is a trajectory $\ssp(t)$ that is a closed curve,
+A \po\ (or a cycle) is a trajectory $\ssp(t)$ that is a closed curve,
 \beq
-\ssp(0)=\ssp(\period{}) \,\, for \,\, some \,\, time \,\, \period{}.
+\ssp(0)=\ssp(\period{}) \,\, 
 \eeq
-The smallest $\period{}$ for which this occurs is known as the period.
+where the cycle period \period{} is the shortest the shortest time for which this occurs.
 \end{definition}
 
 \subsection{\CLe}
@@ -68,7 +67,7 @@ first order ODE system\rf{SiminosThesis}
 \end{split}
 \eeq
 In all numerical calculations that follow we shall set the
-parameters to Siminos's values\rf{SiminosThesis},
+parameters to Siminos thesis values\rf{SiminosThesis},
 \beq
 r_1=28,\; b=\frac{8}{3},\;
 \sigma=10,\; e=\frac{1}{10},\quad \mbox{and} \quad r_2=0
@@ -76,11 +75,12 @@ r_1=28,\; b=\frac{8}{3},\;
 \ee{SiminosPrmts}
 The \cLe\ exhibit an $\SOn{2}$ symmetry under rotations around the z-axis (see \refexam{exam:FinRot}).
 
-Here we are not interested in the physical applications of these equations; rather, we use them as a simple example of a dynamical system with continuous (but no discrete) symmetries. Our goal is to find a computationally straightforward method of reducing the dynamics to a lower-dimensional \statesp, where each group orbit of the full system (\ie, set of rotationally equivalent states) is represented by a single point. If successful, the methods that we develop might be applicable to very high-dimensional flows, such as translationally equivariant fluid flows bounded by pipes or planes\rf{GHCW07,GibsonMovies}.
+Here we are not interested in the physical applications of these equations; rather, we use them as a simple example of a dynamical system with a continuous (but no discrete) symmetry. Our goal is to find a computationally straightforward method of reducing the dynamics to a lower-dimensional \statesp, where each group orbit of the full system (\ie, set of rotationally equivalent states) is represented by a single point. If successful, the methods that we develop might be applicable to very high-dimensional flows, such as translationally equivariant fluid flows bounded by pipes or planes\rf{GHCW07,GibsonMovies}.
 
 \subsection{Visualizing \cLf}
 
-\refFig{fig:CLEx2y1z} is an example of a long term trajectory on the strange attractor of the \cLe. The dynamics is a big mess - the trajectory seems to oscillate while drifting around $z$-axis. However,  note that the flow appears to have a rotational symmetry about the $z$-axis. The goal of this paper is to introduce a more illuminating way of understanding the dynamics of this flow as well as `cleaning it up'--that is, removing this symmetry and reducing the ODE system from five dimensions to four.
+\refFig{fig:CLEx2y1z} is an example of a long term trajectory on the strange attractor of the \cLe. The dynamics is a big mess - the trajectory seems to oscillate while drifting around $z$-axis. However,  note that the flow appears to have a rotational symmetry about the $z$-axis. The goal of this paper is to introduce a more illuminating way of understanding the dynamics of this flow 
+by quotienting this symmetry and reducing the ODE system from five dimensions to four.
     \PC{label axes, use legible fonts in all figures.}
     \PC{to Stefan: put all single figures into SFIG format, as
         \reffig{fig:CLEx1x2z}.
@@ -102,21 +102,14 @@ A typical $\{y_2,y_1,z\}$ plot of the \cLf\ strange attractor, with initial poin
 %    }
 
 
-When studying the trajectories of a flow, it is useful to
-know how small neighborhoods of points are transported by the
-flow.
-We start by a discussion of the stability of \eqva\ and \po s,
-and postpone the discussion of the stability of \reqva\ and \rpo s,
-quintessentially continuous symmetry effects, to \refsect{SF:rpos}.
-
+When studying the trajectories of a flow, it is useful to know how small neighborhoods of points are transported by the flow. We start by a discussion of the stability of \eqva\ and \po s, and postpone the discussion of the stability of \reqva\ and \rpo s, quintessentially continuous symmetry effects, to \refsect{sect:relStab}.
 
 Consider the displacement of an infinitesimally close
 neighbor $\ssp+\delta \ssp$. Taylor expanding the flow equation
 $\dot \ssp = \vel(\ssp)$ we find that
-\beq
-\dot \ssp + \dot{\delta \ssp}
-  =\vel_i(\ssp+\delta \ssp) \approx \vel_i(\ssp)+\Mvar \delta \ssp
-\eeq
+\[
+\dot{\delta \ssp} =  \Mvar \delta \ssp
+\]
 where we shall refer to the matrix of velocity gradients
 \beq
 \Mvar_{ij}(\ssp)=\frac{\partial v_i (\ssp)}{\partial \ssp_j}
@@ -124,9 +117,9 @@ where we shall refer to the matrix of velocity gradients
 as the \stabmat.
 
 In our first attempt to understand the dynamics of the flow,
-we examine the \eqv\ of the system by finding this \stabmat\
+we examine the neighborhoods of \eqva\ of the system by finding this \stabmat\
 $\Mvar$. For the \cLe\ it is the $[5\!\times\!5]$
-matrix of velocity gradients,
+matrix,
                                                     \exerbox{exer:StabmatCLf}
 \beq
   \Mvar =\left(\barr{ccccc}
@@ -138,28 +131,20 @@ matrix of velocity gradients,
     \earr\right)
 \,.
 \eeq
-A \stabmat\ describes the instantaneous rate of shearing of the infinitesimal neighborhood of $x(t)$ by the flow. That is, it describes how quickly points initially very near to $x(t)$ will diverge away from / converge to it in time.
+A \stabmat\ describes the instantaneous rate of shearing of the infinitesimal neighborhood of $x(t)$ by the flow. Integrated along the flow it describes how quickly points initially very near to $x(t)$ will diverge away from / converge to it in time.
 
-\subsection{\jacobianM}
-
-Consider the trajectory of a  neighbor infinitesimally close
-to $\xInit$. Taylor expanding a finite time flow, we find that
+Consider again the trajectory of a  neighbor infinitesimally close
+to $\xInit$, but now Taylor expanding a \emph{finite time} flow
+$f^t(\xInit +\delta \ssp)$, we find that
 \[
-f^t(\xInit +\delta x) \approx f^t(\xInit)+\jMps^t(\xInit)\delta x,
+ \delta \ssp(t) = \jMps^t(\xInit)\delta \xInit
+ \,,
 \]
 where
 \beq
 \jMps^t(x)_{ij}=\frac{\partial x_i(t)}{\partial x_j}
 \ee{SF:jacMat}
- is
-the \jacobianM. This means that up to the linear term the
-neighborhood is transported by $\delta x(t)=\jMps^t(\xInit)\delta
-\xInit$. This means that how nearby trajectories separate or
-approach each other is dependent on the eigenvectors and
-values of the \jacobianM.
-
-The \jacobianM\ also maps the initial, Lagrangian coordinate
-frame to the Eulerian coordinate at time $t$,
+is the \jacobianM. How nearby trajectories separate or approach each other depends on the eigenvectors and eigenvalues of the \jacobianM. In particular, the \jacobianM\ maps the initial, Lagrangian coordinate frame to the Eulerian coordinate at time $t$,
 \beq
 \velField{\ssp(t)}=\jMps^t(\xInit) \velField{\xInit}
 \,,
@@ -170,11 +155,16 @@ see \refexer{traLocEigFr}.
     appears too early, search for ``traLocEigFr.''
     }
 
-The methods of calculating the \jacobianM\ are discussed in ChaosBook.org\rf{DasBuch} where it is shown that the \jacobianM\ matrix is related to the stability matrix by $\frac{d}{dt} \jMps^t(x)=\Mvar (x) \jMps^t(x)$ or equivalently $\jMps^t(\xInit)= \texttt{T} e^{\int^t_0 d\tau \Mvar (x(\tau))}$, where \texttt{T} stands for a time-ordered product. When using a numerical routine to integrate the equations of motion, using a discrete approximation of either of these two formulas requires minimal additional programming effort.
+The methods of calculating the \jacobianM\ are discussed in ChaosBook.org\rf{DasBuch} where it is shown that the \jacobianM\ matrix is related to the stability matrix by $\frac{d}{dt} \jMps^t(x)=\Mvar (x) \jMps^t(x)$ or equivalently 
+\[
+\jMps^t(\xInit)= \texttt{T} e^{\int^t_0 d\tau \Mvar (x(\tau))}
+ \,,
+\]
+where \texttt{T} stands for a time-ordered product. When using a numerical routine to integrate the equations of motion, evaluation of either of these two formulas requires minimal additional programming effort.
 
 % PC 13jul2010
 \exercise{Transport of local eigenframes.}{     \label{traLocEigFr}
-%    \toCB
+     \toCB
 \noindent (a)
 Derive \refeq{JacobVeloc}.
 (b)
@@ -227,16 +217,12 @@ are co-moving with the tangent flow.
 \authorSF{2010-07-??}
     }% end
 
-\subsection{\Eqva}
+\subsection{\Eqva\ of \cLe}
 
-An \eqv\ $\EQV{}$ is a point $\ssp_{\EQV{}}$ for which the
-velocity field of an ordinary differential equation
-$\dot{\ssp} = \vel(\ssp)$ is zero, $\vel(\ssp_{\EQV{}})=0$. These
-are points where the flow does not move, and if it reaches an
-equilibrium, the flow remains there. For the \cLe\, the
+For the \cLe\, the
 origin $\EQV{0}=(0, 0, 0, 0, 0)$ is always an equilibrium
 point, but there are two more families of equilibrium when
-both $r_2 + e=0$ and $r_1>1$. If we could set on of these
+both $r_2 + e=0$ and $r_1>1$. If we could set one of these
 {\em infinitely precisely} as the initial point of the flow,
 instead of seeing the messiness of \reffig{fig:CLEx2y1z}, we
 would stay at this single point for all times. In any

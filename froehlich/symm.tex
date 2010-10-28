@@ -23,7 +23,7 @@ equations, then this implies $\LieEl\,\ssp(\tau)$ is also a solution.
 
 The equivariant operations of dynamical system form a group under composition, and it this group that we call the symmetry of the dynamics.
 
-In many flows (the \cLe\ are a particularly simple example), this symmetry group will form a Lie group. When the symmetry group is a Lie group, \mslices\ (see \refsect{sect:mslices}) can be applied to the system to replace it with an equivalent lower dimensional system.
+In many flows (the \cLe\ are a particularly simple example), this symmetry group will form a Lie group. When the symmetry group is a Lie group, \mslices\ (see \refsect{sect:reducedStateSp}) can be applied to the system to replace it with an equivalent lower dimensional system.
 
 
 \subsection{Lie groups}
@@ -40,9 +40,11 @@ An element of a compact Lie group can be parameterized in exponential form\rf{Si
 For example, an element of a compact Lie group that is continuously connected to the identity can be expressed as
 \beq
 \LieEl(\gSpace)=e^{{\gSpace} \cdot \Lg }
+    \,,\qquad
+\gSpace \cdot \Lg = \sum_a \gSpace_a \Lg_a
 \,,
 \ee{FiniteRot}
-where $\gSpace \cdot \Lg = \sum_a \gSpace_a \Lg_a$ is a \emph{Lie algebra} element, the $\gSpace_a$ are the parameters of the transformation, and the $\Lg_a$ are a set of N linearly independent $[d\times d]$ antihermitian matrices acting linearly on the {\statesp}\rf{DasBuch}.
+where $\gSpace \cdot \Lg $ is a \emph{Lie algebra} element, the $\gSpace_a$ are the parameters of the transformation, and the $\Lg_a$ are a set of N linearly independent $[d\!\times\!d]$ antihermitian matrices acting linearly on the {\statesp} vectors\rf{DasBuch}.
     \PC{need to generalize to groups like \On{n}}
                                                     \exerbox{exer:FinRot2d}
 %
@@ -51,7 +53,6 @@ A rotation by an infinitesimal amount, $|\delta \gSpace| \ll 1$, can be  express
 \beq
 \LieEl(\delta \gSpace) \simeq 1 + \delta \gSpace \cdot \Lg.
 \ee{eq:infinitesimal}
-
 The $\Lg_a$  are called the \emph{generators} of infinitesimal rotations. To see why, define the group action tangent at $\ssp$,
 \beq
  \groupTan_{a}(\ssp) = \Lg _{a} \ssp
@@ -72,10 +73,7 @@ $\Lg_{a}\sspRed$) to emphasize that the group action
 induces a \emph{tangent field} at $\sspRed$.
 
 The statement of equivariance
-$
-\dot{x}=\LieEl^{-1} \vel(\LieEl x)
-$
-for infinitesimal rotations is:
+\refeq{eq:FiniteRot} for infinitesimal rotations is:
 \[
 \dot{x}=(1-\gSpace \cdot \Lg ) \vel(x+\gSpace \cdot \Lg  x)
        =\vel(x)-\gSpace \cdot \left(
@@ -106,6 +104,16 @@ where $\Mvar$ is the \stabmat\ \refeq{SF:stabMat}.
 
 When dealing with symmetry groups, certain subsets of the {\statesp} play an important role in understanding the action of the group.
 
+\begin{definition}
+\label{def:grouporbit}
+\textbf{Group orbit.}
+The orbit of a point $\ssp$ under the group $\Group$ is the set of all points that $\ssp$ are mapped to under the groups actions
+\beq
+\pS_\ssp=\{{g} \, \ssp: g \in \Group\}.
+\eeq
+The points in the fixed-point subspace $\pS_\Group$ are those points whose group orbits consist of only itself ($\pS_\ssp=\{\ssp\}$).
+\end{definition}
+
 %\paragraph{Definition:           Fixed-point subspace}
 \begin{definition}
 \label{def:centralizer}
@@ -123,7 +131,6 @@ under action of the subgroup
 \,.
 \ee{dscr:FPsubsp}
 % \paragraph{Definition:         Invariants.}
-\index{invariant!points}
 Points in the \emph{fixed-point subspace}  $\pS_\Group$ are fixed
 points of the full group action. They are called \emph{invariant
 points},
@@ -134,24 +141,13 @@ points},
 \,.
 \ee{dscr:InvPoints}
 \end{definition}
-		%
-%		                                                  \toCB
+		                                                  \toCB
 
-If a point is an invariant point of the symmetry group, by the definition of equivariance \refeq{eq:FiniteRot} the velocity at that point is also in $\pS_\Group$, so the trajectory through that point will remain in $\pS_\Group$. $\pS_\Group$ is disjoint from the rest of the {\statesp} since no trajectory can ever enter or leave $\pS_\Group$. The fixed-point subspace of the $\SOn{2}$ symmetry group of the \cLe\ is the $z$-axis (see \refexam{exam:FinRot}). The velocity \refeq{eq:CLeR} at a point on the $z$-axis points only in the $z$-direction and so the trajectory remains on the $z$-axis for all time as expected.
-
-\begin{definition}
-\label{def:grouporbit}
-\textbf{Group orbit.}
-The orbit of a point $\ssp$ under the group $\Group$ is the set of all points that $\ssp$ are mapped to under the groups actions
-\beq
-\pS_\ssp=\{{g} \, \ssp: g \in \Group\}.
-\eeq
-The points in the fixed-point subspace $\pS_\Group$ are those points whose group orbits consist of only itself ($\pS_\ssp=\{\ssp\}$).
-\end{definition}
+If a point is an invariant point of the symmetry group, by the definition of equivariance \refeq{eq:FiniteRot} the velocity at that point is also in $\pS_\Group$, so the trajectory through that point will remain in $\pS_\Group$. $\pS_\Group$ is disjoint from the rest of the {\statesp} since no trajectory can ever enter or leave it. The fixed-point subspace of the $\SOn{2}$ symmetry group of the \cLe\ is the $z$-axis (see \refexam{exam:FinRot}). The velocity \refeq{eq:CLeR} at a point on the $z$-axis points only in the $z$-direction and so the trajectory remains on the $z$-axis for all times, as expected.
 
 \begin{definition}
 \label{def:SO2}
-\textbf{\SOn{2}.} The special orthogonal group, \SOn{2}, is a group of length-preserving rotations of the {\statesp}. `Special' refers to requirement that $det \, g = 1$, in contradistinction to the orthogonal group O(n) which allows for $det \, g = \pm 1$. \SOn{2}\ is a compact Lie group with a single infinitesimal generator.
+\textbf{\SOn{2}.} The special orthogonal group, \SOn{2}, is a group of length-preserving rotations. `Special' refers to requirement that $det \, g = 1$, in contradistinction to the orthogonal group \On{n} which allows for $det \, g = \pm 1$. \SOn{2}\ is a compact Lie group with a single infinitesimal generator.
 \end{definition}
 
 $\SOn{2}$ symmetries are common amongst fluid flows. The \KS\ flow\rf{ku,siv}, {\pCf}\rf{Visw07b,GHCW07,HGC08,HalcrowThesis}, and flow through a cylindrical pipe\rf{Wk04,Kerswell05} all have symmetry groups which are products (see \refdef{def:productGroup}) of $\SOn{2}$ symmetries along with discrete symmetries.
@@ -173,7 +169,7 @@ a_m \cos m \gSpace + b_m \sin m \gSpace
 The matrix representation of the \SOn{2}\ action
 %DB% \refeq{SO2LieFunct}
 on the $m$th Fourier coefficient pair
-$(a_m,b_m)$ is                                      %\toCB
+$(a_m,b_m)$ is                                       \toCB
 \beq
 \LieEl^{(m)}(\gSpace') \,=\,  \left(\barr{cc}
  ~\cos m \gSpace'  & \sin m \gSpace' \\
@@ -199,7 +195,7 @@ subspace, 0 elsewhere.
 The \SOn{2}\ group tangent $\groupTan(u)$
 %DB% \refeq{GroupTangField}
 to \statesp\ point $u(\gSpace)$ is the sum over invariant subspace
-contributions                           %\toCB
+contributions                            \toCB
 \beq
  \groupTan(u) = \sum_{m=1}^\infty \groupTan^{(m)}(u)
     \,,\qquad
@@ -211,15 +207,15 @@ contributions                           %\toCB
 \,.
 \ee{u:x:tang}
 The $L^2$ norm of $\groupTan(u)$ is weighted by
-the \SOn{2}\ quadratic Casimir \refeq{QuadCasimir},
+the quadratic Casimir \refeq{QuadCasimir}. For \SOn{2} this is
 $C_2^{(m)} = m^2$,
 \beq
 \oint \frac{d\gSpace}{2\pi}
      \, (\Lg u(\gSpace))^T \Lg u(2\pi-\gSpace)
 = \sum_{m=1}^\infty m^2 \left(a_m^2 + b_m^2\right)
-\,,
+\,.
 \ee{tangL2norm}
-and converges only for sufficiently smooth $u(\gSpace)$. What
+It converges only for sufficiently smooth $u(\gSpace)$. What
 does that mean?
 %DB% We saw in \refeq{RPOtrans_gen} that
 $\Lg$ generates translations, and by \refeq{SO2irrepAlg-Lg} the velocity of the $m$th Fourier mode is $m$ times higher than for the $m=1$ component. If $| u^{(m)}| = (a_m^2+b^2_m)^{1/2}$ does not fall off faster than $1/m$, the action of \SOn{2}\ is overwhelmed by the high Fourier modes.
@@ -290,20 +286,10 @@ The  velocity field at every point along a \reqv\ must point in the same directi
 \end{definition}
 
 \begin{definition}
-\textbf{\Rpo.}
-A \rpo\ is trajectory that periodically returns to a point on the group orbit of its initial point
-\beq
-\ssp(\period{})=\LieEl \, \ssp(0)
-\,\, for \,\,  some \,\, \LieEl \in \Group \,\, and \,\, time \,\, \period{}.
-\eeq
-Up to the action of the group, a \rpo\ is the same as a \po.
-\end{definition}
-
-\paragraph{Definition:
-           \Rpo}
-$p$ is an orbit $\pS_p$ in {\statesp} $\pS$, a set of relative periodic
-points which exactly recur
-    %\toCB
+\textbf{\Rpo} $p$ 
+is a trajectory that periodically returns to a point on the group orbit of its initial point, \ie, a set of relative periodic
+points $\pS_p$ which exactly recur
+    \toCB
 \beq
 \ssp (0) = \LieEl_p \ssp (\period{p} )
     \,,\qquad
@@ -315,13 +301,19 @@ at a fixed {\em relative period} $\period{p}$, but
 shifted by a fixed group action ${\LieEl_p}$
 which brings the endpoint $\ssp (\period{p} ) $
 back into the initial point $\ssp (0) $.
-The group action ${\LieEl_p}=\LieEl(\gSpace_p)$ parameters  %\toCB
+The group action ${\LieEl_p}=\LieEl(\gSpace_p)$ parameters   \toCB
 $\gSpace = (\gSpace_1,\gSpace_2,\cdots\gSpace_N)$
 are referred to as ``phases,'' or ``shifts.''
-%
-In general these phase are irrational, and the trajectory  %\toCB
+In general these phase are irrational, and the trajectory   \toCB
 sweeps out ergodically the group orbit without ever closing
 into a \po.
+\end{definition}
+
+\paragraph{Definition:
+           \Rpo}
+is an orbit  in {\statesp} $\pS$, 
+
+ 
 
 The \reqva\ and \rpo s of the original system are mapped to \eqva\ and \po s in the reduced system. We can then apply the same wealth of knowledge to studying these trajectories in the \reducedsp\ that we have for \eqva\ and \po s\rf{DasBuch}.
     \ifarticle
@@ -332,7 +324,7 @@ The \reqva\ and \rpo s of the original system are mapped to \eqva\ and \po s in 
 \label{def:innerProduct}
 \index{slice}
 
-One final piece of notation must be introduced before we can finally discuss the \mslices. The notion of an inner product on the {\statesp} is necessary to define a linear slice of the {\statesp}. We will therefore assume from now on that the {\statesp} has an inner product.
+One final piece of notation must be introduced before we can discuss the \mslices. The notion of an inner product on the {\statesp} is necessary to define a linear slice of the {\statesp}. We will therefore assume from now on that the {\statesp} has an inner product.
 
 As we shall use here several inner products:
 over group manifolds, over real and complex finite-dimensional coordinates, and over function spaces, it is convenient to introduce a compact notation that subsumes them all as special cases.
@@ -359,6 +351,8 @@ If the \statesp\ is finite dimensional and complex,
 \,,
 \ee{innerC}
 where $\dual{x}$ is the complex conjugate transpose of vector $x$, or, more generally, the hermitian conjugate $\dual{M}$ of matrix $M$.
+    \PC{add a paragraph on the length as integral along a
+        geodesic on a curved surface with a metric tensor}
 
 In an inner product, a matrix $M$ acts as
     \PC{This should probably be extended to non-selfadjoint
