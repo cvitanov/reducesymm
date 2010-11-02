@@ -137,13 +137,13 @@
 	    <img src="images/acroread16.png" alt="reprint"><a href="./papers/PhysRevLett.105.015001.pdf"> reprint</a>
  	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 	    <span class="dsphead">+</span> abstract</a>
-<!--		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
+		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 		    <span class="dsphead">+</span> bibtex</a>
 		  </span>
 		  <span class="dspcont">
-		      <?php include("./bib/benistiThreshold10.bib");?> 
+		      <?php include("./bib/benisti10-1.bib");?> 
 		  </span>
-	    </span>-->
+	    </span>
 	    <span class="dspcont">We derive, both theoretically and using an envelope code, threshold intensities for stimulated Raman scattering which compare well with results from Vlasov simulations. To do so, we account for the nonlinear decrease of Landau damping and for the detuning induced by, both, the nonlinear wave number shift &delta;k and frequency shift  &delta;&omega; of the plasma wave. In particular, we show that the effect of &delta;k may cancel out that of &delta;&omega;, but only in that plasma region where the laser intensity decreases along the direction of propagation of the scattered wave. Elsewhere, &delta;k enhances the detuning effect of &delta;&omega;. 
 	    </span>
 	</p>
@@ -156,14 +156,33 @@
 <!-- 	    <img src="images/acroread16.png" alt="preprint"><a href="./papers/threshold.pdf"> preprint</a> -->
  	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 	    <span class="dsphead">+</span> abstract</a>
-<!--		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
+		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 		    <span class="dsphead">+</span> bibtex</a>
 		  </span>
 		  <span class="dspcont">
-		      <?php include("./bib/SiCvi10.bib");?> 
-		  </span>-->
+		      <?php include("./bib/benisti10-2.bib");?> 
+		  </span>
 	    </span>
 	    <span class="dspcont">The nonlinear group velocity of an electron plasma wave is investigated numerically using a Vlasov code, and is found to assume values which agree very well with those predicted by a recently published theory [Phys. Rev. Lett., 103, 155002, (2009)], which we further detail here. In particular we show that, once Landau damping has been substantially reduced due to trapping, the group velocity of an electron plasma wave is not the derivative of its frequency with respect to its wave number. This result is moreover discussed physically, together with its implications in the saturation of stimulated Raman scattering.
+	    </span>
+	</p>
+<!--     -->
+	<p class="ref"> 
+	  <span class="refauthors"> D. B&eacute;nisti, O. Morice, L. Gremillet, <strong>E. Siminos</strong>, and D.J. Strozzi</span></br>
+	  <span class="reftitle"> Nonlinear kinetic description of Raman growth using an envelope code, and comparisons with Vlasov simulations</span></br> 
+	    <a href="http://dx.doi.org/10.1063/1.3494223"><span class=journal>Phys. Plasmas <strong>17</strong></span>, 102311 (2010)</a></br>
+    <!-- 	<a href="http://dx.doi.org/10.1137/070705623">Phys. D ???</a> -->
+<!-- 	    <img src="images/acroread16.png" alt="preprint"><a href="./papers/threshold.pdf"> preprint</a> -->
+ 	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
+	    <span class="dsphead">+</span> abstract</a>
+		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
+		    <span class="dsphead">+</span> bibtex</a>
+		  </span>
+		  <span class="dspcont">
+		      <?php include("./bib/benisti10-3.bib");?> 
+		  </span>
+	    </span>
+	    <span class="dspcont">In this paper, we present our nonlinear kinetic modeling of stimulated Raman scattering in a uniform and collisionless plasma using envelope equations. We recall the derivation of these equations, as well as our theoretical predictions for each of the nonlinear kinetic terms, the precision of which having been carefully checked against Vlasov simulations. We particularly focus here on the numerical resolution of these equations, which requires the additional concept of ``self-optimization'' that we explain, and we describe the envelope code BRAMA that we used. As an application of our modeling, we present one-dimensional BRAMA simulations of stimulated Raman scattering which predict threshold intensities, as well as time scales for Raman growth above threshold, in very good agreement with those inferred from Vlasov simulations. Finally, we discuss the differences between our modeling and other published ones.
 	    </span>
 	</p>
 <!--     -->
