@@ -113,7 +113,7 @@
 	  <span class="reftitle"> Stability of nonlinear Vlasov equilibria through spectral deformation and Fourier-Hermite expansion</span></br> 
 	    submitted <span class="journal"></span>(2010)</br> 
 <!-- 	    <a href="http://dx.doi.org/10.1103/PhysRevLett.105.015001"><span class=journal>Phys. Rev. Lett. <strong>105</strong></span>, 015001 (2010)</a></br> -->
-	    <img src="images/acroread16.png" alt="preprint"><a href="./papers/siminos11.pdf"> preprint</a>
+	    <img src="images/acroread16.png" alt="preprint"><a href="./papers/sbg11.pdf"> preprint</a>
  	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 	    <span class="dsphead">+</span> abstract</a>
 <!--		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">

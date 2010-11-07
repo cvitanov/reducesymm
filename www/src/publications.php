@@ -98,14 +98,14 @@
 	  <span class="reftitle"> Stability of nonlinear Vlasov equilibria through spectral deformation and Fourier-Hermite expansion</span></br> 
 	    submitted <span class="journal"></span>(2010)</br> 
 <!-- 	    <a href="http://dx.doi.org/10.1103/PhysRevLett.105.015001"><span class=journal>Phys. Rev. Lett. <strong>105</strong></span>, 015001 (2010)</a></br> -->
-	    <img src="images/acroread16.png" alt="preprint"><a href="./papers/siminos11.pdf"> preprint</a>
+	    <img src="images/acroread16.png" alt="preprint"><a href="./papers/sbg11.pdf"> preprint</a>
  	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 	    <span class="dsphead">+</span> abstract</a>
 <!--		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 		    <span class="dsphead">+</span> bibtex</a>
 		  </span>
 		  <span class="dspcont">
-		      <?php include("./bib/siminos11.bib");?> 
+		      <?php include("./bib/sbg11.bib");?> 
 		  </span>-->
 	    </span>
 	    <span class="dspcont">We study the stability of spatially periodic, nonlinear Vlasov-Poisson equilibria as an eigenproblem in a Fourier-Hermite basis (in the space and velocity variables, respectively) of finite dimension, N. When the advection term in Vlasov equation becomes dominant, the convergence with N of the eigenvalues is rather slow, limiting the applicability of the method. We accelerate convergence using the spectral deformation introduced in [J. D. Crawford and P. D. Hislop, Ann. Phys. <strong>189</strong>, 265 (1989)] to selectively damp the continuum of neutral modes associated with the advection term. We validate and benchmark the performance of our method by reproducing the kinetic dispersion relation results for linear (spatially homogeneous) equilibria. Finally, we study the stability of  a periodic Bernstein-Greene-Kruskal mode with multiple phase space vortices, compare our results with numerical simulations of the Vlasov-Poisson system and show that the initial unstable equilibrium may evolve to different asymptotic states depending on the way it was perturbed.
