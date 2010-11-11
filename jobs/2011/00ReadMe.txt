@@ -8,6 +8,8 @@ Nordita Fellowship: 	Nov 15 	3:(they contact ref.)		jam.nordita.org/
 N. Bohr Inst. Fel.: 	Nov 05 	2-3:postdoc10@nbi.dk		www.nbia.dk/node/13
 Motter's group:		Nov 15 	2:motter@northwestern.edu	dyn.phys.northwestern.edu/job.html	
 MPI Dresden		Nov 17  2:visitors@mpipks-dresden.mpg.de www.mpipks-dresden.mpg.de/pages/stellenangebote/frames_stellen_en.html
+				addressed to Prof. Dr. J. Rost
+				also sent by ordinary mail, see below
 Greek Fellowships: 	Nov 20 	---
 Marseille (Leoncini)	TBD		
 
