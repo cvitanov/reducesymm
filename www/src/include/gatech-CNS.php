@@ -8,6 +8,6 @@ School of Physics, 837 State Street<br>
 
 Atlanta, Georgia 30332-0430<br>
 
-Phone 404.894.5200 - Fax 404.385-2506</a></div>
+<!-- Phone 404.894.5200 - Fax 404.385-2506</a></div> -->
 
       </td>

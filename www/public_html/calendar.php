@@ -28,7 +28,7 @@
 
       <td colspan="3">
   
-  <div id="banner"><a href="index.html"><img src="images/bannerTurb0.png" alt="turbulent sea" border="0" height="104" width="738"></a></div>
+  <div id="banner"><a href="papers/sbg11.pdf"><img src="images/banner.png" alt="banner" border="0" height="104" width="738"></a></div>
 
   </td>
 
@@ -54,7 +54,9 @@
 
       <div class="sidetitle"> <a href="publications.php">publications</a></div>
 
-      <div class="sidetitle"> <a href="calendar.php">calendar</a></div>
+      <div class="sidetitle"> <a href="cv.php">CV</a></div>
+
+<!--       <div class="sidetitle"> <a href="calendar.php">calendar</a></div> -->
 
       <div class="sidetitle"> <a href="index.php#links">links</a></div>
 
@@ -93,7 +95,7 @@
 91297 Arpajon Cedex<br>
 France<br>
 <br>
-EMail: <a href="mailto:siminos%20%5Bsnail%5D%20gatech.edu">siminos [at] gatech.edu</a> 
+EMail: <a href="mailto:siminos%20%5Bat%5D%20gatech.edu">siminos [at] gatech.edu</a> 
 </div>
 
 

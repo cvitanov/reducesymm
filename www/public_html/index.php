@@ -23,7 +23,7 @@ School of Physics, 837 State Street<br>
 
 Atlanta, Georgia 30332-0430<br>
 
-Phone 404.894.5200 - Fax 404.385-2506</a></div>
+<!-- Phone 404.894.5200 - Fax 404.385-2506</a></div> -->
 
       </td>
 
@@ -33,7 +33,7 @@ Phone 404.894.5200 - Fax 404.385-2506</a></div>
 
         <td colspan="3">
   
-  <div id="banner"><a href="index.html"><img src="images/bannerTurb0.png" alt="turbulent sea" border="0" height="104" width="738"></a></div>
+  <div id="banner"><a href="papers/sbg11.pdf"><img src="images/banner.png" alt="banner" border="0" height="104" width="738"></a></div>
 
   </td>
 
@@ -46,7 +46,7 @@ Phone 404.894.5200 - Fax 404.385-2506</a></div>
       <td rowspan="2" valign="top" width="201"><br>
 
 &nbsp;
-      <p align="center"> <a href="images/siminos_large.jpg"><img style="border: 0px solid ; width: 214px;" alt="Evangelos Siminos photo" src="images/siminos_small.jpg"></a></p>
+      <p align="center"> <a href="images/siminos_large.jpg"><img style="border: 0px solid ; width: 154px;" alt="Evangelos Siminos photo" src="images/siminos_small.jpg"></a></p>
 
 
             <div class="sidetitle"> <a href="index.php#home">home</a></div>
@@ -55,7 +55,9 @@ Phone 404.894.5200 - Fax 404.385-2506</a></div>
 
       <div class="sidetitle"> <a href="publications.php">publications</a></div>
 
-      <div class="sidetitle"> <a href="calendar.php">calendar</a></div>
+      <div class="sidetitle"> <a href="cv.php">CV</a></div>
+
+<!--       <div class="sidetitle"> <a href="calendar.php">calendar</a></div> -->
 
       <div class="sidetitle"> <a href="index.php#links">links</a></div>
 
@@ -77,7 +79,7 @@ Phone 404.894.5200 - Fax 404.385-2506</a></div>
 
       <p class="main-title"><br>
 
-<p>Ph.D. Georgia Tech 2009</p>
+<p>PhD, Georgia Tech 2009</p>
 
       <div class="description" align="right">Now postdoc at:<br>
 <br>&nbsp; D&#233;partement de Physique Th&#233;orique et Appliqu&#233;e<br>
@@ -85,7 +87,7 @@ Phone 404.894.5200 - Fax 404.385-2506</a></div>
 91297 Arpajon Cedex<br>
 France<br>
 <br>
-EMail: <a href="mailto:siminos%20%5Bsnail%5D%20gatech.edu">siminos [at] gatech.edu</a> 
+EMail: <a href="mailto:siminos%20%5Bat%5D%20gatech.edu">siminos [at] gatech.edu</a> 
 </div>
 
 
@@ -133,7 +135,7 @@ dynamics of Kuramoto-Sivashinsky equation.</p>-->
   </tbody>
 </table>
 
-<p class="posted">last updated April 13 2010</p>
+<p class="posted">last updated Nov. 14 2010</p>
 
 <!-- Start of StatCounter Code -->
 <script type="text/javascript">

@@ -43,7 +43,7 @@
 
       <td colspan="3">
   
-  <div id="banner"><a href="index.html"><img src="images/bannerTurb0.png" alt="turbulent sea" border="0" height="104" width="738"></a></div>
+  <div id="banner"><a href="papers/sbg11.pdf"><img src="images/banner.png" alt="banner" border="0" height="104" width="738"></a></div>
 
   </td>
 
@@ -65,7 +65,9 @@
 
       <div class="sidetitle"> <a href="publications.php">publications</a></div>
 
-      <div class="sidetitle"> <a href="calendar.php">calendar</a></div>
+      <div class="sidetitle"> <a href="cv.php">CV</a></div>
+
+<!--       <div class="sidetitle"> <a href="calendar.php">calendar</a></div> -->
 
       <div class="sidetitle"> <a href="index.php#links">links</a></div>
 
@@ -90,27 +92,27 @@
       
       <div class="blogbody"> <span style="font-weight: bold;">Evangelos Siminos</span><br>
       <div class="description" align="right">
-	EMail: <a href="mailto:siminos%20%5Bsnail%5D%20gatech.edu">siminos [at] gatech.edu</a> 
+	EMail: <a href="mailto:siminos%20%5Bat%5D%20gatech.edu">siminos [at] gatech.edu</a> 
       </div>
       <p class="main-title"><span style="text-decoration: underline;">Publications</span><br>
       </p>
 
-      <blockquote>
-        <pre class="checkers"><a href="#papers">papers</a> - <a href="http://arxiv.org/find/grp_math,grp_nlin,grp_physics/1/au:+Siminos/0/1/0/all/0/1" class="checkers">arXiv</a> - <a href="#thesis ">thesis</a><br></pre>
+<!--      <blockquote>
+        <pre class="checkers"> <a href="http://arxiv.org/find/grp_math,grp_nlin,grp_physics/1/au:+Siminos/0/1/0/all/0/1" class="checkers">arXiv</a> - <a href="#thesis ">thesis</a><br></pre>
 
-      </blockquote>
+      </blockquote>-->
 
 
 
       
 <!--       <p class="main-title"><span style="text-decoration: underline;">Papers</span><br> -->
-      <h4 class="title2"> <a name="papers"></a>Papers</h4>
+      <h4 class="title2"> <a name="preprints"></a>Preprints</h4>
 
 
 <!--     -->
 	<p class="ref"> 
 	  <span class="refauthors"><strong>E. Siminos</strong>, D. B&eacute;nisti, and L. Gremillet</span></br>
-	  <span class="reftitle"> Stability of nonlinear Vlasov equilibria through spectral deformation and Fourier-Hermite expansion</span></br> 
+	  <span class="reftitle"> Stability of nonlinear Vlasov-Poisson equilibria through spectral deformation and Fourier-Hermite expansion</span></br> 
 	    submitted <span class="journal"></span>(2010)</br> 
 <!-- 	    <a href="http://dx.doi.org/10.1103/PhysRevLett.105.015001"><span class=journal>Phys. Rev. Lett. <strong>105</strong></span>, 015001 (2010)</a></br> -->
 	    <img src="images/acroread16.png" alt="preprint"><a href="./papers/sbg11.pdf"> preprint</a>
@@ -127,6 +129,28 @@
 	    </span>
 	</p>
 <!--     -->
+	<p class="ref"> 
+	  <span class="refauthors"> G. S&aacute;nchez-Arriaga, <strong>E. Siminos</strong>, and E. Lefebvre</span></br>
+	  <span class="reftitle"> Solitary waves with nonvanishing boundary conditions in relativistic plasmas</span></br> 
+	    submitted <span class="journal"></span>(2010)</br> 
+    <!-- 	<a href="http://dx.doi.org/10.1137/070705623">Phys. D ???</a> -->
+	    <img src="images/acroread16.png" alt="preprint"><a href="./papers/SSL10.pdf"> preprint</a>
+ 	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
+	    <span class="dsphead">+</span> abstract</a>
+<!--		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
+		    <span class="dsphead">+</span> bibtex</a>
+		  </span>
+		  <span class="dspcont">
+		       
+		  </span>-->
+	    </span>
+	    <span class="dspcont">The existence of solitary waves in relativistic plasmas with nonvanishing boundary conditions and their possible applications to particle acceleration through laser-plasma interaction is discussed. These solutions are homoclinic (grey solitons) or heteroclinic (dark solitons) orbits to fixed points of a Hamiltonian system derived from the 1-dimensional relativistic fluid plasma model, under the assumption of traveling wave solutions with velocity $V$ and vector potential frequency $\omega$. By using a dynamical systems description of the Hamiltonian system and an iterative spectral method, we locate a great variety of new solutions, including asymmetric ones, discuss their disappearance for certain parameters, and classify them according to: (i) grey or dark character, (ii) the number of humps of the vector potential and (iii) their symmetries. The solutions come in continuous families in the parametric $V-\omega$ plane and extend up to velocities that approach the speed of light. The ion energy within the solitary waves reaches values of the order of tens of MeV therefore suggesting applications for particle acceleration.
+	    </span>
+	</p>
+<!--     -->
+
+      <h4 class="title2"> <a name="articles"></a>Articles</h4>
+
 <!--       -->
 	  <p class="ref"> 
 	  <span class="refauthors">P. Cvitanovi&#263;, R.L. Davidchack, and <strong>E. Siminos</strong></span></br>
@@ -218,7 +242,6 @@
 	  <span class="refauthors"> D. B&eacute;nisti, O. Morice, L. Gremillet, <strong>E. Siminos</strong>, and D.J. Strozzi</span></br>
 	  <span class="reftitle"> Nonlinear group velocity of an electron plasma wave</span></br> 
 	    <a href="http://dx.doi.org/10.1063/1.3464467"><span class=journal>Phys. Plasmas <strong>17</strong></span>, 082301 (2010)</a></br>
-    <!-- 	<a href="http://dx.doi.org/10.1137/070705623">Phys. D ???</a> -->
 <!-- 	    <img src="images/acroread16.png" alt="preprint"><a href="./papers/threshold.pdf"> preprint</a> -->
  	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 	    <span class="dsphead">+</span> abstract</a>
@@ -248,7 +271,6 @@
 	  <span class="refauthors"> D. B&eacute;nisti, O. Morice, L. Gremillet, <strong>E. Siminos</strong>, and D.J. Strozzi</span></br>
 	  <span class="reftitle"> Nonlinear kinetic description of Raman growth using an envelope code, and comparisons with Vlasov simulations</span></br> 
 	    <a href="http://dx.doi.org/10.1063/1.3494223"><span class=journal>Phys. Plasmas <strong>17</strong></span>, 102311 (2010)</a></br>
-    <!-- 	<a href="http://dx.doi.org/10.1137/070705623">Phys. D ???</a> -->
 <!-- 	    <img src="images/acroread16.png" alt="preprint"><a href="./papers/threshold.pdf"> preprint</a> -->
  	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 	    <span class="dsphead">+</span> abstract</a>
@@ -275,25 +297,7 @@
 	    </span>
 	</p>
 <!--     -->
-	<p class="ref"> 
-	  <span class="refauthors"> G. S&aacute;nchez-Arriaga, <strong>E. Siminos</strong>, and E. Lefebvre</span></br>
-	  <span class="reftitle"> Solitary waves with nonvanishing boundary conditions in relativistic plasmas</span></br> 
-	    submitted <span class="journal"></span>(2010)</br> 
-    <!-- 	<a href="http://dx.doi.org/10.1137/070705623">Phys. D ???</a> -->
-	    <img src="images/acroread16.png" alt="preprint"><a href="./papers/SSL10.pdf"> preprint</a>
- 	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
-	    <span class="dsphead">+</span> abstract</a>
-<!--		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
-		    <span class="dsphead">+</span> bibtex</a>
-		  </span>
-		  <span class="dspcont">
-		       
-		  </span>-->
-	    </span>
-	    <span class="dspcont">The existence of solitary waves in relativistic plasmas with nonvanishing boundary conditions and their possible applications to particle acceleration through laser-plasma interaction is discussed. These solutions are homoclinic (grey solitons) or heteroclinic (dark solitons) orbits to fixed points of a Hamiltonian system derived from the 1-dimensional relativistic fluid plasma model, under the assumption of traveling wave solutions with velocity $V$ and vector potential frequency $\omega$. By using a dynamical systems description of the Hamiltonian system and an iterative spectral method, we locate a great variety of new solutions, including asymmetric ones, discuss their disappearance for certain parameters, and classify them according to: (i) grey or dark character, (ii) the number of humps of the vector potential and (iii) their symmetries. The solutions come in continuous families in the parametric $V-\omega$ plane and extend up to velocities that approach the speed of light. The ion energy within the solitary waves reaches values of the order of tens of MeV therefore suggesting applications for particle acceleration.
-	    </span>
-	</p>
-<!--     -->
+
       <h4 class="title2"> <a name="thesis"></a>Thesis</h4>
 
 	<p class="ref">
@@ -325,7 +329,7 @@
 	</p>
       
 
-      <p class="posted">last updated August 03 2010</p>
+      <p class="posted">last updated Nov. 14 2010</p>
 
       </div>
 

@@ -29,7 +29,7 @@
       <td rowspan="2" valign="top" width="201"><br>
 
 &nbsp;
-      <p align="center"> <a href="images/siminos_large.jpg"><img style="border: 0px solid ; width: 214px;" alt="Evangelos Siminos photo" src="images/siminos_small.jpg"></a></p>
+      <p align="center"> <a href="images/siminos_large.jpg"><img style="border: 0px solid ; width: 154px;" alt="Evangelos Siminos photo" src="images/siminos_small.jpg"></a></p>
 
 
       <?php include("include/menu.php"); ?>
@@ -50,7 +50,7 @@
 
       <p class="main-title"><br>
 
-<p>Ph.D. Georgia Tech 2009</p>
+<p>PhD, Georgia Tech 2009</p>
 
       <?php include("include/address.php"); ?>
 
@@ -97,7 +97,7 @@ dynamics of Kuramoto-Sivashinsky equation.</p>-->
   </tbody>
 </table>
 
-<p class="posted">last updated April 13 2010</p>
+<p class="posted">last updated Nov. 14 2010</p>
 
 <?php include("include/counter.js");  ?>
 
