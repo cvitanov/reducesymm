@@ -51,4 +51,8 @@ should be bigger)
 	there might be more stuff in repository vaggelis:
 	vaggelis/production/KS22.0/equil/plot*.nb
 	However, none of that seems to work in Mathematica 6.*
-
+	ES: These are old files, I've used them to automate
+		plotting relative periodic orbits by the
+		hundreds. They need some work to become
+		compatible with Mathematica 6 or 7 but I don't
+		know if they will be good as examples.
