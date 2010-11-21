@@ -1,0 +1,950 @@
+% def.tex
+% $Author: predrag $ $Date: 2010-11-07 11:35:56 -0500 (Sun, 07 Nov 2010) $
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% defines macros used throughout ChaosBook and related
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% edited, initially from dasbuch/book/inputs/def.tex
+% Predrag copied to her						21nov2010
+% DasBuch version of						07nov2010
+
+\ifpaper % prepare for B&W paper printing:
+       \newcommand{\href}[2]{{#2}}  % no hyperref
+       \newcommand{\HREF}[2]{{#2}}
+       \renewcommand{\color}[1]{}       % B&W
+       \newcommand{\wwwcb}[1]{{\tt ChaosBook.org#1}}
+       \newcommand{\wwwgt}{{\tt birtracks.eu}}
+       \newcommand{\wwwQFT}[1]{{\tt ChaosBook.org/\-Field\-Theory#1}}
+       \newcommand{\wwwcnsQFT}[1]{{\tt ChaosBook.org/\-Field\-Theory#1}}
+       \newcommand{\weblink}[1]{{\tt #1}}
+       \newcommand{\arXiv}[1]{ {\tt arXiv:#1}}
+       \newcommand{\mpArc}[1]{{\tt \goodbreak mp\_arc~#1}}
+\else % prepare hyperlinked pdf
+        \newcommand{\wwwcb}[1]{       % keep homepage flexible:
+                  {\tt \href{http://ChaosBook.org#1}
+              {ChaosBook.org#1}}}
+       \newcommand{\wwwgt}{{\tt \href{http://birtracks.eu}
+              {birtracks.eu}}}
+       \newcommand{\wwwQFT}[1]{
+                  {\tt \href{http://ChaosBook.org/FieldTheory#1}
+              {ChaosBook.org/\-Field\-Theory#1}}}
+       \newcommand{\wwwcnsQFT}[1]{
+                  {\tt \href{http://ChaosBook.org/FieldTheory#1}
+              {ChaosBook.org/\-Field\-Theory#1}}}
+       \newcommand{\weblink}[1]{{\tt \href{http://#1}{#1}}}
+       \newcommand{\HREF}[2]{
+              {\href{#1}{#2}}}
+       \newcommand{\mpArc}[1]{
+              {\tt \href{http://www.ma.utexas.edu/mp_arc-bin/mpa?yn=#1}
+                   {\goodbreak mp\_arc~#1}}}
+       \newcommand{\arXiv}[1]{
+              {\tt \href{http://arXiv.org/abs/#1}{\goodbreak arXiv:#1}}}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%% QUOTATIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  the learned/witty quotes at the chapter and section headings
+%
+\newsavebox{\bartName}
+\newcommand{\bauthor}[1]{\sbox{\bartName}{\parbox{\textwidth}{\vspace*{0.8ex}
+       %\hspace*{\fill}
+       \hspace{2em}---\small\noindent #1}}}
+\newenvironment{bartlett}{\hfill\begin{minipage}[t]{0.65\textwidth}\small}%
+{\hspace*{\fill}\nolinebreak[1]\usebox{\bartName}\vspace*{1ex}\end{minipage}}
+%
+%  a quotation inserted into the text
+%
+\newenvironment{txtquote}{\begin{quotation} \small}{\end{quotation}}
+
+\newcommand{\student}{Henri Roux}
+%\newcommand{\student}{Jens J. Jensen}
+
+%%%%%%%%%%%%%%%%%%%%%% INDEXING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\indx}[1] {#1\index{#1}}    % do not need to repeat the word
+
+\newcommand{\file}[1]{$\footnotemark\footnotetext{{\bf file} #1}$}
+% PC 9sep2008 commented out (is it used?):
+%\newcommand{\lecture}[2]{ \addtocontents{toc}
+%           {{\scriptsize #1}{\sf\small lecture: \scriptsize #2}} }
+
+%%%%%%%%%%%%%%% EQUATIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\continue}{\nonumber \\ }
+\newcommand{\nnu}{\nonumber}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\ee}[1] {\label{#1} \end{equation}}
+\newcommand{\bea}{\begin{eqnarray}}
+\newcommand{\ceq}{\nonumber \\ & & }
+\newcommand{\eea}{\end{eqnarray}}
+\newcommand{\barr}{\begin{array}}
+\newcommand{\earr}{\end{array}}
+
+%%%%%%%%%%%%%%% REFERENCING EQUATIONS ETC. %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\rf}     [1] {~\cite{#1}}
+\newcommand{\refref} [1] {ref.~\cite{#1}}
+\newcommand{\refRef} [1] {Ref.~\cite{#1}}
+\newcommand{\refrefs}[1] {refs.~\cite{#1}}
+\newcommand{\refRefs}[1] {Refs.~\cite{#1}}
+\newcommand{\refeq}  [1] {(\ref{#1})}
+\newcommand{\refeqs} [2]{(\ref{#1}--\ref{#2})}
+\newcommand{\refpage}[1] {page~\pageref{#1}}
+\newcommand{\reffig} [1] {figure~\ref{#1}}
+\newcommand{\reffigs} [2] {figures~\ref{#1} and~\ref{#2}}
+\newcommand{\refFig} [1] {Figure~\ref{#1}}
+\newcommand{\refFigs} [2] {Figures~\ref{#1} and~\ref{#2}}
+\newcommand{\reftab} [1] {table~\ref{#1}}
+\newcommand{\refTab} [1] {Table~\ref{#1}}
+\newcommand{\reftabs}[2] {tables~\ref{#1} and~\ref{#2}}
+\newcommand{\refsect}[1] {sect.~\ref{#1}}
+\newcommand{\refsects}[2] {sects.~\ref{#1} and \ref{#2}}
+\newcommand{\refSect}[1] {Sect.~\ref{#1}}
+\newcommand{\refSects}[2] {Sects.~\ref{#1} and \ref{#2}}
+\newcommand{\refchap}[1] {chapter~\ref{#1}}
+\newcommand{\refChap}[1] {Chapter~\ref{#1}}
+\newcommand{\refchaps}[2] {chapters~\ref{#1} and~\ref{#2}}
+\newcommand{\refchaptochap}[2] {chapters~\ref{#1} to~\ref{#2}}
+\newcommand{\refappe}[1] {appendix~\ref{#1}}
+\newcommand{\refappes}[2] {appendices~\ref{#1} and~\ref{#2}}
+\newcommand{\refAppe}[1] {Appendix~\ref{#1}}
+\newcommand{\refrem} [1] {remark~\ref{#1}}
+\newcommand{\refexam}[1] {example~\ref{#1}}
+\newcommand{\refExam}[1] {Example~\ref{#1}}
+\newcommand{\refexer}[1] {exercise~\ref{#1}}
+\newcommand{\refExer}[1] {Exercise~\ref{#1}}
+\newcommand{\refsolu}[1] {solution~\ref{#1}}
+
+%%%%%%%%%%%%%%  Abbreviations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% APS (American Physiology Society, it seems) style:
+%%%     Latin or foreign words or phrases should be roman, not italic.
+%%%     Insert a `hard' space after full points
+%%%                                         that do not end sentences.
+
+\newcommand{\etc}{{etc.}}       % APS
+\newcommand{\etal}{{\em et al.}}    % etal in italics, APS too
+\newcommand{\ie}{{i.e.}}        % APS
+\newcommand{\cf}{{\em cf.\ }}     % APS
+\newcommand{\eg}{{e.g.\ }}        % APS, OUP, hard space '\eg\ NextWord'
+% \newcommand{\etc}{{\em etc.}}     % etcetera in italics
+% \newcommand{\ie}{{that is}}       % use Latin or English?  Decide later.
+% \newcommand{\cf}{{cf.}}
+% \newcommand{\eg}{{\it e.g.,\ }}   % Wirzba 2sep2001
+
+%%%%%%%%%%%%%%% ChaosBook Abbreviations %%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\evOper}{evolution oper\-ator}
+\newcommand{\EvOper}{Evolution oper\-ator}
+ %% \newcommand{\evOp}{Ruelle operator} %could be ``evolution'' instead?
+%\newcommand{\FPoper}{Frobenius-Perron oper\-ator}
+\newcommand{\FPoper}{Perron-Frobenius oper\-ator} % Pesin's ordering
+\newcommand{\FP}{Perron-Frobenius}
+\newcommand{\statesp}{state space}
+\newcommand{\Statesp}{State space}
+\newcommand{\fixedpnt}{fixed point}
+\newcommand{\Fixedpnt}{fixed point}
+\newcommand{\maslov}{topological}
+\newcommand{\Maslov}{Topological}
+%\newcommand{\Maslov}{Keller-Maslov}
+\newcommand{\jacobian}{Jacobian}        % determinant
+% \newcommand{\jacobianM}{fundamental matrix} % no known standard name?
+% \newcommand{\jacobianMs}{fundamental matrices}  %
+% \newcommand{\JacobianM}{Fundamental matrix} %
+% \newcommand{\JacobianMs}{Fundamental matrices}  %
+\newcommand{\jacobianM}{Jacobian matrix}  % back to Predrag's name 20oct2009
+\newcommand{\jacobianMs}{Jacobian matrices}   % matrices
+\newcommand{\JacobianM}{Jacobian matrix} %
+\newcommand{\JacobianMs}{Jacobian matrices}  %
+\newcommand{\FloquetM}{Floquet matrix} % specialized to periodic orb
+\newcommand{\FloquetMs}{Floquet matrices}  %
+% \newcommand{\stabmat}{matrix of variations}   % Arnold, says Vattay
+\newcommand{\stabmat}{stability matrix}     % stability matrix, velocity gradients
+\newcommand{\Stabmat}{Stability matrix}     % Stability matrix
+\newcommand{\stabmats}{stability matrices}
+\newcommand{\monodromyM}{monodromy matrix} % monodromy matrix, Poincare cut
+\newcommand{\MonodromyM}{Monodromy matrix} % monodromy matrix, Poincare cut
+\newcommand{\dzeta}{dyn\-am\-ic\-al zeta func\-tion}
+\newcommand{\Dzeta}{Dyn\-am\-ic\-al zeta func\-tion}
+\newcommand{\tzeta}{top\-o\-lo\-gi\-cal zeta func\-tion}
+\newcommand{\Tzeta}{Top\-o\-lo\-gi\-cal zeta func\-tion}
+\newcommand{\BERzeta}{BER zeta func\-tion}
+%\newcommand{\tzeta}{Artin-Mazur zeta func\-tion} %alternative to topological
+\newcommand{\qS}{semi\-classical zeta func\-tion}
+%\newcommand{\qS}{Gutz\-willer-Voros zeta func\-tion}
+\newcommand{\Gt}{Gutz\-willer trace formula}
+\newcommand{\Fd}{spec\-tral det\-er\-min\-ant}
+%\newcommand{\fd}{spec\-tral det\-er\-min\-ant} %in many articles
+\newcommand{\FD}{Spec\-tral det\-er\-min\-ant}
+\newcommand{\cFd}{semiclass\-ic\-al spec\-tral det\-er\-mi\-nant}
+\newcommand{\cFD}{Semiclass\-ic\-al spec\-tral det\-er\-mi\-nant}
+% \newcommand{\cFd}{semiclass\-ic\-al Fred\-holm det\-er\-mi\-nant}
+\newcommand{\Vd}{Vattay det\-er\-mi\-nant}
+\newcommand{\cycForm}{cycle averaging formula}
+\newcommand{\CycForm}{Cycle averaging formula}
+\newcommand{\freeFlight}{mean free flight time}
+\newcommand{\FreeFlight}{Mean free flight time}
+\newcommand{\pdes}{partial differential equations}
+\newcommand{\Pdes}{Partial differential equations}
+\newcommand{\dof}{dof}         % Hamiltonian deegree of freedom
+% \newcommand{\dof}{deegree of freedom}
+\newcommand\Poincare{Poincar\'e }
+
+%%%%%%%%%%%%%%% VECTORS, MATRICES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Commented out AMS-style pmatrix, which is incompatible with TeX/LaTeX pmatrix
+% used throughout dasbuch. Fri Oct 12 15:51:03 EDT 2007
+
+\newcommand{\MatrixII}[4]{\left(
+\begin{array}{cc}
+{#1}  &  {#2} \\
+{#3}  &  {#4} \end{array} \right)}
+% a problem with \pmatrix 12oct 2007
+%\newcommand{\MatrixII}[4]{
+%   \begin{pmatrix}{#1}  &  {#2} \\
+%                  {#3}  &  {#4} \end{pmatrix}}
+
+\newcommand{\MatrixIII}[9]{
+  \pmatrix{ {#1}  &  {#2} &  {#3} \cr
+            {#4}  &  {#5} &  {#6} \cr
+            {#7}  &  {#8} &  {#9}
+          }               }
+% \newcommand{\MatrixIII}[9]{
+%    \begin{pmatrix} {#1}  &  {#2} &  {#3} \\
+%                    {#4}  &  {#5} &  {#6} \\
+%                    {#7}  &  {#8} &  {#9}  \end{pmatrix}}
+
+
+% \newcommand{\transpVectorII}[2]{
+%    \begin{pmatrix}{#1}  &  {#2}  \end{pmatrix}}
+
+\newcommand{\VectorII}[2]{\left(
+\begin{array}{cc}
+{#1}  &  {#2} \end{array} \right)}
+%
+%\newcommand{\VectorII}[2]{
+%  \pmatrix{ {#1} \cr {#2}}
+%}
+
+% \newcommand{\VectorII}[2]{
+%    \begin{pmatrix} {#1} \\
+%                    {#2}  \end{pmatrix}}
+
+% \newcommand{\VectorIII}[3]{
+%    \begin{pmatrix} {#1} \\
+%                    {#2} \\
+%                    {#3} \end{pmatrix}}
+
+\newcommand{\transpVectorII}[2]{
+  \pmatrix{ {#1}  &  {#2}}
+}
+
+\newcommand{\VectorIII}[3]{
+  \pmatrix{ {#1} \cr
+            {#2} \cr
+            {#3}
+          }
+}
+
+\newcommand{\combinatorial}[2]{ {#1 \choose #2}}
+
+%%%%%%%%%%%%%%% Sundry symbols within math eviron.: %%%%%%%%%%%%
+
+\newcommand{\obser}{\ensuremath{a}}     % an observable from phase space to R^n
+\newcommand{\Obser}{\ensuremath{A}}     % time integral of an observable
+\newcommand{\onefun}{\iota} % the function that returns one no matter what
+\newcommand{\defeq}{=}      % the different equal for a definition
+\newcommand {\deff}{\stackrel{\rm def}{=}}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\integers}{\mathbb{Z}}
+\newcommand{\rationals}{\mathbb{Q}}
+\newcommand{\naturals}{\mathbb{N}}
+\newcommand{\LieD}{{{\cal L}\!\!\llap{-}\,\,}}  % {{\pound}} % Lie Derivative
+\newcommand{\half}{{\scriptstyle{1\over2}}}
+\newcommand{\pde}{\partial}
+\newcommand{\pdfrac}[2]{{\partial #1 \over \partial #2}}
+\renewcommand\Im{\ensuremath{{\rm Im}\,}}
+\renewcommand\Re{\ensuremath{{\rm Re}\,}}
+\renewcommand{\det}{\mbox{\rm det}\,}
+\newcommand{\Det}{\mbox{\rm Det}\,}
+\newcommand{\tr}{\mbox{\rm tr}\,}
+\newcommand{\Tr}{\mbox{\rm tr}\,}
+%\newcommand{\Tr}{\mbox{Tr}\,}
+\newcommand{\sign}[1]{\sigma_{#1}}
+%\newcommand{\sign}[1]{{\rm sign}(#1)}
+\newcommand{\mInv}{{I}}                 % material invariant
+\newcommand{\msr}{\ensuremath{\rho}}                % measure
+\newcommand{\Msr}{{\mu}}                % coarse measure
+\newcommand{\dMsr}{{d\mu}}              % measure infinitesimal
+\newcommand{\SRB}{{\rho_0}}             % natural measure
+\newcommand{\vol}{{V}}                  % volume of i-th tile
+\newcommand{\prpgtr}[1]{\delta\negthinspace\left( {#1} \right)}
+%\newcommand{\Zqm}{\ensuremath{Z_{qm}}}         % Gutz-Voros zeta function
+\newcommand{\Zqm}{\ensuremath{\det(\hat{H} - E)_{sc} }} % semicls spectr. det:
+\newcommand{\Fqm}{\ensuremath{F_{qm}}}
+\newcommand{\zfct}[1]{\zeta ^{-1}_{#1}}
+\newcommand{\zetaInv}{\ensuremath{1/\zeta}}
+% \newcommand{\zetaInv}{{\zeta^{-1}}}
+\newcommand{\zetatop}{\ensuremath{1/\zeta_{\mbox{\footnotesize top}} }}
+\newcommand{\zetaInvBER}[1]{1/\zeta_{\mbox{\footnotesize BER}}(#1)}
+\newcommand{\BER}[1]{{\mbox{\footnotesize BER}}} % Baladi-Ruelle-Eckmann
+\newcommand{\eigCond}{\ensuremath{F}}           % eigenvalue cond. function
+\newcommand{\expct}    [1]{\left\langle {#1} \right\rangle}
+\newcommand{\spaceAver}[1]{\left\langle {#1} \right\rangle}
+\newcommand{\timeAver} [1]{\overline{#1}}
+\newcommand{\norm}[1]{\left\Arrowvert \, #1 \, \right\Arrowvert}
+\newcommand{\pS}{\ensuremath{{\cal M}}}          % symbol for state space
+\newcommand{\ssp}{\ensuremath{x}}                % state space point
+\newcommand{\tissp}{\tilde{\Delta\ssp}} % Rytis \CostFct
+\newcommand{\pSpace}{x}       % Hamiltonian phase space x=(q,p) coordinate
+\newcommand{\coord}{q}        % configuration space p coordinate
+\newcommand{\DOF}{\ensuremath{D}}          % Hamiltonian deegree of freedom
+\newcommand{\NWS}{\ensuremath{\Omega}}     % symbol for the non--wandering set
+\newcommand{\AdmItnr}{\Sigma}      % set of admissible itineraries
+\newcommand{\intM}[1]{{\int_\pS{\!d #1}\:}} %phase space integral
+\newcommand{\Cint}[1]{\oint\frac{d#1}{2 \pi i}\;} %Cauchy contour integral
+\newcommand{\PoincS}{\ensuremath{{\cal P}}}  % symbol for Poincare section
+\newcommand{\PoincM}{\ensuremath{P}}       % symbol for Poincare map
+\newcommand{\PoincC}{\ensuremath{U}}       % symbol for Poincare constraint function
+\newcommand{\arc}{\ensuremath{s}}          % symbol for billiard wall arc
+\newcommand{\mompar}{\ensuremath{p}}       % billiard wall parall. momentum
+\newcommand{\restCoeff}{\ensuremath{\gamma}}  % billiard wall restitution coeff
+\newcommand{\timeIn}[1]{{t^{-}_{#1}}} % billiard wall time of arrival
+\newcommand{\timeOut}[1]{{t^{+}_{#1}}}   % billiard wall time of departure
+%\newcommand{\PoincS}{\partial{\cal M}}          % billiard Poincare section
+\newcommand{\Lop}{\ensuremath{{\cal L}}}       % evolution operator
+\newcommand{\Uop}{\ensuremath{{\cal K}}}       % Koopman operator, Driebe notation
+\newcommand{\Aop}{\ensuremath{{\cal A}}}       % evolution generator
+\newcommand{\TrOp}{\ensuremath{{\cal T}}}       % transfer operator, like in statmech
+\newcommand{\matId}{\ensuremath{{\bf 1}}}      % matrix identity
+\newcommand{\eigenvL}{\ensuremath{s}}      % evolution operator eigenvalue
+\newcommand{\eigenvG}{\ensuremath{m}}      % compact group eigenvalues
+\newcommand{\inFix}[1]{{\in \mbox{\footnotesize Fix}f^{#1}}}
+\newcommand{\inZero}[1]{{\in \mbox{\footnotesize Zero} \, f^{#1} }}
+\newcommand{\xzero}[1]{{x_{#1}^{*}}}
+\newcommand{\fractal}{{{\cal F}}}
+\newcommand{\contract}{F}
+% \newcommand{\presentation}{P} % PC commented out 7sep2008
+\newcommand{\orderof}[1]{o(#1)} % Rytis 22mar2005
+
+     %%%%%%%%%% flows: %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\map{f}                  % other people like \phi's etc
+\newcommand\flow[2]{{f^{#1}(#2)}}
+\newcommand{\vel}{\ensuremath{v}}   % state space velocity
+\newcommand\velField[1]{{v(#1)}}    % ODE velocity field
+\newcommand\invFlow{F}
+\newcommand\hflow[2]{{\hat{f}^{#1}(#2)}}
+\newcommand\timeflow{{f^t}}
+\newcommand\tflow[2]{{\tilde{f}^{#1}(#2)}}
+%\newcommand\tflow{\tilde{f}^\tau}        %RECHECK USE OF THIS!
+\newcommand\xInit{{x_0}}        %initial x
+%\newcommand\xInit{\xi}     %initial x, Spiegel notation
+\newcommand{\para}{\parallel}
+\newcommand\multiX{x}       %multi point n-dim vector
+\newcommand\multiF{f}       %multi point n-dim vector mapping
+
+   %%%%%%% 3D physical flow
+\newcommand{\stagp}{stagnation point}
+\newcommand{\Stagp}{Stagnation point}
+\newcommand{\relstagp}{traveling stagnation point}
+\newcommand{\Relstagp}{Traveling stagnation point}
+\newcommand{\velgradmat}{velocity gradients matrix}
+
+   %%%%%%%% Siminos thesis %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\Le}{Lorenz equations}
+\newcommand{\rLor}{\rho}    % parameter r in Lorenz paper
+\newcommand{\cLe}{complex Lorenz equations}
+\newcommand{\cLf}{complex Lorenz flow}
+\newcommand{\CLe}{Complex Lorenz equations}
+\newcommand{\CLf}{Complex Lorenz flow}
+\newcommand{\RerCLor}{\rho_1}    % real      part of parameter r, CLe
+\newcommand{\ImrCLor}{\rho_2}    % imaginary part of parameter r, CLe
+% \newcommand{\AGHe}{Armbruster-Guckenheimer-Holmes flow}
+
+     %%%%%%%%%% periods: %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\period[1]{{\ensuremath{T_{#1}}}}         %continuous cycle period
+%\newcommand\period[1]{{\tau_{#1}}}
+\newcommand{\cl}[1]{{\ensuremath{n_{#1}}}}   % discrete length of a cycle, Predrag
+%\newcommand{\cl}[1]{|#1|}  % the length of a periodic orbit, Ronnie
+\newcommand{\nCutoff}{N}    % maximal cycle length
+                % maximal stability cutoff:
+\newcommand{\stabCutoff}{\ExpaEig_{\mbox{\footnotesize max}}}
+\newcommand{\timeSegm}[1]{{\tau_{#1}}}      %billiard segment time period
+\newcommand{\timeStep}{\ensuremath{{\delta \tau}}}  %integration step
+\newcommand{\deltaX}{\ensuremath{{\delta x}}}       %trajectory displacement
+\newcommand{\unitVec}{\ensuremath{\hat{n}}}     %unit vector
+
+\newcommand{\Mvar}{\ensuremath{A}}  % stability matrix
+\newcommand{\derF}[1]{\ensuremath{A(#1)}}   % Predrag stability matrix
+ %\newcommand{\derF}[1]{{DF |_{#1}}}        % Gibson stability matrix
+\newcommand{\jMps}{\ensuremath{J}}   % jacobian matrix, phase space/state space
+% \newcommand{\jMps}{\ensuremath{{\bf J}}}  % bold fundamental matrix phase space
+\newcommand{\derf}[2]{\ensuremath{{J}^{#1}(#2)}}    % Predrag fundamental matrix
+% \newcommand{\derf}[2]{\ensuremath{{\bf J}^{#1}(#2)}}  % Predrag bold fundamental matrix
+ % \newcommand{\derf}[2]{{Df^{#1}|_{#2}}}   % Gibson fundamental matrix
+\newcommand{\jMConfig}{\ensuremath{{\bf j}}}    % fundamental matrix, configuration space
+\newcommand{\jConfig}{\ensuremath{j}}      % jacobian, configuration space
+\newcommand{\jMP}{\ensuremath{\hat{J}}}   % jacobian matrix, Poincare return
+% \newcommand{\jMP}{\ensuremath{{\bf \hat{J}}}}   % bold jacobian matrix, Poincare return
+\newcommand{\monodromy}{\ensuremath{M}}   % monodromy matrix, full Poincare cut
+% \newcommand{\monodromy}{\ensuremath{{\bf M}}}   % bold monodromy matrix, full Poincare cut
+                   % Fredholm det jacobian weight:
+%\newcommand{\jEigvec}[1]{\ensuremath{{\bf e}^{(#1)}}}   % jacobiam eigenvector
+%\newcommand{\jEigvecT}[1]{\ensuremath{{\bf e}_{(#1)}}}   % jacobiam eigenvector transposed
+\newcommand{\jEigvec}[1][]{\ensuremath{{\bf e}^{(#1)}}} % jacobiam eigenvector
+\newcommand{\jEigvecT}[1][]{\ensuremath{{\bf e}_{(#1)}}}   % jacobiam eigenvector transposed
+\newcommand{\oneMinJ}[1]
+           {\left|\det\!\left(\matId-\monodromy_p^{#1}\right)\right|}
+\newcommand{\maslovInd}{\ensuremath{m}}        % Maslov index
+\newcommand{\ExpaEig}{\ensuremath{\Lambda}}
+\newcommand{\Lyap}{\ensuremath{\lambda}}            %Lyapunov exponent
+
+%%   optional parameter comes in [\ldots], for example
+%%   \newcommand\eigRe[1][ ]{\ensuremath{\mu_{#1}}}
+%%   no subscript: \eigRe\
+%%   with subscript j: \eigRe[j]
+%%
+% \newcommand{\eigExp}[1][ ]{\ensuremath{\lambda_{#1}}}   % complex eigenexponent
+%%  Guckenheimer&Holmes:  lambda = alpha + i beta
+%%  Hirsch-Smale:         lambda = a     + i b
+%%  Boyce-di Prima:       lambda = mu    + i nu
+% \newcommand{\eigRe}[1][ ]{\ensuremath{\mu_{#1}}}    % Re eigenexponent
+% \newcommand{\eigIm}[1][ ]{\ensuremath{\nu_{#1}}}    % Im eigenexponent
+
+\newcommand{\eigExp}[1][]{
+     \ifthenelse{\equal{#1}{}}{\ensuremath{\lambda}}{\ensuremath{\lambda^{(#1)}}}}
+\newcommand{\eigRe}[1][]{
+     \ifthenelse{\equal{#1}{}}{\ensuremath{\mu}}{\ensuremath{\mu^{(#1)}}}}
+\newcommand{\eigIm}[1][]{
+     \ifthenelse{\equal{#1}{}}{\ensuremath{\omega}}{\ensuremath{\omega^{(#1)}}}}
+
+\newcommand\LyapTime{T_{\mbox{\footnotesize Lyap}}} %Lyapunov time
+\newcommand{\hatx}{{\hat{x}}}
+% \newcommand{\hatx}{{\hat{x}_t}}               %RECHECK USE OF THIS!
+\newcommand{\hatp}{{\hat{x}_p}}
+\newcommand{\phat}{{\hat{p}}}
+\newcommand{\curvR}{\rho}           %billiard curvature
+\newcommand{\dz}{{\delta z}}
+\newcommand{\dth}{{\delta \theta}}
+\newcommand{\delh}{{\delta h}}
+\newcommand{\NN}{{{\cal N}}}
+
+%%%%%%%%%%%%%%% symbolic dynamics %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\MarkGraph}{Transition graph} % following Yorke
+\newcommand{\markGraph}{transition graph} % following Yorke
+% \newcommand{\MarkGraph}{Markov graph}
+\newcommand{\admissible}{admissible}
+\newcommand{\Admissible}{Admissible}
+\newcommand{\inadmissible}{inadmissible}
+\newcommand{\cycle}[1]{\ensuremath{\overline{#1}}}
+\newcommand{\cycpt}{_{p,m}}
+\newcommand\sumprime{\mathop{{\sum}'}}
+\newcommand{\pseudos}{\pi}
+% \newcommand{\pseudos}{{p_1+p_2+\dots+p_k}}
+% \newcommand{\pseudos}{{\{p_1 p_2 \dots p_k\}}}
+\newcommand{\block}[1]{\ensuremath{#1}} % PC 07sep2008: conflict with beamer
+\newcommand{\prune}[1]{\ensuremath{\_{#1}\_}}        % fits into math env.
+%\newcommand{\prune}[1]{\ldots{#1}\ldots}
+%\newcommand{\strng}[1]{$\_#1\_$}    % fits into text without $'s
+% replaced \strng by \prune throughout
+\newcommand{\biinf}[2]{\ensuremath{\cdots#1.#2\cdots}}
+\newcommand{\rctngl}[2]{\ensuremath{[#1.#2]}}
+\newcommand{\BKsym}[1]{\ensuremath{S_{#1}}}
+\newcommand{\Ksym}[1]{{\ensuremath{\sigma_{#1}}}}
+\newcommand{\Ssym}[1]{{\ensuremath{s_{#1}}}}
+\newcommand{\gmax}{\ensuremath{\hat{\gamma}}}
+\newcommand{\Spast}{\ensuremath{S^\textrm{-}}}       % past itenerary
+\newcommand{\Sfuture}{\ensuremath{S^\textrm{\scriptsize +}}} % future itenerary
+\newcommand{\Sbiinf}{\ensuremath{S}}             % biinf. itenerary
+\newcommand{\str}{\ensuremath{\epsilon_{1},\epsilon_{2}, \ldots} } % Ronnie's problems
+
+%%%%%%%%%%%%%%% Ronnie's problems %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\estr}[1] {\epsilon_{1},\epsilon_{2}, \ldots, \epsilon_{#1}}
+\newcommand{\eestr}[2] {#1,\epsilon_{1},\epsilon_{2}, \ldots,\epsilon_{#2}}
+
+%%%%%%%%%%%% loopDef.tex, defCrete.tex specific %%%%%%%%%%%%%
+% Predrag   defCrete.tex             4mar2003
+% Predrag   loopDefs.tex            10jul2003
+\newcommand{\descent}{Newton descent}
+\newcommand{\Descent}{Newton Descent}
+\newcommand{\CostFct}{Cost function}    % functional to minimize
+\newcommand{\costFct}{cost function}    % functional to minimize
+\newcommand{\costF}{F^2}        % cost function,
+\newcommand{\Loop}{L}
+\newcommand{\pVeloc}{v}         % phase-space velocity
+\newcommand{\lSpace}{\tilde{x}}     % a point on a loop
+\newcommand{\lVeloc}{\tilde{v}}     % loop tangent
+\newcommand{\damp}{\Delta\tau}      % descrete fictitous time step
+% \newcommand{\pSpaceDer}[1]{x^{(#1)}}
+% \newcommand{\lSpaceDer}[1]{\tilde{x}^{(#1)}}
+
+%%%%%%%%%%%%%% ks.tex specific %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\KS}{Kuramoto-Siva\-shin\-sky}
+\newcommand{\KSe}{Kuramoto-Siva\-shin\-sky equation}
+\newcommand{\pCf}{plane Couette flow}
+\newcommand{\PCf}{Plane Couette flow}
+\newcommand{\dmn}{-dimensional}  %  experimental 220ct2009
+%\newcommand{\dmn}{\ensuremath{d}}  %  n-dimensional
+%\newcommand{\dmn}{\ensuremath{\!-\!d}}  %  n-dimensional
+\newcommand{\expctE}{\ensuremath{E}}    % E space averaged
+\newcommand{\tildeL}{\ensuremath{\tilde{L}}}
+\newcommand{\EQV}[1]{\ensuremath{EQ_{#1}}} %experimental
+% \newcommand{\EQV}[1]{\ensuremath{q_{#1}}} %ChaosBook
+% \newcommand{\EQV}[1]{\ensuremath{E_{#1}}} %Ruslan
+% E_0: u = 0 - trivial equilibrium
+% E_1,E_2,E_3, for 1,2,3-wave equilibria
+\newcommand{\REQV}[2]{\ensuremath{TW_{#1#2}}} % #1 is + or -
+% TW_1^{+,-} for 1-wave traveling waves (positive and negative velocity).
+\newcommand{\PO}[1]{\ensuremath{PO_{#1}}}
+% PO_{period to 2-4 significant digits} - periodic orbits
+\newcommand{\RPO}[1]{\ensuremath{RPO_{#1}}}
+% RPO_{period to 2-4 significant digits} - relative PO.  We use ^{+,-}
+% to distinguish between members of a reflection-symmetric pair.
+% Gibson likes:
+\newcommand{\tEQ}{\ensuremath{{EQ}}}
+
+%%%%%%%%%%%%%%% Lorentz gas section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\hn{\hat n}
+\newcommand\hM{\hat \pS}
+%\def\hM{\widehat M}
+\newcommand\hx{\hat x}
+\def\tx{\tilde x}
+\def\tpk{_{\tilde p,k}}
+\def\tpk{}              %why redefined?
+\def\ttime{\sigma_{\tilde{p}}}
+
+%%%%%%%%%%%%%%% Henon map specific %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\fullTent}{full tent map}
+\newcommand{\FullTent}{Full tent map}
+% \newcommand{\fullTent}{Ulam tent map}
+% \newcommand{\FullTent}{Ulam tent map}
+\newcommand{\logisticm}{quadratic map}
+\newcommand{\Logisticm}{Quadratic map}
+\newcommand{\stretchf}{`stretch \&\ fold'}
+\newcommand{\Stretchf}{`Stretch \&\ fold'}
+\newcommand{\ofm}{once-folding map}
+\newcommand{\Ofm}{Once-folding map}
+\newcommand{\mHt}{map of the H\'enon type}
+\newcommand{\mHts}{maps of the H\'enon type}
+\newcommand{\MHts}{Maps of the H\'enon type}
+\newcommand{\opres}{orientation preserving}
+\newcommand{\Opres}{Orientation preserving}
+\newcommand{\orev}{orientation reversing}
+\newcommand{\Orev}{Orientation reversing}
+\newcommand{\nws}{non--wandering set}
+\newcommand{\stranges}{non--wandering set}
+%\newcommand{\stranges}{strange set}
+\newcommand{\ki}{kneading value}
+\newcommand{\Ki}{Kneading value}
+\newcommand{\ks}{kneading sequence}
+\newcommand{\turn}{turning point}    % {turnback} ??
+\newcommand{\Turn}{Turning point}    % {Turnback} ??
+\newcommand{\pturn}{primary turning point}    % {turnback} ??
+\newcommand{\Pturn}{Primary turning point}    % {Primary turnback} ??
+\newcommand{\topc}{topological coordinate}
+\newcommand{\Topc}{Topological coordinate}
+\newcommand{\critVal}{f(x_c)}
+\newcommand{\topcv}{maximal value}
+\newcommand{\Topcv}{Maximal value}
+\newcommand{\toppar}{topological parameter}
+\newcommand{\toppp}{topological parameter plane}
+\newcommand{\topp}{symbol square}
+\newcommand{\Topp}{Symbol square}
+\newcommand{\bimappr}{bimodal approximation}
+\newcommand{\Bimappr}{Bimodal approximation}
+\newcommand{\henappr}{bimodal approximation}
+\newcommand{\fourfa}{four-folds approximation}
+\newcommand{\Fourfa}{Four-folds approximation}
+\newcommand{\snbif}{saddle-node bifurcation}
+\newcommand{\Snbif}{Saddle-node bifurcation}
+
+%%%%%%%% Noisy stuff %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\Fokker}{Fokker-Planck}
+% \newcommand{\Fokker}{Fokker-Planck  oper\-ator}
+\newcommand{\DiffC}{\ensuremath{D}}         % diffusion constant
+% \newcommand{\Lnoise}[1]{{\cal L}^{#1}}    % noisy evolution operator, Lippolis
+\newcommand{\Lnoise}[1]{{\cal L}_D^{#1}}    % noisy evolution operator, ChaosBook
+\newcommand{\Lmat}[1]{{{\bf L}_{#1}}}      % evolution matrix
+\newcommand{\orbitDist}{\ensuremath{z}}     % Langevin distance from orbit point
+
+%%%%%%%% Siminos macros %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\Rls}[1]{\ensuremath{\mathbb{R}^{#1}}}
+%\newcommand{\Idg}{\ensuremath{\mathbf{1}}}
+%\newcommand{\Clx}[1]{\ensuremath{\mathbb{C}^{#1}}}
+%\newcommand{\conj}[1]{\ensuremath{\bar{#1}}}
+%\newcommand{\trace}{\mbox{\rm trace}\,}
+%\newcommand{\On}[1]{\ensuremath{\mathbf{O}(#1)}}
+\newcommand{\Un}[1]{\ensuremath{\textrm{U}(#1)}}         % in DasBuch
+\newcommand{\On}[1]{\ensuremath{\textrm{O}(#1)}}
+%\newcommand{\SOn}[1]{\ensuremath{\mathbf{SO}(#1)}} % in Siminos thesis
+\newcommand{\SOn}[1]{\ensuremath{\textrm{SO}(#1)}}         % in DasBuch
+%\newcommand{\Dn}[1]{\ensuremath{\mathbf{D}_{#1}}    % in Siminos thesis
+\newcommand{\Dn}[1]{\ensuremath{\textrm{D}_{#1}}}              % in DasBuch
+%\newcommand{\Zn}[1]{\ensuremath{\mathbf{Z}_{#1}}}    % in Siminos thesis
+\newcommand{\Zn}[1]{\ensuremath{\textrm{C}_{#1}}}              % in DasBuch
+%\newcommand{\Ztwo}{\ensuremath{\mathbf{Z}_2}}      % in Siminos thesis
+\newcommand{\Ztwo}{\ensuremath{\textrm{C}_2}}                % in DasBuch
+%\newcommand{\Refl}{\ensuremath{\kappa}}            % Siminos uses R for rotations.
+\newcommand{\Refl}{\ensuremath{\sigma}}             % in DasBuch
+%\newcommand{\Shift}{\ensuremath{\tau}}
+\newcommand{\Rot}[1]{\ensuremath{C^{#1}}}           % in DasBuch, e.g. C^{1/3}
+%\newcommand{\Rot}[1]{\ensuremath{R(#1)}}           % Siminos uses R for rotations.
+%\newcommand{\Drot}{\ensuremath{\zeta}}
+%\newcommand{\Lg}{\mathcal{G}}
+%\newcommand{\stab}[1]{\ensuremath{\Sigma_{#1}}}
+\newcommand{\stab}[1]{\ensuremath{G_{#1}}}
+\newcommand{\shift}{\ensuremath{d}}
+\newcommand{\gSpace}{\ensuremath{{\bf \theta}}}   % group rotation parameters
+\newcommand{\velRel}{\ensuremath{c}}    % relative state velocity
+\newcommand{\Fix}[1]{\ensuremath{\mathrm{Fix}\left(#1\right)}}
+
+\newcommand{\pSRed}{\ensuremath{\bar{\cal M}}} % reduced state space
+\newcommand{\sspRed}{\ensuremath{y}}    % reduced state space point, experiment
+% \newcommand{\sspRed}{\ensuremath{\bar{x}}}    % reduced state space point
+% \newcommand{\velRed}{\ensuremath{\bar{v}}}    % PC reduced state space velocity
+\newcommand{\velRed}{\ensuremath{u}}    % ES reduced state space velocity
+
+\newcommand{\slicep}{{\ensuremath{y'}}}   % slice-fixing point, experimental
+% \newcommand{\slicep}{\ensuremath{\ssp'}}   % slice-fixing point
+%\newcommand{\sliceTan}[1]{\ensuremath{t_{#1}(y')}}    % tangent at slice-fixing, experimental
+\newcommand{\sliceTan}[1]{\ensuremath{t'_{#1}}}    % group orbit tangent at slice-fixing
+\newcommand{\groupTan}{\ensuremath{t}}    % group orbit tangent
+%\newcommand{\Group}{\ensuremath{\Gamma}}    % Siminos Lie group
+\newcommand{\Group}{\ensuremath{G}}         % Predrag Lie or discrete group
+%\newcommand{\Lg}{\mathfrak{a}}             % Siminos Lie algebra generator
+\newcommand{\Lg}{\ensuremath{\mathbf{T}}}   % Predrag Lie algebra generator
+%\newcommand{\LieEl}{\ensuremath{\mathbb{G}}}  % Wiczek project Lie group element
+\newcommand{\LieEl}{\ensuremath{g}}  % Predrag Lie group element
+
+%%%%%%%%%%%%%%% symmetric, asymmetric orbits: %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\sym}{{s}}
+\newcommand{\nsym}{{n_s}}
+\newcommand{\asym}{{a}}
+\newcommand{\nasym}{{n_a}}
+% fundamental domain:
+\newcommand{\pf}{{\tilde p}}
+\newcommand{\nf}{n_{\tilde p}}
+\newcommand{\symf}{{\tilde s}}
+\newcommand{\nsymf}{n_{\tilde s}}
+%\newcommand\stagn{*}        %equilibrium/stagnation point suffix
+\newcommand\stagn{q}      %equilibrium/stagnation point suffix
+\newcommand{\rpprime}{{\tilde{p}}}  % relative periodic prime orbit
+
+%%%%%%%%%%%%%%% relative periodic orbits: %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\po}{periodic orbit}
+\newcommand{\Po}{Periodic orbit}
+\newcommand{\rpo}{rela\-ti\-ve periodic orbit}
+%   \newcommand{\rpo}{equivariant periodic orbit}
+\newcommand{\Rpo}{Rela\-ti\-ve periodic orbit}
+%   \newcommand{\Rpo}{Equivariant periodic orbit}
+\newcommand{\eqv}{equilib\-rium}
+\newcommand{\Eqv}{Equilib\-rium}
+\newcommand{\eqva}{equilib\-ria}
+\newcommand{\Eqva}{Equilib\-ria}
+\newcommand{\reqv}{rela\-ti\-ve equilib\-rium}
+%   \newcommand{\reqv}{equivariant equilibrium}
+%   \newcommand{\reqv}{travelling wave}
+\newcommand{\Reqv}{Rela\-ti\-ve equilib\-rium}
+%   \newcommand{\Reqv}{Equivariant equilibrium}
+%   \newcommand{\Reqv}{travelling wave}
+\newcommand{\reqva}{rela\-ti\-ve equilib\-ria}
+%   \newcommand{\reqva}{equivariant equilibria}
+\newcommand{\Reqva}{Rela\-ti\-ve equilib\-ria}
+%   \newcommand{\Reqva}{Equivariant equilibria}
+\newcommand{\equilibrium}{equilib\-rium}
+\newcommand{\equilibria}{equilib\-ria}
+\newcommand{\Equilibria}{Equilib\-ria}
+% \newcommand{\equilibrium}{steady state}
+% \newcommand{\equilibria}{steady states}
+% \newcommand{\Equilibria}{Steady states}
+% \newcommand{\reducedsp}{orbit space}
+% \newcommand{\Reducedsp}{Orbit space}
+\newcommand{\reducedsp}{reduced state space}
+\newcommand{\Reducedsp}{Reduced state space}
+\newcommand{\fixedsp}{fixed-point subspace}
+\newcommand{\Fixedsp}{Fixed-point subspace}
+\newcommand{\csection}{cross-section}
+\newcommand{\Csection}{Cross-section}
+\newcommand{\slice}{slice}
+\newcommand{\Slice}{Slice}
+\newcommand{\mslices}{method of slices}
+\newcommand{\Mslices}{Method of slices}
+\newcommand{\mframes}{method of moving frames}
+\newcommand{\Mframes}{Method of moving frames}
+\newcommand{\Hec}{Hetero\-clinic connect\-ion}
+\newcommand{\hec}{hetero\-clinic connect\-ion}
+\newcommand{\HeC}{Hetero\-clinic Connect\-ion}
+
+%%%%%%%%%%%%%% Quantum mechanical stuff %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\HamPrincFct}[4]{R_{#4}({#1},{#2},{#3})}
+               % \HamPrincFct{q}{q'}{t}{j}
+
+%%%%%%%%%%%%%% SPECIFIC TO lattFT.tex NOTES %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\unit}{{\bf 1}}
+\newcommand{\hopMat}{{\bf h}}
+\newcommand{\hop}{h}
+\newcommand{\fix}{\marginpar{$\diamond$}}
+\newcommand{\source}{{J}}
+\newcommand{\sourceFT}{{\tilde{J}}}
+\newcommand{\derSource}{{d~\over d\source}}
+\newcommand{\derSourceFT}{{d~\over d\sourceFT}}
+\newcommand{\field}{{\phi}}     % used in lattFT.tex
+%\newcommand{\field}{{x}}       % not a good notation
+\newcommand{\fieldFT}{{\tilde{\phi}}}
+\newcommand{\derField}{{d~\over d\field}}
+\newcommand{\saddleField}{{\field^c}}
+\newcommand{\saddleCoord}{{\coord^c}}
+\newcommand{\Laplacian}{\Delta}
+% \newcommand{\Prpgtr}{{G_0}}       % modified in lattFT.tex
+\newcommand{\Prpgtr}{{M}}
+\newcommand{\PrpgtrFT}{{\tilde{G}_0}}
+% \newcommand{\InvPrpgtr}{{G_0^{-1}}}   % modified in lattFT.tex
+\newcommand{\InvPrpgtr}{{M^{-1}}}
+\newcommand{\GreenF}{{G}}
+\newcommand{\Df}[1]{f^{'}_{#1}}
+\newcommand{\DDf}[1]{f^{''}_{#1}}
+\newcommand{\nosum}{\not\!\!{\scriptstyle\sum}}
+\newcommand{\doublespace}{\baselineskip = \normalbaselineskip \multiply\baselineskip by 2}
+%%%%%%%%%%%%%% end of SPECIFIC TO lattFT.tex NOTES %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%  gli commandi di Commandottore Roberto   %%%%%%%%%%%%
+\newcommand {\tidue}{{\mbox{\bf T}}^{2}}
+\newcommand {\bom}[1]{\mbox{\boldmath $#1$}}
+\newcommand {\polit}{{\cal P}_{T}}
+\newcommand {\id}{{\ \hbox{{\rm 1}\kern-.6em\hbox{\rm 1}}}}
+\newcommand {\ep}{\epsilon}
+
+%%%%%%% Wirzba scattering.tex  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\gesim}{\mbox{\raisebox{-.6ex}{$\,{\stackrel{>}{\sim}}\,$}}}
+\newcommand{\lesim}{\mbox{\raisebox{-.6ex}{$\,{\stackrel{<}{\sim}}\,$}}}
+\newcommand{\Ageom}[1]{{\bf A}^{#1}}
+\newcommand{\Aghost}[1]{{\underline{\bf A}}^{#1}}
+\newcommand{\Acreep}[1]{{\mathbb{A}}^{#1}}
+%\newcommand{\Acreep}[1]{{\hat{\bf A}}^{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%% birdtracks SPECIFIC %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% from def_group.tex
+\newcommand{\PP}{{\mathbf P}}                   % projection operator
+\newcommand{\RR}{{\mathbf R}}    % real part, projection operator
+\newcommand{\QQ}{{\mathbf Q}}    % imaginary part, projection operator
+
+%% Young diagrams (multiplication-stuff due to C. Holm -- cheers!)
+%% command \btrackYt[size of one box (optional)]{filename}{number of boxes}
+\newdimen\onebox
+\newdimen\boxsize
+\newcount\boxnum
+\gdef\mult#1#2#3{% #1 = #2 * #3
+    \ifx#1\relax\else%
+      \ifx#2\relax\else%
+        #1=#2%
+        \ifx#3\relax\else%
+          \multiply#1#3%
+        \fi%
+      \fi%
+    \fi}
+
+\newcommand{\btrack}[1]{\raisebox{-2.0ex}[3.5ex][2.5ex]
+    {\includegraphics[height=5ex]{Fig/f_#1.eps}\negthinspace} }
+    %{\epsfig{file=Fig/f_#1.eps,height=5ex}\negthinspace} }
+%% A is 7/5-ths taller
+\newcommand{\btrackA}[1]{\raisebox{-3.0ex}[4.5ex][3.5ex]
+         { \epsfig{file=Fig/f_#1.eps,height=7ex}\negthinspace} }
+%% B is 9/5-ths taller
+\newcommand{\btrackB}[1]{\raisebox{-4.0ex}[5.5ex][4.5ex]
+          { \epsfig{file=Fig/f_#1.eps,height=9ex}\negthinspace} }
+%% BB is 11/5 larger
+\newcommand{\btrackBB}[1]{\raisebox{-5.0ex}[6.5ex][5.5ex]
+          { \epsfig{file=Fig/f_#1.eps,height=11ex}\negthinspace} }
+%% C is 1/2 smaller
+\newcommand{\btrackC}[1]{\raisebox{-0.4ex}[1.75ex][1.25ex]
+          { \epsfig{file=Fig/f_#1.eps,height=2.5ex}\negthinspace} }
+%% birtrack to be drawn:
+\newcommand{\zzzz}{{\tt birdTrack}}
+%%   Birdtracks with vertical alignment info
+%%%% copied from Anders Johansen inputs/anders_def.tex  15 May 2002
+\newlength{\verti}
+\newcommand{\btrackAl}[3]{%
+    \setlength{\verti}{-#3pt*5+2.5pt}% -(5pt*m)+2.5pt  m=#3
+    \setlength{\boxsize}{#2pt*5}%
+    \raisebox{\verti}{\includegraphics[width=\boxsize]{Fig/f_#1.eps}}}
+%% Birdtracks with sizes in terms of #Young diagram boxes
+\newcommand{\btrackYq}[3][5pt]{%
+    \boxnum=#3%
+    \onebox=#1%
+    \mult{\boxsize}{\onebox}{\boxnum}%
+    \parbox{\boxsize}{\includegraphics[width=\boxsize]{Fig/f_#2.eps}}}
+
+%%%%%%%%%%%%%%%%%% FEYNMANN DIAGRAMS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\thicklines
+\newlength{\Fsize}   % allow for easy resizing of diagrams
+\newlength{\Fdotsize}
+\setlength{\Fsize}{20pt}
+\setlength{\Fdotsize}{5pt}
+\setlength{\unitlength}{\Fsize}
+\newcommand{\Fdot}{  % vertex
+        \begin{picture}(0,0)
+        \setlength{\unitlength}{\Fdotsize}
+    \put(0,0){\circle*{1}}
+        \end{picture}}
+%Propagator naming conventions: \F(d|D)(h|[c](u|d|l|r)(u|d|l|r))
+%d=dotted, D=solid, h=horizontal, c=curved, u=up, d=down, l=left, r=right
+%The straight propagators are specified u|d then l|r
+%The curved propagators end up in the location specified by the last letter
+\newcommand{\Fdh}{   % horizontal dotted propagator
+    \begin{picture}(0,0)
+    \setlength{\unitlength}{\Fsize}
+    \qbezier[10](0,0)(0.5,0)(1,0)
+    \end{picture}}
+\newcommand{\FDh}{   % horizontal solid propagator
+        \begin{picture}(0,0)
+        \setlength{\unitlength}{\Fsize}
+    \put(0,0){\line(1,0){1}}
+        \end{picture}}
+\newcommand{\FDur}{  % diagonal solid propagators
+        \begin{picture}(0,0)
+        \setlength{\unitlength}{\Fsize}
+    \put(0,0){\line(1,1){0.7}}
+        \end{picture}}
+\newcommand{\FDdr}{
+        \begin{picture}(0,0)
+        \setlength{\unitlength}{\Fsize}
+        \put(0,0){\line(1,-1){0.7}}
+        \end{picture}}
+\newcommand{\FDul}{
+        \begin{picture}(0,0)
+        \setlength{\unitlength}{\Fsize}
+        \put(0,0){\line(-1,1){0.7}}
+        \end{picture}}
+\newcommand{\FDdl}{
+        \begin{picture}(0,0)
+        \setlength{\unitlength}{\Fsize}
+        \put(0,0){\line(-1,-1){0.7}}
+        \end{picture}}
+\newcommand{\Fdcul}{  % curved propagators
+        \begin{picture}(0,0)
+        \setlength{\unitlength}{\Fsize}
+    \qbezier[15](0,0)(-1,1)(-1,0)
+        \end{picture}}
+\newcommand{\FDcdl}{
+        \begin{picture}(0,0)
+        \setlength{\unitlength}{\Fsize}
+        \qbezier(0,0)(-1,-1)(-1,0)
+        \end{picture}}
+\newcommand{\Fdcur}{
+        \begin{picture}(0,0)
+        \setlength{\unitlength}{\Fsize}
+        \qbezier[15](0,0)(1,1)(1,0)
+        \end{picture}}
+\newcommand{\FDcur}{
+        \begin{picture}(0,0)
+        \setlength{\unitlength}{\Fsize}
+        \qbezier(0,0)(1,1)(1,0)
+        \end{picture}}
+\newcommand{\FDcdr}{
+        \begin{picture}(0,0)
+        \setlength{\unitlength}{\Fsize}
+        \qbezier(0,0)(1,-1)(1,0)
+        \end{picture}}
+\newcommand{\Fdclu}{
+        \begin{picture}(0,0)
+        \setlength{\unitlength}{\Fsize}
+        \qbezier[20](0,0)(-1,1)(1,1)
+        \end{picture}}
+\newcommand{\FDcld}{
+        \begin{picture}(0,0)
+        \setlength{\unitlength}{\Fsize}
+        \qbezier(0,0)(-1,-1)(1,-1)
+        \end{picture}}
+\newcommand{\FDcru}{
+        \begin{picture}(0,0)
+        \setlength{\unitlength}{\Fsize}
+        \qbezier(0,0)(1,1)(-1,1)
+        \end{picture}}
+\newcommand{\FDcrd}{
+        \begin{picture}(0,0)
+        \setlength{\unitlength}{\Fsize}
+        \qbezier(0,0)(1,-1)(-1,-1)
+        \end{picture}}
+\setlength{\unitlength}{1pt}
+
+%%%%%%%%%%%%      stuff below this line will probably be dropped%%%%%%%%%%%
+
+\renewcommand{\b}{\beta}
+\newcommand{\w}{\omega}
+\newcommand{\p}{2\pi}
+\newcommand{\J}{\mbox{  \rule[.03ex]{.03em}{1.5ex} \hspace*{-0.9em} \rm J}}
+\newcommand{\f}{\varphi}
+
+%%%%%%%%%%%%%%  Bibliography abbreviations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newcommand{\AP}[1]{{\em Ann.\ Phys.}\/ {\bf #1}}
+%\newcommand{\CHAOS}[1]{{\em CHAOS}\/ {\bf #1}}
+%\newcommand{\CM}[1]{{\em Cont.\ Math.}\/ {\bf #1}}
+%\newcommand{\CMP}[1]{{\em Commun.\ Math.\ Phys.}\/ {\bf #1}}
+%\newcommand{\INCB}[1]{{\em Il Nuov.\ Cim.\ B}\/ {\bf #1}}
+%\newcommand{\JCP}[1]{{\em J.\ Chem.\ Phys.}\/ {\bf #1}}
+%\newcommand{\JETP}[1]{{\em Sov.\ Phys.\ JETP}\/ {\bf #1}}
+%\newcommand{\JETPL}[1]{{\em JETP Lett.}\/ {\bf #1}}
+%\newcommand{\JMP}[1]{{\em J.\ Math.\ Phys.}\/ {\bf #1}}
+%\newcommand{\JMPA}[1]{{\em J.\ Math.\ Pure Appl.}\/ {\bf #1}}
+%\newcommand{\JPA}[1]{{\em J.\ Phys.}\/ {\bf A  #1}}
+%\newcommand{\JPB}[1]{{\em J.\ Phys.}\/ {\bf B  #1}}
+%\newcommand{\JPC}[1]{{\em J.\ Phys.\ Chem.}\/ {\bf #1}}
+%\newcommand{\JchemP}[1]{{\em J.\ Chem.\ Phys.}\/ {\bf #1}}
+%\newcommand{\NPA}[1]{{\em Nucl.\ Phys.}\/ {\bf A #1}}
+%\newcommand{\NPB}[1]{{\em Nucl.\ Phys.}\/ {\bf B #1}}
+%\newcommand{\NONLIN}[1]{{\em Nonlinearity}\/ {\bf #1}}
+%\newcommand{\PLA}[1]{{\em Phys.\ Lett.}\/ {\bf A #1}}
+%\newcommand{\PLB}[1]{{\em Phys.\ Lett.}\/ {\bf B #1}}
+%\newcommand{\PRA}[1]{{\em Phys.\ Rev.}\/ {\bf A #1}}
+%\newcommand{\PRD}[1]{{\em Phys.\ Rev.}\/ {\bf D #1}}
+%\newcommand{\PRL}[1]{{\em Phys.\ Rev.\ Lett.}\/ {\bf #1}}
+%\newcommand{\PST}[1]{{\em Phys.\ Scripta}\/ {\bf T #1}}
+%\newcommand{\RMS}[1]{{\em Russ.\ Math.\ Surv.}\/ {\bf #1}}
+%\newcommand{\USSR}[1]{{\em Math.\ USSR.\ Sb.}\/ {\bf #1}}
+%\newcommand{\ZNat}[1]{{\em Z. Naturforschung}\/ {\bf #1}}
+
+% \newcommand{\R}{\mbox{  \rule[.07ex]{.03em}{1.5ex} \hspace*{-0.75em} \rm R}}
+% \newcommand{\nextchapter}{\newpage{\pagestyle{empty}\cleardoublepage}}
+
+%\newcommand {\vett}[2]{\bepar{c} #1 \\ #2 \epar}
+%\newcommand {\vettc}[2]{\bepar{c,c} #1 & #2 \epar}
+%\newcommand {\vettq}[2]{\left[ \begin{array}{c,c} #1 & #2 \end{array} \right]}
+%\newcommand {\ron}{\rho_{n}}
+%\newcommand {\ronu}{\rho_{n+1}}
+%\newcommand {\ggat}{\Gamma_{T}}
+%\newcommand {\gga}{\Gamma}
+%\newcommand {\ggan}{\Gamma_{n}}
+%\newcommand {\figurino}[3]{\begin{figure}[b]  \vspace{#1}
+%            \caption{\protect\small #2}  \label{#3} \end{figure}}
+% \newcommand {\zitadef}{\prod_{p}(1-t_{p})}
+%\def\t{\tilde}
+%\def\h{\hat}
+%\def\tf{\tilde f}
+%\def\hf{\hat f}
+% \def\time{\sigma_p}
+%       %% try to understand what does this do?:
+% \def\pmb#1{\setbox0=\hbox{$#1$}\kern-.025em\copy0\kern-\wd0
+%        \kern-0.05em\copy0\kern-\wd0\kern-.025em\raise.0233em\box0}
+
+    % Roberto's versions:
+% \newcommand{\reals}{\mbox{\bf R}} % used in Ronnie's problems
+% \newcommand {\natur}{{\hbox{{\rm I}\kern-.2em\hbox{\rm N}}}}
+%\newcommand {\relativi}{{\ \hbox{{\rm Z}\kern-.4em\hbox{\rm Z}}}}
+% \newcommand {\reali}{{\hbox{{\rm I}\kern-.2em\hbox{\rm R}}}}
+% \newcommand{\RR}{{I\negthinspace\!R}}     % Reals: we honor Tresser
+
+%%%% all \Fig to be eliminated in favor of \FIG eventually %%%%%%%%%
+%%%% eventually eliminate epsfig by \includegraphics everywhere %%%%
+%   \Fig{#1}    % \epsfig{file=Fig/f_name.ps,width=?cm} ... here
+%   {#2}    % short caption text
+%   {#3}    % full caption text
+%   {#4}    % f-figure-label
+%       defined here:
+% \newcommand{\Fig}[4]{\begin{figure}
+%           \centering{#1}
+%                       \caption[#2]{#3}
+%                       \label{#4} \end{figure} }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% changes bars package collides with everything, abandoned Apr 2000
+% \setlength{\changebarwidth}{0.5cm}    % margin changes bars width
+% %?\setcounter{\changebargray}{85}     % margin changes bars blackness
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
