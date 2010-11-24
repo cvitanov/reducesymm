@@ -61,3 +61,6 @@ Fig_singpass.nb creates a figure of a trajectory passing
 through a singularity, a nearby trajectory which does not pass
 through the singularity, and the group orbit of the singularity
 point.
+
+plots.nb creates three figures used to demonstrate what happens
+to trajectories near a singularity
