@@ -76,39 +76,131 @@
 
 \maketitle %must follow title, authors, abstract and \pacs
 
-% Body of paper goes here.
 \section{Introduction}
 \label{sec:intro}
 
-Even every slice cuts all group orbits, it makes no sense physically to
-use one slice
-(a set of all group orbit points that are closest to a given `template')
-globally. Instead we should do what we already do for KS Poincar\'e sections.
-We need to make a global chart by deploying both linear slices and linear
-Poincar\'e sections in neighborhoods of the most important (relative)
-equilibria and/or (relative) periodic orbits (those are tricky, because
-slice fixing points must lie in the full \statesp, and have no symmetry,
-so most of the solutions we have are not good as they stand). This is the
-periodic-orbit generalization of the idea of
-\HREF{http://chaosbook.org/overheads/trace/Tesselate.jpg}{\statesp\ tessellation}
-so dear to professional cyclist(s).
+Suppose you are observing turbulence in a pipe flow, or your
+defibrillator has a mesh of sensors measuring electrical currents that
+cross your heart. Here you see a pattern, and there you see a pattern
+that seems much like the first one. How ``much like the first one?'' Or
+you have a precomputed pattern, and are sifting through the turbulent
+data set for something like it. Think of the first pattern (represented
+by a point {\slicep} in the \statesp) as a
+`template'\rf{rowley_reconstruction_2000,rowley_reduction_2003} or a
+`reference state' and use the symmetries of the flow to slide and rotate
+the `template' until it overlays the second pattern, \ie, act with elements of
+the symmetry group \Group\ on the template \statesp\ point ${\slicep} \to
+{\LieEl}{\slicep}$ until the distance between the two patterns, measured
+in a bilinear norm of \refsect{def:innerProduct},
+%    \PC{recheck, is the unitary case different,
+%	(one does need $2 \Re \,\braket{\sspRed}{\slicep}$).
+%	If so, restrict consideration to subgroups of \SOn{n}.}
+\bea
+|\ssp - {\LieEl}{\slicep}|^2
+    &=& |\sspRed - \slicep|^2
+		\,=\,
+   \braket{\sspRed - \slicep}{\sspRed - \slicep}
+%\\ |\ssp|^2 - 2\,\Re\braket{\sspRed}{\slicep} +|\slicep|^2
+\,,
+    \label{minDistance}
+\eea
+is minimized. Here $\sspRed$ is the point on the group orbit
+of $\ssp$,
+\beq
+\ssp=\LieEl \sspRed
+\,,
+\ee{sspOrbit}
+closest to the template. Rather than blindly sliding one pattern over the
+other, we determine the group rotation `angles' $\gSpace =
+(\gSpace_1,\gSpace_2,\cdots\gSpace_N)$ by solving the extremum condition
+	\PC{to select minima, need 2nd partials}
+\bea
+0 &=&
+\frac{\partial ~~}{\partial \gSpace_a} |\ssp - \LieEl\slicep|^2
+	\continue
+  &=& \braket{\sspRed - \slicep}{\sliceTan{a}}
+    \,,\qquad
+	  \sliceTan{a} = \Lg_a \slicep
+\,,
+\label{PCsectQ}
+\eea
+where $\ssp \in \pS$ is a point in the full \statesp, and  the group
+elements \refeq{FiniteRot} of Lie group $\Group$ are represented  by
+$\LieEl=\exp(\gSpace \cdot \Lg)$.
+By the antihermiticity of $\Lg$, \refeq{antiHerm},  we have
+$\braket{\slicep}{\sliceTan{a}}=0$, and the transformation parameters
+$\gSpace$ for which the state $\ssp$ is closest to the template
+$\slicep$ are fixed by $N$ slice conditions
+\beq
+\braket{\sspRed}{\sliceTan{a}} =0
+    \,,\qquad
+\sspRed = \LieEl(\gSpace) \ssp
+\,.
+\ee{PCsectQ0}
+
+A given compact group orbit intersects a slice at least twice, and
+possibly many times, so we need a prescription for how to
+pick a unique \reducedsp\ point as the representative of the entire group
+orbit.
+
+The extremal distance condition \refeq{PCsectQ1} is a condition that
+closest point $\sspRed$ in the group orbit of $\ssp$ lies in a
+$(d\!-\!N)$-dimensional hyperplane normal to the group action tangent
+space $\sliceTan{}$ at template point $\slicep$. If the two patterns are
+close, their group orbits will be nearly parallel, and for a smooth flow
+this tangent plane will be transverse to all group orbits of $\ssp$ in a
+neighborhood of \slicep.
+
+However, we will be bolder, and show next that for a generic template $\slicep$ (\ie, any $\slicep$ whose group orbit is $N$-dimensional), the slice hyperplane \refeq{PCsectQ1} cuts across the group orbit of {\em every} point in the full \statesp\ \pS.
+
+    \PC{reuse this somewhere: "
+If $\ssp$ is the invariant subspace \refeq{def:centralizer}, its group
+orbit is itself and the distance $|\sspRed - \slicep|$ is fixed.
+    "}
+
+As a generic group orbit is a curved $N$-dimensional manifold embedded in
+the \statesp, several values of $\gSpace$ might be local extrema of the
+distance function \refeq{minDistance}; we only care about those that are
+local {\em minima}, for which all the eigenvalues of tensor
+\refeq{PCinflPoint} are positive. The physically most interesting one is
+presumably the closest one, the absolute minimum of \refeq{minDistance}.
+It does not matter whether the group is compact, for example $\On{n}$, or
+noncompact, for example the Euclidean group that underlies the generation
+of spiral patterns\rf{Barkley94}; in either case any group orbit has
+one or several locally closest passages to the template state.
+    \PC{recycle this:
+Here we describe symmetry reduction by the
+{\em {\mslices}} of
+Cartan\rf{CartanMF,FelsOlver98,FelsOlver99,OlverInv}.
+    }
+
+For
+example, group orbits of \SOn{2}\ are topologically circles, and their
+projections have maxima, minima and inflection points as extrema.
+In order to ensure that we are looking at local minima, we will have to
+check the local curvature, \ie, the eigenvalues and eigenvectors of the
+symmetric matrix $[N\!\times\!N]$ matrix of second derivatives
+of distance,
+\beq
+\frac{\partial^2}
+     {\partial \gSpace_a \partial \gSpace_b}
+        |\sspRed - \slicep|^2
+    =
+%  - \braket{\Lg_a e^{\gSpace \cdot \Lg} \ssp}{\sliceTan{b}}=
+  - \braket{\groupTan_a(\sspRed)}{\sliceTan{b}}=
+  \braket{\sspRed}{\dual{\Lg}{}_a {\Lg}{}_b\slicep}
+\ee{PCinflPoint}
 
 
-Boundaries
-between hyperplanes are themselves hyperplanes of one dimension less and
-should be easy compute once we have decided on the set of slices. To find
-what slice a given full \statesp\ trajectory point is in, one rotates
-with respect to each slice, and checks whether the given group orbit
-belong to it. In the \reducedsp\ the trajectory is integrated within a
-given slice until it hits a hyperplane boundary - then one switches to
-the next slice across the boundary. Boundary corners are measure zero, no
-way you would hit them.
+The distance surface $|\sspRed - \slicep|$ can have inflection points,
+What role do they play? They are non-generic, but if we consider distance
+to local minima at successive instants of a time-evolving trajectory,
+coalescence of
+nearby minima, maxima pairs cannot be avoided. At the instant of
+coalescence the denominator in \refeq{SF:sliceEas} goes through a simple
+pole, and the integrated trajectory within slice might jump.
 
-Global chart should be sufficiently fine-grained that we never hit any
-slice singularities. That means that the neighborhood - bounded by
-intersections with neighboring slices is sufficiently small that group
-tangent space is nowhere within the slice - works in smooth flows
-for sufficiently small neighborhoods.
+
 
 \subsection{}
 \subsubsection{}
@@ -141,6 +233,8 @@ for sufficiently small neighborhoods.
 % \end{table}
 
 \section{Conclusion}
+\label{sec:intro}
+
 \input concl
 
 \begin{acknowledgments}
