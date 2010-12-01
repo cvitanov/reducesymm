@@ -133,7 +133,24 @@
 <!--     -->
 
       <h4 class="title2"> <a name="articles"></a>Articles</h4>
-
+<!--      -->
+	<p class="ref"> 
+	  <span class="refauthors"><strong>E. Siminos</strong> and P. Cvitanovi&#263;</span></br>
+	  <span class="reftitle"> Continuous symmetry reduction and return maps for high-dimensional flows</span></br> 
+	    <a href="http://dx.doi.org/10.1016/j.physd.2010.07.010"><span class="journal">Physica D <strong>240</strong></span>, 187-198 (2011) </a></br>
+	    <img src="images/acroread16.png" alt="reprint"><a href="./papers/SiCvi10.pdf"> preprint</a>
+ 	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
+	    <span class="dsphead">+</span> abstract</a>
+		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
+		    <span class="dsphead">+</span> bibtex</a>
+		  </span>
+		  <span class="dspcont">
+		      <?php include("./bib/SiCvi10.bib");?> 
+		  </span>
+	    </span>
+	    <span class="dspcont">We present two continuous symmetry reduction methods for reducing high-dimensional dissipative flows to local return maps. In the Hilbert polynomial basis approach, the equivariant dynamics is rewritten in terms of invariant coordinates. In the method of moving frames (or method of slices) the state space is sliced locally in such a way that each group orbit of symmetry-equivalent points is represented by a single point. In either approach, numerical computations can be performed in the original state-space representation, and the solutions are then projected onto the symmetry-reduced state space. The two methods are illustrated by reduction of the complex Lorenz system, a 5-dimensional dissipative flow with rotational symmetry. While the Hilbert polynomial basis approach appears unfeasible for high-dimensional flows, symmetry reduction by the method of moving frames offers hope.
+	    </span>
+	</p>
 <!--       -->
 	  <p class="ref"> 
 	  <span class="refauthors">P. Cvitanovi&#263;, R.L. Davidchack, and <strong>E. Siminos</strong></span></br>
@@ -152,24 +169,6 @@
 	    <span class="dspcont">The continuous and discrete symmetries of the Kuramoto-Sivashinsky system restricted to a spatially periodic domain play a prominent role in shaping the invariant sets of its chaotic dynamics. The continuous spatial translation symmetry leads to relative equilibrium (traveling wave) and relative periodic orbit (modulated traveling wave) solutions. The discrete symmetries lead to existence of equilibrium and periodic orbit solutions, induce decomposition of state space into invariant subspaces, and enforce certain structurally stable heteroclinic connections between equilibria. We show, on the example of a particular small-cell Kuramoto-Sivashinsky system, how the geometry of its dynamical state space is organized by a rigid `cage' built by heteroclinic connections between equilibria, and demonstrate the preponderance of unstable relative periodic orbits and their likely role as the skeleton underpinning spatiotemporal turbulence in systems with continuous symmetries. We also offer novel visualizations of the high-dimensional Kuramoto-Sivashinsky state space flow through projections onto low-dimensional, PDE representation independent, dynamically invariant intrinsic coordinate frames, as well as in terms of the physical, symmetry invariant energy transfer rates. 
 	    </span>
 	  </p>
-<!--      -->
-	<p class="ref"> 
-	  <span class="refauthors"><strong>E. Siminos</strong> and P. Cvitanovi&#263;</span></br>
-	  <span class="reftitle"> Continuous symmetry reduction and return maps for high-dimensional flows</span></br> 
-	    to appear in <span class="journal">Physica D </span>(2010),  <a href="http://dx.doi.org/10.1016/j.physd.2010.07.010">doi:10.1016/j.physd.2010.07.010</a></br>
-	    <img src="images/acroread16.png" alt="preprint"><a href="./papers/SiCvi10.pdf"> preprint</a>
- 	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
-	    <span class="dsphead">+</span> abstract</a>
-		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
-		    <span class="dsphead">+</span> bibtex</a>
-		  </span>
-		  <span class="dspcont">
-		      <?php include("./bib/SiCvi10.bib");?> 
-		  </span>
-	    </span>
-	    <span class="dspcont">We present two continuous symmetry reduction methods for reducing high-dimensional dissipative flows to local return maps. In the Hilbert polynomial basis approach, the equivariant dynamics is rewritten in terms of invariant coordinates. In the method of moving frames (or method of slices) the state space is sliced locally in such a way that each group orbit of symmetry-equivalent points is represented by a single point. In either approach, numerical computations can be performed in the original state-space representation, and the solutions are then projected onto the symmetry-reduced state space. The two methods are illustrated by reduction of the complex Lorenz system, a 5-dimensional dissipative flow with rotational symmetry. While the Hilbert polynomial basis approach appears unfeasible for high-dimensional flows, symmetry reduction by the method of moving frames offers hope.
-	    </span>
-	</p>
 <!--     -->
 	<p class="ref"> 
 	  <span class="refauthors"> D. B&eacute;nisti, O. Morice, L. Gremillet, <strong>E. Siminos</strong>, and D.J. Strozzi</span></br>
