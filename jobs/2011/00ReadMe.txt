@@ -1,12 +1,15 @@
 ES postdoc hunt 2011
 
-CEA contract ends Jul 05 2011 
+CEA contract ends Jul 05 2011
 
 Institute		D-line:	Recomm. Lett. 			Web
 
-Nordita Fellowship: 	Nov 15 	3:(they contact ref.)		jam.nordita.org/			
+Nordita Fellowship: 	Nov 15 	3:(they contact ref.)		jam.nordita.org/
+						Dec 2 2010 Predrag uploaded	Nordita letter		
 N. Bohr Inst. Fel.: 	Nov 05 	2-3:postdoc10@nbi.dk		www.nbia.dk/node/13			[x]
+						Dec 2 2010 Predrag emailed	NB Int Academy letter
 Motter's group:		Nov 15 	2:motter@northwestern.edu	dyn.phys.northwestern.edu/job.html	
+						Dec 2 2010 Predrag emailed	motter@northwestern.edu letter
 Greek Fellowships: 	Nov 20 	---
 Marseille (Leoncini)	TBD		
 
@@ -23,7 +26,7 @@ MPI Dresden		Nov 17  2:visitors@mpipks-dresden.mpg.de www.mpipks-dresden.mpg.de/
 ***For DRESDEN:
 
 	Nov 17 Deadline refers to reference letters as well!!!
- 
+
 	Reference letters can be sent via email, but should follow in original by ordinary mail to the following address:
 
 	Dr. Sergej Flach
