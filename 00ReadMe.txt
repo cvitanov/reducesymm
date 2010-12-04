@@ -70,6 +70,6 @@ HISTORY:
 --------------------------------------------------------------------------
 FIXED:
 						Evangelos Dec 4 2010	
-	emaildict
+	emaildict for correct reply-to address
 
 -- made ...
