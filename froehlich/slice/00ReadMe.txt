@@ -1,6 +1,6 @@
 siminos/froehlich/slice/00ReadMe.txt
-$Author: predrag $
-$Date: 2010-10-13 23:26:11 -0400 (Wed, 13 Oct 2010) $
+$Author$
+$Date$
 ---------------------------------------------------------------
 
 
