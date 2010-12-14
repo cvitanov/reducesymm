@@ -3,10 +3,13 @@ $Author$
 $Date$
 ---------------------------------------------------------------
 
-
-[Title(s) here] Symmetry reduction paper
-========================================
+"Reduction of continuous symmetries of chaotic flows
+ by the method of slices"
 	(Stefan Froehlich and P Cvitanovi\'c)
+
+       previous titles:
+"Reducing continuous symmetries with linear slice"
+========================================
 
 pdflatex FrCv11.tex
 
@@ -23,11 +26,14 @@ pdflatex FrCv11.tex
 	figures from dasbuch/book/Fig/ (do not edit these)
 
 ----------------------------------------------------------------
-                        Predrag  ??, 2011
-submitted to CHAOS
-"Reducing continuous symmetries with linear slice"
+                        Predrag  Dec 10, 2011
+Change of journal: submit to Phil Morrison's 60 birthday Festschrift
+editor: Crystel Chandre
 
-Instructions on
+----------------------------------------------------------------
+                        Predrag  Nov 21, 2011
+First idea: submit to CHAOS
+Configured following instructions on
 http://chaos.aip.org/
 
 ---------------------------------------------------------------
