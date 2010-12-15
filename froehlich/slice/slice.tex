@@ -236,6 +236,55 @@ pole, and the integrated trajectory within slice might jump.
 \section{Dynamics in the slice}
 \label{sect:MovFrameODE}
 
+The \reducedsp\ trajectory is given by $\ssp(\tau)=\LieEl(\tau)
+\sspRed(\tau)$. Differentiating both sides with respect to time and
+setting $\velRed={d\sspRed}/{d\tau}$ we find
+\[
+\vel(\ssp)=\dot{\LieEl} \, \sspRed+\LieEl \, \velRed(\sspRed) \]
+\[
+\vel(\LieEl \, \sspRed)=\dot{\LieEl} \, \sspRed+\LieEl \, \velRed(\sspRed) \]
+\[
+\vel=\velRed + \LieEl^{-1} \, \dot{\LieEl} \, \sspRed
+\,.
+\]
+The product of the inverse of the Lie group element and its time
+derivative give the group tangent at the point:
+$\LieEl^{-1}\dot{\LieEl}=e^{-\gSpace \cdot \Lg} \,
+\frac{d ~~}{d \, \tau} e^{\gSpace \cdot \Lg}=\dot{\gSpace}\cdot \Lg$,
+leaving us with the equation for the velocity of the reduced flow in the slice:
+\beq
+\velRed(\sspRed)=\vel(\sspRed)-\dot{\gSpace}(\sspRed)\cdot \groupTan(\sspRed).
+\ee{eq:redVel}
+This says that the velocity in the full \statesp\ is the sum of the
+velocity in the slice and the velocity normal to it, along the group
+tangent.
+
+This equation is true for any factorization $\ssp(\tau)=\LieEl(\tau)
+\sspRed(\tau)$, and by itself provides no information on how to calculate
+$\dot{\gSpace}$. Let
+$\sliceTan{a}$ be the group tangents at the slice
+fixing point. When require that the flow stays in the slice,
+as in \refeq{PCsectQ0},
+we find that $\gSpace$ must satisfy the system of equations:
+\beq
+\braket{\vel(\sspRed)}{\sliceTan{a}}
+ -\braket{\dot{\gSpace}\cdot \groupTan(\sspRed)}{\sliceTan{a}}=0
+\,.
+\label{eq:slicecondition}
+\eeq
+% for each group tangent $\sliceTan{a}$ at the slice fixing point.
+In principle this is a matrix equation one can solve
+for $\dot{\gSpace}_a$.
+$\SOn{2}$ is the easiest case, as it has a single group tangent,
+resulting in the explicit system of equations:
+\bea
+\dot{\gSpace}(\sspRed) &=& \frac{\braket{\vel(\sspRed)}{\sliceTan{}}}
+               {\braket{\groupTan(\sspRed)}{\sliceTan{}}}
+\continue
+\velRed(\sspRed) &=& \vel(\sspRed)
+   -\dot{\gSpace}(\sspRed) \groupTan(\sspRed).
+\label{eq:so2reduced}
+\eea
 
  \begin{figure}
  \includegraphics[width=0.35\textwidth]{CLEreduced}%
@@ -253,19 +302,48 @@ reduced flow.
 \subsection{Traversing a slice singularity}
 \label{sect:passingSing}
 
+\beq
+\braket{\groupTan(\sspRed)}{\sliceTan{}}=0
+\ee{sliceSingl}
+
  \begin{figure}
 \includegraphics[width=0.45\textwidth]{CLEsingpass}
 \\
 \includegraphics[width=0.45\textwidth]{CLEnearsing2}%
  \caption{\label{fig:dthetasing}
- (a) $\dot{\gSpace}$ of the trajectory with initial point
-$\ssp_0=(-1.22, 3.212, -4.31, 1.11, 4)$ as it passes through a
-singularity at $t=0.1$ in the slice with slice fixing point
-$\slicep=(0.782,-0.277,-0.4,0.12,0)$.
-(b) $\dot{\gSpace}$ of the trajectory with initial point $\ssp_0+\delta
-\ssp$ where $\delta\ssp=(0.01,0,0,0,0)$.
+The group velocity $\dot{\gSpace}$ for two \CLf\
+\reducedsp\ trajectories in a slice defined by the slice-fixing
+point $\slicep=(0.782?,-0.277?,-0.4?,0.12?,0)$:
+ (a) As trajectory $\sspRed(\tau)$ passes through the singularity
+\refeq{sliceSingl}
+%$\braket{\groupTan(\sspRed)}{\sliceTan{}}=0$
+ at $\sspRed=(-1.22?, ?3.212, -?4.31, ?1.11, ?4)$,
+the group velocity diverges
+$\dot{\gSpace} \to \infty$ as a Dirac delta function.
+(b) The group velocity for a nearby trajectory going
+through $\sspRed+\delta \sspRed$,
+where $\delta\sspRed=(0.01,0,0,0,0)$.
  }%
  \end{figure}
+
+ \begin{figure}
+\includegraphics[width=0.45\textwidth]{singpass}
+ \caption{\label{fig:singpass}
+The blue trajectory passes through the singularity point
+$x_{sing}=(-0.44, 3.23, -0.034, 6.37, 2.34)$ in the slice normal to
+$(-0.45, -1.05, 0.3, 0.5, 0.)$. Notice how there is the gap in the
+trajectory, this corresponds to the jump cause by passing through the
+singularity. The red trajectory has initial point differing from the
+blue's by $(0,0,0.1,0,0)$, so it does not pass through a singularity. The
+green trajectory is the group orbit of $x_{sing}$ between the two
+$\gSpace$ that rotate $v(x_{sing})$ in the slice. Notice how, as
+predicted, the red trajectory begins near the blue trajectory, closely
+follows the green trajectory after the singularity point, reaches the
+other side of the blue trajectory and begins to follow it
+again.
+ }%
+ \end{figure}
+
 
 %
 % ****** End of file slice.tex ******
