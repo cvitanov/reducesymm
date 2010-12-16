@@ -123,7 +123,7 @@ curved $N$-dimensional manifold embedded in
 the $d\dmn$ \statesp, several values of $\gSpace$ might be local extrema of the
 distance function \refeq{PCsectQ}. For example, group orbits of \SOn{2}\
 are topologically circles, and the distance function \refeq{minDistance0}
-has maxima, minima and inflection points as extrema. 
+has maxima, minima and inflection points as extrema.
   %
 The physically most interesting minimum is
 presumably the closest one, the absolute minimum of \refeq{minDistance0}.
@@ -201,7 +201,7 @@ slice hyperplane \refeq{PCsectQ} cuts across the group orbit of {\em
 every} point in the full \statesp\ \pS.
 
 But is this a useful reduction of the \statesp? A distant pattern
-that is a bad match to a given template will have any number of 
+that is a bad match to a given template will have any number of
 `minimal' distances, each another bad match.
 
 
@@ -217,43 +217,52 @@ pole, and the integrated trajectory within slice might jump.
 
 
 
-\subsection{}
+\ifboyscout
+\subsection{\Poincare\ sections from the closest recurrences}
+    {\color{red} {\bf PC to Stefan}:
+An epiphany; what we do for slice, works for linear \Poincare\ sections
+as well (still to be written down, but obvious once it has been said).
+   }
+\else
+\fi
+
 \subsubsection{}
 
 
 \section{Dynamics in the slice}
 \label{sect:MovFrameODE}
 
-The \reducedsp\ trajectory is given by $\ssp(\tau)=\LieEl(\tau)
+Any \statesp\ trajectory can be given in a factorized
+form $\ssp(\tau)=\LieEl(\tau)
 \sspRed(\tau)$. Differentiating both sides with respect to time and
 setting $\velRed={d\sspRed}/{d\tau}$ we find
-\[
-\vel(\ssp)=\dot{\LieEl} \, \sspRed+\LieEl \, \velRed(\sspRed) \]
-\[
-\vel(\LieEl \, \sspRed)=\dot{\LieEl} \, \sspRed+\LieEl \, \velRed(\sspRed) \]
+\(
+\vel(\ssp)=\dot{\LieEl} \, \sspRed+\LieEl \, \velRed(\sspRed)
+\,.
+\)
+By the equivariance (??)
 \[
 \vel=\velRed + \LieEl^{-1} \, \dot{\LieEl} \, \sspRed
 \,.
 \]
-The product of the inverse of the Lie group element and its time
-derivative give the group tangent at the point:
+The product $\LieEl^{-1}\dot{\LieEl}$ defines
+the group tangent:
 $\LieEl^{-1}\dot{\LieEl}=e^{-\gSpace \cdot \Lg} \,
 \frac{d ~~}{d \, \tau} e^{\gSpace \cdot \Lg}=\dot{\gSpace}\cdot \Lg$,
 leaving us with the equation for the velocity of the reduced flow in the slice:
 \beq
 \velRed(\sspRed)=\vel(\sspRed)-\dot{\gSpace}(\sspRed)\cdot \groupTan(\sspRed).
 \ee{eq:redVel}
-This says that the velocity in the full \statesp\ is the sum of the
-velocity in the slice and the velocity normal to it, along the group
-tangent.
+In other words, the velocity in the full \statesp\ is the sum of the
+velocity normal along the group tangent and the remainder $\velRed$.
 
 This equation is true for any factorization $\ssp(\tau)=\LieEl(\tau)
 \sspRed(\tau)$, and by itself provides no information on how to calculate
 $\dot{\gSpace}$. Let
 $\sliceTan{a}$ be the group tangents at the slice
-fixing point. When require that the flow stays in the slice,
+fixing point. Requirement that the flow is confined to the slice,
 as in \refeq{PCsectQ0},
-we find that $\gSpace$ must satisfy the system of equations:
+we find that $\dot{\gSpace}$ must satisfy
 \beq
 \braket{\vel(\sspRed)}{\sliceTan{a}}
  -\braket{\dot{\gSpace}\cdot \groupTan(\sspRed)}{\sliceTan{a}}=0
@@ -262,18 +271,22 @@ we find that $\gSpace$ must satisfy the system of equations:
 \eeq
 % for each group tangent $\sliceTan{a}$ at the slice fixing point.
 In principle this is a matrix equation one can solve
-for $\dot{\gSpace}_a$.
-$\SOn{2}$ is the easiest case, as it has a single group tangent,
-resulting in the explicit system of equations:
+for $\dot{\gSpace}_a$. We shall consider here the easiest case,
+$\SOn{2}$ which has a single group tangent:
 \bea
+\velRed(\sspRed) &=& \vel(\sspRed)
+   -\dot{\gSpace}(\sspRed) \groupTan(\sspRed)
+\continue
 \dot{\gSpace}(\sspRed) &=& \frac{\braket{\vel(\sspRed)}{\sliceTan{}}}
                {\braket{\groupTan(\sspRed)}{\sliceTan{}}}
-\continue
-\velRed(\sspRed) &=& \vel(\sspRed)
-   -\dot{\gSpace}(\sspRed) \groupTan(\sspRed).
+\,.
 \label{eq:so2reduced}
 \eea
-
+The first equation defines the flow confined to the slice, and
+the second, `reconstruction' equation
+%PC give Marsden references here
+enables us to reconstruct the corresponding trajectory in the
+full \statesp.
  \begin{figure}
  \includegraphics[width=0.35\textwidth]{CLEreduced}%
  \caption{\label{fig:CLErx2y1z}
@@ -286,6 +299,19 @@ slice normal to $\sliceTan{}=(1,0,0,0,0)$. Contrast this plot with
 reduced flow.
  }%
  \end{figure}
+
+%\item[2010-12-06 PC]
+%\HREF{http://webusers.physics.uiuc.edu/~goldbart/PostScript/MS_PG_book/bookmaster.pdf}
+{Stone and Goldbart}\rf{StGo09} Sect 1.5 discussion of Lagrange
+multipliers, simple and intuitive, suggests that we should think of
+symmetry reduction of dynamics to a slice in terms of Lagrange
+multipliers. Perhaps we can finally get a clear exposition that unifies
+our discussion of \Poincare\ sections and \reducedsp\ with our methods of
+finding \po s and \rpo s, where we increase dimension by one for every
+continuous symmetry dimension. Rytis starting writing that up for
+ChaosBook (it is in the boyscout edition) but characteristically left in
+limbo.
+
 
 \subsection{Traversing a slice {\sset}}
 \label{sect:passingSing}
@@ -307,7 +333,7 @@ neighborhood of \slicep.
 The group velocity $\dot{\gSpace}$ for two \CLf\
 \reducedsp\ trajectories in a slice defined by the slice-fixing
 point $\slicep=(0.782?,-0.277?,-0.4?,0.12?,0)$:
- (a) As trajectory $\sspRed(\tau)$ passes through the 
+ (a) As trajectory $\sspRed(\tau)$ passes through the
 {\sset} \refeq{sliceSingl}
 %$\braket{\groupTan(\sspRed)}{\sliceTan{}}=0$
  at $\sspRed=(-1.22?, ?3.212, -?4.31, ?1.11, ?4)$,

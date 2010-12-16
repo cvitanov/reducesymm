@@ -4,8 +4,8 @@
 % \section{Introduction}
 %    \label{sec:intro}
 
-In spatially extended turbulent flows (such as a pipe flow) one observes
-similar patterns at different spatial positions and different times. 
+In spatially extended, turbulent flows one observes
+similar patterns at different spatial positions and different times.
 How `similar?' If the dynamics of the system under study is invariant under
 a group of continuous symmetries, one way of answering this question is by
 measuring distances between different states in the
@@ -13,58 +13,65 @@ symmetry-reduced \statesp\ $\pS/\Group$, a space in which each group orbit (clas
 of physically equivalent states) is represented by a single point.
 But there exist no preferred, one-size fits all
 symmetry-reduction method. The literature
-(see \refrefs{CBcontinuous,SiCvi10,SiminosThesis} for a review) broadly
+(see \refrefs{CBcontinuous,SiCvi10} for a review) broadly
 offers two approaches (a) Hilbert invariant polynomial bases, and (b) methods which
-slice group orbits, a generalization of the way that \Poincare\ sections cut
+slice group orbits, generalizing the way that \Poincare\ sections cut
 time-evolving trajectories.
 %
-Our goal is to find a computationally straightforward method of reducing the dynamics to a lower-dimensional \statesp, where each group orbit of the full system (\ie, set of rotationally equivalent states) is represented by a single point. If successful, the methods that we develop might be applicable to very high-dimensional flows, such as translationally equivariant fluid flows bounded by pipes or planes\rf{GHCW07,GibsonMovies}.
+Our task is to formulate a computationally straightforward method of reducing
+the dynamics to a lower-dimensional \statesp, where each group orbit of
+the full system (\ie, set of physically equivalent states) is
+represented by a single point. If successful, the methods that we develop
+should be applicable to very high-dimensional flows, such as
+translationally equivariant fluid flows bounded by pipes or
+planes\rf{GHCW07,GibsonMovies}.
 %
-In this paper we argue that for 
-high-dimensional chaotic/turbulent nonlinear flows the
-\mslices\ is the only feasible implementable and practical technique.
-In this context, the method has been
-studied in \refrefs{SiminosThesis,SiCvi10,Wilczak09,CBcontinuous}.
+In this paper we argue that for high-dimensional chaotic/turbulent
+nonlinear flows the \mslices\ studied in
+\refrefs{SiCvi10,Wilczak09,CBcontinuous} is the only feasible,
+implementable and practical technique.
 Here the method is rederived as a distance minimization problem in the
 space of patterns. The new results reported in this this paper are:
-    (a) Any (linear) slice cuts across group orbits of {\em all} states in
-        the \statesp.
-    (b) Every slice carries along with it a {\sset}. We show how
-        to compute the jump of the \reducedsp\ trajectory whenever it crosses
+    (a) Any generic (linear) slice cuts across group orbits of {\em all}
+        states in the \statesp.
+    (b) Every slice carries along with it a {\sset}. We show how to
+        compute the jump of the \reducedsp\ trajectory whenever it crosses
         through such singularity.
-    (c) We propose to avoid these singularities (artifacts of the symmetry
-        reduction by a linear slice) by tiling the \statesp\ by an atlas
+    (c) We avoid these singularities (artifacts of the symmetry
+        reduction by linear slices) by tiling the \statesp\ with an atlas
         constructed from a set of local slices.
-We also show that if a continuous symmetry has a product structure (such as
-$\SOn(2) \times \SOn(2)$ symmetries of pipe and plane fluid flows), each
-symmetry induces its own {\sset}.
+	(d) We show that if a continuous symmetry has a product structure
+	   (such as $\SOn{2} \times \SOn{2}$ symmetries of pipe and plane
+	   fluid flows), each symmetry induces its own {\sset}.
 
 \subsection{\CLe}
 	
-The \cLe\ were introduced by Gibbon and McGuinness\rf{GibMcCLE82}
-as a low-dimensional model of baroclinic instability in the
-atmosphere. 
-In the real form,  the \cLe\ are a 5-dimensional first order ODE system
+The \cLe\
 \beq
 \begin{split}
 	\dot{x}_1 &= -\sigma x_1 + \sigma y_1\\
 	\dot{x}_2 &= -\sigma x_2 + \sigma y_2\\
 	\dot{y}_1 &= (r_1-z) x_1 - r_2 x_2 -y_1-e y_2 \\
-	\dot{y}_2 &= r_2 x_1 + (r_1-z) x_2 + e y_1- y_2\\
+	\dot{y}_2 &= (r_1-z) x_2 + e y_1- y_2\\
 	\dot{z} &= -b z + x_1 y_1 + x_2 y_2\,.
 	\label{eq:CLeR}
 \end{split}
 \eeq
+were introduced by Gibbon and McGuinness\rf{GibMcCLE82}
+as a 5-dimensional model of baroclinic instability in the
+atmosphere.
 In all numerical calculations that follow we shall set the
-parameters to Siminos thesis values\rf{SiminosThesis},
+parameters to \refref{SiCvi10} values,
 \beq
-r_1=28,\; b=\frac{8}{3},\;
-\sigma=10,\; e=\frac{1}{10},\quad \mbox{and} \quad r_2=0
+r_1=28,\; b={8}/{3},\;
+\sigma=10,\quad \mbox{and}  \quad e={1}/{10}
 \,.
 \ee{SiminosPrmts}
-Here we are not interested in the physical applications of these equations; rather, we use them as a simple example of a dynamical system with a continuous (but no discrete) symmetry.
-The \cLe\ exhibit an $\SOn{2}$ symmetry under rotations around the z-axis, with
-a finite angle \SOn{2} rotation given by
+Here we are not interested in the physical applications of these
+equations; rather, we use them as a simple example of a dynamical system
+with a continuous (but no discrete) symmetry. The equations exhibit an
+symmetry under rotations around the $z$-axis, with a finite angle
+\SOn{2} rotation given by
 \beq
 \LieEl(\gSpace) \,=\,  \left(\barr{ccccc}
   \cos \gSpace  & \sin \gSpace  & 0 & 0 & 0 \\
@@ -86,15 +93,16 @@ and the corresponding Lie algebra generator
     \earr\right)
 \,.
 \ee{CLfLieGen}
-%From \refeq{SO2irrepAlg-m} we see that
-The action of \SOn{2}\ on the \cLe\ \statesp\ thus decomposes into $m=0$ \Group-invariant subspace ($z$-axis) and  $m=1$ subspace with multiplicity 2.
+The action of \SOn{2}\ thus decomposes the  \statesp\ into $m=0$
+\SOn{2}-invariant subspace ($z$-axis) and  $m=1$ subspace of
+multiplicity 2.
 The generator $\Lg$ is anti-hermitian,
-$\Lg^\dagger = - \Lg$, and the group is compact, its
+$\dual{\Lg} = - \Lg$, and the group is compact, its
 elements parameterized by $\gSpace \mbox{ mod } 2\pi$. Locally, at
 $\ssp \in \pS$, the infinitesimal action of the group is
 given by the group tangent field $\groupTan(\ssp) = \Lg \ssp
-= (x_2,-x_1,y_2,-y_1,0)$. In other words, the flow induced by
-the group action is normal to the radial direction in the
+= (x_2,-x_1,y_2,-y_1,0)$, with the flow induced by
+the group action normal to the radial direction in the
 $(x_1,x_2)$ and $(y_1,y_2)$ planes, while the $z$-axis is left
 invariant.
 
