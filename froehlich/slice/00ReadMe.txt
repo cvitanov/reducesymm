@@ -42,6 +42,19 @@ created froehlich/slice folder
 
 ---------------------------------------------------------------
 NOTES:
+                                        Stefan 2010-12-20
+
+'final' figures for the ../froehlich/slice article:
+../../figs/Fullspace.png 
+RedTrajNoPlane1.png
+RedTrajNoPlane2.png
+RedTrajPlane1.png
+RedTrajPlane2.png
+RedTrajPlane3.png
+dthetanearsing.png
+dthetasing.png
+singpass1.png
+
 
 ---------------------------------------------------------------
 TO FIX:

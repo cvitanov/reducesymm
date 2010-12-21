@@ -7,6 +7,20 @@ Siminos source programs for figures
 [read also halcrow/figSrc/00ReadMe.txt]
 
 -----------------------------------------------------------------
+                                        Stefan 2010-12-20
+
+'final' figures for the ../froehlich/slice article
+
+../figs/Fullspace.png 
+RedTrajNoPlane1.png
+RedTrajNoPlane2.png
+RedTrajPlane1.png
+RedTrajPlane2.png
+RedTrajPlane3.png
+dthetanearsing.png
+dthetasing.png
+singpass1.png
+-----------------------------------------------------------------
                                         Predrag 2010-04-02
 
 talked to Zbigniew Nitecki,  www.tufts.edu/~znitecki who is
