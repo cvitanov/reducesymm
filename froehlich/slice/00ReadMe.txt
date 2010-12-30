@@ -29,6 +29,7 @@ pdflatex FrCv11.tex
                         Predrag  Dec 10, 2011
 Change of journal: submit to Phil Morrison's 60 birthday Festschrift
 editor: Crystel Chandre
+instructions: CNSNSinstr.doc
 
 ----------------------------------------------------------------
                         Predrag  Nov 21, 2011
