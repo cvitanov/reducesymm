@@ -28,7 +28,8 @@ pdflatex FrCv11.tex
 ----------------------------------------------------------------
                         Predrag  Dec 10, 2011
 Change of journal: submit to Phil Morrison's 60 birthday Festschrift
-editor: Crystel Chandre
+journal: Communications in Nonlinear Science and Numerical Simulation
+editor:  Crystel Chandre
 instructions: CNSNSinstr.doc
 
 ----------------------------------------------------------------
@@ -46,7 +47,7 @@ NOTES:
                                         Stefan 2010-12-20
 
 'final' figures for the ../froehlich/slice article:
-../../figs/Fullspace.png 
+../../figs/Fullspace.png
 RedTrajNoPlane1.png
 RedTrajNoPlane2.png
 RedTrajPlane1.png
