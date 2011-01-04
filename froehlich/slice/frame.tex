@@ -47,10 +47,12 @@ or, if the \statesp\ is a normed function space,
 \braket{g}{f} = \int dx \, {g}(x) f(x)
 \,,
 \) %\ee{innerL2}
-in terms of the $L^2$ norm $|f|^2 = \braket{f}{f}$.
-In practice, we represent such spatially extended functions by discrete
-meshes or truncated basis sets, with a (possibly large)
-finite-dimensional \statesp\  $\pS \subset \reals^d$.
+in terms of the $L^2$ norm $|f|^2 = \braket{f}{f}$. In practice, we
+represent such spatially extended functions by discrete meshes or finite
+basis sets, within a (possibly large) finite-dimensional \statesp\  $\pS
+\subset \reals^d$. An example is a representation of a dissipative PDE by
+truncating the Fourier basis \refeq{FourierExp} to a finite number of
+modes.
 
 If we parameterize a Lie group element $\LieEl=\LieEl(\gSpace)$ by
 parameters $\gSpace = (\gSpace_1,\gSpace_2,\cdots\gSpace_N)$, the minimal
@@ -65,7 +67,7 @@ distance satisfies the extremum conditions
 \,.
 \label{PCsectQ}
 \eeq
-The minimum distance condition, combined with the Euclidean norm says
+Thus the minimum distance condition, combined with the Euclidean norm, says
 that the point $\sspRed$ in the group orbit of \statesp\ point $\ssp$
 closest to the {\template} $\slicep$ lies in a $(d\!-\!N)$\dmn\ hyperplane
 through the point $\slicep$, normal to the group action tangent space
@@ -75,62 +77,56 @@ by transverse sections of group
 orbits\rf{FelsOlver98,FelsOlver99,OlverInv} that can be traced back to
 Cartan's \mframes\rf{CartanMF}.
 
-As \Group\ is a symmetry of the system and the
-length $|\ssp|$ is invariant under symmetry operations, $\Group \subset \On{d}$,
-the Lie algebra {generators} $\Lg_a$ are a set of $N$ linearly
-independent $[d\!\times\!d]$ antisymmetric matrices acting linearly on
-the {\statesp} vectors $\ssp \in \pS \subset \reals^d$.
-By the antisymmetry of the Lie algebra generators we have
-$\braket{\slicep}{\sliceTan{a}}
- = \braket{\slicep}{\Lg_{a}\slicep}=0$, and the transformation parameters
-$\gSpace$ for which the state $\ssp$ is closest to the {\template}
-$\slicep$ are fixed by $N$ slice conditions \refeq{PCsectQ},
+As \Group\ is a symmetry of the system and the length $|\ssp|$ is
+symmetry invariant under symmetry operations, $\Group$ is a subgroup of
+the group of orthogonal transformations $\On{d}$, and the Lie algebra
+{generators} $\Lg_a$ are a set of $N$ linearly independent
+$[d\!\times\!d]$ antisymmetric matrices acting linearly on the {\statesp}
+vectors $\ssp \in \pS \subset \reals^d$. By the antisymmetry of the Lie
+algebra generators we have $\braket{\slicep}{\sliceTan{a}} =
+\braket{\slicep}{\Lg_{a}\slicep}=0$ in \refeq{PCsectQ}, so the
+transformation parameters $\gSpace$ for which the state $\ssp$ is closest
+to the {\template} $\slicep$ are fixed by $N$ \emph{slice conditions} determined
+solely by the group tangent vectors $\sliceTan{a}$,
 \beq
 \braket{\sspRed}{\sliceTan{a}} =0
     \,,\qquad
 \sspRed = \LieEl(\gSpace) \ssp
 \,.
 \ee{PCsectQ0}
-
-
-As a generic group orbit is a smooth curved $N$\dmn\ manifold embedded in
-the $d$\dmn\ \statesp, several values of $\gSpace$ might be local extrema
-of the distance function \refeq{PCsectQ}. For example, group orbits of
-\SOn{2}\ are topologically circles, and the distance function
-\refeq{minDistance0} has maxima, minima and inflection points as extrema.
-  %
-The physically most interesting extremum is the closest one, or the
-\emph{infimum}, the absolute minimum of \refeq{minDistance0}. It does not
-matter whether the group is compact, for example $\SOn{n}$, or
-noncompact, for example the Euclidean group $E_2$ that underlies the
-generation of spiral patterns\rf{Barkley94}; in either case any group
-orbit has one or several locally closest passages to the {\template}
-state, and generically only one that is the closest one.
-
-A given compact group orbit intersects a slice at least twice, and
-possibly many times. Our prescription is to pick the infimum distance
-\reducedsp\ point as the unique representative of the entire group orbit.
-
-In what follows we denote by `\mframes' the post-processing of the full
-\statesp\ flow (\refsect{exam:CLErotAngle}), and by `\mslices' the
-integration of flow confined to the \reducedsp\ (\refsect{sec:mslices}).
- The symmetry-reduction induced singularities are
-artifacts of the reduction method, more tractable numerically if given
-the full \statesp\ trajectory.
-In practice, symmetry reduction is best carried out as post-processing,
-after the numerical trajectory is obtained by integrating the full
-\statesp\ flow.
+In the choice of $\slicep$ one should avoid solutions that belong to the
+invariant or partially symmetric subspaces; for such choices some or all
+$\sliceTan{a}=0$, and impose no slice conditions. The {\template}
+$\slicep$ should be a generic \statesp\ point in the sense that its group
+orbit has the full $N$-dimensions of the group \Group.
+	\PC{comment that this is regrettable, and the reason why
+	Sandstede and Fields(?) have to stand on their
+	heads while bifurcating
+	}
 
 \subsection{Computing the moving frame rotation angle}
 \label{exam:CLErotAngle}
 
+The basic idea behind symmetry reduction is to define an equivalence
+relation on the \statesp\ where two points are equivalent if they are in
+the same group orbit. We can associate with any trajectory in the full
+\statesp\, $\ssp(\tau)$ a `\reducedsp' trajectory, $\bar{\sspRed}(\tau)$,
+which is the equivalence class of the full trajectory at any time (\ie\
+$\ssp(\tau) \in \bar{\sspRed}(\tau)$ for each $\tau$). If a unique
+representative, denoted $\sspRed$, is chosen from each equivalence class,
+then the full space trajectory is recovered given $\LieEl(\tau)$, the
+group action that rotates the equivalence class representative point
+$\sspRed(\tau)$  to $\ssp(\tau)$ (\ie\ $\ssp(\tau)=\LieEl(\tau)
+\sspRed(\tau)$). We show here how $\LieEl(\tau)$ is computed for a given
+slice.
+
 To show how the rotation into the \slice\ is computed, consider first the
-\cLe. By \refeq{PCsectQ0} the \reducedsp\ trajectory is given by
+\cLe. The \reducedsp\ point $\sspRed$ is given by
 $\sspRed=\LieEl(\gSpace) \ssp$ where $\gSpace$ is such that
 $\braket{\sspRed}{\sliceTan{}}=0$. Substituting the \SOn{2}\ Lie algebra
-generator \refeq{CLfRots} and  a finite angle \SOn{2} rotation
-\refeq{CLfRots} acting on a 5\dmn\ space \refeq{eq:CLeR} into the slice
-condition \refeq{PCsectQ0} yields the explicit formula for $\gSpace$:
+generator and a finite angle \SOn{2} rotation \refeq{CLfRots} acting on a
+5\dmn\ space \refeq{eq:CLeR} into the slice condition \refeq{PCsectQ0}
+yields the explicit formula for $\gSpace$:
 \bea
 0 &=&
     \braket{\ssp}{\sliceTan{}}\cos\gSpace
@@ -142,27 +138,23 @@ condition \refeq{PCsectQ0} yields the explicit formula for $\gSpace$:
 \,.
 \label{SL:CLEsliceRot}
 \eea
-The dot product of two tangent fields in \refeq{PCinflPoint} is thus a
-sum of inner products weighted by Casimirs,
+The dot product of two tangent fields in \refeq{SL:CLEsliceRot} is a
+sum of inner products weighted by Casimirs \refeq{QuadCasimir},
 \beq
 \braket{\groupTan(\sspRed)}{\groupTan(\slicep)}
    = \sum_m C_2^{(m)} {\sspRed}_i\, \delta_{ij}^{(m)} \slicep_j
 \,.
 \ee{braket}
-An example is the Fourier series \refeq{tangL2norm}.
-
-For \cLe\ this yields
+For \cLe\
+$\ssp = (x_1,x_2,y_1,y_2,z)$,
+$\sspRed = (x_1',x_2',y_1',y_2',z)$,
+and the moving frame condition \refeq{SL:CLEsliceRot} yields
 \[
 \tan\gSpace =
 - \, \frac{x_1 x_2'-x_2 x_1'+y_1 y_2' -y_2 y_1'}
        {x_1 x'_1+x_2 x'_2+y_1 y'_1+y_2 y'_2}
 \,.
 \]
-%    \PC{Stefan, I think you have to explain that, just as in the
-%    case of Poincar\'e sections, one keeps track of only oriented
-%    crossings, \ie, a circle has only on section in a \slice,
-%    not two. That should give you a precise $\pi$ rotation rule
-%    for singularity crossing.}
 % PC 2010-12-16 - just pick the infimum.
 Note that if \gSpace\ is a solution, so is $\gSpace+\pi$.
 This formula is particularly simple, as in the \cLe\
@@ -172,36 +164,58 @@ example the group acts only through $m=0$ and $m=1$ representations.
 %{\bf $\SOn{2}$ singularities.}
 %\label{ex:so2singularities}
 Consider next the general form \refeq{SO2irrepAlg-m} of action
-of an $\SOn{2}$ symmetry on arbitrary Fourier coefficients of a smooth
-function.
-Substituting this into the slice condition \refeq{PCsectQ0} we find that
-    \PC{prettify this formula}
+of an $\SOn{2}$ symmetry on arbitrary Fourier coefficients of a spatially periodic
+function \refeq{FourierExp}.
+Substituting this into the slice condition \refeq{PCsectQ0} and using
+\refeq{SO2irrepAlg-m} we find that
+    \PC{RECHECK! and prettify this formula}
 \bea
 \braket{e^{\gSpace \Lg}\ssp}{\groupTan(\slicep)}
-=\braket{\ssp}{(\sum\limits_m (\cos(-m\gSpace) \id^{(m)}
-     +\sin(-m\gSpace) \frac{1}{m}\Lg^{(m)})) \sliceTan{}}
+=\braket{\ssp}{\left(\sum\limits_m (\cos(-m\gSpace) \id^{(m)}
+     +\sin(-m\gSpace) \frac{1}{m}\Lg^{(m)})\right) \sliceTan{}}
 \continue
-=\sum\limits_m(\cos(m\gSpace) \braket{\ssp}{\Lg^{(m)} \slicep}-\sin(m\gSpace) \braket{\ssp}{\id^{(m)} \slicep}).
+=\sum\limits_m
+   \left(
+    \braket{\ssp}{\Lg^{(m)} \slicep} \cos(m\gSpace)
+  - \braket{\ssp}{\id^{(m)} \slicep} \sin(m\gSpace)
+   \right)
+   =0
+\,.
 \label{eq:so2sing}
 \eea
 Rewriting $\cos(m\gSpace)$, $\sin(m\gSpace)$ as
-polynomials of degree $m$ in $\sin(\gSpace)$ and $\cos(\gSpace)$, so
-\refeq{eq:so2sing} is a polynomial whose coefficients are
+polynomials of degree $m$ in $\sin(\gSpace)$ and $\cos(\gSpace)$, we can recast
+\refeq{eq:so2sing} as a polynomial equation, with coefficients
 determined by $\braket{\ssp}{\Lg^{(m)} \slicep}$ and
-$\braket{\ssp}{\id^{(m)}\slicep}$. The phase $\gSpace$ corresponds to a root of
-this polynomial and in general the `phases' $\gSpace_a$ have to be computed
+$\braket{\ssp}{\id^{(m)}\slicep}$. The `phase' $\gSpace$ that rotates
+$\ssp$ into any group-orbit traversal of the slice corresponds to a root of
+this polynomial. In general these phases have to be computed
 numerically.
-We do not have to compute all the roots of
-this polynomial - all we care about is the infimum, or the root that
+
+As a generic group orbit is a smooth curved $N$\dmn\ manifold embedded in
+the $d$\dmn\ \statesp, several values of $\gSpace$ might be local extrema
+of the distance function \refeq{PCsectQ}. For example, group orbits of
+\SOn{2}\ are topologically circles, and the distance function
+\refeq{minDistance0} has maxima, minima and inflection points as extrema.
+Our prescription is to pick the closest \reducedsp\ point as the unique
+representative of the entire group orbit. \ie, the absolute minimum or
+the \emph{infimum} of \refeq{minDistance0}. It does not matter whether
+the group is compact, for example $\SOn{n}$, or noncompact, for example
+the Euclidean group $E_2$ that underlies the generation of spiral
+patterns\rf{Barkley94}; in either case any group orbit has one or several
+locally closest passages to the {\template} state, and generically only
+one that is the closest one.
+
+So we do not have to compute all the roots of the polynomial
+\refeq{eq:so2sing} - all we care about is the infimum, or the root that
 corresponds to the shortest distance \refeq{minDistance0}.
-
-
-\ifboyscout
-\subsubsection{Subsubsection header}
-[Just checking what the header looks like]
-\else
-\fi
-
+While post-processing of a full \statesp\ trajectory $\ssp(\tau_j)$
+requires a numerical (Newton method) determination of the
+`moving frame' rotation
+$\gSpace(\tau_j)$ at each time step $\tau_j$, the computation is not
+as onerous as it might seem, as the knowledge of $\gSpace(\tau_j)$ and
+$\groupTan(\sspRed(\tau_j))$
+gives us a very good guess for $\gSpace(\tau_{j+1})$.
 
 
 %

@@ -15,11 +15,11 @@ the symmetry-reduction method. Our goal is to formulate a computationally
 straightforward method of reducing continuous symmetries, applicable to
 high-dimensional chaotic/turbulent flows, such as the fluid flows bounded
 by pipes or planes. The literature is very extensive (see
-\refrefs{CBcontinuous,SiCvi10} for a review) but it basically offers two
+\refrefs{CBcontinuous,SiCvi10} for a review), but it basically offers two
 approaches (a) invariant polynomial bases, and (b) methods which pick a
 representative point by slicing group orbits, generalizing the way in
 which {\PoincSec}s cut time-evolving trajectories. For high-dimensional
-flows the \mslices\ studied in \refrefs{SiCvi10,Wilczak09,CBcontinuous}
+flows the \mslices\ studied in \refrefs{CBcontinuous,SiCvi10,Wilczak09}
 appears to be the only feasible approach, implementable in practice. Here
 the method is rederived as a distance minimization problem in the space
 of patterns.
@@ -41,15 +41,31 @@ The new results reported in this paper are:
         reduction by linear slices) by tiling the \statesp\ with an atlas
         constructed from a set of local slices  (\refsect{sec:chart}).
 
+In what follows we denote by `\mframes' the post-processing of the full
+\statesp\ flow (\refsect{exam:CLErotAngle}), and by `\mslices' the
+integration of flow confined to the \reducedsp\ (\refsect{sec:mslices}).
+In practice, symmetry reduction is best carried out as post-processing,
+after the numerical trajectory is obtained by integrating the full
+\statesp\ flow. In particular, the symmetry-reduction induced
+singularities (\refsect{sec:singulProd}) are more tractable numerically
+if given the full \statesp\ trajectory.
+
+
 \subsection{Symmetries of dynamics}
 \label{sec:SymmDyn}
 
-In this section we review a few basic facts about dynamics and symmetries in
-order to set up the notation for what follows. The core of the paper is
-\refsect{sec:frame}.
+In this section we review a few basic facts about dynamics and symmetries
+in order to set up the notation for what follows. We follow notational
+conventions of Chaosbook.org\rf{DasBuch}, to which the reader is referred
+to for a more extensive discussion of dynamics and its symmetries. The
+core of the paper is \refsect{sec:frame}.
 
-A flow $\dot{x}= \vel(x)$ is \emph{equivariant} under a coordinate
-transformation $\LieEl$ if
+If a pipe is rotated around its axis or translated, the shifted and
+rotated state of the fluid is also a physically equivalent solution of
+the Navier-Stokes equations. Such rotations and translations of the pipe
+are examples of continuous symmetries. On the level of equations of
+motion, one says that a flow $\dot{x}= \vel(x)$ is \emph{equivariant}
+under a coordinate transformation $\LieEl$ if
 \beq
 \vel(x)=\LieEl^{-1}\vel(\LieEl \, x)
 \,.
@@ -158,22 +174,27 @@ tangent $\groupTan(u)$ to \statesp\ point $u$ is
 \ee{u:x:tang}
 
  \begin{figure}
-(a)\includegraphics[width=0.50\textwidth]{Fullspace}%
-(b)\includegraphics[width=0.45\textwidth]{RedTrajNoPlane1}%
+ \begin{center}
+(a)\includegraphics[width=0.45\textwidth]{Fullspace}%
+(b)\includegraphics[width=0.38\textwidth]{RedTrajNoPlane1}%
+ \end{center}
  \caption{\label{fig:Fullspace}
-(a) \CLe\ \refeq{eq:CLeR} exhibit a strange attractor for
-parameter values \refeq{SiminosPrmts}. (thin line)
-A segment of generic finite time trajectory. (thick line)
+(color online).
+(a) \CLe\ \refeq{eq:CLeR} exhibit a strange attractor for parameter
+values \refeq{SiminosPrmts}, here projected on the $\{y_1,y_2,z\}$ axes.
+(thin line/blue) A segment of generic finite time trajectory.
+(thick line/red)
 $\REQV{}{1}$, the only \reqv.
 %
 % Former {CLEreduced} \label{fig:RedTrajNoPlane1}
-(b) A $\{y_1,y_2,z\}$ plot of the \reducedsp\ \cLf\ strange attractor
-with initial point
+(b) The same strange attractor plotted in the symmetry-\reducedsp\
+% with initial point
 %$(x_1, x_2, y_1, y_2, z) = (1, 2, 3, 1, 2)$
-in the slice normal to $\sliceTan{}=(1,0,0,0,0)$. Contrast this plot with
-\reffig{fig:Fullspace}\,(a). In the \reducedsp\ \reqv\ $\REQV{}{1}$ is
-reduced to $\EQV{1}$. In particular, note the semicircular jumps in the
-reduced flow. For a blow-up of such jump, see \reffig{fig:singpass}.
+in the slice \refeq{PCsectQ0}, defined by the $\sliceTan{}=(1,0,0,0,0)$.
+In the \reducedsp\ \reqv\ $\REQV{}{1}$ is reduced to \eqv\ $\EQV{1}$.
+Note, however, the semicircular jumps in the reduced flow. These are
+explained and computed in \refsect{sec:singul}. For a blow-up of the jump
+indicted by the small rectangle (red), see \reffig{fig:singpass}.
  }%
  \end{figure}
 
@@ -237,6 +258,11 @@ given by the group tangent field $\groupTan(\ssp) = \Lg \ssp
 the group action normal to the radial direction in the
 $(x_1,x_2)$ and $(y_1,y_2)$ planes, while the $z$-axis is left
 invariant.
+	\PC{
+	explain the \statesp\ is foliated by group and time-evolution
+	orbits, the reduction is attained by slicing group orbits
+	and \PoincSec s for time-evolution
+	}
 
 %
 % ****** End of file intro.tex ******
