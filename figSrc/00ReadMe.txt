@@ -23,6 +23,16 @@ RedTrajPlane3.png
 dthetanearsing.png
 dthetasing.png
 singpass1.png
+
+----------------------------------------------------------------
+                                        Evangelos 2011-01-06
+
+  repository vaggelis/sys_utils/epstopdf_dir
+			      sys_utils/makefile
+
+Added script that applies epstopdf on all eps files 
+in a specified directory.
+
 ----------------------------------------------------------------
                                         Predrag 2010-04-02
 

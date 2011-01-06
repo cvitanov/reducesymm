@@ -1,6 +1,8 @@
 % siminos/froehlich/slice/concl.tex  called by FrCv11.tex
 % $Author$ $Date$
 
+% PC 2011-01-05 incorporated concl.tex from the SF article
+
 % \section{Conclusion}
 \ifboyscout
 	...
@@ -12,69 +14,57 @@
    }
 \fi
 
-If a physical problem has a symmetry, one should use it.
-One does not want to compute the same solution over and over, all
-one needs is one representative per the equivalence class (the group orbit).
-Unattended to, a symmetry can induce drifts along group orbit directions
-and be a great nuisance; deftly deployed
-it can be a powerful tool in simplifying physical problems.
-
-Symmetry strongly constrains the form of solutions and their bifurcations,
-if appropriately implemented, it can significantly accelerate
-convergence of numerical algorithms,
-it splits the dynamical \statesp\ into chains of lower-dimensional flow-invariant
-subspaces, dictates its invariant partitions and the symbolic dynamics that dictates its coarse geometry.
-
-The theory of \emph{linear} representations of symmetry groups is
-a well developed, essentially completed subject. Role of symmetries in
-\emph{nonlinear} settings is altogether another story.
-
 Many spatially extended and fluid dynamics systems exhibit continuous
-symmetries: Excitable
+symmetries. Some of the common examples are  excitable
 media\rf{ZaZha70,Winfree73,Winfree1980,BaKnTu90,Barkley94}, the \KS\
 flow\rf{ku,siv,SCD07}, {\pCf}\rf{Visw07b,GHCW07,HGC08,GibsonMovies}, and
-pipe flow\rf{Wk04,Kerswell05} are invariant (equivariant) under
-combinations of translational (Euclidean), rotational $\SOn{2}$ and
-discrete symmetries. In numerical studies such (non-compact) translation
-groups are rendered compact by the imposition of periodic boundary
-conditions.
+pipe flow\rf{Wk04,Kerswell05}, invariant (equivariant) under
+combinations of translational (Euclidean), rotational and
+discrete symmetries.
 
-In this paper we investigated symmetry reduction by the
-\mslices\ and answer affirmatively the main about the method:
-(1) does a slice cut the group orbit of every point in the dynamical \statesp?
-(2) can one deal with the global singularities that the method necessarily
-induces? Locally linear slices intersect each group orbit only once,
-but extended globally, a slice can intersect a group orbit multiple times.
-We shown that the \reducedsp\ trajectory
-passing through a {\sset} does so as a simple shift,
-causing no difficulties (other than to sloppy numerics). In addition we
-demonstrated that the problem of dealing with singularities of a product
-of $\SOn{2}$ groups acting on different coordinates of the {\statesp}
-(as is the case for the \KS\rf{ku,siv},
-{\pCf}\rf{Visw07b,GHCW07,HGC08,HalcrowThesis}, and
-pipe flows\rf{Wk04,Kerswell05}) is equivalent to dealing with the
-symmetries of each \SOn{2}\ symmetry independently.
+If a physical problem has a symmetry, one should use it - one does not
+want to compute the same solution over and over, all one needs is to
+pick one representative solution per each symmetry induced equivalence
+class. Such procedure is called symmetry reduction, and the `\mslices' is
+one such procedure, particularly simple and practical to implement. In this
+paper we have investigated symmetry reduction by the \mslices\ and
+answered affirmatively the two main questions about the method:
+(1) does a slice cut the group orbit of \emph{every} point in the dynamical \statesp?
+(2) can one deal with the {\sset s} that the method necessarily
+introduce, artifacts of the reduction absent from the full
+\statesp\ flow?
 
-Even though every slice cuts all group orbits, it makes no sense
+Re. (2) we have shown here that a reduced trajectory
+passes through such singularities through computable jumps,
+a nuisance numerically, but cause of no conceptual difficulty.
+
+Re. (1): Locally, a slices intersect each group orbit in a neighborhood of a
+template only once,
+but extended globally, a slice intersects a group orbit multiple times.
+So even though every slice cuts all group orbits, it makes no sense
 physically to use one slice (a set of all group orbit points that are
-closest to a given {\template}) globally. Instead we should do what we
-already do for KS Poincar\'e sections. We need to make a global chart by
-deploying both linear slices and linear Poincar\'e sections in
+closest to a given {\template}) globally. Instead we propose to
+construct make a global atlas by
+deploying sets of slices and linear Poincar\'e sections as charts of
 neighborhoods of the most important (relative) equilibria and/or
-(relative) periodic orbits (those are tricky, because slice fixing points
-must lie in the full \statesp, and have no symmetry, so most of the
-solutions we have are not good as they stand).
+(relative) periodic orbits.
 
-Boundaries between hyperplanes are themselves hyperplanes of one
-dimension less, easy to compute once we have decided on the set of
-slices. To find what slice a given full \statesp\ trajectory point is in,
-one rotates with respect to each slice, and checks whether the given
-group orbit belongs to it. In the \reducedsp\ the trajectory is
-integrated within a given slice until it hits a ridge - then one switches
-to the next slice across the boundary.
+Ridges (intersection boundaries between different slices) are themselves
+hyperplanes of lower dimensions, easy to compute once we have decided
+on the set of slices. To find what slice a given full \statesp\
+trajectory point is in, one rotates with respect to each slice, and
+checks whether the given group orbit belongs to it. In the \reducedsp\
+the trajectory is integrated within a given slice until it hits a ridge -
+then one switches to the next slice across the boundary.
 
 Global chart should be sufficiently fine-grained so that an unstable,
 ergodic trajectory never gets too close to any of the {\sset s}. That
 means that the neighborhood - bounded by intersections with neighboring
 slices is sufficiently small that group tangent space is nowhere within
 the slice - works in smooth flows for sufficiently small neighborhoods.
+
+While we have demonstrated that the
+\mslices\ works for a system as simple as the \cLf,
+one still has to the the method can be implemented for a
+truly high-dimensional flow. In addition, flows such as the
+\KS\ and {\pCf} also exhibit discrete symmetries that also have to be taken into account.
