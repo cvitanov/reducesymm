@@ -64,3 +64,5 @@ point.
 
 plots.nb creates three figures used to demonstrate what happens
 to trajectories near a singularity
+
+PaperPlotter.nb creates figures used in the paper.
