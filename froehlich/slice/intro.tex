@@ -11,10 +11,24 @@ answering this question is by measuring distances between different
 states in the symmetry-reduced \statesp\ $\pS/\Group$, a space in which
 each group orbit (class of physically equivalent states) is represented
 by a single point. This `distance' depends on the choice of norm and on
-the symmetry-reduction method. Our goal is to formulate a computationally
-straightforward method of reducing continuous symmetries, applicable to
-high-dimensional chaotic/turbulent flows, such as the fluid flows bounded
-by pipes or planes. The literature is very extensive (see
+the symmetry-reduction method.
+
+													\toCB
+In 1980 Phil Morrison\rf{Morr80,Morr98} showed how to derive Hamiltonian
+description of ideal fluid (plasma) dynamics from the Low Lagrangian\rf{Low58}
+by a transformation from Lagrangian to Eulerian variables. Morrison's
+method is an important example of symmetry reduction: the \statesp\ of
+time-labeled Lagrangian trajectories of fluid `particles' is reduced to a
+much smaller \statesp\ of Eulerian velocity fields (time independent, if
+the flow is steady). It is also a very difficult example of symmetry
+reduction; the reductions steps have to be executed judiciously, new
+variables cleverly chosen, and ``one should do the Legendre
+transformations slowly and carefully when there are
+degeneracies\rf{CHHM98}.'' Our goal here is different. Rather than to
+reduce a particular set of dynamical equations, we seek to formulate a
+computationally straightforward general method of reducing continuous symmetries,
+applicable to high-dimensional chaotic/turbulent flows, such as the fluid
+flows bounded by pipes or planes. The literature is very extensive (see
 \refrefs{CBcontinuous,SiCvi10} for a review), but it basically offers two
 approaches (a) invariant polynomial bases, and (b) methods which pick a
 representative point by slicing group orbits, generalizing the way in
@@ -23,8 +37,6 @@ flows the \mslices\ studied in \refrefs{CBcontinuous,SiCvi10,Wilczak09}
 appears to be the only feasible approach, implementable in practice. Here
 the method is rederived as a distance minimization problem in the space
 of patterns.
-	\PC{start with ode to Phil Morrison symmetry reduction classic,
-	Francis Low as well, if we can find it}
 
 The new results reported in this paper are:
     (a) A generic linear slice cuts across group orbits of {\em all}
@@ -69,10 +81,10 @@ $\REQV{}{1}$, the only \reqv.
 % with initial point
 %$(x_1, x_2, y_1, y_2, z) = (1, 2, 3, 1, 2)$
 in the slice \refeq{PCsectQ0}, defined by the group tangent
-$\sliceTan{}=(?,?,?,?,?)$.
+$\sliceTan{}$ whose choice is explained in \refeq{exmplTempl}.
 In the \reducedsp\ \reqv\ $\REQV{}{1}$ is reduced to \eqv\ $\EQV{1}$.
 Note, however, the semicircular jumps in the reduced flow. These are
-explained and computed in \refsect{sec:singul}. For a blow-up of the jump
+analyzed in \refsect{sec:singul}. For a blow-up of the jump
 indicted by the small rectangle (red), see \reffig{fig:singpass}.
  }%
  \end{figure}
@@ -104,11 +116,12 @@ for which the flow exhibits a strange attractor,
 \CLe\ are a simple example of a dynamical system
 with a continuous (but no discrete) symmetry.
 They are equivariant \refeq{eq:FiniteRot} under \SOn{2} rotations by
-\beq
+	\ifarticle  %submission version
+\bea
 \LieEl(\gSpace)
-    \,=\,
+    &=&
 \exp{({\gSpace} \cdot \Lg)}
-	\,=\,
+	 \,=\,
   \left(\barr{ccccc}
   \cos \gSpace  & \sin \gSpace  & 0 & 0 & 0 \\
  -\sin \gSpace  & \cos \gSpace  & 0 & 0 & 0 \\
@@ -116,8 +129,9 @@ They are equivariant \refeq{eq:FiniteRot} under \SOn{2} rotations by
  0 & 0 & -\sin \gSpace & \cos \gSpace   & 0 \\
  0 & 0 & 0             & 0              & 1
     \earr\right)
-\,,\qquad
- \Lg \,=\,   \left(\barr{ccccc}
+\continue
+\Lg &=&
+   \left(\barr{ccccc}
     0  &  1 & 0  &  0 & 0  \\
    -1  &  0 & 0  &  0 & 0 \\
     0  &  0 & 0  &  1 & 0  \\
@@ -125,23 +139,45 @@ They are equivariant \refeq{eq:FiniteRot} under \SOn{2} rotations by
     0  &  0 & 0  &  0 & 0
     \earr\right)
 % \,.
-\ee{CLfRots}
-(for group-theoretical notation, see \refappe{sec:SymmDyn}).
-The fixed-point subspace \refeq{dscr:InvPoints} of the $\SOn{2}$ symmetry
-group of the \cLe\ is the $z$-axis. The velocity \refeq{eq:CLeR} at a
-point on the $z$-axis points only in the $z$-direction and so the
-trajectory remains on the $z$-axis for all times.
-The group is 1\dmn\ and compact, its
-elements parameterized by $\gSpace \mbox{ mod } 2\pi$.
-The action of \SOn{2}\ thus decomposes the  \statesp\ into $m=0$
-\SOn{2}-invariant subspace ($z$-axis) and  $m=1$ subspace of
-multiplicity 2. Locally, at
-\statesp\ point $\ssp$, the infinitesimal action of the group is
-given by the group tangent field $\groupTan(\ssp) = \Lg \ssp
-= (x_2,-x_1,y_2,-y_1,0)$, with the flow induced by
-the group action normal to the radial direction in the
-$(x_1,x_2)$ and $(y_1,y_2)$ planes, while the $z$-axis is left
-invariant.
+\label{CLfRots}
+\eea
+    \else  %web version
+\bea
+\LieEl(\gSpace)
+    &=&
+\exp{({\gSpace} \cdot \Lg)}
+	 \,=\,
+  \left(\barr{ccccc}
+  \cos \gSpace  & \sin \gSpace  & 0 & 0 & 0 \\
+ -\sin \gSpace  & \cos \gSpace  & 0 & 0 & 0 \\
+ 0 & 0 &  \cos \gSpace & \sin \gSpace   & 0 \\
+ 0 & 0 & -\sin \gSpace & \cos \gSpace   & 0 \\
+ 0 & 0 & 0             & 0              & 1
+    \earr\right)
+\,,\qquad \Lg \,=\,
+   \left(\barr{ccccc}
+    0  &  1 & 0  &  0 & 0  \\
+   -1  &  0 & 0  &  0 & 0 \\
+    0  &  0 & 0  &  1 & 0  \\
+    0  &  0 &-1  &  0 & 0 \\
+    0  &  0 & 0  &  0 & 0
+    \earr\right)
+% \,.
+\label{CLfRots}
+\eea
+	\fi
+(for group-theoretical notation, see \refappe{sec:SymmDyn}). The group is
+1\dmn\ and compact, its elements parameterized by $\gSpace \mbox{ mod }
+2\pi$. The fixed-point subspace \refeq{dscr:InvPoints} is the $z$-axis.
+The velocity \refeq{eq:CLeR} at a point on the $z$-axis points only in
+the $z$-direction and so the trajectory remains on the $z$-axis for all
+times. The action of \SOn{2}\ thus decomposes the  \statesp\ into $m=0$
+\SOn{2}-invariant subspace ($z$-axis) and  $m=1$ subspace of multiplicity
+2. Locally, at \statesp\ point $\ssp$, the infinitesimal action of the
+group is given by the group tangent field $\groupTan(\ssp) = \Lg \ssp =
+(x_2,-x_1,y_2,-y_1,0)$, with the flow induced by the group action normal
+to the radial direction in the $(x_1,x_2)$ and $(y_1,y_2)$ planes, while
+the $z$-axis is left invariant.
 
 %
 % ****** End of file intro.tex ******

@@ -1,3 +1,4 @@
+
 siminos/froehlich/slice/00ReadMe.txt
 $Author$
 $Date$
@@ -26,14 +27,28 @@ pdflatex FrCv11.tex
 	figures from dasbuch/book/Fig/ (do not edit these)
 
 ----------------------------------------------------------------
-                        Predrag  Dec 10, 2011
+                        Predrag  Dec 10, 2010
 Change of journal: submit to Phil Morrison's 60 birthday Festschrift
 journal: Communications in Nonlinear Science and Numerical Simulation
 editor:  Crystel Chandre
 instructions: CNSNSinstr.doc
 
 ----------------------------------------------------------------
-                        Predrag  Nov 21, 2011
+                        Predrag  Jan 17, 2011
+merged all sections, uploaded
+		  ../CNSNS/FrCv11.tex (as in arxiv-v1)
+
+
+----------------------------------------------------------------
+                        Predrag  Jan 15, 2011
+merged all sections, uploaded
+		  ../arxiv-v1/FrCv11.tex
+		  defsFrCv11.tex FrCv11Notes.bbl  
+		  elsarticle.cls numcompress.sty
+		  Fullspace.png  RedTrajNoPlane1.png
+		  dthetasing.png dthetanearsing.png  singpass1.png
+----------------------------------------------------------------
+                        Predrag  Nov 21, 2010
 First idea: submit to CHAOS
 Configured following instructions on
 http://chaos.aip.org/

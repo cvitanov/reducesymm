@@ -3,7 +3,6 @@ $Author$
 $Date$
 ---------------------------------------------------------------
 
-
 Stefan Froehlich dynamical systems blog
 ========================================
 	(with RL Davidchack, E Siminos and P Cvitanovi\'c)
@@ -21,7 +20,15 @@ pdflatex blog.tex
 	(or .txt files explain how to regenerate them if needed)
 ../Fig
 	figures from dasbuch/book/Fig/ (do not edit these)
+----------------------------------------------------------------
+                        Predrag  Jan 15, 2011
+submitted
+"Reduction of continuous symmetries of chaotic flows
+ by the method of slices"
+	(Stefan Froehlich and P Cvitanovi\'c)
 
+slice/00ReadMe.txt 
+	for details
 ----------------------------------------------------------------
                         Stefan  Oct 12, 2010
 submitted
@@ -30,7 +37,7 @@ ChaosBook.org/projects/Froehlich/Froeh10.pdf
 	contained within
 blog.tex
 	\ifarticle ... \else ... \fi %article switch
-
+The paper is on ChaosBook.org/projects/index.shtml homepage
 
                         Predrag Sep 15, 2010
 
