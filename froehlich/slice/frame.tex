@@ -15,55 +15,55 @@ one. How `much like the first one?' Think of the first pattern
 `reference state' and use the symmetries of the flow to slide and rotate
 the `{\template}' until it overlays the second pattern (a point $\ssp$ in
 the \statesp), \ie, act with elements of the symmetry group \Group\ on
-the {\template} ${\slicep} \to {\LieEl}{\slicep}$ until the distance between
-the two patterns
+the {\template} $\slicep \to \LieEl(\gSpace)\,\slicep$ until the
+distance between the two patterns
 \beq
-|\ssp - {\LieEl}{\slicep}|
+|\ssp - \LieEl(\gSpace)\,\slicep|
     = |\sspRed - \slicep|
 \label{minDistance0}
 \eeq
 is minimized. Here $\sspRed$ is the point on the group orbit of $\ssp$
-(the set of all points that $\ssp$ is mapped to under the groups
+(the set of all points that $\ssp$ is mapped to under the group
 actions),
 \beq
-\ssp=\LieEl \sspRed
+\ssp=\LieEl(\gSpace)\,\sspRed
 	\,,\qquad
 \LieEl \in \Group
 \,,
 \ee{sspOrbit}
-closest to the {\template} {\slicep}.
-This distance needs to be an invariant of the symmetry group: here
-we shall assume \Group\ is a subgroup of the group of Euclidean
-transformations, and measure distance
-$|\ssp|^2=\braket{\ssp}{\ssp}$ in terms of the Euclidean inner product
+closest to the {\template} {\slicep}, the Lie group element
+$\LieEl=\LieEl(\gSpace)\propto\exp{({\gSpace} \cdot \Lg)}$ is
+parameterized by angles $\gSpace =
+(\gSpace_1,\gSpace_2,\cdots\gSpace_N)$, and the distance is an invariant
+of the symmetry group, $|\LieEl\ssp|^2=|\ssp|^2$. We assume that \Group\
+is a subgroup of the group of orthogonal transformations
+$\On{d}$, and measure
+distance $|\ssp|^2=\braket{\ssp}{\ssp}$ in terms of the Euclidean inner
+product
 \( %beq
 \braket{x}{y} = \sum_i^d {x}_i y_i
 %    \,,\; %\qquad
 % x, y \in \pS \subset \reals^d
-	\,,
+	\,.
 \) %\ee{innerR}
-or, if the \statesp\ is a normed function space,
+Its Lie algebra {generators} $\Lg_a$ \refeq{FiniteRot} are $N$
+linearly independent $[d\!\times\!d]$ antisymmetric matrices acting
+linearly on the {\statesp} vectors $\ssp \in \pS \subset \reals^d$.
+
+If the \statesp\ is a normed function space,
 \( %\beq
 \braket{g}{f} = \int dx \, {g}(x) f(x)
 \,,
 \) %\ee{innerL2}
-in terms of the $L^2$ norm $|f|^2 = \braket{f}{f}$. In practice, we
-represent such spatially extended functions by discrete meshes or finite
-basis sets, within a (possibly large) finite-dimensional \statesp\  $\pS
-\subset \reals^d$. An example is a representation of a dissipative PDE by
-truncating the Fourier basis \refeq{FourierExp} to a finite number of
-modes.
+one customarily measures distance between two patterns in the $L^2$ norm
+$|f|^2 = \braket{f}{f}$. In computations spatially extended functions are
+represented by discrete meshes or finite basis sets, within a (possibly
+large) finite-dimensional \statesp\  $\pS \subset \reals^d$. An example
+is representation of a dissipative PDE by truncating the Fourier basis
+\refeq{FourierExp} to a finite number of modes.
 
-As \Group\ is a symmetry of the system and the length $|\ssp|$ is
-invariant under symmetry operations, $\Group$ is a subgroup of the group
-of orthogonal transformations $\On{d}$, and its Lie algebra {generators}
-$\Lg_a$ (see \refeq{FiniteRot}) are a set of $N$ linearly independent
-$[d\!\times\!d]$ antisymmetric matrices acting linearly on the {\statesp}
-vectors $\ssp \in \pS \subset \reals^d$. If we parameterize a Lie group
-element $\LieEl=\LieEl(\gSpace)\propto\exp{({\gSpace} \cdot \Lg)}$ by
-parameters $\gSpace = (\gSpace_1,\gSpace_2,\cdots\gSpace_N)$, the minimal
-distance satisfies the extremum conditions
-\beq
+The minimal distance satisfies the extremum conditions
+\[ %beq
 \frac{\partial ~~}{\partial \gSpace_a} |\ssp - \LieEl\slicep|^2
    =
 \braket{\sspRed - \slicep}{\sliceTan{a}}
@@ -71,116 +71,89 @@ distance satisfies the extremum conditions
     \,,\qquad
 	  \sliceTan{a} = \Lg_a \slicep
 \,.
-\label{PCsectQ}
-\eeq
-Thus the minimum distance condition, combined with the Euclidean norm, says
-that the point $\sspRed$ in the group orbit of \statesp\ point $\ssp$
-closest to the {\template} $\slicep$ lies in a hyperplane
-through the point $\slicep$, normal to the group action tangent space
-$\sliceTan{}$. \ES{ If find this derivation confusing and hard to follow,
-although it illustrates a very simple fact, encapsulated in this last sentence. 
-Contrary to what you say here, in your derivation you start by rotating 
-the template $\slicep$, but then also rotate the \statesp\ point $\ssp$ and you
-tacitly use the fact that in order to minimize distance either way you have
-to rotate by the same angle. I don't disagree, but it might be hard for the
-casual reader to follow. I propose the following simplification of the
-derivation, in the spirit of your last sentence: Look instead for minima of
-\[
-	|\LieEl(\gSpace)x-\slicep|^2\,,	
-\] 
-to get 
-\[
- \frac{\partial ~~}{\partial \gSpace_a}	|\LieEl(\gSpace)x-\slicep|^2 \sim 
-		\braket{\Lg_{a}\sspRed}{\sspRed-\slicep}=0\,, 
-\]
-and finally use antisymmetry of $\Lg_{a}$ (twice) to write this as 
-$\braket{\sspRed}{\sliceTan{a}} =0$.
-
-I also suggest that it might benefit the reader to introduce the group 
-angle parameterization earlier in this section, \ie\ use 
-$\LieEl(\gSpace)\ssp$ instead of $\LieEl\ssp$, \etc 
-}
-
+\] % ee{PCsectQ0}
 By the antisymmetry of the Lie algebra generators we have
 $\braket{\slicep}{\sliceTan{a}} = \braket{\slicep}{\Lg_{a}\slicep}=0$, so
-we can replace $\sspRed - \slicep \to \slicep$ in \refeq{PCsectQ}, and
-the transformation parameters $\gSpace$ which map the state $\ssp$ to
-$\sspRed$, the group orbit point
-closest to the {\template} $\slicep$, are determined solely by being
-normal to the $N$ {\template} tangent vectors $\sliceTan{a}$,
+we can replace $\sspRed - \slicep \to \slicep$, and the
+`moving frame' transformation
+parameters $\gSpace$ which map the state $\ssp$ to $\sspRed$, the group
+orbit point closest to the {\template} $\slicep$, are determined by
 \beq
 \braket{\sspRed}{\sliceTan{a}} =0
     \,,\qquad
-\sspRed = \LieEl(\gSpace) \ssp
+\sspRed = \LieEl(\gSpace)\,\ssp
 \,.
-\ee{PCsectQ0}
-The group orbit points closest to the {\template} thus lie in a
-$(d\!-\!N)$\dmn\ hyperplane $\pSRed = \pS/\Group$, the set of vectors
-$\sspRed \in  \pSRed$ orthogonal to the {\template} tangent space spanned
-by tangent vectors $\{\sliceTan{1},\cdots,\sliceTan{N}\}$
+\ee{PCsectQ}
+The closest group orbit points thus lie in a $(d\!-\!N)$\dmn\ hyperplane
+$\pSRed = \pS/\Group$, the set of vectors $\sspRed \in  \pSRed$
+orthogonal to the {\template} tangent space spanned by tangent vectors
+$\{\sliceTan{1},\cdots,\sliceTan{N}\}$
 \beq
 \sspRed_1\sliceTan{a,1} + \sspRed_2\sliceTan{a,2}
   + \cdots + \sspRed_d\sliceTan{a,d} = 0
 \,.
 \ee{hyperpl}
-In what follows we shall refer to this hyperplane as a
-\emph{slice,} and to  \refeq{PCsectQ0} as the \emph{slice conditions}.
-Slice so defined is a particular case of symmetry reduction
-by transverse sections of group
+In what follows we shall refer to this hyperplane as a \emph{slice,} and
+to  \refeq{PCsectQ} as the \emph{slice conditions}. Slice so defined is
+a particular case of symmetry reduction by transverse sections of group
 orbits\rf{FelsOlver98,FelsOlver99,OlverInv} that can be traced back to
 Cartan's \mframes\rf{CartanMF}. `Moving frame' refers to the action
-$\LieEl(\gSpace)$ that
-brings a \statesp\ point \ssp\ into the slice.
+$\LieEl(\gSpace)$ that brings a \statesp\ point \ssp\ into the slice.
+
 
 In the choice of the {\template} $\slicep$ one should avoid solutions
 that belong to the invariant or partially symmetric subspaces; for such
-choices $\Lg_{a}\slicep=0$, and some or all $\sliceTan{a}$ vanish
-identically and impose no slice conditions. The {\template} $\slicep$
-should be a generic \statesp\ point in the sense that its group orbit has
-the full $N$ dimensions of the group \Group. In particular, even though
-the simplest solutions (laminar, \etc) often capture important physical
+choices $\Lg_{a}\slicep=0$, some or all $\sliceTan{a}$ vanish identically
+and impose no slice conditions. The {\template} $\slicep$ should be a
+generic \statesp\ point in the sense that its group orbit has the full
+$N$ dimensions of the group \Group. In particular, even though the
+simplest solutions (laminar, \etc) often capture important physical
 features of a flow, most \eqva\ and short \po s have nontrivial
 symmetries and thus are not suited as choices of symmetry-reducing
-templates.
+{\template s}.
+It should also be emphasized that in general a {\template} is \emph{not}
+a spatially {localized} structure. We are not using translations /
+rotations to superimpose a localized, `solitonic' solution over a
+localized {\template}. In a strongly nonlinear, turbulent flow a good
+{\template} is typically a nontrivial global solution.
 
-It should be emphasized is that a {\template} is \emph{not} a
-{localized} structure. We are not using translations / rotations to
-superimpose a localize, `solitonic' solution over a solitonic {\template}. In
-a strongly nonlinear, turbulent flow a good {\template} is typically a
-nontrivial global solution.
+In summary: the minimum distance condition, combined with the Euclidean
+norm, says that the point $\sspRed$ in the group orbit of $\ssp$ closest
+to the {\template} $\slicep$ lies in a \emph{slice}, a {\em hyperplane}
+normal to the group action tangent space $\sliceTan{}$, for any \statesp\
+point $\ssp \in \pS$. {\em Symmetry reduction} by the \mframes\ is a
+precise rule for how to pick a unique point \sspRed\ for each such
+symmetry equivalence class, and compute the \emph{moving frame}
+transformation $\ssp =\LieEl(\gSpace)\, \sspRed$ that relates the full
+\statesp\ point  $\ssp \in \pS$, to its symmetry reduced representative
+$\sspRed \in \pSRed$.
+
 
 \subsection{Computing the moving frame rotation angle}
 \label{exam:CLErotAngle}
 
 															\toCB
-The idea of reducing a flow with Lie-group structure to a system of
-a smaller dimension dates back to Lie, Poincar\'e, and Cartan.
+The idea of reducing a flow with Lie-group structure to a system of a
+smaller dimension dates back to Lie, Poincar\'e, and Cartan.
 Time-evolution and symmetry group actions foliate the \statesp\ into
 $(N\!+\!1)$\dmn\ submanifolds: Given a state (a \statesp\ point $\ssp(0)$
 at time $\tau=0$), we can trace its  1\dmn\ trajectory $\ssp(\tau)$ by
 integrating its equations of motion, and its $N$\dmn\ group orbit by
 acting on it with the symmetry group \Group. Locally, a continuous time
-flow can be reduced to the set of neighboring points $\ssp(0)$ by a
-\PoincSec; a slice does the same for local neighborhoods of group orbits.
-{\em Symmetry reduction} by the \mframes\ is a precise rule for
-how to pick a unique point \sspRed\ for each such equivalence class, and
-compute the transformation $\ssp =\LieEl \sspRed$ that relates the full
-\statesp\ point  $\ssp \in \pS$, to its symmetry reduced representative
-$\sspRed \in \pSRed$.
+flow can be reduced by a \PoincSec; a slice does the same for local
+neighborhoods of group orbits.
 
 To show how the rotation into the \slice\ is computed, consider first the
-\cLe. The \reducedsp\ point $\sspRed$ is given by
-$\ssp=\LieEl(\gSpace) \sspRed$ where $\gSpace$ is such that
-$\braket{\sspRed}{\sliceTan{}}=0$. Substituting the \SOn{2}\ Lie algebra
+\cLe. Substituting the \SOn{2}\ Lie algebra
 generator and a finite angle \SOn{2} rotation \refeq{CLfRots} acting on a
-5\dmn\ \statesp\ into the slice condition \refeq{PCsectQ0}
+5\dmn\ \statesp\ into the slice condition \refeq{PCsectQ}
 yields
 \(\braket{\ssp}{\sliceTan{}}\cos\gSpace
     +\braket{\groupTan_{}(\ssp)}{\sliceTan{}} \sin\gSpace
 = 0
 \,,
 \)
-and the explicit formula for $\gSpace$:
+and the explicit formula for frame angle $\gSpace$:
 \bea
 \tan\gSpace &=&
    - \, {\braket{\ssp}{\sliceTan{}}}/
@@ -197,7 +170,7 @@ sum of inner products weighted by Casimirs \refeq{QuadCasimir},
 \ee{braket}
 For \cLe\
 $\ssp = (x_1,x_2,y_1,y_2,z)$,
-$\sspRed = (x_1',x_2',y_1',y_2',z)$,
+$\slicep = (x_1',x_2',y_1',y_2',z)$,
 and the moving frame condition \refeq{SL:CLEsliceRot} yields
 \beq
 \tan\gSpace =
@@ -212,7 +185,7 @@ example the group acts only through $m=0$ and $m=1$ representations
 Consider next the general form \refeq{SO2irrepAlg-m} of action of an
 $\SOn{2}$ symmetry on arbitrary Fourier coefficients of a spatially
 periodic function \refeq{FourierExp}. Substituting this into the slice
-condition \refeq{PCsectQ0} and using \refeq{SO2irrepAlg-m} we find that
+condition \refeq{PCsectQ} and using \refeq{SO2irrepAlg-m} we find that
     \PC{RECHECK! and prettify this formula}
 \bea
 \braket{e^{\gSpace \Lg}\ssp}{\groupTan(\slicep)}
@@ -238,7 +211,7 @@ polynomial. In general these phases have to be computed numerically.
 
 As a generic group orbit is a smooth $N$\dmn\ manifold embedded in the
 $d$\dmn\ \statesp, several values of $\gSpace$ might be local extrema of
-the distance function \refeq{PCsectQ}.
+the distance function \refeq{minDistance0}.
 Our prescription is to pick the closest \reducedsp\ point as the unique
 representative of the entire group orbit. \ie, determine the absolute
 minimum or the \emph{infimum} of \refeq{minDistance0}.
@@ -266,8 +239,8 @@ one that is the closest one.
 flows such as the \KS\ and {\pCf} exhibit will also have to be taken into
 account\rf{SCD07,HGC08,DasBuchMirror}.)
 
-So we do not have to compute all zeros of the slice conditions
-\refeq{eq:so2sing} - all we care about is the infimum, the zero that
+In summary, we do not have to compute all zeros of the slice condition
+\refeq{PCsectQ} - all we care about is the infimum, the zero that
 corresponds to the shortest distance \refeq{minDistance0}.
 While post-processing of a full \statesp\ trajectory $\ssp(\tau_j)$
 requires a numerical (Newton method) determination of the
@@ -309,10 +282,8 @@ $\dot{\gSpace} \cdot \groupTan(\ssp)$, and the remainder $\velRed$.
 Eq. \refeq{eq:redVel} is true for any factorization
 $\ssp=\LieEl \sspRed$, and by itself provides no
 information on how to calculate $\dot{\gSpace}$. That is attained by
-demanding that the reduced trajectory stays within a slice. Let
-$\sliceTan{a}$ be the {\template} tangents.
-Slice conditions \refeq{PCsectQ0} that the flow is confined to the slice
-yield
+demanding that the reduced trajectory stays within a slice, by imposing
+the slice conditions \refeq{PCsectQ}:
 \beq
 \braket{\vel(\sspRed)}{\sliceTan{a}}
  -\braket{\dot{\gSpace}\cdot \groupTan(\sspRed)}{\sliceTan{a}}=0

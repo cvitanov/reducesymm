@@ -4,24 +4,14 @@
 \section{Flotsam}
 \label{sec:flotsam}
 
-\ifboyscout
-\subsubsection{Subsubsection header}
-[Just checking what the header looks like]
-\else
-\fi
+%\ifboyscout
+%\subsubsection{Subsubsection header}
+%[Just checking what the header looks like]
+%\else
+%\fi
 
 													\toCB
 symmetry reduction = lowering the order\rf{ArKoNe88} % (Arn Kozl Neist)
-
-\noindent \textbf{PC 2010-12-11~~}
-This text is clipped from 2010-06-07 siminos/CLE/CLE.tex as is. Use parts of it:
-
-``
-As to high-dimensional applications, it was shown in
-\refref{SiminosThesis} that the coexistence of four equilibria, two
-\reqva\ and a nested \fixedsp\ structure in an effectively
-$8$-dimensional \KS\ system\rf{SCD07} complicates matters considerably.
-''
 
 -------------
 
@@ -38,14 +28,6 @@ dynamics within the slice are given by
 \eea
 where $\velRed(\sspRed)$ is the velocity in the slice.
     ''}
-
--------------
-
-{\bf PC}{draw your own reffig~{fig:CLEpcSect}:\\
-        * Mark $\ssp_{\REQV{}1}$ \\
-        * Draw stable eigenvector of $\ssp_{\REQV{}1}$\\
-        * State value of $\ssp_{\REQV{}1}$ somewhere
-        }
 
 -------------
 
@@ -102,21 +84,29 @@ Square apartment earlier this year.
 	}
 
 
--------------
-
-Symmetry reduction replaces a symmetry-invariant flow by a
-lower-dimensional, symmetry-reduced flow.
-
-By symmetry, two points are equivalent if they are in the same group
-orbit.
-
-We can associate with any trajectory in the full \statesp, $\ssp(\tau)
-\in \pS$, a \reducedsp\ trajectory, $\sspRed(\tau) \in \pS$. Conversely,
-given the unique \reducedsp\ equivalence class representative
-$\sspRed(\tau)$, the full space trajectory can be reconstructed given
-$\LieEl(\tau)$, the group action that rotates the \reducedsp\ point
-$\sspRed(\tau)$  to $\ssp(\tau)$.
-
+%\ES{ If find this derivation confusing and hard to follow,
+%although it illustrates a very simple fact, encapsulated in this last sentence.
+%Contrary to what you say here, in your derivation you start by rotating
+%the template $\slicep$, but then also rotate the \statesp\ point $\ssp$ and you
+%tacitly use the fact that in order to minimize distance either way you have
+%to rotate by the same angle. I don't disagree, but it might be hard for the
+%casual reader to follow. I propose the following simplification of the
+%derivation, in the spirit of your last sentence: Look instead for minima of
+%\[
+%	|\LieEl(\gSpace)x-\slicep|^2\,,	
+%\]
+%to get
+%\[
+% \frac{\partial ~~}{\partial \gSpace_a}	|\LieEl(\gSpace)x-\slicep|^2 \sim
+%		\braket{\Lg_{a}\sspRed}{\sspRed-\slicep}=0\,,
+%\]
+%and finally use antisymmetry of $\Lg_{a}$ (twice) to write this as
+%$\braket{\sspRed}{\sliceTan{a}} =0$.
+%
+%I also suggest that it might benefit the reader to introduce the group
+%angle parameterization earlier in this section, \ie\ use
+%$\LieEl(\gSpace)\ssp$ instead of $\LieEl\ssp$, \etc
+%}
 
 -------------
 
@@ -125,26 +115,9 @@ Shift in time to the closest passage\rf{pchaot,MFKM10,CviGib10}:
 
 -------------
 
-This application of symmetry reduction to a spatially extended, PDE
-system is the subject of a forthcoming publication\rf{SCD09b}.
-
--------------
-
-More has to be done to reduce a system with a discrete
-symmetry before the \mslices\ can be used for the continuous symmetry.
-
--------------
-
-While \refref{Christiansen97} demonstrated that \po\ theory can be
-applied to spatially extended systems,
-
--------------
-
 Unattended to, a symmetry can induce drifts along group orbit directions
 and be a great nuisance; deftly deployed it can be a powerful tool in
 simplifying physical problems.
-
--------------
 
 Symmetry strongly constrains the form of solutions and their
 bifurcations, if appropriately implemented, it can significantly
@@ -154,15 +127,31 @@ dictates its invariant partitions and the symbolic dynamics.
 
 -------------
 
-(those are tricky, because {\template s} must lie in the full
-\statesp, and have no symmetry, so most of the solutions we have are not
-good as they stand)
-
-cannot use most \eqva\ as `templates,' as they often 	are invariants
-under subgroups of the symmetry group \Group, and 	thus their group
-orbits have dimensions less than $N$.
+By construction, $S$ lies within, and is lower-dimensional than
+the \reducedsp, $\sspRSing \in S \subset \pSRed$.
 
 -------------
+
+%% In FrCv11.tex replaced by f_1_08_1.png
+%%{Hyp} %{fig6} and {tr:fig6} in ChaosBook
+%% \HREF{http://chaosbook.org/overheads/trace/Tesselate.jpg}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{figure}
+% \begin{center}
+%%\includegraphics[width=0.35\textwidth]{f_1_08_1}
+% \end{center}
+% \caption{\label{fig:Tesselate}
+%Smooth dynamics  (left frame) tesselated by the skeleton of periodic
+%points, together with their linearized neighborhoods, (right frame).
+%Indicated are segments of two 1-cycles and a 2-cycle that alternates
+%between the neighborhoods of the two 1-cycles, shadowing first one, and
+%then the other
+%(from \wwwcb{}).
+%  }\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%
+
 
  This tessellation is akin to the
 %\HREF{http://en.wikipedia.org/wiki/Vector_quantization}
@@ -173,6 +162,14 @@ method encodes values from a multidimensional vector space into a
 `codebook,' a finite set of values from a discrete space of a lower
 dimension; \ie, what in the theory of dynamical systems is called
 `symbolic dynamics.'
+
+Ridges (intersection boundaries between different slices) are themselves
+hyperplanes of lower dimensions, easy to compute once we have picked
+the set of {\template s}. To find what slice a given full \statesp\
+trajectory point is in, one rotates with respect to each slice, and
+checks whether the given group orbit belongs to it. In the \reducedsp\
+the trajectory is integrated within a given slice until it hits a ridge -
+then one switches to the next slice across the boundary.
 
 Ridges are of Lebesgue measure zero, no way you would hit them.
 
@@ -185,14 +182,6 @@ locked relative to each other by the shortest unstable manifold segments
 offers a better approximation to distances between points on an attractor
 of a nonlinear flow.
 
-Ridges (intersection boundaries between different slices) are themselves
-hyperplanes of lower dimensions, easy to compute once we have picked
-the set of {\template s}. To find what slice a given full \statesp\
-trajectory point is in, one rotates with respect to each slice, and
-checks whether the given group orbit belongs to it. In the \reducedsp\
-the trajectory is integrated within a given slice until it hits a ridge -
-then one switches to the next slice across the boundary.
-
 That means that the neighborhood - bounded by intersections with
 neighboring slices is sufficiently small that group tangent space is
 nowhere within the slice - works in smooth flows for sufficiently small
@@ -204,8 +193,5 @@ neighborhoods.
 	While `fixes' is a correctly used math word, I tend to avoid it 	
 as it violates the common usage; $\Lg_1$ does not (transitively) `fix'
 anything, 	it simply does not act upon $b$ coordinates.
-
--------------
-
 
 -------------
