@@ -119,14 +119,13 @@ by a single point. This distance depends on the choice of norm and on
 the symmetry-reduction method.
 
 													\toCB
-In 1980 Phil Morrison\rf{Morr80,Morr98} showed how to derive Hamiltonian
+In 1981 Phil Morrison\rf{Morr98} showed how to derive Hamiltonian
 description of ideal fluid (plasma) dynamics from the Low
-Lagrangian\rf{Low58} by a transformation from Lagrangian to Eulerian
-variables.
-Morrison's method is an important example of
-reduction: the \statesp\ of time-labeled Lagrangian trajectories of
-`particles' is reduced to a much smaller \statesp\ of Eulerian velocity
-fields. It is also a very
+Lagrangian\rf{Low58} by a Lie symmetry reduction, which in this context
+amounts to the transformation from Lagrangian to Eulerian variables: the
+\statesp\ of position-labeled Lagrangian trajectories of `fluid parcels'
+is reduced to a much smaller \statesp\ of Eulerian velocity
+fields. It is a
 difficult example of reduction; the reduction steps have to be
 executed judiciously, new variables cleverly chosen, and ``one should do
 the Legendre transformations slowly and carefully when there are
@@ -140,7 +139,7 @@ symmetry-reduction literature is very extensive (see
 approaches (a) invariant polynomial bases, and (b) methods which pick a
 representative point by slicing group orbits, generalizing the way in
 which {\PoincSec}s cut time-evolving trajectories. For high-dimensional
-flows the \mslices\ studied in \refrefs{CBcontinuous,SiCvi10,Wilczak09}
+flows the \mslices\ studied in \refrefs{CBcontinuous,SiminosThesis,SiCvi10,Wilczak09}
 appears to be the only computationally feasible approach. Here
 the method is rederived as a distance minimization problem in the space
 of patterns.
@@ -340,19 +339,19 @@ linearly on the {\statesp} vectors $\ssp \in \pS \subset \reals^d$.
 
 If the \statesp\ is a normed function space,
 \( %\beq
-\braket{g}{f} = \int dx \, {g}(x) f(x)
+\braket{h}{f} = \int dx \, h(x) f(x)
 \,,
 \) %\ee{innerL2}
-one customarily measures distance between two patterns in the $L^2$ norm
+one customarily measures distance between two patterns in the $L^2$ norm,
 $|f|^2 = \braket{f}{f}$. In computations, spatially extended functions are
 represented by discrete meshes or finite basis sets, within a (possibly
 large) finite-dimensional \statesp\  $\pS \subset \reals^d$. An example
 is representation of a dissipative PDE by truncating the Fourier basis
 \refeq{FourierExp} to a finite number of modes.
 
-We can characterize the infimum points by considering the extremum conditions
+The minimal distance is a solution of the extremum conditions
 \[ %beq
-\frac{\partial ~~}{\partial \gSpace_a} |\ssp - \LieEl\slicep|^2
+\frac{\partial ~~}{\partial \gSpace_a} |\ssp - \LieEl(\gSpace)\,\slicep|^2
    =
 \braket{\sspRed - \slicep}{\sliceTan{a}}
    = 0
@@ -387,7 +386,9 @@ a particular case of symmetry reduction by transverse sections of group
 orbits\rf{FelsOlver98,FelsOlver99,OlverInv} that can be traced back to
 Cartan's \mframes\rf{CartanMF}. \emph{Moving frame} refers to the action
 $\LieEl(\gSpace)$ that brings a \statesp\ point \ssp\ into the slice.
-
+We denote the full \statesp\ points and velocities by $\ssp$,
+$\vel(\ssp)$, and the \reducedsp\  points and velocities by $\sspRed$,
+$\velRed(\sspRed)$.
 
 In the choice of the {\template} one should avoid solutions
 that belong to the invariant or partially symmetric subspaces; for such
@@ -422,9 +423,7 @@ $\sspRed \in \pSRed$.
 
 															\toCB
 The idea of reducing a flow with Lie-group structure to a system of a
-smaller dimension dates back to Lie, Poincar\'e, and Cartan\ES{Not really
-Cartan. The problems he studied had to do with the classification of
-curves but I do not know of any result related to flows.}.
+smaller dimension dates back to Sophus Lie.
 Time-evolution and symmetry group actions foliate the \statesp\ into
 $(N\!+\!1)$\dmn\ submanifolds: Given a state (a \statesp\ point $\ssp(0)$
 at time $\tau=0$), we can trace its  1\dmn\ trajectory $\ssp(\tau)$ by
@@ -476,7 +475,6 @@ Consider next the general form \refeq{SO2irrepAlg-m} of action of an
 $\SOn{2}$ symmetry on arbitrary Fourier coefficients of a spatially
 periodic function \refeq{FourierExp}. Substituting this into the slice
 condition \refeq{PCsectQ} and using \refeq{SO2irrepAlg-m} we find that
-    \PC{RECHECK! and prettify this formula}
 \bea
 \braket{e^{-\gSpace \Lg}\ssp}{\groupTan(\slicep)}
 =\braket{\ssp}{\sum\limits_m \left(\cos(m\gSpace) \id^{(m)}
@@ -503,12 +501,13 @@ As a generic group orbit is a smooth $N$\dmn\ manifold embedded in the
 $d$\dmn\ \statesp, several values of $\gSpace$ might be local extrema of
 the distance function \refeq{minDistance0}.
 Our prescription is to pick the closest \reducedsp\ point as the unique
-representative of the entire group orbit. \ie, determine the absolute
-minimum or the \emph{infimum} of \refeq{minDistance0}.
+representative of the entire group orbit. \ie, determine the global
+minimum (or infimum) of distance \refeq{minDistance0}.
 For example, group orbits of
 \SOn{2}\ are topologically circles, and the distance function
-\refeq{minDistance0} has maxima, minima and inflection points as extrema:
-if \gSpace\ is a solution of the slice condition \refeq{SL:CLEsliceRot},
+has maxima, minima and inflection points as extrema:
+if \gSpace\ is a solution of the slice condition \refeq{SL:CLEsliceRot}
+for \cLe,
 so is $\gSpace+\pi$. We can pick the closest by noting that
 the local minima have positive curvature,
 \beq
@@ -519,7 +518,9 @@ the local minima have positive curvature,
 -  \braket{\sspRed}{\Lg^2\slicep}
 \,.
 \ee{SO2inflPoint}
-For the \cLe\, this determines which angle will be used since there is only a minima and a maxima, though it is not sufficient in general.
+For the \cLe\, this determines which moving frame angle will be used since the
+the distance function \refeq{minDistance0} has
+only a minimum and a maximum.
 It does not matter
 whether the group is compact, for example $\SOn{n}$, or noncompact, for
 example the Euclidean group $E_2$ that underlies the generation of spiral
@@ -531,11 +532,11 @@ flows such as the \KS\ and {\pCf} exhibit will also have to be taken into
 account\rf{SCD07,HGC08,DasBuchMirror}.)
 
 In summary, we do not have to compute all zeros of the slice condition
-\refeq{PCsectQ} - all we care about is the infimum, the zero that
+\refeq{PCsectQ} - all we care about is the zero that
 corresponds to the shortest distance \refeq{minDistance0}.
 While post-processing of a full \statesp\ trajectory $\ssp(\tau_j)$
 requires a numerical (Newton method) determination of the
-`moving frame' rotation
+moving frame rotation
 $\gSpace(\tau_j)$ at each time step $\tau_j$, the computation is not
 as onerous as it might seem, as the knowledge of $\gSpace(\tau_j)$ and
 $\groupTan(\sspRed(\tau_j))$
@@ -594,10 +595,6 @@ consider only the $\SOn{2}$ case, which has a single group tangent:
 \,.
 \label{eq:so2reduced}
 \eea
-
-When the group tangent of the reduced trajectory points in the slice, the equation
-for $\dot{\gSpace}$ is not defined and the trajectory passes through a `singularity'.
-
 One way to think about this reduction of a flow to a slice is in terms of
 Lagrange multipliers (see {Stone and Goldbart}\rf{StGo09}, Sect 1.5 for
 intuitive, geometrical interpretation of Lagrange multipliers). The first
@@ -614,7 +611,11 @@ continuous trajectory from its \PoincSec s.
 \section{\Sset}
 	\label{sec:singul}
 % former siminos/froehlich/slice/singul.tex 2011-01-13
-Next consider when the system is not defined on the reduced space (when the group tangent of the reduced trajectory points inside the slice so the denominator in \refeq{eq:so2reduced} is zero).
+
+If the group tangent of the \reducedsp\ trajectory points into the slice,
+the denominator in the Eq.~\refeq{eq:so2reduced} vanishes and {\angVel}
+$\dot{\gSpace}$ is not defined. We now show this singularity induces a
+computable jump in the \reducedsp\ trajectory.
 
 If  two patterns are close, their group orbits are nearly parallel, and
 $\braket{\groupTan(\ssp)}{\sliceTan{}} \neq 0$. Hence a slice is transverse
@@ -633,15 +634,17 @@ locally `horizontal,'
 \ee{sliceSingl0}
 (for simplicity, in this section we specialize to the  $\SOn{2}$ case).
 We shall refer to the $(d\!-\!2)$\dmn\ intersection of the two as the
-{\em \sset} $S$, \ie all points $\sspRSing$ where
+{\em \sset} $S$, \ie, all points $\sspRSing$ where
 \bea
 \braket{\sspRSing}{\sliceTan{}}&=&0 \continue
 \braket{\groupTan(\sspRSing)}{\sliceTan{}}
  &=&
 \braket{\sspRSing}{\Lg^2\slicep}
  =0
-\,.
-\eea{sliceSingl}
+% \,.
+\label{sliceSingl}
+\eea
+(this is called `singular set' in \refref{SiCvi10}).
 Looking back at \refeq{SO2inflPoint}, we see that $S$ is the locus of
 inflection points, a hyperplane through which the curvature of the
 distance function changes sign, and a local minimum turns into a local
@@ -660,7 +663,7 @@ trajectory crosses an {\sset}, it pays it no heed whatsoever.
 We next show that the singularity in
 the formula \refeq{SL:CLEsliceRot} causes a discontinuous jump in the
 moving frame angle $\gSpace$. Consider a full \statesp\ trajectory
-$\ssp(\tau)$ that passes through the {\sset} \refeq{sliceSingl} at time $\tau^*$, 
+$\ssp(\tau)$ that passes through the {\sset} \refeq{sliceSingl} at time $\tau^*$,
 $\sspRSing =\ssp(\tau^*)$, which we shall set to  $\tau^*=0$. At that
 instant the moving frame angle $\gSpace$ is formally undefined: the
 numerator $\braket{\sspRSing}{\sliceTan{}}$ in \refeq{SL:CLEsliceRot}
@@ -690,7 +693,7 @@ by
 \eea
 In other words, the moving frame rotates the \statesp\ point $\ssp$ and
 the velocity $\vel(\ssp)$ by the same angle, so either can be used to
-compute it. The infimum in the slice condition demands that we pick the
+compute it. The shortest distance condition demands that we pick the
 solution with positive curvature \refeq{SO2inflPoint}, so
 $\braket{\groupTan(\ssp)}{\sliceTan{}}\geq 0$
 for all $\tau$. As the trajectory traverses $\sspRSing$, the time $\tau$
@@ -710,12 +713,6 @@ that instant the numerator $\braket{\vel(\sspRSing)}{\sliceTan{a}}$ is
 lies in the slice, ${\braket{\groupTan_{}(\sspRSing)}{\sliceTan{}}}=0$
 by \refeq{sliceSingl}, the denominator in \refeq{eq:so2reduced} vanishes,
 and the {\angVel} $\dot{\gSpace}$ shoots off to infinity.
-\SF{For the nearby trajectories the numerator is nonzero, but along a
-trajectory passing through a singularity doesn't the numerator approach
-zero $\gSpace$ approach the angle required to rotate the velocity into
-the slice? Hence the infinitely thin delta function}
-\ES{I am also confused about what happens in the last two paragraphs, but
-I'll let you two sort it out first.}
 
 % 2010-12-20 previously {CLEsingpass}{CLEnearsing2}
  \begin{figure}
@@ -759,15 +756,13 @@ the inflection \refeq{sliceSingl} and jumps to the $\pi$-rotated extremum
 of the distance function, \reffig{fig:singpass}\,(a).
 
 The {\sset} $S$ is the intersection of two hyperplanes: (1) the slice
-(infimum of the group-orbit distance to the {\template}), and (2) the
+(the shortest distance from the group-orbit to the {\template}), and (2) the
 closest inflection in the distance function \refeq{sliceSingl}, and thus
 of higher codimension than either. While all group orbits of a  generic
 trajectory cross the slice, the trajectory has vanishing probability to
 cross the lower-dimensional {\sset} - that is why we had to `engineer'
 the slice \refeq{exmplTempl}. However, an ergodic trajectory  might come
 arbitrarily close to  $S$ arbitrarily often.
-	\PC{This hopefully resolves a long-standing conundrum for Evangelos
-        and me. Please CORRECT ME if I am wrong, I'm on thin ice here!}
 Such nearby \reducedsp\ trajectories exhibit large {\angVels} $\dot{\gSpace}$,
 \reffig{fig:dthetasing}\,(b), and very fast, nearly semi-circular
 excursions close to the singularity, \reffig{fig:singpass}\,(a). Which segment
@@ -812,16 +807,14 @@ then the other
  \end{figure}
 
 In summary, whenever a \reducedsp\ trajectory crosses the {\sset}, it
-jumps instantaneously and discontinuously to the new distance infimum. We
+jumps instantaneously and discontinuously to the new group orbit point
+with the shortest distance to the template. We
 have shown that these jumps are harmless and theoretically under control.
 Nearby trajectories are numerically under control if sufficient care is
 taken to deal with large \angVels. But they are an artifact of the
 \mslices\ of no dynamical significance, and an uncalled-for numerical
 nuisance. We now outline a strategy how to avoid them altogether by a
 clever choice of {\template s}.
-	\PC{no, not
-\HREF{http://en.wikipedia.org/wiki/Infimum}{infinum}
-	}
 
 
 \section{Charting the \reducedsp}
@@ -975,18 +968,17 @@ dynamics of dissipative PDEs.
 While it has been demonstrated in \refref{SiCvi10}  that the \mslices,
 with a judicious choice of the {\template} and {\PoincSec}, works for a
 system as simple as the \cLf, one still has to show that the method can
-be implemented for a truly high-dimensional flow. In \refref{SCD07} it
-was found that the coexistence of four equilibria, two \reqva\ and a
+be implemented for a truly high-dimensional flow.
+Siminos\rf{SiminosThesis} has used a modified \mframes\ to compute
+analytically a 128\dmn\ invariant basis for \reducedsp\ $\pSRed
+= \pS/\SOn{2}$, and shown that the unstable manifolds of \reqva\ play
+surprisingly important role in organizing the geometry of \KS.
+In \refref{SCD07} it
+was found that the coexistence of four \eqva, two \reqva\
+(traveling waves) and a
 nested \fixedsp\ structure in an effectively $8$-dimensional \KS\ system
-complicates matters sufficiently that no symmetry reduction has been
-attempted so far.\ES{ Not attempted? Not funny. You seem to
-totally forget my thesis, but I have to say that not only it attempted
-but also succeeded to provide global invariant coordinates, analytically
-and in $128$ dimensions. You might not like it for aesthetical reasons,
-but you cannot say it was not attempted -- it was an effort of
-at least three years involving me, Ruslan, Predrag, Jonathan (and I might
-forget someone).
-}
+complicates matters sufficiently that no symmetry reduction by the \mslices\ has been
+attempted so far.
 More importantly, a symmetry reduction of pipe flows, which
 due to the translational symmetry have only relative (traveling)
 solutions, remains an outstanding challenge\rf{ACHKW11}.
@@ -1187,7 +1179,7 @@ rule
 Some important fluid-dynamical flows exhibit continuous symmetries which
 are the products of $\SOn{2}$ groups, each of which acts on a subset  of
 the {\statesp} coordinates. The \KS\ equations\rf{ku,siv}\ES{In $2$-D?},
-{\pCf}\rf{Visw07b,GHCW07,HGC08,HalcrowThesis}, and pipe
+{\pCf}\rf{Visw07b,GHCW07,HGC08}, and pipe
 flow\rf{Wk04,Kerswell05} all have continuous symmetries of this form.
 
 Let $\Group \times H$ be a Lie group with two sets of infinitesimal

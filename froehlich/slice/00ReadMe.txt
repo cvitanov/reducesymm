@@ -41,13 +41,32 @@ merged all sections, uploaded
 
 ----------------------------------------------------------------
                         Predrag  Jan 15, 2011
-merged all sections, uploaded
-		  ../arxiv-v1/FrCv11.tex
-		  defsFrCv11.tex FrCv11Notes.bbl  
+    arXiv article-id:       
+    Article password: 
+    http://arxiv.org/abs/
+
+From: <e-prints@arxiv.org>
+Date: Sat, Jan 15, 2011 at 20:39
+Subject: arXiv submission submit/0180352
+We have received your submission to arXiv. Your temporary
+submission identifier is: submit/0180352.
+You may update your submission at: http://arxiv.org/submit/180352
+
+Your article is scheduled to be announced at 
+18 Jan 2011 01:00:00 GMT.
+The abstract will appear in the subsequent mailing as displayed below, except that the submission identifier will be replaced by
+the official arXiv identifier. Updates before Mon, 17 Jan 2011 21:00:00 GMT will not delay announcement.
+
+    merged all sections, uploaded
+		  ../arxiv-v1/
+		  defsFrCv11.tex FrCv11Defs.tex FrCv11.bbl
 		  elsarticle.cls numcompress.sty
 		  Fullspace.png  RedTrajNoPlane1.png
-		  dthetasing.png dthetanearsing.png  singpass1.png
-----------------------------------------------------------------
+		  dthetasing.png dthetanearsing.png  
+		  singpass1.png  f_1_08_1.pdf
+
+!!! then DO NOT TOUCH arxiv-v1/* again, do all edits in CLE/
+===============================================================
                         Predrag  Nov 21, 2010
 First idea: submit to CHAOS
 Configured following instructions on
