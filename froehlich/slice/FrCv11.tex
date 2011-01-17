@@ -109,7 +109,7 @@ method, we reduce the $\SOn{2}$ symmetry of the \cLe.
     \label{sec:intro}
 % former file siminos/froehlich/slice/intro.tex 2011-01-13
 
-In spatially extended, turbulent flows one observes similar patterns at
+In spatially-extended turbulent flows one observes similar patterns at
 different spatial positions and at different times. How `similar?' If the
 flow is equivariant under a group of continuous symmetries, one way of
 answering this question is by measuring distances between different
@@ -145,7 +145,7 @@ the method is rederived as a distance minimization problem in the space
 of patterns.
 
 The new results reported in this paper are:
-    (a) A generic linear slice cuts across group orbits of {\em all}
+    (a) A generic slice cuts across group orbits of {\em all}
         states in the \statesp\ (\refsect{sec:frame}).
     (b) Every slice carries along with it the {\sset}. We show how to
         compute the jump of the \reducedsp\ trajectory
@@ -220,6 +220,9 @@ r_1=28,\; b={8}/{3},\;
 \ee{SiminosPrmts}
 for which the flow exhibits a strange attractor,
 \reffig{fig:Fullspace}\,(a).
+Our goal is to understand in detail this flow
+in the symmetry-\reducedsp, in particular the
+singularities induced by the symmetry reduction.
 The \CLe\ are a simple example of a dynamical system
 with a continuous (but no discrete) symmetry.
 They are equivariant \refeq{eq:FiniteRot} under \SOn{2} rotations by
@@ -343,7 +346,7 @@ If the \statesp\ is a normed function space,
 \,,
 \) %\ee{innerL2}
 one customarily measures distance between two patterns in the $L^2$ norm,
-$|f|^2 = \braket{f}{f}$. In computations, spatially extended functions are
+$|f|^2 = \braket{f}{f}$. In computations, spatially-extended functions are
 represented by discrete meshes or finite basis sets, within a (possibly
 large) finite-dimensional \statesp\  $\pS \subset \reals^d$. An example
 is representation of a dissipative PDE by truncating the Fourier basis
@@ -401,7 +404,7 @@ features of a flow, most \eqva\ and short \po s have nontrivial
 symmetries and thus are not suited as choices of symmetry-reducing
 {\template s}.
 It should also be emphasized that in general a {\template} is \emph{not}
-a spatially {localized} structure. We are not using translations /
+a spatially-{localized} structure. We are not using translations /
 rotations to superimpose a localized, `solitonic' solution over a
 localized {\template}. In a strongly nonlinear, turbulent flow a good
 {\template} is typically a nontrivial global solution.
@@ -530,6 +533,13 @@ one that is the closest one.
 (Here we focus only on continuous symmetries - discrete symmetries that
 flows such as the \KS\ and {\pCf} exhibit will also have to be taken into
 account\rf{SCD07,HGC08,DasBuchMirror}.)
+
+However, 'picking the closest' point in a group orbit of a pattern very unlike
+the {\template} is not necessarily a sensible thing to do; as such state
+evolves in time, distant points along its orbit can come closer to the
+{\template}, causing discontinuous jumps in the moving frame angle. We
+shall show in \refsect{sec:singul} that this is a generic phenomenon for a 
+single-slice symmetry reduction, and propose a cure in \refsect{sec:singul}.
 
 In summary, we do not have to compute all zeros of the slice condition
 \refeq{PCsectQ} - all we care about is the zero that
@@ -737,7 +747,7 @@ but finite excursion close to the singularity.
  \end{figure}
 
 As an illustration of such jump, consider a blow-up of the small rectangle indicated
-in \reffig{fig:Fullspace}\,(b). Here the {\template}
+in \reducedsp\ flow \reffig{fig:Fullspace}\,(b). Here the {\template}
 \bea
 \slicep 	&=& (0.887846,-0.150461,0.4,-0.12,0)
 	\continue
@@ -814,7 +824,7 @@ Nearby trajectories are numerically under control if sufficient care is
 taken to deal with large \angVels. But they are an artifact of the
 \mslices\ of no dynamical significance, and an uncalled-for numerical
 nuisance. We now outline a strategy how to avoid them altogether by a
-clever choice of {\template s}.
+clever choice of a {\em set} of {\template s}.
 
 
 \section{Charting the \reducedsp}
@@ -837,7 +847,7 @@ shown in \refrefs{lanCvit07,SCD07} that for turbulent/chaotic systems a
 set of Poincar\'e sections is needed to capture the dynamics. The choice
 of sections should reflect the dynamically dominant patterns seen in the
 solutions of nonlinear PDEs. We propose to construct a global atlas of
-the symmetry \reducedsp\ $\pS/\Group$ by deploying both linear slices and
+the symmetry \reducedsp\ $\pS/\Group$ by deploying both slices and
 linear Poincar\'e sections across neighborhoods of the qualitatively most
 important patterns, taking care that the {\template s} chosen have no
 symmetry. Each slice $\pSRed{}^{(j)}$, tangential to one of a finite
@@ -883,19 +893,37 @@ $\pSRed{}^{(2)}$ slice. Or, if you prefer to track the  given full
 with respect to each (global) slice, and check to which tile does the
 given group orbit belong.
 
-There is a rub, though - you need to pick the phases of neighboring
-{\template s} in such way that you minimize the distance from one to the
-next as the ant crosses the ridge. This a reflection of the flaw inherent in use
-of a linear slice globally: a slice is derived from the Euclidean
+There is a rub, though - you need to know how to
+pick the phases of neighboring {\template s}.
+This a reflection of the flaw inherent in use
+of a linear, hyperplane slice globally: a slice is derived from the Euclidean
 notion of distance, but for nonlinear flows the distance has to be
 measured curvilinearly, along unstable
-manifolds\rf{Christiansen97,DasBuch}. We nevertheless have to stick with tessellation by
+manifolds\rf{Christiansen97,DasBuch}.
+We nevertheless have to stick with tessellation by
 linearized tangent spaces, as curvilinear charts seem computationally too
-prohibitive. The {\em relative phase} between two
-different \reqva\ can be fixed, as proposed in \refref{SCD07}, by the
+prohibitive. 
+Perhaps a glance at 
+\reffig{fig:singpass}\,(b) helps visualize the
+problem; imagine the trajectories drawn there are group orbits, and the
+tiles belong to the slices through {\template} points on these orbits. 
+One could slide {\template s} along their group orbits until the pairs of
+ straight line segments connecting neighboring {\template} points are minimized,
+ but that is not physical: one would like the dynamical trajectories to
+ cross ridges as continuously as possible.
+So how is one to pick the phases of the {\template s}?
+The phase of the first {\template} is for free, but its choice fixes all 
+{\em relative phases}
+to the succeeding {\template s}, as was demonstrated in \refref{SCD07}:
+the universe of all other solutions is rigidly
+fixed through a web of heteroclinic connections between them. This
+insight garnered from study of a 1-dimensional \KS\ PDE is more
+remarkable still when applied to the plane Couette flow\rf{GHCW07},
+with 3-$d$ velocity fields and two translational symmetries.
+The {\em relative phase} between two
+different \reqva\ is thus fixed  by the
 shortest heteroclinic connection, a rigid bridge from one
 neighborhood to the next.
-
 
 
 \section{What lies ahead} % Conclusion}
@@ -903,7 +931,7 @@ neighborhood to the next.
 % former siminos/froehlich/slice/concl.tex  2011-01-13
 % PC 2011-01-05 incorporated concl.tex from the SF article
 
-Many physically important spatially extended and fluid dynamics systems
+Many physically important spatially-extended and fluid dynamics systems
 exhibit continuous symmetries. For example,  excitable
 media\rf{ZaZha70,Winfree73,Winfree1980,BaKnTu90,Barkley94}, \KS\
 flow\rf{ku,siv,SCD07}, {\pCf}\rf{Visw07b,GHCW07,HGC08,GibsonMovies}, and
@@ -945,7 +973,7 @@ altogether another story. It is natural to express a dynamical system
 with a symmetry in the symmetry's linear eigenfunction basis (let  us
 say, Fourier modes), but for a nonlinear flow different modes are
 strongly coupled, and group orbits embedded in such coordinate bases can
-be highly convoluted, in ways that no single global linear slice
+be highly convoluted, in ways that no single global slice
 hyperplane can handle intelligibly.
 
 It should be emphasized that the atlas so constructed retains the
