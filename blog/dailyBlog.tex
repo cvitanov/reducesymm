@@ -3850,6 +3850,14 @@ Fig. 1\,(b)), '' but now we also refer to it in the introduction.
   {\bf 2011-01-17 PC}
 You are right, I have now added a paragraph discussing the point you rise
 here.
+    \\
+  {\bf 2011-01-19 ES}
+This remark reminded me that I had tried using Newton's method with
+a guess from the previous point to get the solution on the slice
+that is at minimum distance from the template, in order  
+to get \reffig{ks22rpo16mf}. However, there were problems with jumps,
+as correctly pointed by Ashley. So I've ended up finding all solutions 
+and picking the one which was at a minimum distance from the template. 
 
   \item In section 4 it wasn't obvious to me what was meant by {\em linear slices}.
     \\
@@ -3948,6 +3956,75 @@ a black-headed woman make a freight train
 
 \end{description}
 
+\begin{description}
+  \item[ES 2010-01-19] Rescued from FrCv11.tex flotsam:\\
+  {\bf PC:}{
+{\bf Tessellation of the \reducedsp\ by two or many slices:
+how to implement it?}
+See \HREF{http://en.wikipedia.org/wiki/Voronoi_diagram}
+{wiki on Voronoi diagrams}.
+We have to study Roweis  and Saul\rf{RoSa00}
+\emph{``Nonlinear dimensionality reduction by locally linear embedding.''}
+A sobering fact: Roweis, assistant professor at N.Y.U., a young
+star in the field and universally liked, jumped out of his Washington
+Square apartment earlier this year.
+	}
+
+ \item[ES 2010-01-19: Roweis and Saul\rf{RoSa00}] is indeed a very interesting 
+  paper that got me thinking again -- so much that I took the day off to devote 
+  it to symmetry reduction. 
+
+  The main goal is to construct a global, low dimensional ``intrinsic'' 
+  embedding of high-dimensional data based on locally linear transformations. 
+  I will mention the three steps involved very briefly (but they will only make
+  sense once one reads \rf{RoSa00} or the more detailed \rf{SaRo02}):
+  (1) compute for each state space point its
+  closest neighbors (within the sampled data), (2) solve a costrained 
+  least squares minimization problem for the (local) linear transformation 
+  matrix $W_{ij}$ that most accurately reconstructs each data point 
+  from its neighbors. (3) Given $W_{ij}$ (only!) solve a second minimization
+  problem for the coordinates of each data point in a new, lower-dimensional,
+  global coordinate system. In practice this involves solving a sparse
+  eigenproblem for the first $d$ eigenvectors, where $d$ the dimension of
+  the embedding.
+  
+  Roweis and Saul argue that the transformations computed in step (2) are
+  translation, rotation and scaling invariant by construction and certain
+  constraints imposed. This would fit us very well, but do we really want
+  to also compute a low dimensional embedding? In principle this is what we are
+  after, but we also do not want to make any drastic approximation of the 
+  dynamics at this stage. 
+
+  One option might be to reduce only by the group dimension.
+  However one has to consider at least as many closest neighbors
+  in step (1) as the dimension of the embedding. Then I would think that
+  the problem might be computationally very intensive.
+
+  Another option would be to bypass step (2) altogether and use a local
+  moving frame transformation to map the local neighborhood of (a few?)
+  sample points to local slices, then use step (3) to construct a global
+  coordinate frame.
+
+  In any case we might need to work with a symmetry invariant norm for the
+  minimization problems, rather than the Euclidean distance used in \rf{RoSa00}.
+
+  I would be very interested to try something else in a system without symmetry
+  (e.g. KSe in antisymmetric subspace). Take the sample points from a dense 
+  set of periodic orbits. Rather than computing the  local transformation
+  $W_{ij}$ in step (2), use the Jacobian of the periodic orbits.
+  Compute the global embedding as in step (3). Does it faithfully reproduce
+  the dynamics? Can we learn something about the dimensionality of 
+  the attractor (actually of the embedding manifold)?
+
+  There are $\sim1500$ papers citing \rf{RoSa00} so it is impossible to track
+  all of them down. The ones from physics and math are fewer and the only one 
+  directly relevant to us I could find is by Bollt\rf{bollt07}. 
+  It does however use a different pattern recognition method (called ISOMAP) 
+  to compute embeddings of various systems, including KSe in antisymmetric 
+  subspace (no continuous symmetry reduction there).
+  
+
+\end{description}
 
 
 
