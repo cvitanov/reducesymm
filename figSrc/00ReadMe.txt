@@ -1,15 +1,30 @@
 % siminos/figSrc/00ReadMe.txt
 % $Author$ $Date$
 
-Siminos source programs for figures
-===================================
+Siminos, Froehlich source programs for figures
+==============================================
 
 [read also halcrow/figSrc/00ReadMe.txt]
 
 ----------------------------------------------------------------
                                         Predrag 2010-12-21
+
 Stefan, please save, clearly document here the source code.
 
+----------------------------------------------------------------
+                                        Predrag 2010-12-21
+
+*.pdf vector graphic files are much larger than
+*.png raster graphics, so deferred these Mathematica generated
+files to the journal submission:
+
+froehlich/CNSNS-v1/dthetanearsing.pdf
+		   Fullspace.pdf 
+		   singpass1.pdf 
+		   dthetasing.pdf 
+		   RedTrajNoPlane1.pdf 
+
+----------------------------------------------------------------
                                         Stefan  2010-12-20
 
 'final' figures for the ../froehlich/slice article
