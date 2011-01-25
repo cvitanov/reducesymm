@@ -1,5 +1,5 @@
 % master file siminos/froehlich/slice/FrCv11.tex    pdflatex  FrCv11
-% $Author$ 
+% $Author$
 % $Date$
 
                         %% logical setup, no need to edit %%%%%%%%%%
@@ -301,7 +301,11 @@ through the data set of observed patterns for something like it. Here you
 see a pattern, and there you see a pattern that seems much like the first
 one. How `much like the first one?' Think of the first pattern
 (represented by a point {\slicep} in the \statesp\  \pS) as a
-`template'\rf{rowley_reconstruction_2000,rowley_reduction_2003} or a
+`template'%
+\rf{rowley_reconstruction_2000,%
+rowley_reduction_2003,%
+ahuja_template-based_2007}
+or a
 `reference state' and use the symmetries of the flow to slide and rotate
 the `{\template}' until it overlays the second pattern (a point $\ssp$ in
 the \statesp), \ie, act with elements of the symmetry group \Group\ on
@@ -466,20 +470,25 @@ is usually only topologically a circle. The \slice\ intersects all full
 \statesp\ group orbits (indicated by dotted lines here).  The full
 \statesp\ trajectory $\ssp(\tau)$ and the \reducedsp\ trajectory
 $\sspRed(\tau)$ are equivalent up to a group rotation
-$\ssp(\tau)=\LieEl(\tau)\,\sspRed(\tau)$.
+$\ssp(\tau)=\LieEl(\tau)\,\sspRed(\tau)$, where $\LieEl(\tau)$ is
+a shorthand for $\LieEl(\ssp(\tau))$.
 (b)
-Two hyperplanes are associated with  any given {\template} \slicep; the
-slice $\pSRed$, and the hyperplane of inflection points $\sspSing$, points
-for which the curvature of the distance function \refeq{minDistance}
-changes sign. For $\SOn{2}$ this hyperplane is normal to the quadratic Casimir-weighted
-vector $\Lg^2\slicep$. The intersection of the two hyperplanes is the {\em \sset}
-$S$, within which the group tangent
-$\groupTan(\sspRSing)$ points into the slice and is thus normal to
-$\sliceTan{}$; for rotation angles beyond this hyperplane
-the group orbit  $\LieEl\,\ssp$ has left the {\template} neighborhood.
+For $\SOn{2}$ two hyperplanes are associated with  any given {\template}
+\slicep; the slice $\pSRed$, and the hyperplane of points $\sspSing$
+normal to the quadratic Casimir-weighted vector $\Lg^2\slicep$, for which
+the curvature \refeq{SO2inflPoint} of the distance function
+\refeq{minDistance} changes sign. This defines a group-theoretic
+boundary of the {\template} neighborhood: For rotation angles
+beyond this hyperplane the group orbit $\LieEl\,\ssp$ has left the
+neighborhood. The intersection of the two hyperplanes is the {\em \sset}
+$\sspRSing \in S$, within which all group tangents $\groupTan(\sspRSing)$
+point into the slice and are thus normal to $\sliceTan{}$. Note that the
+`line' of intersection  $S$ is actually $(d\!-\!2)$\dmn\ hyperplane, but
+that is not easy to visualize in this 3\dmn\ sketch.
 %(from \wwwcb{}).
  }%
  \end{figure}
+
 
 \subsection{Computing the moving frame rotation angle}
 \label{exam:CLErotAngle}
@@ -655,7 +664,9 @@ the slice conditions \refeq{PCsectQ}:
 \eeq
 This is a matrix equation in
 $\braket{\groupTan_b(\sspRed)}{\sliceTan{a}}$ that one can in
-principle\rf{FiSaScWu96} solve for $\dot{\gSpace}_a$. Here we shall
+principle\rf{FiSaScWu96,%
+ahuja_template-based_2007}
+solve for $\dot{\gSpace}_a$. Here we shall
 consider only the $\SOn{2}$ case, which has a single group tangent:
 \bea
 \velRed(\sspRed) &=& \vel(\sspRed)
@@ -670,7 +681,7 @@ One way to think about this reduction of a flow to a slice is in terms of
 Lagrange multipliers (see {Stone and Goldbart}\rf{StGo09}, Sect 1.5 for
 intuitive, geometrical interpretation of Lagrange multipliers). The first
 equation defines the flow confined to the slice (see
-\reffig{fig:Fullspace}\,(b), \reffig{fig:slice}\,(a)), 
+\reffig{fig:Fullspace}\,(b), \reffig{fig:slice}\,(a)),
 and integration of the second,
 `reconstruction' equation\rf{Marsd92,MarsdRat94} enables us to track the
 corresponding trajectory in the full \statesp. For invariant subspaces
@@ -680,26 +691,43 @@ trajectory, we can hop at will back and forth between the reduced
 and the full \statesp\ trajectories, just as we can reconstruct a
 continuous trajectory from its \PoincSec s.
 
+At this point it is worth noting that imposing the global and fixed slice
+\refeq{PCsectQ} is not the only way to separate equivariant dynamics into
+the group dynamics and `shape' dynamics\rf{BeTh04}. In modern mechanics
+and even field theory (where elimination of group-directions is called
+`gauge-fixing') it is natural to separate the flow into group dynamics
+and a transverse, `horizontal' flow\rf{Smale70I,AbrMars78}, by the
+`method of connections'\rf{rowley_reduction_2003}. From our point of
+view, such approaches are not useful, as they do not reduce the dynamics
+to a lower-dimensional \reducedsp\ $\pS/\Group$.
+
+
 \section{\Sset}
 	\label{sec:singul}
 % former siminos/froehlich/slice/singul.tex 2011-01-13
 
-If the group tangent of the \reducedsp\ trajectory points into the slice,
-the denominator in the Eq.~\refeq{eq:so2reduced} vanishes and {\angVel}
-$\dot{\gSpace}$ is not defined. We now show this singularity induces a
-computable jump in the \reducedsp\ trajectory.
-
 If  two patterns are close, their group orbits are nearly parallel, and
-$\braket{\groupTan(\ssp)}{\sliceTan{}} \neq 0$. Hence a slice is transverse
-to all group orbits in an open neighborhood of the {\template} \slicep.
-However, globally the \mslices\ always introduces singularities. Two
-hyperplanes sketched in
+$\braket{\groupTan(\ssp)}{\sliceTan{}} \neq 0$. Hence a {\slice} is
+transverse to all group orbits in an open neighborhood of the {\template}
+\slicep, but not so {\em globally}. As we go away from
+the {\template} point, the angles of the group orbit traversals
+can decrease all the way to zero, until their group tangents lie in the slice.
+This set of points defines a purely group-theoretic boundary of
+the {\template's} neighborhood.
+Furthermore, whenever the group tangent of the \reducedsp\ trajectory
+points into the slice, the denominator in \refeq{eq:so2reduced} vanishes
+and {\angVel} $\dot{\gSpace}$ is not defined. We now show that these
+singularities (a) also lie in a hyperplane, determined by the symmetry
+group alone, and (b) induce computable jumps in the \reducedsp\
+trajectory.
+
  													\toCB
-\reffig{fig:slice}\,(b)
-are associated with  any given {\template} \slicep; the slice
-\refeq{PCsectQ}, and the hyperplane of points \sspSing\ such that from
-the {\template} vantage point their group orbits are not transverse, but
-locally `horizontal,'
+Two hyperplanes sketched in \reffig{fig:slice}\,(b) are associated with
+any given {\template} \slicep; the slice \refeq{PCsectQ}, and the
+hyperplane of points \sspSing\ defined by being normal to  the quadratic
+Casimir-weighted vector $\Lg^2\slicep$, such that from the {\template}
+vantage point their group orbits are not transverse, but locally
+`horizontal,'
 \beq
 \braket{\groupTan(\sspSing)}{\sliceTan{}}
  =
@@ -708,8 +736,13 @@ locally `horizontal,'
 %\,.
 \ee{sliceSingl0}
 (for simplicity, in this section we specialize to the  $\SOn{2}$ case).
-We shall refer to the $(d\!-\!2)$\dmn\ intersection of the two as the
-{\em \sset} $S$, \ie, all points $\sspRSing$ where
+
+We shall refer to the
+%$(d\!-\!2)$\dmn\
+intersection of the two as the
+{\em \sset} $S$, \ie, all the set of points $\sspRSing$ which are both
+(1) in the {\slice}, and (2) whose group tangent $\groupTan(\sspRSing)$
+is also in the  {\slice}:
 \bea
 \braket{\sspRSing}{\sliceTan{}}&=&0 \continue
 \braket{\groupTan(\sspRSing)}{\sliceTan{}}
@@ -831,18 +864,17 @@ the inflection \refeq{sliceSingl} and jumps to the $\pi$-rotated extremum
 of the distance function, \reffig{fig:singpass}\,(a).
 
 The {\sset} $S$ is the intersection of two hyperplanes: (1) the slice
-(the shortest distance from the group-orbit to the {\template}), and (2) the
-closest inflection in the distance function \refeq{sliceSingl}, and thus
-of higher codimension than either. While all group orbits of a  generic
-trajectory cross the slice, the trajectory has vanishing probability to
-cross the lower-dimensional {\sset} - that is why we had to `engineer'
-the slice \refeq{exmplTempl}. However, an ergodic trajectory  might come
-arbitrarily close to  $S$ arbitrarily often.
-Such nearby \reducedsp\ trajectories exhibit large {\angVels} $\dot{\gSpace}$,
-\reffig{fig:dthetasing}\,(b), and very fast, nearly semi-circular
-excursions close to the singularity, \reffig{fig:singpass}\,(a). Which segment
-of the group orbit they follow depends on the side from which the
-trajectory approached the {\sset}.
+(the shortest distance from the group-orbit to the {\template}), and (2)
+the closest inflection in the distance function \refeq{sliceSingl}. While
+all group orbits of a  generic trajectory cross the slice, the trajectory
+has vanishing probability to cross the lower-dimensional {\sset} - that
+is why we had to `engineer' the slice \refeq{exmplTempl}. However, an
+ergodic trajectory  might come arbitrarily close to  $S$ arbitrarily
+often. Such nearby \reducedsp\ trajectories exhibit large {\angVels}
+$\dot{\gSpace}$, \reffig{fig:dthetasing}\,(b), and very fast, nearly
+semi-circular excursions close to the singularity,
+\reffig{fig:singpass}\,(a). Which segment of the group orbit they follow
+depends on the side from which the trajectory approached the {\sset}.
 
 % 2011-01-12 previously Figs. {singpass} and {fig:Tesselate}
 % In FrCv11.tex replaced by f_1_08_1.png
@@ -937,9 +969,8 @@ specialize to the $\SOn{2}$ case). Within it, there is a ($d\!-\!2$)\dmn\
 {\sset} \refeq{sliceSingl}. If we pick another {\template} point
 $\slicep{}^{(2)}$, it comes along with its own slice and {\sset}. Any
 neighboring pair of $(d\!-\!1)$\dmn\ slices intersects in a `ridge'
-(`boundary,' `edge'), a $(d\!-\!2)$\dmn\ hyperplane, easy to compute. All
-intersections of slices, ridges and {\sset s} contain the fixed-point
-subspace $\pS_\Group$. A global atlas so constructed should be sufficiently
+(`boundary,' `edge'), a $(d\!-\!2)$\dmn\ hyperplane, easy to compute.
+A global atlas so constructed should be sufficiently
 fine-grained that we never hit any {\sset} singularities. The {\sset}s
 should be eliminated by requiring that they lie either on the far sides
 of the slice-slice intersections, or elsewhere where the strange
@@ -956,6 +987,14 @@ $\pSRed{}^{(2)}$ slice. Or, if you prefer to track the  given full
 \statesp\ trajectory $\ssp(\tau)$, you compute the moving-frame angle
 with respect to each (global) slice, and check to which tile does the
 given group orbit belong.
+
+What about the fixed-point subspace $\pS_\Group$ (see \refeq{dscr:InvPoints})?
+Because of it, the action of \Group\ is globally neither free nor proper,
+\etc. All intersections of slices, ridges and {\sset s} contain the
+fixed-point subspace $\pS_\Group$. Should we worry? Not really. The
+objective of the \mslices\ is to freeze all equivariant coordinates; once
+frozen, they together with the  $\pS_\Group$ coordinates span the
+symmetry-\reducedsp.
 
 There is a rub, though - you need to know how to pick the phases of
 neighboring {\template s}. This is a reflection of the flaw inherent in use
