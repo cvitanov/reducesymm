@@ -1,24 +1,125 @@
 ES postdoc hunt 2011
 
 CEA contract ends Jul 05 2011
+==========================================================
 
+1) Guhr at Duisburg-Essen.
+
+  Deadline: NOW! 
+
+  Ref letter by email to:
+
+  thomas.guhr@uni-duisburg-essen.de
+
+  It would be addressed to:
+
+  Professor Thomas Guhr
+  Faculty of Physics
+  University of Duisburg-Essen
+  Lotharstr. 1
+  47048 Duisburg
+  Germany
+
+2) Advanced MPI PKS fellow (Dresden).
+
+  Deadline: Feb 17 (inclusive ref. letters)
+
+  http://www.mpipks-dresden.mpg.de/pages/forschung/forschung_distpostdocs.html
+
+  It appears they want it by REGULAR MAIL. It should be
+  addressed to:
+
+  Prof. Dr. Roderich Moessner -
+  Managing Director
+  Max Planck Institute for the Physics
+  of Complex Systems,
+  Nöthnitzer Str. 38, 01187 Dresden,
+  Germany
+
+
+3) Fellowship at Laboratoire de Physique Théorique et Modèles Statistiques,
+Paris-Sud. 
+
+  Application deadline Feb 4.
+
+  The reference letter should be sent
+  by email to the secretary:
+
+  Ms Le Vaou: Claudine.le-vaou@lptms.u-psud.fr
+
+  The address of the lab is
+
+  LPTMS
+  bâtiment 100
+  Université Paris-Sud
+  Centre scientifique d'Orsay
+  15 rue Georges Clémenceau
+  91405 Orsay cedex
+
+  No specific information on who should be addressed. 
+
+ES TO DO List
+==================================
+
+[] Marie-Curie integration grant.
+
+  Deadline: March 1st.
+
+  Here the problem is, if I could pick any lab in Europe (cannot be in France) and
+  apply for a chance to work on whatever I want to, what would that be?
+
+  -Something semiclassical, many-body, high-dimensional sounds good right now.
+
+[] Write to Hughes Chate, ask if postdoc available at CEA/Saclay.
+[] Apply to Hans Christian Öttinger?
+    http://www.polyphys.mat.ethz.ch/
+[] Almost got an offer from A. Ghizzo (Nancy); he will probably not write back to 
+    me after asking him if I would be allowed to do anything else than running his
+    Vlasov codes. Write to him if despert? Or go work in a company?
+[] Locate people who do quantum plasmas, write to them:
+    [] Manfredi at Strasburg: Giovanni.Manfredi@ipcms.u-strasbg.fr
+	  http://www-ipcms.u-strasbg.fr/spip.php?article289&lang=fr
+    [] Prof. Dr. Dr. h.c. PADMA KANT SHUKLA CorrFRSE FInstP FAPS AFTWAS 
+	  http://www.tp4.ruhr-uni-bochum.de/~ps/
+	  profshukla@yahoo.com (this guy is scary)
+    [] B. Eliasson: bengt@tp4.rub.de
+	  http://www.tp4.ruhr-uni-bochum.de/~bengt/
+[] Try a few non-linear dynamicists?
+    [] A. Pikovsky http://www.stat.physik.uni-potsdam.de/~pikovsky/
+    [] explore MPI Goettingen http://www.ds.mpg.de/Forschung/index.php
+[] Attend a conference if all fails?
+    [] Will go here anyway: http://www-fusion-magnetique.cea.fr/eps2011/index.html
+	Deadline: 28/02/11
+	27 Jun - 1 July 2011
+    [] http://nonlineaire.univ-lille1.fr/SNL/conferences/85/
+	Deadline: 15 March 2011
+	Dates: 23 Mai - 27 Mai 2011
+    [] Predrag's 65 (date conflict):
+	26 June - 10 July 2011
+    [] Gilmore's 70 (date conflict):
+	28 Jun - 30 Juin 2011
+	http://nonlineaire.univ-lille1.fr/SNL/conferences/87/
+
+Applied
+==========================================================
 Institute		D-line:	Recomm. Lett. 			Web
 
-Nordita Fellowship: 	Nov 15 	3:(they contact ref.)		jam.nordita.org/
+Nordita Fellowship: 	Nov 15 	3:(they contact ref.)		jam.nordita.org/			[x]
 						Dec 2 2010 Predrag uploaded	Nordita letter		
 N. Bohr Inst. Fel.: 	Nov 05 	2-3:postdoc10@nbi.dk		www.nbia.dk/node/13			[x]
 						Dec 2 2010 Predrag emailed	NB Int Academy letter
 Motter's group:		Nov 15 	2:motter@northwestern.edu	dyn.phys.northwestern.edu/job.html	
 						Dec 2 2010 Predrag emailed	motter@northwestern.edu letter
-Greek Fellowships: 	Nov 20 	---
-Marseille (Leoncini)	TBD		
-
-
+Greek Fellowships: 	Nov 20 	---	Written proposal on magnetic reconnection, recycle?		[x]
 
 
 
 I will NOT apply here.
 ======================================
+
+Marseille (Leoncini)	No funding		
+
+
 MPI Dresden		Nov 17  2:visitors@mpipks-dresden.mpg.de www.mpipks-dresden.mpg.de/pages/stellenangebote/frames_stellen_en.html
 				addressed to Prof. Dr. J. Rost
 				also sent by ordinary mail, see below
