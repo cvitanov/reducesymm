@@ -3,24 +3,10 @@ ES postdoc hunt 2011
 CEA contract ends Jul 05 2011
 ==========================================================
 
-1) Guhr at Duisburg-Essen.
-
-  Deadline: NOW! 
-
-  Ref letter by email to:
-
-  thomas.guhr@uni-duisburg-essen.de
-
-  It would be addressed to:
-
-  Professor Thomas Guhr
-  Faculty of Physics
-  University of Duisburg-Essen
-  Lotharstr. 1
-  47048 Duisburg
-  Germany
 
 2) Advanced MPI PKS fellow (Dresden).
+fellowship at MPI for Complex Systems in
+Dresden to conduct independent research. 
 
   Deadline: Feb 17 (inclusive ref. letters)
 
@@ -37,8 +23,7 @@ CEA contract ends Jul 05 2011
   Germany
 
 
-3) Fellowship at Laboratoire de Physique Théorique et Modèles Statistiques,
-Paris-Sud. 
+3) Fellowship at Laboratoire de Physique Théorique et Modèles Statistiques, Paris-Sud. There are surprisingly many permanent researchers working on statistical mechanics and nonlinear dynamics. 
 
   Application deadline Feb 4.
 
@@ -111,6 +96,18 @@ N. Bohr Inst. Fel.: 	Nov 05 	2-3:postdoc10@nbi.dk		www.nbia.dk/node/13			[x]
 Motter's group:		Nov 15 	2:motter@northwestern.edu	dyn.phys.northwestern.edu/job.html	
 						Dec 2 2010 Predrag emailed	motter@northwestern.edu letter
 Greek Fellowships: 	Nov 20 	---	Written proposal on magnetic reconnection, recycle?		[x]
+
+Thomas.Guhr@uni-duisburg-essen.de
+  2011-01-30 Predrag emailed the recommendation.
+Professor Thomas Guhr
+  Faculty of Physics
+  University of Duisburg-Essen
+  Lotharstr. 1
+  D-47048 Duisburg
+  Germany
+www.theo-phys.uni-essen.de/tp/ags/guhr_dir/index_en.html 
+quantum chaos in many body systems, seems very interesting and
+could be a good opportunity for me to go beyond classical physics.
 
 
 

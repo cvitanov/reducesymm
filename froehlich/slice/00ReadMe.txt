@@ -32,6 +32,7 @@ Change of journal: submit to Phil Morrison's 60 birthday Festschrift
 journal: Communications in Nonlinear Science and Numerical Simulation
 editor:  Crystel Chandre
 instructions: CNSNSinstr.doc
+deadline: 					January 31 2011
 
 ----------------------------------------------------------------
                         Predrag  Jan 17, 2011
