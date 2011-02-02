@@ -48,19 +48,19 @@ ES TO DO List
 
 [] Marie-Curie integration grant.
 
-  Deadline: March 1st.
+  Deadline: March 8.
 
   Here the problem is, if I could pick any lab in Europe (cannot be in France) and
   apply for a chance to work on whatever I want to, what would that be?
 
   -Something semiclassical, many-body, high-dimensional sounds good right now.
+  -Or recycle the magentic-reconnection proposal?
 
 [] Write to Hughes Chate, ask if postdoc available at CEA/Saclay.
-[] Apply to Hans Christian Öttinger?
+[x] Apply to Hans Christian Öttinger.
     http://www.polyphys.mat.ethz.ch/
-[] Almost got an offer from A. Ghizzo (Nancy); he will probably not write back to 
-    me after asking him if I would be allowed to do anything else than running his
-    Vlasov codes. Write to him if despert? Or go work in a company?
+[?] Almost got an offer from A. Ghizzo (Nancy);  
+	- Upgrade: 60% simulation, 40% theory. Waiting to see if I get an offer.
 [] Locate people who do quantum plasmas, write to them:
     [] Manfredi at Strasburg: Giovanni.Manfredi@ipcms.u-strasbg.fr
 	  http://www-ipcms.u-strasbg.fr/spip.php?article289&lang=fr
@@ -96,6 +96,7 @@ N. Bohr Inst. Fel.: 	Nov 05 	2-3:postdoc10@nbi.dk		www.nbia.dk/node/13			[x]
 Motter's group:		Nov 15 	2:motter@northwestern.edu	dyn.phys.northwestern.edu/job.html	
 						Dec 2 2010 Predrag emailed	motter@northwestern.edu letter
 Greek Fellowships: 	Nov 20 	---	Written proposal on magnetic reconnection, recycle?		[x]
+	Will hear back in summer 2011 (Greek timetable, say December 2011)
 
 Thomas.Guhr@uni-duisburg-essen.de
   2011-01-30 Predrag emailed the recommendation.
