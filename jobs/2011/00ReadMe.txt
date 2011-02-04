@@ -3,6 +3,16 @@ ES postdoc hunt 2011
 CEA contract ends Jul 05 2011
 ==========================================================
 
+1)  2011-02-02: ES Applied to Hans Christian Öttinger.
+    http://www.polyphys.mat.ethz.ch/
+
+    To Predrag: More or less I've asked whether I could
+    apply for an ETH fellowship to work in his group, as
+    I don't fit his typical applicant profile but I find
+    what he does very interesting. I am not sure 
+    whether I should also provide recommendation letters 
+    at this point. What would you think from your
+    experience?
 
 2) Advanced MPI PKS fellow (Dresden).
 fellowship at MPI for Complex Systems in
@@ -23,7 +33,9 @@ Dresden to conduct independent research.
   Germany
 
 
-3) Fellowship at Laboratoire de Physique Théorique et Modèles Statistiques, Paris-Sud. There are surprisingly many permanent researchers working on statistical mechanics and nonlinear dynamics. 
+3) ES Applied 2011-02-04. 
+
+Fellowship at Laboratoire de Physique Théorique et Modèles Statistiques, Paris-Sud. There are surprisingly many permanent researchers working on statistical mechanics and nonlinear dynamics. 
 
   Application deadline Feb 4.
 
@@ -56,11 +68,9 @@ ES TO DO List
   -Something semiclassical, many-body, high-dimensional sounds good right now.
   -Or recycle the magentic-reconnection proposal?
 
-[] Write to Hughes Chate, ask if postdoc available at CEA/Saclay.
-[x] Apply to Hans Christian Öttinger.
-    http://www.polyphys.mat.ethz.ch/
 [?] Almost got an offer from A. Ghizzo (Nancy);  
 	- Upgrade: 60% simulation, 40% theory. Waiting to see if I get an offer.
+	He didn't ask for letters, so I just wait.
 [] Locate people who do quantum plasmas, write to them:
     [] Manfredi at Strasburg: Giovanni.Manfredi@ipcms.u-strasbg.fr
 	  http://www-ipcms.u-strasbg.fr/spip.php?article289&lang=fr
