@@ -6,13 +6,17 @@ CEA contract ends Jul 05 2011
 1)  2011-02-02: ES Applied to Hans Christian Öttinger.
     http://www.polyphys.mat.ethz.ch/
 
-    To Predrag: More or less I've asked whether I could
-    apply for an ETH fellowship to work in his group, as
-    I don't fit his typical applicant profile but I find
-    what he does very interesting. I am not sure 
-    whether I should also provide recommendation letters 
-    at this point. What would you think from your
-    experience?
+  - Oettinger asked for recommendation letters. Please send
+    by email to hco@mat.ethz.ch
+
+    Addressed to:
+
+    Prof. Hans Christian Öttinger
+    ETH Zürich
+    Institut f. Polymere
+    HCI H 543
+    Wolfgang-Pauli-Str. 10
+    8093 Zürich
 
 2) Advanced MPI PKS fellow (Dresden).
 fellowship at MPI for Complex Systems in
@@ -22,8 +26,10 @@ Dresden to conduct independent research.
 
   http://www.mpipks-dresden.mpg.de/pages/forschung/forschung_distpostdocs.html
 
-  It appears they want it by REGULAR MAIL. It should be
-  addressed to:
+  It appears they want it by REGULAR MAIL. BUT if there is
+  no time, sent it by email to visitors@pks.mpg.de 
+
+  It should be addressed to:
 
   Prof. Dr. Roderich Moessner -
   Managing Director
