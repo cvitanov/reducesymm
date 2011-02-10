@@ -132,7 +132,7 @@
 	<p class="ref"> 
 	  <span class="refauthors"> G. S&aacute;nchez-Arriaga, <strong>E. Siminos</strong>, and E. Lefebvre</span></br>
 	  <span class="reftitle"> Relativistic solitary waves modulating long laser pulses in plasmas</span></br> 
-	    submitted <span class="journal"></span>(2011), <a href="http://arxiv.org/abs/1101.1004">arXiv:1101.1004</a></br>
+	    to appear in Plasma Phys. Contr. Fusion <span class="journal"></span>(2011), <a href="http://arxiv.org/abs/1101.1004">arXiv:1101.1004</a></br>
     <!-- 	<a href="http://dx.doi.org/10.1137/070705623">Phys. D ???</a> -->
 	    <img src="images/acroread16.png" alt="preprint"><a href="./papers/SSL10.pdf"> preprint</a>
  	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
