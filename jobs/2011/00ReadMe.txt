@@ -39,27 +39,6 @@ Dresden to conduct independent research.
   Germany
 
 
-3) ES Applied 2011-02-04. 
-
-Fellowship at Laboratoire de Physique Théorique et Modèles Statistiques, Paris-Sud. There are surprisingly many permanent researchers working on statistical mechanics and nonlinear dynamics. 
-
-  Application deadline Feb 4.
-
-  The reference letter should be sent
-  by email to the secretary:
-
-  Ms Le Vaou: Claudine.le-vaou@lptms.u-psud.fr
-
-  The address of the lab is
-
-  LPTMS
-  bâtiment 100
-  Université Paris-Sud
-  Centre scientifique d'Orsay
-  15 rue Georges Clémenceau
-  91405 Orsay cedex
-
-  No specific information on who should be addressed. 
 
 ES TO DO List
 ==================================
@@ -127,6 +106,34 @@ quantum chaos in many body systems, seems very interesting and
 could be a good opportunity for me to go beyond classical physics.
 
 
+
+
+
+==============
+	Rejected 2011-02-11
+ES 	Applied 2011-02-04. 
+
+Fellowship at Laboratoire de Physique Théorique et Modèles Statistiques, Paris-Sud. There are surprisingly many permanent researchers working on statistical mechanics and nonlinear dynamics. 
+
+  Application deadline Feb 4.
+
+  The reference letter should be sent
+  by email to the secretary:
+
+  Ms Le Vaou: Claudine.le-vaou@lptms.u-psud.fr
+
+  The address of the lab is
+
+  LPTMS
+  bâtiment 100
+  Université Paris-Sud
+  Centre scientifique d'Orsay
+  15 rue Georges Clémenceau
+  91405 Orsay cedex
+
+  No specific information on who should be addressed. 
+
+=====================================================
 
 I will NOT apply here.
 ======================================
