@@ -86,7 +86,7 @@ Hans Christian Öttinger.
 
 Distinguished MPI PKS Fellowship at MPI for Complex Systems in
 Dresden to conduct independent research.
-    2011-02-??: ES Applied
+    2011-02-15: ES Applied
     2011-02-12: PC emailed the letter
 
   Deadline: Feb 17 (inclusive ref. letters)
