@@ -1871,6 +1871,58 @@ the hyperbolicity of the dynamics.
 
 \end{description}
 
+\begin{description}
+\item[2011-02-07 ES:] Sent Kaz an initial condition for a KS, $L=22$ \po\ with $T_p=10.2534$. 
+\item[2011-02-09 Kaz:] I tried your initial condition and it works perfectly! 
+I also tried to calculate the Lyapunov exponents associated to this UPO. 
+The largest is about 0.03328, right? I'm not yet really sure about this value, 
+so it would be nice if you let me know the Lyapunov exponents you know for this UPO.
+\item[2011-02-11 ES:] The Lyapunov exponent I have is 0.033163, so you
+are pretty close. In fact this exponent has multiplicity two, and
+there is no other positive exponent for this orbit.
+\item[2011-02-11 Kaz:] Great! All you are saying (multiplicity, only two positive 
+exponents) are exactly what I confirmed with that UPO. I will soon have all 
+the necessary information regarding the physical/spurious modes for that UPO.
+\item[2011-02-11 Kaz:] Which quantities/properties do you have 
+analytically/numerically for these UPOs in your methods? For instance, 
+if we know the time evolution operator for a UPO, we can compute both 
+Lyapunov exponents and covariant Lyapunov vectors as eigenvalues and 
+eigenvectors of that operator. Do you have them? Or, the exponent values 
+you have are just computed by Bennetin's standard algorithm?
+\item[2011-02-11 ES:] We do not use Bennetin's method, but rather something similar to what
+you just described. However, I am not sure how you exactly define the
+time evolution operator, so I will describe with details what we do.
+
+Given an initial condition $x_o$ and period $T$ for a UPO, we integrate
+for $t=0$ to $T$, the differential equations for the nonlinear flow
+$dx/dt=v(x)$, and a differential equation for the Jacobian matrix:
+$dJ(t,x_o)/dt = A(x)J(t,x_o)$, with initial condition $J(0,x_o)=1$.
+Here $A_{ij}(x)=\partial v_i/\partial x_j$. The eigenvalues $\Lambda_i$ of $J(T,x_o)$ are
+the Floquet multipliers and its eigenvectors the Floquet eigenvectors
+(the covariant Lyapunov vectors for UPOs). Then the i'th Lyapunov exponent is
+$\mu_i = \ln(|\Lambda_i|)/ T$
+(for periodic orbits we usually call them Floquet exponents).
+Although we only have the eigenvalues in file, I could easily compute
+the eigenvectors for comparison.
+
+The problem with this approach is that, while we believe the leading
+eigenvalues to be accurate, the highly contracting ones suffer from
+numerical noise. So it would be hard for us to separate physical from
+isolated eigenvectors based on this computation alone.
+
+\item[2011-02-11 Kaz:] Thank you for the explanation. That is exactly what 
+I meant by eigenvalues of the time evolution operator.
+
+Myself, I compute the Lyapunov exponents (and the covariant vectors) simply 
+by Benettin's method (and by Ginelli's one). The only trick is that, each time 
+the trajectory x(t) returns to its original position x(0), i.e., at every cycle 
+of the orbit, I replace x(t) by its initial value x(0). This is to kill 
+numerical noise that would grow and eventually kick the trajectory 
+out of the periodic orbit. This method is accurate even for very small 
+exponent values.
+
+\end{description}
+
 
 
 \renewcommand{\ssp}{a}
