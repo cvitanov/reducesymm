@@ -96,7 +96,7 @@
 	<p class="ref"> 
 	  <span class="refauthors"><strong>E. Siminos</strong>, D. B&eacute;nisti, and L. Gremillet</span></br>
 	  <span class="reftitle"> Stability of nonlinear Vlasov-Poisson equilibria through spectral deformation and Fourier-Hermite expansion</span></br> 
-	    submitted <span class="journal"></span>(2011), <a href="http://arxiv.org/abs/1101.1318">arXiv:1101.1318</a></br> 
+	    to appear in Phys. Rev. E <span class="journal"></span>(2011), <a href="http://arxiv.org/abs/1101.1318">arXiv:1101.1318</a></br> 
 <!-- 	    <a href="http://dx.doi.org/10.1103/PhysRevLett.105.015001"><span class=journal>Phys. Rev. Lett. <strong>105</strong></span>, 015001 (2010)</a></br> -->
 	    <img src="images/acroread16.png" alt="preprint"><a href="./papers/sbg11.pdf"> preprint</a>
  	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
