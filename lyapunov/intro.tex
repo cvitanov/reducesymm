@@ -6,7 +6,11 @@
  \svnid{$Id$}
 \fi
 
-\section{The physical dimension of a \KS\ flow}
+Bits and pieces for the putative article,
+
+``The physical dimension of a \KS\ flow.''
+
+\section{Introduction}
 \label{sect:intro}
 
 We use Floquet or `covariant Lyapunov'
@@ -21,19 +25,14 @@ Kaplan-Yorke estimate.
 %\item[2010-04-07 Predrag]
 The idea is to coarsely cover the nonlinear strange attractor with a set
 of hyperplanes, as in \reffig{fig:Tesselate}. For any pair, they
-intersect in a 'boundary' hyperplane, of one less dimension. So our task
-is to, for a given strange attractor, pick a set of slice-fixing points,
-such that each is approximately tangent to the strange attractor, and the
-singularity hyperplanes are eliminated by requiring that they lie either
-on the `wrong' side of the slice-slice intersection, or somewhere where
-the strange attractor does not tread.
+intersect in a 'ridge' hyperplane of one less dimension. So our task
+is to, for a given strange attractor, pick a set of \Poincare\ section-fixing points,
+such that each is approximately tangent to the strange attractor.
 
-We need to make a global chart by deploying both linear slices and linear
-Poincar\'e sections in neighborhoods of the most important (relative)
-equilibria and/or (relative) periodic orbits (those are tricky, because
-slice fixing points must lie in the full \statesp, and have no symmetry,
-so most of the solutions we have are not good as they stand). This is the
-periodic-orbit generalization of the idea of {\statesp\ tessellation} so
+We need to make a global chart by deploying linear
+{\Poincare} sections in neighborhoods of the most important (relative)
+equilibria and/or (relative) periodic orbits. This is the
+periodic-orbit implementation of the idea of {\statesp\ tessellation} so
 dear to professional cyclists, \reffig{fig:Tesselate}.
 
 % In FrCv11.tex replace by Tesselate.png
@@ -49,6 +48,118 @@ two 1-cycles, and then the other.
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
+
+\section{Charting the \statesp}
+	\label{sec:chart}
+% extracted from siminos/froehlich/slice/FrCv11.tex   2011-02-20
+
+Work on \KS\ suggests how to proceed: it was shown in \refrefs{lanCvit07,SCD07} that for turbulent/chaotic systems a set of {\Poincare} sections is needed to capture the dynamics. The choice of sections should reflect the dynamically dominant patterns seen in the solutions of nonlinear PDEs. We propose to construct a global atlas of the dimensionally \reducedsp\ $\pS?$ by deploying linear {\Poincare} sections across neighborhoods of the qualitatively most important patterns. 
+    \PC{define Poincar\'e section by a \template\ point, 
+    normal to $\vel$}    
+Each \Poincare\ section $\PoincS{}^{(j)}$, provides a local chart for a neighborhood of an important, qualitatively distinct class of solutions (2-rolls states, 3-rolls states, \etc); together they `Voronoi' tessellate  the curved manifold in which the reduced strange attractor is embedded by a finite set of hyperplane tiles\rf{rowley_reconstruction_2000,RoSa00}.
+
+The physical task is to, for a given dynamical flow, pick a set of
+qualitatively distinct {\template s} whose {\Poincare} sections are locally tangent to
+the strange attractor. A `{\Poincare} section' is a
+($d\!-\!1$)\dmn\ hyperplane. If we pick another {\template} point
+$\slicep{}^{(2)}$, it comes along with its own {\Poincare} section. Any
+neighboring pair of $(d\!-\!1)$\dmn\ {\Poincare} sections intersects in a `ridge'
+(`boundary,' `edge'), a $(d\!-\!2)$\dmn\ hyperplane, easy to compute.
+A global atlas so constructed should be sufficiently
+fine-grained: each `chart' or `tile,' bounded by ridges to
+neighboring {\Poincare} sections, should be sufficiently small.
+
+Follow an ant as it traces out a trajectory
+$\PoincS{}^{(1)}(\tau)$, confined to the {\Poincare} section $\PoincS{}^{(1)}$. The
+moment $\braket{\PoincS{}^{(1)}(\tau)}{\vel{}{}^{(2)}}$ changes
+sign, the ant has crossed the ridge and  continues its merry stroll within the
+$\PoincS{}^{(2)}$ {\Poincare} section.
+
+There is a rub, though - you need to know how to pick the
+neighboring {\template s}. This is a reflection of the flaw inherent in use
+of a {\Poincare} section hyperplane globally: a {\Poincare} section is derived from the Euclidean
+notion of distance, but for nonlinear flows the distance has to be
+measured curvilinearly, along unstable
+manifolds\rf{Christiansen97,DasBuch}. We nevertheless have to stick with
+tessellation by linearized tangent spaces, as curvilinear charts appear
+computationally prohibitive. Perhaps a glance at
+\reffig{f_1_08_1} helps visualize the problem; imagine that the
+tiles belong to the
+{\Poincare} sections through {\template} points on these orbits. One could slide
+{\template s} along their trajectories until the pairs of straight line
+segments connecting neighboring {\template} points are minimized, but
+that is not physical: one would like the dynamical trajectories to cross
+ridges as continuously as possible. So how is one to orient
+the {\template s} relative to each other? The choice of the first template thus fixes all {\em
+relative phases} to the succeeding {\template s}, as was demonstrated in
+\refref{SCD07}: the universe of all other solutions is rigidly fixed
+through a web of heteroclinic connections between them. This insight
+garnered from study of a 1-dimensional \KS\ PDE is more remarkable still
+when applied to the plane Couette flow\rf{GHCW07}, with 3-$d$ velocity
+fields and two translational symmetries. The {\em relative phase} between
+two {\template s} is thus fixed  by the shortest heteroclinic connection,
+a rigid bridge from one neighborhood to the next. Once the relative phase
+between the templates {\template s} is fixed, so are their their {\Poincare} sections,
+\ie, their tangent hyperplanes, and their intersection, \ie, the  ridge
+joining them.
+
+
+\section{Conclusions}
+    \label{sec:concl}
+
+If a physical flow is confined to a lower-dimensional manifold, one should
+use this fact to implement a dimensionality reduction.  In this
+paper we have investigated dimensionality reduction by the \mslices, a linear
+procedure particularly simple and practical to implement.
+
+We have shown here that a symmetry-reduced trajectory passes through such
+singularities through computable jumps, a nuisance numerically, but cause
+to no conceptual difficulty. However, while a {\Poincare} section intersects each group
+orbit in a neighborhood of a {\template} only once, extended globally any
+{\Poincare} section intersects every group orbit multiple times. So even though every
+{\Poincare} section cuts all group orbits, it makes no sense physically to use one
+{\Poincare} section (a set of \emph{all} group orbit points that are closest to a given
+{\template}) globally. We propose instead to construct a global atlas by
+deploying sets of {\Poincare} sections and linear {\Poincare} sections as charts of
+neighborhoods of the most important (relative) equilibria and/or
+(relative) periodic orbits.
+
+Such global atlas should be sufficiently fine-grained.
+
+It should be emphasized that the atlas so constructed retains the
+dimensionality of the original problem. The full dynamics is faithfully
+retained, we are \emph{not} constructing a lower-dimensional model of the
+dynamics. Neighborhoods of unstable \eqva\ and \po s are dominated by
+their unstable and least contracting stable eigenvalues and are, for all
+practical purposes, low-dimensional. Traversals of the ridges are,
+however, higher dimensional. For example, crossing from the neighborhood
+of a two-rolls state into the neighborhood of a three-rolls state entails
+going through a pattern `defect,' a rapid transient whose precise
+description requires many Fourier modes. Nevertheless, the recent
+progress on separation of `physical' and `hyperbolically isolated'
+covariant Lyapunov
+vectors\rf{PoGiYaMa06,ginelli-2007-99,YaTaGiChRa08,TaGiCh09} gives us
+hope that the proposed atlas could provide a systematic and controllable
+framework for construction of lower-dimensional models of `turbulent'
+dynamics of dissipative PDEs.
+
+While it has been demonstrated in \refref{SiCvi10}  that the \mframes, with a judicious choice of the {\template} and {\PoincSec}, works for a system as simple as the \cLf, one still has to show that the method can be implemented for a truly high-dimensional flow. Siminos\rf{SiminosThesis} has used a modified \mframes\ to compute analytically a 128\dmn\ invariant basis for \reducedsp\ $\PoincS = \pS/\SOn{2}$, and shown that the unstable manifolds of \reqva\ play surprisingly important role in organizing the geometry of \KS. In \refref{SCD07} it was found that the coexistence of four \eqva, two \reqva\ (traveling waves) and a nested \fixedsp\ structure in an effectively $8$-dimensional \KS\ system complicates matters sufficiently that no dimensionality reduction by the \mslices\ has been attempted so far. More importantly, a dimensionality reduction of pipe flows remains an outstanding challenge\rf{ACHKW11}.
+
+
+	%\begin{acknowledgments}
+	\medskip
+	\noindent{\bf Acknowledgments}
+We sought in vain Hugues Chat\'e's sage counsel on how to reduce
+physical dimensionality, but none was forthcoming - hence this
+confusion.
+We are grateful to
+??,
+and in particular R.L.~Davidchack
+for spirited exchanges.
+P.C. work was supported by  Glen Robinson Jr.
+and the National Science Foundation grant
+DMR~0820054. 	
+	%\end{acknowledgments}
 
 \Remarks
 
