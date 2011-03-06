@@ -6,34 +6,40 @@
  \svnid{$Id$}
 \fi
 
-Bits and pieces for the putative article,
+Bits and pieces for a putative article,
 
 ``The physical dimension of a \KS\ flow.''
 
 \section{Introduction}
 \label{sect:intro}
 
-We use Floquet or `covariant Lyapunov'
-vectors (CLV) of unstable \po s to identify the number of degrees of freedom
-that capture the physics of a `turbulent' PDE on a compact spatial
-domain\rf{PoGiYaMa06,ginelli-2007-99,YaTaGiChRa08,TaGiCh09}.
-That number is proportional to the
-system size, for \KS\ flow roughly four times the number of
- positive/marginal Floquet (or Lyapunov) exponents, twice its
+Inspired by the global
+studies\rf{PoGiYaMa06,ginelli-2007-99,YaTaGiChRa08,TaGiCh09} of
+`covariant Lyapunov' vectors we use Floquet vectors of unstable \po s to
+identify the \emph{local} number of degrees of freedom that capture the
+physics of a `turbulent' PDE on a compact spatial domain. That number is
+proportional to the system size, for \KS\ flow roughly four times the
+number of positive/marginal Floquet (or Lyapunov) exponents, twice its
 Kaplan-Yorke estimate.
 
-%\item[2010-04-07 Predrag]
-The idea is to coarsely cover the nonlinear strange attractor with a set
-of hyperplanes, as in \reffig{fig:Tesselate}. For any pair, they
-intersect in a 'ridge' hyperplane of one less dimension. So our task
-is to, for a given strange attractor, pick a set of \Poincare\ section-fixing points,
-such that each is approximately tangent to the strange attractor.
+The idea is to coarsely cover the \emph{continuous-symmetry reduced}
+nonlinear strange attractor with a set of
+hyperplanes\rf{SiCvi10,FrCvi11}, as in \reffig{fig:Tesselate}. Any
+adjacent pair intersects in a `ridge' hyperplane of one less dimension.
+So our task is to, for a given strange attractor, pick a set of \Poincare
+section-fixing points, such that each is approximately tangent to the
+strange attractor. For simplicity here we shall consider only the flows
+with a 1 continuous parameter (the time), postponing the more general
+case of continuous symmetries to a happier time. An example of such
+dynamics is the \KS\ flow restricted to the antisymmetric
+subspace\rf{Christiansen97,lanCvit07}; examples of flows with continuous
+symmetries are the \KS\ flow on a periodic domain\rf{SCD07}, the pipe
+flow\rf{ACHKW11} and the \pCf\rf{GHCW07}.
 
-We need to make a global chart by deploying linear
-{\Poincare} sections in neighborhoods of the most important (relative)
-equilibria and/or (relative) periodic orbits. This is the
-periodic-orbit implementation of the idea of {\statesp\ tessellation} so
-dear to professional cyclists, \reffig{fig:Tesselate}.
+We need to make a global chart by deploying linear \Poincare sections in
+neighborhoods of the most important equilibria and/or periodic orbits.
+This is the periodic-orbit implementation of the idea of {\statesp\
+tessellation} so dear to professional cyclists, \reffig{fig:Tesselate}.
 
 % In FrCv11.tex replace by Tesselate.png
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -49,62 +55,176 @@ two 1-cycles, and then the other.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 
+\begin{description}
+
+\item[2011-03-04 Evangelos]
+I really can't follow this tessellation idea. My motivation to be
+involved with this project at this point developed while reading Roweis
+and Saul\rf{RoSa00}. I believe what we ought to do should be very close
+to their way of thinking: construct linear local charts (bases) and then
+bring them together to construct a global curvilinear embedding. In
+contrast to their pattern recognition, empirical way to construct the
+local charts, we can use information from the covariant Lyapunov vectors.
+
+\item[2011-03-05 Predrag]
+I agree in principle.
+
+\item[2011-03-04 Evangelos]
+I would prefer to work with \KS\ in the antisymmetric subspace, so that we do not
+have to worry about the translational symmetry (remember that the periodic
+orbits for $L=22$ are in the full space, rather that in the antisymmetric
+subspace).
+
+\item[2011-03-05 Predrag]
+I agree.
+
+\item[2011-03-04 Evangelos]
+The local charts can be provided by the physical covariant Lyapunov
+vectors computed on a set of the most important \po s. Then we only need
+to implement the final step in the procedure of Roweis and
+Saul\rf{RoSa00}, which involves solving a minimization problem for the
+global coordinates and should be computationally tractable if a truly
+low-dimensional embedding exists.
+
+\item[2011-03-05 Predrag]
+We cannot tessellate with \po s; we can only work with \emph{periodic
+points}, hence we need to understand what Floquet vectors (AKA `covariant
+Lyapunov' vectors evaluated on \po s) tell us about the `physical
+dimension' of the local \Poincare section.
+
+\end{description}
+
+
 \section{Charting the \statesp}
 	\label{sec:chart}
 % extracted from siminos/froehlich/slice/FrCv11.tex   2011-02-20
 
-Work on \KS\ suggests how to proceed: it was shown in \refrefs{lanCvit07,SCD07} that for turbulent/chaotic systems a set of {\Poincare} sections is needed to capture the dynamics. The choice of sections should reflect the dynamically dominant patterns seen in the solutions of nonlinear PDEs. We propose to construct a global atlas of the dimensionally \reducedsp\ $\pS?$ by deploying linear {\Poincare} sections across neighborhoods of the qualitatively most important patterns. 
-    \PC{define Poincar\'e section by a \template\ point, 
-    normal to $\vel$}    
-Each \Poincare\ section $\PoincS{}^{(j)}$, provides a local chart for a neighborhood of an important, qualitatively distinct class of solutions (2-rolls states, 3-rolls states, \etc); together they `Voronoi' tessellate  the curved manifold in which the reduced strange attractor is embedded by a finite set of hyperplane tiles\rf{rowley_reconstruction_2000,RoSa00}.
+Work on \KS\ suggests how to proceed: it was shown in
+\refrefs{lanCvit07,SCD07} that for turbulent/chaotic systems a set of
+\Poincare sections is needed to capture the dynamics. The choice of
+sections should reflect the dynamically dominant patterns seen in the
+solutions of nonlinear PDEs. We propose to construct a global atlas of
+the dimensionally \reducedsp\ $\pS^{(?)}$ by deploying linear \Poincare
+sections across neighborhoods of the qualitatively most important
+patterns. We shall refer to these states as \emph{\template s}, each
+represented in the \statesp\ $\pS$ of the system by
+a \emph{\template\ point} $\slicep$. Together with the velocity
+field at this point, a template defines a linear \Poincare section,
+an affine hyperplane $\sspRed \in \PoincS$,
+\beq
+    \vel(\slicep) \cdot (\sspRed - \slicep)= 0
+\,,
+\ee{locTransvVar1}
+locally normal to the $\vel(\slicep)$ at the \template\ point.
+(For a motivation, see
+\refappe{s-POs-flows} \emph{Newton method for flows}.)
+Each \Poincare section $\PoincS{}^{(j)}$, provides a local chart for a
+neighborhood of an important, qualitatively distinct class of solutions
+(2-rolls states, 3-rolls states, \etc); together they `Voronoi'
+tessellate  the curved manifold in which the reduced strange attractor is
+embedded by a finite set of hyperplane
+tiles\rf{rowley_reconstruction_2000,RoSa00}.
 
 The physical task is to, for a given dynamical flow, pick a set of
-qualitatively distinct {\template s} whose {\Poincare} sections are locally tangent
-to the strange attractor\ES{Do you mean locally transverse?}. 
-A `{\Poincare} section' is a
+qualitatively distinct {\template s} whose \Poincare sections are locally tangent
+to the strange attractor\ES{Do you mean locally transverse?}.
+A \Poincare section is a
 ($d\!-\!1$)\dmn\ hyperplane. If we pick another {\template} point
-$\slicep{}^{(2)}$, it comes along with its own {\Poincare} section. Any
-neighboring pair of $(d\!-\!1)$\dmn\ {\Poincare} sections intersects in a `ridge'
+$\slicep{}^{(2)}$, it comes along with its own \Poincare section. Any
+neighboring pair of $(d\!-\!1)$\dmn\ \Poincare sections intersects in a `ridge'
 (`boundary,' `edge'), a $(d\!-\!2)$\dmn\ hyperplane, easy to compute.
 A global atlas so constructed should be sufficiently
 fine-grained: each `chart' or `tile,' bounded by ridges to
-neighboring {\Poincare} sections, should be sufficiently small.
+neighboring \Poincare sections, should be sufficiently small.
 
 Follow an ant as it traces out a trajectory
-$\PoincS{}^{(1)}(\tau)$, confined to the {\Poincare} section $\PoincS{}^{(1)}$
-\ES{How could a trajectory be confined to a {\Poincare} section? You seem
-to talk about local charts here, rather than {\Poincare} sections.}. The
-moment $\braket{\PoincS{}^{(1)}(\tau)}{\vel{}{}^{(2)}}$ changes
+$\sspRed{}^{(1)}(\tau)$, confined to the \Poincare section $\PoincS{}^{(1)}$
+The
+moment $\braket{(\sspRed{}^{(1)}(\tau)-\slicep{}^{(2)})}{\vel{}{}^{(2)}}$ changes
 sign, the ant has crossed the ridge and  continues its merry stroll within the
-$\PoincS{}^{(2)}$ {\Poincare} section.
+$\PoincS{}^{(2)}$ \Poincare section.
+
+\begin{description}
+
+\item[2011-03-04 Evangelos]
+How could a trajectory be confined to a \Poincare section? You seem
+to talk about local charts here, rather than \Poincare sections.
+
+
+\item[2011-03-05 Predrag]
+Ant is not following a \emph{trajectory}, ant is moving \emph{transversely}
+to the time flow, for example: if the continuous time trajectory has one
+unstable eigen-direction, it sweeps out a 2-dimensional unstable manifold,
+whose \Poincare section is 1-dimensional curve that the ant could follow.
+
+\end{description}
+
+
 
 There is a rub, though - you need to know how to pick the
 neighboring {\template s}. This is a reflection of the flaw inherent in use
-of a {\Poincare} section hyperplane globally: a {\Poincare} section is derived from the Euclidean
+of a \Poincare section hyperplane globally: a \Poincare section is derived from the Euclidean
 notion of distance, but for nonlinear flows the distance has to be
 measured curvilinearly, along unstable
 manifolds\rf{Christiansen97,DasBuch}. We nevertheless have to stick with
 tessellation by linearized tangent spaces, as curvilinear charts appear
 computationally prohibitive. Perhaps a glance at
-\reffig{f_1_08_1} helps visualize the problem; imagine that the
+\reffig{fig:Tesselate} helps visualize the problem; imagine that the
 tiles belong to the
-{\Poincare} sections through {\template} points on these orbits. One could slide
+\Poincare sections through {\template} points on these orbits. One could slide
 {\template s} along their trajectories until the pairs of straight line
 segments connecting neighboring {\template} points are minimized, but
 that is not physical: one would like the dynamical trajectories to cross
 ridges as continuously as possible. So how is one to orient
-the {\template s} relative to each other? The choice of the first template thus fixes all {\em
+the {\template s} relative to each other? The choice of the first template fixes all {\em
 relative phases} to the succeeding {\template s}, as was demonstrated in
 \refref{SCD07}: the universe of all other solutions is rigidly fixed
 through a web of heteroclinic connections between them. This insight
 garnered from study of a 1-dimensional \KS\ PDE is more remarkable still
 when applied to the plane Couette flow\rf{GHCW07}, with 3-$d$ velocity
-fields and two translational symmetries. The {\em relative phase} between
+fields. The {\em relative phase} between
 two {\template s} is thus fixed  by the shortest heteroclinic connection,
 a rigid bridge from one neighborhood to the next. Once the relative phase
-between the templates {\template s} is fixed, so are their their {\Poincare} sections,
+between the templates {\template s} is fixed, so are their their \Poincare sections,
 \ie, their tangent hyperplanes, and their intersection, \ie, the  ridge
 joining them.
+
+
+\begin{description}
+
+\item[2011-03-04 Evangelos]
+If we manage to use local \Poincare sections to reduce the flow to a
+discrete map (or maps) before applying this procedure, we would then only
+need one (or a few) representative point(s) per periodic orbit for our
+local charts, rather than points along the full orbit. However, we know
+this is tricky to do in a high-dimensional space, before an embedding is
+available.
+
+\item[2011-03-05 Predrag]
+\HREF{http://en.wikipedia.org/wiki/String_Quartet_No._16_(Beethoven)}
+{Es muss sein!} No sense can be made out of a collection of \po s unless
+they and their Floquet vectors are reduced onto  \Poincare sections.
+
+
+\item[2011-03-04 Evangelos]
+In any case, while I can see many local \Poincare sections working
+together, either before or after the global coordinates are found, I
+cannot see how a tessellation as you describe it here would work.
+\Poincare sections are designed to pierce the flow (so the ant we follow
+would leave the section immediately) and good sections should be
+transverse, not tangent to the attractor.
+
+
+\item[2011-03-05 Predrag] Grave misunderstanding. The continuous group
+that is being reduced by \Poincare sections is the evolution in time.
+After the reduction of continuous time to discrete time, what remains are
+the affine hyperplanes (local \Poincare sections) which are
+\emph{tangent} to the strange attractor; the ant is not crawling in the
+time direction, she is crawling (for example) along the unstable manifold
+heteroclinic section as it is seen within the \Poincare sections, not the
+time trajectory traced out in the full \statesp.
+
+\end{description}
 
 
 \section{Conclusions}
@@ -112,18 +232,16 @@ joining them.
 
 If a physical flow is confined to a lower-dimensional manifold, one should
 use this fact to implement a dimensionality reduction.  In this
-paper we have investigated dimensionality reduction by the \mslices, a linear
+paper we have investigated dimensionality reduction by the method
+linear \Poincare sections, a linear
 procedure particularly simple and practical to implement.
 
-We have shown here that a symmetry-reduced trajectory passes through such
-singularities through computable jumps, a nuisance numerically, but cause
-to no conceptual difficulty. However, while a {\Poincare} section intersects each group
-orbit in a neighborhood of a {\template} only once, extended globally any
-{\Poincare} section intersects every group orbit multiple times. So even though every
-{\Poincare} section cuts all group orbits, it makes no sense physically to use one
-{\Poincare} section (a set of \emph{all} group orbit points that are closest to a given
-{\template}) globally. We propose instead to construct a global atlas by
-deploying sets of {\Poincare} sections and linear {\Poincare} sections as charts of
+ However, while a \Poincare section intersects each trajectory
+  in a neighborhood of a {\template} only once, extended globally any
+\Poincare section intersects a longer trajectory segment multiple times. So
+it makes no sense physically to use one
+\Poincare section globally. We propose instead to construct a global atlas by
+deploying sets of linear \Poincare sections as charts of
 neighborhoods of the most important (relative) equilibria and/or
 (relative) periodic orbits.
 
@@ -146,7 +264,12 @@ hope that the proposed atlas could provide a systematic and controllable
 framework for construction of lower-dimensional models of `turbulent'
 dynamics of dissipative PDEs.
 
-While it has been demonstrated in \refref{SiCvi10}  that the \mframes, with a judicious choice of the {\template} and {\PoincSec}, works for a system as simple as the \cLf, one still has to show that the method can be implemented for a truly high-dimensional flow. Siminos\rf{SiminosThesis} has used a modified \mframes\ to compute analytically a 128\dmn\ invariant basis for \reducedsp\ $\PoincS = \pS/\SOn{2}$, and shown that the unstable manifolds of \reqva\ play surprisingly important role in organizing the geometry of \KS. In \refref{SCD07} it was found that the coexistence of four \eqva, two \reqva\ (traveling waves) and a nested \fixedsp\ structure in an effectively $8$-dimensional \KS\ system complicates matters sufficiently that no dimensionality reduction by the \mslices\ has been attempted so far. More importantly, a dimensionality reduction of pipe flows remains an outstanding challenge\rf{ACHKW11}.
+One still has to show that the method can be implemented for a truly
+high-dimensional flow. In \refref{SCD07} it was found that the
+coexistence of four \eqva, two \reqva\ (traveling waves) and a nested
+\fixedsp\ structure in an effectively $8$-dimensional \KS. Even more
+importantly, a dimensionality reduction of pipe and \pCf s remains an
+outstanding challenge\rf{ACHKW11}.
 
 
 	%\begin{acknowledgments}
@@ -166,49 +289,15 @@ DMR~0820054.
 
 
 
-\section{ES remarks}
-
-I really can't follow this tessellation idea, see footnotes above. 
-My motivation to be involved with this project at this point
-developed while reading Roweis and Saul\rf{RoSa00}. I believe what we ought to 
-do should be very close to their way of thinking: 
-construct linear local charts (bases) and then bring them together 
-to construct a global curvilinear embedding. In contrast to their pattern recognition, 
-empirical way to construct the local charts, we can use information from
-the covariant Lyapunov vectors.
-
-I would prefer to work with KSe in the antisymmetric subspace, so that we do not
-have to worry about the translational symmetry (remember that the periodic
-orbits for $L=22$ are in the full space, rather that in the antisymmetric
-subspace). 
-The local charts can be provided by the physical covariant Lyapunov vectors 
-computed on a set of the most important periodic orbits. Then we only need
-to implement the final step in the procedure of Roweis and Saul\rf{RoSa00}, 
-which involves solving a minimization problem for the global coordinates
-and should be computationally tractable if a truly
-low-dimensional embedding exists.
-
-If we manage to use local {\Poincare} sections to reduce the flow to a discrete map
-(or maps) before applying this procedure, we would then only need one (or a few)
-representative point(s) per periodic orbit for our local charts, rather than 
-points along the full orbit. However, we know this is tricky to do in a high-dimensional
-space, before an embedding is available. In any case, while I can see many
-local {\Poincare} sections working together, either before or after the global
-coordinates are found, I cannot see how a tessellation as you described 
-it in \refsect{sec:chart} would work. {\Poincare} sections are designed
-to pierce the flow (so the ant we follow would leave the section immediately) 
-and good sections should be transverse, not tangent to the attractor (based
-on what I've learned from ChaosBook.org -- I hope I've learned something). 
-
 \Remarks
 
 \remark{Nomenclature.}{\label{rem:Lyapunov}
 From ChaosBook.org: ``
+											\toCB
 \beq
-{d \over dt} \deltaX_i(\xInit,t) =
-\sum_j \left.{\pde \vel_i  \over \pde \ssp_j}(\ssp)
-       \right|_{\ssp=\ssp(\xInit,t)}
-         \deltaX_j(\xInit,t)
+{d \over dt} \deltaX(\xInit,t) =
+{\Mvar}(\ssp) \,  \deltaX(\xInit,t)
+	\,,\qquad \ssp=\ssp(\xInit,t)
 \, .
 \label{lin_odes}
 \eeq
@@ -224,7 +313,7 @@ From ChaosBook.org: ``
 \, .
 \label{hOdes}
 \eeq
-This Jacobian matrix is sometimes referred to as the
+The Jacobian matrix $\jMps$ is sometimes referred to as the
 {\em fundamental solution matrix} or simply
 {\em fundamental matrix}, a name inherited
 from the theory of linear ODEs.
@@ -245,7 +334,8 @@ finite time $t$ in the co-moving frame of $\ssp(t)$. %,
 The nomenclature tends to be a bit confusing.
 In referring to \velgradmat) ${\Mvar}$ defined in \refeq{DerMatrix}
 as the {``\stabmat''} we follow Tabor\rf{Tabor89}.
-Sometimes ${\Mvar}$,
+												\toCB
+All too often ${\Mvar}$,
 which describes the instantaneous shear of the trajectory
 point $\ssp(\xInit,t)$ is referred to as the `Jacobian
 matrix,'
@@ -253,7 +343,10 @@ a particularly unfortunate usage when one considers
 linearized stability of an \eqv\ point \refeq{eqPointStab}.
 What Jacobi had in mind in his
 1841 fundamental paper\rf{Jacobi1841} on the determinants today known as
-`jacobians' were transformations between different coordinate frames.
+`jacobians' were transformations between different coordinate frames,
+\ie, in the present context, the
+$\jMps^{t} = e^{t {\Mvar}}$ transformation of the local linearized
+neighborhood.
 These are dimensionless quantities,
 while dim\-ens\-ion\-ally ${\Mvar}_{ij}$ is 1/[time].
 More unfortunate still is referring to
