@@ -62,6 +62,37 @@ figure out how to use it - some notes are
 {here}. Designed for scientists, it's better than skype if you want to
 share presentations.
 
+\item[2011-03-02 Evangelos] First meeting's wisdom:
+\begin{itemize}
+ \item We all agree that it's best to work on antisymmetric subspace KS.
+ \item Evangelos will do the shooting for periodic orbits 
+	(we need to decide on system size). He hopes he will find the time \ldots  
+ \item Kaz uses an implicit second order Adams(-Something) method, with
+	pseudospectral space discretization. He uses one of the standard
+	prescriptions for anti-aliasing, in order to keep the large wavenumbers
+	and corresponding isolated Lyapunov vectors uncontaminated. Uses numerical 
+	recipes for FFT. (ES suggests switching to FFTW as numerical recipes FFT is
+	known to be unreliable in double precision.) 
+ \item Evangelos uses explicit fourth order Runge-Kutta with exponential
+	time differencing (see \refref{ks05com}) and pseudospectral space
+	discretization. He uses brute force anti-aliasing (increases resolution
+	to the point that only modes already at round-off are affected by
+	aliasing). He uses FFTW. 
+ \item We agreed that a good strategy would be that Kaz implements a simple
+	Newton routine, so that he can refine the orbits I give him. I've 
+	pointed him to Chaosbook chapters, my own first year report on Newton's
+	method for periodic orbits and my thesis.
+ \item I've also agreed to give Kaz the backbone of my integrator routines
+	(and also pointed him to \refref{ks05com}). Kaz is suspicious towards
+	Trefethen's algorithm, he thinks that the integrating factor trick might
+	lead to under-resolved large wavenumbers and problematic isolated 
+	Lyapunov vectors (and that the implicit method performs better in this
+	respect). I can't argue in favor of one or the other integrator.
+ \item I am also thinking to try to implement anti-aliasing and see
+	if agreement improves.
+\end{itemize}
+ 
+
 
 \end{description}
 
