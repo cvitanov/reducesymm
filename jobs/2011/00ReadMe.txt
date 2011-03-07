@@ -3,20 +3,22 @@ ES postdoc hunt 2011
 CEA contract ends Jul 05 2011
 ==========================================================
 
+Interviews
+==================================
+
+ETH Zurich 29-30 March (H. C. Ottinger)
+
+MPIPKS Dresden TBD (S. Skupin?)
+(did not get the fellowship, but I might get a postdoctoral
+position)
 
 ES TO DO List
 ==================================
 
 [] Marie-Curie integration grant.
 
-  Deadline: March 8.
+  Deadline: September?
 
-  Here the problem is, if I could pick any lab in Europe (cannot be in
-  France) and apply for a chance to work on whatever I want to, what
-  would that be?
-
-  -Something semiclassical, many-body, high-dimensional sounds good right now.
-  -Or recycle the magnetic-reconnection proposal?
 
 [?] Almost got an offer from A. Ghizzo (Nancy);
 	- Upgrade: 60% simulation, 40% theory. Waiting to see if I get an offer.
