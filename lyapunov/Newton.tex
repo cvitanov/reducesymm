@@ -1,0 +1,202 @@
+\ifsvnmulti
+ \svnkwsave{$RepoFile: siminos/lyapunov/Newton.tex $}
+ \svnidlong {$HeadURL$}
+ {$LastChangedDate$}
+ {$LastChangedRevision$} {$LastChangedBy$}
+ \svnid{$Id$}
+\fi
+
+\renewcommand{\ssp}{x}            % state space point
+
+\section{Poincar\'e sections}
+\label{s:PoincSect}
+% Predrag							 5mar2011
+% extracted from ChaosBook.org 		13jun2008
+% \Chapter{maps}}{Discrete time dynamics}
+
+\noindent
+Successive trajectory intersections with a {\em Poincar\'e
+section}, a $(d-1)$-dim\-ens\-ion\-al hypersurface or a set of
+hypersurfaces $\PoincS$ embedded in the $d$-dim\-ens\-ion\-al
+{\statesp} $\pS$, define the {\em Poincar\'e return map}
+$\PoincM({\ssp})$, a $(d-1)$-dim\-ens\-ion\-al map of form
+\beq
+\ssp' = \PoincM({\ssp})
+          =  \flow{\tau(\ssp)}{\ssp}
+\,,\qquad
+\ssp', \ssp \in \PoincS
+\,.
+\ee{PoincMap}
+Here the {\em first return function} $\tau(\ssp)$--sometimes
+referred to as the {\em ceiling function}--is the time of
+flight to the next section for a trajectory starting at $\ssp$.
+The choice of the section hypersurface $\PoincS$ is altogether
+arbitrary, but in practice one
+often needs only a local section--a hyperplane of
+codimension~1 intersected by a swarm of trajectories near to
+the trajectory of interest. This hyperplane can be specified
+implicitly through a function $\PoincC(\ssp)$ that is zero
+whenever a point $\ssp$ is on the Poincar\'e section,
+  \beq
+\ssp \in \PoincS \quad \mbox{iff}
+\quad \PoincC(\ssp) = 0 \,.
+  \ee{PoincU}
+
+First, the flow should pierce the
+hypersurface $\PoincS$, rather than being tangent to it. A
+nearby point $\ssp + \delta\ssp$ is in the hypersurface
+$\PoincS$ if $\PoincC(\ssp+ \delta\ssp)=0$. A nearby point on
+the trajectory is given by $\delta\ssp = \vel \delta t$, so a
+traversal is ensured by the {\em transversality condition}
+\beq
+    (\vel \cdot \pde\PoincC) =
+    \sum_{j=1}^{d}
+    \vel_j(\ssp) \, \pde_j \PoincC(\ssp) \neq 0
+\,,\quad
+    \pde_j \PoincC(\ssp) =
+    \frac{\partial~}{\partial \ssp_j} \PoincC(\ssp)
+\,,\quad
+    \ssp \in \PoincS
+\,.
+\ee{transvrCond}
+Second, the definition of {Poincar\'e return
+map} $\PoincM({\ssp})$ needs to be supplemented
+with the orientation condition
+\bea
+\ssp_{n+1} = \PoincM({\ssp_n}) \,,\qquad &&
+\PoincC(\ssp_{n+1}) = \PoincC(\ssp_{n})   = 0 \,,\quad n \in
+\integers^{+} \continue
+ &&
+  \sum_{j=1}^{d} \vel_j(\ssp_{n}) \, \pde_j \PoincC(\ssp_{n}) \,>\, 0
+\,.
+\label{orientCond}
+\eea
+In this way the continuous time $t$ flow $
+\flow{t}{\ssp}$ is reduced to a discrete time $n$ sequence
+$\ssp_n$ of successive {\em oriented} trajectory traversals of
+$\PoincS$.
+
+
+With a sufficiently clever choice of a Poincar\'e section
+or a set of sections,
+any orbit of interest intersects a section.
+
+\section{Newton method for flows}
+\label{s-POs-flows}
+% Predrag extracted							05mar2011
+% from ChaosBook.org \Chapter{cycles}{Fixed points, and ...}
+% Predrag edits  							26sep2008
+
+% \authorRPPC
+
+{\bf Predrag 2011-03-05}
+{This appendix is copied from ChaosBook.org - the edits here will
+eventually be returned back to ChaosBook.org. Please keep ChaosBook
+formatting throughout this chapter. Thanks!}
+
+\noindent
+For a continuous time flow the periodic orbit Floquet
+multiplier
+% \refeq{MargEigParall}
+along the flow direction of
+necessity equals unity; the separation of any two points along
+a cycle remains unchanged after a completion of the cycle.
+% \toSect{s:MargEigs}
+More unit Floquet multipliers arise if the
+flow satisfies conservation laws, such as the symplectic
+invariance for Hamiltonian flows, or the dynamics is equivariant
+under a continuous symmetry transformation.
+% \toSect{s:StabRpo}
+% \index{Newton method!flows}
+
+Let us apply the Newton method of
+% \refeq{NewtIt}
+to search for
+periodic orbits with unit Floquet multipliers,
+starting with the case of a \emph{continuous time
+flow}. Assume that the periodic orbit condition
+% \refeq{e:periodic}
+holds for $\ssp+\Delta\ssp$ and
+$\period{}+\Delta t$, with the initial guesses $\ssp$ and
+$\period{}$ close to the desired solution, \ie, with
+$|\Delta\ssp|$, $\Delta t$ small. The Newton setup
+% \refeq{NewtIt}
+\bea
+0 &=& \ssp+\Delta\ssp - f^{\period{}+\Delta t}(\ssp+\Delta\ssp)
+  \continue
+  &\approx&
+\ssp - f^{\period{}}(\ssp) + (1 - \jMps(\ssp))\cdot\Delta\ssp
+- \vel(f^{\period{}}(\ssp))\Delta t
+\label{NewtonVarFlow}
+\eea
+suffers from two shortcomings. First, we now need to solve not
+only for the periodic point $\ssp$, but for the period
+$\period{}$ as well. Second, the marginal, unit Floquet
+multiplier
+% \refeq{MargEigParall}
+along the flow direction
+(arising from the time-translation invariance of a \po) renders
+the factor $(1-\jMps)$ in
+\refeq{NewtonVarFlow} % \refeq{NewtItMap}
+non-invertible: if $\ssp$ is close to the solution,
+$f^\period{}(\ssp)\approx \ssp$, then
+$\jMps(\ssp)\cdot\vel(\ssp)=
+\vel(f^\period{}(\ssp))\approx \vel(\ssp)$. If $\Delta\ssp$ is
+parallel to the velocity vector, the derivative term
+$(1-\jMps)\cdot\Delta\ssp\approx 0$, and it becomes harder to invert
+$(1-\jMps)$ as the iterations approach the solution.
+
+As a periodic orbit $p$ is a 1\dmn\ set of points invariant
+under dynamics, Newton guess is not improved by picking
+$\Delta\ssp$ such that the new point lies on the orbit
+of the initial one, so we need to constrain the variation
+$\Delta\ssp$ to directions transverse to the flow, by requiring,
+for example, that
+\PC{In remark explain that Davidchack inverts it anyway,
+    without a constraint}
+\beq
+    \vel(\ssp) \cdot \Delta\ssp = 0
+\,.
+\ee{locTransvVar}
+Combining this constraint with the variational condition
+\refeq{NewtonVarFlow} we obtain a Newton setup for flows, best
+displayed in the matrix form:
+	\PC{bottom left corner is dimensionally wrong?
+		it should be $1/[\vel]$?}
+\beq
+\MatrixII{1-\jMps(\ssp)}{\vel(\ssp)}{\vel(\ssp)}{0}
+\left(\begin{array}{c}
+    \Delta\ssp \\
+    \Delta t
+  \end{array}\right) =-
+\left(\begin{array}{c}
+    \ssp-f(\ssp)\\
+    0
+  \end{array}\right)
+\ee{e:veq-1}
+This illustrates the general strategy for determining \po s in
+presence of continuous symmetries - for each symmetry, break
+the invariance by a constraint, and compute the value of the
+corresponding continuous parameter (here the period
+$\period{}$) by iterating the enlarged set of Newton equations.
+Constraining the variations to transverse ones thus fixes both
+of Newton's shortcomings: it breaks the time-translation
+invariance, and the period $\period{}$ can be read off once the
+fixed point has been found (hence we omit the superscript
+in $f{}^\period{}$ for the remainder of this discussion).
+
+More generally, the Poincar\'e surface of section technique
+% of \refsect{s:PoincSect}
+turns the periodic orbit search into a
+fixed point search on a suitably defined surface of section,
+with a neighboring point variation $\Delta\ssp$ with respect to
+a reference point  $\ssp$ constrained to \emph{stay} on the
+surface manifold
+%  \refeq{PoincU},
+\beq
+\PoincC( \ssp+\Delta\ssp) = \PoincC (\ssp) =0
+\,.
+\ee{e:pscond}
+The price to pay are constraints imposed by the section: in
+order to \emph{stay} on the surface, arbitrary variation
+$\Delta\ssp$ is not allowed.
