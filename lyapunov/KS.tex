@@ -538,6 +538,63 @@ and UPOa-lyap.dat. I hope this is the one you wanted.
  -8.8935807811399997e+1    \\
  -8.8935807884699997e+1    \\
 
+\item[2011-03-02 Evangelos] First meeting's wisdom:
+\begin{itemize}
+ \item We all agree that it's best to work on antisymmetric subspace KS.
+ \item Evangelos will do the shooting for periodic orbits 
+	(we need to decide on system size). He hopes he will find the time \ldots  
+ \item Kaz uses an implicit second order Adams(-Moulton) method (see post of
+	2011-03-09), with pseudospectral space discretization. 
+	He uses some prescription for anti-aliasing, in order to keep the large wavenumbers
+	and corresponding isolated Lyapunov vectors uncontaminated. Uses numerical 
+	recipes for FFT. (ES suggests switching to FFTW as numerical recipes FFT is
+	known to be unreliable in double precision.) 
+ \item Evangelos uses explicit fourth order Runge-Kutta with exponential
+	time differencing (see \refref{ks05com}) and pseudospectral space
+	discretization. He uses brute force anti-aliasing (increases resolution
+	to the point that only modes already at round-off are affected by
+	aliasing). He uses FFTW. 
+ \item We agreed that a good strategy would be that Kaz implements a simple
+	Newton routine, so that he can refine the orbits I give him. I've 
+	pointed him to Chaosbook chapters, my own first year report on Newton's
+	method for periodic orbits and my thesis.
+ \item I've also agreed to give Kaz the backbone of my integrator routines
+	(and also pointed him to \refref{ks05com}). Kaz is suspicious towards
+	Trefethen's algorithm, he thinks that the integrating factor trick might
+	lead to under-resolved large wavenumbers and problematic isolated 
+	Lyapunov vectors (and that the implicit method performs better in this
+	respect). I can't argue in favor of one or the other integrator.
+ \item I am also thinking to try to implement anti-aliasing and see
+	if agreement improves.
+\end{itemize}
+
+\item[2011-09-03 Kazz] to Evangelos: 
+Before your mail I made a code to improve the quality of the periodic orbits 
+and it works very well. Now, with my integrator, the norm of distance 
+(with square root) after one cycle is on the order of $10^{-13}$ for the orbit 
+I focus on, and the trajectory stays nearby over $40$ periods, to be compared 
+with $10$ for the original orbit data. I restarted all the calculations 
+with this improved orbit.
+
+To answer your question, my code uses the splitting method with the 
+2nd-order implicit method 
+(\HREF{http://en.wikipedia.org/wiki/Linear_multistep_method}{Adams-Moulton}) 
+for the linear terms and the 2nd-order Runge-Kutta 
+(\HREF{http://en.wikipedia.org/wiki/Heun\%27s_method}{Heun method}) 
+for the nonlinear term.
+
+For the aliasing, I use at least $(3N+1)$ spatial points when computing 
+the nonlinear term, where $N$ is the wavenumber cutoff of the Fourier modes. 
+Under this condition the pseudospectral method is exact 
+(equivalent with the spectral method apart from the computational cost).
+ 
+\BFIG{1.0}   % width=#1\textwidth
+{kaz-fig-temp}   % f_name.pdf
+{}   % short caption text
+{    % full caption text
+kaz-fig-temp
+}
+{kaz-fig-temp}   % f-figure-label
 
 
 \end{description}
