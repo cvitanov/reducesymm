@@ -541,53 +541,53 @@ and UPOa-lyap.dat. I hope this is the one you wanted.
 \item[2011-03-02 Evangelos] First meeting's wisdom:
 \begin{itemize}
  \item We all agree that it's best to work on antisymmetric subspace KS.
- \item Evangelos will do the shooting for periodic orbits 
-	(we need to decide on system size). He hopes he will find the time \ldots  
+ \item Evangelos will do the shooting for periodic orbits
+	(we need to decide on system size). He hopes he will find the time \ldots
  \item Kaz uses an implicit second order Adams(-Moulton) method (see post of
-	2011-03-09), with pseudospectral space discretization. 
+	2011-03-09), with pseudospectral space discretization.
 	He uses some prescription for anti-aliasing, in order to keep the large wavenumbers
-	and corresponding isolated Lyapunov vectors uncontaminated. Uses numerical 
+	and corresponding isolated Lyapunov vectors uncontaminated. Uses numerical
 	recipes for FFT. (ES suggests switching to FFTW as numerical recipes FFT is
-	known to be unreliable in double precision.) 
+	known to be unreliable in double precision.)
  \item Evangelos uses explicit fourth order Runge-Kutta with exponential
 	time differencing (see \refref{ks05com}) and pseudospectral space
 	discretization. He uses brute force anti-aliasing (increases resolution
 	to the point that only modes already at round-off are affected by
-	aliasing). He uses FFTW. 
+	aliasing). He uses FFTW.
  \item We agreed that a good strategy would be that Kaz implements a simple
-	Newton routine, so that he can refine the orbits I give him. I've 
+	Newton routine, so that he can refine the orbits I give him. I've
 	pointed him to Chaosbook chapters, my own first year report on Newton's
 	method for periodic orbits and my thesis.
  \item I've also agreed to give Kaz the backbone of my integrator routines
 	(and also pointed him to \refref{ks05com}). Kaz is suspicious towards
 	Trefethen's algorithm, he thinks that the integrating factor trick might
-	lead to under-resolved large wavenumbers and problematic isolated 
+	lead to under-resolved large wavenumbers and problematic isolated
 	Lyapunov vectors (and that the implicit method performs better in this
 	respect). I can't argue in favor of one or the other integrator.
  \item I am also thinking to try to implement anti-aliasing and see
 	if agreement improves.
 \end{itemize}
 
-\item[2011-03-09 Kazz] to Evangelos: 
-Before your mail I made a code to improve the quality of the periodic orbits 
-and it works very well. Now, with my integrator, the norm of distance 
-(with square root) after one cycle is on the order of $10^{-13}$ for the orbit 
-I focus on, and the trajectory stays nearby over $40$ periods, to be compared 
-with $10$ for the original orbit data. I restarted all the calculations 
+\item[2011-03-09 Kazz] to Evangelos:
+Before your mail I made a code to improve the quality of the periodic orbits
+and it works very well. Now, with my integrator, the norm of distance
+(with square root) after one cycle is on the order of $10^{-13}$ for the orbit
+I focus on, and the trajectory stays nearby over $40$ periods, to be compared
+with $10$ for the original orbit data. I restarted all the calculations
 with this improved orbit.
 
-To answer your question, my code uses the splitting method with the 
-2nd-order implicit method 
-(\HREF{http://en.wikipedia.org/wiki/Linear_multistep_method}{Adams-Moulton}) 
-for the linear terms and the 2nd-order Runge-Kutta 
-(\HREF{http://en.wikipedia.org/wiki/Heun\%27s_method}{Heun method}) 
+To answer your question, my code uses the splitting method with the
+2nd-order implicit method
+(\HREF{http://en.wikipedia.org/wiki/Linear_multistep_method}{Adams-Moulton})
+for the linear terms and the 2nd-order Runge-Kutta
+(\HREF{http://en.wikipedia.org/wiki/Heun\%27s_method}{Heun method})
 for the nonlinear term.
 
-For the aliasing, I use at least $(3N+1)$ spatial points when computing 
-the nonlinear term, where $N$ is the wavenumber cutoff of the Fourier modes. 
-Under this condition the pseudospectral method is exact 
+For the aliasing, I use at least $(3N+1)$ spatial points when computing
+the nonlinear term, where $N$ is the wavenumber cutoff of the Fourier modes.
+Under this condition the pseudospectral method is exact
 (equivalent with the spectral method apart from the computational cost).
- 
+
 \BFIG{1.0}   % width=#1\textwidth
 {kaz-fig-temp}   % f_name.pdf
 {}   % short caption text
@@ -596,26 +596,35 @@ kaz-fig-temp
 }
 {kaz-fig-temp}   % f-figure-label
 
-\item[2011-03-10 Kazz] To refine the orbits I use Newton's method, 
-but I adapted it to apply to half a period, playing with the reflection 
-symmetry. That is to say, instead of considering 
+\item[2011-03-10 Kazz] To refine the orbits I use Newton's method,
+but I adapted it to apply to half a period, playing with the reflection
+symmetry. That is to say, instead of considering
 \[
   (I-J(u))(u'-u) - vt = -(u-f(u))\,
 \]
-I use 
+I use
 \beq
   (R-J(u))(u'-u) - vt = -(Ru-f(u))\,
-\ee{eq:preper-newt} where $R$ is the operator 
-for the reflection, i.e., $Ru(x) = -u(-x)$. 
-It is better, not only because the integration time is half, but also because 
-the reference coordinate $x_0$ for the reflection $u(x,t)=-u(x_0-x,t+T_p)$ 
+\ee{eq:preper-newt} where $R$ is the operator
+for the reflection, i.e., $Ru(x) = -u(-x)$.
+It is better, not only because the integration time is half, but also because
+the reference coordinate $x_0$ for the reflection $u(x,t)=-u(x_0-x,t+T_p)$
 is automatically set to be 0.
 
-That said, I looked at the results from the refined orbit, and found 
-that the results do not change. The angle between spurious modes oscillates 
+That said, I looked at the results from the refined orbit, and found
+that the results do not change. The angle between spurious modes oscillates
 always with a finite amplitude.
 
-\item[2011-03-10 ES] My bad here, I forgot to mention to Kazz that we 
+\item[2011-03-10 ES] My bad here, I forgot to mention to Kaz that we
 use \refeq{eq:preper-newt} for pre-periodic orbits \ldots
+
+\item[2011-03-10 Ruslan] {\em Comment on the numerical approximation of the KS flow}\\
+I would suggest not to worry too much about the accuracy of the numerical approximation of the KS flow.  Instead, it is better, in my opinion, to adopt the viewpoint that one investigates the properties not of the KS flow, but of the map defined by the numerical integrator of the KSE, which approximates the solutions of the KSE.  As long as the orbits of the map resemble the solutions of the flow (think of it in terms of shadowing), the results of our investigation of the map will faithfully represent those for the KS flow.  So, it doesn't matter whether one investigates the Kassam-Trefethen map or the Adam-Moulton-RK map: the qualitative picture will be the same.
+
+The neat thing about Kassam-Trefethen map is that it solves the linear part of the KS flow exactly, thus eliminating the problem of the stiffness of the linear part, and thus allowing to use a much larger time step.  Implicit Adams-Moulton also deals with the stiffness, but it solves the linear part only approximately, so it is likely to be less accurate if used with the same time step.
+
+From the same viewpoint, there is also no need, in my opinion, to use anti-aliasing.  If a better approximation of the KS flow is needed, just include more modes into the map and decrease the time step.  Of course, if Kaz already implemented anti-aliasing, then there is no harm in using it, provided it doesn't increase the flops count too much.
+
+On a different note, I don't see why we should expect higher modes to be {\em exactly} orthogonal.  Since all modes in the KSE are coupled though the nonlinear term, the deviation from orthogonality should be proportional to the strength of this coupling.  Of course this coupling is very weak for higher modes and decreases exponentially with increasing mode number.  But if we measure with sufficient resolution, which is what Kaz does, we'll observe the deviation from orthogonality for any higher mode, whether anti-aliased or not.  Or am I wrong?
 
 \end{description}
