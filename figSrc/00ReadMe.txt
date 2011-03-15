@@ -46,7 +46,28 @@ singpass1.png
 			      sys_utils/makefile
 
 Added script that applies epstopdf on all eps files 
-in a specified directory.
+in a specified directory. Usually results in huge savings in
+figure size, without loss of quality. Use it for arxiv (with
+pdflatex), keep eps files for APS submission.
+
+----------------------------------------------------------------
+                                        Evangelos 2011-03-15
+
+I've recently started using matplotlib for visualization:
+
+http://matplotlib.sourceforge.net/
+
+It is a matlab-like python library, that can be used either
+interactively or through scripts. Excellent! Perhaps it only
+lags behind matlab and mathematica in 3D capabilities.
+
+I've also noticed asymptote
+
+http://asymptote.sourceforge.net/
+
+produces high-quality figures in 2D and 3D. I think it is
+intended mostly for drawing, rather than for data visualization.
+I haven't tried it.
 
 ----------------------------------------------------------------
                                         Predrag 2010-04-02
