@@ -4,13 +4,16 @@
                         \newif\ifOUP \newif\ifboyscout            %%
                         \newif\ifdasbuch \newif\ifarticle         %%
                         \newif\ifsolutions                        %%
+ 			            \newif\ifsvnmulti                         %%
+                        \svnmultitrue %% turn on svn-multi	      %%
                         \dasbuchtrue %% DasBuch, not QFT lectures %%
                         \boyscouttrue %% commented, WWW/boyscouts %%
                         \solutionstrue %% include solutions       %%
                         \paperfalse\PDFtrue %% hyperlinked        %%
                         \OUPfalse \articlefalse  %% ChaosBook %%%%%%
     % Toggle between draft and non-draft versions
-%\boyscoutfalse                 % public, for hyperlinked ChaosBook/projects
+\svnmultifalse
+\boyscoutfalse                 % public, for hyperlinked ChaosBook/projects
     % Toggle between draft and non-draft for articla
 %\articletrue                   %editing the article
 %\articletrue\boyscoutfalse     % article for submission
@@ -26,8 +29,10 @@
 \usepackage{fancyhdr}
 \usepackage{alltt}
 \usepackage{ifthen}
-\usepackage{svn-multi}
-
+\ifsvnmulti
+ \usepackage{svn-multi}
+\else
+\fi
 \usepackage[latin1]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[pdftex]{graphicx}
@@ -43,6 +48,7 @@
    pdfauthor=Chao Shi,
    pdfkeywords=?? Lorenz flow,
    pdftitle=Reducing ??}
+\ifsvnmulti
 \svnidlong          %uses svn-multi
 {$HeadURL$}
 {$LastChangedDate$}
@@ -52,6 +58,7 @@
 \svnkwsave{$RepoFile: siminos/chao/blog.tex $}
 \svnRegisterAuthor{chao}{Chao Shi}
 \svnRegisterAuthor{predrag}{Predrag Cvitanovi{\'c}}
+\fi
 
     \ifboyscout
 %% If the svn information should be also placed
@@ -61,15 +68,17 @@
 \pagestyle{fancy}
 \fancyhead{}
 \fancyhead[er,ol]{\slshape \leftmark }
+\ifsvnmulti
     \Private{ % subversion label pages
 \fancyfoot[er,ol]{rev. \svnrev\ (\svnfileauthor, rev. \svnfilerev )}
-%\fancyfoot[or]{\svnyear -\svnmonth -\svnday \
-%\svnhour :\svnminute }
+\fancyfoot[or]{\svnyear -\svnmonth -\svnday \
+\svnhour :\svnminute }
 \fancyfoot[el,or]{\svnfilemonth/\svnfileday/\svnfileyear}
 %}
-%URL \svnmainurl \svnkw{URL}
+URL \svnmainurl \svnkw{URL}
 %Filename \svnmainfilename
     } % end \Private{
+\fi
     \else
     \fi %end of boyscout switch
 
@@ -92,7 +101,7 @@
 
 \bibliographystyle{../inputs/adkPCphysrev}  % PC Phys Rev style,
                                             % but with article titles
-%\bibliographystyle{unsrt} %prsty} %apsrev} %plain}
+\bibliographystyle{unsrt} %prsty} %apsrev} %plain}
 \bibliography{../bibtex/siminos}
 
 \end{document}
