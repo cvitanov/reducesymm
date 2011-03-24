@@ -1,6 +1,7 @@
 siminos/00ReadMe.txt
-$Author$ $Date$
-----------------------------------------------------------------------------
+$Author$ 
+$Date$
+--------------------------------------------------------
 
 Evangelos Siminos thesis, publications and working notes
 ========================================================
@@ -22,9 +23,9 @@ bibtex/siminos.bib
 	one bibliography for all projects
 
 figs/
-	one directory for thesis and blog figures
-	.eps figures needed for compatibility with articles, ChaosBook
-    when creating a new version, please use the SAME name (so
+    one directory for thesis and blog figures .eps figures
+    needed for compatibility with articles, ChaosBook.
+    When creating a new version, please use the SAME name (so
     it propagates to publications etc. as well, without messing
     around with renaming it)
 
@@ -39,13 +40,32 @@ figsSrc/
 inputs/
 	one directory for all Siminos specific macros
 
+thesis/
+
+www/
+    Siminos home pages (tres elegantes)
+
 talks/
+    all symmetry reduction talks
     Tufts10/    Predrag seminar, 2010-04-02
+
+posters/
+
+blog/
+    all matters pertaining to symmetry reduction reading
+
+lyapunov/
+    all matters pertaining to 'covariant Lyapunov vectors'
+
+froehlich/
+    Stefan Froehlich blog, papers 
+
+chao/
+    Chao's blog
 
 ---------------------------------------------------------------
 TO FIX:
-
---
+- 2011-03-16: emaildict for Chao Shi reply-to address
 
 ---------------------------------------------------------------
 NOTES:
@@ -62,12 +82,12 @@ To have svn time-stamp file "someFile.type", include the contents of
 into the file, and then
 	svn propset svn:keywords "Date Author" someFile.type
 
---------------------------------------------------------------------------
+----------------------------------------------------------------
 HISTORY:
 						Predrag Jul 26 2008
     created this file
 
---------------------------------------------------------------------------
+----------------------------------------------------------------
 FIXED:
 						Evangelos Dec 4 2010	
 	emaildict for correct reply-to address
