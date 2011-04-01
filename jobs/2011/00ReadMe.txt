@@ -6,9 +6,7 @@ CEA contract ends Jul 05 2011
 Interviews
 ==================================
 
-ETH Zurich 29-30 March (H. C. Ottinger)
-
-MPIPKS Dresden TBD (S. Skupin?)
+MPIPKS Dresden May 29-31 (S. Skupin)
 (did not get the fellowship, but I might get a postdoctoral
 position)
 
@@ -21,8 +19,6 @@ ES TO DO List
 
 
 [?] Almost got an offer from A. Ghizzo (Nancy);
-	- Upgrade: 60% simulation, 40% theory. Waiting to see if I get an offer.
-	He didn't ask for letters, so I just wait.
 [] Locate people who do quantum plasmas, write to them:
     [] Manfredi at Strasburg: Giovanni.Manfredi@ipcms.u-strasbg.fr
 	  http://www-ipcms.u-strasbg.fr/spip.php?article289&lang=fr
@@ -134,30 +130,22 @@ on statistical mechanics and nonlinear dynamics.
 
 =====================================================
 
-I will NOT apply here.
-======================================
+=====================================================
+ETH Zurich 29-30 March (H. C. Ottinger, Material Science)
 
-Marseille (Leoncini)	No funding		
+The idea was to work in Ottinger's group to learn non-equilibrium thermodynamics
+and try to understand nonlinear collisionless damping in plasmas.
+Ottinger did not want to hear a word about Vlasov (since collisions are ignored
+and he is a fan of Boltzmann) and complained plasmas is not his topic and he cannot
+follow me. At the end he decided that I am an applied mathematician, "was impressed by 
+my sound background in numerical methods," but I don't fit to work with them the
+physicists. 
 
+I am rather depressed about this, since I do not consider myself as having 
+particular computational skills compared to what an average plasma guy can do here
+(programm GPUs in parallel and the like). The whole point was about suppressing 
+irrelevant scales and I expected statistical physicists to be interest.
 
-MPI Dresden		Nov 17  2:visitors@mpipks-dresden.mpg.de www.mpipks-dresden.mpg.de/pages/stellenangebote/frames_stellen_en.html
-				addressed to Prof. Dr. J. Rost
-				also sent by ordinary mail, see below
+At least I got some good advice by one of the senior researchers in the group who
+cared to listen and found the topic interesting.
 
-***For DRESDEN:
-
-	Nov 17 Deadline refers to reference letters as well!!!
-
-	Reference letters can be sent via email, but should follow in
-    original by ordinary mail to the following address:
-
-	Dr. Sergej Flach
-	Visitors' Program
-	Max Planck Institute for the Physics of Complex Systems
-	Noethnitzer Str. 38
-	D-01187 Dresden, Germany
-
-L. Rondoni		Nov 15  3				http://www.ac.infn.it/personale/borsedistudio/pdf/getfile.php?filename=id751.pdf
-
-``Not present in France'' requirement not met:
-Poincare Fel.:		Nov 15 	Dr. F. Namouni (cpoca@oca.eu) 	http://www.oca.eu/spip.php?article181
