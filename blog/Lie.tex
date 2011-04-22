@@ -5,6 +5,7 @@
 \label{sect:LiePolice}
 
 \renewcommand{\LieEl}{\ensuremath{g}}  % Predrag Lie group element
+\renewcommand{\ssp}{x}
 
 \begin{description}
 \item[2011-03-15
@@ -188,6 +189,13 @@ papers like this...
 Sure, that was how I started, but then I decided I better read
 your \emph{Physica D} paper first!
 
+\item[2011-04-23 PC]
+Michael Loss says we should look at Fefferman{Feffer83} ``Uncertainty
+principle,'' which he thinks attempts to define symplectic distances.
+Fefferman's conjectures were proved by Hofer. I have looked at the paper,
+and see no connection to what we do; it's about relations between
+phase-space volumes and spectra of the Schr\"odinger operator.
+
 \end{description}
 
 
@@ -228,6 +236,28 @@ conjugate momenta of a Hamiltonian system with $\DOF$ degrees of freedom
 {\bf p} = (p_1,p_2,\dots,p_\DOF)
 \,.
 \ee{2.7a}
+The equations of motion
+for a time-independent, $\DOF$-dof Hamiltonian
+\refeq{Ham_eQ}
+can be written
+\index{symplectic!invariance}
+\index{invariance!symplectic}
+\beq
+%index%\dot{\pSpace}_m = {\bf \omega}_{mn}
+%index%        \frac{\partial H}{\partial \pSpace_n}, \qquad
+\dot{x}_i={\omega}_{ij} H_j(\pSpace)
+    \,, \quad
+    H_j(\pSpace) =
+    \frac{\partial~}{\partial\pSpace_j} H(\pSpace)
+        \,,
+%   \qquad
+%        m,n=1,2,\dots,2D
+\ee{symplec}
+\PC{use O de Almeida book argument here?}
+where $\pSpace = ({\bf q},{\bf p}) \in \pS$ is a phase space point,
+$H_{k} = \partial_k H$
+is the column vector of partial derivatives of $H$.
+
 
 \subsection{Tangent space spanned by the Lie algebra}
 \label{sect:tanSpace}
@@ -294,8 +324,9 @@ The Lie algebra of $Sp(n)$ is the set of Hamiltonian matrices.
 \subsection{Symplectic group}
 \label{sect:SymplctGroup}
 
-A symplectic matrix $\LieEl$ transformation preserves the
-\emph{symplectic bilinear form} $\pSpace^T {\bf \omega} \pSpace$,
+A symplectic matrix transformation $\LieEl$ preserves the
+\emph{symplectic bilinear form}
+$\braket{\sspRed}{\pSpace} = \sspRed^T {\bf \omega} \pSpace$,
 \beq
 \LieEl^T {\bf \omega} \LieEl = {\bf \omega}
     \,, \quad\quad
@@ -327,12 +358,134 @@ $\LieEl^T$ denotes the transpose of $\LieEl$, ${\bf I}$ is the
 \,.
 \ee{sympForm}
 
+\example{Symplectic form for $\DOF=2$:}{
+                    \label{exmp:SymplTwoDof}
+												\toCB
+For two degrees of freedom the phase space is 4\dmn,
+\(
+\pSpace=(q_1,q_2,p_1,p_2)
+\,,
+\)
+and the symplectic 2-form is
+\beq
+{\omega} = \left(
+\begin{array}{cccc}
+0  &  0 & 1 & 0\\
+0  &  0 & 0 & 1\\
+-1  &  0 & 0 & 0\\
+0  &  -1 & 0 & 0
+\end{array} \right)
+	\,,
+\ee{symlectNorm2D}
+The symplectic bilinear form  $\braket{\pSpace^{(1)}}{\pSpace^{(2)}}$
+is the sum over the areas of the
+parallelepipeds spanned pairwise by the two vectors,
+\beq
+\braket{\pSpace^{(1)}}{\pSpace^{(2)}} =
+(\pSpace^{(1)})^T {\bf \omega} \pSpace^{(2)} =
+(q_1^{(1)}p_1^{(2)} -q_1^{(2)}p_1^{(1)})
+	+
+(q_2^{(1)}p_2^{(2)} -q_2^{(2)}p_2^{(1)})
+\,
+\ee{twoFormD2}
+and it is these oriented areas (not the Euclidean distance between the two vectors,
+$\pSpace^{(2)}-\pSpace^{(1)}$) that are preserved by the symplectic transformations.
+    } %end \example{Symplectic form for 2 \dof
+
+\example{How far are two points from each other in a symplectic vector space?}{
+                    \label{exmp:SymplDistance}
+												\toCB
+Consider the sum of oriented areas (a sophisticate
+would say the `action')
+\[
+S(\pSpace,\slicep) =
+\braket{\pSpace}{\slicep} =
+		\pSpace^T {\bf \omega} \, \slicep
+\]
+spanned by a pair of vectors in a symplectic vector space.
+
+Think of one of the patterns
+(represented by a point {\slicep} in the phase space  \pS) as a
+`template'
+%\rf{rowley_reconstruction_2000,%
+%rowley_reduction_2003,%
+%ahuja_template-based_2007}
+or a `reference state' and act with elements of the symplectic group
+$Sp(d)$ on the {\template} $\slicep \to \LieEl(\gSpace)\,\slicep$ until
+its `distance' to the second pattern (a point $\ssp$ in the phase space),
+\beq
+S(\ssp,\LieEl(\gSpace)\,\slicep)
+    = S(\sspRed,\slicep)
+\label{minDistanceSp}
+\eeq
+is extremized.
+Here $\sspRed$ is the point on the group orbit of $\ssp$
+(the set of all points that $\ssp$ is mapped to under the group
+actions),
+\beq
+\ssp=\LieEl(\gSpace)\,\sspRed
+	\,,\qquad
+\LieEl \in \Group
+\,,
+\ee{sspOrbit}
+`closest' to the {\template} {\slicep}.
+
+The Lie group element
+$\LieEl=\LieEl(\gSpace)$ is
+parameterized by angles $\gSpace =
+(\gSpace_1,\gSpace_2,\cdots\gSpace_N)$, and the `distance' is an invariant
+of the $Sp(d)$ group, $S(\LieEl\pSpace,\LieEl\slicep)=S(\pSpace,\slicep)$.
+Its Lie algebra {generators} $\Lg_a$
+%\refeq{FiniteRot}
+are $N$
+linearly independent $[d\!\times\!d]$ Hamiltonian matrices acting
+linearly on the {phase space} vectors $\ssp \in \pS \subset \reals^d$.
+
+The symplectic bilinear form is not positive (see \refeq{twoFormD2}),
+but if \slicep\ is on the group orbit of $\ssp$, the
+form can be made to exactly vanish by its antisymmetry,
+$\braket{\slicep}{\slicep} = 0$.
+The minimal `distance' is a solution of the extremum conditions
+\[ %beq
+\frac{\partial ~~}{\partial \gSpace_a} \braket{\ssp}{\LieEl(\gSpace)\,\slicep}
+   =
+\braket{\sspRed}{\sliceTan{a}}
+   = 0
+    \,,\qquad
+	  \sliceTan{a} = \Lg_a \slicep
+\,.
+\] % ee{PCsectQ0}
+By the antisymmetry of the Lie algebra generators we have
+$\braket{\slicep}{\sliceTan{a}} = \braket{\slicep}{\Lg_{a}\slicep}=0$, so
+we can replace $\sspRed - \slicep \to \slicep$, and the
+`moving frame' transformation
+parameters $\gSpace$ which map the state $\ssp$ to $\sspRed$, the group
+orbit point closest to the {\template} $\slicep$, are determined by
+\beq
+\braket{\sspRed}{\sliceTan{a}} =0
+    \,,\qquad
+\LieEl(\gSpace)\,\sspRed = \ssp
+\,.
+\ee{PCsectQ}
+The closest group orbit points thus lie in a $(d\!-\!N)$\dmn\ hyperplane
+$\pSRed = \pS/\Group$, the set of vectors $\sspRed \in  \pSRed$
+orthogonal to the {\template} tangent space spanned by tangent vectors
+$\{\sliceTan{1},\cdots,\sliceTan{N}\}$
+\beq
+\sspRed_1\sliceTan{a,1} + \sspRed_2\sliceTan{a,2}
+  + \cdots + \sspRed_d\sliceTan{a,d} = 0
+\,.
+\ee{hyperpl}
+
+In what follows we shall refer to this hyperplane as a \emph{slice,} and
+to  \refeq{PCsectQ} as the \emph{slice conditions}.
+    } %end \example{Symplectic form for 2 \dof
+
 
 If $\LieEl$ is symplectic, so is its inverse $\LieEl^{-1}$, and if
 $\LieEl_1$ and $\LieEl_2$ are symplectic, so is their product $\LieEl_2
 \LieEl_1$. Symplectic matrices form a group called the \emph{symplectic
 group} $Sp(d)$.
-
 
 {Symplectic} transformations $ \exp(\gSpace \cdot {\Lg}) $ are
 generated by sequences of infinitesimal steps of form
@@ -351,7 +504,7 @@ where $\Lg_a$, the {\em generators} of infinitesimal
 transformations, are a set of linearly independent
 $[d\!\times\!d]$ Hamiltonian matrices,
 acting linearly on the $d$-dim\-ens\-ion\-al
-\statesp\ $\pS$.
+phase space $\pS$.
 
 From
 \refeq{symlectNorm} and
@@ -442,28 +595,6 @@ called the symplectic Lie algebra $sp(2n)$.
 
 \subsection{Canonical transformations}
 \label{sect:CanonTransf}
-
-The equations of motion
-for a time-independent, $\DOF$-dof Hamiltonian
-\refeq{Ham_eQ}
-can be written
-\index{symplectic!invariance}
-\index{invariance!symplectic}
-\beq
-%index%\dot{\pSpace}_m = {\bf \omega}_{mn}
-%index%        \frac{\partial H}{\partial \pSpace_n}, \qquad
-\dot{x}_i={\omega}_{ij} H_j(\pSpace)
-    \,, \quad
-    H_j(\pSpace) =
-    \frac{\partial~}{\partial\pSpace_j} H(\pSpace)
-        \,,
-%   \qquad
-%        m,n=1,2,\dots,2D
-\ee{symplec}
-\PC{use O de Almeida book argument here?}
-where $\pSpace = ({\bf q},{\bf p}) \in \pS$ is a phase space point,
-$H_{k} = \partial_k H$
-is the column vector of partial derivatives of $H$.
 
 The
 evolution of $\jMps^t$ \refeq{hOdes} is again determined by
@@ -685,3 +816,4 @@ a conserved quantity with each Killing vector.
   \RemarksEnd
 
 \renewcommand{\LieEl}{\ensuremath{\gamma}}  % also a Siminos Lie group element
+\renewcommand{\ssp}{a}
