@@ -111,29 +111,29 @@
 	    <span class="dspcont">We study the stability of spatially periodic, nonlinear Vlasov-Poisson equilibria as an eigenproblem in a Fourier-Hermite basis (in the space and velocity variables, respectively) of finite dimension, $N$. When the advection term in Vlasov equation is dominant, the convergence with $N$ of the eigenvalues is rather slow, limiting the applicability of the method. We use the method of spectral deformation introduced in [J. D. Crawford and P. D. Hislop, Ann. Phys. 189, 265 (1989)] to selectively damp the continuum of neutral modes associated with the advection term, thus accelerating convergence. We validate and benchmark the performance of our method by reproducing the kinetic dispersion relation results for linear (spatially homogeneous) equilibria. Finally, we study the stability of  a periodic Bernstein-Greene-Kruskal mode with multiple phase space vortices, compare our results with numerical simulations of the Vlasov-Poisson system and show that the initial unstable equilibrium may evolve to different asymptotic states depending on the way it was perturbed.
 	    </span>
 	</p>
+<!--      -->
+
+      <h4 class="title2"> <a name="articles"></a>Articles</h4>
 <!--     -->
 	<p class="ref"> 
 	  <span class="refauthors"> G. S&aacute;nchez-Arriaga, <strong>E. Siminos</strong>, and E. Lefebvre</span></br>
 	  <span class="reftitle"> Relativistic solitary waves modulating long laser pulses in plasmas</span></br> 
-	    to appear in Plasma Phys. Contr. Fusion <span class="journal"></span>(2011), <a href="http://arxiv.org/abs/1101.1004">arXiv:1101.1004</a></br>
-    <!-- 	<a href="http://dx.doi.org/10.1137/070705623">Phys. D ???</a> -->
+<!-- 	    <a href="http://arxiv.org/abs/1101.1004">arXiv:1101.1004</a></br> -->
+     	<a href="http://dx.doi.org/10.1088/0741-3335/53/4/045011">Plasma Phys. Contr. Fusion <strong>53</strong>, 045011 <span class="journal"></span>(2011)</a></br>
 	    <img src="images/acroread16.png" alt="preprint"><a href="./papers/SSL10.pdf"> preprint</a>
  	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 	    <span class="dsphead">+</span> abstract</a>
-<!--		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
+		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 		    <span class="dsphead">+</span> bibtex</a>
 		  </span>
 		  <span class="dspcont">
-		      <?php include("./bib/SSL10.bib");?> 
-		  </span>-->
+		      <?php include("./bib/SSL11.bib");?> 
+		  </span>
 	    </span>
 	    <span class="dspcont">This article discusses the existence of solitary electromagnetic waves trapped in a self-generated Langmuir wave and embedded in an infinitely long circularly polarized electromagnetic wave propagating through a plasma. From the mathematical point of view they are exact solutions of the 1-dimensional relativistic cold fluid plasma model with nonvanishing boundary conditions. Under the assumption of traveling wave solutions with velocity $V$ and vector potential frequency $\omega$, the fluid model is reduced to a Hamiltonian system. The solitary waves are homoclinic (grey solitons) or heteroclinic (dark solitons) orbits to fixed points. By using a dynamical systems description of the Hamiltonian system and a spectral method, we identify a great variety of solitary waves, including asymmetric ones, discuss their disappearance for certain parameter values, and classify them according to: (i) grey or dark character, (ii) the number of humps of the vector potential envelope and (iii) their symmetries. The solutions come in continuous families in the parametric $V-\omega$ plane and extend up to velocities that approach the speed of light. The stability of certain types of grey solitary waves is investigated with the aid of particle-in-cell simulations that demonstrate their propagation for a few tens of the inverse of the plasma frequency. 
 	    </span>
 	</p>
 <!--     -->
-
-      <h4 class="title2"> <a name="articles"></a>Articles</h4>
-<!--      -->
 	<p class="ref"> 
 	  <span class="refauthors"><strong>E. Siminos</strong> and P. Cvitanovi&#263;</span></br>
 	  <span class="reftitle"> Continuous symmetry reduction and return maps for high-dimensional flows</span></br> 
