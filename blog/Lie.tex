@@ -243,24 +243,28 @@ The equations of motion for a time-independent, $\DOF$-dof Hamiltonian
 \index{symplectic!invariance}
 \index{invariance!symplectic}
 \beq
-\dot{x}_i={\omega}_{ij} H_j(\pSpace)
+\dot{x}_i={\omega}_{ij} H_{,j}(\pSpace)
     \,, \quad
-    H_j(\pSpace) =
+    H_{,j}(\pSpace) =
     \frac{\partial~}{\partial\pSpace_j} H(\pSpace)
         \,,
 \ee{symplec}
 \PC{use O. de Almeida book\rf{almeida88} argument here?}
 where $\pSpace = ({\bf q},{\bf p}) \in \pS$ is a phase space point,
-$H_{k} = \partial_k H$ is the column vector of partial derivatives of
-$H$,
+% $H{,{k} = \partial_k H$ is the column vector of partial derivatives of $H$,
+a derivative of $(\cdot)$ with respect to $\pSpace_j$ is denoted by
+comma-index notation $(\cdot)_{,j}$,
 \beq
 {\omega} = \MatrixII{0}{\bf I}{\bf -I}{~0}
 	\,,
 \ee{symplNormConv}
 is an antisymmetric  [$d\!\times\!d$] matrix,
 and ${\bf I}$ is the [$\DOF\!\times\!\DOF$] unit matrix.
+
 Throughout ChaosBook we reserve the term `phase space' to Hamiltonian
-flows, and `\statesp' to general flows with no symplectic symmetry.
+flows. A `\statesp' is the stage on which any flow takes place.
+'Phase space' is a special, but physically important case, 
+a \statesp\ with symplectic structure, preserved by the flow.
 
 \example{Who ordered `symplectic?'}{
                     \label{exmp:SymplNewton}
@@ -285,13 +289,13 @@ H(q,p) = p^2/2m + V(q)
 \)
 and voila, the equation of motion take on the symplectic form
 \refeq{symplec}. What makes this important is the fact that the evolution
-in time (and more generally any canonical transformation) preserve this
+in time (and more generally any canonical transformation) preserves this
 symplectic structure, as we shall show in \refsect{sect:CanonTransf}.
-Another way to put it: gradient flows $ \dot{x} =  - \partial V(x) $
-contract \statesp\ volumes into a fixed point. In contrast,
+Another way to put it: a gradient flow $ \dot{x} =  - \partial V(x) $
+contracts a \statesp\ volume into a fixed point. In contrast,
 the `$-$' sign
 in the symplectic action on
-$(q,p)$ coordinates induces rotations, and preserves phase space
+$(q,p)$ coordinates induces a rotation, and preserves phase space
 areas.
 
 	} %end \example{Who ordered `symplectic?'}{
@@ -353,17 +357,17 @@ and the symplectic 2-form is
 \ee{symlectNorm2D}
 The symplectic bilinear form  $\braket{\pSpace^{(1)}}{\pSpace^{(2)}}$
 is the sum over the areas of the
-parallelepipeds spanned pairwise by the two vectors,
+parallelepipeds spanned pairwise by components of the two vectors,
 \beq
 \braket{\pSpace^{(1)}}{\pSpace^{(2)}} =
-(\pSpace^{(1)})^T {\bf \omega} \pSpace^{(2)} =
+(\pSpace^{(1)})^T {\bf \omega}\,\pSpace^{(2)} =
 (q_1^{(1)}p_1^{(2)} -q_1^{(2)}p_1^{(1)})
 	+
 (q_2^{(1)}p_2^{(2)} -q_2^{(2)}p_2^{(1)})
 \,.
 \ee{twoFormD2}
-It is these oriented areas (not the Euclidean distance between the
-two vectors, $\pSpace^{(2)}-\pSpace^{(1)}$) that are preserved by the
+It is this sum over oriented areas (not the Euclidean distance between the
+two vectors, $|\pSpace^{(2)}-\pSpace^{(1)}|$) that is preserved by the
 symplectic transformations.
     } %end \example{Symplectic form for 2 \dof
 
@@ -391,15 +395,19 @@ Lie groups in general, a topic that we study in more depth in
 Chapter continuous.tex.
 		\fi
 A \emph{Lie group} is a group whose elements $\LieEl(\gSpace)$ depend smoothly
-on a finite number $N$ of parameters $\gSpace_i$. In a neighborhood of a
-given group element the linearization
+on a finite number $N$ of parameters $\gSpace_a$. In a linearized neighborhood
+of a given group element,
 \[
 \LieEl(\gSpace+\delta\gSpace) \simeq \LieEl(\gSpace)
 +  \sum_{a=1}^N  \delta\gSpace_a
 	\frac{\partial \LieEl(\gSpace)}{\partial_a \gSpace}
 \,,
 \]
-spans the \emph{tangent space} at $\LieEl(\gSpace)$. With an application
+the $[d\!\times\!d]$ matrices
+\(
+{\partial \LieEl(\gSpace)}/{\partial_a \gSpace}
+\)
+span the \emph{tangent space} at $\LieEl(\gSpace)$. With an application
 of the inverse of a group element $\LieEl^{-1}$, this neighborhood can be
 mapped into a neighborhood $\LieEl(\delta\gSpace)$ of the identity
 $\LieEl(0)=1$, so the local structure of Lie groups can be understood by
@@ -429,10 +437,15 @@ Lie algebra generators):
 where $\{\Lg_1,\Lg_2\cdots,\Lg_N\}$, the {\em generators} of
 infinitesimal transformations, are a set of $N$ linearly independent
 $[d\!\times\!d]$ matrices which span the tangent space and act linearly
-on the $d$-dim\-ens\-ion\-al phase space $\pS$. As we shall see later,
+on the $d$-dim\-ens\-ion\-al phase space $\pS$. As we shall see
+	   \ifdasbuch
+in \refsect{??}.
+		\else
+later,
+		\fi
 they endow the tangent space with a Lie algebra structure. Globally
 different Lie groups may have the same local structure: for example, near
-the identity $\SOn{n}$ and $\On{n}$ have the same Lie algebra $o(n)$.
+the identity $\SOn{n}$ and $\On{n}$ have the same Lie algebra $so(n)$.
 
 The infinitesimal statement of symplectic invariance follows by
 substituting \refeq{InftsmLieTransf} into \refeq{symlectNorm} and keeping
@@ -448,7 +461,11 @@ symplectic} transformations. Matrices that satisfy \refeq{symFunny_L} are
 sometimes called \emph{Hamiltonian matrices}. A linear combination  of
 Hamiltonian matrices is a Hamiltonian matrix, so Hamiltonian matrices
 form a linear vector space, the \emph{symplectic
-Lie algebra} $sp(d)$. By the antisymmetry of $\omega$,
+Lie algebra} $sp(d)$, or, in the Cartan-Killing classification of
+simple Lie algebras, Lie algebra $C_\DOF$. Here the subscript $\DOF$
+refers to the the number of mutually commuting generators,
+or the \emph{rank} of the algebra
+By the antisymmetry of $\omega$,
 \index{Hamiltonian!matrix}
 \beq
 ({\bf \omega} \Lg_a)^T = {\bf \omega} \Lg_a
@@ -460,26 +477,39 @@ dimension of the symplectic group $Sp(d)$,
 N= {d(d+1)}/{2} = \DOF (2 \DOF+1)
 \,.
 \ee{symplDim}
-The lowest-dimensional symplectic group $Sp(2)$ is isomorphic to $SU(2)$
-and $\SOn{3}$.
+The lowest-dimensional symplectic group $Sp(2)$, of dimension $N=3$,
+is isomorphic to $SU(2)$ and $\SOn{3}$. The first interesting case is
+$Sp(3)$ whose dimension is $N=10$.
 
 It is easily checked that the exponential of a Hamiltonian matrix
 \beq
 \LieEl = e^{\gSpace \cdot {\Lg}}
 \ee{SymplExcp}
-is a symplectic matrix; Lie group elements are obtained from the Lie
-algebra elements by exponentiation.
+is a symplectic matrix; Lie \emph{group} elements are related to the Lie
+\emph{algebra} elements by exponentiation.
 
 
-\example{How far are two points from each other in a symplectic vector space?}{
+\example{
+    \ifboyscout
+So near, and yet so far
+    \else
+How far are two points from each other in a symplectic vector space?
+    \fi
+}{
                     \label{exmp:SymplDistance}
 												\toCB
+The notion of distance has no meaning for $Sp(d)$.
+Under symplectic action areas are mapped into equal                                             areas of different shapes, so the Euclidean distance
+between two points has no invariant meaning, it can be
+mapped into any other separation under a symplectic
+transformation.
 Consider the sum of oriented areas (a sophisticate
-would say the `action')
+would say the `action'), as in \refeq{twoFormD2}
 \[
 S(\pSpace,\slicep) =
 \braket{\pSpace}{\slicep} =
-		\pSpace^T {\bf \omega} \, \slicep
+%		\pSpace^T {\bf \omega} \, \slicep
+\sum_{j=1}^\DOF (q_j^{(1)}p_j^{(2)} -q_j^{(2)}p_j^{(1)})
 \]
 spanned by a pair of vectors joined by the symplectic 2-form.
 
@@ -554,26 +584,35 @@ What gives?
 \label{sect:CanonTransf}
 
 The
-evolution of $\jMps^t$ \refeq{hOdes} is again determined by
+evolution of $\jMps^t$
+    \ifdasbuch
+\refeq{hOdes}
+    \else
+    \fi
+is again determined by
+    \ifdasbuch
 the {\stabmat} $\Mvar$, \refeq{Bew_Miaw}:
+    \else
+the {\stabmat} $\Mvar$:
+    \fi
 %%RA e
 \index{Hessian matrix}
 \beq
 {d\over dt}\jMps^t(\pSpace) = \Mvar(\pSpace)
 \jMps^t(\pSpace)
 \,, \qquad
-\Mvar_{ij}(\pSpace)={\omega}_{ik}\,S_{kj}(\pSpace)
+\Mvar_{ij}(\pSpace)={\omega}_{ik}\,H_{,kj}(\pSpace)
 \,,
 \ee{Bew_Mon}
 where the symmetric matrix of second derivatives
-$S_{kn} = \partial_k \partial_n H$
-%index%$S_{kn}=\partial_k \partial_n H$
+$H_{,kn} = \partial_k \partial_n H$
+%index%$H_{,kn}=\partial_k \partial_n H$
 is called the {\em Hessian matrix}.
 From
 % \refeq{Bew_Mon} and
-the symmetry of $S_{kn}$
+the symmetry of $H_{,kn}$
 %index% $H_{kn}$
-it follows that
+it follows that for Hamiltonian flows \refeq{symplec}
 \index{symplectic!transformation}
 \index{canonical transformation}
 \beq
@@ -586,12 +625,12 @@ generators of {\em symplectic} (or canonical) transformations.
 \PC{make sure nothing refers to eq. \texttt{sympQ}}
 
 Consider now a smooth nonlinear change of variables of form $y_i=h_i(x)$,
-and define a new function $K(x)=H(h(x))$. Under which conditions does
+and define a `Kamiltonian' function $K(x)=H(h(x))$. Under which conditions does
 $K$ generate a Hamiltonian flow? In what follows we will use the notation
-$\tilde{\partial}_j=\partial/\partial y_j$,
-$s_{ij} =
-% (\partial h)_{ji}=
-\frac{\partial h_i}{\partial x_j}$
+$\partial_{\tilde{j}}=\partial/\partial y_j$,
+$s_{i,j} =
+% (\partial h)_{ji}= \frac
+{\partial h_i}/{\partial x_j}$
 .
 By employing the chain rule we
 have that
@@ -599,29 +638,31 @@ have that
 %and transform $H(x)$  into $K(y) = H(g(y)$ with $g = h^{-1}$. PC: as you
 %wish - just make sure that it is consistent with $h$ as defined in conjug.tex}
 \beq
-\omega_{ij} \partial_j K \,=\, \omega_{ij}
-\tilde{\partial}_l H
-s_{lj}
+%\omega_{ij}
+K_{,j} \,=\,
+% \omega_{ij}
+H_{,\tilde{l}}
+s_{\tilde{l},j}
 % \frac{\partial h_l}{\partial x_j}
 \eeq
 (Here, as elsewhere in this book, a repeated index implies summation.)
 By virtue of \refeq{Ham_eQ} $\tilde{\partial}_l H=-\omega_{lm}\dot{y}_m$, so
 that, again by employing the chain rule, we obtain
 \beq
-\omega_{ij} \partial_j K \,=\, -\omega_{ij} s_{jl}
+\omega_{ij} \partial_j K \,=\, -\omega_{ij} s_{j,l}
 % \frac{\partial h_l}{\partial x_j}
 \omega_{lm}
-s_{mn}
+s_{m,n}
 % \frac{\partial h_m}{\partial x_n}
 \dot{x}_n
 \eeq
 The right hand side simplifies to $\dot{x}_i$ (yielding Hamiltonian
 structure) only if
 \beq
--\omega_{ij} s_{lj}
+-\omega_{ij} s_{l,j}
 % \frac{\partial h_l}{\partial x_j}
 \omega_{lm}
-s_{mn}
+s_{m,n}
 %\frac{\partial h_m}{\partial x_n}
 \, =\, \delta_{in}
 \eeq
@@ -695,9 +736,9 @@ referred to as $ad(f)$ where $ad$ is shorthand for adjoint. Dragt uses the
 $:f:$ notation instead of $ad(f)$ because `it facilitates the writing of
 complicated expressions.'
 
-I call the matrix of second derivatives of the Hamiltonian, $S_{kn}=
+I call the matrix of second derivatives of the Hamiltonian, $H_{,kn}=
 \partial_k \partial_n H$, the `Hessian matrix.'
-${\omega}_{ik}\,S_{kj}(\pSpace)$ in \refeq{Bew_Mon} is the (instantaneous)
+${\omega}_{ik}\,H_{,kj}(\pSpace)$ in \refeq{Bew_Mon} is the (instantaneous)
 {\stabmat} of the flow - it is a Hamiltonian matrix. Its integral along
 the trajectory, the linearization of the flow ${\jMps}$ that ChaosBook (as well
 as Dragt\rf{Dragt05}) call the `\JacobianM,' is symplectic.
@@ -714,6 +755,8 @@ Dragt and Habib\rf{DraHab08,Dragt05} offer a concise discussion of
 symplectic Lie operators and their relation to Poisson brackets:
 incorporate this into the Liouville operator discussion in ChaosBook.org.
 
+													\toCB
+\PC{put into period doubling}
 Curiosity: in \refref{Dragt11} Dragt says ``Sometimes Feigenbaum
 diagrams are called bifurcation diagrams. However. strictly speaking,
 bifurcation diagrams should also display the unstable fixed points, and
@@ -724,6 +767,7 @@ The book is more extreme than even ChaosBook.org: 1872 pages. But
 considerably more repetitive.
 
 \toCB
+\PC{put into introduction}
 Dragt: ``The use of the term bifurcation in
 the context of dynamics is due to Poincar\'e.''
 
