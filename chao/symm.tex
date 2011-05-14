@@ -1,0 +1,565 @@
+\ifsvnmulti
+\svnkwsave{$RepoFile: siminos/chao/symm.tex $}
+\svnidlong {$HeadURL$}
+{$LastChangedDate$}
+{$LastChangedRevision$} {$LastChangedBy$}
+\svnid{$Id$}
+\fi
+
+
+\chapter{The importance of being symmetric}
+\label{chap:symms}
+
+\begin{description}
+
+\item[2011-5-14 PC to Chao]
+I have copied to this chapter the 2011-07-12 symmetry notes from
+repository spieker/blog/* to help you get started with your own symmetry
+notes - edit this your own way as you learn this stuff.
+
+Keep it up-to-date - if all goes well, it can be used in forthcoming
+papers and
+\HREF{http://www.online-literature.com/wilde/being_earnest/}
+{the thesis}. Please use the same notational conventions and
+macros, makes life easier later on.
+
+Dustin Speaker was a good grad student who flunked out because he flunked
+Classical Mechanics qualifiers. Go figure...
+
+\end{description}
+
+
+\section{Basics of group theory}
+
+
+Suppose that a set of elements $A,B,C,...$ has a form of group
+multiplication that associates a third member of the set with
+two other elements of the set; a group, $\Group =
+\{\LieEl_1,\LieEl_2,...,\LieEl_n\}$,
+is defined as the members of that set that
+satisfy four conditions.
+
+The first condition is called \emph{closure}, namely that
+multiplication between any two elements in a group produces an
+element in the same group:
+\[
+ \LieEl_i \circ \LieEl_j \in \Group
+\]
+The second condition is called \emph{associativity}:
+the order in which group multiplication is performed
+does not matter.  If parenthesis denote the first operation to
+be performed:
+\[
+ (\LieEl_i \cdot \LieEl_j) \circ \LieEl_k
+   = \LieEl_i \circ (\LieEl_j \circ \LieEl_k)
+\,.
+\]
+The third condition is that there must exist an \emph{identity
+element} in the group, usually denoted by $e$, such that for all
+$\LieEl_i \in \Group$
+\[
+ e \circ \LieEl_i = \LieEl_i \circ e = \LieEl_i
+\,.
+\]
+The fourth condition is the existence of an \emph{inverse}.  For every
+element in a group $g \in \Group$, there must exist an inverse
+$h = g^{-1} \in \Group$ such that
+\[
+ g\circ h = h\circ g = e
+\,,
+\]
+where $e$ once again represents the identity element.  As an
+example, the real line with the exception of zero, $\mathbb{R}
+\cap 0$, forms an order~$\infty$ group under multiplication.
+   \PC{This example is probably more confusing than helpful,
+       the group is continuous but not a Lie group (no generators,
+       I believe). I think you can also show that is a group/not a group
+       under addition.}
+It satisfies all of the above
+conditions.  Including $0$ in the set would fail to satisfy the
+existence of an inverse condition and the set would no longer
+be a group.
+
+Group theory is much more developed than the simple properties
+listed above, but with these definitions alone, we might begin
+to apply our knowledge of groups toward analysis of dynamical
+systems.  First we must define few terms that will come up
+frequently in our considerations.  It will be useful to
+consider a simple symmetric geometric object to reference
+throughout the definitions.  Consider a square that is
+symmetric \PCedit{under reflection} by $\pi$ about axes
+$A,B,C,D$ and rotations about the center of the square by
+$\frac{\pi}{2},\pi,\frac{3\pi}{2}$ called $F,G,H$ respectively.
+We also include the identity symmetry $E$.  With these 8
+symmetries in place, we can work out the group multiplication
+\reftab{t:squareMultTab}.
+    \PC{No need to fix this now in \reftab{t:squareMultTab}, but
+        the multiplication tables convention is to put identity
+        into the first row/column, then other elements class by
+        class, in increasing class size. This will be useful later
+        on, when you write down character tables which tell you
+        the weight for a given class within a given irreducible
+        representation.}
+\begin{table}
+\caption[]
+{Group multiplication table for a square.
+The order of group operations is multiplying the
+column by the row.}
+\centering
+{\small
+\begin{tabular}{c|llllllll}
+  & E & A & B & C & D & F & G & H
+\\[1ex]
+\hline\\[-0.5ex]
+E & E & A & B & C & D & F & G & H \\
+A & A & E & G & F & H & C & B & D \\
+B & B & G & E & H & F & D & A & C \\
+C & C & H & F & E & G & B & D & A \\
+D & D & F & H & G & E & A & C & B \\
+F & F & D & C & A & B & G & H & E \\
+G & G & B & A & D & C & H & E & F \\
+H & H & C & D & B & A & E & F & G \\
+
+\end{tabular}
+} %end {\small
+\label{t:squareMultTab} % removed \tEQsix\
+\end{table}
+
+Now we might begin our definitions.  The first term to come up
+regularly is \textit{conjugacy}.  Suppose there exists a group
+$\Group = \{\LieEl_1,\LieEl_2,...,\LieEl_n\}$. Element $\mathcal{Q}$ is said to be
+conjugate to $P$ if $\LieEl_iP\LieEl_i^{-1} = \mathcal{Q}$ or
+$\LieEl_i^{-1}Q\LieEl_i = P$ for all elements $\LieEl_i \in \Group$.
+	\PC{wrong as it stands - 'all elements' defins the class,
+            conjugacy works only for specific elements, as you show in
+	    \refeq{eq:class}}
+For
+example, in the square example, both $E$ and $G$ are conjugate
+to themselves (but not to each other).
+
+Suppose that we carry out the out calculations of the form
+$\LieEl_i^{-1}A\LieEl_i$ for the group of elements of our square
+symmetry.  One would find
+\bea
+&&\{AAA^{-1},BAB^{-1},CAC^{-1},DAD^{-1},EAE^{-1},FAF^{-1},GAG^{-1},HAH^{-1}\}
+\continue
+&& ~~~~~~~~~~~~~~~~~~~~ = ~~\{A,A,B,A,A,B,A,B\}
+\label{eq:class}
+\eea
+Notice that only the elements $A$
+and $B$ turn up.  If we do the same calculation for $B$, we
+find that
+\bea
+&&\{ABA^{-1},BBB^{-1},CBC^{-1},DBD^{-1},EBE^{-1},FBF^{-1},GBG^{-1},HBH^{-1}\}
+\continue
+&& ~~~~~~~~~~~~~~~~~~~~ = ~~\{B,B,A,B,B,A,B,A\}
+\eea
+Again, note that only the elements $A$ and $B$ result.  This
+property of $A$ and $B$ links them in a way that is called a
+\emph{class}, which is our next definition.  A class is a
+set of group elements
+$\mathcal{C} \in \Group$, such that for any
+$\LieEl_i \subset \Group$
+\[
+\LieEl_i\mathcal{C}\LieEl_i^{-1} = \mathcal{C}
+\,.
+\]
+For our square symmetry group, we find there are 5 such
+classes:
+$\mathcal{C}_1 = \{E\}$,
+$\mathcal{C}_2 = \{G\}$,
+$\mathcal{C}_3 = \{F,H\}$,
+$\mathcal{C}_4 = \{A,B\}$,
+$\mathcal{C}_5 = \{C,D\}$.
+Note that all of the classes, with
+the exception of $\mathcal{C}_1$, do not
+contain the identity element.  This means that classes, with
+the exception of the class that contain the identity
+as its sole element, cannot be groups.
+
+This brings us to our next definition: \textit{subgroups}.  A
+subgroup has all of the same properties as a group, but is part
+of a larger group.  Just by looking at our multiplication
+table, one is able to see that there are a number of subgroups:
+one of order 4, 5 of order 2, and the obvious order one
+identity subgroup.
+
+
+
+
+
+%The first commonly used term is the \textbf{coordinate
+%transformation}.  Suppose there exists a map $\dot{x} = f(x)$
+%where $x, f(x) \in \mathcal{M}$.  For any $[d\times d]$,
+%non-singular ($det(M) \neq 0$) matrix $M$, that maps the vector
+%$x$
+
+
+\section{Discrete symmetries of PCF}
+
+The Dirichlet boundary condition on the top and bottom plates
+leads to rotational invariance in both the spanwise and
+streamwise directions, which leads to three rotational
+symmetries in {\pCf}
+
+\begin{eqnarray}
+ \sigma_z[u,v,w](x,y,z) & = & [u,v,-w](x,y,-z) \\
+ \sigma_x[u,v,w](x,y,z) & = & [-u,-v,w](-x,-y,z) \\
+ \sigma_{xz}[u,v,w](x,y,z) & = & [-u,-v,-w](-x,-y,-z)
+\end{eqnarray}
+
+
+
+
+\section{Continuous symmetries}
+
+Both the translational symmetries of the infinite-extent
+pipes and planes flows, and their finite cell versions with
+periodic boundary conditions imposed in both the streamwise and
+spanwise directions are examples of continuous symmetries.  Factoring
+out continuous symmetries in spatially extended systems can be
+useful in reducing the state space and visualizing the dynamics
+of infinite dimensional systems.  How this \statesp\ reduction is
+implemented is discussed in detail in
+\refrefs{SiminosThesis,DasBuch} for the \cLf.
+
+
+\subsection{PCF symmetries and isotropy subgroups}
+\label{s:symm}
+% n00bs.tex 2009-06-17
+
+    \PC{copied this section from \refref{HGC08}}
+On an infinite domain and in the absence of boundary conditions, the Navier-Stokes
+equations are equivariant under any $3D$~translation, $3D$~rotation, and
+$\bx \to -\bx$, $\bu \to -\bu$ inversion through the origin \rf{frisch}.
+In {\pCf}, the counter-moving walls restrict the rotation
+symmetry to rotation by $\pi$ about the $z$-axis. We denote this rotation
+by $\sigma_{x}$ and the inversion through the origin by $\sigma_{xz}$.
+The suffixes indicate
+which of the homogeneous directions $x,z$ change sign and simplify the
+notation for the group algebra of rotation, inversion, and translations
+presented in \refsects{s:flipnshift}{s:67-fold}.
+The $\sigma_{xz}$ and $\sigma_x$ symmetries generate a discrete dihedral group
+$D_1 \times D_1 = \{e,\sigma_x,\sigma_{z},\sigma_{xz}\}$ of order 4, where
+\begin{align}
+\sigma_x    \, [u,v,w](x,y,z) &= [-u,-v,w](-x,-y,z) \nnu \\
+\sigma_z    \, [u,v,w](x,y,z) &= [u, v,-w](x,y,-z)  \label{sigma}\\
+\sigma_{xz} \, [u,v,w](x,y,z) &= [-u,-v,-w](-x,-y,-z) \nnu
+\,.
+\end{align}
+
+The walls also restrict the translation symmetry to $2D$ in-plane
+translations. With periodic boundary conditions, these translations
+become the $SO(2)_x \times SO(2)_z$ continuous two-parameter
+group of streamwise-spanwise translations
+\begin{align}
+\tau(\shift_x, \shift_z) [u, v, w](x,y,z) &= [u, v, w](x+\shift_x, y, z+ \shift_z)
+\,.
+\label{translation}
+\end{align}
+The equations of {\pCf} are thus equivariant under the group
+$\GPCF = O(2)_x \times O(2)_z = D_{1,x} \ltimes SO(2)_{x} \times D_{1,z}
+\ltimes SO(2)_z$, where $\ltimes$ stands for a semi-direct product,
+$x$  subscripts indicate streamwise translations
+and sign changes in $x,y$, and $z$ subscripts indicate spanwise translations
+and sign changes in $z$.
+
+The solutions of an equivariant system can satisfy all of
+the system's symmetries, a proper subgroup of them, or
+have no symmetry at all. For a given solution $\bu$, the
+subgroup that contains all symmetries that fix $\bu$ (that satisfy
+$s \bu = \bu$) is called the isotropy (or stabilizer) subgroup of $\bu$%
+\rf{hoyll06,MarRat99, golubitsky2002sp, GL-Gil07b}. For example, a typical
+turbulent trajectory $\bu(\bx,t)$ has no symmetry beyond the identity,
+so its isotropy group is $\{e\}$. At the other extreme is the laminar
+{\eqv}, whose isotropy group is the full plane Couette symmetry
+group $\GPCF$.
+
+In between, the isotropy subgroup  of the Nagata \eqva\ and most
+of the \eqva\ reported here is $S = \{e, s_1, s_2, s_3\}$, where
+\begin{align}
+s_1 \, [u, v, w](x,y,z) &= [u, v, -w](x+L_x/2, y, -z) \nnu \\
+s_2 \, [u, v, w](x,y,z) &= [-u, -v, w](-x+L_x/2,-y,z+L_z/2) \label{shiftRot}\\
+s_3 \, [u, v, w](x,y,z) &= [-u,-v,-w](-x, -y, -z+L_z/2) \nnu
+\,.
+\end{align}
+These particular combinations of flips and shifts match the symmetries
+of instabilities of streamwise-constant streaky flow\rf{W97,W03}
+and are well suited to the wavy streamwise streaks observable in
+simulations, %\reffig{f:bigbox},
+with suitable choice of $L_x$ and $L_z$.
+But $S$ is one choice among a number of intermediate isotropy
+groups of $\GPCF$, and other subgroups might also play an
+important role in the turbulent dynamics. In this section we
+provide a partial classification of the isotropy groups of $\GPCF$, sufficient
+to classify all currently known invariant solutions and to guide
+the search for new solutions with other symmetries. We focus on
+isotropy groups involving at most half-cell shifts. The main result is
+that among these, up to conjugacy in spatial translation, there
+are only  five isotropy groups in which we should expect to find {\eqva}.
+
+\subsection{Flips and half-shifts}
+\label{s:flipnshift}
+% n00bs.tex 2009-06-17
+
+    \PC{copied this section from \refref{HGC08}}
+A few observations will be useful in what follows. First, we note the
+key role played by the rotation and reflection symmetries $\sigma_x$
+and $\sigma_z$ \refeq{sigma} in the classification of solutions and
+their isotropy groups. The equivariance of {\pCf} under
+continuous translations allows for {\reqvD} solutions, \ie,
+solutions that are steady in a frame moving with a constant velocity
+in $(x,z)$. In {\statesp}, {\reqva} either trace out
+circles or wind around tori, and these sets are both
+continuous-translation and time invariant. The sign changes under
+$\sigma_x$, $\sigma_{z}$, and $\sigma_{xz}$, however, imply particular
+centers of symmetry in $x$, $z$, and both $x$ and $z$, respectively,
+and thus fix the translational phases of fields that are fixed by these
+symmetries. Thus the presence of $\sigma_x$ or $\sigma_z$ in an
+isotropy group prohibits {\reqva} in $x$ or $z$, and the
+presence of $\sigma_{xz}$ prohibits any form of {\reqv}. Guided
+by this observation, we will seek {\eqva} only for isotropy subgroups
+that contain the $\sigma_{xz}$ inversion symmetry.
+
+Second, the periodic boundary conditions impose discrete
+translation symmetries of $\tau(L_x, 0)$ and $\tau(0, L_z)$ on
+velocity fields. In addition to this full-period translation symmetry,
+a solution can also be fixed under a rational translation, such as
+$\tau(m L_x/n, 0)$ or a continuous translation $\tau(\ell_x, 0)$.
+If a field is fixed under continuous translation, it is
+constant along the given spatial variable. If it is fixed under rational
+translation $\tau(m L_x/n, 0)$, it is fixed under $\tau(m L_x/n,
+0)$ for $m \in [1, n-1]$ as well, provided that $m$ and $n$ are
+relatively prime. For this reason the subgroups of the
+continuous translation $SO(2)_x$ consist of the discrete cyclic groups
+$C_{n,x}$ for $n=2,3,4,\ldots$ together with the trivial subgroup $\{e\}$
+and the full group $SO(2)_x$ itself, and similarly for $z$. For rational
+shifts $\ell_x/L_x = m/n$ we simplify the notation a bit by rewriting
+\refeq{translation} as
+\begin{align}
+\trDiscr{x}{m/n} = \tau(m L_x/n, 0) \,,\;
+\trDiscr{z}{m/n} = \tau(0,m L_z/n) \,.
+\label{translDisc}
+\end{align}
+Since $m/n = 1/2$ will loom large in what follows, we omit exponents of $1/2$:
+\beq
+    \trHalf{x} = \trDiscr{x}{1/2}
+    \,,\;
+    \trHalf{z} = \trDiscr{z}{1/2}
+    \,,\;
+    \trHalf{xz} = \trHalf{x} \trHalf{z}
+\,.
+\label{tauHalf}
+\eeq
+If a field $\bu$ is fixed under a rational shift $\tau(L_x/n)$,
+it is periodic on the smaller spatial domain $x \in [0,L_x/n]$.
+For this reason we can exclude from our searches all \eqv\
+whose isotropy subgroups contain
+rational translations in favor of \eqva\ computed on smaller domains.
+However, as we need to study bifurcations into
+states with wavelengths longer than the initial state,
+the linear stability computations
+need to be carried out in the full $[L_x,2,L_z]$ cell.
+For example, if \tEQ{}\ is an \eqv\ solution in the
+$\bCell_{1/3}= [L_x/3,2,L_z]$ cell, we refer to the
+same solution repeated thrice in $\bCell = [L_x,2,L_z]$
+as ``spanwise-tripled'' or
+$3 \times \tEQ{}$. Such solution is by construction fixed under the
+$C_{3,x} = \{e,\trDiscr{x}{1/3},\trDiscr{x}{2/3}\}$ subgroup.
+
+
+Third, some isotropy groups are conjugate to each other under
+symmetries of the full group $\GPCF$. Subgroup $H'$ is conjugate to $H$
+if there is an $s \in \GPCF$ for which $H' = s^{-1} H s$. In spatial terms,
+two conjugate isotropy groups are equivalent to each other under a coordinate
+transformation. A set of conjugate isotropy groups forms a conjugacy class.
+It is necessary to consider only a single representative of each conjugacy
+class; solutions belonging to conjugate isotropy groups can be generated by
+applying the symmetry operation of the conjugacy.
+
+In the present case conjugacies under spatial translation symmetries are
+particularly important. Note that $O(2)$ is not an abelian group, since
+reflections $\sigma$ and translations $\tau$ along the same axis do not
+commute\rf{Harter93}. Instead we have $\sigma \tau  = \tau^{-1} \sigma$.
+Rewriting this relation as $\sigma \tau^{2} = \tau^{-1} \sigma \tau$, we
+note that
+\bea
+\sigma_x \tau_x(\ell_x, 0)
+  &=& \tau^{-1}(\ell_x/2, 0) \, \sigma_x \, \tau(\ell_x/2, 0)
+\,.
+\label{origShift}
+\eea
+The right-hand side of \refeq{origShift} is a similarity
+transformation that translates the origin of coordinate system. For
+$\shift_x = L_x/2$ we have
+\beq
+\trDiscr{x}{-1/4} \, \sigma_{x} \, \trDiscr{x}{1/4}
+        = \sigma_{x} \trHalf{x}
+\label{origQuartShift}
+\,,
+\eeq
+and similarly for the spanwise shifts / reflections. Thus for
+each isotropy group containing the shift-reflect $\sigma_x \tau_x$
+symmetry, there is a simpler conjugate isotropy group in which
+$\sigma_x \tau_x$ is replaced by $\sigma_x$ (and similarly
+for $\sigma_z \tau_z$ and $\sigma_z$). We choose as the representative
+of each conjugacy class the simplest isotropy group, in which all such
+reductions have been made. However, if an isotropy group contains both
+$\sigma_x$ and $\sigma_x \tau_x$, it cannot be simplified this way,
+since the conjugacy simply interchanges the elements.
+
+Fourth, for $\shift_x = L_x$, we have
+$\trHalf{x}^{-1} \, \sigma_{x} \, \trHalf{x} = \sigma_x \,,$
+so that, in the special case of half-cell shifts,
+$\sigma_x$ and $\tau_x$ commute. For the same reason,
+$\sigma_z$ and $\tau_z$ commute, so the order-16 isotropy subgroup
+\beq
+G = D_{1,x} \times C_{2,x} \times D_{1,z} \times C_{2,z} \subset \GPCF
+\ee{order16subgrp}
+is abelian.
+
+
+\subsection{PCF: The 67-fold path}
+\label{s:67-fold}
+% n00bs.tex 2009-06-17
+
+    \PC{copied this section from \refref{HGC08}}
+We now undertake a partial classification
+of the lattice of isotropy subgroups of {\pCf}. We focus on
+isotropy groups involving at most half-cell shifts, with $SO(2)_x \times SO(2)_z$
+translations restricted to order 4 subgroup of spanwise-streamwise
+translations \refeq{tauHalf} of half the cell length,
+\beq
+T = C_{2,x}\times C_{2,z}
+  =  \{e,\trHalf{x},\trHalf{z},\trHalf{xz}\}
+\,.
+\label{tauD2}
+\eeq
+All such isotropy subgroups of $\GPCF$ are contained
+in the subgroup $G$  \refeq{order16subgrp}. Within $G$, we look for the
+simplest representative of each conjugacy class, as described above.
+
+
+Let us first enumerate all subgroups $\isotropyG{} \subset G$.
+The subgroups can be of order
+$|\isotropyG{}| = \{1,2,4,8,16\}$.
+A subgroup is generated by multiplication of a set of
+generator elements, with the choice of
+generator elements unique up to a permutation of subgroup
+elements.
+A subgroup of order $|\isotropyG{}| =  2$ has only one generator,
+since every group element is its own inverse. There are 15
+non-identity elements in $G$ to choose from, so there are 15 subgroups
+of order 2.
+Subgroups of order 4 are generated by multiplication of two
+group elements. There are 15 choices for the first and 14
+choices for the second. However, each order-4 subgroup
+can be generated by $3 \cdot 2$ different choices of generators.
+For example, any two of $\tau_x, \tau_z, \tau_{xz}$ in any order
+generate the same group $T$. Thus there are $(15 \cdot 14)/(3 \cdot 2) = 35$
+subgroups of order 4.
+
+Subgroups of order 8 have three generators.  There are
+15 choices for the first generator, 14 for the second, and 12 for the
+third. There are 12 choices for the third
+generator and not  13, since if it were chosen to be the product of the
+first two generators, we would get a subgroup of order 4.
+Each order-8 subgroup can be generated
+by $7 \cdot 6 \cdot 4$ different choices of three generators, so there are
+$(15 \cdot 14 \cdot 12)/(7 \cdot 6 \cdot 4) = 15$ subgroups of order 8.
+In summary: there is the group $G$ itself, of order 16,
+15 subgroups of order 8, 35 of order 4, 15 of
+order 2, and 1 (the identity) of order 1,
+or 67 subgroups in all\rf{HalcrowThesis}.
+This is whole lot of isotropy subgroups to juggle; fortunately,
+the observations of \refsect{s:flipnshift} show that there
+are only 5 {\em distinct conjugacy classes} in which we can expect
+to find \eqva.
+
+The 15 order-2 groups fall into 8 distinct conjugacy
+classes, under conjugacies between $\sigma_x \tau_x$ and $\sigma_x$
+and $\sigma_z \tau_z$ and $\sigma_z$. These conjugacy classes are
+represented by the 8 isotropy groups generated individually by the 8
+generators
+$\sigma_x,\, \sigma_z,\, \sigma_{xz},\, \sigma_x \tau_z,\,  \sigma_z \tau_x,\,
+\tau_x,\, \tau_z,\,$ and $\tau_{xz}$. Of these, the latter three imply
+periodicity on smaller domains. Of the remaining five,
+$\sigma_x$ and $\sigma_x \tau_z$ allow {\reqva} in $z$,
+$\sigma_z$ and $\sigma_z \tau_x$ allow {\reqva} in $x$.
+Only a single conjugacy class, represented by the isotropy
+group
+\beq
+  \{e,\sigma_{xz}\}
+\,,
+\ee{S3subgrp}
+breaks both continuous translation symmetries. Thus, of all
+order-2  isotropy groups, we expect only this group to have {\eqva}.
+\tEQnine, \tEQten, and \tEQelev\ described below are examples of \eqva\
+with isotropy group $\{e,\sigma_{xz}\}$.
+
+Of the 35 subgroups of order 4, we need to identify those that
+contain $\sigma_{xz}$ and thus support {\eqva}. We choose
+as the simplest representative of each conjugacy class the isotropy
+group in which $\sigma_{xz}$ appears in isolation.
+Four isotropy subgroups of order 4 are generated by picking
+$\sigma_{xz}$ as the first generator, and $\sigma_{z},\, \sigma_{z}
+\trHalf{x},\, \sigma_{z} \trHalf{z},\,$ or $\sigma_{z} \trHalf{xz}$
+as the second generator (\emph{R} for reflect-rotate):
+\begin{align}
+ R~~  &=  \{e, \sigma_x, \sigma_z, \sigma_{xz}\}
+      ~~~~~~~\; = \{e,\sigma_{xz}\} \times \{e,\sigma_{z}\} \nnu\\
+ R_x~ &=  \{e,\sigma_x \trHalf{x}, \sigma_z \trHalf{x}, \sigma_{xz}\}
+      ~~ = \{e,\sigma_{xz}\} \times \{e,\sigma_{x}\trHalf{x}\}
+        \label{subg4RR} \\
+ R_z~ &=  \{e, \sigma_x \trHalf{z}, \sigma_z \trHalf{z}, \sigma_{xz}\}
+      ~~\; = \{e,\sigma_{xz}\} \times \{e,\sigma_{z}\trHalf{z}\}
+        \nnu\\
+ R_{xz} &= \{e, \sigma_x \trHalf{xz}, \sigma_z \trHalf{xz}, \sigma_{xz}\}
+        = \{e,\sigma_{xz}\} \times \{e,\sigma_{z}\trHalf{xz}\}
+        \simeq S \,. \nnu
+\end{align}
+These are the only isotropy groups of order 4 containing $\sigma_{xz}$
+and no isolated translation elements. Together with $\{e,\sigma_{xz}\}$,
+these 5 isotropy subgroups represent the 5 conjugacy classes in
+which expect to find {\eqva}.
+
+The $R_{xz}$ isotropy subgroup is particularly important, as the\rf{N90}
+{\eqva} belong to this conjugacy class\rf{W97,CB97,W03}, as do
+most of the solutions reported here. The \emph{NBC} isotropy subgroup of
+\refref{Schmi99} and $S$ of \refref{GHCW07} are conjugate to $R_{xz}$ under
+quarter-cell coordinate transformations. In keeping with previous literature,
+we often represent this conjugacy class with
+$S = \{e, s_1, s_2, s_3\} = \{e, \sigma_z \tau_x, \sigma_x \tau_{xz},
+\sigma_{xz} \tau_z\}$ rather than the simpler conjugate group $R_{xz}$.
+Schmiegel's \emph{I} isotropy group is conjugate to our $R_{z}$; \refref{Schmi99}
+contains many examples of $R_z$-isotropic \eqva. $R$-isotropic {\eqva} were found
+by \rf{TuckBar03} for {\pCf} in which the translation symmetries
+were broken by a streamwise ribbon. We have not searched for $R_x$-isotropic
+solutions, and are not aware of any published in the literature.
+
+The remaining subgroups of orders 4 and 8 all involve $\{e,\tau_i\}$ factors
+and thus involve states that are periodic on half-domains.
+For example, the isotropy subgroup of \tEQsev\ and \tEQeight\ studied below is
+$S  \times \{e, \tau_{xz}\} \simeq R  \times \{e, \tau_{xz}\}$,
+and thus these are doubled states of solutions on half-domains. For
+the detailed count of all 67 subgroups, see \refref{HalcrowThesis}.
+
+
+\exercise{Symmetries of invariant solutions for duct flows}
+		 {\label{exer:pathsDuct}
+{\bf PC} to {\bf CS}:
+ this is optional, but it might have customers. Repeat
+in this section Halcrow \etal\ classification of isotropy
+groups for the duct flows (square profile, as opposed to the
+circular profile of the pipe). Reason: number of groups
+(Nagata, Botero, Kawahara, etc - see Marburg turbulence
+conference ETC12 proceedings\rf{etc12}, in \wwwcb{/library},
+and my
+\HREF{http://www.channelflow.org/dokuwiki/doku.php/gtspring2009:predrag:blog\#trieste_2009_turbulence_conference}
+      {channelflow.org blog})
+are repeating plane Couette kind of investigations for the duct
+problem. None of them have worked detailed group theory, or the
+state space visualizations. For us it is simpler than the pipe,
+as there is only one, streamwise continuous symmetry, and I
+believe it is pure \SOn{2}, not \On{2}.
+    } %end \exercise{?-path for duct flows}
