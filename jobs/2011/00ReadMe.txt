@@ -3,12 +3,32 @@ ES postdoc hunt 2011
 CEA contract ends Jul 05 2011
 ==========================================================
 
+- Dusseldorf: Deadline ASAP (e.g. June 22)
+
+Predrag, please send reference letter by email to:
+
+Pukhov@tp1.uni-duesseldorf.de
+
+Prof. Alexander Pukhov, 
+Institute for Theoretical Physics I 
+University of Dusseldorf 
+Universitaetsstr. 1, Geb. 25.32 
+40225 Dusseldorf Germany
+
+
 Interviews
 ==================================
 
 MPIPKS Dresden May 29-31 (S. Skupin)
 (did not get the fellowship, but I might get a postdoctoral
 position)
+	This went extremely well, people showed interest
+	and we found some projects we could work on. The
+	issue is whether there is a position available,
+	so I am waiting for an answer.
+
+
+
 
 ES TO DO List
 ==================================
