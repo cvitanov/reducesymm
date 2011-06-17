@@ -9,12 +9,13 @@ Predrag, please send reference letter by email to:
 
 Pukhov@tp1.uni-duesseldorf.de
 
-Prof. Alexander Pukhov, 
-Institute for Theoretical Physics I 
-University of Dusseldorf 
-Universitaetsstr. 1, Geb. 25.32 
+Prof. Alexander Pukhov,
+Institute for Theoretical Physics I
+University of Dusseldorf
+Universitaetsstr. 1, Geb. 25.32
 40225 Dusseldorf Germany
 
+[2011-06-17 Predrag: emaild the letter]
 
 Interviews
 ==================================
@@ -157,15 +158,14 @@ The idea was to work in Ottinger's group to learn non-equilibrium thermodynamics
 and try to understand nonlinear collisionless damping in plasmas.
 Ottinger did not want to hear a word about Vlasov (since collisions are ignored
 and he is a fan of Boltzmann) and complained plasmas is not his topic and he cannot
-follow me. At the end he decided that I am an applied mathematician, "was impressed by 
+follow me. At the end he decided that I am an applied mathematician, "was impressed by
 my sound background in numerical methods," but I don't fit to work with them the
-physicists. 
+physicists.
 
-I am rather depressed about this, since I do not consider myself as having 
+I am rather depressed about this, since I do not consider myself as having
 particular computational skills compared to what an average plasma guy can do here
-(programm GPUs in parallel and the like). The whole point was about suppressing 
+(programm GPUs in parallel and the like). The whole point was about suppressing
 irrelevant scales and I expected statistical physicists to be interest.
 
 At least I got some good advice by one of the senior researchers in the group who
 cared to listen and found the topic interesting.
-
