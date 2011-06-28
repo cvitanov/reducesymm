@@ -3,6 +3,35 @@ ES postdoc hunt 2011
 CEA contract ends Jul 05 2011
 ==========================================================
 
+Starting at the Max Planck Institute for the Physics of
+Complex Systems in August and for the next two years.
+
+  Remember next time: negotiating works, did not get higher
+  salary but got 2 years contract instead of 1+1.
+
+-- Rejected offer from KTH at Stockholm to work on dusty
+plasmas. 
+
+  Remember next time: People need postdocs. I got the offer
+  despite Russian woman being unhappy with my publication
+  throughput ("I want you to publish at least 3-4 papers per
+  year"), having a family ("with two kids, you are not Master
+  of your Domain, are you?") my background ("What? Your PhD
+  was not in plasma physics?" - apparently she did not read
+  my CV before calling me for interview). Negiotiating again
+  worked: the salary was excellent already, but I've also
+  asked to teach a course of my own to strengthen my teaching
+  curriculum and was granted the request.
+
+-- Got a call for interview from G. Manfredi at Strasbourg,
+but there is no guaranteed funding and had offer from
+Dresden so I denied.
+
+  Remember next time: apply early and to all places at the
+  same time, even to people who do not advertise positions. 
+
+
+==========================================================
 - Dusseldorf: Deadline ASAP (e.g. June 22)
 
 Predrag, please send reference letter by email to:
