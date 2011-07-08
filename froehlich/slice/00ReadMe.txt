@@ -31,6 +31,28 @@ deadline: 					January  31 2011
 		changed to			February 28 2011
 
 ----------------------------------------------------------------
+                        Predrag  Jul 08, 2011
+
+[x] resubmitted to the journal:
+    edited FrCv11.tex etc., uploaded
+		  ../CNSNS-v2/    (contents as in in arxiv-v4?)
+    response1.txt, resubmitLett.doc, forReferee.pdf
+    other files as in first submission
+
+To submit a revision,
+ees.elsevier.com/cnsns/
+log in as an Author, username is: PCvitanovic-353
+If you need to retrieve password details,
+ees.elsevier.com/cnsns/automail_query.asp
+
+!!! then DO NOT TOUCH CNSNS-v2/* again, do all edits in slice/
+
+----------------------------------------------------------------
+                        Predrag  Jul 08, 2011
+
+[ ] revised version uploaded to arXiv
+!!! then DO NOT TOUCH arxiv-v4/* again, do all edits in slice/
+
                         Predrag  Feb 20, 2011
 
 [x] submitted to the journal:
