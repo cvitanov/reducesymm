@@ -3,10 +3,16 @@ $Author$
 $Date$
 ---------------------------------------------------------------
 
+article's reference number: CNSNS 2101
+
 Ms. Ref. No.: CNSNS-D-11-00259
 Title:      Reduction of continuous symmetries of chaotic flows
             by the method of slices
 Authors:    Stefan Froehlich and P Cvitanovi\'c
+
+----------------------------------------------------------------
+                        Predrag  July 8, 2011
+[x] accepted
 
 ----------------------------------------------------------------
                         Predrag  July 8, 2011

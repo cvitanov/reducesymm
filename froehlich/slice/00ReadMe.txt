@@ -6,6 +6,7 @@ $Date$
 "Reduction of continuous symmetries of chaotic flows
  by the method of slices"
 	(Stefan Froehlich and P Cvitanovi\'c)
+article's reference number: CNSNS 2101
 
 ========================================
 
@@ -22,13 +23,19 @@ pdflatex FrCv11.tex
 	figures from dasbuch/book/Fig/ (do not edit these)
 
 ----------------------------------------------------------------
-                        Predrag  Dec 10, 2010
-Change of journal: submit to Phil Morrison's 60 birthday Festschrift
-journal: Communications in Nonlinear Science and Numerical Simulation
-editor:  Crystel Chandre
-instructions: CNSNSinstr.doc
-deadline: 					January  31 2011
-		changed to			February 28 2011
+                        Predrag  Jul 20, 2011
+Accepted, but incorrect format highlights.doc
+consist of a short collection of bullet points that convey
+the core findings of the article. Use 'Research highlights'
+in the file name and include 3 to 5 bullet points
+(maximum 85 characters per bullet point including spaces).
+See www.elsevier.com/researchhighlights for examples.
+[x] highlights.doc emailed (could not be uploaded)
+complete the publishing forms:
+authors.elsevier.com/authorforms/CNSNS2101/64047482a8d1b623d589b2a31f717e7a
+[x] Journal publishing agreement completed      Jul 20, 2011
+[x] Research funding and sponsorship completed  Jul 20, 2011
+[x] no offprints
 
 ----------------------------------------------------------------
                         Predrag  Jul 08, 2011
@@ -131,6 +138,14 @@ merged all sections, edited FrCv11.tex etc., uploaded
 
 !!! then DO NOT TOUCH arxiv-v1/* again, do all edits in slice/
 ===============================================================
+                        Predrag  Dec 10, 2010
+Change of journal: submit to Phil Morrison's 60 birthday
+Festschrift journal: Communications in Nonlinear Science and
+Numerical Simulation editor: Crystel Chandre instructions:
+CNSNSinstr.doc deadline: 					January 31 2011
+		changed to			February 28 2011
+
+----------------------------------------------------------------
                         Predrag  Nov 21, 2010
 
 First idea: submit to CHAOS
