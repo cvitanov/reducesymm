@@ -132,7 +132,10 @@
       <td class="title2"> <a name="employement"></a>Employment</td>
       </tr>
       <tr>
-	<td align="right">2009 - now</td> <td> <strong> Postdoctoral Researcher</strong>, CEA, DAM, DIF, France. </td>
+	<td align="right">2011 - </td> <td> <strong> Guest Scientist</strong>, Max Planck Inst. for the Physics of Complex Systems, Dresden, Germany. </td>
+      </tr>
+      <tr>
+	<td align="right">2009 - 2011</td> <td> <strong> Postdoctoral Fellow</strong>, CEA, DAM, DIF, France. </td>
       </tr>
       <tr>
 	<td align="right">2008 - 2009</td> <td> <strong>Research Assistant</strong>, Center for Nonlinear Science, School of Physics, Georgia Tech.</td>
@@ -160,7 +163,7 @@
 
 	</p>
 
-      <p class="posted">last updated Nov. 14 2010</p>
+      <p class="posted">last updated 2011-07-29</p>
 
       </div>
 

@@ -89,7 +89,33 @@
 
       
 <!--       <p class="main-title"><span style="text-decoration: underline;">Papers</span><br> -->
-<!--       <h4 class="title2"> <a name="preprints"></a>Preprints</h4> -->
+      <h4 class="title2"> <a name="preprints"></a>Preprints</h4>
+<!--     -->
+	<p class="ref"> 
+	  <span class="refauthors"> G. S&aacute;nchez-Arriaga, <strong>E. Siminos</strong>, and E. Lefebvre</span></br>
+	  <span class="reftitle"> Relativistic solitary waves with phase modulation embedded in long laser pulses in plasmas</span></br> 
+<!-- 	    <a href="http://arxiv.org/abs/1101.1004">arXiv:1101.1004</a></br> -->
+	    to appear in Phys. Plasmas (2011)</br>
+<!--      	<a href="http://dx.doi.org/10.1088/0741-3335/53/4/045011">Plasma Phys. Contr. Fusion <strong>53</strong>, 045011 <span class="journal"></span>(2011)</a></br> 
+-->
+	    <img src="images/acroread16.png" alt="preprint"><a href="./papers/SSL11-2.pdf"> preprint</a>
+ 	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
+	    <span class="dsphead">+</span> abstract</a>
+<!--		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
+		    <span class="dsphead">+</span> bibtex</a>
+		  </span>
+		  <span class="dspcont">
+		      <?php include("./bib/SSL11.bib");?> 
+		  </span>
+-->
+	    </span>
+	    <span class="dspcont">
+		  We investigate the existence of nonlinear phase-modulated relativistic solitary waves embedded in an infinitely long circularly polarized electromagnetic wave propagating through  a plasma. These states are exact nonlinear solutions of the 1-dimensional Maxwell-fluid model for a cold plasma composed of electrons and ions. The solitary wave, which consists of an electromagnetic wave trapped in a self-generated Langmuir wave, presents a phase modulation when the group velocity $V$ and the phase velocity $V_{ph}$  of the long circularly polarized electromagnetic wave do not match the condition $VV_{ph}=c^2$. The main properties of the waves as a function  of their group velocities, wavevectors and frequencies are studied, as well as bifurcations of the dynamical system that describes the waves when the parameter controlling the phase modulation changes from zero to a finite value. Such a transition is illustrated in the limit of small amplitude waves where an analytical solution for a grey solitary wave exists. The solutions are interpreted as the stationary state after the collision of a long laser pulse with an isolated solitary wave. 
+	    </span>
+	</p>
+<!--     -->
+
+
 
       <h4 class="title2"> <a name="articles"></a>Articles</h4>
 
@@ -245,7 +271,7 @@
 	</p>
       
 
-      <p class="posted">last updated 2011-05-19</p>
+      <p class="posted">last updated 2011-07-29</p>
 
       </div>
 

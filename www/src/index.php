@@ -145,7 +145,7 @@ dynamics of Kuramoto-Sivashinsky equation.</p>-->
 
       </div>
 
-      <p class="posted">last updated Nov. 14 2010</p>
+      <p class="posted">last updated 2011-07-29</p>
 
       </div>
 
