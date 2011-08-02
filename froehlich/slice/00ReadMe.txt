@@ -23,6 +23,38 @@ pdflatex FrCv11.tex
 	figures from dasbuch/book/Fig/ (do not edit these)
 
 ----------------------------------------------------------------
+                        Predrag		Aug  2, 2011
+
+[X] update Predrag's homepage version
+
+[x] arXiv: uploaded the published article version, referee edits included
+    received your replacement of 1101.3037,
+    temporary submission identifier: submit/0293491.
+		  ../arxiv-v4/FrCv11.zip
+		  FrCv11.tex FrCv11.bbl defsFrCv11.tex
+		  elsarticle.cls numcompress.sty
+		  Fullspace.png RedTrajNoPlane1.png
+		  slice.pdf inflectHype.pdf
+		  dthetasing.png dthetanearsing.png
+		  singpass1.png  f_1_08_1.pdf
+[x] edited 'To appear in' into elsarticle.cls
+[x]  tar -cvf FrCv11.tar *; gzip FrCv11.tar
+    [to update, http://arxiv.org/user, log in as predrag -> My Account
+     have to upload all files individually;
+     did not figure how to upload FrCv11.tar.gz]
+
+!!! then DO NOT TOUCH arxiv-v4/* again, do all edits in slice/
+----------------------------------------------------------------
+                        Predrag  Aug  2, 2011
+[x] CNSNS_2101edits.pdf (in Predrag's directory, not in svn)
+    returned the proofs to the journal
+----------------------------------------------------------------
+                        Predrag  Jul 26, 2011
+[x] accepted manuscript
+    doi:10.1016/j.cnsns.2011.07.007
+    (unformatted and unedited) is available at:
+    http://dx.doi.org/10.1016/j.cnsns.2011.07.007
+----------------------------------------------------------------
                         Predrag  Jul 20, 2011
 Accepted, but incorrect format highlights.doc
 consist of a short collection of bullet points that convey
