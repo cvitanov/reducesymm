@@ -37,6 +37,9 @@ pdflatex FrCv11.tex
 		  slice.pdf inflectHype.pdf
 		  dthetasing.png dthetanearsing.png
 		  singpass1.png  f_1_08_1.pdf
+          replacement of 1101.3037 by submission submit/0293491
+          is available at: http://arxiv.org/abs/1101.3037
+          The paper password for this article is: dpv8v
 [x] edited 'To appear in' into elsarticle.cls
 [x]  tar -cvf FrCv11.tar *; gzip FrCv11.tar
     [to update, http://arxiv.org/user, log in as predrag -> My Account
