@@ -861,11 +861,29 @@ always with a finite amplitude.
 use \refeq{eq:preper-newt} for pre-periodic orbits \ldots
 
 \item[2011-03-10 Ruslan] {\em Comment on the numerical approximation of the KS flow}\\
-I would suggest not to worry too much about the accuracy of the numerical approximation of the KS flow.  Instead, it is better, in my opinion, to adopt the viewpoint that one investigates the properties not of the KS flow, but of the map defined by the numerical integrator of the \KSe, which approximates the solutions of the \KSe.  As long as the orbits of the map resemble the solutions of the flow (think of it in terms of shadowing), the results of our investigation of the map will faithfully represent those for the KS flow.  So, it doesn't matter whether one investigates the Kassam-Trefethen map or the Adam-Moulton-RK map: the qualitative picture will be the same.
+I would suggest not to worry too much about the accuracy of the numerical
+approximation of the KS flow.  Instead, it is better, in my opinion, to
+adopt the viewpoint that one investigates the properties not of the KS
+flow, but of the map defined by the numerical integrator of the \KSe,
+which approximates the solutions of the \KSe.  As long as the orbits of
+the map resemble the solutions of the flow (think of it in terms of
+shadowing), the results of our investigation of the map will faithfully
+represent those for the KS flow.  So, it doesn't matter whether one
+investigates the Kassam-Trefethen map or the Adam-Moulton-RK map: the
+qualitative picture will be the same.
 
-The neat thing about Kassam-Trefethen map is that it solves the linear part of the KS flow exactly, thus eliminating the problem of the stiffness of the linear part, and thus allowing to use a much larger time step.  Implicit Adams-Moulton also deals with the stiffness, but it solves the linear part only approximately, so it is likely to be less accurate if used with the same time step.
+The neat thing about Kassam-Trefethen map is that it solves the linear
+part of the KS flow exactly, thus eliminating the problem of the
+stiffness of the linear part, and thus allowing to use a much larger time
+step.  Implicit Adams-Moulton also deals with the stiffness, but it
+solves the linear part only approximately, so it is likely to be less
+accurate if used with the same time step.
 
-From the same viewpoint, there is also no need, in my opinion, to use anti-aliasing.  If a better approximation of the KS flow is needed, just include more modes into the map and decrease the time step.  Of course, if Kazz already implemented anti-aliasing, then there is no harm in using it, provided it doesn't increase the flops count too much.
+From the same viewpoint, there is also no need, in my opinion, to use
+anti-aliasing.  If a better approximation of the KS flow is needed, just
+include more modes into the map and decrease the time step.  Of course,
+if Kazz already implemented anti-aliasing, then there is no harm in using
+it, provided it doesn't increase the flops count too much.
 
 \item[2011-02-21 Kazz]
 If the isolated Lyapunov vectors of
@@ -874,13 +892,32 @@ cycle can be decomposed to two parts, one of which would be an
 orthogonal submatrix. Does that seem likely to you?
 
 \item[2011-03-10 Ruslan]
-I don't see why we should expect higher Lyapunov vectors to be {\em exactly} orthogonal.  Since all Lyapunov vectors in the \KSe\ are coupled though the nonlinear term, the deviation from orthogonality should be proportional to the strength of this coupling.  Of course this coupling is very weak for higher Lyapunov vectors and decreases exponentially with increasing mode number.  But if we measure with sufficient resolution, which is what Kazz does, we'll observe the deviation from orthogonality for any higher mode, whether anti-aliased or not.  Or am I wrong?
+I don't see why we should expect higher Lyapunov vectors to be {\em
+exactly} orthogonal.  Since all Lyapunov vectors in the \KSe\ are coupled
+though the nonlinear term, the deviation from orthogonality should be
+proportional to the strength of this coupling.  Of course this coupling
+is very weak for higher Lyapunov vectors and decreases exponentially with
+increasing mode number.  But if we measure with sufficient resolution,
+which is what Kazz does, we'll observe the deviation from orthogonality
+for any higher mode, whether anti-aliased or not.  Or am I wrong?
 
-\item[2011-03-10 Predrag] My belief too. There is no reason to require non-physical Floquet vectors to be pure, orthogonal Fourier modes: all
-    we need is that perturbations along these directions are pushed back into
-    the attractor without being entangled along it...
+\item[2011-03-10 Predrag] My belief too. There is no reason to require
+non-physical Floquet vectors to be pure, orthogonal Fourier modes: all we
+need is that perturbations along these directions are pushed back into
+the attractor without being entangled along it...
 
-\item[2011-03-11 Ruslan] It seems to me that the behavior of the isolated Lyapunov vectors in the \KSe\ is rather easy to understand.  Since they are essentially generated by the linear part of the \KSe, they will be nothing else but the Fourier modes living in mutually orthogonal planes.  That is, they are the eigenvectors of the \jacobianM\ of the trivial equilibrium $u = 0$, just slightly perturbed by the nonlinear coupling.  But since, as I already said, this perturbation decays exponentially with the mode number, it is negligible for high enough modes.  So, to answer Kazz's question, the strongly contracting eigenvectors of the \jacobianM\ of a cycle should be essentially orthogonal to one another as well as to the subspace spanned by the expanding and weakly contracting eigenvectors (i.e. the subspace where the physical Lyapunov vectors live).
+\item[2011-03-11 Ruslan] It seems to me that the behavior of the isolated
+Lyapunov vectors in the \KSe\ is rather easy to understand.  Since they
+are essentially generated by the linear part of the \KSe, they will be
+nothing else but the Fourier modes living in mutually orthogonal planes.
+That is, they are the eigenvectors of the \jacobianM\ of the trivial
+equilibrium $u = 0$, just slightly perturbed by the nonlinear coupling.
+But since, as I already said, this perturbation decays exponentially with
+the mode number, it is negligible for high enough modes.  So, to answer
+Kazz's question, the strongly contracting eigenvectors of the \jacobianM\
+of a cycle should be essentially orthogonal to one another as well as to
+the subspace spanned by the expanding and weakly contracting eigenvectors
+(i.e. the subspace where the physical Lyapunov vectors live).
 
 \item[2011-06-28 Evangelos]
 Met with Kazz at \HREF{http://cct11.cpt.univ-mrs.fr/}{CCT11 conference}
@@ -961,5 +998,64 @@ should probe heteroclinic tangencies a bit better...
 \item[2011-08-09 Predrag] For comments to Takeuchi and Chat\'e\rf{TaCh11}
 \emph{Can the inertial manifold be captured by unstable periodic
 orbits?}, see [2011-07-21] entry, \refsect{sec:TaCh11}.
+
+\item[2011-08-17 Evangelos]
+I've just arrived to Dresden and found out that Hugues will
+spend a year in the Institute heading a study group and Kazz will come
+here for a workshop. So I'll get a chance to talk discuss with them.
+
+\item[2011-08-17 Evangelos]
+Kazz works in full space but studies
+periodic orbits. You and me know that relative periodic orbits are the
+relevant objects that are expected to capture the dynamics in presence
+of translational symmetry, so why not try them instead?
+
+\item[2011-08-17 Predrag]
+Here is my proposal to you and Ruslan. You have some 40,000 \rpo s. Why
+not take a point on the Kazz favorite cycle
+$\period{p}=10.25336729174627$ as the template $\slicep$, and pick from
+the 40,000 \rpo s the set of the closest ones to it in its slice. As they
+are cycles in {\pSRed} you need to also make a local Poincar\'e section
+through template point $\slicep$ (within the slice), normal to the
+velocity vector $\velRed(\slicep)$, to find the closest passage. Some are
+probably as close as the Kazz ergodic trajectory closest passage. For
+each of the close ones you have the 9-12 leading eigenvectors, their
+orientations information on where you are on stable/unstable manifolds,
+and their relative separation vectors. Those Kazz will need to check,
+show they are in the `physical' 9 dimensions.
+
+\item[2011-08-17 Evangelos]
+By the way, do you understand how Kazz handles spatial shifts? After a
+long exchange of emails it seems that I don't.
+
+\item[2011-08-17 Predrag]
+I believe he does it what was the standard way before the invention of
+slicing. Following ChaosBook:
+
+{\SOn{2} irreducible representations:}
+Expand a smooth periodic function $u(\gSpace + 2\pi) =
+u(\gSpace)$ as a Fourier series
+\beq
+u(\gSpace) = a_0 + \sum_{m=1}^\infty \left(
+a_m \cos m \gSpace + b_m \sin m \gSpace
+                               \right)
+\,.
+\ee{FourierExp}
+The matrix representation of the \SOn{2}\ action
+on the $m$th Fourier coefficient pair
+$(a_m,b_m)$ is
+\beq
+\LieEl^{(m)}(\gSpace') \,=\,  \left(\barr{cc}
+ ~\cos m \gSpace'  & \sin m \gSpace' \\
+ -\sin m \gSpace'  & \cos m \gSpace'
+    \earr\right)
+\,,
+\ee{SO2irrepAlg-m}
+For each ergodic trajectory point he runs $\theta$ in some interval and
+finds the minimal distance to the periodic point (their paper says that).
+Though I am not sure that this is what he really does.
+
+Sorry, getting too late - need to go to bed.
+
 
 \end{description}

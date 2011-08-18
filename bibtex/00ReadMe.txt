@@ -1,4 +1,4 @@
-/bibtex/00ReadMe.txt
+siminos/bibtex/00ReadMe.txt
 $Author$ $Date$
 ===========================================================
 
