@@ -4334,73 +4334,76 @@ periods which also reach up to the thousands.
 \newpage % comment this out
 
 \item[2011-08-12 Predrag] Woods Hole Geophysical Fluid Dynamics Program
-report: After deriving in my seminar the \mslices, I talked experimentalists
+report: After deriving in
+\HREF{http://chaosbook.org/overheads/continuous/index.html}{my seminar}
+the \mslices, I attempted to talk experimentalists
 \HREF{http://www.mcnd.manchester.ac.uk/mullin.html}{Tom Mullin} and
 \HREF{https://www.irphe.fr/~legal/}{Patrice Le Gal} (studies instabilities
 and transitions of rotar-stator flows) into implementing numerical the
 `nearest group orbit point' distance for experimental video images of
 flows. In fluids community everybody obsesses about `norms', especially
-the control engineers who have to optimize perturbations in order to attain
-desired ends. Collecting 3D velocity vector field information is out, but
-as the inertial manifold for transitional boundary-shear flows is only 100 to 1,000-dimensional, most
-projections from 100,000 to 1,000,000-dimensional \statesp s will capture
-the topology and correctly identify the nearest neighbors.
-People agree that there is no compelling reason to
-use the energy norm, other than that velocity fields is what is given
-in a numerical computation. In practice people use ``dissipation norms'',
-``compensatory norms'', \etc, \etc.
+the control engineers who have to optimize perturbations in order to
+attain desired ends. Collecting the full 3D velocity vector field information is
+not feasible, but as the inertial manifold for transitional boundary-shear flows
+is only 100 to 1,000-dimensional, most projections from 100,000 to
+1,000,000-dimensional \statesp s will capture the topology and correctly
+identify the nearest neighbors. People agree that there is no compelling
+reason to use the energy norm, other than that velocity fields is what is
+given in a numerical computation. In practice people use ``dissipation
+norms'', ``compensatory norms'', \etc, \etc.
 
-My first thought has been to define a
-Gaussian-smeared out norm to compare Hamming (pixel by pixel) distance
-between two images, smearing being necessary to account for the sensor
-noise. Problem is that for nonlinear flows this noise should not be
-isotropic\rf{LipCvi08,LipCvi07} - it matters whether points compared are on unstable or stable
-manifolds, etc. But as this is a pattern recognition problem, why not use
-the accumulated wisdom of the pattern compression and pattern recognition
+My first thought has been to define a Gaussian-smeared out norm to
+compare Hamming (pixel by pixel) distance between two images, smearing
+being necessary to account for the sensor noise. Problem is that for
+nonlinear flows this noise should not be isotropic\rf{LipCvi08,LipCvi07}
+- it matters whether points compared are on unstable or stable manifolds,
+etc. But as this is a pattern recognition problem, why not use the
+accumulated wisdom of the pattern compression and pattern recognition
 community?
 
 So here is my proposal: jpeg and gif algorithms are optimized to reduce
-the information content of an image. Optimization is for human vision, but that might be OK
-for our purposes. So use not the raw, but the jpeg compressed images, their
-[pixel$\times$pixel] size
-reduced to the resolution realistically needed, each pixel a coordinate in the
-\statesp. The group orbit is traced in this \statesp\ by translating a
-given image. For example, in Le Gal's French washing machine experiments,
-or Mullin's expanding pipe ones, the group orbit is traced out by
-rotating a given image around the rotation axis, and the group tangent at
-a given image is obtained by a minute angular rotation of a pattern. Pick
-a state of the fluid that seems important and typical of the flow studies,
-and us it a template. Its group tangent defines the slice
-hyperplane, and its group curvature (the second derivative of the group orbit
-with respect to the angle) both defines the \sset\ (the edges of the
-neighborhood that can be associate with a given template), and an optimal
-coordinate to project the group orbit and visualize it in a 2\dmn\ projection.
-The
-dynamics in the slice is determined by step-by-step post-processing, \ie,
-by finding the angle that satisfies the slice-group tangent orthogonality,
-and rotating the full \statesp\ trajectory into the slice. This process
-is losless: it
-\emph{loses no information}, other than what was lost in going from the raw
-image to the jpeg compressed image.
+the information content of an image. Optimization is for human vision,
+but that might be OK for our purposes. So use not the raw, but the jpeg
+compressed images, their [pixel$\times$pixel] size reduced to the
+resolution realistically needed, each pixel a coordinate in the \statesp\
+(if the proposal works, one would actually go into the jpeg algorithm and
+start tweaking its parameters).
+The group orbit is traced in this \statesp\ by translating a given image.
+For example, in Le Gal's French washing machine experiments, or Mullin's
+expanding pipe ones, the group orbit is traced out by rotating a given
+image around the rotation axis, and the group tangent at a given image is
+obtained by a minute angular rotation of a pattern. Pick a state of the
+fluid that seems important and typical of the flow studies, and us it a
+template. Its group tangent defines the slice hyperplane, and its group
+curvature (the second derivative of the group orbit with respect to the
+angle) both defines the \sset\ (the outer edges of the neighborhood that can be
+associated with a given template), and an optimal coordinate to project
+the group orbit and visualize it in a 2\dmn\ projection. The dynamics in
+the slice is determined by step-by-step post-processing, \ie, by finding
+the angle that satisfies the slice-group tangent orthogonality, and
+rotating the full \statesp\ trajectory into the slice. This symmetry reduction is
+losless: it \emph{loses no information}, other than what was lost in
+going from the raw image to the jpeg compressed image.
 
 Reduced dynamics can be now visualized in two ways:
 \begin{enumerate}
-\item Make a video from the slice reduced video frames; in such video a radially
+    \item Make a video from the slice reduced video frames; in such video a radially
 symmetric spiral
 pattern becomes stationary \reqv\ (again, no information lost - \emph{this is
-not averaging over azimuthal angle}), and
+not averaging over the azimuthal angle}), and
 turbulence reduces to turbulence with azimuthal drifts removed.
 
-\item Project the \statesp\ trajectory on 2-3 coordinates formed from
+    \item Project the \statesp\ trajectory on 2-3 coordinates formed from
 dynamically important states of the fluid\rf{GHCW07}. There things like
 bifurcation of a spiral in two spirals, or bifurcation of a torus into
-two tori will be just the garden variety dynamical systems bifurcations.
+two tori will be reduced to the garden variety dynamical systems
+bifurcations.
 
-\item More importantly, experimental dynamics will reveal swirls and
+    \item More importantly, experimental dynamics will reveal swirls and
 close passages to invariant solutions that cannot be discerned from the
 unreduced flow.
 
-\item The connection to numerics is now made by generating jpegs of
+    \item The connection to numerics is now made by generating jpegs of
 numerical flows visualized from the same vantage point as that of the camera
 shooting the experimental flow. Once a nearby image is identified in the
 numerical flow, one can run numerics to predict the future evolution, and
