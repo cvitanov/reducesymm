@@ -176,7 +176,7 @@
 	    <img src="images/acroread16.png" alt="preprint"><a href="./papers/SSL10.pdf"> preprint</a>
  	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 	    <span class="dsphead">+</span> abstract</a>
-		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
+<!--		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 		    <span class="dsphead">+</span> bibtex</a>
 		  </span>
 		  <span class="dspcont">
@@ -192,7 +192,7 @@
 }
 </pre>
  
-		  </span>
+		  </span>-->
 	    </span>
 	    <span class="dspcont">This article discusses the existence of solitary electromagnetic waves trapped in a self-generated Langmuir wave and embedded in an infinitely long circularly polarized electromagnetic wave propagating through a plasma. From the mathematical point of view they are exact solutions of the 1-dimensional relativistic cold fluid plasma model with nonvanishing boundary conditions. Under the assumption of traveling wave solutions with velocity $V$ and vector potential frequency $\omega$, the fluid model is reduced to a Hamiltonian system. The solitary waves are homoclinic (grey solitons) or heteroclinic (dark solitons) orbits to fixed points. By using a dynamical systems description of the Hamiltonian system and a spectral method, we identify a great variety of solitary waves, including asymmetric ones, discuss their disappearance for certain parameter values, and classify them according to: (i) grey or dark character, (ii) the number of humps of the vector potential envelope and (iii) their symmetries. The solutions come in continuous families in the parametric $V-\omega$ plane and extend up to velocities that approach the speed of light. The stability of certain types of grey solitary waves is investigated with the aid of particle-in-cell simulations that demonstrate their propagation for a few tens of the inverse of the plasma frequency. 
 	    </span>
@@ -205,7 +205,7 @@
 	    <img src="images/acroread16.png" alt="reprint"><a href="./papers/SiCvi10.pdf"> preprint</a>
  	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 	    <span class="dsphead">+</span> abstract</a>
-		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
+<!--		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 		    <span class="dsphead">+</span> bibtex</a>
 		  </span>
 		  <span class="dspcont">
@@ -221,7 +221,7 @@
 }
 </pre>
  
-		  </span>
+		  </span>-->
 	    </span>
 	    <span class="dspcont">We present two continuous symmetry reduction methods for reducing high-dimensional dissipative flows to local return maps. In the Hilbert polynomial basis approach, the equivariant dynamics is rewritten in terms of invariant coordinates. In the method of moving frames (or method of slices) the state space is sliced locally in such a way that each group orbit of symmetry-equivalent points is represented by a single point. In either approach, numerical computations can be performed in the original state-space representation, and the solutions are then projected onto the symmetry-reduced state space. The two methods are illustrated by reduction of the complex Lorenz system, a 5-dimensional dissipative flow with rotational symmetry. While the Hilbert polynomial basis approach appears unfeasible for high-dimensional flows, symmetry reduction by the method of moving frames offers hope.
 	    </span>
@@ -234,7 +234,7 @@
 	    <img src="images/acroread16.png" alt="reprint"><a href="./papers/CDS10.pdf"> reprint</a>
 	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 	      <span class="dsphead">+</span> abstract</a>
-		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
+<!--		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 		    <span class="dsphead">+</span> bibtex</a>
 		  </span>
 		  <span class="dspcont">
@@ -251,7 +251,7 @@
     note = "arXiv:nlin.CD/0709.2944"
 }
 </pre> 
-		  </span>
+		  </span>-->
 	    </span>
 	    <span class="dspcont">The continuous and discrete symmetries of the Kuramoto-Sivashinsky system restricted to a spatially periodic domain play a prominent role in shaping the invariant sets of its chaotic dynamics. The continuous spatial translation symmetry leads to relative equilibrium (traveling wave) and relative periodic orbit (modulated traveling wave) solutions. The discrete symmetries lead to existence of equilibrium and periodic orbit solutions, induce decomposition of state space into invariant subspaces, and enforce certain structurally stable heteroclinic connections between equilibria. We show, on the example of a particular small-cell Kuramoto-Sivashinsky system, how the geometry of its dynamical state space is organized by a rigid `cage' built by heteroclinic connections between equilibria, and demonstrate the preponderance of unstable relative periodic orbits and their likely role as the skeleton underpinning spatiotemporal turbulence in systems with continuous symmetries. We also offer novel visualizations of the high-dimensional Kuramoto-Sivashinsky state space flow through projections onto low-dimensional, PDE representation independent, dynamically invariant intrinsic coordinate frames, as well as in terms of the physical, symmetry invariant energy transfer rates. 
 	    </span>
@@ -264,7 +264,7 @@
 	    <img src="images/acroread16.png" alt="reprint"><a href="./papers/PhysRevLett.105.015001.pdf"> reprint</a>
  	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 	    <span class="dsphead">+</span> abstract</a>
-		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
+<!--		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 		    <span class="dsphead">+</span> bibtex</a>
 		  </span>
 		  <span class="dspcont">
@@ -281,7 +281,7 @@
 }
 </pre>
  
-		  </span>
+		  </span>-->
 	    </span>
 	    <span class="dspcont">We derive, both theoretically and using an envelope code, threshold intensities for stimulated Raman scattering which compare well with results from Vlasov simulations. To do so, we account for the nonlinear decrease of Landau damping and for the detuning induced by, both, the nonlinear wave number shift &delta;k and frequency shift  &delta;&omega; of the plasma wave. In particular, we show that the effect of &delta;k may cancel out that of &delta;&omega;, but only in that plasma region where the laser intensity decreases along the direction of propagation of the scattered wave. Elsewhere, &delta;k enhances the detuning effect of &delta;&omega;. 
 	    </span>
@@ -294,7 +294,7 @@
 <!-- 	    <img src="images/acroread16.png" alt="preprint"><a href="./papers/threshold.pdf"> preprint</a> -->
  	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 	    <span class="dsphead">+</span> abstract</a>
-		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
+<!--		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 		    <span class="dsphead">+</span> bibtex</a>
 		  </span>
 		  <span class="dspcont">
@@ -310,7 +310,7 @@
     doi = {10.1063/1.3464467}
 }
 </pre> 
-		  </span>
+		  </span>-->
 	    </span>
 	    <span class="dspcont">The nonlinear group velocity of an electron plasma wave is investigated numerically using a Vlasov code, and is found to assume values which agree very well with those predicted by a recently published theory [Phys. Rev. Lett., 103, 155002, (2009)], which we further detail here. In particular we show that, once Landau damping has been substantially reduced due to trapping, the group velocity of an electron plasma wave is not the derivative of its frequency with respect to its wave number. This result is moreover discussed physically, together with its implications in the saturation of stimulated Raman scattering.
 	    </span>
@@ -323,7 +323,7 @@
 <!-- 	    <img src="images/acroread16.png" alt="preprint"><a href="./papers/threshold.pdf"> preprint</a> -->
  	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 	    <span class="dsphead">+</span> abstract</a>
-		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
+<!--		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 		    <span class="dsphead">+</span> bibtex</a>
 		  </span>
 		  <span class="dspcont">
@@ -340,7 +340,7 @@
       doi = {10.1063/1.3494223}
 }
 </pre> 
-		  </span>
+		  </span>-->
 	    </span>
 	    <span class="dspcont">In this paper, we present our nonlinear kinetic modeling of stimulated Raman scattering in a uniform and collisionless plasma using envelope equations. We recall the derivation of these equations, as well as our theoretical predictions for each of the nonlinear kinetic terms, the precision of which having been carefully checked against Vlasov simulations. We particularly focus here on the numerical resolution of these equations, which requires the additional concept of ``self-optimization'' that we explain, and we describe the envelope code BRAMA that we used. As an application of our modeling, we present one-dimensional BRAMA simulations of stimulated Raman scattering which predict threshold intensities, as well as time scales for Raman growth above threshold, in very good agreement with those inferred from Vlasov simulations. Finally, we discuss the differences between our modeling and other published ones.
 	    </span>
@@ -356,7 +356,7 @@
 	    <img src="images/acroread16.png" alt="preprint"><a  href="http://www.chaosbook.org/projects/Siminos/thesis.pdf"> pdf</a>&nbsp;&nbsp;
   	    <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 	    <span class="dsphead">+</span> abstract</a>
-		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
+<!--		  <span><a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
 		    <span class="dsphead">+</span> bibtex</a>
 		  </span>
 		  <span class="dspcont">
@@ -371,7 +371,7 @@
   note = "avalaible online at http://www.chaosbook.org/projects/Siminos/thesis.pdf"
 }
 </pre> 
-		  </span>
+		  </span>-->
 	    </span>
 	    <span class="dspcont"> When statistical assumptions do not hold and coherent structures are present in spatially extended systems such as fluid flows, flame fronts and field theories, a dynamical description of turbulent phenomena becomes necessary. In the dynamical systems approach, theory of turbulence for a given system, with given boundary conditions, is given by (a) the geometry of its infinite-dimensional state space and (b) the associated measure, that is, the likelihood that asymptotic dynamics visits a given state space region.</br></br> In this thesis this vision is pursued in the context of Kuramoto-Sivashinsky system, one of the simplest physically interesting spatially extended nonlinear systems. With periodic boundary conditions, continuous translational symmetry endows state space with additional structure that often dictates the type of observed solutions. At the same time, the notion of recurrence becomes relative: asymptotic dynamics visits the neighborhood of any equivalent, translated point, infinitely often. Identification of points related by the symmetry group action, termed symmetry reduction, although conceptually simple as the group action is linear, is hard to implement in practice, yet it leads to dramatic simplification of dynamics.</br></br> Here we propose a scheme, based on the method of moving frames of Cartan, to efficiently project solutions of high-dimensional truncations of partial differential equations computed in the original space to a reduced state space. The procedure simplifies the visualization of high-dimensional flows and provides new insight into the role the unstable manifolds of equilibria and traveling waves play in organizing Kuramoto-Sivashinsky flow. This in turn elucidates the mechanism that creates unstable modulated traveling waves (periodic orbits in reduced space) that provide a skeleton of the dynamics. The compact description of dynamics thus achieved sets the stage for reduction of the dynamics to mappings between a set of Poincare sections.
 	    </span>
