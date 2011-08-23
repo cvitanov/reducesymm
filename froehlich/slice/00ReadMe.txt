@@ -52,10 +52,10 @@ pdflatex FrCv11.tex
 [x] CNSNS_2101edits.pdf (in Predrag's directory, not in svn)
     returned the proofs to the journal
 ----------------------------------------------------------------
-                        Predrag  Jul 26, 2011
-[x] accepted manuscript
+                        Predrag  Jul 26, Aug 15 2011
+[x] online published manuscript
     doi:10.1016/j.cnsns.2011.07.007
-    (unformatted and unedited) is available at:
+    is available at:
     http://dx.doi.org/10.1016/j.cnsns.2011.07.007
 ----------------------------------------------------------------
                         Predrag  Jul 20, 2011
