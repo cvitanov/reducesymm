@@ -209,8 +209,10 @@ Read Siminos blog \refsect{sec:KSlit}, \emph{ \KS: literature survey}.
 Other useful sources are Lan thesis, \refsect{s:LanThesis} and Siminos
 thesis, \refsect{s:SiminosThesis}.
 
-\end{description}
+\item[2011-09-18 Predrag]  Not a line of the review has been written down
+yet, not even the \KSe?
 
+\end{description}
 
 
 \section{Reading}
@@ -249,11 +251,11 @@ one-dimensional visualization, which illustrate in detail how we find
 Here is my understanding of the whole process: First we choose a
 \PoincSec\ in the full \statesp\ and let the dynamical system evolve for
 a sufficiently long time to give us enough points on the section. This
-enables us to define a return map for the section. Within the section,
+enables us to define a return map $\PoincM$ for the section. Within the section,
 iterating the map generates discrete-time \po s, which can be
 found out exhaustively (in finite resolution) by utilizing symbolic
 dynamics. Before we use symbolic dynamics, we have to build an intrinsic
-arclength coordinate system; for the parameter values studied here, close
+arc-length coordinate system; for the parameter values studied here, close
 to onset of chaos, this return map is approximately unimodal. This
 situation is very special, due to only one direction of any \po\ being
 unstable. The remaining ones (except for the single marginal eigenvalue
@@ -262,83 +264,155 @@ Since periodic points of a discrete time \po\ belong to the corresponding
 continuous time \po\  in the full \statesp\, we can integrate from these
 periodic points to recover the full space \po.
 
-Here are some detailed questions:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\SFIG{return6a}
+%%\includegraphics[width=0.65\textwidth]{../../../articles/vachtang/return6.ps}
+{}{
+The attractor of the \KS\ system,
+% \refeq{expan}, %[2011-09-18 Predrag] \KSe\ have not been written down yet.
+plotted as the $a_6$
+component of the $a_1=0$ Poincar\'e section return map $\PoincM$. Here 10,000
+Poincar\'e section returns of a typical trajectory are plotted. Also
+indicated are the periodic points
+${0}$, ${1}$, ${01}$ and ${10}$.
+System size $ \tilde{L} = 2.89109$, $N=16$ Fourier modes truncation.
+~~(From \refref{Christiansen97}.)
+}{returnmap}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-In the third paragraph of part 4, it is said
-``The $i$th cycle point  $s_i$ is mapped onto its image $s_{\sigma i} = f(s_i)$ where $\sigma i$ denotes  the label of the next periodic point in the cycle.''
+Questions:
+
+The third paragraph of part 4:
+``The $i$th cycle point  $\arc_i$ is mapped onto its image $\arc_{\sigma i} =
+f(\arc_i)$ where $\sigma i$ denotes  the label of the next periodic point in
+the cycle.''
 
 
-So that means $\sigma i$ is not meant to be $i+1$, right? Because the order of different cycle points is given in following way: ``there exists a fixed point which
-is not connected to the attractor (the point
-$\overline{0}$ in \reffig{returnmap}) - we
-choose this fixed point
-as the starting point and assign it number $1$.
-Point number $2$ is the periodic point in the sample
-which is closest (in the full space)
-to this fixed point, and the $n$-th point is determined as the point
-which has the minimum distance from the point number $n-1$ among
-all the periodic points which have not yet been enumerated.
-Proceeding this way, we order all the periodic points that we have found
-so far.''
+So that means $\sigma i$ is not meant to be $\arc_{i+1}$, right? Because the
+order of different cycle points is given in following way: ``there exists
+a fixed point which is not connected to the attractor (the point
+$\overline{0}$ in \reffig{returnmap}) - we choose this fixed point as the
+starting point and assign it number $1$. Point number $2$ is the periodic
+point in the sample which is closest (in the full space) to this fixed
+point, and the $n$th point is determined as the point which has the
+minimum distance from the point number $n-1$ among all the periodic
+points which have not yet been enumerated. Proceeding this way, we order
+all the periodic points that we have found so far.''
 
 So from this we could know that the order of periodic points on the
 section is not the order of time evolution of these points. Right? But if
 it is true, that seems to contradict with the illustration under figure
 4?
 
-\item[2011-08-30 Predrag]
-For a general orbit we  label points in map iteration by
+\item[2011-08-30, 2011-09-18 Predrag]                            \toCB
+For a general orbit we  label points in Poincar\'e section iteration by
 \beq
-s_{n+1} = f(s_n)
-\ee{curvTime}
-where $n=\{1,2,\cdots\}$ is the discrete time.
-For a periodic orbit of period $n$ we use $s_a$
-where $a = \Ssym{1}\Ssym{2}\cdots\Ssym{n}$, and the
-dynamics acts on the label as a cyclic permutation,
-$\sigma s_a = \Ssym{2}\cdots\Ssym{n}\Ssym{1}$
+\ssp_{n+1} = \PoincM(\ssp_n)
+\ee{discrTime}
+where $n=\{1,2,\cdots\}$ denotes the discrete time, and $\ssp$ is a point
+in the \statesp\ $\pS \subseteq \reals^d$. For a periodic orbit of period
+$n$ we use $\ssp_a$ where $a = \Ssym{1}\Ssym{2}\cdots\Ssym{n}$ is the
+symbolic dynamics label of the cycle point  $\ssp_a$, and the dynamics
+acts on the label as a cyclic permutation, $\sigma \ssp_a =
+\Ssym{2}\cdots\Ssym{n}\Ssym{1}$
 \beq
-s_{\Ssym{2}\cdots\Ssym{n}\Ssym{1}} =
-    f(s_{\Ssym{1}\Ssym{2}\cdots\Ssym{n}})
+\ssp_{\Ssym{2}\cdots\Ssym{n}\Ssym{1}} =
+    f(\ssp_{\Ssym{1}\Ssym{2}\cdots\Ssym{n}})
 \,,
 \ee{curvPO}
-where the block $\Ssym{1}\Ssym{2}\cdots\Ssym{n}$ is the cycle itinerary.
-For example, 11100-cycle point $s_{11100}$ is mapped into next cycle
-point $s_{11001}$ which can be far away; spatial ordering of cycle points
-is given by alternating binary trees and such...
+where the block $a=\Ssym{1}\Ssym{2}\cdots\Ssym{n}$ denotes the itinerary
+of the periodic point $\ssp_a$ in the prime cycle $\pS_p$. For example,
+11100-cycle point $\ssp_{11100}$ is mapped into next cycle point
+$\ssp_{11001}$ which can be far away; spatial ordering of cycle points is
+given by, for example, alternating binary trees.
 
-Unfortunately, in this application we discretize the 1-dimensional
-unstable manifold, so there is yet another integer suffix which refers to
-a spatially ordered set of points, such that
+In application at hand we discretize the 1-dimensional base segment of
+the unstable manifold parametrized by arc-length $\arc$, so there is yet
+another integer suffix which refers to a spatially ordered set of points,
+for example
 \beq
-s_{j-1} < s_{j} < s_{j+1}
+\arc_{j-1} < \arc_{j} < \arc_{j+1}
 \,.
 \ee{curvPO}
+In practice, we have two ways of populating the base segment by points -
+either by running a long ergodic orbit and approximating each point on
+the strange attractor by the nearest base segment point $\ssp(\arc)$,
+labeled by the arc-length $\arc$, as is done in \refref{lanCvit07}, or by
+threading a jagged line through the nearest periodic points, and adding
+Euclidean distances between them to obtain $\arc$, as was originally done in
+\refref{Christiansen97}. We prefer the former, as the latter approach of
+necessity runs into ambiguities due to the fractal structure of a strange
+attractor along the stable manifold directions, and one misses parts of
+the base segment that are not reached by long-time ergodic dynamics.
 
-Can you try to add text to ChaosBook.org
-smale.tex, section {\em Parametrization of invariant manifolds}
-which clarifies this for the next reader? Maybe a drawing with
-a 3-cycle would be helpful. Not sure
+The dynamics of close returns to the unstable manifold, approximated by
+the nearest point on the manifold leads to return map
+\beq
+\arc_{n+1} = {f}(\arc_n)
+\,,
+\ee{curvTime}
+where suffix $n=\{1,2,\cdots\}$ again denotes the discrete time, as in
+\refeq{discrTime}.
 
-[will continue this later]
+
+\noindent{\bf 2011-08-30 Predrag}
+Can you try to add edited version of the above text to ChaosBook.org
+smale.tex, section {\em Parametrization of invariant manifolds} which
+clarifies this for the next reader? Maybe a drawing with a 3-cycle would
+be helpful. Not sure...
+
+\noindent
+[ ] {\bf 2011-08-30 Predrag} mark this box once you have entered the
+edits and discussed them with me.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\SFIG{unfolded}
+{}{
+The return map $\arc_{n+1} = f(\arc_n)$ constructed from the images of periodic
+points. The diamonds were obtained by using $34$ periodic points, the
+dots were obtained by using $240$ periodic points. We have indicated the
+periodic points $\overline{0}$, $\overline{1}$ and $\overline{01}$. Note
+that the transverse fractal structure of the map shows when the number of
+points is increased.
+System size $ \tilde{L} = 2.89109$, $N=16$ Fourier modes truncation.
+~~(From \refref{Christiansen97})
+}{unfolded}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 \item[2011-08-24 Chao]
 A prerequisite question is that from paragraph 2 to paragraph 3, the
-phrase``periodic points'' should mean the points on the reduced
-1-dimensional map, right?(or points on the N-1 dimensional Poincare
-section?) If so, since the reduced 1-dimensional map is a projection from
+phrase ``periodic points'' should mean the points on the 1-dimensional
+return map, right? (or points on the $N-1$ dimensional Poincar\'e
+section?) If so, since the 1-dimensional return map is a projection from
 higher dimension, it could be that two different periodic points have the
 same projection? What to do about that?
 
+\item[2011-09-18 Predrag]                            \toCB
+The return map \refeq{curvTime} is \emph{not a projection}: every point
+on the 1-dimensional curve is a fully specified point in the full
+\statesp, $\arc = \ssp(\arc)$, labeled by the arc-length $\arc$. That is precisely
+why the approximation of the full dynamics by the iterates of the return
+map is so powerful; the return map gives very good guesses for the
+location of the next point in a cycle, which can then be pushed to
+machine precision by the Newton or variational numerical algorithm used
+in the \emph{full \statesp}.
 
+\item[2011-08-24 Chao]
 In figure 1, it is said `` The lower arrow indicates the kink where the
-invariant set A starts to overlap with $\theta SA$''. I don't understand
+invariant set $A$ starts to overlap with $\theta SA$''. I don't understand
 how the overlap of A and $\theta SA$ is connected to the kink in the
-Feigenbaum tree. I can don't have the intuition of how is it like that
-``A overlaps with $\theta SA$''. Can you show me some simple examples to
+Feigenbaum tree. I don't have the intuition of how is it like that
+``$A$ overlaps with $\theta SA$''. Can you show me some simple examples to
 illustrate it pictorially so that I can have an intuitive feeling?
 
+\noindent
+[ ] {\bf 2011-08-25 Predrag} We have discussed this. Can you mark this
+box once you have written up you what you understood. If things you have
+learned are not written up now, they probably never will be written down.
+
 \end{description}
+
 
 \subsection{1-$d$ spatiotemporal chaos - A cyclist's view}
 \label{s:LanThesis}
