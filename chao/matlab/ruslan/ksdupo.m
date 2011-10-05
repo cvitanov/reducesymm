@@ -2118,7 +2118,7 @@ end
 %% Plot individual RPOs and PPOs from ks22f90 with the first 4 FMs in polar coordinates (19-Jan-2010)
   clear;  load ks22f90h25t100;  te = 100;  np = 1; h = 0.1; rpoflg = 0;
   if rpoflg, nst = length(rpo); else nst = length(ppo); end
-  for ist = 14:100, ost = 1:nst;
+  for ist = [23 32], ost = 1:nst;
     if rpoflg, a0 = rpo(ost(ist)).a1;  tend = rpo(ost(ist)).T1;  ph = rpo(ost(ist)).s1;  eig = rpo(ost(ist)).e1(1:8); pflg = 1;
     else a0 = ppo(ost(ist)).a1;  tend = ppo(ost(ist)).T1;  ph = 0;  eig = ppo(ost(ist)).e1(1:8);  pflg = -1; end
     N = length(a0)+2;  ek = exp((2i*pi/L).*ph.*(1:N/2-1)');
@@ -2701,6 +2701,15 @@ for ii = 1:length(ppo),
     end
   end
   
-  
+%% Test convergence of PPOs and RPOs in ks22f90h25t100 (05-Oct-2011)
+  clear; load ks22f90h25t100;  npo = [23 32];
+  global PFLG;  PFLG = -1;
+  format short g
+  for ipo = npo,
+    h = 0.25;  
+    [f, df] = ksfmms3([ppo(ipo).a;ppo(ipo).T;0],L,h);  
+    disp([ppo(ipo).T norm(f) ppo(ipo).r]);
+  end
+
   
   
