@@ -63,7 +63,10 @@ ksfmetd2.m  - KS ODE solver (you can see how it's used in ksdupo.m)
 
 ksfmms5.m - KS ODE solver + shift/reflection + multiple shooting
 
-ksfmms3.m - same as above but simpler: for generating return map, stability matrix (df) etc.  At the bottom of ksdupo.m file you'll see how I used it to check that indeed the orbits that Evangelos asked me about converge correctly.  You can use ksfmetd2 to actually plot the orbits, as I do in the section of ksdupo.m called.  Evangelos, I don't know why numbers in the *.dat files don't work, but they are the older versions, so I'd stop using them.
+ksfmms3.m - same as above but simpler: for generating return map, stability matrix (df) etc.  At the bottom of ksdupo.m file you'll see how I used it to check that indeed the orbits that Evangelos asked me about converge correctly.  You can use ksfmetd2 to actually plot the orbits, as I do in the section of ksdupo.m called
 
 %% Plot individual RPOs and PPOs from ks22f90 with the first 4 FMs in polar coordinates (19-Jan-2010)
+
+Evangelos, I don't know why numbers in the *.dat files don't work, but they are the older versions, so I'd stop using them.
+
 
