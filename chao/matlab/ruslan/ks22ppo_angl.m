@@ -14,7 +14,7 @@ np=5;
 
 global PFLG;  PFLG = -1;
 
-for ipo=1:size(ppo,2),
+for ipo=1:100%size(ppo,2),
     
     disp(['iteration ' num2str(ipo)]);
     
@@ -69,9 +69,10 @@ for ipo=1:size(ppo,2),
                         ev(:,j)=ev(:,j)/norm(ev(:,j));
                         if norm(eils(j)-1)>1e-3 && imag(eils(j)) == 0 %
                             kj=kj+1;
-                            angl(i,kj)=acos(dot(ev(:,j),ev(:,k)))*180/pi;
-                        elseif norm(eils(j)-1)>1e-3 && imag(eils(j)) ~= 0
-                            if imag(eils(j-1)) ~= 0, % skip step if we have checked cc.
+                            angl(i,kj)=acos(dot(ev(:,j),ev(:,k)));
+                            if angl(i,kj)>pi/2., angl(i,kj)=pi-angl(i,kj); end;
+                        elseif abs(abs(eils(j))-1)>1e-3 && imag(eils(j)) ~= 0
+                            if eils(j-1)== conj(eils(j)) , % skip step if we have checked cc.
                                 continue;
                             end
                             kj=kj+1;
@@ -82,13 +83,15 @@ for ipo=1:size(ppo,2),
                             a=1/sqrt(1+c^2+2*c*dot(ev1,ev2));
                             b=c*a;
                             evComp=a*ev1+b*ev2;
-                            angl1=acos(dot(ev(:,k),evComp))*180/pi;
-                            angl2=acos(dot(ev(:,k),-evComp))*180/pi;
+                            angl1=acos(dot(ev(:,k),evComp));
+                            if angl1>pi/2., angl1=pi-angl1; end;
+                            angl2=acos(dot(ev(:,k),-evComp));
+                            if angl2>pi/2., angl2=pi-angl2; end;
                             angl(i,kj)=min(angl1,angl2);                
                         end
                     end
                 else
-                    if k>1 && imag(eils(k-1)) ~= 0, % skip step if we have checked cc.
+                    if k>1 && eils(k-1) == conj( eils(k) ), % skip step if we have checked cc.
                         continue;
                     end
                     ev1=real(ev(:,k))/norm(real(ev(:,k)));
@@ -99,11 +102,11 @@ for ipo=1:size(ppo,2),
                         a=1/sqrt(1+c^2+2*c*dot(ev1,ev2));
                         b=c*a;
                         evComp=a*ev1+b*ev2;
-                        if abs(eils(j)-1)>1e-3 && imag(eils(k)) == 0, % then we would have to check angle of subspaces
+                        if abs(abs(eils(j))-1)>1e-3 && imag(eils(j)) == 0, % then we would have to check angle of subspaces
                             ev(:,j)=ev(:,j)/norm(ev(:,j));
                             kj=kj+1;
-                            angl1=acos(dot(ev(:,j),evComp))*180/pi;
-                            angl2=acos(dot(ev(:,j),-evComp))*180/pi;
+                            angl1=acos(dot(ev(:,j),evComp));
+                            angl2=acos(dot(ev(:,j),-evComp));
                             angl(i,kj)=min(angl1,angl2);
                         end
                     end    
@@ -117,7 +120,7 @@ for ipo=1:size(ppo,2),
    ppo(ipo).angl =  min(angl);
    exprt= [ppo(ipo).T, min(angl)];
      
-   save('ks22ppo_min_angl.dat', 'exprt', '-ascii','-double','-tabs', '-append');
+    save('ks22ppo_min_angl.dat', 'exprt', '-ascii','-double','-tabs', '-append');
    
    if (mod(ipo,1000)==0), save ks22f90h25angl ppo -append; end; % save in mat file every 1000 orbits.
    
