@@ -14,13 +14,14 @@ np=5;
 
 global PFLG;  PFLG = -1;
 
-for ipo=1:100%size(ppo,2),
+for ipo=1:size(ppo,2),
     
     disp(['iteration ' num2str(ipo)]);
     
     a0=ppo(ipo).a;
     
     [tt, aa, da] = ksfmetd_i(a0, L, h, ppo(ipo).T, np);
+    [tt2, aa2, da2] = ksfmetd_i(aa(:,end), L, h, ppo(ipo).T, np);
     % [tt, aa] = ksfmedt(L,tend, a0, h,  np);
 
 %      [x, uu] = ksfm2real(aa, L);
@@ -29,15 +30,8 @@ for ipo=1:100%size(ppo,2),
 %                        'PaperSize',[20.98 29.68],'Position',[400 300 180 450]);
 %      pcolor(x,tt,uu'); caxis([-3 3]); shading flat; hold off;
 
-    [f,df] = ksfmms3([ppo(ipo).a;ppo(ipo).T;0],L,h); 
-    disp(['|f|=' num2str(norm(f(1:end-2)))]);
-    dftmp=df(1:end-2,1:end-2)+eye(2*N-2);
-    dftmp=dftmp*dftmp;
-    [vdf,edf] = eig(dftmp); edf = diag(edf);
-    [sedf, ie] = sort(abs(edf),1,'descend');
-%     ppo(ipo).eig = edf(ie);  ppo(ipo).evec = vdf(:,ie);
-     eils = edf(ie);  ev0 = vdf(:,ie);
-     
+     [ev0, eils] = eig(da(:,end-(2*N-2)+1:end)*da2(:,end-(2*N-2)+1:end));
+     eils=diag(eils);
 %      da2=da(:,end-size(da,1)+1:end);
 %      for i=1:2:size(da2,1)
 %          for j=1:2:size(da2,2)
@@ -108,6 +102,9 @@ for ipo=1:100%size(ppo,2),
                             angl1=acos(dot(ev(:,j),evComp));
                             angl2=acos(dot(ev(:,j),-evComp));
                             angl(i,kj)=min(angl1,angl2);
+                        elseif abs(abs(eils(j))-1)>1e-3 && imag(eils(j)) ~= 0
+                            exprt= [ipo, ppo(ipo).T, j, eils(j)];
+                            save('ks22ppo_angl_probl.dat', 'exprt', '-ascii','-double','-tabs', '-append');
                         end
                     end    
                 end
