@@ -323,15 +323,24 @@ Hi Ruslan, sorry to bother you. I tried to run every cell but almost every cell 
 \item[2011-10-13 Chao to Ruslan] I read the file ksfmeted2.m of KS Solver which uses ETDRK4 scheme from \rf{ks05com}. Therefore I understand the main idea but have some specific questions:
 
 1, What are variables $\textit{nargin}$ and $\textit{nargout}$ for? I didn't find the definition in the main file ksdupo.m.
- 
+
    There are three main if...else... blocks controlled by the value of nargout. The code between if...else and after else are doing basically the same thing except some difference related to nargout. Probably I will understand why you have to extend those coefficient matrix to N*M(N-1) if I know the function of nargout. Or would you just explain that to me together? :)
 
 2, For array $\textit{y1,v0p,vp,y0p}$, why do they throw away the first element in array $\textit{v}$?
 
-3, Why is $\textit{da}$ Jacobian as you said in the comment ahead of the main code. It seems that $\textit{da}$ is just $\textit{ys}$ without the first element(here again, why get rid of the first one?) while $\textit{ys}$ is just the final value interpolated from $\textit{v}$ which is the value of $\mu(t)$ in Fourier space. I think this is realted to line 20 and 21 where you set some particular elements of $\textit{v}$ to 1 but not sure because of the first question.
+3, Why is $\textit{da}$ Jacobian as you said in the comment ahead of the main code. It seems that $\textit{da}$ is just $\textit{ys}$ without the first element(here again, why get rid of the first one?) while $\textit{ys}$ is just the final value interpolated from $\textit{v}$ which is the value of $\mu(t)$ in Fourier space. I think this is related to line 20 and 21 where you set some particular elements of $\textit{v}$ to 1 but not sure because of the first question.
 
 4, Where is the interpolation formula from?
- 
+
+\item[2011-10-13 Ruslan 2 Chao]
+
+1. Variables $\texttt{nargin}$ and $\texttt{nargout}$ allow Matlab functions to use variable number of input and output arguments.  Type 'doc nargin' at Matlab prompt to find out more.  In general, if you don't understand something about Matlab language, read help.  In this particular case, if the number of output arguments is less than 3, then calculation of the Jacobian is not required.
+
+2. Because the first element is the 0-th Fourier mode, which is always zero (see line 16).
+
+3. This is a standard way to compute Jacobian through variational equations.  If you have $N$ ODEs and want to calculate full Jacobian of the solution, then you augment the $N$ ODEs with $N^2$ variational ODEs into a single $N(N+1)$ dimensional system.  I'm sure you can read about this in any standard dynamical systems text.
+
+4. I'm sure it can be found somewhere, but it's easy to derive.  It's just a cubic polynomial passing through two given end points ($\texttt{y0}, $\texttt{y1}) with specific slopes $\texttt{y0p}, $\texttt{y1p}).  So, there are 4 conditions which can be used to find the 4 coefficients of the cubic.
 
 \end{description}
 
