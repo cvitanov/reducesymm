@@ -343,17 +343,13 @@ Hi Ruslan, sorry to bother you. I tried to run every cell but almost every cell 
 4. I'm sure it can be found somewhere, but it's easy to derive.  It's just a cubic polynomial passing through two given end points ($\texttt{y0}, $\texttt{y1}) with specific slopes $\texttt{y0p}, $\texttt{y1p}).  So, there are 4 conditions which can be used to find the 4 coefficients of the cubic.
 
 \item[2011-10-14 Chao to Ruslan]
-
 In line 18 to 19, v is defined as [zeros(1,N-1); [a0(1:2:end-1)+1i*a0(2:2:end) zeros(Nh-1,N-2)]; ...
 zeros(1,N-1); [a0(end-1:-2:1)-1i*a0(end:-2:2) zeros(Nh-1,N-2)]];. I'm curious that would the submatrix [a0(1:2:end-1)+1i*a0(2:2:end) zeros(Nh-1,N-2)] be legally defined in this function since the dimensions of a0 and zeros(Nh-1,N-2) are different? I tried simpler versions [a(1:2:end-1), zeros(2,4)] [zeros(1,10),[a(1:2:end-1), zeros(2,4)]] in command mode which both invoked error message.
 
-\item[2011-10-14 Ruslan 2 Chao]
-
-I do not understand what you are trying to ask me here...
-
-\item[2011-10-14 Chao to Ruslan]
 I mean that in line 18 and 19 of the file ksfmetd2.m the vector v when nargout>3 is defined. But it seems that one the subvector of v [a0(1:2:end-1)+1i*a0(2:2:end) zeros(Nh-1,N-2)] is not correctly defined because it is directly composed of two parts: \textbf{a0(1:2:end-1)+1i*a0(2:2:end)} and \textbf{zeros(Nh-1,N-2)} which obviously have different dimensions. The former is an one dimensional array while the latter is a matrix of Nh-1 by N-2. As I mentioned above I tried two vectors of the same type as this one and both of them have error says dimensions are not consistent. So I am asking if my judgement is correct. If it does have problem, what's the correct form? Thanks!
 
+\item[2011-10-15 Ruslan 2 Chao]
+If you don't think the code is correct, but it's working fine (which it does), then obviously it's not the code but your understanding of it that is not right.  So you need to think harder before asking such questions.  In this case we are composing a column vector of length Nh-1 and an Nh-1 by N-2 matrix, so the result is an Nh-1 by N-1 matrix.  I think that it should be rather trivial to figure this out.  I'm afraid that if you keep asking these types of questions, we are not going to get very far...
 
 \end{description}
 
