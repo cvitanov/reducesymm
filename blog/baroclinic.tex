@@ -21,11 +21,10 @@ invariant solutions. After one hour Wolfe said he was converted.
 
 Tried ditto with Pierrehumbert and Silber postdoc Yi-Ping Ma (Knobloch
 trained, has worked with Spiegel at Woods Hole GFD). He does not know any
-geophysical fluid dynamics yet, so I'm sceptical that he will do
-anything.
+geophysical fluid dynamics yet, so I'm sceptical that he will do anything.
 
 \item[2011-05-27 Annalisa Bracco]
-if you ever need a code that produce baroclinic instability, I have plenty.
+If you ever need a code that produce baroclinic instability, I have plenty.
 Worked with the Baroclinic Instability Man as a postdoc.
 I also have an easy atmospheric model (global, on a sphere etc)
 that reproduces very well baroclinic instability as per observations
@@ -39,5 +38,51 @@ The second step might be either to determine ``physical dimension'' using
 Wolfe-Samelson\rf{WoSa07} Lyapunov vectors (that is just simulation) or find
 some traveling waves (that is Krylov-Arnoldi nontrivial work,
 but for low-dimensional discretizations might be doable by Newton).
+
+\item[2011-10-15 Annalisa]
+'Baroclynic' means that the instability is driven by density
+difference; 'barotropic' means not.
+She has shown me some simulations.
+Baroclinic Instability is modeled by a 2-layer incompressible
+viscous fluid in a channel with
+no-slip side walls, periodic in streamwise direction, top layer
+driven by
+`atmospheric stream', \ie\ a constant total streamwise volume flow per unit
+time. She simply imposes uniform streamwise velocity of unit size,
+ignoring the boundary condition (could use a parabolic profile).
+With free slip the layers are still unstable in the same way,
+just the boundary behavior is different. Oceanographers prefer no-slip,
+perhaps because of coastal stream.
+The bottom layer is not forced, no slip, no Eckman layer
+(Eckman layer models friction at the bottom; that would make sense when she works
+with 50 layers, but not two).
+The two layers are coupled by the difference $\Phi_2 - \Phi_1$.
+Laplacian of stream function is vorticity.
+Each layer is computed in terms of vorticity equations as a 2-dimensional
+fluid. The lower layer has higher fluid density, and they are coupled
+across their interface by difference of vorticity. This is about factor
+two; it is related to the
+R\"osby deformation radius $L_R$. The spanwise $y$ width is $L_R/2\pi = 1/2$.
+Unless the width is larger than $L_R$, no instability. The streamwise
+aspect ration is about 8.
+
+They tend to the barotropic solution (vortices rotating the same way on
+top and bottom).
+
+\begin{enumerate}
+  \item [Simulation 1)]
+is linear: dropped the nonlinear term \ie\ the Jacobian of the vorticity
+and the stream function. Instability is seeded by a small random field of
+prescribed power spectrum, but the resulting instability is a localized
+wave (about 3 rolls) with streamwise/spanwise ratio of about 1/2 set
+$L_R$. That sets the scale of the instability off the laminar solution.
+Initial noise does not matter, as the instability grows very fast. The
+two layer vorticities are opposite.
+  \item [Simulation 2)] is fully nonlinear, all other parameters the same.
+
+  \item [Simulation 3)]
+\end{enumerate}
+
+Run 2-layers, spanways
 
 \end{description}
