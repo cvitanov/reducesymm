@@ -655,6 +655,30 @@ Appendix C gives the searching algorithm of relative periodic orbits. I
 got the idea, waiting to embark on real computation to knock down more
 blockade.
 
+\item[2011-10-16 CS]
+From Appedix B, Ruslan's code and re-reading part of Chapter:Local Stability,
+I leart the first example on how to compute the Jacobian practically in the
+``standard way''.
+
+Here is a summary of the method:
+We start the integration of ${a_k}$ and ${b_k}$ together according to (A.4)
+and (A.6) respectively. The key point here is to recognize that while ${a_k}$
+is a component of the vector in Fourier space, $b_k$ is a vector in tangent 
+space, not a component of a vector. That's why we have to extend the integration
+to N(N-1) dimensions. In the routine, the first column of the N by N-1 matrix is 
+vector $a$; from the second to last column are real part and imaginary part of 
+vectors ${b_k}$. We assign the intial values of ${b_k}$ to be the ``unit'' vector(unit
+on both real and imaginary axis) on each axis of the intial tangent space(which of course
+ is also the space of vector a). Then as the integration goes on, $a$ changes, more importantly,
+${b_k}$ also changes. When it is done, $a$ get the final value in the intial space and ${b_k}$
+get the final value in the final tangent space(which is just a relative frame with parallel axis to the
+initial coordinate but origin fixed at point $a$). ${b_k}$ could be rotated, streched, or compressed.
+So the length and direction of ${b_k}$ may both change and are not orthognal anymore. Then since the intial
+value of ${b_j(0)}$ are acutally orthogonal basis, the matrix composed of all ${b_i(t)}$ is just the Jacobian because
+the elements are $\partial{b_i(t)}/\partial{b_j(0)}$ which is exactly the definition of Jacobian.
+
+ 
+
 \end{description}
 
 \subsection{Turbulence, coherent structures, dynamical systems and
