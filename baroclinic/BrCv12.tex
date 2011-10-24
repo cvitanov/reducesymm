@@ -1,0 +1,101 @@
+%% siminos/baroclinic/BrCv12.tex                           pdflatex blog
+                        %% logical setup, no need to edit %%%%%%%%%%
+                        \newif\ifpaper \newif\ifPDF               %%
+                        \newif\ifOUP \newif\ifboyscout            %%
+                        \newif\ifdasbuch \newif\ifarticle         %%
+                        \newif\ifsolutions                        %%
+                        \dasbuchtrue %% DasBuch, not QFT lectures %%
+                        \boyscouttrue %% commented, WWW/boyscouts %%
+                        \solutionstrue %% include solutions       %%
+                        \paperfalse\PDFtrue %% hyperlinked        %%
+                        \OUPfalse \articlefalse  %% ChaosBook %%%%%%
+%%%% Toggle between draft and non-draft versions
+% \boyscoutfalse               % public, for hyperlinked ChaosBook/projects
+    % Toggle between draft and non-draft for article
+%\articletrue                   %editing the article
+%\articletrue\boyscoutfalse     % article for submission
+
+    \ifarticle
+\documentclass[letter,10pt,openany]{article}
+    \else
+\documentclass[letter,10pt,openany]{book}
+    \fi %end of article switch
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{color}
+\usepackage{url}
+\usepackage{fancyhdr}
+\usepackage{alltt}
+\usepackage{ifthen}
+\usepackage{svn-multi}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage[pdftex]{graphicx}
+\usepackage{array}
+\usepackage[pdftex,colorlinks]{hyperref}
+\usepackage{verbatim}
+%\usepackage[nooneline]{caption} %% 2011-07-23 consider switching to floatraw
+%\usepackage{float}              %% 2011-07-23 consider switching to floatraw
+%\usepackage{floatraw}           %% 2011-07-23 experimental, not im MikTeX
+%\input ../inputs/layout         %% page layout, ChaosBook environments
+\input ../inputs/setupBlog      %% logical chores (nothing to edit)
+\input ../inputs/editsDasbuch   %% editing comments, DasBuch style
+\input ../inputs/def            %% do not edit; always update by copying
+                                %% dasbuch/book/inputs/def.tex
+\input ../inputs/defsBlog       %% Vaggelis bloggy macros: \renewcommand, etc
+\graphicspath{{../figs/}{../Fig/}}  %% directories with color graphics files
+\hypersetup{
+   pdfauthor=Annalisa Bracco,
+   pdfkeywords=?? Lorenz flow,
+   pdftitle=Reducing ??}
+\svnidlong          %uses svn-multi
+{$HeadURL$}
+{$LastChangedDate$}
+{$LastChangedRevision$}
+{$LastChangedBy$}
+\svnid{$Id$}
+\svnkwsave{$RepoFile: siminos/baroclinic/BrCv12.tex $}
+\svnRegisterAuthor{bracco}{Annalisa Bracco}
+\svnRegisterAuthor{predrag}{Predrag Cvitanovi{\'c}}
+
+    \ifboyscout
+%% If the svn information should be also placed
+%% on the chapter page use:
+%\fancypagestyle{plain}{%
+%% otherwise use
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[er,ol]{\slshape \leftmark }
+    %\Private{ % subversion label pages
+\fancyfoot[er,ol]{rev. \svnrev\ (\svnfileauthor, rev. \svnfilerev )}
+\fancyfoot[or]{\svnyear -\svnmonth -\svnday \
+\svnhour :\svnminute }
+\fancyfoot[el,or]{\svnfilemonth/\svnfileday/\svnfileyear}
+\cfoot{\rm\thepage}
+%}
+%URL \svnmainurl \svnkw{URL}
+%Filename \svnmainfilename
+%   } % end \Private{
+    \else
+    \fi %end of boyscout switch
+
+\begin{document}
+
+\input blogTitle
+\maketitle
+
+\thispagestyle{empty}
+\tableofcontents
+\input intro
+%% the remaining files: templates for an article
+%\input flow
+%\input concl
+%\input flotsamChCv11
+\input dailyBlog
+
+\bibliographystyle{../inputs/adkPCphysrev}  % PC Phys Rev style,
+                                            % but with article titles
+%\bibliographystyle{unsrt} %prsty} %apsrev} %plain}
+\bibliography{../bibtex/siminos}
+
+\end{document}
