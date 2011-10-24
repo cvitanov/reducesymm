@@ -172,7 +172,7 @@ correctly (and some system libraries, \eg\ fftw3).
 Reading  parts of ``Numerical Recipes in Fortran 90,'' might help you,
 as the organization of the code follows the strategy layed out there.
 Regarding numerical algorithms, I implement ETDRK4 scheme of Kassam and
-Trefethen\rf{ks05com}.
+Trefethen\rf{ks04com}.
 
 Once the repository vaggelis is up and running I'll try to improve the
 documentation. Meanwhile, let me know how it goes. It might be more efficient
@@ -305,7 +305,7 @@ whether it is realistic to continue with this project.
 \item[2011-10-12 Chao]
 Thanks for all of your advice. This morning I also found that Matlab is
 much easier to use and now I'm running the code of integrating \KSe  with
-ETDRK4 scheme from \rf{ks05com} which works well. So I'll turn to
+ETDRK4 scheme from \rf{ks04com} which works well. So I'll turn to
 exploring Ruslan's code.
 
 \end{description}
@@ -320,7 +320,7 @@ Hi Ruslan, sorry to bother you. I tried to run every cell but almost every cell 
 
 \item[2011-10-13 Ruslan 2 Chao]  Now, why would you do that!  It's like getting into the cockpit of an airplane and start pushing every button you see there and then saying "Well, it doesn't fly...".  You actually need to understand what you are doing.  Start by reading the README file in matlab/ruslan.  Focus on the bits of the ksdupo.m file which I mention there, try to understand what they do and how they do it.  Ask specific questions.  I'll try to answer promptly.
 
-\item[2011-10-13 Chao to Ruslan] I read the file ksfmetd2.m of KS Solver which uses ETDRK4 scheme from \rf{ks05com}. Therefore I understand the main idea but have some specific questions:
+\item[2011-10-13 Chao to Ruslan] I read the file ksfmetd2.m of KS Solver which uses ETDRK4 scheme from \rf{ks04com}. Therefore I understand the main idea but have some specific questions:
 
 1, What are variables $\textit{nargin}$ and $\textit{nargout}$ for? I didn't find the definition in the main file ksdupo.m.
 
@@ -352,7 +352,7 @@ I mean that in line 18 and 19 of the file ksfmetd2.m the vector v when nargout>3
 If you don't think the code is correct, but it's working fine (which it does), then obviously it's not the code but your understanding of it that is not right.  So you need to think harder before asking such questions.  In this case we are composing a column vector of length Nh-1 and an Nh-1 by N-2 matrix, so the result is an Nh-1 by N-1 matrix.  I think that it should be rather trivial to figure this out.  I'm afraid that if you keep asking these types of questions, we are not going to get very far...
 
 \item[2011-10-16 Chao to Ruslan]
-Copied and slightly modified the file ksfmetd2.m to an independent routine by changing the input arguments to variables or constants defined in the program and assigning proper initial values as in \rf{ks05com}. Thus I can test it independently
+Copied and slightly modified the file ksfmetd2.m to an independent routine by changing the input arguments to variables or constants defined in the program and assigning proper initial values as in \rf{ks04com}. Thus I can test it independently
 
 In detail I defined the initial function $\mu(x,0)=cos(x/16)*(1+sin(x/16))$ in real space where $x = 32*pi*(1:N)'/N$ and $N =128$.  It runs well with no errors but the result of integration diverges. I'm trying to figure out the problem
 
@@ -374,9 +374,39 @@ Figs.~3.1, 12.6, 12.8, 12.9. You should at least be able to
 produce visualizations such as Fig.~39 ``The relative periodic orbit with $(\period{p}, \shift_p) = (33.5, 4.04)$,
 ...''
 
-\item[2011-10-21 Chao] Summary of plot RPOs in co-moving coordinate in Fourier space. 
+\item[2011-10-21 Chao] Summary of plot RPOs in co-moving coordinate in Fourier space.
 Suppose we have a RPO with shift $\textit{$l_p$}$, $\mu(x+\textit{$l_p$},\textit{$T_p$})=\mu(x,0)$. Let $x'=x+t\textit{$l_p$}/\textit{$T_p$}$, then obviously $\mu(x',t)$ saftisfies periodic condition, which is equivalent to express $\mu(x,t)$ in the co-moving frame with velocity $\textit{$l_p$}/\textit{$T_p$}$.  Translational property of Fourier transformation gives $\textit{F}(\mu(x+t\textit{$l_p$}/\textit{$T_p$},\textit{t})) = exp(-ikt\textit{$l_p$}/\textit{$T_p$})\textit{F}(\mu(x,t))$, where \textit{F} denotes Fourier transform. Thus in order to obtain the Fourier modes tranformed from co-moving real space, we just multiply the original one with a time-dependent prefactor, which is just a point-wise product of two matrix in Matlab.
 
-\item[2011-10-23 Chao] In spirit of tutorial on Chaosbook.org, I'm trying to plot RPOs in L2 norm space. The data of RPOs given here has 64 Fourier modes, thus in real space the interval [0,d] is also discretized into 64 one dimensional lattice. The velocity in every lattice is also one dimensional. So instead of 60,000+ dimensions of velocity vector space in Navier-Stokes equation, the velocity field here is just 64 dimensions. The distance in this case is defined in the same way:
-$(v_1,v_2) = \frac{1}{d}\int_d{v_1}\cdot{v_2}dx$, where $v(x)=d\mu(x)/dx$. Since we have the Fourier reprensation of $\mu(x)$, in order to find the space derivative of $\mu$ we just need to multiply the k$th$ Fourier modes of $\mu(x)$ by $ik$ and then transform them back to real space. The code I wrote works except that the last time step obtained by interpolation in Ruslan's code deviate far from the orbit. I think the problem lies in the way that I transfer the Fourier modes from real representation back to complex representation. I'm now still trying to find the bug.  
+\item[2011-10-23 Chao] In spirit of tutorial on Chaosbook.org, I'm trying
+to plot RPOs in L2 norm space. The data of RPOs given here has 64 Fourier
+modes, thus in real space the interval [0,d] is also discretized into 64
+one dimensional lattice. The velocity in every lattice is also one
+dimensional. So instead of 60,000+ dimensions of velocity vector space in
+Navier-Stokes equation, the velocity field here is just 64 dimensions.
+The distance in this case is defined in the same way: $(v_1,v_2) =
+\frac{1}{d}\int_d{v_1}\cdot{v_2}dx$, where $v(x)=d\mu(x)/dx$. Since we
+have the Fourier representation of $\mu(x)$, in order to find the space
+derivative of $\mu$ we just need to multiply the k$th$ Fourier modes of
+$\mu(x)$ by $ik$ and then transform them back to real space. The code I
+wrote works except that the last time step obtained by interpolation in
+Ruslan's code deviate far from the orbit. I think the problem lies in the
+way that I transfer the Fourier modes from real representation back to
+complex representation. I'm now still trying to find the bug.
+
+\item[2011-10-23 Predrag]
+Why are we plotting $v(x)=d\mu(x)/dx$,
+if the field $u(x,t)$ (or $\mu(x,t)$) is already the velocity field?
+Is that what Evangelos plots in \refrefs{SiminosThesis,SCD07}?
+
+Minor gripe: I think the convention for \KSe\ is to call the
+field $u(x,t)$, letter $u$ to indicate that it is a (1-dimensional)
+velocity field, as in \refeq{eq:KSeAP} and in all our publications. Not
+sure why it has become $\mu(x,t)$...
+
+\item[2011-10-23 Predrag]
+I have now loaned you my write-up of why one uses physical \statesp\
+coordinates, \refsect{s:visualStatSp}. Not sure I can say it more
+clearly...
+
+
 \end{description}
