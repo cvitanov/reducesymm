@@ -51,6 +51,9 @@ talks/
 
 posters/
 
+scripts/
+    potentially useful scripts 
+
 blog/
     all matters pertaining to symmetry reduction reading
 
