@@ -1,6 +1,5 @@
-% load ks22f90h25angl.mat
+load ks22f90h25angl.mat
 
-fig1=figure(); hold on;
 
 minangl=ppo(1).angl(1);
 minangl_pos= [1, 1];
@@ -9,6 +8,9 @@ non_prob=0;
 
 Ttab=[];
 anglTab=[];
+floqTab=[];
+TtabProb=[];
+floqTabProb=[];
 
 for ipo=1:size(ppo,2),
     if not(ppo(ipo).angl_prob),
@@ -21,13 +23,19 @@ for ipo=1:size(ppo,2),
                     end
 %                     plot(ppo(ipo).T, ppo(ipo).angl(i)/pi,'k.','MarkerSize',6);
                     Ttab =[Ttab, ppo(ipo).T];
+                    floqTab= [floqTab, log(abs(ppo(ipo).e(1)))/ppo(ipo).T];
                     anglTab = [anglTab, ppo(ipo).angl(i)/pi];
                     non_prob=non_prob+1;
                 end
             end
         end
+    else
+        TtabProb =[TtabProb, ppo(ipo).T];
+        floqTabProb= [floqTabProb, log(abs(ppo(ipo).e(1)))/ppo(ipo).T];
     end
 end
+
+fig1=figure(); hold on;
 
 plot(Ttab,anglTab,'k.','MarkerSize',6);
 axis([0 1.01*max(Ttab) 0.9*min(anglTab) 1.1*max(anglTab)]);
@@ -37,8 +45,27 @@ set(gca, 'fontsize', 12)
 xlabel('T_p','FontSize',14);
 ylabel('\theta_{min} / \pi','FontSize',14);
 
+saveas(fig1, 'ks22ppo_min_angle.png');
 saveTightFigure(fig1, 'ks22ppo_min_angle.pdf');
 saveas(fig1, 'ks22ppo_min_angle.eps');
+
+
+hold off;
+
+
+fig1a=figure(); hold on;
+
+plot(floqTab,anglTab,'k.','MarkerSize',6);
+axis([0 1.05*max(floqTab) 0.9*min(anglTab) 1.1*max(anglTab)]);
+% axis tight;
+set(gca,'box','on', 'Layer','top');
+set(gca, 'fontsize', 12)
+xlabel('\mu_p^{(1)}','FontSize',14);
+ylabel('\theta_{min} / \pi','FontSize',14);
+
+saveas(fig1a, 'ks22ppo_min_angle_floq.png');
+saveTightFigure(fig1a, 'ks22ppo_min_angle_floq.pdf');
+saveas(fig1a, 'ks22ppo_min_angle_floq.eps');
 
 hold off;
 
@@ -55,13 +82,21 @@ set(gca, 'fontsize', 12);
 ylabel('PDF','FontSize',14);
 xlabel('\theta_{min} / \pi','FontSize',14);
 
-
-
 saveTightFigure(fig2, 'ks22ppo_min_angle_pdf.pdf');
 saveas(fig2, 'ks22ppo_min_angle_pdf.eps');
 
 
-% fig3=figure(); hold on;
+fig3=figure(); hold on;
+
+plot(TtabProb,floqTabProb,'.');
+
+figure();
+
+edges=0:0.01:0.25;
+n_elements_prob = histc(floqTabProb, edges);
+hist(floqTabProb,edges);
+
+% fig4=figure(); hold on;
 % 
 % for ipo=1:size(ppo,2),
 %     if not(ppo(ipo).angl_prob),
