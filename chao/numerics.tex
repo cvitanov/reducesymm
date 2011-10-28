@@ -228,85 +228,6 @@ Evangelos would you mind explaining ``subdirectory modules'' a little bit? Sorry
 \item[2011-10-12 Chao]
 Hi Evangelos, it seems that add ``export COMP=gfortran'' in .bashrc file doesn't work. I just define COMP=gfortran in the makefile. And I copied nrtype.f90 nr.f90 nrutil.f90 to folder lib-gfotran\ moudules. Then it generates three .mod files, three .o files and libnr.a. It means it works now right? What should I do next?
 
-\item[2011-10-11 Predrag and Chao]
-Had a long chat. Predrag said that he does not understand what Chao does with his time -
-on his RA he has no obligations other than science, while Predrag also teaches, grades
-problem sets, writes papers, proposals, organizes seminars, colloquia \emph{und so weiter}. As
-an experiment, Predrag stopped writing Chaos's blog on Sept 19 and nothing (in terms of
-research progress, literature, things learned) has been written into it since.
-Predrag had expected
-to have a rough draft of Davidchack et al. paper II, with KS dynamics sliced and the
-infamous 40,000 (60,000?) \rpo s organized in happy families. Predrag believes that
-starting computing should be very easy, as number of people, including Predrag's
-undergraduate nonlinear dynamics class, have learned it in matter of
-weeks (including Predrag, working with Pukaradze and Christiansen), and here everything
-is set up. Nothing that we had agreed on (see \refpage{chap:blog}) has been carried out.
-
-Chao explained that he feels that he must understand what he is doing, and that
-he has read many papers. He has downloaded a book on infinite-dimensional systems that
-seems to have a good chapter on \KS. But he should organize his time differently,
-and spend 1/2 on computing, and 1/2 on reading. This was followed by much embarrassing
-Predrag's windbaggery, who even dragged in dead Feynman as a possible model on how to do
-science.
-
-Predrag's
-2007 GaTech undergraduate nonlinear dynamics class
-Kuramoto-Sivashinsky reports:
-\HREF{http://chaosbook.org/extras/KSEproject/KSEbiffs.html}{1. A fishing expedition},
-\HREF{http://chaosbook.org/extras/KSEproject/ks_sim.html}{2. Flickering flame front}.
-
-
-\item[2011-10-12 Chao 2 Predrag] I plan to write my own code if I can't demystify
-Simino's code in short time.
-
-\item[2011-10-12 Predrag 2 Ruslan and Evangelos]
-What do you think?
-
-My personal feeling it would be a waste of time, as you both have well developed
-codes that work and
-it would be much more economical to add to them than start from the scratch.
-
-\item[2011-10-12 Ruslan]
-I agree that it's a waste of time.  I don't know about Evangelos's code,
-but my Matlab code shouldn't be hard to use.  It's fairly modular and
-there are just a few key function files, which most of the time can
-be used as black boxes.
-
-For initial exploration, Matlab is preferable since the code is smaller
-and visualization of results directly available, but, as a rule of thumb,
-if it takes about 1 hour for Matlab code to compute the result,
-then it's time to start thinking about moving to Fortran or C.
-
-Seems to me that Evangelos didn't find it hard to start changing my Matlab
-functions once I explained a few things in the README file last week.
-Of course I'm partial, but with Matlab you don't have to spend time worrying
-about compiles, makefiles, etc.
-
-Of course, if Chao doesn't know Matlab, it might appear difficult
-for him to start using it.
-
-
-\item[2011-10-12 Evangelos]
-I knew virtually no Matlab when I started using Ruslan's code
-- so it should be no problem for Chao to learn how to use it. My code
-is written in Fortran 90 and is therefore a bit harder to compile and
-use (also the user interface is not great). For what Chao is expected
-to work on in the near future there should be no serious performance
-penalty. So I think Ruslan's Matlab code should be the first think to
-master, then if there is need for Fortran or C code he can either try
-to use my code or write his own.
-
-\item[2011-10-12 Predrag]
-To summarize, continuing on what we agreed on \refpage{chap:blog}:
-We advise Chao to get Ruslan's Matlab simulations running, and by the
-end of this month discuss how far we have gotten, and
-whether it is realistic to continue with this project.
-
-\item[2011-10-12 Chao]
-Thanks for all of your advice. This morning I also found that Matlab is
-much easier to use and now I'm running the code of integrating \KSe  with
-ETDRK4 scheme from \rf{ks04com} which works well. So I'll turn to
-exploring Ruslan's code.
 
 \end{description}
 
@@ -314,6 +235,13 @@ exploring Ruslan's code.
 \label{s:matlab}
 
 \begin{description}
+
+\item[2011-10-12 Chao]
+Thanks for all of your advice. This morning I also found that Matlab is
+much easier to use and now I'm running the code of integrating \KSe  with
+ETDRK4 scheme from \rf{ks04com} which works well. So I'll turn to
+exploring Ruslan's code.
+
 
 \item[2011-10-12 Chao to Ruslan]
 Hi Ruslan, sorry to bother you. I tried to run every cell but almost every cell has errors. Most commonly are undefined functions, undefined variables, and unable to read file because ``No such file or directory''. Do I miss some packages or data files? Thanks.
@@ -471,13 +399,15 @@ solution $u(x,t)$ of \KSe\ in such functional basis is
   \beq \be_a=\frac{u(x,t)-u(-x,t)}{\Norm{u(x,t)-u(-x,t)}}\eeq
   \beq \be_m=u_m(x,t): \max \Norm{u_m(x,t)-u(x,t)}
         \,,
-  \eeq where $u_m(x,t)$ is in the same \rpo\ as $u(x,t)$. Usually to conserve orthogonality 
-  we orthogonalize $\be_m$ by Gram-Schmidt process to make $\{\be_a, \be_s, \be_m\}$ a orthonormal 
-  basis. 
+  \ee{ChaoFrame}
+where $u_m(x,t)$ is in the same \rpo\ as $u(x,t)$. Usually to conserve
+orthogonality we orthogonalize $\be_m$ by Gram-Schmidt process to make
+$\{\be_a, \be_s, \be_m\}$ a orthonormal basis.
 
 \item[2011-10-24 Predrag] You sure about $u(x,t)$? $u_m(x,t)$? $t$
 dependence in all these terms? Orthogonality of $\{\be_a, \be_s,
 \be_m\}$? I suspect another reader would need more explicit text to grasp
 what the plan here is...
+
 
 \end{description}
