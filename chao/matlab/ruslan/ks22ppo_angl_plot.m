@@ -12,6 +12,9 @@ floqTab=[];
 TtabProb=[];
 floqTabProb=[];
 
+knownRepeatsPPO=[3, 19, 50, 162, 576, 1592, 209];
+knownRepeatsRPO=[2, 11, 31, 111, 305, 1016];
+
 for ipo=1:size(ppo,2),
     if not(ppo(ipo).angl_prob),
         if ipo~=3 && ipo ~=19. % exclude known repeats (delete from dataset?)
