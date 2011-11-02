@@ -50,20 +50,20 @@ set(gca, 'fontsize', 12)
 xlabel('T_p','FontSize',14);
 ylabel('\theta_{min} / \pi','FontSize',14);
 
-saveas(fig1, 'ks22ppo_min_angle.png');
-saveTightFigure(fig1, 'ks22ppo_min_angle.pdf');
-saveas(fig1, 'ks22ppo_min_angle.eps');
-
 period_edges=[min(Ttab):15:max(Ttab) max(Ttab)];
 n_elements = histc(Ttab, period_edges);
 c_elements = cumsum(n_elements);
 anglTabC=zeros(size(c_elements,2),1);
 anglTabC(1)=mean(anglTab(1:c_elements(1)));
-for i=2:size(anglTabC)-1, %
+for i=2:size(anglTabC), %
     anglTabC(i)=mean(anglTab(c_elements(i-1)+1:c_elements(i)));
 end
-plot(period_edges,anglTabC,'r-','MarkerSize', 8);
+stairs(period_edges,anglTabC,'r-','LineWidth', 2);
 % plot(period_edges,anglTabC,'r.','MarkerSize', 6);
+
+saveas(fig1, 'ks22ppo_min_angle.png');
+saveTightFigure(fig1, 'ks22ppo_min_angle.pdf');
+saveas(fig1, 'ks22ppo_min_angle.eps');
 
 hold off;
 
