@@ -798,6 +798,7 @@ $L=22$ case.
 	discretization. He uses brute force anti-aliasing (increases resolution
 	to the point that only Lyapunov vectors already at round-off are affected by
 	aliasing). He uses FFTW.
+    \PC{can you identify this pesky reference 'ks05com'?}
  \item We agreed that a good strategy would be that Kazz implements a simple
 	Newton routine, so that he can refine the orbits I give him. I've
 	pointed him to Chaosbook chapters, my own first year report on Newton's
@@ -1236,9 +1237,8 @@ left Floquet eigenvectors $\jEigvecT[i]$. Hugues will know.
 calculated over a complete period ($2T_p$) to compute Floquet eigenvectors.
 Any objection? {\bf PC 2011-10-27}: dunno...]
 
-
 You are right to ignore the marginal directions, but it might be that
-when you do it correctly (\Poincare\ in time direction, \slice in \SOn{2}
+when you do it correctly (\Poincare\ in time direction, \slice\ in \SOn{2}
 direction) you will get much larger angles, as $\jEigvec[i]$ might form
 very non-normal narrow pencils of eigenvectors, stretched out along the
 flow direction.
@@ -1287,20 +1287,64 @@ equilibria in the system. However, he failed to explain to Hugues how he does it
 crazy idea, but we are unsure whether it could be applied to larger systems (or in the
 full space).
 
-If we assume dynamics live on a finite dimensional space of (unknown) dimension $D$,
-then a robust connection will occur if the dimension $d_u^{(1)}$ of the unstable manifold of
-the ``donor'' \EQV{1} and the dimension $d_s^{(2)}$ of the stable manifold of the ``receiver''  \EQV{2}
-obey $d_u^{(1)}+d_s^{(2)} \geq D+1$ (this is just the condition for transversal intersection of
-$d_u^{(1)}$- and $d_s^{(2)}$-dimensional manifolds in $D$-dimensional space).
-% Since $d_s^{(2)}=D-d_u^{(2)}$
-% (where $d_u^{(2)}$ the dimension of the stable manifold of the receiver) we get $d_u^{(1)}-d_u^{(2)}\geq1$.
-We know $d_u^{(1)}$ and
-% we can estimate $d_s^{(2)}=\sum_i d_u^{(i)}$ where $i$ runs over all known
-% ``donors'' from which a connection to \EQV{2} exists?
-we need an estimate for  $d_s^{(2)}$ in order to bound D from above. Presumably this is
-what Yang computes by taking into account the dimensions of all incoming unstable manifolds into \EQV{2},
-but we do not know any details.
+If we assume dynamics live on a finite dimensional space of (unknown)
+dimension $D$, then a robust connection will occur if the dimension
+$d_u^{(1)}$ of the unstable manifold of the ``donor'' \EQV{1} and the
+dimension $d_s^{(2)}$ of the stable manifold of the ``receiver''  \EQV{2}
+obey $d_u^{(1)}+d_s^{(2)} \geq D+1$ (this is just the condition for
+transversal intersection of $d_u^{(1)}$- and $d_s^{(2)}$-dimensional
+manifolds in $D$-dimensional space). % Since $d_s^{(2)}=D-d_u^{(2)}$ %
+(where $d_u^{(2)}$ the dimension of the stable manifold of the receiver)
+we get $d_u^{(1)}-d_u^{(2)}\geq1$. We know $d_u^{(1)}$ and % we can
+estimate $d_s^{(2)}=\sum_i d_u^{(i)}$ where $i$ runs over all known %
+``donors'' from which a connection to \EQV{2} exists? we need an estimate
+for  $d_s^{(2)}$ in order to bound D from above. Presumably this is what
+Yang computes by taking into account the dimensions of all incoming
+unstable manifolds into \EQV{2}, but we do not know any details.
 
+\item[2011-11-03 Predrag] I always have to think this argument through -
+not quite sure it is right. Maybe this helps -
+clippings from \refref{GHCV08}: ``
+Our computations rely on the simple principle that an object of dimension
+$k$ is likely to intersect in a stable way an object whose codimension in
+{\statesp} is less than or equal to $k$. At the bottom, this is nothing
+more than the fact that two submanifolds in general position can
+intersect if the sum of their dimensions is greater than or equal to the
+dimension of the {\statesp} (whether they actually intersect is a subtle
+question that is central to the ``structural stability'' of ergodic
+dynamical systems\rf{smale}). For an illustration in the nonlinear
+setting, see \refref{AbSh92}. Kevrekidis \etal\rf{KNSks90} (see Section 5
+of their paper) make elegant use of this principle and of invariant
+subspaces implied by discrete symmetries of the underlying PDE to
+numerically deduce the existence of a heteroclinic connection in the
+Kuramoto-Sivashinsky equation. Indeed, they comment that their work may
+have implications for shear flows. With regard to the heteroclinic
+connections presented here, it is significant to note from Table~1 that
+the codimension of the stable manifold in the $S$-invariant space (which
+is equal to $d(W^u_S)$) of $\tLB$ is less than the value of $d(W^u_S)$
+for $\EQV{i}$ with $i=3,4,5$. Thus it is not surprising that the unstable
+manifolds of $\EQV{i}$ with $i=3,4,5$ intersect the stable manifold of
+{$\tLB$} in a stable way (\ie, robustly with respect to small changes of
+system parameters).
+''
+
+Are you guys saying ``two submanifolds can intersect if the sum of their
+dimensions is greater than or equal to the dimension of the {\statesp}'',
+\ie,
+\beq
+d(W^u_{(1)})+d(W^s_{(2)}) \geq d\,,\quad \mbox{or }
+d(W^u_{(1)}) \geq d-d(W^s_{(2)})
+\,?
+\ee{hecsRobust}
+That argument does not require invoking the 'physical' dimension $D$, all
+unphysical dimensions are subtracted equally from $ d$ and $d(W^s_{(2)})$.
+
+\item[2011-11-03 Predrag] By the way, it is not obvious to me that each local
+chart of a good atlas of the inertial manifold has the same physical dimension?
+Maybe there is some transitivity argument that it has to be so for all
+charts belonging to the same ergodic set. I do not know.
+
+\item[2011-11-01 Evangelos and Hugues]
 We would also consider natural to take into account hetero- and
 homoclinic connections of (relative) periodic orbits, eventually building a network of interconnected invariant
 objects. Could we tell the dimension of the ``inertial manifold'' simply by counting vertices in this
@@ -1310,26 +1354,79 @@ so that we preferentially examine connections of the most important nodes.
 
 How does this sound?
 
-\item[2011-11-01 Ruslan] I suggest to weight by stability, rather than the number of times found, since, even though the two are correlated, the latter also reflects the properties of the search algorithm, which you don't need in your analysis.
+\item[2011-11-01 Ruslan] I suggest to weight by stability, rather than
+the number of times found, since, even though the two are correlated, the
+latter also reflects the properties of the search algorithm, which you
+don't need in your analysis.
 
-\item[2011-11-01 Evangelos and Hugues 2 Ruslan] We thought that if the trajectory Ruslan used to fish for
-relative periodic orbits is still available, and if the association of each located orbit to the point on the
-trajectory used as an initial guess is still known, we might have a quick and dirty way to figure out which connections of relative periodic orbits might be present and preferentially visited (follow how the chaotic trajectory hops from the neighborhood of one orbit to another). Are any data of this kind still available?
+\item[2011-11-04 Predrag] I fully agree with Ruslan - I do not know of
+any argument that would identify a basin of attraction of the search
+method (small for Newton, large for variational methods described in
+ChaosBook.org ``Relaxation for cyclists'') with the natural measure of
+the same, given by it's `geometrical' cycle stability and period weight.
+In our \pCf\ papers Gibson has used the frequency of how often a cycle
+shows up in searches that take initial point as a coarse measure of its
+weight, but that is because we have nothing better - we have no
+systematic symbolic dynamics and no systematic way of uniformly
+populating the strange attractor with cycle points in that case.
 
-\item[2011-11-01 Ruslan] No, because I didn't use a single trajectory, but rather random initial conditions 
-within a rectangular region of Fourier space containing the attractor, as described on p. 30 of \rf{SCD07}.  
-If you want to find such a network of RPOs/PPOs, then I would suggest to generate a 'typical' long chaotic orbit 
-and run a 'proximity' search on it.  I have attempted it some time ago and briefly described the results in my Snowbird 2007 presentation 
-(see siminos/rpo\_ks/davidchack/DS07.ppt slides 28-31).  I believe this is something similar to what Kazz is doing 
-(in terms of minimizing the distance along time a phase).  By the way, the same proximity search can be carried out among the RPOs/PPOs themselves.  
-I'm sure this will allow us to organize them into 'happy families'.  
-% I know Predrag wants to do it on a slice, but i) I'm yet to see a sliced KS and ii) I'm not convinced that slicing is useful in high dimensions anyway: 
-%I can see the benefit of reducing a 3-d flow to a 2-d map, but I'm not sure it is as beneficial to work with a 6-d map instead of an 8-d flow.
+\item[2011-11-01 Evangelos and Hugues 2 Ruslan] We thought that if the
+trajectory Ruslan used to fish for relative periodic orbits is still
+available, and if the association of each located orbit to the point on
+the trajectory used as an initial guess is still known, we might have a
+quick and dirty way to figure out which connections of relative periodic
+orbits might be present and preferentially visited (follow how the
+chaotic trajectory hops from the neighborhood of one orbit to another).
+Are any data of this kind still available?
+
+\item[2011-11-01 Ruslan] No, because I didn't use a single trajectory,
+but rather random initial conditions within a rectangular region of
+Fourier space containing the attractor, as described on p. 30 of
+\refref{SCD07}. If you want to find such a network of RPOs/PPOs, then I would
+suggest to generate a 'typical' long chaotic orbit and run a 'proximity'
+search on it.  I have attempted it some time ago and briefly described
+the results in my Snowbird 2007 presentation (see
+siminos/rpo\_ks/davidchack/DS07.ppt slides 28-31).  I believe this is
+something similar to what Kazz is doing (in terms of minimizing the
+distance along time a phase).  By the way, the same proximity search can
+be carried out among the RPOs/PPOs themselves. I'm sure this will allow
+us to organize them into 'happy families'.
+
+\item[2011-11-01 Ruslan] (muttering to himself)             \toCB
+I know Predrag wants to do it on a slice, but
+i) I'm yet to see a sliced KS and
+ii) I'm not convinced that slicing is useful in high dimensions anyway:
+I can see the benefit of reducing a 3-d flow to a 2-d map, but I'm not
+sure it is as beneficial to work with a 6-d map instead of an 8-d flow.
+
+\item[2011-11-01 Predrag]              \toCB
+How high does 100.000 dimensions sound to you?
+
+i) I have said ciao to Chao, so currently no one is slated to slice
+\KS.
+
+ii) Instead, we have sliced transitionally turbulent pipe flow, and
+for the first time we have \rpo s embedded in pipe turbulence. The great
+advantage of the pipe flow is that it has no streamwise reflection
+symmetry, so all exact solutions are relative, and there is no room for
+philosophy - you either do it or do not do it. \emph{Invite Ashley Willis
+for a seminar}.
+
+iii) Every continuous symmetry must be reduced in order
+to organize the flow, a local chart describing a neighborhood of a
+template is a slice in group action directions, Poincar\'e section in
+time evolution directions. One MUST go to Poincar\'e section to organize
+the attractor by local stable-manifold road maps. In \pCf\ we have many
+\po s, but together they just make a jumble in the \statesp. It's obvious
+why if you just work through the 3-disk example in ChaosBook.org - only
+in the Poincar\'e section is the topology of the strange attractor
+cleanly laid out. (Getting this across has ballooned ChaosBook's
+initial 2-chapter review of dynamics into 10 chapters and counting...)
 
 \item[2011-11-02 Evangelos] A ``proximity'' search among RPOs/PPOs is what I am running right now with the goal of simply finding orbits close to the
-shortest periodic orbit. However, organizing the orbits into families this way really seems possible now. Stay tuned... 
+shortest periodic orbit. However, organizing the orbits into families this way really seems possible now. Stay tuned...
 
-\item[2011-11-02 Evangelos] Asked by Hugues to plot the average minimum angle over some bins in $T_p$ in 
+\item[2011-11-02 Evangelos] Asked by Hugues to plot the average minimum angle over some bins in $T_p$ in
 \reffig{fig:ks22ppo_min_angle}(a). I think it shows a tendency towards smaller angles for larger periods, but I wouldn't be
 able to say for sure whether it saturates towards some finite value or tends to zero. However, given the fact that we sample over a
 finite set of points along each orbit, so a tendency of the minimum angle towards a finite value should be expected.
