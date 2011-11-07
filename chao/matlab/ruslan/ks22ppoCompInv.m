@@ -6,7 +6,7 @@ h=0.25; N=16; L=22;
 
 np=1;
 
-refpo=7;
+refpo=4;
 
 sfile=['data/ks22ppo' num2str(refpo) 'cr.dat'];
 
@@ -33,7 +33,7 @@ a0=ppo(refpo).a;
 
 % ppos close to refpo=7: ipo=48;
 
-ipo=48;
+ipo=274;
 
 a0=ppo(ipo).a;
 [tt, aa] = ksfmetd(a0, L, h, ppo(ipo).T, np); 
@@ -70,8 +70,8 @@ xlabel('\beta_1');
 ylabel('\beta_2');
 zlabel('\gamma_2');
 
-l1=['T_p=' num2str(ppo(refpo).T)];
-l2=['T_p=' num2str(ppo(ipo).T)];
+l2=['T_p=' num2str(ppo(refpo).T)];
+l1=['T_p=' num2str(ppo(ipo).T)];
 % l3=['T_p=' num2str(rpo(ipo1).T)];
 legend(l1,l2);
 
@@ -79,7 +79,7 @@ legend(l1,l2);
 
 view(-1.5,-2.)
 
-saveas(fig2, 'ks22ppo1_shad.png');
+saveas(fig2, 'ks22ppo_shad1.png');
 %%%%%
 
 fig3= figure();

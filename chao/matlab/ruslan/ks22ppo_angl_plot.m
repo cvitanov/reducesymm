@@ -42,6 +42,11 @@ for ipo=1:size(ppo,2),
     end
 end
 
+save('ks22ppo_angl_T.dat', 'Ttab', '-ascii','-double','-tabs');
+save('ks22ppo_angl_floq.dat', 'floqTab', '-ascii','-double','-tabs');
+save('ks22ppo_angl_angl.dat', 'anglTab', '-ascii','-double','-tabs');
+save('ks22ppo_angl_i.dat', 'iTab', '-ascii','-double','-tabs');
+
 fig1=figure(); hold on;
 
 plot(Ttab,anglTab,'k.','MarkerSize',6);
