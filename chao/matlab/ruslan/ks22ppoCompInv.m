@@ -6,7 +6,7 @@ h=0.25; N=16; L=22;
 
 np=1;
 
-refpo=37;
+refpo=7;
 
 sfile=['data/ks22ppo' num2str(refpo) 'cr.dat'];
 
@@ -30,12 +30,28 @@ a0=ppo(refpo).a;
 % rpos maybe close to refpo=1 : ipo=10568;
 
 % ppos close to refpo=5: ipo=1567;
-ipo=29;
+
+% ppos close to refpo=7: ipo=48;
+
+ipo=48;
 
 a0=ppo(ipo).a;
 [tt, aa] = ksfmetd(a0, L, h, ppo(ipo).T, np); 
 
-[d, aamf, aa0mf]=minDistanceInv(aa,aa0);
+[d, aamf, aa0mf, pos]=minDistanceInvPos(aa,aa0);
+
+globmin=find(d==min(d));
+
+% points of minimal distance
+if size(aa0mf,2)>=size(aamf,2), 
+    pnt0mf = aa0mf(:,pos(globmin));
+    pntmf = aamf(:,globmin);
+else
+    pnt0mf = aa0mf(:,globmin);
+    pntmf = aamf(:,pos(globmin));
+end
+
+difvmf=pntmf-pnt0mf;
 
 proj=[1, 3, 4];
 
@@ -46,7 +62,8 @@ plot3(aamf(proj(1),:),aamf(proj(2),:),aamf(proj(3),:),'.-');
 hold on;
 
 plot3(aa0mf(proj(1),:),aa0mf(proj(2),:),aa0mf(proj(3),:),'r.-');
-% plot3(aa0mf(proj(1),13),aa0mf(proj(2),13),aa0mf(proj(3),13),'ks');
+plot3(pnt0mf( proj(1)), pnt0mf(proj(2)), pnt0mf(proj(3)),'ks');
+plot3(pntmf( proj(1)), pntmf(proj(2)), pntmf(proj(3)),'ko');
 %%%%
 
 xlabel('\beta_1');
@@ -73,15 +90,50 @@ hold on;
 
 plot3(aa0(proj(1),:),aa0(proj(2),:),aa0(proj(3),:),'r');
 
-[d1, aamf1, aa0mf1]=minDistance(aa,aa0,1); 
-
 fig4= figure();
 
-plot3(aamf1(proj(1),:),aamf1(proj(2),:),aamf1(proj(3),:));
+[d1, aamf1, aa0mf1, pos1]=minDistanceMFpos(aa,aa0); 
+
+plot3(aamf1(proj(1),:),aamf1(proj(2),:),aamf1(proj(3),:),'.-');
+
+globmin1=find(d1==min(d1));
+% points of minimal distance
+if size(aa0mf1,2)>=size(aamf1,2), 
+    pnt0mf1 = aa0mf1(:,pos1(globmin1));
+    pntmf1 = aamf1(:,globmin1);
+    pnt0mf1o = aa0mf1(:,pos(globmin));
+    pntmf1o = aamf1(:,globmin);
+else
+    pnt0mf1 = aa0mf1(:,globmin1);
+    pntmf1 = aamf1(:,pos1(globmin1));
+    pnt0mf1o = aa0mf1(:,globmin);
+    pntmf1o = aamf1(:,pos(globmin));
+end
+
+difvmf1=(pntmf1-pnt0mf1)/norm(pntmf1-pnt0mf1);
+difvmf1o=(pntmf1o-pnt0mf1o)/norm(pntmf1o-pnt0mf1o);
 
 hold on;
 
-plot3(aa0mf1(proj(1),:),aa0mf1(proj(2),:),aa0mf1(proj(3),:),'r');
+plot3(aa0mf1(proj(1),:),aa0mf1(proj(2),:),aa0mf1(proj(3),:),'r.-');
+
+plot3(pnt0mf1( proj(1)), pnt0mf1(proj(2)), pnt0mf1(proj(3)),'ks');
+plot3(pntmf1( proj(1)), pntmf1(proj(2)), pntmf1(proj(3)),'ko');
+plot3(pnt0mf1o( proj(1)), pnt0mf1o(proj(2)), pnt0mf1o(proj(3)),'gs');
+plot3(pntmf1o( proj(1)), pntmf1o(proj(2)), pntmf1o(proj(3)),'go');
+
+%%% Compute Jacobian at point of minimal approach
+a0=mf(ppo(refpo).a,1);
+a0r=mf(ksfmRefl(a0),1);
+
+[tt, aa, da] = ksfmetd(a0, L, h, ppo(refpo).T, np);
+[tt2, aa2, da2] = ksfmetd(a0r, L, h, ppo(refpo).T, np);
+[ev0, eils] = eig(da2*da);
+eils=diag(eils);
+
+%%%
+
+
 
 fig5= figure();
 
@@ -94,5 +146,9 @@ hold on;
 
 plot3(aa0mf1(proj(1),:),aa0mf1(proj(2),:),aa0mf1(proj(3),:),'r.-');
 
+plot3(pnt0mf1( proj(1)), pnt0mf1(proj(2)), pnt0mf1(proj(3)),'ks');
+plot3(pntmf1( proj(1)), pntmf1(proj(2)), pntmf1(proj(3)),'ko');
+plot3(pnt0mf1o( proj(1)), pnt0mf1o(proj(2)), pnt0mf1o(proj(3)),'gs');
+plot3(pntmf1o( proj(1)), pntmf1o(proj(2)), pntmf1o(proj(3)),'go');
 
 

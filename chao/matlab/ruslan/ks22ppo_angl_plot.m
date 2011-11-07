@@ -9,6 +9,7 @@ minangl_pos= [1, 1];
 non_prob=0;
 
 Ttab=[];
+iTab=[]; % use it to store index ipo.
 anglTab=[];
 floqTab=[];
 TtabProb=[];
@@ -28,6 +29,7 @@ for ipo=1:size(ppo,2),
                     end
 %                     plot(ppo(ipo).T, ppo(ipo).angl(i)/pi,'k.','MarkerSize',6);
                     Ttab =[Ttab, ppo(ipo).T];
+                    iTab = [iTab, ipo];
                     floqTab= [floqTab, log(abs(ppo(ipo).e(1)))/ppo(ipo).T];
                     anglTab = [anglTab, ppo(ipo).angl(i)/pi];
                     non_prob=non_prob+1;
@@ -111,20 +113,20 @@ edges=0:0.01:0.25;
 n_elements_prob = histc(floqTabProb, edges);
 hist(floqTabProb,edges);
 
-% fig4=figure(); hold on;
-% 
-% for ipo=1:size(ppo,2),
-%     if not(ppo(ipo).angl_prob),
-%         if ipo~=3 && ipo ~=19.
-%             for i=1:size(ppo(ipo).angl)
-%                 if imag(ppo(ipo).angl) ==0
-%                     plot(ipo, ppo(ipo).angl(i),'b.');
-%                 end
-%             end
-%         end
-%     end
-% end
-% 
-% xlabel('i');
-% ylabel('min. angle');
+fig4=figure(); hold on;
+
+for ipo=1:size(ppo,2),
+    if not(ppo(ipo).angl_prob),
+        if ipo~=3 && ipo ~=19.
+            for i=1:size(ppo(ipo).angl)
+                if imag(ppo(ipo).angl) ==0
+                    plot(ipo, ppo(ipo).angl(i),'b.');
+                end
+            end
+        end
+    end
+end
+
+xlabel('i');
+ylabel('min. angle');
 

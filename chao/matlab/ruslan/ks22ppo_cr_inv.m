@@ -8,15 +8,15 @@ h=0.25; N=16; L=22;
 
 np=1;
 
-refpo=37;
+refpo=7;
 
 sfile=['data/ks22ppo' num2str(refpo) 'cr.dat'];
 
 a0=ppo(refpo).a;
 [tt, aa0] = ksfmetd(a0, L, h, ppo(refpo).T, np); % SO(2) invariant variables are not reflection invariant
-dtab=ones(refpo+1:size(ppo,2),4);
+dtab=ones(refpo+1:1000,4);
 
-for ipo=1:refpo-1%+1:1000%size(ppo,2),
+for ipo=refpo+1:1000%size(ppo,2),
 %     if not(ppo(ipo).angl_prob),
 %         if ipo~=3 && ipo ~=19  && ipo ~=50% exclude known repeats (delete from dataset?)
                     disp(['Comparing ppo ' num2str(refpo) ' , with ppo ' num2str(ipo)]);
