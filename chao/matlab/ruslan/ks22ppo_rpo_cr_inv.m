@@ -7,15 +7,15 @@ h=0.25; N=16; L=22;
 
 np=1;
 
-refpo=4;
+refpo=48;
 
 sfile=['data/ks22ppo' num2str(refpo) '_rpo_cr.dat'];
 
 a0=ppo(refpo).a;
 [tt, aa0] = ksfmetd(a0, L, h, ppo(refpo).T, np);
-dtab=ones(size(rpo,2),4);
+dtab=ones(1000,4);
 
-for ipo=refpo+1:size(rpo,2),
+for ipo=1:1000,
     disp(['Comparing ppo ' num2str(refpo) ' , with rpo ' num2str(ipo)]);
     a0=rpo(ipo).a;
     [tt, aa] = ksfmetd(a0, L, h, rpo(ipo).T, np);

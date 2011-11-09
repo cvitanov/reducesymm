@@ -1,14 +1,14 @@
 clear;
 
-load ks22f90h25angl.mat
+load ks22f90h25.mat
 
 h=0.25; N=16; L=22;
 
 np=1;
 
-refpo=4;
+refpo=48;
 
-sfile=['data/ks22ppo' num2str(refpo) 'cr.dat'];
+sfile=['data/ks22ppo' num2str(refpo) '_rpo_cr.dat'];
 
 crdat=load(sfile);
 
@@ -18,6 +18,8 @@ semilogy(crdat(:,1),crdat(:,2),'.');
 
 a0=ppo(refpo).a;
 [tt, aa0] = ksfmetd(a0, L, h, ppo(refpo).T, np); 
+% [tt, aa0r] = ksfmetd(ksfmRefl(a0), L, h, ppo(refpo).T, np); 
+% aa0=[aa0, aa0r];
 
 % ppos close to refpo=4 : 37; 274; 369; 507; 2279;
 % maybe not close to refpo=4 : 37;
@@ -33,10 +35,22 @@ a0=ppo(refpo).a;
 
 % ppos close to refpo=7: ipo=48;
 
-ipo=274;
+% rpos close to refpo=115: ipo=410;
 
-a0=ppo(ipo).a;
-[tt, aa] = ksfmetd(a0, L, h, ppo(ipo).T, np); 
+% rpos close to refpo=62: ipo=392;
+% ppos close to refpo=62: ipo=18;
+
+
+ipo=6;
+
+a0 = rpo(ipo).a;
+%%% fix the phase to the one of first orbit
+% phi = angle(ppo(refpo).a(1)+1i*ppo(refpo).a(2));
+% ac=a0(1:2:end)+1i*a0(2:2:end);
+% as = exp(-1i*(1:size(ac))'*phi).*ac;
+% a0(1:2:end)=real(as);
+% a0(2:2:end)=imag(as);
+[tt, aa] = ksfmetd(a0, L, h, rpo(ipo).T, np); 
 
 [d, aamf, aa0mf, pos]=minDistanceInvPos(aa,aa0);
 
@@ -53,7 +67,7 @@ end
 
 difvmf=pntmf-pnt0mf;
 
-proj=[1, 3, 4];
+proj=[ 1, 3 ,4];
 
 fig2= figure();
 
@@ -62,24 +76,45 @@ plot3(aamf(proj(1),:),aamf(proj(2),:),aamf(proj(3),:),'.-');
 hold on;
 
 plot3(aa0mf(proj(1),:),aa0mf(proj(2),:),aa0mf(proj(3),:),'r.-');
-plot3(pnt0mf( proj(1)), pnt0mf(proj(2)), pnt0mf(proj(3)),'ks');
-plot3(pntmf( proj(1)), pntmf(proj(2)), pntmf(proj(3)),'ko');
+% plot3(pnt0mf( proj(1)), pnt0mf(proj(2)), pnt0mf(proj(3)),'ks');
+% plot3(pntmf( proj(1)), pntmf(proj(2)), pntmf(proj(3)),'ko');
 %%%%
+
+%%% test alternative ppo
+ipo1=9;
+a0=rpo(ipo1).a;
+[tt, aa1] = ksfmetd(a0, L, h, rpo(ipo1).T, np); 
+
+[d1, aamf1, aa0mf]=minDistanceInv(aa1,aa0);
+
+plot3(aamf1(proj(1),:),aamf1(proj(2),:),aamf1(proj(3),:),'g-', 'LineWidth', 2);
+%%%%
+% %%% test alternative ppo
+% ipo2=7;
+% a0=ppo(ipo2).a;
+% [tt, aa2] = ksfmetd(a0, L, h, ppo(ipo2).T, np); 
+% 
+% [d, aamf2, aa0mf]=minDistanceInv(aa2,aa0);
+% 
+% plot3(aamf2(proj(1),:),aamf2(proj(2),:),aamf2(proj(3),:),'k-', 'LineWidth', 2);
+% %%%%
+ 
 
 xlabel('\beta_1');
 ylabel('\beta_2');
 zlabel('\gamma_2');
 
-l2=['T_p=' num2str(ppo(refpo).T)];
-l1=['T_p=' num2str(ppo(ipo).T)];
-% l3=['T_p=' num2str(rpo(ipo1).T)];
-legend(l1,l2);
+l2=['T_p=' num2str(rpo(refpo).T,4)];
+l1=['T_p=' num2str(rpo(ipo).T,4)];
+l3=['T_p=' num2str(rpo(ipo1).T,4)];
+% l4=['T_p=' num2str(ppo(ipo2).T,4)];
+legend(l1,l2,l3);
 
 % use [az, el]=view; 
 
 view(-1.5,-2.)
 
-saveas(fig2, 'ks22ppo_shad1.png');
+saveas(fig2, 'ks22ppo_rpo_shad1.png');
 %%%%%
 
 fig3= figure();
