@@ -1,6 +1,6 @@
 clear;
 
-load ks22f90h25.mat
+load ks22f90h25angl.mat
 
 h=0.25; N=16; L=22;
 
