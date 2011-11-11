@@ -1,9 +1,9 @@
 % Visualization of KS L=22 reduced state space.
 % ES 2011-11-11
 
-%% Shadowing of RPO(68.54)
+%% Shadowing of RPO(70.35)
 
-clear; load ks22f90h25.mat
+clear; load ks22f90h25.mat;
 h=0.25; N=16; L=22;
 np=1;
 
@@ -101,3 +101,44 @@ saveas(fig2, ['ks22rpoT', '7035', 'shad.png']);
 fexp_refpo = [log(abs(ppo(refpo).e(1)))/rpo(refpo).T, log(abs(ppo(refpo).e(2)))/ppo(refpo).T];
 fexp_ipo = [log(abs(rpo(ipo).e(1)))/rpo(ipo).T, log(abs(rpo(ipo).e(2)))/rpo(ipo).T];
 fexp_ipo1 = [log(abs(rpo(ipo1).e(1)))/rpo(ipo1).T, log(abs(rpo(ipo1).e(4)))/rpo(ipo1).T];
+
+
+%%%%%
+
+%%% Minimum angle along PO(70.35)
+
+% clear; load ks22f90h25angl.mat;
+% h=0.25; N=16; L=22;
+% np=1;
+% refpo=48;
+
+angl=load('ks22ppo_angl_48.dat');
+
+minanglpos=find( angl(:,1) == min(angl(:,1)));
+
+fig3= figure();
+
+plot3(aa0mf(proj(1),:),aa0mf(proj(2),:),aa0mf(proj(3),:),'.-');
+
+hold on;
+
+dmin=min(d);
+dmax=max(d);
+
+for i=1:size(aamf,2),
+    plot3(aamf(proj(1),i),aamf(proj(2),i),aamf(proj(3),i), '.', 'Color', [d(i)/dmax 0 0]);
+end
+
+
+d1min=min(d1);
+d1max=max(d1);
+
+for i=1:size(aamf1,2),
+    plot3(aamf1(proj(1),i),aamf1(proj(2),i),aamf1(proj(3),i), '.', 'Color', [0 d1(i)/d1max 0]);
+end
+
+
+
+plot3(aa0mf(proj(1),minanglpos),aa0mf(proj(2),minanglpos),aa0mf(proj(3),minanglpos),'ks');
+
+

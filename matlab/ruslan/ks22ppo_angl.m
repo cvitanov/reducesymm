@@ -1,4 +1,4 @@
-% Compute minimum angle of Floquet eigenvectors along a preperiodic orbit.
+% Compute minimum angle of Floquet eigenvectors along preperiodic orbits.
 % ES, 2011-10-09
 
 clear;
