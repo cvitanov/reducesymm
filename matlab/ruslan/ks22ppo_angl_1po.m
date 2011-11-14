@@ -14,7 +14,7 @@ np=1;
 
 global PFLG;  PFLG = -1;
 
-ipo=48;
+ipo=274;
 
 a0=ppo(ipo).a;
 
@@ -149,4 +149,4 @@ for i=1:size(aa,2),
 end
 
      
-save(['ks22ppo_angl_', num2str(48), '.dat'], 'angl', '-ascii','-double','-tabs');
+save(['ks22ppo_angl_', num2str(ipo), '.dat'], 'angl', '-ascii','-double','-tabs');
