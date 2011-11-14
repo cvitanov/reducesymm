@@ -1,4 +1,4 @@
-function aa=MF(a)
+function aa=mf1(a)
 %
 % 
 ac=a(1:2:size(a))+1i*a(2:2:size(a));

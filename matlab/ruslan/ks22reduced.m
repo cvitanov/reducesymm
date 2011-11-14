@@ -22,7 +22,7 @@ ylabel('d_{min}');
 
 % Integrate reference cycle i.c.
 a0=ppo(refpo).a;
-[tt, aa0] = ksfmetd(a0, L, h, ppo(refpo).T, np); 
+[tt0, aa0] = ksfmetd(a0, L, h, ppo(refpo).T, np); 
 
 % Pick shadowing cycle
 ipo=6;
@@ -66,7 +66,7 @@ ipo1=9;
 a0=rpo(ipo1).a;
 [tt, aa1] = ksfmetd(a0, L, h, rpo(ipo1).T, np); 
 
-[d1, aamf1, aa0mf]=minDistanceInv(aa1,aa0);
+[d1, aamf1, aa0mf, pos1]=minDistanceInvPos(aa1,aa0);
 
 plot3(aamf1(proj(1),:),aamf1(proj(2),:),aamf1(proj(3),:),'g-', 'LineWidth', 2);
 %%%%
@@ -92,13 +92,13 @@ legend(l1,l2,l3);
 
 % use [az, el]=view; 
 
-view(-1.5,-2.)
+view(27.5,22)
 
-saveas(fig2, ['ks22rpoT', '7035', 'shad.png']);
+saveas(fig2, ['ks22ppoT', '7035', 'shad.png']);
 %%%%%
 
 % Compute Floquet exponents (from stored multipliers)
-fexp_refpo = [log(abs(ppo(refpo).e(1)))/rpo(refpo).T, log(abs(ppo(refpo).e(2)))/ppo(refpo).T];
+fexp_refpo = [log(abs(ppo(refpo).e(1)))/ppo(refpo).T, log(abs(ppo(refpo).e(2)))/ppo(refpo).T];
 fexp_ipo = [log(abs(rpo(ipo).e(1)))/rpo(ipo).T, log(abs(rpo(ipo).e(2)))/rpo(ipo).T];
 fexp_ipo1 = [log(abs(rpo(ipo1).e(1)))/rpo(ipo1).T, log(abs(rpo(ipo1).e(4)))/rpo(ipo1).T];
 
@@ -116,29 +116,55 @@ angl=load('ks22ppo_angl_48.dat');
 
 minanglpos=find( angl(:,1) == min(angl(:,1)));
 
-fig3= figure();
+%%%% Plot cycles in phase space, color-code distance from longer orbit.
+%%%% Not very clear as it stands
+%
+% fig3= figure();
+% 
+% plot3(aa0mf(proj(1),:),aa0mf(proj(2),:),aa0mf(proj(3),:),'.-');
+% 
+% hold on;
+% 
+% dmin=min(d);
+% dmax=max(d);
+% 
+% for i=1:size(aamf,2),
+%     plot3(aamf(proj(1),i),aamf(proj(2),i),aamf(proj(3),i), '.', 'Color', [d(i)/dmax 0 0]);
+% end
+% 
+% 
+% d1min=min(d1);
+% d1max=max(d1);
+% 
+% for i=1:size(aamf1,2),
+%     plot3(aamf1(proj(1),i),aamf1(proj(2),i),aamf1(proj(3),i), '.', 'Color', [0 d1(i)/d1max 0]);
+% end
+% 
+% 
+% plot3(aa0mf(proj(1),minanglpos),aa0mf(proj(2),minanglpos),aa0mf(proj(3),minanglpos),'ks');
 
-plot3(aa0mf(proj(1),:),aa0mf(proj(2),:),aa0mf(proj(3),:),'.-');
-
+fig4=figure();
 hold on;
 
-dmin=min(d);
-dmax=max(d);
+[AX,H1,H2] =plotyy(pos*h,d,tt0,angl(:,1)/pi);
 
-for i=1:size(aamf,2),
-    plot3(aamf(proj(1),i),aamf(proj(2),i),aamf(proj(3),i), '.', 'Color', [d(i)/dmax 0 0]);
-end
+set(H1,'LineStyle','v', 'Color', [0 0 0.8]);
+set(H2,'LineStyle','-', 'Color', [0.8 0 0], 'LineWidth', 2);
 
+plot(pos1*h,d1,'x','Color', [0 0.8 0]);
 
-d1min=min(d1);
-d1max=max(d1);
+set(AX(1),'YColor', 'k', 'FontSize', 11); 
+set(AX(2),'YColor', 'k', 'FontSize', 11); 
+set(get(AX(1),'Ylabel'),'String','d','FontSize', 12);
+set(get(AX(2),'Ylabel'),'String','\theta_{1,2}','FontSize', 12); 
+xlabel('t');
 
-for i=1:size(aamf1,2),
-    plot3(aamf1(proj(1),i),aamf1(proj(2),i),aamf1(proj(3),i), '.', 'Color', [0 d1(i)/d1max 0]);
-end
+l1=['d(' num2str(rpo(ipo).T,4) ', ' num2str(ppo(refpo).T,4) ')'];
+l3=['\theta_{1,2} for PO(' num2str(ppo(refpo).T,4) ')'];
+l2=['d(' num2str(rpo(ipo1).T,4) ', ' num2str(ppo(refpo).T,4) ')'];
 
-
-
-plot3(aa0mf(proj(1),minanglpos),aa0mf(proj(2),minanglpos),aa0mf(proj(3),minanglpos),'ks');
+saveas(fig4, ['ks22ppoT', '7035', 'angl_dist.png']);
+saveas(fig4, ['ks22ppoT', '7035', 'angl_dist.pdf']);
+saveas(fig4, ['ks22ppoT', '7035', 'angl_dist.eps']);
 
 
