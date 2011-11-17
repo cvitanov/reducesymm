@@ -7,23 +7,24 @@ h=0.25; N=16; L=22;
 
 np=1;
 
-refpo=48;
+refpo=97;
 
 sfile=['data/ks22ppo' num2str(refpo) '_rpo_cr.dat'];
 
 a0=ppo(refpo).a;
 [tt, aa0] = ksfmetd(a0, L, h, ppo(refpo).T, np);
-dtab=ones(1000,4);
+dtab=ones(500,4);
 
-for ipo=1:1000,
+for ipo=1:500,
     disp(['Comparing ppo ' num2str(refpo) ' , with rpo ' num2str(ipo)]);
     a0=rpo(ipo).a;
     [tt, aa] = ksfmetd(a0, L, h, rpo(ipo).T, np);
     [d, aamf, aa0mf]=minDistanceInv(aa,aa0);
     dtab(ipo,:)=[ipo, mean(d), min(d), max(d)];
-    exprt=dtab(ipo,:);
-    save(sfile, 'exprt', '-ascii','-double','-tabs', '-append');
 end
+
+
+save(sfile, 'dtab', '-ascii','-double','-tabs', '-append');
 
 
 

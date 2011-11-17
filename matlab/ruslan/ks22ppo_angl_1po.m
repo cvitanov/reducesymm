@@ -14,7 +14,7 @@ np=1;
 
 global PFLG;  PFLG = -1;
 
-ipo=48;
+ipo=54;
 
 a0=ppo(ipo).a;
 

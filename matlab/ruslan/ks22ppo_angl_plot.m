@@ -74,6 +74,25 @@ saveas(fig1, 'ks22ppo_min_angle.eps');
 
 hold off;
 
+%%% Only plot orbits with small period, small angle, 1st Floquet exponent
+%%% close to Lyapunov exp.
+fig11=figure();
+
+compTab=[Ttab' anglTab' floqTab'];
+
+excl1=Ttab>110;
+excl2 = anglTab>0.01;
+excl3 = or(floqTab>0.06,floqTab<0.035);
+excl= [excl1'  excl2'  excl3'];
+
+compTab(any(excl,2),:)=[];
+
+plot3(compTab(:,1),compTab(:,2),compTab(:,3),'k.','MarkerSize',6);
+xlabel('T_p','FontSize',14);
+ylabel('\theta_{min} / \pi','FontSize',14);
+zlabel('\mu^{(p,1)}');
+
+%%%%
 
 fig1a=figure(); hold on;
 
