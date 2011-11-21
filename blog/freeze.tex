@@ -257,7 +257,9 @@ the equations, parameters, dynamics you are interested in, etc.
 \item[2011-11-08 Predrag] If it is any help, here is the code for Karma 1994 that Naveen is using
 (can one just replace KS by Karma in your RPO search routines?)
 
-\item[2011-11-08 Ruslan] Yes, equations help, but I also need to know which method you use to integrate them.  Actually, what I need to replace in my search routines is not the definitions of the PDE (or ODEs), but rather the numerical flow map.  So, a sample Matlab code that generates a typical (chaotic?) solution of this model would be helpful.
+\item[2011-11-08 Ruslan] Yes, equations help, but I also need to know which method you use to integrate them.  
+Actually, what I need to replace in my search routines is not the definitions of the PDE (or ODEs), but rather the numerical flow map.  
+So, a sample Matlab code that generates a typical (chaotic?) solution of this model would be helpful.
 
 \item[2011-11-19 Ruslan] Has Naveen been able to integrate the Karma model?
 
@@ -351,6 +353,22 @@ reduce reflections is not an overkill.
     space, there could be two different reduced orbits that pass through
     it.  Can you guarantee that this doesn't happen?
 
+\item[2011-11-21 Evangelos] Regarding i) The limits of
+  $b_1/r_1$ and $c_1/r_1$ as $r_1$ do not exist as they depend on the
+  direction on the $(b_1,c_1)$ plane through which we approach the origin.
+  Another way to see this is to observe, for instance, that $b_1/r_1 = cos \phi_1$.
+  If we approach $r_1\rightarrow0$ through $c_1=0$, \ie\ on the $b_1$ axis, 
+  $cos \phi_1$ jumps from $-1$ to $1$. In general, if we approach the origin
+  through a ray at $\phi_1=\Phi$, $b_1/r_1$ jumps from $-\cos \Phi$ to $\cos \Phi$.
+  Although it might be tempting to try to ensure continuity of trajectories by
+  tracking the direction through which they approach the origin, I cannot see how 
+  to treat equilibria with $b_1=c_1=0$ (2-cell, 3-cell, etc). 
+  
+  Regarding ii) you are right, I shouldn't have used absolute value since then
+  points that are not related by reflections are also identified. Defining 
+  a transformation to fundamental domain with respect to reflections 
+  needs more thinking then. Any ideas?
+
 \begin{figure}[ht]
 \begin{center}
 \includegraphics[width=0.48\textwidth, clip=true]{ks22_E2_manifold_c}
@@ -434,6 +452,52 @@ flow. I believe one has to do both, but write it up this way because
 neither plumbers nor flamers (KS crowd) want to do Poincer\'e sections.
 So maybe in the end it will all work out nicely, without any
 singularities.
+
+\item[2011-11-21 Evangelos] \refFig{f:KS22E2man1} is in my opinion a
+a great example of slicing inconvenience. I suppose Ruslan uses 
+$\bar{b}_1 = 0$, $\bar{c}_1 > 0$ instead of $\bar{c}_1 = 0$, $\bar{b}_1 > 0$
+which I use in ksReduced, in order to avoid rotating points in the antisymmetric
+subspace (equilibria being the most tricky) by an angle $\neq \pi$. 
+Other than this, this approach is equivalent to using eqs. (9) in ksReduced.
+
+Apart from tearing the unstable manifold apart (while it seems all we needed 
+was to rotate some of its points by $\pi$), this approach also fails to identify
+$\EQV{2}$ and its translated copy $\tau_{1/4}\EQV{2}$. As both $\EQV{2}$ and 
+$\tau_{1/4}\EQV{2}$ have $a_1=0$, these point are not rotated at all and they must
+have been drawn using their initial coordinates. What I did not expect, 
+and I do not understand, is that the unstable manifold of \EQV{2} 
+approaches $\tau_{1/4}\EQV{2}$ and not \EQV{2} in this reduced space. Why?
+
+I can also see a vertical line going through $\tau_{1/4}\EQV{2}$, where did this
+come from?
+
+\item[2011-11-21 Evangelos] Plotting the unstable manifold of \EQV{2} in $\SOn{2}$-invariant 
+coordinates $\tilde{b}',\tilde{c}'$ of ksReduced. As we only deal with antisymmetric subspace
+here, we do not need to worry about reflections.
+
+\begin{figure}[ht]
+ \begin{center}
+  \includegraphics[width=0.5\textwidth]{ks22_E2_manifold_inv}
+ \end{center}
+  \caption{Unstable manifold of \EQV{2} in coordinates $\tilde{b}',\tilde{c}'$ of ksReduced. The coordinate axes $v_1$,
+$v_2$, and $v_3$ are constructed from vectors \Re\, $\jEigvec[1]$, \Im\, $\jEigvec[1]$, and {\Re\,} $\jEigvec[7]$ 
+by Gram-Schmidt orthogonalization (in original space) and transformed to reduced space through transformations
+(11) of ksReduced.
+  }
+\label{f:ks22_E2_inv}
+\end{figure}
+
+Here we can see that $\EQV{2}$ and $\tau_{1/4} \EQV{2}$ are identified and their 
+connections become homoclinic. The unstable manifold of $\EQV{2}$ has indeed been distorted
+nonlinearly and spiraling is not as clear in \reffig{f:ks22_E2_inv} as in 
+\reffig{f:ks22_E2_MSO2}. Moreover, identification of $\EQV{2}$ and $\tau_{1/4} \EQV{2}$
+makes the figure more busy (unstable and stable manifolds lead to the same point), but this
+cannot be avoided.
+
+In general I prefer to have to live with such nonlinear projections until a good Poincar\'e section
+can be identified than to have to deal with artificial discontinuities.
+
+
 
 \end{description}
 

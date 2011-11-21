@@ -1,6 +1,148 @@
 % Visualization of KS L=22 reduced state space.
 % ES 2011-11-11
 
+%% E2 unstable manifold and orbits projection on eigenbasis (based on ks22figs.m) 
+  clear;  load kse22orbits;  k = 2;  h = 0.1;  tend = 150;  av = [];
+  ere = real(eq(k).eig(1));  period = 2*pi/imag(eq(k).eig(1));
+  v = gsorth([real(eq(k).evec(:,1)) imag(eq(k).evec(:,1)) real(eq(k).evec(:,7))]);
+  vInv=mfinvTraj(repmat(eq(k).a,1,3)+v);
+  for delta = [0:0.03:1, 0.74 0.066 0.0693]*ere*period,
+    a0 = eq(k).a + 1e-4.*exp(delta).*v(:,2);
+    [tt, aa] = ksfmetd2(a0, L, h, tend, 3);
+%    [aa, ss] = ksfm_so2(aa, L);
+    aa = mfinvTraj(aa);
+    av = [av; vInv'*aa];
+    if delta == 0.74*ere*period, aa1 = aa; end
+    if delta == 0.066*ere*period, aa2 = aa; end, 
+  end
+  figure(1); clf; %set(gcf,'pos',[5 400 420 300],'paperpos',[5 8 12 9]); 
+% %   ax1 = axes('pos',[0.12 0.10 0.83 0.88]);
+    plot3(av(1:3:end-8,:)',av(2:3:end-7,:)',av(3:3:end-6,:)','-','color',[.5 .5 .5]);
+    hold on; grid on; % view(27,30);
+    plot3(av(end-8,:)',av(end-7,:)',av(end-6,:)','.-','color',[0 .8 0]);
+    plot3(av(end-5,:)',av(end-4,:)',av(end-3,:)','r.-');
+    plot3(av(end-2,:)',av(end-1,:)',av(end,:)','b.-');
+% %     text(0.5, 0.1,-0.5,'A','fontsize',14,'color',[0 .8 0]);
+% %     text(1.0, 0.0,-0.5,'B','fontsize',14,'color','r');
+% %     text(1.0, 0.0, 0.3,'C','fontsize',14,'color','b');
+%    text(-0.4, 0.3,-0.15,'$\mathbf{g}(L/4)E_2$','fontsize',14,'interp','latex');    
+%     text(-0.6, 0.3, 0.2,'$\tau_{1/4}E_2$','fontsize',14,'interp','latex');    
+%     text(1.1, 0.0,-0.1,'$E_3$','fontsize',14,'interp','latex');
+    e2 = vInv'*mfinv(eq(k).a); plot3(e2(1),e2(2),e2(3),'k.','markersize',30);
+    e3 = vInv'*mfinv(eq(3).a); plot3(e3(1),e3(2),e3(3),'k.','markersize',26);
+    text(e2(1)-0.1, e2(2)-0.1, e2(3),'$E_2$','fontsize',14,'interp','latex');    
+    text(e3(1)-0.1, e3(2)-0.1, e3(3),'$E_3$','fontsize',14,'interp','latex');
+% %     if 0, phase = 0:0.01:1;  ve = eq(3).a(1:2:end)+1i*eq(3).a(2:2:end);
+% %     ve = repmat(ve,1,length(phase)).*exp(-2i*pi*(1:31)'*phase);
+% %     ae = zeros(size(aa,1),length(phase));
+% %     ae(1:2:end,:) = real(ve); ae(2:2:end,:) = imag(ve); ve = v'*ae;
+% %     plot3(ve(1,:),ve(2,:),ve(3,:),'k-','linewidth',1.5); end    
+    xlabel('$v_1$','fontsize',14,'interp','latex');
+    ylabel('$v_2$','fontsize',14,'interp','latex');%,'pos',[1.3 0 -.8]); 
+    zlabel('$v_3$','rotat',0,'fontsize',14,'interp','latex');%,'pos',[-1.4 -.7 0]);
+    xlim([-0.1 1.6]);
+    ylim([-0.4 1.2]);
+    zlim([-0.02 0.08]);
+    view(-4.5,76);
+% %     set(gca,'FontSize',14)
+%     arr1 = annotation(1,'arrow',[0.458 0.5347],[0.7372 0.5791]);
+    print -depsc2 ks22_E2_manifold_inv.eps
+    
+    
+%% E2 unstable manifold and orbits using moving frame (based on ks22figs.m) 
+  clear;  load kse22orbits;  k = 2;  h = 0.1;  tend = 150;  av = [];
+  ere = real(eq(k).eig(1));  period = 2*pi/imag(eq(k).eig(1));
+  v = gsorth([real(eq(k).evec(:,1)) imag(eq(k).evec(:,1)) real(eq(k).evec(:,7))]);
+  vInv=mfinvTraj(v); % Change mfinvTraj manually.
+  for delta = [0:0.03:1, 0.74 0.066 0.0693]*ere*period,
+    a0 = eq(k).a + 1e-4.*exp(delta).*v(:,2);
+    [tt, aa] = ksfmetd2(a0, L, h, tend, 3);
+%    [aa, ss] = ksfm_so2(aa, L);
+    aa = mfinvTraj(aa);
+    av = [av; vInv'*aa];
+    if delta == 0.74*ere*period, aa1 = aa; end
+    if delta == 0.066*ere*period, aa2 = aa; end, 
+  end
+  figure(1); set(gcf,'pos',[5 400 420 300],'paperpos',[5 8 12 9]); clf;
+% %   ax1 = axes('pos',[0.12 0.10 0.83 0.88]);
+    plot3(av(1:3:end-8,:)',av(2:3:end-7,:)',av(3:3:end-6,:)','-','color',[.5 .5 .5]);
+    hold on; grid on; % view(27,30);
+    plot3(av(end-8,:)',av(end-7,:)',av(end-6,:)','.-','color',[0 .8 0]);
+    plot3(av(end-5,:)',av(end-4,:)',av(end-3,:)','r.-');
+    plot3(av(end-2,:)',av(end-1,:)',av(end,:)','b.-');
+% %     text(0.5, 0.1,-0.5,'A','fontsize',14,'color',[0 .8 0]);
+% %     text(1.0, 0.0,-0.5,'B','fontsize',14,'color','r');
+% %     text(1.0, 0.0, 0.3,'C','fontsize',14,'color','b');
+%    text(-0.4, 0.3,-0.15,'$\mathbf{g}(L/4)E_2$','fontsize',14,'interp','latex');    
+%     text(-0.6, 0.3, 0.2,'$\tau_{1/4}E_2$','fontsize',14,'interp','latex');    
+%     text(1.1, 0.0,-0.1,'$E_3$','fontsize',14,'interp','latex');
+% %     e2 = vInv'*eq(k).a; plot3(e2(1),e2(2),e2(3),'k.','markersize',30);
+% %     e3 = vInv'*eq(3).a; plot3(e3(1),e3(2),e3(3),'k.','markersize',26);
+% %     text(e2(1)-0.1, e2(2)-0.1, e2(3),'$E_2$','fontsize',14,'interp','latex');    
+% %     text(e3(1)-0.1, e3(2)-0.1, e3(3),'$E_3$','fontsize',14,'interp','latex');
+% %     if 0, phase = 0:0.01:1;  ve = eq(3).a(1:2:end)+1i*eq(3).a(2:2:end);
+% %     ve = repmat(ve,1,length(phase)).*exp(-2i*pi*(1:31)'*phase);
+% %     ae = zeros(size(aa,1),length(phase));
+% %     ae(1:2:end,:) = real(ve); ae(2:2:end,:) = imag(ve); ve = v'*ae;
+% %     plot3(ve(1,:),ve(2,:),ve(3,:),'k-','linewidth',1.5); end    
+    xlabel('$v_1$','fontsize',14,'interp','latex');
+    ylabel('$v_2$','fontsize',14,'interp','latex');%,'pos',[1.3 0 -.8]); 
+    zlabel('$v_3$','rotat',0,'fontsize',14,'interp','latex');%,'pos',[-1.4 -.7 0]);
+% %     xlim([-0.1 1.6]);
+% %     ylim([-0.4 1.2]);
+% %     zlim([-0.02 0.08]);
+% %     view(-4.5,76);
+% % %     arr1 = annotation(1,'arrow',[0.458 0.5347],[0.7372 0.5791]);
+% %     print -depsc2 ks22_E2_manifold_inv.eps
+
+%% E2 unstable manifold and orbits (based on ks22figs.m) 
+  clear;  load kse22orbits;  k = 2;  h = 0.1;  tend = 150;  av = [];
+  v = gsorth([real(eq(k).evec(:,1)) imag(eq(k).evec(:,1)) real(eq(k).evec(:,7))]);
+%   proj=[1,3,4];
+proj=[1,4,5];
+  ere = real(eq(k).eig(1));  period = 2*pi/imag(eq(k).eig(1));
+  for delta = [0:0.03:1, 0.74 0.066 0.0693]*ere*period,
+    a0 = eq(k).a + 1e-4.*exp(delta).*v(:,2);
+    [tt, aa] = ksfmetd2(a0, L, h, tend, 3);
+%    [aa, ss] = ksfm_so2(aa, L);
+    aa = mfinvTraj(aa);
+    av = [av; aa(proj(1),:); aa(proj(2),:); aa(proj(3),:);];
+    if delta == 0.74*ere*period, aa1 = aa; end
+    if delta == 0.066*ere*period, aa2 = aa; end, 
+  end
+  figure(1); set(gcf,'pos',[5 400 420 300],'paperpos',[5 8 12 9]); clf;
+% %   ax1 = axes('pos',[0.12 0.10 0.83 0.88]);
+    plot3(av(1:3:end-8,:)',av(2:3:end-7,:)',av(3:3:end-6,:)','-','color',[.5 .5 .5]);
+    hold on; grid on; % view(27,30);
+    plot3(av(end-8,:)',av(end-7,:)',av(end-6,:)','.-','color',[0 .8 0]);
+    plot3(av(end-5,:)',av(end-4,:)',av(end-3,:)','r.-');
+    plot3(av(end-2,:)',av(end-1,:)',av(end,:)','b.-');
+% %     text(0.5, 0.1,-0.5,'A','fontsize',14,'color',[0 .8 0]);
+% %     text(1.0, 0.0,-0.5,'B','fontsize',14,'color','r');
+% %     text(1.0, 0.0, 0.3,'C','fontsize',14,'color','b');
+%    text(-0.4, 0.3,-0.15,'$\mathbf{g}(L/4)E_2$','fontsize',14,'interp','latex');    
+%     text(-0.6, 0.3, 0.2,'$\tau_{1/4}E_2$','fontsize',14,'interp','latex');    
+%     text(1.1, 0.0,-0.1,'$E_3$','fontsize',14,'interp','latex');
+    e2 = mfinv(eq(k).a); plot3(e2(proj(1)),e2(proj(2)),e2(proj(3)),'k.','markersize',30);
+    e3 = mfinv(eq(3).a); plot3(e3(proj(1)),e3(proj(2)),e3(proj(3)),'k.','markersize',30);
+%     text(e2(1), e2(2)-0.1, e2(3),'$E_2$','fontsize',14,'interp','latex');    
+%     text(e3(1), e3(2)-0.1, e3(3),'$E_3$','fontsize',14,'interp','latex');
+% %     if 0, phase = 0:0.01:1;  ve = eq(3).a(1:2:end)+1i*eq(3).a(2:2:end);
+% %     ve = repmat(ve,1,length(phase)).*exp(-2i*pi*(1:31)'*phase);
+% %     ae = zeros(size(aa,1),length(phase));
+% %     ae(1:2:end,:) = real(ve); ae(2:2:end,:) = imag(ve); ve = v'*ae;
+% %     plot3(ve(1,:),ve(2,:),ve(3,:),'k-','linewidth',1.5); end    
+    xlabel('$v_1$','fontsize',14,'interp','latex');
+    ylabel('$v_2$','fontsize',14,'interp','latex');%,'pos',[1.3 0 -.8]); 
+    zlabel('$v_3$','rotat',0,'fontsize',14,'interp','latex');%,'pos',[-1.4 -.7 0]);
+    xlim([-0.1 1.6]);
+    ylim([-0.4 1.2]);
+    zlim([-0.02 0.08]);
+    view(-4.5,76);
+%     arr1 = annotation(1,'arrow',[0.458 0.5347],[0.7372 0.5791]);
+    print -depsc2 ks22_E2_manifold_inv.eps
+
+
 %% Shadowing of RPO(70.35)
 
 clear; load ks22f90h25.mat;
