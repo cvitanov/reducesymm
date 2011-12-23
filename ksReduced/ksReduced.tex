@@ -77,6 +77,14 @@
 \newcommand{\arXiv}[1]{
               {\tt \href{http://arXiv.org/abs/#1}{\goodbreak arXiv:#1}}}
 \newcommand{\weblink}[1]{{\tt \href{http://#1}{#1}}}
+\newcommand{\jEigvec}[1][]{\ensuremath{{\bf e}^{(#1)}}} % right jacobiam eigenvector
+\newcommand{\REQV}[2]{\ensuremath{TW_{#1#2}}} % #1 is + or -
+\newcommand{\Poincare}{Poincar\'e}
+ \newcommand{\EQV}[1]{\ensuremath{E_{#1}}}
+\newcommand{\period}[1]{{\ensuremath{T_{#1}}}}      
+\newcommand{\shift}{\ensuremath{d}}
+\newcommand{\rpo}{rela\-ti\-ve periodic orbit}
+
 
 %% Use comments sparingly. Current journal style choice (Chaos) places footnotes
 %% in references.
@@ -93,7 +101,7 @@
 \hypersetup{colorlinks=true,urlcolor=hreflinkcolor,
 		linkcolor=hreflinkcolor,citecolor=hreflinkcolor}
 % Graphics files are in directory
-\graphicspath{{../../figs/}}
+\graphicspath{{../figs/}}
 \bibliographystyle{plain}
 
 
@@ -192,6 +200,20 @@ N\"othnitzer Stra\ss e 38, D-01187 Dresden, Germany}
 % wave motion appears frozen.
 %
 
+The relation of such singularities to the choice of a slice
+has been discussed in \refrefs{SiminosThesis, SiCvi10, FrCv11}. In
+\refrefs{SiCvi10, FrCv11}, and also in \refref{rowley_reconstruction_2000},
+the use of multiple local slices to cover state-space has been proposed.
+However, the tasks of picking such a set of slices
+and piecing them together in a manner that does not obscure the global picture
+are highly non-trivial when one works in high-dimensional spaces and we know
+of no successful implementation of the tessellation idea set forth in
+\refref{FrCv11}. Here we will take a different path and motivate some
+modifications of equations \refeq{eq:O2cheb} until we obtain
+\emph{globally} well behaved transformations to invariant variables.
+
+
+
 \section{Basic notions\label{s:notions}}
 
 \section{From moving frames to invariant variables}
@@ -218,9 +240,8 @@ The choice of a slice is arbitrary; here we choose
 \beq
  	\overline{c}_1=0\,,\qquad \overline{b}_1>0\,
 \eeq
-
-[Ruslan: If it's all the same to you, I'd suggest to set $\overline{b}_1=0$, which would be consistent with the definition of antisymmetric subspace we used before.]
-
+\RLD{If it's all the same to you, I'd suggest to set $\overline{b}_1=0$, which would be consistent with the definition of antisymmetric subspace we used before.}
+\ES{It makes derivations (slightly) easier if I use this convention. I will keep it as it is and rethink at the end.}
 which leads to
 \beq
 	\overline{c}_1 = b_1\,\sin\theta + c_1\,\cos\theta  = 0\,
@@ -237,8 +258,43 @@ results to
   \theta=-\phi_1\,,
 \eeq
 where $\phi_1$ the polar angle in the $a_1$ Fourier
-subspace. Pluging \refeq{eq:phi1} into
-transformations \refeq{eq:SO2stand} we get:
+subspace. 
+
+
+Pluging \refeq{eq:phi1} into \refeq{eq:SO2stand} and using 
+the identity
+$\alpha\cos(\phi)+\beta\sin(\phi)=\sqrt{\alpha^2+\beta^2}\cos(\phi-\tan^{-1}(\beta/\alpha))$
+we get
+\bseq\label{eq:SO2polar}
+  \begin{align}
+    \overline{b}_k &=
+		    r_k\, \cos(\phi_k-k\,\phi_1)\,, \label{eq:SO2polar1}\\
+    \overline{c}_k &=
+		    r_k\, \sin(\phi_k-k\,\phi_1)\,,\label{eq:SO2polar2}
+  \end{align}
+\eseq
+for $k=1,\ldots N$, where $r_k\equiv\sqrt{b_i^2+c_i^2}$, and
+$\phi_k$ the polar angle in the $a_k$ Fourier subspace.
+Note that for $k=1$ we get $\overline{b}_1=r_1,\, \overline{c}_1=0$.
+Thus we have arrived at a system of $2N-1$ variables, which according to
+theorems of Fels and Olver\rf{FelsOlver98,FelsOlver99} are
+$\SOn{2}$-invariant and functionally independent. They therefore serve the goal
+of unique identification of group orbits, at least in the neighborhood of the
+slice. We observe that \refeq{eq:SO2polar} are undefined at $r_1=0$,
+a fact related to the familiar singularities of polar variables at the origin.
+Tuckerman\rf{tuckerman89} showed that terms of the form $\psi_{n,k}(r,\phi)=r^n\exp(\ii\, k\,\phi)$
+which appear in cylindrical coordinate $(r,\phi,z)$ discretizations of PDEs
+are typically non-smooth at the origin. The problem is traced to rapid
+oscillations of $\psi_{n,k}$ (with $\phi$) as $r\rightarrow0$ and Tuckerman\rf{tuckerman89} shows
+that such oscillations are heavily damped near the origin for
+$\psi_{n,k}$ with $n\geq k$. The prescription put forth by Tuckerman\rf{tuckerman89} to
+construct a smooth basis for the numerical discretization of
+PDEs is to keep only terms with $n\geq k$ (with some additional technical conditions).
+
+The simplest way to modify variables \refeq{eq:SO2polar} to fulfil Tuckerman's
+criterion is to multiply the right hand side by $r_1^k$. This would lead us to
+work with invariant polynomials of order $k+1$ for the $k$'th Fourier subspace.
+To see this, plug \refeq{eq:phi1} into \refeq{eq:SO2stand} to get
 \bseq\label{eq:SO2cheb}
   \begin{align}
     \overline{b}_k &=
@@ -249,126 +305,91 @@ transformations \refeq{eq:SO2stand} we get:
 		    c_k\,\chebT_k\left(b_1/r_1\right)\,,  \label{eq:SO2cheb2}
   \end{align}
 \eseq
-for $k=1,\ldots N$, where $r_k\equiv\sqrt{b_i^2+c_i^2}$ and $\chebT_k,\,\chebU_k$
-are Chebyshev polynomials of the first and second type, respectively.
-Note that for $k=1$ we get $\overline{b}_1=r_1,\, \overline{c}_1=0$.
-Thus we have arrived at a system of $2N-1$ variables, which according to
-theorems of Fels and Olver\rf{FelsOlver98,FelsOlver99} are
-$\SOn{2}$-invariant and functionally independent. They therefore serve the goal
-of unique identification of group orbits, at least in the neighborhood of the
-slice. Under reflections $\Refl a_k \mapsto-b_k+\ii c_k$ we see that
-\bseq\label{eq:SO2chebRefl}
- \begin{align}
-  \overline{b}_k \mapsto (-1)^{k+1}\, \overline{b}_k\,,\\
-  \overline{c}_k \mapsto (-1)^{k}\, \overline{c}_k\,.
- \end{align}
-\eseq
- To factor out the discrete reflection symmetry in \refeq{eq:SO2chebRefl} we can
-introduce a fundamental domain by taking the absolute value of those variables
-which are equivariant under $\Refl$, so that we are led to
-\bseq\label{eq:O2cheb}
-  \begin{align}
-    \overline{b}'_k &=
-		    |\overline{b}_k|\,, \\
-    \overline{c}'_k &=
-		    \overline{c}_k\,.
-  \end{align}
-for $k$ even, and
-  \begin{align}
-    \overline{b}'_k &=
-		    \overline{b}_k\,, \\
-    \overline{c}'_k &=
-		    |\overline{c}_k|\,.
-  \end{align}
-for $k$ odd.
-\eseq
-
-However, invariant variables \refeq{eq:O2cheb} can be seen to be singular as
-$r_1\rightarrow1$
-
-[Ruslan: sure you mean $r_1\rightarrow0$].
-
-The relation of such singularities to the choice of a slice
-has been discussed in \refrefs{SiminosThesis, SiCvi10, FrCv11}. In
-\refrefs{SiCvi10, FrCv11}, and also in \refref{rowley_reconstruction_2000},
-the use of multiple local slices to cover state-space has been proposed.
-However, the tasks of picking such a set of slices
-and piecing them together in a manner that does not obscure the global picture
-are highly non-trivial when one works in high-dimensional spaces and we know
-of no successful implementation of the tessellation idea set forth in
-\refref{FrCv11}. Here we will take a different path and motivate some
-modifications of equations \refeq{eq:O2cheb} until we obtain
-\emph{globally} well behaved transformations to invariant variables.
-
-To shed more light into the origin of the singularities in \refeq{eq:O2cheb},
-we use the identity
-$\alpha\cos(\phi)+\beta\sin(\phi)=\sqrt{\alpha^2+\beta^2}\cos(x-\tan^{-1}(\beta/\alpha))$
-and plug \refeq{eq:phi1} into \refeq{eq:SO2stand}, to arrive to the
-``polar'' form of \refeq{eq:SO2cheb}
-\bseq\label{eq:SO2polar}
-  \begin{align}
-    \overline{b}_k &=
-		    r_k\, \cos(\phi_k-k\,\phi_1)\,, \label{eq:SO2polar1}\\
-    \overline{c}_k &=
-		    r_k\, \sin(\phi_k-k\,\phi_1)\,,\label{eq:SO2polar2}
-  \end{align}
-\eseq
-where $\phi_k$ the polar angle in the $a_k$ Fourier subspace. In this coupled-polar
-representation, it becomes apparent that the singularities of \refeq{eq:SO2cheb}
-are related to the familiar singularities of polar variables at the origin.
-Tuckerman\rf{tuckerman89} showed that terms of the form $\psi_{nk}(r,\phi)=r^n\exp(\ii\, k\,\phi)$
-which appear in cylindrical coordinate $(r,\phi,z)$ discretizations of PDEs
-are typically non-smooth at the origin. The problem is traced to rapid
-oscillations of $\psi_{nk}$ (with $\phi$) as $r\rightarrow0$ and Tuckerman\rf{tuckerman89} shows
-that such oscillations are heavily damped near the origin for
-$\psi_{nk}$ with $n\geq k$. The prescription put forth by Tuckerman\rf{tuckerman89} to
-construct a smooth basis for the numerical discretization of
-PDEs is to keep only terms with $n\geq k$
-(with some additional technical conditions).
-
-The simplest way to modify variables \refeq{eq:SO2polar} to fulfil Tuckerman's
-criterion is to multiply the right hand side by $r_1^k$. This would lead us to
-work with invariant polynomials of order $k+1$ for the $k$'th Fourier subspace,
-as seen from \refeq{eq:SO2cheb}, resulting in highly deformed $a_k$ components
+where and $\chebT_k,\,\chebU_k$ are Chebyshev polynomials of the first and second type, respectively.
+Therefore, multiplication by $r_1^k$ would result in highly deformed $a_k$ components
 (and numerical underflow problems). Since our main goal is to investigate the
-topology of the attractor we can instead aim at merely continuous transformations.
-Note also, that the introduction of a fundamental domain for discrete symmetry
-reduction destroys smoothness of the transformations, even if it is initially
-imposed in continuous symmetry reduction.
-Thus, we simply multiply the right-hand side of \refeq{eq:SO2polar} with $r_1$,
-so that our modified set of $SO(2)$-invariants reads
+topology of the attractor we can instead aim at merely continuous or
+differentiable transformations.
+% Note also, that the introduction of a fundamental domain for discrete symmetry
+% reduction destroys smoothness of the transformations, even if it is initially
+% imposed in continuous symmetry reduction.
+
+Thus, we multiply the right-hand side of \refeq{eq:SO2polar} with a monotonic function
+$h_\epsilon(r_1)$ which satisfies $h_\epsilon(0)=0$,
+has a convergent Maclaurin series for $0<r_1<\infty$, 
+and may depend on a parameter $\epsilon$.
+Our modified set of $SO(2)$-invariants reads
 \bseq\label{eq:SO2polarCont}
   \begin{align}
     \tilde{b}_k &=
-		    r_1\,\overline{b}_k\,, \label{eq:SO2polarCont1}\\
+		    h_\epsilon(r_1)\,\overline{b}_k\,, \label{eq:SO2polarCont1}\\
     \tilde{c}_k &=
-		    r_1\,\overline{c}_k\,.\label{eq:SO2polarCont2}
+		    h_\epsilon(r_1)\,\overline{c}_k\,, \quad k=1,\ldots,N.\label{eq:SO2polarCont2}
   \end{align}
 \eseq
-
-Transformations \refeq{eq:SO2polarCont}, although continuous at
-$r_1=0$ fail to distinguish points in the $a_k$ Fourier subspace when $r_1=0$.
+A simple choice for $h_\epsilon$ is 
+%are $h_\epsilon(r_1)=r_1$ which would lead to 
+%transformations \refeq{eq:SO2polarCont} continuous at $r_1=0$, 
+%and 
+$h_\epsilon(r_1)=r_1^2$ which would lead to differentiable transformations \refeq{eq:SO2polarCont}.
+One can easily show that, with the above requirements,
+\refeq{eq:SO2polarCont} are linearly independent. However,
+\refeq{eq:SO2polarCont} maps any point in the subspace $r_1=0$ to zero, \ie\ 
+\refeq{eq:SO2polarCont} do not provide a complete basis for the reduced space.
 This a rather serious limitation, since non-trivial $N$-cell equilibria of
 KSe are mapped to the origin under \refeq{eq:SO2polarCont}.
-We can bypass this difficulty by adding an $r_k^2$ factor into the variables
-associated with the $k$'th Fourier subspace, in such a way that it respects
-reflection equivariance as expressed by \refeq{eq:SO2chebRefl}, to arrive to
-\bseq\label{eq:SO2inv}
+
+This difficulty suggests extending \refeq{eq:SO2polarCont} by including $2N-2$ additional linearly
+independent invariant variables which do not vanish at $r_1=0$. To this end, we write
+the transformations resulting from defining a slice $c_m=0,\, b_m>0$ for any $1<m\leq N$:
+\bseq\label{eq:SO2polarAny}
   \begin{align}
-    \tilde{b}'_k &=
-		    r_1\,r_k\, \cos(\phi_k-k\,\phi_1)\,, \\
-    \tilde{c}'_k &=
-		    r_k^2+r_1\,r_k\,\sin(\phi_k-k\,\phi_1)\,,
+    \overline{b}_k &=
+		    r_k\, \cos\left(\phi_k-\left(k/m\right)\phi_m\right)\,, \label{eq:SO2polarAny1}\\
+    \overline{c}_k &=
+		    r_k\, \sin\left(\phi_k-\left(k/m\right)\phi_m\right)\,,\label{eq:SO2polarAny2}
   \end{align}
-for $k$ even, and
-  \begin{align}
-    \tilde{b}'_k &=
-		    r_k^2+r_1\,r_k\, \cos(\phi_k-k\,\phi_1)\,, \\
-    \tilde{c}'_k &=
-		    r_1\,r_k\, \cos(\phi_k-k\,\phi_1)\,,
-  \end{align}
-for $k$ odd.
 \eseq
+for $k=1,\ldots N$. As before, we multiply variables \refeq{eq:SO2polarAny} by $h_\epsilon(r_m)$.
+However, we have to note that only variables with $k=n\,m$, where $n$ integer, are well behaved.
+Thus our basis reads
+\bseq\label{eq:SO2polarExt}
+\begin{align}
+  \overline{b}_{nm} &=
+		  h_\epsilon(r_m)r_{nm}\, \cos\left(\phi_{nm}-n\phi_m\right)\,, \label{eq:SO2polarAny1}\\
+  \overline{c}_{nm} &=
+		  h_\epsilon(r_m)r_{nm}\, \sin\left(\phi_{nm}-n\phi_m\right)\,,\label{eq:SO2polarAny2}
+\end{align}
+\eseq
+$m=1,...,M$, $n=1,\ldots\lfloor N/m\rfloor$ and $M$ is the smallest integer that 
+satisfies $\sum_{m=2}^M(2\lfloor N/m\rfloor-1)\geq2N-2$ and for
+$m=M$ we have $n=1,\ldots,\sum_{m=2}^M(2\lfloor N/m\rfloor-1)-(2N-2)$.
+
+Variables \refeq{eq:SO2polarExt} are linearly, but not functionally independent. Therefore increase
+in reduced space dimensionality is only apparent. [ES: here we could project back to $2N-1$ dimensions
+through a linear transformation \emph{ala} Gilmore\rf{GL-Gil07b}. Another option is careful counting
+of functional dependencies to figure out if we can simply pick $2N-1$ variables.]
+
+
+% We can bypass this difficulty by adding an $r_k^2$ factor into the variables
+% associated with the $k$'th Fourier subspace, in such a way that it respects
+% reflection equivariance as expressed by \refeq{eq:SO2chebRefl}, to arrive to
+% \bseq\label{eq:SO2inv}
+%   \begin{align}
+%     \tilde{b}'_k &=
+% 		    r_1\,r_k\, \cos(\phi_k-k\,\phi_1)\,, \\
+%     \tilde{c}'_k &=
+% 		    r_k^2+r_1\,r_k\,\sin(\phi_k-k\,\phi_1)\,,
+%   \end{align}
+% for $k$ even, and
+%   \begin{align}
+%     \tilde{b}'_k &=
+% 		    r_k^2+r_1\,r_k\, \cos(\phi_k-k\,\phi_1)\,, \\
+%     \tilde{c}'_k &=
+% 		    r_1\,r_k\, \cos(\phi_k-k\,\phi_1)\,,
+%   \end{align}
+% for $k$ odd.
+% \eseq
 % \bseq\label{eq:SO2polarContInd}
 %   \begin{align}
 %     \tilde{b}_k &=
@@ -382,46 +403,162 @@ for $k$ odd.
 % in \refeq{eq:SO2inv}. A simple but effective way to achieve this is
 % by taking the absolute value of $\Refl$-equivariant variables
 % in \refeq{eq:SO2inv}.
-As before, we factor out reflection symmetry by taking the absolute value
-of $\Refl$-equivariant variables in \refeq{eq:SO2inv}.
-Thus we are led to $\On{2}$-invariant variables
-\bseq\label{eq:O2inv}
-  \begin{align}
-    \beta_k &=
-		    r_1\,r_k\, |\cos(\phi_k-k\,\phi_1)|\,, \\
-    \gamma_k &=
-		    r_k^2+r_1\,r_k\,\sin(\phi_k-k\,\phi_1)\,,
-  \end{align}
-for $k$ even, and
-  \begin{align}
-    \beta_k &=
-		    r_k^2+r_1\,r_k\, \cos(\phi_k-k\,\phi_1)\,, \\
-    \gamma_k &=
-		    r_1\,r_k\, |\cos(\phi_k-k\,\phi_1)|\,,
-  \end{align}
-for $k$ odd.
-\eseq
+% As before, we factor out reflection symmetry by taking the absolute value
+% of $\Refl$-equivariant variables in \refeq{eq:SO2inv}.
+% Thus we are led to $\On{2}$-invariant variables
+% \bseq\label{eq:O2inv}
+%   \begin{align}
+%     \beta_k &=
+% 		    r_1\,r_k\, |\cos(\phi_k-k\,\phi_1)|\,, \\
+%     \gamma_k &=
+% 		    r_k^2+r_1\,r_k\,\sin(\phi_k-k\,\phi_1)\,,
+%   \end{align}
+% for $k$ even, and
+%   \begin{align}
+%     \beta_k &=
+% 		    r_k^2+r_1\,r_k\, \cos(\phi_k-k\,\phi_1)\,, \\
+%     \gamma_k &=
+% 		    r_1\,r_k\, |\cos(\phi_k-k\,\phi_1)|\,,
+%   \end{align}
+% for $k$ odd.
+% \eseq
 
-[Ruslan: I'd like to see how the E$_2 \to $E$_3$ heteroclinic cage looks in these coordinates.]
+
+
+
+ Under reflections $\Refl a_k \mapsto-b_k+\ii c_k$ we see that
+\bseq\label{eq:SO2chebRefl}
+ \begin{align}
+  \overline{b}_k \mapsto (-1)^{k+1}\, \overline{b}_k\,,\\
+  \overline{c}_k \mapsto (-1)^{k}\, \overline{c}_k\,.
+ \end{align}
+\eseq
+%  To factor out the discrete reflection symmetry in \refeq{eq:SO2chebRefl} we can
+% introduce a fundamental domain by taking the absolute value of those variables
+% which are equivariant under $\Refl$, so that we are led to
+% \bseq\label{eq:O2cheb}
+%   \begin{align}
+%     \overline{b}'_k &=
+% 		    |\overline{b}_k|\,, \\
+%     \overline{c}'_k &=
+% 		    \overline{c}_k\,.
+%   \end{align}
+% for $k$ even, and
+%   \begin{align}
+%     \overline{b}'_k &=
+% 		    \overline{b}_k\,, \\
+%     \overline{c}'_k &=
+% 		    |\overline{c}_k|\,.
+%   \end{align}
+% for $k$ odd.
+% \eseq
+% 
+
+
+% To shed more light into the origin of the singularities in \refeq{eq:O2cheb},
+% we use the identity
+% $\alpha\cos(\phi)+\beta\sin(\phi)=\sqrt{\alpha^2+\beta^2}\cos(x-\tan^{-1}(\beta/\alpha))$
+% and plug \refeq{eq:phi1} into \refeq{eq:SO2stand}, to arrive to the
+% ``polar'' form of \refeq{eq:SO2cheb}
+% \bseq\label{eq:SO2polar}
+%   \begin{align}
+%     \overline{b}_k &=
+% 		    r_k\, \cos(\phi_k-k\,\phi_1)\,, \label{eq:SO2polar1}\\
+%     \overline{c}_k &=
+% 		    r_k\, \sin(\phi_k-k\,\phi_1)\,,\label{eq:SO2polar2}
+%   \end{align}
+% \eseq
+% where $\phi_k$ the polar angle in the $a_k$ Fourier subspace. In this coupled-polar
+% % representation, it becomes apparent that the singularities of \refeq{eq:SO2cheb}
+% are related to the familiar singularities of polar variables at the origin.
+% Tuckerman\rf{tuckerman89} showed that terms of the form $\psi_{nk}(r,\phi)=r^n\exp(\ii\, k\,\phi)$
+% which appear in cylindrical coordinate $(r,\phi,z)$ discretizations of PDEs
+% are typically non-smooth at the origin. The problem is traced to rapid
+% oscillations of $\psi_{nk}$ (with $\phi$) as $r\rightarrow0$ and Tuckerman\rf{tuckerman89} shows
+% that such oscillations are heavily damped near the origin for
+% $\psi_{nk}$ with $n\geq k$. The prescription put forth by Tuckerman\rf{tuckerman89} to
+% construct a smooth basis for the numerical discretization of
+% PDEs is to keep only terms with $n\geq k$
+% (with some additional technical conditions).
+
 
 \section{KS reduced state-space}
 
+
+For all numerical results presented in this section we pick $ h_\epsilon(r_k)=(1-e^{-r_k^2/\epsilon})$
+with $\epsilon=0.2$. This choice scales as $r_k^2$ for $r_k\rightarrow0$, thus ensuring differentiability of
+\refeq{eq:SO2polarExt}, while for large $r_k$ distortion of trajectories is minimal.s
+
 \begin{figure}
-% ES used siminos/chao/matlab/ruslan/ks22rpoCompInv.m
- (a)~\includegraphics[width=0.40\textwidth]{../figs/ks22rpo_shad1}
- (b)~\includegraphics[width=0.40\textwidth]{../figs/ks22rpo_shad2}
+% ES used siminos/chao/matlab/ruslan/ks22reduced.m
+ (a)~\includegraphics[width=0.40\textwidth]{ks22rpoT6451shad}
+ (b)~\includegraphics[width=0.40\textwidth]{ks22rpoT8072shad_manif}
 \caption{
  Shadowing of relative periodic orbits of \KSe\ for $L=22.0$ (see \refref{SCD07}),
-projected in $\beta_1, \beta_2, \gamma_2$ of
-\refeq{eq:O2inv}. (a) Orbit with period $T_{64.51}$ is shadowed by
+projected on variables \refeq{eq:SO2polarExt}. 
+(a) Orbit with period $T_{64.51}$ is shadowed by
 orbits $T_{16.32}$ and $T_{47.32}$, (b) Orbit with period
 $T_{80.71}$ is shadowed by orbits $T_{16.32}$ and $T_{47.32}$. Note
-that $T_{80.71}$ traces $T_{16.32}$ twice.
+that $T_{80.71}$ traces $T_{16.32}$ twice. Intersections of
+the unstable manifold of cycle $T_{16.32}$ with a \Poincare\ section
+defined as a hyperplane transverse to the flow at a point $x_{P}$
+on cycle $T_{16.32}$ are shown in cyan and magenta (first and second
+intersections, respectively). Intersections of the unstable manifold of
+cycle $T_{47.32}$ with the same \Poincare\ section are shown in blue and black 
+(first and second intersections, respectively).
+The coordinate axes $v_1$, $v_2$, and $v_3$ are constructed 
+from Floquet eigenvectors $\jEigvec[1]$, $\jEigvec[4]$ on \Poincare\ 
+fixing point $x_{P}$, and unstable eigenvector ${\Re\,} \jEigvec[1]$ 
+of the relative equilibrium  \REQV{}{1},
+by Gram-Schmidt orthogonalization in original space 
+and transformed to reduced space through transformations
+\refeq{eq:SO2polarExt}. 
 \ES{We can hope for some coarse symbolic dynamics in which  $T_{64.51}$  is $01$ and
-$T_{80.71}$ is $001$.}
+$T_{80.71}$ is $001$. Return map involving unstable manifolds of the two cycles is under construction, 
+but one can draw it mentally based on this figure already.}
 }
-\label{fig:rpo_shad}
+\label{f:rpo_shad}
 \end{figure}
+
+
+\begin{figure*}[ht]
+ \begin{center}
+  (a)~\includegraphics[width=0.35\textwidth]{ks22_E2_manif_homo_rpo_inv}
+  (b)~\includegraphics[width=0.35\textwidth]{ks22_E2_manif_homo_rpo_mf1}
+  (c)~\includegraphics[width=0.09\textwidth, clip=true]{ks22rpo0335-0505}
+     ~\includegraphics[width=0.09\textwidth, clip=true]{ks22rpo0717-0550}
+ \end{center}
+  \caption{Unstable manifold of \EQV{2} projected on variables \refeq{eq:SO2polarExt}. The coordinate axes $v_1$,
+$v_2$, and $v_3$ are constructed from vectors $\Re\, \jEigvec[1], \Im\, \jEigvec[1]$, and ${\Re\,} \jEigvec[4]$
+by Gram-Schmidt orthogonalization (in original space) and transformed to reduced space through transformations
+(11) of ksReduced. Two relative periodic orbits with $\period{p} = 33.5$, $\shift_p = 4.04$ (red) 
+and $\period{p} = 71.7$, $\shift_p = 5.503$ (orange) are also shown. (b) Same as in panel (a) but using a slice with
+$c_1=0,\, b_1>0$. (c) Spatial representation of \rpo s with $\period{p} = 33.5$, $\shift_p = 4.04$ 
+and $\period{p} = 71.7$, $\shift_p = 5.503$.
+  }
+\label{f:ks22_E2_manif_rpo_homo}
+\end{figure*}
+
+\begin{figure*}[ht]
+ \begin{center}
+  (a)~\includegraphics[width=0.45\textwidth]{ks22_TW1_E2_manif_inv}
+  (b)~\includegraphics[width=0.45\textwidth]{ks22_TW1_manif_rpos_inv}
+ \end{center}
+  \caption{Different parts of the unstable submanifold of \REQV{}{1} corresponding to the leading expanding pair of complex eigenvalues
+projected on variables \refeq{eq:SO2polarExt}. The coordinate axes $v_1$,
+$v_2$, and $v_3$ are constructed from vectors $\Re\, \jEigvec[1], \Im\, \jEigvec[1]$, and ${\Re\,} \jEigvec[3]$
+by Gram-Schmidt orthogonalization (in original space) and transformed to reduced space through transformations
+\refeq{eq:SO2polarExt}. (a) Trajectories on the unstable manifold of \REQV{}{1} (red) which come to the neighborhood of $\EQV{2}$.
+Those which come closest to $\EQV{2}$ leave its neighborhood tracing its unstable manifold (shown in light blue).
+(b) Nonlinear folding of trajectories on the unstable manifold of \REQV{}{1} (black) appears related to the existence of
+\rpo s of \reffig{f:rpo_shad}. However, it is more efficient to use the manifolds of the shortest orbits to study the corresponding
+return maps.
+  }
+\label{f:ks22_TW1_manifold}
+\end{figure*}
+
+
+
 
 
 \section{Conclusions}
@@ -432,8 +569,47 @@ implemented numerically, requiring no computer algebra, 3) it scales well
 with the dimension of phase space, 4) it is global requires no further
 thinking of singularities and can thus be used in automated searches for
 neighboring orbits in sets of thousands orbits. This is how commencing with the
-organization of relative periodic orbits in families, as in \reffig{fig:rpo_shad},
+organization of relative periodic orbits in families, as in \reffig{f:rpo_shad},
 became possible.
+
+\appendix
+
+% \section{Alternative basis}
+% 
+% A simple choice is
+% \beq\label{eq:SO2polarMag}
+%     \tilde{q}_k =
+% 		    g_\delta(r_1^2)\,r_k^2\,, \qquad k=2,\ldots,N,
+% \eeq
+% where $g_\delta(r_1)$ is monotonic, satisfies $g_\delta(0)\neq0$, 
+% has a convergent Maclaurin series for $0<r_1<\infty$ and 
+% may depend on a parameter $\delta$. 
+% % and has to be chosen such that \refeq{eq:SO2polarCont} 
+% % and \refeq{eq:SO2polarMag} are linearly independent. To fulfill the latter requirement,
+% % it is sufficient to choose $g_\delta(r_1)$ such that 
+% Under these assumptions we can easily show that \refeq{eq:SO2polarMag} and
+% \refeq{eq:SO2polarCont} are linearly independent. A simple choice which serves our purposes 
+% is  $g_\delta(r_1^2)=1$. However, the freedom in choosing more general $g_\delta(r_1^2)$ will be used
+% in the following to keep the nonlinear deformation of state-space portraits by the introduction
+% of \refeq{eq:SO2polarMag} to a minimum. Eventhough the introduction of
+% $N-1$ variables \refeq{eq:SO2polarMag} leads to an apparent increase of state-space dimension,
+% we have to note that $\tilde{q}_k$ are not functionally independent from $\tilde{b}_k$
+% and $\tilde{c}_k$, since they satisfy $N-1$ relations 
+% \beq\label{eq:SO2polarSyz}
+%   \tilde{q}_k\,h_\epsilon^2(\tilde{b}_1^2+\tilde{c}_1^2) = (\tilde{b}_k^2+\tilde{c}_k^2)\,g_\delta(\tilde{b}_1^2+\tilde{c}_1^2)\,,\quad k=2,\ldots,N.
+% \eeq
+% Relations \refeq{eq:SO2polarSyz} describe the manner in which the $(2N-1)$-dimensional reduced space is embedded in
+% $(3N-2)$-dimensional space of $\tilde{b}_k,\tilde{c}_k,\tilde{q}_k$.
+% 
+% However, even with the introduction of $\tilde{q}_k$ we still fail to span $r_1=0$, 
+% since points in reduced space are not identified by the $r_k$ alone (\ie\ there are
+% $N-1$ variables which depend on appropriate differences of $\theta_k$ missing).
+% A strategy towards constructing a complete basis is outlined in the Appendix.
+% For the example of \KSe, however, we note that completeness is not essential; 
+% points with $r_1=0$ in the dynamically important antisymmetric subspace are
+% uniquely identified by $q_k$.  
+% 
+
 
 \bibliography{../bibtex/siminos}
 
