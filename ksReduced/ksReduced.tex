@@ -7,17 +7,29 @@
 % ES started writing and thinking sometime in		March 2011
 
                 \newif\ifdraft \drafttrue
-%\draftfalse     % For web and journal version, no comments
+ \draftfalse     % For web and journal version, no comments
+
                 \ifdraft
-%% Use sparingly. Date your comment. Once settled,
-%% please move to siminos/blog/freeze.tex (append at the end)
+%% Date your comment. Once settled, please move intersting comments
+%% to siminos/blog/freeze.tex (append at the end)
 \newcommand{\PCedit}[1]{{\color{magenta}#1}}
 \newcommand{\ESedit}[1]{{\color{blue}#1}}
 \newcommand{\RLDedit}[1]{{\color{red}#1}}
 \newcommand{\ES}[1]{\ESedit{\small [ES: #1]}}
 \newcommand{\PC}[1]{\PCedit{\small[PC: #1]}}
 \newcommand{\RLD}[1]{\RLDedit{\small [RLD: #1]}}
-                \fi
+\newcommand{\toCB}{\marginpar{\footnotesize 2CB}}  % to compare with ChaosBook
+\newcommand{\inCB}{\marginpar{\footnotesize now in CB}} % entered in ChaosBook
+                \else
+\newcommand{\PCedit}[1]{{#1}}
+\newcommand{\ESedit}[1]{{#1}}
+\newcommand{\RLDedit}[1]{{#1}}
+\newcommand{\ES}[1]{}
+\newcommand{\PC}[1]{}
+\newcommand{\RLD}[1]{}
+\newcommand{\toCB}{}
+\newcommand{\inCB}{}
+                \fi %end of internal draft switch
 
 % For chaos (see authors.aps.org/revtex4):
                 \ifdraft
@@ -35,6 +47,14 @@
 \usepackage{ifthen}
 \usepackage{color}
 
+%%%%%%% Setup hyperlinks
+\definecolor{hreflinkcolor}{rgb}{0.13,0.17,0.83}
+\hypersetup{colorlinks=true,urlcolor=hreflinkcolor,
+		linkcolor=hreflinkcolor,citecolor=hreflinkcolor}
+% Graphics files are in directory
+\graphicspath{{../figs/}}
+\bibliographystyle{plain}
+
 %%%%%%%%% Macros
 %% ES: Please only add macros that will allow to easilly change journal.
 %% Do not add macros to keep terminology, notation etc flexible.
@@ -48,16 +68,20 @@
 \newcommand{\barr}{\begin{array}}
 \newcommand{\earr}{\end{array}}
 
+%% this block follows APS style:
 \newcommand{\rf}     [1] {\cite{#1}}
 \newcommand{\refref} [1] {Ref.~\onlinecite{#1}}
 \newcommand{\refrefs}[1] {Refs.~\onlinecite{#1}}
-\newcommand{\refeq}  [1] {(\ref{#1})}
-\newcommand{\refeqs} [2]{(\ref{#1}--\ref{#2})}
-\newcommand{\reffig} [1] {Fig.~\ref{#1}}
-\newcommand{\refFig} [1] {Figure~\ref{#1}}
-\newcommand{\refsect}[1] {Sect.~\ref{#1}}
-\newcommand{\refappe}[1] {Appendix~\ref{#1}}
-\newcommand{\reftab} [1] {Table~\ref{#1}}
+\newcommand{\refeq}  [1] {Eq.~(\ref{#1})}                   %APS style
+\newcommand{\refeqs} [2] {Eqs.(\ref{#1}--\ref{#2})}         %APS style
+\newcommand{\reffig} [1] {FIG.~\ref{#1}}                    %APS style
+\newcommand{\reffigs} [2] {FIGS.~\ref{#1} and~\ref{#2}}     %APS style
+\newcommand{\refFig} [1] {FIG.~\ref{#1}}                    %APS style
+\newcommand{\refFigs} [2] {FIGS.~\ref{#1} and~\ref{#2}}     %APS style
+\newcommand{\refsect}[1] {Section~\ref{#1}}                 %APS style
+\newcommand{\refappe}[1] {Appendix~\ref{#1}}                %APS style
+\newcommand{\reftab} [1] {TABLE~\ref{#1}}                   %APS style
+%% end of APS style specific
 
 \newcommand{\etc}{{etc.}}
 \newcommand{\etal}{{\em et al.}}
@@ -88,13 +112,14 @@
 
 \newcommand{\ii}{\ensuremath{\mathrm{i}}} % \sqrt{-1}
 
-%%%%%%% From chaosbook def.tex (copy them if absolutely necessary)
+%%%%%%% From chaosbook def.tex (only if absolutely necessary)
 \newcommand{\wwwcb}[1]{       % keep homepage flexible:
                   {\tt \href{http://ChaosBook.org#1}
               {ChaosBook.org#1}}}
 \newcommand{\arXiv}[1]{
               {\tt \href{http://arXiv.org/abs/#1}{arXiv:#1}}}
 \newcommand{\weblink}[1]{{\tt \href{http://#1}{#1}}}
+\newcommand{\Poincare}{Poincar\'e}
 \newcommand{\jEigvec}[1][]{\ensuremath{{\bf e}^{(#1)}}} % right jacobiam eigenvector
 \newcommand{\ExpaEig}{\ensuremath{\Lambda}}
 \newcommand{\eigExp}[1][]{
@@ -106,19 +131,30 @@
 \newcommand{\eigIm}[1][]{
   \ifthenelse{\equal{#1}{}}{\ensuremath{\omega}}{\ensuremath{\omega^{(#1)}}}
             }
-\newcommand{\REQV}[2]{\ensuremath{TW_{#1#2}}} % #1 is + or -
-\newcommand{\Poincare}{Poincar\'e}
- \newcommand{\EQV}[1]{\ensuremath{E_{#1}}}
+\newcommand{\eqv}{equilib\-rium}
+\newcommand{\Eqv}{Equilib\-rium}
+\newcommand{\eqva}{equilib\-ria}
+\newcommand{\Eqva}{Equilib\-ria}
+\newcommand{\reqv}{rela\-ti\-ve equilib\-rium}
+\newcommand{\Reqv}{Rela\-ti\-ve equilib\-rium}
+\newcommand{\reqva}{rela\-ti\-ve equilib\-ria}
+\newcommand{\Reqva}{Rela\-ti\-ve equilib\-ria}
+\newcommand{\po}{periodic orbit}
+\newcommand{\Po}{Periodic orbit}
+\newcommand{\rpo}{rela\-ti\-ve periodic orbit}
+\newcommand{\Rpo}{Rela\-ti\-ve periodic orbit}
 \newcommand{\period}[1]{{\ensuremath{T_{#1}}}}
 \newcommand{\Shift}{\ensuremath{\tau}}
 \newcommand{\shift}{\ensuremath{d}}
-\newcommand{\rpo}{rela\-ti\-ve periodic orbit}
-\newcommand{\Rpo}{Rela\-ti\-ve periodic orbit}
+\newcommand{\EQV}[1]{\ensuremath{E_{#1}}}
+\newcommand{\REQV}[2]{\ensuremath{TW_{#1#2}}} % #1 is + or -
+\newcommand{\PO}[1]{\ensuremath{PO_{#1}}}
 \newcommand{\RPO}[1]{\ensuremath{\mathrm{RPO}_{#1}}}
 % \newcommand{\RPO}[1]{\ensuremath{\text{RP$#1$}}}
 % RPO_{period to 2-4 significant digits} - relative PO.  We use ^{+,-}
 % to distinguish between members of a reflection-symmetric pair.
 
+\newcommand{\pS}{\ensuremath{{\cal M}}}          % symbol for state space
 \newcommand{\ssp}{a}            % state space point
 \newcommand{\vel}{\ensuremath{v}}   % state space velocity
 \newcommand{\pSRed}{\ensuremath{\bar{\cal M}}} % reduced state space
@@ -126,15 +162,23 @@
 \newcommand{\velRed}{\ensuremath{\bar{\vel}}}    % ES reduced state space velocity
 \newcommand{\velRel}{\ensuremath{c}}    % relative state or phase velocity
 \newcommand{\slicep}{\ensuremath{\bar{\ssp}'}}   % slice-fixing point, experimental
+\newcommand{\expct}    [1]{\left\langle {#1} \right\rangle}
 \newcommand{\timeAver} [1]{\overline{#1}}
+\newcommand{\expctE}{\ensuremath{E}}    % E space averaged
+\newcommand{\Norm}[1]{\|{#1}\|}
+\newcommand{\braket}[2]
+		   {\langle{#1}\vphantom{#2}|\vphantom{#1}{#2}\rangle}
+\newcommand{\bra}[1]{\langle{#1}\vphantom{ }|}
+\newcommand{\ket}[1]{|\vphantom{}{#1}\rangle}
+\newcommand{\Lint}[1]{\frac{1}{L}\!\oint d#1\,}
+\newcommand{\pSpace}{x}       % Hamiltonian phase space x=(q,p) coordinate
+\newcommand{\LieElrep}{\ensuremath{\mathbf{G}}}
+\newcommand{\Sset}{Inflection hyperplane}
+\newcommand{\sset}{inflection hyperplane} 	% {singularity hyperplane}
+											% {singular set}
+\newcommand{\sspSing}{\ensuremath{\ssp^*}} 	% inflection point
+\newcommand{\sspRSing}{\ensuremath{\sspRed^*}} 	% inflection point, reduced space
 
-%%%%%%% Setup hyperlinks
-\definecolor{hreflinkcolor}{rgb}{0.13,0.17,0.83}
-\hypersetup{colorlinks=true,urlcolor=hreflinkcolor,
-		linkcolor=hreflinkcolor,citecolor=hreflinkcolor}
-% Graphics files are in directory
-\graphicspath{{../figs/}}
-\bibliographystyle{plain}
 
 
 \begin{document}
@@ -338,7 +382,7 @@ represented here by a complex valued vector
 $a = \{a_k\in\mathbb{C}\,|\,k = 1, 2, \ldots\}$, is given by
 \beq
   \Shift_{\shift/L}\, a = \mathbf{g}(\shift) \, a \,,
-  \label{eq:shiftFour}
+\label{eq:shiftFour}
 \eeq
 where $\mathbf{g}(\shift) = \mbox{diag}( e^{i q_k\, \shift} )$ is a complex
 valued diagonal matrix, which amounts to the $k$-th mode complex plane
@@ -395,49 +439,102 @@ $\shift_p$ has a symmetric partner $-u_p(-x)$ with shift $-\shift_p$.
 %% A basic RevTeX table looks as follows:
 %%  \begin{table}
 %%  \caption{\label{tab:example}Text of table caption.}
-\begin{table}
+\begin{table*}
    \caption{\label{tab:RPOs}
-      All rela\-ti\-ve equilib\-ria and some of the shortest \rpo s studied in this
-      paper: rela\-ti\-ve equilib\-rium phase velocity $\velRel$ or \rpo\ mean phase velocity
-      $\timeAver{\velRel}_p= \shift_p/\period{p}$; \rpo\ period
-      $\period{p}$, shift $\shift_p$; (mean) dissipation $\timeAver{D}$;
+      All \eqva, \reqva, and some of the shortest \rpo s studied in this
+      paper: rela\-ti\-ve equilib\-rium phase velocity $\velRel$
+      or \rpo\ mean phase velocity
+      $\timeAver{\velRel}_p= \shift_p/\period{p}$;
+      \rpo\ period $\period{p}$, shift $\shift_p$;
+      (mean) energy $\timeAver{E}$, see \refeq{ksEnergy};
+      (mean) dissipation $\timeAver{D}$, see \refeq{EnRate};
       the number of unstable eigen-directions within the solution's
       symmetry subspace, $r= $~real, $c= $~complex (the numbers in
       brackets indicate the number of symmetry-breaking unstable
       eigenvalues when $\Omega_2$ is removed, with trailing $+$
       indicating that there may be more unstable eigenvalues, as only the
-      largest few have been calculated so far); the leading  Floquet
-      exponents $\eigExp[j]= \eigRe[j] \pm i\eigIm[j]$.
+      largest few have been calculated so far);
+      the leading  Floquet exponents
+      $\eigExp[j]= \eigRe[j] \pm i\eigIm[j]$.
    }
    \centering
+   %\begin{\small
    \begin{tabular}{lclllllllll}
        & symm.           & $~~\timeAver{\velRel}$
                                    & ~~$\period{}$ &  ~~$\shift$
-                                   & $\timeAver{D}$
+                                   & $\timeAver{E}$~~  & $\timeAver{D}$
                                    & \# unstable
                                    & $\eigRe[j]$ & $\eigIm[j]$
                                    \\
    \hline
-   LB  &  $(S,\Omega_2)$  & 1.550 &&&& 1r (+0) \\ %1 & 0.0712 \\ % 1606
-   ML  &  $(S,\Omega_2)$  & 1.421 &&&& 1c (+1r+2c) \\ %1 & 0.0224+0.0660i \\
-   MU  &  $(S,\Omega_2)$  & 1.394 &&&& 1r (+1r+2c) \\ %1 & 0.0496 \\
-   UB  &  $(S,\Omega_2)$  & 1.300 &&&& 3c (+3c+)  \\ %3 & 0.1517+1.7591i \\
-   S2a &  $S$              & 1.304 &&&& 1c   \\ % 1856
-   S2b &  $S$              & 1.522 &&&& 1r   \\ %1 & 0.0982 \\
-   $\RPO{4.934}$ &  $(S,\Omega_2)$  & 1.369 & 4.934 &&& 1c (+4c+) \\ %244h
-   $\RPO{10.96}$ &  $S$    & 1.302 & 10.96 &&& 1r+2c  \\ %2544
-   $\RPO{36.72}$ &  $S$    & 2.178 & 36.72 &&& 1r+3c+  %2663
+%                 & $E$~~   & $T$~~  & $\ExpaEig_e$  & $\ExpaEig_c$  \\ \hline
+% $\EQV{1}\ $     &\ 0.2609 &\ 18.81 &\ 4.79     &\ 0.04 \\
+% $\EQV{2}\ $     &\ 0.4382 &\ 26.35 &\ 5.99     &\ 0.03 \\
+% $\EQV{3}\ $     &\ 1.5876 &\ 10.71 &\ 9.92     &\ 0.01 \\
+% $\REQV{\pm}{1}$ &\ 0.4649 &  &  & \\
+% $\REQV{\pm}{2}$ &\ 0.6048 &  &  & \\
+   $\EQV{1}$ & ?? & 0 &&& 0.2609 & ??  & ??  & $0.1308$& $0.3341$ \\
+   $\EQV{2}$ & ?? & 0 &&& 0.4382 & ?? & 1r (+0) & $0.1390$& $0.2384$ \\ % 1606
+   $\EQV{3}$ & ?? & 0 &&& 1.5876 & ?? & 1c (+1r+2c) & $0.0933$&         \\ %1 & 0.0224+0.0660i \\
+   $\REQV{\pm}{1}$ & ?? & ?? &&& 0.4649 & ?? & 1r (+1r+2c) & $0.1156$ & $0.8173$ \\ %1 & 0.0496 \\
+   $\REQV{\pm}{2}$ & ?? & ?? &&& 0.6048 & ?? & 3c (+3c+) & $0.3370$ &         \\ %3 & 0.1517+1.7591i \\
+   $\RPO{16.4}$ &  $S$    & 1.302 & 16.4 &&&& 1r+2c & 0.328 \\ %2544
+   $\RPO{33.5}$ &  $(S,\Omega_2)$  & 0.12? & 33.5 & 4.04 & ?? & ?? & 1c (+4c+) \\ %244h
+   $\RPO{71.7}$ &  $S$    & 0.077? & 71.7 & 5.503 & ?? & ?? & 1r+3c+  \\ %2663
+   $\RPO{??}$ &  $S$    & 1.302 & ?? && ?? & ?? & 1r+2c  \\ %2544
+   $\RPO{??}$ &  $S$    & 1.302 & ?? && ?? & ?? & 1r+2c     %2544
    \end{tabular}
-\end{table}
+   %} % end \small
+\end{table*}
+
+If field $u(x,t)$ in \KSe\  is interpreted as
+`flame-front velocity', the time-dependent $L^2$ norm
+of $u$,
+\beq
+  \expctE(t) = \Lint{\pSpace} \frac{u(t)^2}{2}
+  \,,
+  \label{ksEnergy}
+\eeq
+has a physical interpretation\rf{ksgreene88} as the average `energy'
+density of the flame front, in analogy to the mean kinetic energy
+density for the Navier-Stokes.
+We shall use this `energy' norm to measure distance between pairs of states,
+\beq
+  \Norm{\ssp-\ssp'}^2  = \braket{\ssp-\ssp'}{\ssp-\ssp'} =
+\Lint{\pSpace} ({u}-{u}')^2
+\,.
+\label{KSnorm} \eeq
+the energy variation
+\beq
+   \dot{\expctE} = P - D
+                \,,\qquad
+      P =  \expct{u_{x}{}^2}
+                \,,\quad
+      D =  \expct{u_{xx}{}^2}
+\label{EnRate} \eeq
+balances the power $P$ pumped in by anti-diffusion $u_{xx}$ against the
+energy dissipation rate $D$ by hyper-viscosity $u_{xxxx}$. The virtue of
+energy norm \refeq{KSnorm} and the observables such as $P$ and $D$ is
+that they are invariant (under the \SOn{2} symmetry transformations) and
+representation independent.
 
 A handful of the shortest \rpo s and pre-periodic orbits are listed in
     \reftab{tab:RPOs}.
 For the lack of symbolic dynamics labeling of invariant solutions, we
 refer to \rpo s as $\RPO{\period{}}$, labeled by the 3-4
 significant digits of its period $\period{}$.
-    \PC{2011-12-20 Either merge \reftab{tab:L22cminus} into
+    \PC{2011-12-20 Change symmetries in \reftab{tab:RPOs} following
+    \refref{SCD07}. Either merge \reftab{tab:L22cminus} into
     \reftab{tab:RPOs}, or keep relative equilibria in
     \reftab{tab:L22cminus} only, harmonize the two tables. }
+The short period \rpo s outline the coarse structure of the chaotic
+attractor, while the longer period \rpo s resolve the finer details
+of the dynamics. The shortest \rpo\ with
+$\period{p} = 16.4$ is also the most unstable, with one positive
+Floquet exponent equal 0.328.  The other short orbits are less
+unstable, with the largest Floquet exponent in the range
+0.018 -- 0.073, typical of the long time attractor average.
+
 
 \section{From moving frames to invariant variables}
 
@@ -728,15 +825,15 @@ $\RPO{47.32}$, (b) \Rpo\ $\RPO{80.71}$ is shadowed by orbits
 $\RPO{16.32}$ and $\RPO{47.32}$. Note that $\RPO{80.71}$ traces
 $\RPO{16.32}$ twice. Intersections of the unstable manifold of \rpo\
 $\RPO{16.32}$ with a \Poincare\ section defined as a hyperplane
-transverse to the flow at a state-space point $\ssp_{RPO{16.32}}(0)$ are
+transverse to the flow at a state-space point $\ssp(0) \in RPO{16.32}$ are
 shown in cyan and magenta (first and second intersections, respectively).
 Intersections of the unstable manifold of cycle $\RPO{47.32}$ with the
 same \Poincare\ section are shown in blue and black (first and second
 intersections, respectively). The coordinate axes $v_1$, $v_2$, and $v_3$
 are constructed from Floquet eigenvectors $\jEigvec[1]$, $\jEigvec[4]$ on
 \Poincare\ section fixing point $\ssp_{RPO{16.32}}(0)$, and unstable
-eigenvector ${\Re\,} \jEigvec[1]$ of the relative equilibrium
-\REQV{}{1}, by Gram-Schmidt orthogonalization in original space and
+eigenvector {Re\,}$\jEigvec[1]$ of the relative equilibrium
+\REQV{}{1}, by Gram-Schmidt orthogonalization in the full state space and
 transformed to reduced space through transformations
 \refeq{eq:SO2polarExt}.
 }
@@ -757,13 +854,16 @@ one can draw it mentally based on this figure already.
   (c)~\includegraphics[width=0.09\textwidth, clip=true]{ks22rpo0335-0505}
      ~\includegraphics[width=0.09\textwidth, clip=true]{ks22rpo0717-0550}
  \end{center}
-  \caption{Unstable manifold of \EQV{2} projected on variables \refeq{eq:SO2polarExt}. The coordinate axes $v_1$,
-$v_2$, and $v_3$ are constructed from vectors $\Re\, \jEigvec[1], \Im\, \jEigvec[1]$, and ${\Re\,} \jEigvec[4]$
-by Gram-Schmidt orthogonalization (in original space) and transformed to reduced space through transformations
-(11) of ksReduced. Two relative periodic orbits with $\period{p} = 33.5$, $\shift_p = 4.04$ (red)
-and $\period{p} = 71.7$, $\shift_p = 5.503$ (orange) are also shown. (b) Same as in panel (a) but using a slice with
-$c_1=0,\, b_1>0$. (c) Spatial representation of \rpo s with $\period{p} = 33.5$, $\shift_p = 4.04$
-and $\period{p} = 71.7$, $\shift_p = 5.503$.
+  \caption{
+Unstable manifold of \EQV{2} projected on variables
+\refeq{eq:SO2polarExt}. The coordinate axes $v_1$, $v_2$, and $v_3$ are
+constructed from vectors Re\,$\jEigvec[1]$, Im\,$\jEigvec[1]$, and
+Re\,$\jEigvec[4]$ by Gram-Schmidt orthogonalization in the full state
+space, and then transformed to reduced space through transformations
+\refeq{eq:SO2polarExt}. Two relative periodic orbits $\RPO{33.5}$ (red)
+and $\RPO{71.7}$ (orange) are also shown. (b) Same as in panel (a) but
+using a slice with $c_1=0,\, b_1>0$. (c) Spatial representation of \rpo s
+$\RPO{33.5}$ (red) and $\RPO{71.7}$.
   }
 \label{f:ks22_E2_manif_rpo_homo}
 \end{figure*}
@@ -776,7 +876,7 @@ and $\period{p} = 71.7$, $\shift_p = 5.503$.
   \caption{Different parts of the unstable submanifold of \REQV{}{1} corresponding to the leading expanding pair of complex eigenvalues
 projected on variables \refeq{eq:SO2polarExt}. The coordinate axes $v_1$,
 $v_2$, and $v_3$ are constructed from vectors $\Re\, \jEigvec[1], \Im\, \jEigvec[1]$, and ${\Re\,} \jEigvec[3]$
-by Gram-Schmidt orthogonalization (in original space) and transformed to reduced space through transformations
+by Gram-Schmidt orthogonalization (in the full state space) and transformed to reduced space through transformations
 \refeq{eq:SO2polarExt}. (a) Trajectories on the unstable manifold of \REQV{}{1} (red) which come to the neighborhood of $\EQV{2}$.
 Those which come closest to $\EQV{2}$ leave its neighborhood tracing its unstable manifold (shown in light blue).
 (b) Nonlinear folding of trajectories on the unstable manifold of \REQV{}{1} (black) appears related to the existence of
@@ -787,12 +887,11 @@ return maps.
 \end{figure*}
 
 
-
-
-
 \section{Conclusions}
 
-Motivating \refeq{eq:O2inv} is still rough around the edges, but the final result is
+Motivating \refeq{eq:SO2polarExt}
+    \PC{was \refeq{eq:O2inv}??}
+is still rough around the edges, but the final result is
 1) easily seen to be $\On{2}$-invariant, 2) easily and economically
 implemented numerically, requiring no computer algebra, 3) it scales well
 with the dimension of phase space, 4) it is global requires no further
@@ -800,6 +899,10 @@ thinking of singularities and can thus be used in automated searches for
 neighboring orbits in sets of thousands orbits. This is how commencing with the
 organization of relative periodic orbits in families, as in \reffig{f:rpo_shad},
 became possible.
+
+\begin{acknowledgments}
+The authors would like to thank their mothers for ...
+\end{acknowledgments}
 
 \appendix
 
@@ -839,7 +942,13 @@ became possible.
 % uniquely identified by $q_k$.
 %
 
-
+%% Note: Multiple references in a single citation supported using
+%% starred (*) argument to the \cite command.
 \bibliography{../bibtex/siminos}
+
+                \ifdraft\newpage
+\section{Deep freeze\label{c-freeze}}
+\input ../blog/freeze.tex
+                \fi
 
 \end{document}

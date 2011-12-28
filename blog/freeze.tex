@@ -1,8 +1,8 @@
 % siminos/blog/freeze.tex
 % $Author$ $Date$
 
-\chapter{Deep freeze}
-\label{c-freeze}
+%\chapter{Deep freeze}
+%\label{c-freeze}
 
 \begin{description}
 
@@ -68,11 +68,13 @@ Euclidean distance in Fourier space minimized with respect to the translation
 of the \eqv\ by $\Shift_{\shift/L}$:
 \beq
   d_{\EQV{k}} = \min_\shift \|a - \Shift_{\shift/L} a_{\EQV{k}} \|\,,\quad k = 1,2,3.
-\ee{eq:proxeq}
+\label{eq:proxeq}
+\eeq
 Similarly, the distance to \reqv\ $a_{\REQV{\pm}{k}}$ is defined as follows
 \beq
   d_{\REQV{k}{}} = \min_{\shift} \|a - \Shift_{\shift/L} a_{\REQV{\pm}{k}} \|\,,\quad k = 1,2,
-\ee{eq:proxtw}
+\label{eq:proxtw}
+\eeq
 where we consider the distance to both $a_{\REQV{-}{k}}$ and $a_{\REQV{+}{k}}$, thus
 minimizing both with respect to translation $\Shift_{\shift/L}$ and reflection $\Refl$.
 
@@ -91,10 +93,10 @@ settled on
 \beq
   \Norm{\ssp-\ssp'}^2  = \braket{\ssp-\ssp'}{\ssp-\ssp'} =
 \frac{1}{V}
-\int_\bCell \! d \bx \;
+\int_\Omega \! d {\bf x} \;
 (\vec{u}-\vec{u}') \cdot (\vec{u}-\vec{u}')
 \,.
-\ee{innerproduct}
+\label{innerproduct} \eeq
 There is no compelling reason to use this {`energy norm'}, other than
 that velocity fields is what is given in a numerical computation. What
 norm one actually uses depends very much on the application. In the study
@@ -108,7 +110,7 @@ of $u$,
 \beq
   \expctE= \Lint{\pSpace} V(x,t)= \Lint{\pSpace} \frac{u^2}{2}
   \,,
-  \label{ksEnergy}
+  \label{ksEnergyFreeze}
 \eeq
 has a physical interpretation\rf{ksgreene88} as the average `energy'
 density of the flame front, in analogy to the mean kinetic energy
@@ -118,7 +120,7 @@ I think for \KS\ it would be the safest to use
   \Norm{\ssp-\ssp'}^2  = \braket{\ssp-\ssp'}{\ssp-\ssp'} =
 \Lint{\pSpace} ({u}-{u}')^2
 \,.
-\ee{KSnorm}
+\label{KSnorm} \eeq
 The virtue of energy norm is that it is representation independent. If
 one goes to siminos/ksReduced/ invariant basis, the $2N-1$
 $\SOn{2}$-invariant and functionally independent variables are
@@ -135,7 +137,7 @@ $\SOn{2}$-invariant and functionally independent variables are
 for $k=1,\ldots N$, where $r_k\equiv\sqrt{b_i^2+c_i^2}$ and $\chebT_k,\,\chebU_k$
 are Chebyshev polynomials of the first and second type, respectively.
 The Chebyshev polynomials $\chebT_k,\,\chebU_k$ are degree $k$, so they tend
-to significantly distort the \statesp\ layout of the attractor.
+to significantly distort the state space layout of the attractor.
 
 Evangelos, please confirm that you are using distance function \refeq{KSnorm},
 not the norm
@@ -143,7 +145,7 @@ not the norm
 \Norm{u}  =   {\textstyle\frac{1}{2}} \sum_{k=0}^{\infty}
    (\overline{b}_k^2+\overline{c}_k^2)
 \,,
-\ee{normNotGood}
+\label{normNotGood} \eeq
 
 \item[2011-12-1 Evangelos] I do not understand norm \refeq{KSnorm}. Take for instance a pure sin
 equilibrium solution of KSe and compare it to itself under \refeq{KSnorm} - you get zero. Now
@@ -209,7 +211,7 @@ to organize the flow, a local chart describing a neighborhood of a
 template is a slice in group action directions, Poincar\'e section in
 time evolution directions. One MUST go to Poincar\'e section to organize
 the attractor by local stable-manifold road maps. In \pCf\ we have many
-\po s, but together they just make a jumble in the \statesp. It's obvious
+\po s, but together they just make a jumble in the state space. It's obvious
 why if you just work through the 3-disk example in ChaosBook.org - only
 in the Poincar\'e section is the topology of the strange attractor
 cleanly laid out. (Getting this across has ballooned ChaosBook's
@@ -261,13 +263,13 @@ in siminos/ksReduced. Let's continue the discussion in siminos/blog.
 \item[2011-11-04 Predrag 2 Ruslan] Something completely different. My
 undergraduate Naveen is simulating the \emph{Karma model} of cardiac
 activity introduced by Alain Karma (\emph{Electrical alternans and spiral
-wave breakup in cardiac tissue}\rf{Karma1994}). It is a 1\dmn\ PDE on a
+wave breakup in cardiac tissue}\rf{Karma1994}). It is a 1-dimensional PDE on a
 periodic ring, with using state variables $E$, which is the value for the
 voltage in cardiac tissue, and $n$, which is the slow current gate
 variable.
 
 Can you \rpo\ fishing programs be easily altered from KS to another
-1\dmn\ PDE?
+1-dimensional PDE?
 
 \item[2011-11-05 Ruslan about Karma model]  How interesting... I know
 Alain very well through his work on phase field modelling of solid-liquid
@@ -280,7 +282,7 @@ Chaos here, so it would be useful if you (or Naveen) spelled out for me
 the equations, parameters, dynamics you are interested in, etc.
 
 \item[2011-11-05 Predrag] Karma 1994 paper:
-\HREF{http://chaosbook.org/library/Karma1994.pdf}
+\href{http://chaosbook.org/library/Karma1994.pdf}{library/Karma1994.pdf}
 {click here}. You will need to type \texttt{student} and then \texttt{Lautrup} .
 
 \item[2011-11-08 Predrag] If it is any help, here is the code for Karma 1994 that Naveen is using
@@ -413,8 +415,8 @@ The left panel shows the two-dimensional unstable manifold of \eqv\
 \refref{SCD07} for a different visualization. The right panel shows {\bf
 2011-11-18 Ruslan} two-dimensional unstable manifold of \eqv\ \EQV{2} in
 $\pS/\SOn{2}$ slice at $\theta_1 = \pi/2$. The coordinate axes $v_1$,
-$v_2$, and $v_3$ are constructed from vectors \Re\, $\jEigvec[1]$, \Im\,
-$\jEigvec[1]$, and {\Re\,} $\jEigvec[7]$ by Gram-Schmidt
+$v_2$, and $v_3$ are constructed from vectors Re\,$\jEigvec[1]$,
+Im\,$\jEigvec[1]$, and {Re\,}$\jEigvec[7]$ by Gram-Schmidt
 orthogonalization.
        }
 \label{f:KS22E2man1}
@@ -427,7 +429,7 @@ orthogonalization.
 \end{center}
 \caption{
 The left panel shows spatial representation of three orbits of
-\reffig{f:KS22E2man}, full \statesp. The right panel shows spatial
+\reffig{f:KS22E2man}, full state space. The right panel shows spatial
 representation of three orbits in the $\pS/\SOn{2}$ slice.
        }
 \label{f:ks22_E2_MSO2}
@@ -446,14 +448,14 @@ might not look as pretty as it does now... Well, "beauty is in the
 eyes...", as they say, so maybe it looks ugly to you.
 
 \item[2011-11-19 Predrag] Sorry, I do not get this ``slice at $\theta_1 =
-\pi/2$''. This looks like 1/2 of the full \statesp, which I would expect
+\pi/2$''. This looks like 1/2 of the full state space, which I would expect
 for the discrete $D_1$ quotient; flow in the slice always looks different
-(and simpler) from the flow in full \statesp. Maybe you can walk me
+(and simpler) from the flow in full state space. Maybe you can walk me
 through this?
 
 \item[2011-11-20 Ruslan] OK. I work with the Fourier representation (sorry):
 \[ a_k = (b_k, c_k) = b_k + ic_k = (r_k, \theta_k) = r_k e^{i\theta_k}\,. \]
-I define the slice by points $\bar{a}_k$ with $\bar{\theta}_1 = \pi/2$  (or $\bar{b}_1 = 0$, $\bar{c}_1 > 0$).  Points in the full \statesp\ are mapped onto the slice by translation by $\theta(a) = \bar{\theta}_1 - \theta_1 = \pi/2 - \theta_1$:
+I define the slice by points $\bar{a}_k$ with $\bar{\theta}_1 = \pi/2$  (or $\bar{b}_1 = 0$, $\bar{c}_1 > 0$).  Points in the full state space are mapped onto the slice by translation by $\theta(a) = \bar{\theta}_1 - \theta_1 = \pi/2 - \theta_1$:
 \[ \bar{a} = g(\theta(a)) a\,. \]
 So, $(\bar{r}_k, \bar{\theta}_k) = (r_k, \theta_k + (\pi/2 - \theta_1)k)$.
 
@@ -473,18 +475,18 @@ Yes, the \EQV{2} unstable manifold in the slice indeed looks like reduced by $D_
 
 \item[2011-11-19 Predrag] I believe you cannot put Poincar\'e section on
 the \sset, they are defined by different conditions. However, Siminos did
-show in \refref{SiCvi10} for \cLe\ that even though the \reducedsp\
-trajectories always encounter the \sset, a natural Poincar\'e section can
-be chosen to avoid it. This might be the point of `global Poincar\'{e}
-section' of \refref{DuLoMe11} (see {\bf [2011-11-17 ES] } in Lie.tex; we
-need to study this paper in detail). In my arguments\rf{ACHKW11} for
-constructing a reduced dynamics as global atlas composed from charts
-local to important classes of turbulent states, I currently do it in two
-steps: 1) slice continuous symmetries, 2) Poincer\'e section the time
-flow. I believe one has to do both, but write it up this way because
-neither plumbers nor flamers (KS crowd) want to do Poincer\'e sections.
-So maybe in the end it will all work out nicely, without any
-singularities.
+show in \refref{SiCvi10} for complex Lorenz equations that even though
+the reduced state space trajectories always encounter the \sset, a natural
+Poincar\'e section can be chosen to avoid it. This might be the point of
+`global Poincar\'{e} section' of \refref{DuLoMe11} (see {\bf [2011-11-17
+ES] } in Lie.tex; we need to study this paper in detail). In my
+arguments\rf{ACHKW11} for constructing a reduced dynamics as global atlas
+composed from charts local to important classes of turbulent states, I
+currently do it in two steps: 1) slice continuous symmetries, 2)
+Poincer\'e section the time flow. I believe one has to do both, but write
+it up this way because neither plumbers nor flamers (KS crowd) want to do
+Poincer\'e sections. So maybe in the end it will all work out nicely,
+without any singularities.
 
 \item[2011-11-21 Evangelos] \refFig{f:KS22E2man1} is in my opinion a
 a great example of slicing inconvenience. I suppose Ruslan uses
@@ -511,15 +513,15 @@ come from?
     About identifying $\EQV{2}$ and $\tau_{1/4}\EQV{2}$, we had this discussion some time ago, and this was where I experienced my major (aesthetic) difficulties.  The simple truth is that you cannot rotate by $\pi/2$ (i.e. by $\tau_{1/4}$) if you are only allowed to rotate by $\pi$.  So, in my symmetry reduction approach $\EQV{2}$ and $\tau_{1/4}\EQV{2}$ remain distinct.  But this is not a big deal, since they are invariant objects and thus, according to Predrag, never appear within the dynamics (only as limiting states when $t \to \pm \infty$).
     By the way, this also means that in my original proposal for O(2) symmetry reduction we never need anything more than the 1-st Fourier mode.  This is because points cannot be mapped into the $\theta = \pi/2$ slice only when both $r_1 = 0$ and $\dot{r}_1 = 0$.  But these conditions define the $L/2$ periodic solutions, which are invariant under \KS dynamics and thus appear only as limiting states.
 
-    Basically we have a choice here: to slice or not to slice.  To slice means that we select a subset (a slice) of the full \statesp\ and map every point from the full \statesp\ onto the subset by a group action.  The drawback is that we cannot do it without introducing discontinuities to the dynamics on the slice.  It is already apparent with the SO(2) reduction and will only get worse when we factor in the reflections.
+    Basically we have a choice here: to slice or not to slice.  To slice means that we select a subset (a slice) of the full state space and map every point from the full state space onto the subset by a group action.  The drawback is that we cannot do it without introducing discontinuities to the dynamics on the slice.  It is already apparent with the SO(2) reduction and will only get worse when we factor in the reflections.
 
-    Not to slice means to choose a set of symmetry invariant coordinates.  The drawback here is that these coordinates are nonlinear functions of the original coordinates of the full \statesp\, so the full \statesp\ looks strongly warped up.  Many of the invariant coordinate only take positive values, so the orbits in them often look squeezed into a corner with a lot of things happening around the origin.  Another feature that I don't like here is that the dynamics on the invariant coordinates may not be uniquely defined: there could be points not related by symmetry in the full \statesp\ which have the same values of the invariant coordinates (at least this is what happens in Evangelos's coordinates when reflection invariance is introduced).  This means that one can have several different orbits emanating from the same point in the invariant coordinates.
+    Not to slice means to choose a set of symmetry invariant coordinates.  The drawback here is that these coordinates are nonlinear functions of the original coordinates of the full state space, so the full state space looks strongly warped up.  Many of the invariant coordinate only take positive values, so the orbits in them often look squeezed into a corner with a lot of things happening around the origin.  Another feature that I don't like here is that the dynamics on the invariant coordinates may not be uniquely defined: there could be points not related by symmetry in the full state space which have the same values of the invariant coordinates (at least this is what happens in Evangelos's coordinates when reflection invariance is introduced).  This means that one can have several different orbits emanating from the same point in the invariant coordinates.
 
     Since me and Evangelos are in the opposite camps here, I guess it's
     up to Predrag to decide what we do.  Although, I'm afraid Predrag
     will come up with a third option, which to me will then resemble
     (sadly) the heros of this
-    \HREF{http://www.poemhunter.com/poem/swan-pike-and-crawfish/}{poem}.
+    \href{http://www.poemhunter.com/poem/swan-pike-and-crawfish/}{poem}.
 
 \item[2011-11-21 Evangelos] Plotting the unstable manifold of \EQV{2} in $\SOn{2}$-invariant
 coordinates $\tilde{b}',\tilde{c}'$ of ksReduced. As we only deal with antisymmetric subspace
@@ -529,10 +531,12 @@ here, we do not need to worry about reflections.
  \begin{center}
   \includegraphics[width=0.5\textwidth]{ks22_E2_manifold_inv}
  \end{center}
-  \caption{Unstable manifold of \EQV{2} in coordinates $\tilde{b}',\tilde{c}'$ of ksReduced. The coordinate axes $v_1$,
-$v_2$, and $v_3$ are constructed from vectors \Re\, $\jEigvec[1]$, \Im\, $\jEigvec[1]$, and {\Re\,} $\jEigvec[7]$
-by Gram-Schmidt orthogonalization (in original space) and transformed to reduced space through transformations
-(11) of ksReduced.
+\caption{Unstable manifold of \EQV{2} in coordinates
+$\tilde{b}',\tilde{c}'$ of ksReduced. The coordinate axes $v_1$, $v_2$,
+and $v_3$ are constructed from vectors Re\,$\jEigvec[1]$,
+Im\,$\jEigvec[1]$, and {Re\,}$\jEigvec[7]$ by Gram-Schmidt
+orthogonalization (in the full state space) and transformed to reduced space
+through transformations (11) of ksReduced.
   }
 \label{f:ks22_E2_inv}
 \end{figure}
