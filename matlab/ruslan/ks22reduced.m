@@ -130,6 +130,8 @@ print -depsc2 ks22_TW1_manif_rpo1_E2_manif_inv.eps
   ere = real(re(k).eig(1));  period = 2*pi/imag(re(k).eig(1));
   v = gsorth([real(re(k).evec(:,1)) imag(re(k).evec(:,1)) real(re(k).evec(:,3))]);
   vInv=mfinvTraj(repmat(re(k).a,1,3)+v);
+    % % Coordinate system using E2, TW+-1 and E3:
+    % vInv=gsorth(mfinvTraj([eq(2).a-re(k).a eq(2).a-ksfmRefl(re(k).a) eq(2).a-eq(3).a]));
   for delta = [0:0.06:1]*ere*period,
     a0 = re(k).a + 1e-4.*exp(delta).*v(:,2);
     [tt, aa] = ksfmetd2(a0, L, h, tend, 1);
@@ -187,6 +189,25 @@ print -depsc2 ks22_TW1_manif_rpo1_E2_manif_inv.eps
 %    [aa, ss] = ksfm_so2(aa, L);
     aa = mfinvTraj(aa);
     av51 = [av51; vInv'*aa];
+  end
+
+% visit E2 (not so close, contain rpo 5) 
+  tend=135; av511=[];
+  for delta = [0.441:0.0005:0.446]*ere*period,
+    a0 = re(k).a + 1e-4.*exp(delta).*v(:,2);
+    [tt, aa] = ksfmetd2(a0, L, h, tend, 2);
+%    [aa, ss] = ksfm_so2(aa, L);
+    aa = mfinvTraj(aa);
+    av511 = [av511; vInv'*aa];
+  end  
+  % Reflected TW1 - visit E2  
+  tend=110; av51r=[];
+  for delta = [0.3:0.005:0.44]*ere*period,
+    a0 = ksfmRefl(re(k).a + 1e-4.*exp(delta).*v(:,2));
+    [tt, aa] = ksfmetd2(a0, L, h, tend, 2);
+%    [aa, ss] = ksfm_so2(aa, L);
+    aa = mfinvTraj(aa);
+    av51r = [av51r; vInv'*aa];
   end
 % visit E2
   tend=100; av6=[];
@@ -332,13 +353,40 @@ plot3(av0(1,:)',av0(2,:)',av0(3,:)','.-', 'color', [218/255 112/255 214/255 ]);
 print -depsc2 ks22_TW1_manif_rpo1_inv.eps
 
 figure(5);clf; grid off; axis on; hold on;
-% plot3(av5(1:3:end,:)',av5(2:3:end,:)',av5(3:3:end,:)','r-'); % approach E1
-plot3(av51(1:3:end,:)',av51(2:3:end,:)',av51(3:3:end,:)','r-'); % approach E1
+% plot3(av5(1:3:end,:)',av5(2:3:end,:)',av5(3:3:end,:)','r-');  % approach E2
+plot3(av51(1:3:end,:)',av51(2:3:end,:)',av51(3:3:end,:)','r-'); % approach E2
+% % visit E2  (pin heteroclinic)
+% ere2 = real(re(k).eig(3));  period2 = 2*pi/imag(re(k).eig(3));
+% tend=150; av51h=[]; a51hD=[];
+%    for delta2 = (0:0.1:1)*ere2*period2,
+%      for delta = [0.383:0.00005:0.384]*ere*period,
+%         a0 = re(k).a + 1e-4.*exp(delta).*v(:,2)-1e-4.*exp(delta2).*real(re(k).evec(:,3)); % It was: 
+%         [tt, aa] = ksfmetd2(a0, L, h, tend, 3);
+%     %    [aa, ss] = ksfm_so2(aa, L);
+%         aa = mfinvTraj(aa);
+%         dist=zeros(size(aa,2),1);
+%         for i=1:size(aa,2),
+%             dist(i)=norm(aa(:,i)-mfinvSO2(eq(2).a));    
+%         end
+%         a51hD = [a51hD, min(dist)];
+%         av51h = [av51h; vInv'*aa];
+%     end
+%    end
+% %   for delta = [0.385:0.001:0.390]*ere*period,
+% %     a0 = re(k).a + 1e-4.*exp(delta).*v(:,2);
+% %     [tt, aa] = ksfmetd2(a0, L, h, tend, 2);
+% % %    [aa, ss] = ksfm_so2(aa, L);
+% %     aa = mfinvTraj(aa);
+% %     av51h = [av51h; vInv'*aa];
+% %   end
+% plot3(av51h(1:3:end,:)',av51h(2:3:end,:)',av51h(3:3:end,:)','g-'); % approach E2
+plot3(av511(1:3:end,:)',av511(2:3:end,:)',av511(3:3:end,:)','k-'); % approach E2
+plot3(av51r(1:3:end,:)',av51r(2:3:end,:)',av51r(3:3:end,:)','g-'); % approach E1
 % plot3(av6(1:3:end,:)',av6(2:3:end,:)',av6(3:3:end,:)','r-'); % approach E1
 tend = 100;  avE2 = [];
 ere = real(eq(2).eig(1));  period = 2*pi/imag(eq(2).eig(1));
 v2 = gsorth([real(eq(2).evec(:,1)) imag(eq(2).evec(:,1))  real(eq(2).evec(:,7))]);
-for delta = [0:0.03:1, 0.74 0.066 0.0693]*ere*period,
+for delta = [0:0.01:1]*ere*period,
     a0 = eq(2).a + 1e-4.*exp(delta).*v2(:,2);
     [tt, aa] = ksfmetd2(a0, L, h, tend, 1);
 %    [aa, ss] = ksfm_so2(aa, L);
@@ -362,6 +410,7 @@ set(gca,'FontSize',14);
 view(13,-4);
 axis tight;
 print -depsc2 ks22_TW1_E2_manif_inv.eps
+
 
 figure(6);clf; grid off; axis on; hold on;
 plot3(av1(1:3:end,:)',av1(2:3:end,:)',av1(3:3:end,:)','-','color', [0.5 0.5 0.5] );
@@ -428,12 +477,13 @@ set(gca,'FontSize',14);
 %% Add rpos and unstable manifold of E2 to previous plot.
 
 load ks22f90h25.mat; np=2; h = 0.1; 
-for refpo=1:100,
+clrs=[ [135/255 100/255 250/255]; [189/255 183/255 107/255]; [139/255 69/255 19/255]; [255/255 165/255 0/255]; [0.1 0.9 0.1] ];
+for refpo=1:5,
     a0=rpo(refpo).a1;
     [tt0, aa0] = ksfmetd(a0, L, h, rpo(refpo).T1, np); 
     aa0inv=mfinvTraj(aa0);
     av0=vInv'*aa0inv;
-    plot3(av0(1,:)',av0(2,:)',av0(3,:)','-', 'color', [rand(2,1); 0] );
+    plot3(av0(1,:)',av0(2,:)',av0(3,:)','-', 'color', clrs(refpo,:), 'LineWidth', 2 ); %[rand(2,1); 0]
 end
 
 % figure(); hold on;
@@ -455,18 +505,18 @@ set(gca,'FontSize',14);
 axis tight;
 print -depsc2 ks22_TW1_E2_manif_rpos_inv.eps
 
-refpo=36;
+refpo=62;
 a0=rpo(refpo).a1;
 [tt0, aa0] = ksfmetd2(a0, L, h, rpo(refpo).T1, np); 
 aa0inv=mfinvTraj(aa0);
 av0=vInv'*aa0inv;
-plot3(av0(1,:)',av0(2,:)',av0(3,:)','.-', 'color', [189/255 183/255 107/255]);
+plot3(av0(1,:)',av0(2,:)',av0(3,:)','.-', 'color', [139/255 69/255 19/255]);
 refpo=17;
 a0=ksfmRefl(rpo(refpo).a1);
 [tt0, aa0] = ksfmetd2(a0, L, h, rpo(refpo).T1, np); 
 aa0inv=mfinvTraj(aa0);
 av0=vInv'*aa0inv;
-plot3(av0(1,:)',av0(2,:)',av0(3,:)','.-', 'color', [139/255 69/255 19/255]);
+plot3(av0(1,:)',av0(2,:)',av0(3,:)','.-', 'color', [189/255 183/255 107/255]);
 refpo=1;
 a0=rpo(refpo).a1;
 [tt0, aa0] = ksfmetd2(a0, L, h, rpo(refpo).T1, np); 
@@ -477,7 +527,7 @@ plot3(av0(1,:)',av0(2,:)',av0(3,:)','.-', 'color', [255/255 165/255 0/255]);
 
 %% Plot homoclinic rpo
 clear; load kse22orbits;  k = 2;  h = 0.1;
-v = gsorth([real(eq(k).evec(:,1)) imag(eq(k).evec(:,1)) real(eq(k).evec(:,3))]);
+v = gsorth([real(eq(k).evec(:,1)) imag(eq(k).evec(:,1)) real(eq(k).evec(:,7))]);
 slc=1;    
 vInv=mfinvTraj([eq(k).a eq(k).a eq(k).a]+v);
 figure(4); clf; view(0,90);
@@ -843,7 +893,7 @@ print -depsc2 ks22_TW1_manifold_rpo1_E2_manif_mf1.eps
 
 %% Plot homoclinic rpo in c_i=0, b_i>0 slice
 clear; load kse22orbits;  k = 2;  h = 0.1;
-v = gsorth([real(eq(k).evec(:,1)) imag(eq(k).evec(:,1)) real(eq(k).evec(:,3))]);
+v = gsorth([real(eq(k).evec(:,1)) imag(eq(k).evec(:,1)) real(eq(k).evec(:,7))]);
 slc=1;    
 vInv=mfTraj([eq(k).a eq(k).a eq(k).a]+v,slc);
 figure(3); clf; view(14,18);
@@ -1385,7 +1435,7 @@ l3=['T_p=' num2str(rpo(ipo1).T1,4)];
 % Changing input data here!!!
 load kse22orbits;
 % vInv=gsorth([mfinvTraj(rpo(1).evec(:,1)) vInv(:,1) vInv(:,2)]);
-vInv=gsorth([mfinvTraj(rpo(1).evec(:,1)) mfinvTraj(rpo(1).evec(:,4)) vInv(:,1)]);
+% vInv=gsorth([mfinvTraj(rpo(1).evec(:,1)) mfinvTraj(rpo(1).evec(:,4)) vInv(:,1)]);
 % vInv=gsorth([vPoinc vInv(:,1) vInv(:,2)]);
 
 aamf=vInv'*mfinvTraj(aa);
