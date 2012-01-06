@@ -7,8 +7,20 @@ Siminos, Froehlich source programs for figures
 [read also halcrow/figSrc/00ReadMe.txt]
 
 ----------------------------------------------------------------
-                                        Predrag 2010-12-21
+                                        Predrag 2012-01-06
+you can hand-write equations
+    webdemo.visionobjects.com/equation.html?locale=default
+get LaTeX back!
 
+----------------------------------------------------------------
+                                        Predrag 2012-01-04
+MapleWorks.com/software-products/overview-software-products/android-note-taking-app/
+    MaplePaint seems easy to use from Samsung Galaxy Android tablet,
+    creates compact svg vector graphics, which inkscape converts
+    to pdf
+
+----------------------------------------------------------------
+                                        Predrag 2010-12-21
 Stefan, please save, clearly document here the source code.
 
 ----------------------------------------------------------------
@@ -19,17 +31,17 @@ Stefan, please save, clearly document here the source code.
 files to the journal submission:
 
 froehlich/CNSNS-v1/dthetanearsing.pdf
-		   Fullspace.pdf 
-		   singpass1.pdf 
-		   dthetasing.pdf 
-		   RedTrajNoPlane1.pdf 
+		   Fullspace.pdf
+		   singpass1.pdf
+		   dthetasing.pdf
+		   RedTrajNoPlane1.pdf
 
 ----------------------------------------------------------------
                                         Stefan  2010-12-20
 
 'final' figures for the ../froehlich/slice article
 
-../figs/Fullspace.png 
+../figs/Fullspace.png
 RedTrajNoPlane1.png
 RedTrajNoPlane2.png
 RedTrajPlane1.png
@@ -45,7 +57,7 @@ singpass1.png
   repository vaggelis/sys_utils/epstopdf_dir
 			      sys_utils/makefile
 
-Added script that applies epstopdf on all eps files 
+Added script that applies epstopdf on all eps files
 in a specified directory. Usually results in huge savings in
 figure size, without loss of quality. Use it for arxiv (with
 pdflatex), keep eps files for APS submission.

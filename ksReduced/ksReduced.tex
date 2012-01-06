@@ -1,202 +1,43 @@
 % siminos/ksReduced/ksReduced.tex    pdflatex ksReduced
 % $Author$ $Date$
 
+% PC ver. 2.1 macros to ../inputs/defsKSred.tex     2011-11-03
 % ES ver. 2.0 reboot: re-started writing 			2011-11-03
-%   after being interrupted by job applications,
-%   childbirth, moving to Dresden, real plumbing, etc.
-% ES started writing and thinking sometime in		March 2011
+% ES ver. 1.0 started writing and thinking          March 2011
 
                 \newif\ifdraft \drafttrue
 %\draftfalse    % For web and journal version, no comments
 
-                \ifdraft
-%% Date your comment. Once settled, please move intersting comments
-%% to siminos/blog/freeze.tex (append at the end)
-\newcommand{\PCedit}[1]{{\color{magenta}#1}}
-\newcommand{\ESedit}[1]{{\color{blue}#1}}
-\newcommand{\RLDedit}[1]{{\color{red}#1}}
-\newcommand{\ES}[1]{\ESedit{\small [ES: #1]}}
-\newcommand{\PC}[1]{\PCedit{\small[PC: #1]}}
-\newcommand{\RLD}[1]{\RLDedit{\small [RLD: #1]}}
-\newcommand{\toCB}{\marginpar{\footnotesize 2CB}}  % to compare with ChaosBook
-\newcommand{\inCB}{\marginpar{\footnotesize now in CB}} % entered in ChaosBook
-                \else
-\newcommand{\PCedit}[1]{{#1}}
-\newcommand{\ESedit}[1]{{#1}}
-\newcommand{\RLDedit}[1]{{#1}}
-\newcommand{\ES}[1]{}
-\newcommand{\PC}[1]{}
-\newcommand{\RLD}[1]{}
-\newcommand{\toCB}{}
-\newcommand{\inCB}{}
-                \fi %end of internal draft switch
-
-% For chaos (see authors.aps.org/revtex4):
+%% CHAOS formatting (see authors.aps.org/revtex4):
+%% change reprint -> preprint, remove twocolumn for journal submission
                 \ifdraft
 \documentclass[aip,cha,showpacs,reprint]{revtex4-1} % preprint
                 \else
-% change reprint -> preprint, remove twocolumn for journal submission
-\documentclass[aip,cha,showpacs,twocolumn,
- 		  reprint]{revtex4-1} % superscriptaddress, unsortedaddress
+\documentclass[aip,cha,showpacs,twocolumn,reprint]{revtex4-1}
+              % superscriptaddress, unsortedaddress
                 \fi
-
-\usepackage{amsmath,amsfonts,amssymb,amsbsy,amscd}
-\usepackage[usenames,dvipsnames]{color}
-\usepackage{hyperref}
-\usepackage{graphicx}
-\usepackage{ifthen}
-\usepackage{color}
-
-%%%%%%% Setup hyperlinks
-\definecolor{hreflinkcolor}{rgb}{0.13,0.17,0.83}
-\hypersetup{colorlinks=true,urlcolor=hreflinkcolor,
-		linkcolor=hreflinkcolor,citecolor=hreflinkcolor}
-% Graphics files are in directory
-\graphicspath{{../figs/}}
-\bibliographystyle{plain}
-
-%%%%%%%%% Macros
-%% ES: Please only add macros that will allow to easilly change journal.
-%% Do not add macros to keep terminology, notation etc flexible.
-%% Internal edits/comments macros are OK, as are some math macros already added.
-%% PC: I feel personally persecuted. OK, OK, I surrender - you're the Boss.
-
-\newcommand{\beq}{\begin{equation}}
-\newcommand{\eeq}{\end{equation}}
-\newcommand{\bseq}{\begin{subequations}}
-\newcommand{\eseq}{\end{subequations}}
-\newcommand{\barr}{\begin{array}}
-\newcommand{\earr}{\end{array}}
-
-%% this block follows APS style:
-\newcommand{\rf}     [1] {\cite{#1}}
-\newcommand{\refref} [1] {Ref.~\onlinecite{#1}}
-\newcommand{\refrefs}[1] {Refs.~\onlinecite{#1}}
-\newcommand{\refeq}  [1] {Eq.~(\ref{#1})}                   %APS style
-\newcommand{\refeqs} [2] {Eqs.(\ref{#1}--\ref{#2})}         %APS style
-\newcommand{\reffig} [1] {FIG.~\ref{#1}}                    %APS style
-\newcommand{\reffigs} [2] {FIGS.~\ref{#1} and~\ref{#2}}     %APS style
-\newcommand{\refFig} [1] {FIG.~\ref{#1}}                    %APS style
-\newcommand{\refFigs} [2] {FIGS.~\ref{#1} and~\ref{#2}}     %APS style
-\newcommand{\refsect}[1] {Section~\ref{#1}}                 %APS style
-\newcommand{\refappe}[1] {Appendix~\ref{#1}}                %APS style
-\newcommand{\reftab} [1] {TABLE~\ref{#1}}                   %APS style
-%% end of APS style specific
-
-\newcommand{\etc}{{etc.}}
-\newcommand{\etal}{{\em et al.}}
-\newcommand{\ie}{{i.e.}}
-\newcommand{\cf}{{\em cf.\ }}
-\newcommand{\eg}{{e.g.\ }}
-
-\newcommand{\KS}{Kuramoto-Siva\-shin\-sky}
-\newcommand{\KSe}{Kuramoto-Siva\-shin\-sky equation}
-\newcommand{\pCf}{plane Couette flow}
-\newcommand{\PCf}{Plane Couette flow}
-
-\newcommand{\Rls}[1]{\ensuremath{\mathbb{R}^{#1}}}
-\newcommand{\Clx}[1]{\ensuremath{\mathbb{C}^{#1}}}
-\newcommand{\Un}[1]{\ensuremath{\textrm{U}(#1)}}         % in DasBuch
-\newcommand{\On}[1]{\ensuremath{\textrm{O}(#1)}}
-\newcommand{\SOn}[1]{\ensuremath{\textrm{SO}(#1)}}         % in DasBuch
-\newcommand{\Dn}[1]{\ensuremath{\textrm{D}_{#1}}}              % in DasBuch
-\newcommand{\Zn}[1]{\ensuremath{\textrm{C}_{#1}}}              % in DasBuch
-\newcommand{\Ztwo}{\ensuremath{\textrm{C}_2}}                % in DasBuch
-\newcommand{\Refl}{\ensuremath{\sigma}}
-\newcommand{\bbU}{\mathbb{U}}
-
-\newcommand{\chebT}{\mathrm{T}}
-\newcommand{\chebU}{\mathrm{U}}
-
-\newcommand{\Nd}{\ensuremath{d}} % state-space dimension
-\newcommand{\Nc}{\ensuremath{N}} % complex state-space dimension
-
-\newcommand{\ii}{\ensuremath{\mathrm{i}}} % \sqrt{-1}
-
-%%%%%%% From chaosbook def.tex (only if absolutely necessary)
-\newcommand{\wwwcb}[1]{       % keep homepage flexible:
-                  {\tt \href{http://ChaosBook.org#1}
-              {ChaosBook.org#1}}}
-\newcommand{\arXiv}[1]{
-              {\tt \href{http://arXiv.org/abs/#1}{arXiv:#1}}}
-\newcommand{\weblink}[1]{{\tt \href{http://#1}{#1}}}
-\newcommand{\Poincare}{Poincar\'e}
-\newcommand{\jEigvec}[1][]{\ensuremath{{\bf e}^{(#1)}}} % right jacobiam eigenvector
-\newcommand{\ExpaEig}{\ensuremath{\Lambda}}
-\newcommand{\eigExp}[1][]{
-\ifthenelse{\equal{#1}{}}{\ensuremath{\lambda}}{\ensuremath{\lambda^{(#1)}}}
-                        }
-\newcommand{\eigRe}[1][]{
-\ifthenelse{\equal{#1}{}}{\ensuremath{\mu}}{\ensuremath{\mu^{(#1)}}}
-                        }
-\newcommand{\eigIm}[1][]{
-  \ifthenelse{\equal{#1}{}}{\ensuremath{\omega}}{\ensuremath{\omega^{(#1)}}}
-            }
-\newcommand{\eqv}{equilib\-rium}
-\newcommand{\Eqv}{Equilib\-rium}
-\newcommand{\eqva}{equilib\-ria}
-\newcommand{\Eqva}{Equilib\-ria}
-\newcommand{\reqv}{rela\-ti\-ve equilib\-rium}
-\newcommand{\Reqv}{Rela\-ti\-ve equilib\-rium}
-\newcommand{\reqva}{rela\-ti\-ve equilib\-ria}
-\newcommand{\Reqva}{Rela\-ti\-ve equilib\-ria}
-\newcommand{\po}{periodic orbit}
-\newcommand{\Po}{Periodic orbit}
-\newcommand{\rpo}{rela\-ti\-ve periodic orbit}
-\newcommand{\Rpo}{Rela\-ti\-ve periodic orbit}
-\newcommand{\period}[1]{{\ensuremath{T_{#1}}}}
-\newcommand{\Shift}{\ensuremath{\tau}}
-\newcommand{\shift}{\ensuremath{d}}
-\newcommand{\EQV}[1]{\ensuremath{E_{#1}}}
-\newcommand{\REQV}[2]{\ensuremath{TW_{#1#2}}} % #1 is + or -
-\newcommand{\PO}[1]{\ensuremath{PO_{#1}}}
-\newcommand{\RPO}[1]{\ensuremath{\mathrm{RPO}_{#1}}}
-% \newcommand{\RPO}[1]{\ensuremath{\text{RP$#1$}}}
-% RPO_{period to 2-4 significant digits} - relative PO.  We use ^{+,-}
-% to distinguish between members of a reflection-symmetric pair.
-% ES: it seems we need 4 significant digits to distinguish rpo's.
-
-\newcommand{\pS}{\ensuremath{{\cal M}}}          % symbol for state space
-\newcommand{\ssp}{a}            % state space point
-\newcommand{\vel}{\ensuremath{v}}   % state space velocity
-\newcommand{\pSRed}{\ensuremath{\bar{\cal M}}} % reduced state space
-\newcommand{\sspRed}{\ensuremath{\bar{\ssp}}}    % reduced state space point, experiment
-\newcommand{\velRed}{\ensuremath{\bar{\vel}}}    % ES reduced state space velocity
-\newcommand{\velRel}{\ensuremath{c}}    % relative state or phase velocity
-\newcommand{\slicep}{\ensuremath{\bar{\ssp}'}}   % slice-fixing point, experimental
-\newcommand{\expct}    [1]{\left\langle {#1} \right\rangle}
-\newcommand{\timeAver} [1]{\overline{#1}}
-\newcommand{\expctE}{\ensuremath{E}}    % E space averaged
-\newcommand{\Norm}[1]{\|{#1}\|}
-\newcommand{\braket}[2]
-		   {\langle{#1}\vphantom{#2}|\vphantom{#1}{#2}\rangle}
-\newcommand{\bra}[1]{\langle{#1}\vphantom{ }|}
-\newcommand{\ket}[1]{|\vphantom{}{#1}\rangle}
-\newcommand{\Lint}[1]{\frac{1}{L}\!\oint d#1\,}
-\newcommand{\pSpace}{x}       % Hamiltonian phase space x=(q,p) coordinate
-\newcommand{\LieElrep}{\ensuremath{\mathbf{G}}}
-\newcommand{\Sset}{Inflection hyperplane}
-\newcommand{\sset}{inflection hyperplane} 	% {singularity hyperplane}
-											% {singular set}
-\newcommand{\sspSing}{\ensuremath{\ssp^*}} 	% inflection point
-\newcommand{\sspRSing}{\ensuremath{\sspRed^*}} 	% inflection point, reduced space
-
-
-
+    \usepackage{amsmath,amsfonts,amssymb,amsbsy,amscd}
+    \usepackage[usenames,dvipsnames]{color}%\usepackage{color}
+    \usepackage{hyperref}\usepackage{graphicx}\usepackage{ifthen}
 \begin{document}
+    \input ../inputs/defsKSred
 
-% ES: Please permute names as appropriate.
-% PC: this order fine with me
+\title{Symmetry reduction: Geometry of a Kuramoto-Sivashinsky attractor revealed}
+% previous titles:
+% {Kuramoto-Sivashinsky state space revealed by a global symmetry reduction}
+% {Freezing all waves: A global symmetry reduction of Kuramoto-Sivashinsky equation}
+% {Freezing of all waves: global symmetry reduction in Kuramoto-Sivashinsky equation}
+
+% ES: Maybe also change freezing to stopping or something similar? Freezing has been
+% associated with specific techniques of Beyn which are not followed here, so it might
+% lead to confusion. PC: I agree
 
 \author{Evangelos Siminos}
 \email{siminos@gatech.edu}
 \affiliation{School of Physics,
 	      Georgia Institute of Technology, Atlanta, GA 30332, USA}
-% I find it fair to use GaTech affiliation here as this is
-% improvement/continuation of the Thesis that Never Ends.
-% PC: I'm glad you are using it.
 \affiliation{Max Planck Institute for the Physics of Complex Systems,
-N\"othnitzer Stra\ss e 38, D-01187 Dresden, Germany}
+          N\"othnitzer Stra\ss e 38, D-01187 Dresden, Germany}
 
 \author{Predrag Cvitanovi\'c}
 \affiliation{School of Physics,
@@ -206,17 +47,16 @@ N\"othnitzer Stra\ss e 38, D-01187 Dresden, Germany}
 \affiliation{Department of Mathematics,
 	      University of Leicester, Leicester, LE1 7RH, UK}
 
-\title{Freezing all waves: A global symmetry reduction of Kuramoto-Sivashinsky equation}
-% previous titles:
-% \title{Freezing of all waves: global symmetry reduction in Kuramoto-Sivashinsky equation}
-% ES: Maybe also change freezing to stopping or something similar? Freezing has been
-% associated with specific techniques of Beyn which are not followed here, so it might
-% lead to confussion.
+% ES: Please permute names as appropriate. % PC: this order fine with me
+% I find it fair to use GaTech affiliation here as this is
+% improvement/continuation of the Thesis that Never Ends.
+% PC: I'm glad you are using it.
 
 \date{\today}
 
 % no abstract used for CHAOS (?)
 % ES: sure there is abstract for CHAOS. Write once we know what our main results are.
+% PC: I read the manual, did not see it...
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\begin{abstract}
 %
@@ -233,8 +73,9 @@ N\"othnitzer Stra\ss e 38, D-01187 Dresden, Germany}
 % 47.52.+j 	Chaos in fluid dynamics
 % 42.65.Sf 	Dynamics of nonlinear optical systems; optical instabilities,
 % 		optical chaos and complexity, and optical spatio-temporal dynamics
-% ES: If 42.65.Sf is relevant to us that would be great for me as I am part of
-% a nonlinear optics group. Is it?
+\ES{If 42.65.Sf is relevant to us that would be great for me as I am part of
+a nonlinear optics group. Is it?}\PC{Maybe - if you write that CL is a prime example
+of symmetry reduction?}
             }
 
 \maketitle
@@ -250,7 +91,9 @@ N\"othnitzer Stra\ss e 38, D-01187 Dresden, Germany}
 % upgrade or downgrade journal.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{quotation}
-symmetry reduction
+The geometry of the Kuramoto-Sivashinsky state space attractor
+
+revealed by a global symmetry reduction
 
 which yield {globally} well behaved
 transformations to invariant variables
