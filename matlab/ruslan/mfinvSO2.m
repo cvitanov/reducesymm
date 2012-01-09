@@ -1,4 +1,21 @@
 function aa=mfinvSO2(a)
+
+
+ac=a(1:2:size(a))+1i*a(2:2:size(a));
+ainv=zeros(size(ac));
+r=zeros(size(ac));
+phi=zeros(size(ac));
+r(1)=abs(ac(1));
+ainv(1)=r(1);
+for k=2:size(ac), % k even case
+    phi(k)=angle(ac(k));
+    r(k)=abs(ac(k));
+    ainv(k)=r(k)*(1-exp(-r(k-1)^2/0.2))*cos((k-1)*phi(k)-k*phi(k-1)) + 1i*r(k)*(1-exp(-r(k-1)^2/0.2))*sin((k-1)*phi(k)-k*phi(k-1));
+end
+aa=zeros(size(a));
+aa(1:2:size(aa))=real(ainv);
+aa(2:2:size(aa))=imag(ainv);
+
 %
 % 
 % 
@@ -22,23 +39,23 @@ function aa=mfinvSO2(a)
 % aa(1:2:size(aa))=real(ainv);
 % aa(2:2:size(aa))=imag(ainv);
 
-M=4;
-ac=a(1:2:size(a))+1i*a(2:2:size(a));
-aa=zeros(M*size(a,1),1);
-dmp=0.2;
-for m=1:M,
-    ainv=zeros(size(ac));
-    phim=angle(ac(m))/m;
-    rm=abs(ac(m));
-    for k=m:m:size(ac), 
-        phik=angle(ac(k));
-        rk=abs(ac(k));
-        ainv(k)=(1-exp(-rm^2/dmp))*rk*cos(phik-k*phim) + 1i*((1-exp(-rm^2/dmp))*rk*sin(phik-k*phim));
-    end
-    aa(2*(m-1)+1:2*M:size(aa))=real(ainv);
-%     aa(2*(m-1)+1)=0;
-    aa(2*m:2*M:size(aa))=imag(ainv);
-end
+% M=4;
+% ac=a(1:2:size(a))+1i*a(2:2:size(a));
+% aa=zeros(M*size(a,1),1);
+% dmp=0.2;
+% for m=1:M,
+%     ainv=zeros(size(ac));
+%     phim=angle(ac(m))/m;
+%     rm=abs(ac(m));
+%     for k=m:m:size(ac), 
+%         phik=angle(ac(k));
+%         rk=abs(ac(k));
+%         ainv(k)=(1-exp(-rm^2/dmp))*rk*cos(phik-k*phim) + 1i*((1-exp(-rm^2/dmp))*rk*sin(phik-k*phim));
+%     end
+%     aa(2*(m-1)+1:2*M:size(aa))=real(ainv);
+% %     aa(2*(m-1)+1)=0;
+%     aa(2*m:2*M:size(aa))=imag(ainv);
+% end
 
 
 % m=3;

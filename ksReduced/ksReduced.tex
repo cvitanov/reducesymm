@@ -552,16 +552,65 @@ Thus our basis reads
 \bseq\label{eq:SO2polarExt}
 \begin{align}
   \tilde{b}_{nm} &=
-		  h_\epsilon(r_m)r_{nm}\, \cos\left(\phi_{nm}-n\phi_m\right)\,, \label{eq:SO2polarAny1}\\
+		  h_\epsilon(r_m)r_{nm}\, \cos\left(\phi_{nm}-n\phi_m\right)\,, \label{eq:SO2polarExt1}\\
   \tilde{c}_{nm} &=
-		  h_\epsilon(r_m)r_{nm}\, \sin\left(\phi_{nm}-n\phi_m\right)\,,\label{eq:SO2polarAny2}
+		  h_\epsilon(r_m)r_{nm}\, \sin\left(\phi_{nm}-n\phi_m\right)\,,\label{eq:SO2polarExt2}
 \end{align}
 \eseq
 $m=1,...,M$, $n=1,\ldots\lfloor N/m\rfloor$ and $M$ is the smallest integer that
 satisfies $\sum_{m=2}^M(2\lfloor N/m\rfloor-1)\geq2N-2$ and for
 $m=M$ we have $n=1,\ldots,\sum_{m=2}^M(2\lfloor N/m\rfloor-1)-(2N-2)$.
 
-\RLD{2012-01-06: I find it rather hard to follow what exactly you are doing above.  I'm wondering whether it is possible to have something more straightforward.  For example, reading \rf{AGHO288} awhile ago, I was thinking we could just use their SO(2) invariant variables.  For the 1st and 2nd Fourier modes, they take $|a_1|^2$, $|a_2|^2$, and $a_1^2 \bar{a_2} + \bar{a_1}^2 a_2 = 2 r_1^2 r_2 \cos(2\theta_1 - \theta_2)$, where I use overbar to denote complex conjugate.  For every additional mode $k$, we can add two more variables: $|a_k|^2 = r_k^2$ and $a_1^k \bar{a_k} + \bar{a_1}^k a_k = 2 r_1^k r_k \cos(k\theta_1 - \theta_k)$.  In these variables the equilibria will not collapse into the origin.}
+    \RLD{2012-01-06: I find it rather hard to follow what exactly you are doing above.  
+I'm wondering whether it is possible to have something more straightforward.  
+For example, reading \rf{AGHO288} awhile ago, I was thinking we could just use their SO(2) invariant variables.  
+For the 1st and 2nd Fourier modes, they take $|a_1|^2$, $|a_2|^2$, and $a_1^2 \bar{a_2} + \bar{a_1}^2 a_2 = 2 r_1^2 r_2 \cos(2\theta_1 - \theta_2)$, 
+where I use overbar to denote complex conjugate.  For every additional mode $k$, we can add two more variables: 
+$|a_k|^2 = r_k^2$ and $a_1^k \bar{a_k} + \bar{a_1}^k a_k = 2 r_1^k r_k \cos(k\theta_1 - \theta_k)$.  
+In these variables the equilibria will not collapse into the origin.
+    }
+    \ES{I think it was the basis in\rf{AGHO288} the one which inspired Jonathan Halcrow to propose a similar basis for KS but coupling
+each Fourier mode with the previous one (this was sometime in 2007? I have to check his blog). 
+This was rejected by Predrag because it would lead to invariant polynomials of very high order. 
+The same is true with what you propose here (factors of $r_1^k$). Also note that $r_1^k r_k \cos(k\theta_1 - \theta_k)$ 
+coincides with what I call Tuckermann's prescription.
+From a computational perspective I think there could be problems with over/underflows and this is why I don't like this
+approach. 
+On the other hand, nonlinear nature of such transformations does not seem a problem to me: as long as the topology is respected
+we should be able to get the correct return maps.
+So what I propose is instead of $r_1^k r_k \cos(k\theta_1 - \theta_k)$ to use $r_1 r_k \cos(k\theta_1 - \theta_k)$ or
+$r_1^2 r_k \cos(k\theta_1 - \theta_k)$ or $(1-e^{-r_1^2/\epsilon}) r_k \cos(k\theta_1 - \theta_k)$.
+
+If we use $|a_k|^2 = r_k^2$ instead of $\sin(...)$ you are right that equilibria do not collapse to the origin
+for $r_1=0$.
+However, for $r_1=0$ we are only left with the magnitudes as invariant variables, which means that 
+two points which in the original space are not related by rotations 
+(their phase difference does not match for all Fourier modes) might be represented by the same point
+in reduced space. 
+This is why I propose to add more variables which depend on the relative phases. Once we add a third Fourier mode
+in the variables of \rf{AGHO288} we need to track phase difference of second and third mode when $r_1=0$. The
+problem is that if we use $r_2 r_3 cos(\phi_2-2\phi_3/3)$ for this there seems to be some residual discrete symmetry which
+results in jumps in reduced space. This is why things tend to get a bit more complicated. 
+
+Unfortunately, \ref{eq:SO2polarExt} is still problematic since any prime number larger than $M$ is only coupled to
+the first Fourier mode. So I am now leaning towards a choice of the form:
+\bseq
+  \begin{align}
+    		    h_\epsilon(r_1)\,r_k\, 	\begin{cases} 	
+						    \cos(\phi_k-k\,\phi_1)\,, \qquad k\, \mathrm{even}\\
+						    \sin(\phi_k-k\,\phi_1)\,, \qquad k\, \mathrm{odd}
+					\end{cases}\\
+		    h_\epsilon(r_k)\,r_{2k}\, \cos(\phi_{2k}-2\,\phi_k)\,,\\
+		    r_k^2\,,
+% 		    h_\epsilon(r_k)\,r_{2k}\, \sin(\phi_{2k}-2\,\phi_k)\,, 
+  \end{align}
+\eseq
+$k=2,\ldots,N/2$, where we choose $\sin(...)$ or $\cos(..)$ depending on which one is reflection equivariant and for $k=1$ we have
+simply $r_1^2$. For this to work we must be able to ignore modes with $k>N/2$, which is certainly true for our KS simulations with $N=32$. Here,
+in order to loose information for the relative phase of a mode we must have at the same time $r_1=0$ and $r_{2k}=0$, 
+which is a lower dimensional subspace (3 conditions instead of 1) and therefore harder to visit. Choices for $h_\epsilon$
+would be $h_\epsilon(r_k)=(1-e^{-r_k^2/\epsilon})$ or $h_\epsilon(r_k)=r_k^2$.
+    }
 
 Variables \refeq{eq:SO2polarExt} are linearly, but not functionally independent. Therefore increase
 in reduced space dimensionality is only apparent.
@@ -688,7 +737,7 @@ For all numerical results presented in this section we pick
 $h_\epsilon(r_k)=(1-e^{-r_k^2/\epsilon})$ with $\epsilon=0.2$. This choice
 scales as $r_k^2$ for $r_k\rightarrow 0$, thus ensuring differentiability
 of \refeq{eq:SO2polarExt}, while for large $r_k$ distortion of
-trajectories is minimal.
+trajectories is minimal. For $N=32$ used in our simulations, we find $M=4$.
 
 \begin{figure}
 % ES used siminos/chao/matlab/ruslan/ks22reduced.m
@@ -714,7 +763,13 @@ eigenvector {Re\,}$\jEigvec[1]$ of the relative equilibrium
 \REQV{}{1}, by Gram-Schmidt orthogonalization in the full state space and
 transformed to reduced space through transformations
 \refeq{eq:SO2polarExt}.
-\RLD{2012-01-06: Because of this choice of coordinates $v_k$, I find it rather hard to understand exactly what I'm looking at.  I understand when coordinates are the GSO of eigenvectors, but I cannot imagine what transformations \refeq{eq:SO2polarExt} do to them.  I would think that, since we have introduced invariant coordinates, why not just use some of them as coordinate axes for the plots.  Then we know exactly how the coordinates in the plots are defined.}}
+\RLD{2012-01-06: Because of this choice of coordinates $v_k$, I find it 
+rather hard to understand exactly what I'm looking at.  I understand when 
+coordinates are the GSO of eigenvectors, but I cannot imagine what 
+transformations \refeq{eq:SO2polarExt} do to them.  I would think that, 
+since we have introduced invariant coordinates, why not just use some of 
+them as coordinate axes for the plots.  Then we know exactly how the 
+coordinates in the plots are defined.}}
 \end{figure}
 
     \ES{
