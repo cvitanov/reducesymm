@@ -2848,128 +2848,6 @@ the equations. In each method solutions to the reduced equations are then used
 to reconstruct solutions to the original equations.
 ''
 
-\item[2010-06-02 Predrag] Just heard a talk by
-\HREF{http://win.ua.ac.be/~nschloe/}{N. Schl\"omer},
-\HREF{http://win.ua.ac.be/~wvroose/}{W. Vanroose}
- and
-\HREF{http://personal.maths.surrey.ac.uk/st/D.Avitabile/index.html}{D. Avitabile}
- on
-\HREF{http://www.dspdes2010.org/admin/files/fileabstract/A452.pdf}
-{Numerical continuation and symmetries} in mesoscopic superconductors.
-and
-N. Schl\"omer, D. Avitabile and W. Vanroose\rf{SchlAvVa11},
-\emph{Numerical bifurcation study of superconducting patterns on a square.}
-They fix the overall $U(1)=\SOn{2}$ phase in a BEC problem, do not
-reduce the remaining $D_4$ discrete symmetry. Only stable solutions,
-we might be able to do this better.
-													\toCB
-More precisely: numerical methods break the symmetry of any given
-problem, and the symmetry-breaking errors can be unpleasantly large. If
-symmetry is reduced {\em prior} to numerical work, this does not happen.
-Yet another argument why one should always reduce the symmetries prior to
-the analysis of any given problem.
-
-\item[2010-06-04 Predrag] to nico.schloemer@ua.ac.be,
-Wim.Vanroose@ua.ac.be,
-D.Avitabile@bristol.ac.uk, on
-\emph{Slice \& dice} $\SOn{2} \times D_4$
-
-Nico et al, I enjoyed your talk. Feel free to ignore the rest of this
-email, but if you know literature or have some ideas that might help me
-write up methods of symmetry reduction better, let me know.
-
-You probably have not heard Ashley Willis and various spiraling patterns
-talks, but in fluid and cardiac dynamics one has to deal with various
-(rather simple) continuous and discrete symmetries. All I have found
-useful on the subject so far is described "pedagogically" in Chapter 10
-Relativity for cyclists (another version is given in Continuous symmetry
-reduction and return maps for high-dimensional flows).
-
-I also always quotient discrete symmetries, such as $D_2$ or $D_4$, as
-described in Chapter 9 World in a mirror. That kind of thing you
-appreciate only after you do it yourself.
-
-As long as you look at a single stable equilibrium or travelling wave,
-getting rid of $\SOn{2}$ seems not a problem. It becomes a problem once when
-you start looking at sets of unstable solutions.
-
-Visualization of all relative periodic orbits as periodic orbits we
-attain only by global symmetry reductions. We do it by "slicing", ie
-finding hypersurfaces that cut group orbits just like Poincare sections
-cut time-evolution orbits. The problem is that the natural choice; a
-hyperplane normal to a group orbit tangent vector (Lia algebra generator)
-is only good locally, globally it runs into singularities.
-
-Calling overall complex phase ``gauge invariance'' is a waste of an ugly
-but otherwise quite precise word. In quantum field theory one means by
-that the local (a very deep concept) not the relatively trivial global
-overall complex phase. But AMO physicists do indeed do that.
-
-\item[2010-06-05 Daniele Avitabile]
-Our problem has, as you point out, $\SOn{2} \times D_4$ symmetry. What we would
-like to achieve is exploring the symmetry-breaking bifurcation scenario
-pertaining to $D_4$, in the case of stationary solutions. In other words,
-we do not want to simulate the time-dependent solutions of the
-Ginzburg-Landau system. We concentrate instead on stationary solutions,
-and we want to see how, by breaking $D_4$, we can get new, hopefully
-observable, steady states.
-
-\item[2010-06-05 Predrag]
-I think that you get equilibrium solutions only within subspaces fixed by
-$D_4$ symmetries. The should be also $\SOn{2}$ travelling wave solutions,
-perhaps also important. They would come in two flavors - with irrational
-velocities, and pre-periodic, belonging to a discrete $C_m$ subgroup of
-$\SOn{2}$. And you can bifurcate into Hopf cycles, traveling waves, periodic
-orbits, relative periodic orbits etc., unless for some reason the physics
-does not like anything time-dependent.
-
-\item[2010-06-05 Daniele Avitabile]
-In order to do that we need to factor out the continuous
-group symmetry $\SOn{2}$. As far as I understood from your comments, we
-should be careful in doing that, as the the phase condition that we chose
-now  (seeking a solution in a hyperplane normal to a group-orbit tangent
-vector) is valid only locally. Am I correct in interpreting your
-statement? If so, I should say that we explore our stationary solutions
-only by means of numerical continuation. With this method, the best we
-can do *is to search locally*. What we need to make sure is that, once we
-have a solution and perturb it, we can still invert our problem and find
-a new steady solution. In other words, seeking for a solution locally is
-the best we can do, as far as I can tell. Do you think we could be
-missing some patterns by using our phase condition? I think your
-observation would be absolutely crucial if our continuous symmetry group
-was acting on the time-variable as well, and we wanted to simulate them.
-A typical case would be continuing time-dependent patterns like spiral
-waves or scroll waves. A method that comes to my mind in this context is
-the ``Freezing method'' by Tuemmler and Beyn, which you will probably know. I
-am pretty sure that this differs from the slicing method that you told us
-about. A recent article by Hermann and Gottwald recaps the method and
-contains an extensive set of references about it.
-
-Now, let us assume that we manage to factor out $\SOn{2}$, either locally
-with our phase condition, or globally via the slicing method. You mention
-that you always quotient discrete symmetries. Would you recommend this in
-our case? What is the danger in not factoring them out? My gut feeling is
-that, by factoring $D_4$, for instance, we will make sure that we will find
-just one solution on the group orbit. I don't think this is bad in
-general, and I would be pleased to learn what are the problems associated
-with it.
-
-\item[2010-06-05 Predrag]
-I have read Tuemmler and Beyn and believe ``freezing'' = ``slicing''.
-Siminos and I have Hermann and Gottwald on our reading list, but have not
-studied it yet. Tuemmler and Beyn impose a slice by adding a new
-dimension (the phase parameter) and a condition (a Lagrange multiplier),
-while we go one dimension down by restricting the dynamics into the
-slice. Both approaches are standard in imposing Poincar\' sections; Rytis
-Paskauskas has written that up for Chapter 3 - Discrete time dynamics
-(not yet on the public version), and Chapter 13 - Fixed points, and how
-to get them, Section 13.4 Flows. My feeling is that Tuemmler and Beyn is
-better, but we have not implemented it. If you do use it, let me know how
-it works.
-
-[I moved the discussion to Channelflow.org blog, and that killed it -
-never heard from them again]
-
 
 \item[2010-06-15 Predrag] Just talked to
 \HREF{http://www.crcg.de/wiki/Chenchang_Zhu}
@@ -4110,8 +3988,24 @@ give new strange attractors.
 
 Nambu Hamiltonians are discussed in siminos/lyapunov blog.
 
-\item[2010-11-04 Predrag] For freezing KS discussions, go to
+\item[2011-11-04 Predrag] For freezing KS discussions, go to
 \refsect{sect:freeze}
+
+\item[2012-01-12 Predrag] It's getting to easy to steal books. Clicked on
+\HREF{http://www.ebook4download.com/2012/01/12/an-introduction-to-tensors-and-group-theory-for-physicists/}
+{Ebook4download.com}. Got a brand new book\rf{Jee11}, {\em An
+Introduction to Tensors and Group Theory for Physicists}, whose list
+price is \$60. \HREF{http://ChaosBook.org/library/Jee11.pdf}{Click here}
+for a pirated copy. Most of the books one would like to steal are not
+there - seems to be stuff published recently in eBook formats, even though
+they claim to have over 100,000 books.
+
+I also stole
+Cartan\rf{Cartan01} {\em Riemannian geometry in an orthogonal frame: {From} lectures
+ delivered by \'Elie Cartan at the Sorbonne in 1926-1927}:
+\HREF{http://ChaosBook.org/library/Cartan01.djvu}{Click here}.
+It starts with ``Moving frames,'' perhaps they are the ones we are using.
+
 
 \end{description}
 
