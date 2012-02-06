@@ -13,6 +13,10 @@ you can hand-write equations
 get LaTeX back!
 
 ----------------------------------------------------------------
+                                        Predrag 2012-02-06
+a 2010 overview over LaTeX graphics:
+    www.math.nus.edu.sg/aslaksen/cs/textrix.pdf
+----------------------------------------------------------------
                                         Predrag 2012-01-04
 MapleWorks.com/software-products/overview-software-products/android-note-taking-app/
     MaplePaint seems easy to use from Samsung Galaxy Android tablet,
