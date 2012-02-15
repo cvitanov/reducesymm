@@ -1434,9 +1434,9 @@ l3=['T_p=' num2str(rpo(ipo1).T1,4)];
 
 % Changing input data here!!!
 load kse22orbits;
-% vInv=gsorth([mfinvTraj(rpo(1).evec(:,1)) vInv(:,1) vInv(:,2)]);
-% vInv=gsorth([mfinvTraj(rpo(1).evec(:,1)) mfinvTraj(rpo(1).evec(:,4)) vInv(:,1)]);
-% vInv=gsorth([vPoinc vInv(:,1) vInv(:,2)]);
+vInv=gsorth([mfinvTraj(rpo(1).evec(:,1)) vInv(:,1) vInv(:,2)]);
+vInv=gsorth([mfinvTraj(rpo(1).evec(:,1)) mfinvTraj(rpo(1).evec(:,4)) vInv(:,1)]);
+vInv=gsorth([vPoinc vInv(:,1) vInv(:,2)]);
 
 aamf=vInv'*mfinvTraj(aa);
 aa0mf=vInv'*mfinvTraj(aa0);
