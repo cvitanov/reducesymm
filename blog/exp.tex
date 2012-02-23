@@ -13,7 +13,7 @@ the \mslices, I talked to experimentalists
 \HREF{http://www.mcnd.manchester.ac.uk/mullin.html}{Tom Mullin}
 and
 \HREF{https://www.irphe.fr/~legal/}{Patrice Le Gal}
-(studies instabilities and transitions of rotor-stator flows) about
+(who studies instabilities and transitions of rotor-stator flows) about
 implementing numerically the `nearest group orbit point' distance for
 \emph{experimental} video images of flows. Experimentally collecting the
 full 3D velocity vector field information is not feasible, but as the
@@ -25,8 +25,10 @@ identify the nearest neighbors. In the fluids community everybody worries
 about choices of `norms', especially the control engineers who have to
 optimize perturbations in order to attain desired ends. People agree that
 there is no compelling reason to use the energy norm, other than that
-velocity fields is what is given in a numerical computation. In practice
-people use ``dissipation norms'', ``compensatory norms'', \etc, \etc.
+velocity fields is what is given in a numerical computation. For example,
+in the study of `optimal perturbations' that move a laminar solution to a
+turbulent one, both energy\rf{TeHaHe10} and dissipation\rf{LoCaCoPeGo11}
+norms have been used.
 
 My first thought has been to define a Gaussian-smeared out norm to
 compare Hamming (pixel by pixel) distance between two images, smearing
@@ -102,12 +104,18 @@ fluid.
 
 \begin{description}
 
-%\item[2011-08-12 Predrag]
+\item[2012-02-22 Predrag]
+If the norm $\braket{y}{x}$ is defined as some pixel - to pixel distance,
+what trouble are we to expect from the fact we are measuring distance
+only on the subset of dimensions of the full PDE problem? In the energy
+norm we use the full velocity field to measure distances; in this
+proposal we use a subset that is captured by experimental camera. No
+idea...
 
 \item[2011-12-23 Bj\"orn]
 About slicing, sure it would be great to do this with experimental data.
-Though in pipes we typically do not have the time information. Even with
-simple flow visualization images we typically just look at a few
+In pipes we typically do not have the time information. Even with
+simple flow visualization images we typically look at a few
 diameters in length (fixed in the lab frame) and turbulence advects past.
 I guess we would have to visualize long sections for slicing to have the
 necessary time information?
@@ -120,20 +128,20 @@ hypothesis) and then feed the 3D structure. Have a look at
 \refref{deLMeAvHo12} (Predrag put a copy into the ChaosBook.org/library,
 \HREF{http://ChaosBook.org/library/deLMeAvHo12.pdf}{click here}).  One
 case is in there (figures 2 and 3). We just tried a second case (we only
-tried two so far) and it converged to another traveling wave (to the
-symmetric version of the one in the paper which is also on the edge). For
+tried two cases so far) and it converged to another traveling wave (to the
+symmetric version of the one in the paper, which is also on the edge). For
 numerical people it may not be too extraordinary to converge something
 with Newton but for experiments I did not expect this would ever work. We
 will try this with turbulent data (i.e. non decaying) next.
 
-We have also made progress with this volumetric PIV technique we can now
+We have also made progress with this volumetric PIV technique. We can now
 measure the full velocity field in a volume about one diameter streamwise
 (this gives us some time information).
 
 How about if we use a mixed experimental and numerical strategy? We could
 use whatever velocity data we get from experiments (preferably 3D in a
 volume) and get further time information from time stepping this in a
-numerical code and then do the slicing ???
+numerical code and then do the slicing???
 
 I will discuss further slicing possibilities in experiments with Marc.
 
@@ -144,23 +152,31 @@ doing this with velocity data rather than flow visualization images.
 What is easy for us to do is to measure cross sections with all three
 velocity components (like in the 2004 Science paper). If we do this fully
 time resolved we can get about 100 D/U time units continuous data with
-one measurement (after that the camera memory is full). Now the
-difficulty then is that the information we get is the evolution in space
-rather than in time. Meaning that we sample turbulent structures as they
+one measurement (after that the camera memory is full). The
+difficulty is that the information we get is the evolution in space
+rather than in time, \ie, we sample turbulent structures as they
 are advected through our measurement cross section. But possibly this is
 not a problem for the slicing technique and we can just ignore this to
-some extend (??).
+some extent (??).
 
-If that is the case I suggest the following procedure we take the 100 D/U
+If that is the case I suggest the following procedure: We take the 100 D/U
 velocity data, and put a window of lets say 2.5 D over it. Inside this
 2.5 D window we pretend turbulence is frozen in time, which gives us the
 3D spatial information. Then we move this window across our data set
 which gives us the time information.
 
-Basically this way we get turbulence in a short BUT non periodic pipe.
+Basically this way we get turbulence in a short BUT non-periodic pipe.
 
-Could we do slicing with this?? I would think that with this we can
-probably identify traveling waves but I don't see how we could find
-periodic orbits, for this we would need the time information.
+Could we do slicing with this? I would think that with this we can
+probably identify traveling waves but I do not see how we could find
+\rpo s, for which we would need the time information.
+
+\item[2012-01-09 Bj\"orn]
+Let me try to simplify what I meant: In the experiment we are lacking
+periodic boundary conditions and turbulence advects past. Now if we
+assume that coherent structures in the experiment are short (at  the
+most we found one or two wavelength) then we cannot see a full
+oscillation period either. The structure will have disappeared downstream
+before a full period has passed.
 
 \end{description}
