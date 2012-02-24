@@ -22,3 +22,9 @@ see         siminos/froehlich/slice/00ReadMe.txt
             siminos/froehlich/CNSNS-v2/response1.txt
 
 ----------------------------------------------------------------
+                        Predrag  Feb 23, 2012
+have the journal PDF file (not allowed to put it on our
+homepages by Elsavier), not added to svn repository
+    FrCv11jrnl.pdf
+
+----------------------------------------------------------------

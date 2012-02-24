@@ -1,4 +1,4 @@
-siminos/atlas/00ReadMe.txt
+siminos/atlas/Chaos-v1/00ReadMe.txt
 $Author$
 $Date$
 ------------------------------------------------------------
