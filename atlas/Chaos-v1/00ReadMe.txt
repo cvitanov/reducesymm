@@ -2,13 +2,32 @@ siminos/atlas/00ReadMe.txt
 $Author$
 $Date$
 ------------------------------------------------------------
+submit before April 16, 2012
 
-Slice & chart letter
+Slice & chart pedagogical introduction
 ====================
 	Reduction of continuous symmetries of chaotic flows
 	by the method of slices
 
-Predrag Cvitanovic
+Predrag Cvitanovic et al
+
+-------------------------------------------------------------
+Predrag ver. 0.2, 						Feb 22 2012
+
+Focus issue for Chaos: "50 Years of Chaos"
+To submit your paper to Chaos, please go to our web-based peer review and
+submission system at http://chaos.peerx-press.org. The website is
+currently open to accept papers for this focus issue, and you may submit
+your papers at any point through the manuscript due date,
+
+                April 16, 2012.
+
+Please note the following items requested at submission:
+    (1) a cover letter
+        siminos/atlas/letters/submLett.doc
+        title, authors, contact information, and mention this Focus issue
+    (2) the article file in LaTeX
+    (3) individual figure files in high-quality PDF formats
 
 -------------------------------------------------------------
 Predrag ver. 0.1, 						Dec 10 2011
@@ -30,17 +49,17 @@ arXiv resubmission (here for future use)
 arxiv article-id:       1101.????v2     2011-04-28
      for details, please see/edit ../arXiv-v2/00ReadMe.txt
 
-JFM resubmission  (here for future use)
+Chaos resubmission  (here for future use)
 ----------------
                                         2011-04-28
-JFM referee responses, edits
+Chaos referee responses, edits
 ----------------------------
 Predrag:						      Apr 1 2009
     generate colored comments for referees,
         PCedit\{...\}, etc in defslice.tex,
     then go back to B&W for the final resubmission
 
-JFM submission (here for future use)
+Chaos submission (here for future use)
 --------------
 
 arXiv submission (here for future use)
