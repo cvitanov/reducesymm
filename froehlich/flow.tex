@@ -151,73 +151,21 @@ is the \jacobianM. How nearby trajectories separate or approach each other depen
 \velField{\ssp(t)}=\jMps^t(\xInit) \velField{\xInit}
 \,,
 \ee{JacobVeloc}
-see \refexer{traLocEigFr}.
-    \PC{remember to move \refexer{traLocEigFr}
-    and its solution into ChaosBook. Currently it
-    appears too early, search for ``traLocEigFr.''
-    }
+see  exer {traLocEigFr}.
 
 The methods of calculating the \jacobianM\ are discussed in ChaosBook.org\rf{DasBuch} where it is shown that the \jacobianM\ matrix is related to the stability matrix by $\frac{d}{dt} \jMps^t(x)=\Mvar (x) \jMps^t(x)$ or equivalently
 \[
 \jMps^t(\xInit)= \texttt{T} e^{\int^t_0 d\tau \Mvar (x(\tau))}
  \,,
 \]
-where \texttt{T} stands for a time-ordered product. When using a numerical routine to integrate the equations of motion, evaluation of either of these two formulas requires minimal additional programming effort.
+where \texttt{T} stands for a time-ordered product. When using a
+numerical routine to integrate the equations of motion, evaluation of
+either of these two formulas requires minimal additional programming
+effort.
 
-% PC 13jul2010
-\exercise{Transport of local eigenframes.}{     \label{traLocEigFr}
-     \toCB
-\noindent (a)
-Derive \refeq{JacobVeloc}.
-(b)
-More generally, consider the
-eigen\-vectors $\jEigvec[j]$ of $\jMps^t(\ssp)$
-(sometimes referred to as `covariant Lyapunov vectors,'
-or, for \po s, as `Floquet vectors')
-\index{covariant Lyapunov vector}
-\index{Lyapunov!covariant vector}
-\beq
-\jMps^t(\ssp)\, \jEigvec[j](\ssp(t))
-   = \ExpaEig_{j}(t) \,\jEigvec[j] (\ssp(t))
-\,,
-\ee{finTimeEigs}
-and show that a time $t'$ later they are transported into
-eigenvectors $\jEigvec[j](\ssp(t+t'))$ of
-$\jMps^{t+t'}(\ssp)$.
-\authorPC{2010-07-12}
-    }% end \exercise{Transport of local eigenframes.
+({\bf 2012-02-24 PC}: moved exercise traLocEigFr to ChaosBook
+exerStability.tex)
 
-
-\solution{traLocEigFr}{Transport of local eigenframes.}{
-\noindent (a)
-Consider two points that are an infinitesimal time apart along a trajectory:
-$\delta \xInit
-  = \flow{\timeStep}{\xInit}-\xInit \approx \velField{\xInit}\timeStep$.
-As $\flow{t+\timeStep}{\xInit} =
-\map^t \circ \flow{\timeStep}{\xInit}=\map^{\timeStep} \circ \flow{t}{\xInit}$,
-we have
-$\flow{\timeStep}{\map^t(\xInit)}=\flow{\timeStep}{\ssp(t)}
-\approx x(t) + \velField{\ssp(t)} \timeStep$ and
-$\flow{t}{\flow{\timeStep}{\xInit}}
-=\flow{t}{\xInit+\velField{\xInit} \timeStep}
-\approx \flow{t}{\xInit} + \jMps^t(\xInit) \velField{\xInit} \timeStep$.
-Putting these two equations together we get the desired
-\refeq{JacobVeloc}.
-
-\noindent (b)
-Predrag: I am not sure that this statement is correct, please
-prove or disprove. Basically, check that \refeq{SF:transpEigPO}
-is true for any orbit, not only \po s.
-
-A tangent subspace $T\pS^{(i)}$ of the \statesp\ is said to be {\em covariant} if
-\beq
-T\pS^{(i)}(\ssp(t)) = \jMps^t(\xInit) T\pS^{(i)}(\xInit)
-\ee{SF:covSubsp}
-This definition also applies to covariant vectors, if $T\pS(i)$ is one-dimensional.
-Covariant subspaces
-are co-moving with the tangent flow.
-\authorSF{2010-07-??}
-    }% end
 
 \subsection{\Eqva\ of \cLe}
 
@@ -230,7 +178,6 @@ instead of seeing the messiness of \reffig{fig:CLEx2y1z}, we
 would stay at this single point for all times. In any
 simulation, for unstable \reqv\ the (finite precision)
 trajectory eventually leaves this point.
-                                                    \exerbox{exer:EquiCLe}
 
 % \subsection{Stability of \eqva}
 
@@ -240,7 +187,6 @@ they collapse into the equilibrium, or will they diverge away
 from it? In order to answer this, we find and examine the
 eigenvalues and eigenvectors of \Mvar\ evaluated at the
 equilibrium $\EQV{0}$, the origin.
-                                                    \exerbox{exer:EigenE0}
 For the \cLe\, we find that the eigenvalues are
         \PC{ChaosBook convention is to order eigenvalues
         from most positive (unstable) to the most negative,
@@ -287,7 +233,6 @@ imaginary parts are orders of magnitude smaller than the real
 parts, so that there will be very little spiraling. The large
 values of the real parts tell us that the flow will
 diverge/converge from the equilibrium very quickly.
-                                                    \exerbox{exer:PlotEigenE0}
 
 
 \subsection{\Po s}
@@ -361,4 +306,3 @@ So $\ExpaEig_j$ is a Floquet multiplier for
 $\jMps_p\left(\ssp'\right)$ too.
 
     \fi %end of article switch
-

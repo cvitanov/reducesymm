@@ -10,6 +10,138 @@ started a new blog, for Predrag's putative letter
 
 \texttt{siminos/atlas/atlas.tex}
 
+\item[2010-07-07 PC]                                    \toCB
+A more mathematical thing to fix (not essential if we stick to $\SOn{1}$
+case): a clear discussion how the projection of the group tangent version
+works for simple Lie groups of dimension higher than $N=1$. It will
+involve quadratic Casimir operators, full irreducibility, completeness,
+and other such healthy things.
+
+\item[2010-07-12 PC] Now, a more serious thinking,
+intellectual
+challenge. Rytis and I have started, but not really completed
+and written up well a description of how to implement Poincar\'e
+section and slice constraints for any continuous Lie symmetry.
+Stefan, please study (all references are to the ChaosBook
+boyscout version 13.2, Jul 12 2010):
+\begin{itemize}
+  \item[4.5.1] Stability of Poincar\'e return maps
+  \item[5.3] Stability of Poincar\'e map cycles
+  \item[13.4] Flows
+\end{itemize}
+and write your own synthesis of ``Laplace multipliers''
+approach to sectioning and slicing a continuous-time
+flow with other continuous Lie symmetries. Try first
+incorporating $SO(2)$ symmetry as an example, than
+a general Lie group $\Group$. Symplectic AKA Hamiltonian
+flows are another important class of examples.
+
+\item[2010-07-12 ES]                                \toCB
+Stefan I have added data for the $4$ shortest rpo's
+in
+
+siminos/CLE/data/CLErpo.dat
+
+It is a plain text file, with tab separated values for the following:
+
+period, angle, initial condition $(x_1,x_2,y_1,y_2,z)$,
+Jacobian eigenvalues (5 real numbers)
+
+Let me know if you have trouble importing them and verifying
+the period, shift and stability eigenvalues.
+
+Note to self: Tabulate all computed orbits in this human and machine readable format,
+rather than Mathematica's own that I use right now.
+
+\item[2011-07-08 Predrag]  Still have to derive the general case: ``
+Let $\sliceTan{}$ be a vector normal to the plane of the slice. Then the
+dynamics within the slice are given by
+\bea
+\dot{\gSpace_a}(\sspRed) &=& \frac{\braket{\vel(\sspRed)}{\sliceTan{a}}}
+               {\braket{\groupTan(\sspRed)}{\sliceTan{}}}
+\continue
+\velRed(\sspRed) &=& \vel(\sspRed)
+   -\dot{\gSpace}(\sspRed) \cdot \groupTan(\sspRed)
+\label{SF:sliceEas1}
+\eea
+where $\velRed(\sspRed)$ is the velocity in the slice.
+
+  %
+We only care about those that are local (and preferably global) {\em
+minima}, for which all the eigenvalues of the symmetric matrix
+$[N\!\times\!N]$ matrix of second derivatives of distance,
+\beq
+\frac{\partial^2}
+     {\partial \gSpace_a \partial \gSpace_b}
+        |\sspRed - \slicep|^2
+    =
+%  - \braket{\Lg_a e^{\gSpace \cdot \Lg} \ssp}{\sliceTan{b}}=
+  - \braket{\groupTan_a(\sspRed)}{\sliceTan{b}}=
+  \braket{\sspRed}{\Lg_a \Lg_b\slicep}
+\ee{PCinflPoint1}
+are positive. In practice we do not need to actually compute this matrix,
+we simply pick from among the local minima the infimum of the distance.
+
+
+ %% ReducTraj*.* - read dasbuch/book/FigSrc/inkscape/00ReadMe.txt
+ \begin{figure}
+ \begin{center}
+  \setlength{\unitlength}{0.40\textwidth}
+  %% \unitlength = units used in the Picture Environment
+  \begin{picture}(1,0.8361641)%
+    \put(0,0){\includegraphics[width=\unitlength]{ReducTraj5.pdf}}%
+    \put(0.09054399,0.38282057){\color[rgb]{0,0,0}\rotatebox{-30.34758661}{\makebox(0,0)[lb]{\smash{$\pSRed$}}}}%
+    \put(0.57768586,0.29773425){\color[rgb]{0,0,0}\rotatebox{0.0313674}{\makebox(0,0)[lb]{\smash{$\sspRed(0)$}}}}%
+    \put(0.59310014,0.69932675){\color[rgb]{0,0,0}\rotatebox{0.03136739}{\makebox(0,0)[lb]{\smash{$\ssp(\tau)$}}}}%
+    \put(0.8268425,0.39772328){\color[rgb]{0,0,0}\rotatebox{0.03136739}{\makebox(0,0)[lb]{\smash{$\sspRed(\tau)$}}}}%
+    \put(0.81220962,0.66529577){\color[rgb]{0,0,0}\rotatebox{0.03136739}{\makebox(0,0)[lb]{\smash{$\LieEl(\tau)$}}}}%
+    \put(0.23150193,0.63610779){\color[rgb]{0,0,0}\rotatebox{0.0313674}{\makebox(0,0)[lb]{\smash{$\LieEl\,\slicep$}}}}%
+    \put(0.37740434,0.49597258){\color[rgb]{0,0,0}\rotatebox{0.0313674}{\makebox(0,0)[lb]{\smash{$\slicep$}}}}%
+    \put(0.3627714,0.69665188){\color[rgb]{0,0,0}\rotatebox{0.0313674}{\makebox(0,0)[lb]{\smash{$\sliceTan{}$}}}}%
+  \end{picture}%
+ \end{center}
+ \caption{\label{fig:ReducTraj}
+ % (b)
+\Slice\ \pSRed\ is a hyperplane \refeq{PCsectQ}
+passing through the {\template} point $\slicep$,
+and normal to the group tangent $\sliceTan{}$ at $\slicep$.
+It intersects all
+group orbits (indicated by dotted lines here) in an open
+neighborhood of $\slicep$.  The full
+\statesp\ trajectory $\ssp(\tau)$ and the \reducedsp\
+trajectory $\sspRed(\tau)$ belong to the same group orbit
+$\pS_{\ssp(\tau)}$ and are equivalent up to a group rotation
+$\LieEl(\gSpace)$, defined in  \refeq{sspOrbit}
+(from \wwwcb{}).
+ }%
+ \end{figure}
+													\toCB
+Ponder whether to use \reffig{fig:ReducTraj} (current, but not updated
+yet), or Fig~{fig:slice} in ChaosBook.org
+How it was drawn is described in
+\\
+dasbuch/book/FigSrc/inkscape/00ReadMe.txt
+
+\item[2011-07-08 Predrag]
+The $L^2$ norm of $\groupTan(u)$ is weighted by
+the quadratic Casimir \refeq{QuadCasimir}. For \SOn{2} this is
+$C_2^{(m)} = m^2$,
+\beq
+\oint \frac{d\gSpace}{2\pi}
+     \, (\Lg u(\gSpace))^T \Lg u(2\pi-\gSpace)
+= \sum_{m=1}^\infty m^2 \left(a_m^2 + b_m^2\right)
+\,.
+\ee{tangL2norm1}
+
+
+\item[2011-07-08 Predrag]
+Ridges are of Lebesgue measure zero, no way you would hit them.
+
+We do not need to be very precise about the instant
+where we switch, as long as we are away from either slice's singularity
+subspace.
+
+
 \item[2011-07-08 Predrag, from \refref{FrCv11}]                     \toCB
 At this point it is worth noting that imposing the global and fixed slice
 %\refeq{PCsectQ}
