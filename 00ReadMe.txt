@@ -40,10 +40,17 @@ figsSrc/
 inputs/
 	one directory for all Siminos specific macros
 
+jobs/
+	Siminos eternal job search info.
+
 thesis/
+	Siminos Thesis
+tex/
+	customized tex and bibtex style files
 
 www/
     Siminos home pages (tres elegantes)
+	--> moved to repository siminoswww
 
 talks/
     all symmetry reduction talks
@@ -53,6 +60,9 @@ posters/
 
 scripts/
     potentially useful scripts 
+
+statements/
+	Siminos research statements
 
 blog/
     all matters pertaining to symmetry reduction reading
@@ -66,9 +76,10 @@ froehlich/
 chao/
     Chao's blog
 
+CV/
+	Siminos CV
 ---------------------------------------------------------------
 TO FIX:
-- 2011-03-16: emaildict for Chao Shi reply-to address
 
 ---------------------------------------------------------------
 NOTES:
