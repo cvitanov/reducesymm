@@ -122,6 +122,161 @@ How it was drawn is described in
 \\
 dasbuch/book/FigSrc/inkscape/00ReadMe.txt
 
+  \item[2010-12-06 PC]
+% ES 2010-01-19  Rescued from FrCv11.tex flotsam:
+{\bf Tessellation of the \reducedsp\ by two or many slices:
+how to implement it?}
+Our proposal is essentially to approximately
+\HREF{http://en.wikipedia.org/wiki/Voronoi_tessellation} {Voronoi
+tessellate} (see \HREF{http://en.wikipedia.org/wiki/Voronoi_diagram}
+{wiki on Voronoi diagrams})
+We have to study Roweis  and Saul\rf{RoSa00}
+\emph{``Nonlinear dimensionality reduction by locally linear embedding.''}
+A sobering fact: Roweis, assistant professor at N.Y.U., a young
+star in the field and universally liked, jumped out of his Washington
+Square apartment earlier this year.
+
+ This tessellation is akin to the
+%\HREF{http://en.wikipedia.org/wiki/Vector_quantization}
+{`vector quantization,'} (`block quantization,'  `pattern matching quantization'),
+a computer science data compression method where sets of points are
+clustered by their distance to `prototype' or `reference' points.
+In computer science and linear programming a related method
+is called \HREF{http://en.wikipedia.org/wiki/Vector_quantization}{`vector
+quantization,'}
+    \PC{credit Sara A. Solla with this observation}
+(`block quantization,' `pattern matching
+quantization'), a lossy data compression method where sets of points are
+clustered by their distance to `prototype' or `centroid' points.
+The
+method is `lossy,' as in the replacement of a point by its `prototype,'
+one drops the residual, \ie, the Euclidean distance between the two. It
+works by encoding values from a multidimensional vector space into a `a
+codebook,' a finite set of values from a discrete subspace of lower
+dimension; \ie, what in the theory of dynamical systems is called
+`symbolic dynamics.' Only the index of the codeword in the codebook is sent, thus
+conserving memory and increasing compression. Vector quantization
+numerical algorithms are unlikely to be useful to us.
+
+% in part clipped from
+% www.cs.unm.edu/~terran/downloads/classes/cs529-s10/docs/pretest_soln.pdf
+An (affine) hyperplane is the locus of points obeying the equation:
+\[
+\sliceTan{1}\sspRed_1 + \sliceTan{2}\sspRed_2 + \cdots + \sliceTan{d}\sspRed_d = c
+\,.
+\]
+In vector notation $\braket{\sspRed}{\sliceTan{}{}^{(j)}}=0$. In the case
+of a slice the extremal distance condition sets $c=0$, so all our slices
+include the point at the origin, $\sspRed=0$, and are not affine. A
+$(d\!-\!1)$-dimensional hyperplane embedded in a $d$-dimensional space
+and passing through the origin is defined by a normal vector \sliceTan{},
+a vector orthogonal to every vector in the hyperplane (\sliceTan{} is the
+primary object, the template \slicep\ secondary in this way of thinking).
+The intersection of two hyperplanes is a $(d\!-\!2)$-dimensional
+hyperplane - the `ridge, `boundary,' or `edge' where two hyperplanes
+meet. The intersection is $(d\!-\!2)$-dimensional because every vector in
+the intersection must be orthogonal to the normals of both hyperplanes.
+It is a $(d\!-\!2)$-dimensional hyperplane which also goes through the
+origin. If you are an ant crawling along the trajectory $\sspRed(\tau)$
+symmetry-reduced with respect to the first slice, you do not need to
+compute this hyperplane. Every so often you compute
+$\braket{\sspRed(\tau)}{\sliceTan{}{}^{(2)}}$. As long as this number is
+negative, you have not gone too far. The moment it changes sign, you the
+ant have crossed ridge, we symmetry-reduce with respect to the second
+slice, and the ant continues its merry stroll along the second slice. We
+do not need to be very precise about the instant where we switch, as long
+as we are far away form wither slice's singularity subspace, so the ridge
+can be `fuzzy,' and the numerical check infrequent and cheap.
+
+There is a rub, though - you have to figure out how to pick the phases of
+different templates $\sliceTan{}{}^{(j)}$ in such way that you somehow
+minimize the distance from one to the next as you cross the ridge. We
+proposed in \refref{SCD07} to use heteroclinic connections for that - they
+fix the relative phases of different \eqva.
+
+
+ \item[2010-01-19 ES: Roweis and Saul\rf{RoSa00}] is indeed a very interesting
+  paper that got me thinking again -- so much that I took the day off to devote
+  it to symmetry reduction.
+
+  The main goal is to construct a global, low dimensional ``intrinsic''
+  embedding of high-dimensional data based on locally linear transformations.
+  I will mention the three steps involved very briefly (but they will only make
+  sense once one reads \rf{RoSa00} or the more detailed \rf{SaRo02}):
+  (1) compute for each state space point its
+  closest neighbors (within the sampled data), (2) solve a costrained
+  least squares minimization problem for the (local) linear transformation
+  matrix $W_{ij}$ that most accurately reconstructs each data point
+  from its neighbors. (3) Given $W_{ij}$ (only!) solve a second minimization
+  problem for the coordinates of each data point in a new, lower-dimensional,
+  global coordinate system. In practice this involves solving a sparse
+  eigenproblem for the first $d$ eigenvectors, where $d$ the dimension of
+  the embedding.
+
+  Roweis and Saul argue that the transformations computed in step (2) are
+  translation, rotation and scaling invariant by construction and certain
+  constraints imposed. This would fit us very well, but do we really want
+  to also compute a low dimensional embedding? In principle this is what we are
+  after, but we also do not want to make any drastic approximation of the
+  dynamics at this stage.
+
+  One option might be to reduce only by the group dimension.
+  However one has to consider at least as many closest neighbors
+  in step (1) as the dimension of the embedding. Then I would think that
+  the problem might be computationally very intensive.
+
+  Another option would be to bypass step (2) altogether and use a local
+  moving frame transformation to map the local neighborhood of (a few?)
+  sample points to local slices, then use step (3) to construct a global
+  coordinate frame.
+
+  In any case we might need to work with a symmetry invariant norm for the
+  minimization problems, rather than the Euclidean distance used in \rf{RoSa00}.
+
+  I would be very interested to try something else in a system without symmetry
+  (e.g. KSe in antisymmetric subspace). Take the sample points from a dense
+  set of periodic orbits. Rather than computing the  local transformation
+  $W_{ij}$ in step (2), use the Jacobian of the periodic orbits
+  (or use something Lyapunov vector related, if we get into this).
+  Compute the global embedding as in step (3). Does it faithfully reproduce
+  the dynamics? Can we learn something about the dimensionality of
+  the attractor (actually of the embedding manifold)?
+
+  There are $\sim1500$ papers citing \rf{RoSa00} so it is impossible to track
+  all of them down. The ones from physics and math are fewer and the only one
+  directly relevant to us I could find is by Bollt\rf{bollt07}.
+  It does however use a different pattern recognition method (called ISOMAP)
+  to compute embeddings of various systems, including KSe in antisymmetric
+  subspace (no continuous symmetry reduction there).
+
+\item[2011-01-24 PC] I know about ISOMAP and have decided that for us
+it is a bad idea. Will blog that some other time.
+
+\item[2011-02-04 ES] But what do you think about this method of Roweis and
+Saul? It seems to do much better than ISOMAP for pattern recognition.
+The important point that distinguishes it from ISOMAP appears to be that
+it respects spatial relationships between neighboring points and
+also conserves lengths.
+
+\item[2011-01-24 PC] Made a claim in the slice \&\ dice article:
+``
+What about the fixed-point subspace $\pS_\Group$?
+Because of it, the action of \Group\ is globally neither free nor proper,
+\etc. All intersections of slices, ridges and {\sset s} contain the
+fixed-point subspace $\pS_\Group$. Should we worry? Not really. The
+objective of the \mslices\ is to freeze all equivariant coordinates; once
+frozen, they together with the  $\pS_\Group$ coordinates span the
+symmetry-\reducedsp.
+''
+
+Hope that is right. Have a further claim - it's easy to perturb away from
+the fixed-point subspace $\pS_\Group$; in linear order the perturbations
+commute, so equivariance implies the full reducibility of these
+perturbations into block-diagonal components for each representations.
+This is how it all started, with Ruelle\rf{ruell73}, but I think it is true
+for \emph{all} perturbations from  $\pS_\Group$, not just the stability
+of \eqva.
+
 \item[2011-07-08 Predrag]
 The $L^2$ norm of $\groupTan(u)$ is weighted by
 the quadratic Casimir \refeq{QuadCasimir}. For \SOn{2} this is
@@ -132,6 +287,8 @@ $C_2^{(m)} = m^2$,
 = \sum_{m=1}^\infty m^2 \left(a_m^2 + b_m^2\right)
 \,.
 \ee{tangL2norm1}
+
+
 
 
 \item[2011-07-08 Predrag]
@@ -579,19 +736,37 @@ From \refref{AmLeAg06}:
 =Ax+b$, where $A$ is a constant matrix and $b$ is a constant vector.''
 
                                             \toCB
-Draw (un)stable eigenvectors as in \reffig{fig:AmLeAg06Im1}.
+Draw (un)stable eigenvectors as in \reffig{fig:AmLeAg06Im1}. Also, run
+the unstable spiral(s) for the upper brunch further out, to trace out the
+basin boundary.
+
+
 ``
-In the R\"ossler system, the switching is induced by the
-nonlinearity which acts when the trajectory is sufficiently far
-from lower fixed point, that is, beyond the threshold $x-c$ in
-the third equation. The nonlinearity
-acts when the trajectory is sufficiently close to upper fixed
-points where its converging spiral induces the folding by
-sending the trajectory back to the neighborhood of lower fixed
-point along its unstable manifold. Thus, the lower fixed point
-is mainly responsible for the stretching and upper fixed point for
-the folding.
+In the R\"ossler system, the switching is induced by the nonlinearity
+which acts when the trajectory is sufficiently far from lower fixed
+point, that is, beyond the threshold $x-c$ in the third equation. The
+nonlinearity acts when the trajectory is sufficiently close to upper
+fixed points where its converging spiral induces the folding by sending
+the trajectory back to the neighborhood of lower fixed point along its
+unstable manifold. Thus, the lower fixed point is mainly responsible for
+the stretching and upper fixed point for the folding.
 ''
+
+\item[2012-03-02 Predrag] Francesco likes my explanation why Euclidean
+invariance leads to spirals. Imagine a thousands of marines parachuted
+into Sahara desert an overcast night with no wind. Turn off their GPSes,
+and order each one of them to march straight to Tripoli. The chance that
+anyone will walk a straight line is zero - at best they will circle, or
+spiral away from where they started. In presence of symmetry, and no cost
+for moving along the group manifold, and no possibility to flip the
+direction of motion, all motions will be drifting.
+
+\item[2012-03-02 Predrag]
+A Modest Proposal: create along with this article a Slice \& Dice
+tutorial, like the \HREF{http://chaosbook.org/tutorials/index.html}{\pCf
+one}. I believe Mathematica has ability to put user-orientable 3D
+graphics into a browser, or HTML5 has that facility - that would make
+slicing much easier to understand.
 
 \item[2012-02-28 Predrag]
     The big problem with \reffig{fig:thetadot2} templates
@@ -600,21 +775,21 @@ the folding.
     some templates picked from most likely the turbulent trajectory
     states.
 
-    The problem with
-    \reffig{fig:thetadot2} that you never explain how you chose
-    \emph{relative phases} between templates. I think the way it should
-    be done is that in the starting slice\ $\pS{}^{(1)}$, a local chart
-    at $\slicep{}^{(1)}$, you plot both points corresponding to group
-    orbits of other templates, and keep checking the distance of
+    The problem with \reffig{fig:thetadot2} that you never explain how
+    you chose \emph{relative phases} between templates. I think the way
+    it should be done is that in the starting slice\ $\pS{}^{(1)}$, a
+    local chart at $\slicep{}^{(1)}$, you plot both points corresponding
+    to group orbits of other templates, and keep checking the distance of
     $\sspRed(\zeit)$ to all $\slicep{}^{(j)}$. The moment one of them,
     let's say $\slicep{}^{(2)}$ is closer to $\sspRed(\zeit)$, you keep
     that $\slicep{}^{(2)}$ (that fixes the relative phase) switch to its
     slice\ $\pS{}^{(2)}$, and keep checking distances there. You cannot
     just pick a random set of points, one on group orbit of each template
-    - slices so constructed can sit anywhere in the full \statesp. It is not
-    a technicality - it is the reason why the shift (red line in \reffig{fig:thetadot2})
-    is still too kinky, and probably the reason why no good guesses for
-    \rpo s embedded deeper in the turbulence have not emerged as yet.
+    - slices so constructed can sit anywhere in the full \statesp. It is
+    not a technicality - it is the reason why the shift (red line in
+    \reffig{fig:thetadot2}) is still too kinky, and probably the reason
+    why no good guesses for \rpo s embedded deeper in the turbulence have
+    not emerged as yet.
 
 
 \end{description}

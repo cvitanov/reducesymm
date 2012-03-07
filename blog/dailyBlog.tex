@@ -3332,119 +3332,28 @@ of chaotic flows.  I attach a copy of this article.
 but useless - no figures (?!).]
 
 Abstract\rf{KoRe96}: ``
-An abstract Newton-like equation on a general Lie algebra is introduced such that orbits of the Lie-group action are attracting set. This equation generates the nonlinear dynamical system satisfied by the group parameters having an attractor coinciding with the orbit. The periodic solutions of the abstract equation on a Lie algebra are discussed. The particular case of the SU(2) group is investigated. The resulting nonlinear second-order dynamical system in $R^3$ as well as its constrained version referring to the generalized spherical pendulum are shown to exhibit global Hopf bifurcation.
+An abstract Newton-like equation on a general Lie algebra is introduced
+such that orbits of the Lie-group action are attracting set. This
+equation generates the nonlinear dynamical system satisfied by the group
+parameters having an attractor coinciding with the orbit. The periodic
+solutions of the abstract equation on a Lie algebra are discussed. The
+particular case of the SU(2) group is investigated. The resulting
+nonlinear second-order dynamical system in $R^3$ as well as its
+constrained version referring to the generalized spherical pendulum are
+shown to exhibit global Hopf bifurcation.
 ''
 
 Abstract\rf{KoRe98}: ``
-In our previous paper\rf{KoRe96}, we introduced an abstract Newton-like equation on a general Lie algebra such that submanifolds fixed by the second-order Casimir operator are attracting set. The corresponding group parameters satisfy the nonlinear dynamical system having an attractor coinciding with the submanifold. In this work we discuss the case with the $SU(2)\times SU(2)$ group. The resulting second-order system in $R^6$ is demonstrated to exhibit chaotic behaviour.
+In our previous paper\rf{KoRe96}, we introduced an abstract Newton-like
+equation on a general Lie algebra such that submanifolds fixed by the
+second-order Casimir operator are attracting set. The corresponding group
+parameters satisfy the nonlinear dynamical system having an attractor
+coinciding with the submanifold. In this work we discuss the case with
+the $SU(2)\times SU(2)$ group. The resulting second-order system in $R^6$
+is demonstrated to exhibit chaotic behaviour.
 ''
 Out there in the left field: this Kowalski article\rf{Kowa97}
 looks provocative.
-
-  \item[2010-12-06 PC]
-% ES 2010-01-19  Rescued from FrCv11.tex flotsam:
-{\bf Tessellation of the \reducedsp\ by two or many slices:
-how to implement it?}
-See \HREF{http://en.wikipedia.org/wiki/Voronoi_diagram}
-{wiki on Voronoi diagrams}.
-We have to study Roweis  and Saul\rf{RoSa00}
-\emph{``Nonlinear dimensionality reduction by locally linear embedding.''}
-A sobering fact: Roweis, assistant professor at N.Y.U., a young
-star in the field and universally liked, jumped out of his Washington
-Square apartment earlier this year.
-
- This tessellation is akin to the
-%\HREF{http://en.wikipedia.org/wiki/Vector_quantization}
-{`vector quantization,'} (`block quantization,'  `pattern matching quantization'),
-a computer science data compression method where sets of points are
-clustered by their distance to `prototype' or `reference' points. The
-method encodes values from a multidimensional vector space into a
-`codebook,' a finite set of values from a discrete space of a lower
-dimension; \ie, what in the theory of dynamical systems is called
-`symbolic dynamics.'
-
-
- \item[2010-01-19 ES: Roweis and Saul\rf{RoSa00}] is indeed a very interesting
-  paper that got me thinking again -- so much that I took the day off to devote
-  it to symmetry reduction.
-
-  The main goal is to construct a global, low dimensional ``intrinsic''
-  embedding of high-dimensional data based on locally linear transformations.
-  I will mention the three steps involved very briefly (but they will only make
-  sense once one reads \rf{RoSa00} or the more detailed \rf{SaRo02}):
-  (1) compute for each state space point its
-  closest neighbors (within the sampled data), (2) solve a costrained
-  least squares minimization problem for the (local) linear transformation
-  matrix $W_{ij}$ that most accurately reconstructs each data point
-  from its neighbors. (3) Given $W_{ij}$ (only!) solve a second minimization
-  problem for the coordinates of each data point in a new, lower-dimensional,
-  global coordinate system. In practice this involves solving a sparse
-  eigenproblem for the first $d$ eigenvectors, where $d$ the dimension of
-  the embedding.
-
-  Roweis and Saul argue that the transformations computed in step (2) are
-  translation, rotation and scaling invariant by construction and certain
-  constraints imposed. This would fit us very well, but do we really want
-  to also compute a low dimensional embedding? In principle this is what we are
-  after, but we also do not want to make any drastic approximation of the
-  dynamics at this stage.
-
-  One option might be to reduce only by the group dimension.
-  However one has to consider at least as many closest neighbors
-  in step (1) as the dimension of the embedding. Then I would think that
-  the problem might be computationally very intensive.
-
-  Another option would be to bypass step (2) altogether and use a local
-  moving frame transformation to map the local neighborhood of (a few?)
-  sample points to local slices, then use step (3) to construct a global
-  coordinate frame.
-
-  In any case we might need to work with a symmetry invariant norm for the
-  minimization problems, rather than the Euclidean distance used in \rf{RoSa00}.
-
-  I would be very interested to try something else in a system without symmetry
-  (e.g. KSe in antisymmetric subspace). Take the sample points from a dense
-  set of periodic orbits. Rather than computing the  local transformation
-  $W_{ij}$ in step (2), use the Jacobian of the periodic orbits
-  (or use something Lyapunov vector related, if we get into this).
-  Compute the global embedding as in step (3). Does it faithfully reproduce
-  the dynamics? Can we learn something about the dimensionality of
-  the attractor (actually of the embedding manifold)?
-
-  There are $\sim1500$ papers citing \rf{RoSa00} so it is impossible to track
-  all of them down. The ones from physics and math are fewer and the only one
-  directly relevant to us I could find is by Bollt\rf{bollt07}.
-  It does however use a different pattern recognition method (called ISOMAP)
-  to compute embeddings of various systems, including KSe in antisymmetric
-  subspace (no continuous symmetry reduction there).
-
-\item[2011-01-24 PC] I know about ISOMAP and have decided that for us
-it is a bad idea. Will blog that some other time.
-
-\item[2011-02-04 ES] But what do you think about this method of Roweis and
-Saul? It seems to do much better than ISOMAP for pattern recognition.
-The important point that distinguishes it from ISOMAP appears to be that
-it respects spatial relationships between neighboring points and
-also conserves lengths.
-
-\item[2011-01-24 PC] Made a claim in the slice \&\ dice article:
-``
-What about the fixed-point subspace $\pS_\Group$?
-Because of it, the action of \Group\ is globally neither free nor proper,
-\etc. All intersections of slices, ridges and {\sset s} contain the
-fixed-point subspace $\pS_\Group$. Should we worry? Not really. The
-objective of the \mslices\ is to freeze all equivariant coordinates; once
-frozen, they together with the  $\pS_\Group$ coordinates span the
-symmetry-\reducedsp.
-''
-
-Hope that is right. Have a further claim - it's easy to perturb away from
-the fixed-point subspace $\pS_\Group$; in linear order the perturbations
-commute, so equivariance implies the full reducibility of these
-perturbations into block-diagonal components for each representations.
-This is how it all started, with Ruelle\rf{ruell73}, but I think it is true
-for \emph{all} perturbations from  $\pS_\Group$, not just the stability
-of \eqva.
 
 
 \item[2011-04-11 Predrag]
