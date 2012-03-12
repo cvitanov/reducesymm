@@ -1,0 +1,168 @@
+% siminos/atlas/symm.tex  pdflatex atlas
+% $Author$ $Date$
+
+
+\subsection{Symmetry-induced coordinate frames}
+\label{s:symm}
+
+So far we have not offered any advice as to the choice of basis vectors
+in constructing \statesp\ coordinates \refeq{intrSspTraj}. We now show
+that at least locally, presence of a continuous symmetry suggests two
+natural mutually orthogonal basis vectors, the group action tangent and
+curvature vectors.
+
+Consider the one-parameter rotation group \SOn{2} acting on a smooth
+periodic function $u(\gSpace + 2\pi) = u(\gSpace)$ defined on domain
+$\gSpace \in [0,2\pi)$, expanded in the Fourier basis
+\[ %beq
+   u(\gSpace) = \sum \ssp_m \mathrm{e}^{\mathrm{i}m\gSpace},
+\] %ee{FourierExp1}
+where, as $u$ is real, $\ssp_m=\ssp_{-m}^*$. Parametrize the forward
+translation by the continuous parameter $\phi$,
+\(
+    \LieEl(\phi)\,u(\gSpace) = u(\gSpace-\phi)
+\,,
+\)
+or, in the Fourier basis,
+\(
+   \LieEl(\phi) \,\ssp = \mathrm{diag}\{ \mathrm{e}^{-\mathrm{i}m\phi} \} \,\ssp
+\,.
+\)
+The tangent to the group orbit at the point $\ssp$ is then given by
+the first derivative with respect to the group parameter,
+The tangent to the group orbit at the point $\ssp$ is then given by
+the first derivative with respect to the group parameter,
+and the direction of curvature by the second derivative,
+\bea
+   {\bf t}(\ssp) &=&
+   \lim_{\gSpace\to 0}
+   \left(\LieEl(\gSpace)\,\ssp - \ssp\right)/\gSpace
+   = \mathrm{diag}\{ -\mathrm{i}m \} \, \ssp = \Lg \ssp,
+\label{eq:tang}\\
+   \kappa(\ssp)\, {\bf n}(\ssp) &=& \Lg^2 \ssp  = - \mathrm{diag}\{m^2\} \, \ssp
+   \,,
+\label{eq:curv}
+\eea
+where $\normVec$ is a unit vector normal to the tangent and
+$1/\kappa$ is the radius of curvature. The pair of unit vectors
+    \PC{2011-10-28
+    ``As $\Norm{\LieEl(\gSpace)\slicep}$ is a constant, for the group tangent
+    vector $\Lg_\gSpace \slicep$ evaluated at $\slicep$ \refeq{eq:tang}
+    %GroupTangField} is normal to $\slicep$, and the term
+    $\braket{\slicep}{\Lg_\theta\,\slicep}$ vanishes ($\Lg_{\theta}$ is
+    antisymmetric).''
+The state vector $\ssp$ is not normal to \normVec(\ssp), as $\braket{\ssp
+\Lg^2}{\ssp} = - \Norm{\groupTan(\ssp)}^2 \neq 0$, but can one use it to
+produce from $\ssp$ the 3. local eigenbasis unit vector? Have not thought
+that through. If we do that here, need to rewrite text leading to
+\refeq{PCsectQ0}.
+    }
+\beq
+\{{\be_n},{\be_{n+1}}\} =
+\{\groupTan(\ssp)/\Norm{\groupTan(\ssp)},\normVec(\ssp)\}
+\ee{FrenetFrame}
+forms a local orthogonal Frenet-Serret frame at $\ssp$, and can be useful
+in constructing the \statesp\ basis vector set \refeq{intrSspTraj}. For
+example, in \reffig{f:MeanVelocityFrame} the \rpo\ $\RPO{36.92}$ is
+projected onto the $3$\dmn\ orthogonal frame
+\beq
+\{{\be}_1,{\be}_2,{\be}_3\}
+=
+\left\{{\groupTan(\sspRed_0)}/{\Norm{\groupTan(\sspRed_0)}},
+\,\normVec(\sspRed_0),\,
+(\sspRed_d-\sspRed_0)_{GS} \right\}
+\ee{FrenetFrame1}
+where $\sspRed_0=\sspRed(0)$ is a point on the \rpo, $\sspRed_d$ is the
+most distant point  from $\sspRed_0$ along its symmetry-\reducedsp\ orbit
+$\sspRed(\zeit)$, measured in the energy norm \refeq{innerproduct}, and
+$(\sspRed_d-\sspRed_0)_{GS}$ is their separation vector, Gram-Schmidt
+orthogonalized to $\{\tilde{\be}_1,\tilde{\be}_2\}$.
+
+We note also for later use that, for a time-dependent group parameter
+$\gSpace$, the phase speed $\dot{\gSpace}$ along the group tangent
+evaluated at the \statesp\ point $\ssp$ (the `Cartan derivative') is
+given by
+\beq
+\LieEl^{-1}\dot{\LieEl} \,\ssp % =e^{-\gSpace \cdot \Lg} \,
+     =\mathrm{e}^{-\gSpace \Lg} \,
+\left(\frac{\mathrm{d} ~~}{\mathrm{d} \, \zeit} \, % e^{\gSpace \cdot \Lg}\ssp
+                             \mathrm{e}^{\gSpace \Lg}\right)\ssp
+    =\dot{\gSpace} \, \groupTan(\ssp)
+%    =\dot{\gSpace}\cdot \groupTan(\ssp)
+\,.
+\ee{CartanDer}
+
+\subsection{Relative invariant solutions}
+\label{s:RelInvSol}
+
+Along with continuous symmetries come important classes of invariant
+solutions referred to as `relative' or `equivariant'
+\rf{Huyg1673,Poinc1896}. For pipe flows one expects to find relative
+equilibria and \rpo s\rf{Rand82}, associated with the translational
+and rotational symmetries of the flow.
+
+{\em \Reqv} (labeled here $\REQV{}{}$) is a dynamical
+orbit whose velocity field \refeq{symbolicNS} lies within the group
+tangent space, with a constant phase speed $c$,
+% $c=(c_1,\cdots,c_N)$,
+and whose time evolution is thus confined to the group orbit,
+    \PC{recheck, I might have it normalized wrong; I think it is OK,
+        $c$ is angular speed, so $c\,\ssp$ is $\vel$}
+\bea
+\vel(\ssp) &=& c \, \groupTan(\ssp) % c \cdot \groupTan(\ssp)
+\label{phaseVel}\\
+\ssp(\zeit) &=& \LieEl(\gSpace(\zeit)) \, \ssp(0)
+%          = \mathrm{e}^{ \zeit  c \Lg} \,  \ssp(0)
+%           = \mathrm{e}^{ \zeit\,  c \cdot \Lg} \,  \ssp(0)
+\,,\qquad
+\ssp(\zeit) \in \pS_{\REQV{}{}}
+\nnu
+\,.
+\eea
+While in the case of \SOn{2} symmetry a \reqv\ traces out a loop in the
+full \statesp, for a higher-dimensional continuous symmetry it explores
+the group orbit $\pS_{\REQV{}{}}$ quasi-periodically, so \reqv\ is
+\emph{not} a \po. Rather, as all states in this group orbit are
+physically the same state, this is a generalized \eqv\ state. Relative
+equilibria can propagate in the stream-wise direction $z$ (travelling
+waves), in azimuthal $\theta$ direction (rotational waves), or both. As
+noted in \refsect{s:intro}, for pipe flows many stream-wise
+\reqva\ have been discovered, satisfying \refeq{phaseVel}
+\beq
+   \LieEl(0,-ct)\,\vec{u}(\zeit) - \vec{u}(0) = \vec{0}
+\,,
+\ee{pipeAxTW}
+where $c$ is the stream-wise phase speed.
+
+A {\rpo} $p$ is an orbit in {\statesp} $\pS$ which exactly recurs
+\[ %beq
+\ssp(\zeit) = \LieEl_p \, \ssp(\zeit + \period{p} )
+    \,,\qquad
+\ssp(\zeit) \in \pS_p
+\] %ee{RPOrelper1}
+after a fixed {relative period} $\period{}$, but shifted by a fixed group
+action ${\LieEl}$ that maps the endpoint $\ssp (\period{} ) $ back
+into the initial point cycle point $\ssp (0) $.
+In the pipe flow cylindrical coordinate system
+a \rpo\ is a time-dependent velocity field
+\beq
+\bu_p(r,\theta,z,t)=\bu_p(r,\theta+\phi_p,z+ \shift_p,t+\period{p})
+\ee{RPOpipe}
+that recurs after time $\period{p}$, rotated and shifted by $\phi_p$ and
+$\shift_p$.
+In our Newton search for a \rpo\ $p$, we seek the zeros of
+\beq
+   \vec{f}(\vec{u}(0),\period{},\shift)
+\,=\, \LieEl(0,-\shift)\,\vec{u}(\period{}) - \vec{u}(0) \,=\, \vec{0}
+\,,
+\ee{eq:fRPO}
+for some $\vec{u}_p$ with period $\period{p}$ and shift $\shift_p$.
+
+Continuous symmetry parameters (`phases' or `shifts')
+$\{\gSpace_j\}=\{\phi_p,\shift_p\}$
+% $\{\gSpace_1,\cdots,\gSpace_N\}$
+are real numbers, ratios $\pi/\gSpace_j$ are almost never rational, and
+\rpo s are almost never eventually periodic; for pipe the time evolution
+of a relative periodic point thus sweeps out quasi-periodically the
+$3$\dmn\ group orbit $\pS_p$ without ever closing into a \po, unless the
+dynamics is restricted to a discrete-symmetry invariant subspace.

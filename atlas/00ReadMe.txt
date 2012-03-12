@@ -25,25 +25,30 @@ Predrag ver. 0.1, 						Dec 10 2011
 
 -------------------------------------------------------------
 
+Chaos J resubmission  (here for future use)
+----------------
+
 arXiv resubmission (here for future use)
 ------------------
 arxiv article-id:       1101.????v2     2011-04-28
      for details, please see/edit ../arXiv-v2/00ReadMe.txt
 
-JFM resubmission  (here for future use)
+Chaos J resubmission  (here for future use)
 ----------------
                                         2011-04-28
-JFM referee responses, edits
+Chaos J referee responses, edits
 ----------------------------
 Predrag:						      Apr 1 2009
     generate colored comments for referees,
         PCedit\{...\}, etc in defslice.tex,
     then go back to B&W for the final resubmission
 
-JFM submission (here for future use)
+Chaos J submission
 --------------
+     for details, please see/edit ../Chaos-v1/00ReadMe.txt
 
-arXiv submission (here for future use)
+
+arXiv submission
 ----------------
 arxiv article-id:       1101.????
      for details, please see/edit ../arxiv-v1/00ReadMe.txt
@@ -53,11 +58,6 @@ Processing
 ----------
 
 make sure that you are in repository siminos/atlas/ , then
-for a B&W compile:
-	\draftfalse \colorfigsfalse   in inputs/type.tex
-for color version:
-	\draftfalse %\colorfigsfalse
-	then:
 ./update
     or
 pdflatex main; bibtex main; pdflatex main; pdflatex main
