@@ -91,22 +91,8 @@ address here for the case of turbulent pipe flows.
 \label{s:SymmPipe}
 % former siminos/atlas/symm.tex
 
-In many physical applications equations such as \NS\ (in $3D$
-representation \refeq{NavStokesDev}, or in the \statesp\ representation
-\refeq{symbolicNS}) retain their form under symmetry transformations.
 
-In pipe flow the cylindrical wall restricts the rotation
-symmetry to rotation about the $z$-axis, and translations along it.
 
-A flow $\dot{\ssp}= \vel(\ssp)$ is said to be $\Group$-\emph{equivariant}
-if the form of evolution equations \refeq{symbolicNS} is left invariant
-by the set of transformations $\LieEl$ that form the group of symmetries
-of the dynamics $\Group$,
-\beq
-\vel(\ssp)=\LieEl^{-1} \, \vel(\LieEl \, \ssp)
-\,,\qquad \mbox{for all } \LieEl \in {\Group}
-\,.
-\ee{eq:FiniteRot}
 Let $\LieEl(\phi,\shift)$ be the shift operator such that $\LieEl(\phi,0)$
 denotes an azimuthal rotation by $\phi$ about the pipe axis,
 and $\LieEl(0,\shift)$ denotes the stream-wise translation by
@@ -128,11 +114,6 @@ reflection, $\ltimes$ stands for a semi-direct product (in general,
 reflections and rotations do not commute), and the subscripts $z,\theta$
 indicate stream-wise translation and azimuthal rotation respectively.
 
-While the flow equations are invariant under $\Group$, the state of flow
-typically is not. Only the laminar Hagen-Poiseuille \eqv\ is invariant
-under all of $\Group$, whereas a generic turbulent state has only the
-trivial symmetry group $\{e\}$.
-
 In the literature
 (see, \eg\ \cite{Recke2010}) such \SOn{2} is often referred to as the
 circle group $S^1$, also denoted `one-torus' $T^1$.
@@ -153,16 +134,10 @@ every few time steps using Newton's method,
 where a good initial guess for $\shift(\zeit)$ is obtained from
 the previous value and $\dot{\shift}(\zeit)$.
 
-When ${\sspRed}(\zeit)$ is close to ${\slicep}$ the function $f(\shift)$
-has only one root.
-When ${\ssp}(\zeit)$ is far from ${\slicep}$, however, $f(\shift)$
-may have many roots, pairs of which may disappear with time.
-This would lead
-to a discontinuity in $\shift(\zeit)$.  As explained in
-\refsect{s:chartingslice}, o avoid this, a global
+To avoid this, a global
 atlas has to be pieced together from local \slice\ charts, fixed by
 a well-chosen set of
-\template s $\slicep{}^{(j)}$ .
+\template s $\slicep{}^{(j)}$.
 Shifts $\shift_j(\zeit)$ are tracked for each local \slice\ chart $\pS{}^{(j)}$,
 such that the next $\shift_{j+1}(\zeit)$ is selected at intersection with
 $\pS{}^{(j+1)}$
@@ -195,27 +170,9 @@ reconstruction equation, \refeq{reconstrEq}, or, in practice, by phase
 shift $\shift(\period{})-\shift(0)$ accumulated by the intermediate
 Newton steps that keep the orbit within the slice.
 
-With a good initial guess for $(\vec{u}(0),\period{},\shift)$, such a
-system can be solved using a Newton scheme.  Two conditions in addition
-to \refeq{eq:fRPO} are need to be enforced: the Newton update should have no
-component along the group orbit, $\braket{\vec{\delta
-u}}{\groupTan(\vec{u})}=0$, and no component tangent to trajectory,
-$\braket{\vec{\delta u}}{\dot{\vec{u}}}=0$.
-
-
-\subsection{Pipe flow \rpo s sliced}
-\label{s:rpos}
-% former siminos/atlas/rpos.tex
-
- Without symmetry reduction, the detection
-of the nearest recurrence of a state near a previous state, earlier on the
-the same trajectory,
-would require the calculating the minimum over all possible shifts.
-Within the symmetry-\reducedsp\ the determination of recurrences is simple,
-as the slices are constructed by requiring that the slice points are
-the minimum distance points between the group orbits of the two states.
-\refFig{fig:NormDiff} shows the signal for detecting a nearby \rpo\
-that shadows the turbulent trajectory.  States from the indicated minimum,
-along with the stream-wise shift between start and end of the candidate trajectory,
-determined from $\shift(\zeit)-\shift(\zeit-\Delta t)$,
-were passed to the Newton--Krylov code.
+Without symmetry reduction, the detection of the nearest recurrence of a
+state near a previous state, earlier on the the same trajectory, would
+require the calculating the minimum over all possible shifts. Within the
+symmetry-\reducedsp\ the determination of recurrences is simple, as the
+slices are constructed by requiring that the slice points are the minimum
+distance points between the group orbits of the two states.
