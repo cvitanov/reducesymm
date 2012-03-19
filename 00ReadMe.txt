@@ -61,9 +61,6 @@ posters/
 scripts/
     potentially useful scripts 
 
-statements/
-	Siminos research statements
-
 blog/
     all matters pertaining to symmetry reduction reading
 
