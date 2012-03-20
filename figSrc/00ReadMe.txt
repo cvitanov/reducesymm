@@ -1,7 +1,7 @@
 % siminos/figSrc/00ReadMe.txt
 % $Author$ $Date$
 
-Siminos, Froehlich source programs for figures
+Siminos, Froehlich, ... source programs for figures
 ==============================================
 
 [read also halcrow/figSrc/00ReadMe.txt]
