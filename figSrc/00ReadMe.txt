@@ -2,22 +2,28 @@
 % $Author$ $Date$
 
 Siminos, Froehlich, ... source programs for figures
-==============================================
+===================================================
 
-[read also halcrow/figSrc/00ReadMe.txt]
+read also
+    halcrow/figSrc/00ReadMe.txt
+    dasbuch/book/FigSrc/00ReadMe.txt
+
+----------------------------------------------------------------
+                                        Predrag 2010-12-21
+TO ALL:
+    please save, clearly document here the source code for your figures
 
 ----------------------------------------------------------------
                                         Borrero 2012-03-23
 
-Uploaded TWand01.m. This Matlab script generates a plot of one
-period of the 01 relative periodic orbit for the 5D complex
-Lorenz system along with the group orbit of the relative equilibrium
-TW_0 (or at least their projection in the x1, x2, z subspace). 
-Comments in the code should make playing around with it fairly self 
-explanatory.
-
-Once figure is generated in Matlab it is up to you to figure out
-how you want to export it.
+siminos/figSrc/matlab/TWand01.m
+    generates a plot of one period of the 01 relative periodic orbit for
+    the 5D complex Lorenz system along with the group orbit of the
+    relative equilibrium TW_0 (or at least their projection in the x1,
+    x2, z subspace). Comments in the code should make playing around with
+    it fairly self explanatory.
+    Once figure is generated in Matlab it is up to you to figure out how
+    you want to export it.
 
 ----------------------------------------------------------------
                                         Predrag 2012-01-06
@@ -35,10 +41,6 @@ MapleWorks.com/software-products/overview-software-products/android-note-taking-
     MaplePaint seems easy to use from Samsung Galaxy Android tablet,
     creates compact svg vector graphics, which inkscape converts
     to pdf
-
-----------------------------------------------------------------
-                                        Predrag 2010-12-21
-Stefan, please save, clearly document here the source code.
 
 ----------------------------------------------------------------
                                         Predrag 2010-12-21
