@@ -7,6 +7,19 @@ Siminos, Froehlich, ... source programs for figures
 [read also halcrow/figSrc/00ReadMe.txt]
 
 ----------------------------------------------------------------
+                                        Borrero 2012-03-23
+
+Uploaded TWand01.m. This Matlab script generates a plot of one
+period of the 01 relative periodic orbit for the 5D complex
+Lorenz system along with the group orbit of the relative equilibrium
+TW_0 (or at least their projection in the x1, x2, z subspace). 
+Comments in the code should make playing around with it fairly self 
+explanatory.
+
+Once figure is generated in Matlab it is up to you to figure out
+how you want to export it.
+
+----------------------------------------------------------------
                                         Predrag 2012-01-06
 you can hand-write equations
     webdemo.visionobjects.com/equation.html?locale=default
