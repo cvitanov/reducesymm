@@ -9,10 +9,20 @@ Predrag                                             2012-03-26
 Got symmetry? Here is how you slice it
     CDSNS Colloquium
     Mon, 03/26/2012 - 11:00am, Skiles 006
-    siminos/talks/GTmath12/	
 
+source
+    siminos/talks/GTmath12/	
 the talk
     sectSlice.tex
+the abstract
+    abstract.txt
+on the web
+    ChaosBook.org/overheads/continuous/120326video/sectSlice.evo
+runs from
+    ChaosBook.org/overheads/continuous/index.html
+
+
+--- HISTORY ------------------------------------------------
 is combination of
 	talks/predrag/continuous/continuous.tex
 and some

@@ -1610,55 +1610,197 @@ hyperplanes...
 tried to explain to Daniel and Keith in words: \reffig{fig:chartBord}.
 Might look better if Daniel draws a group orbit for the 2-mode model.
 
-\item[2012-03-25 Keith] Before we continue, I want to clear something up: First Daniel, you have a function in your TWand01 called gCLE, judging by the context, this is just the group rotation (I can generate this myself, I just want to check)?  Second, we are continuing to use the point TWEQ = [8.4849, 0.077135, 8.4856, 0, 26.999].  I am unsure if this is true, when I originally did this problem, I derived: TWEQ = [8.4849, -0.077135, 8.4856, 0, 26.999] (note the sign change in $x_2$); and Daniel, your code in dropbox generates:   [-8.484917778684904, 0.077135616169876, -8.485619011559175, 0,  26.999917355371903], which is the same as what I had derived rotated by pi.
-    
+\item[2012-03-25 Keith] Before we continue, I want to clear something up:
+First Daniel, you have a function in your TWand01 called gCLE, judging by
+the context, this is just the group rotation (I can generate this myself,
+I just want to check)?  Second, we are continuing to use the point TWEQ =
+[8.4849, 0.077135, 8.4856, 0, 26.999].  I am unsure if this is true, when
+I originally did this problem, I derived: TWEQ = [8.4849, -0.077135,
+8.4856, 0, 26.999] (note the sign change in $x_2$); and Daniel, your code
+in Dropbox generates:   [-8.484917778684904, 0.077135616169876,
+-8.485619011559175, 0,  26.999917355371903], which is the same as what I
+had derived rotated by pi.
+
 \item[2012-03-26 Evangelos] Here is what I don't understand. Assume that the
 orbit you draw in \reffig{fig:A29-2slices} is relative periodic, so that in reduced
 space, final and initial point have to be the same. The only
 condition you impose on $\pSRed{}^{(1)}$ is that each group orbit cuts it no more
-than once (it's not clear to me how you impose this condition in practice, 
-but it's certainly a condition you have to impose). The group orbit of 
-$\sspRed(0)$ could however intersect both $\pSRed{}^{(1)}$  and $\pSRed{}^{(2)}$ 
-slice in your atlas (or do I miss something?). Then we could end up with an 
-open orbit in reduced space (if the final point lies on $\pSRed{}^{(2)}$, 
+than once (it's not clear to me how you impose this condition in practice,
+but it's certainly a condition you have to impose). The group orbit of
+$\sspRed(0)$ could however intersect both $\pSRed{}^{(1)}$  and $\pSRed{}^{(2)}$
+slice in your atlas (or do I miss something?). Then we could end up with an
+open orbit in reduced space (if the final point lies on $\pSRed{}^{(2)}$,
 rather than going back to $\pSRed{}^{(1)}$). It seems to me we also need
 to impose the condition that the group orbit of any point on a slice intersects
 no other slice. Then any relative periodic orbit would be required to close back
-to the initial slice. Such a condition would also be consistent 
-with the view of the reduced space, as the space in which each group orbit 
+to the initial slice. Such a condition would also be consistent
+with the view of the reduced space, as the space in which each group orbit
 is replaced by a single representative.
 
-\item[2012-03-26 Evangelos] In \refref{WCA12} the authors say: \emph{``Several symmetry
-reduction schemes are reviewed in \refref{SiCvi10}. Here we shall
-describe the \mslices\ \citep{rowley_reconstruction_2000,BeTh04,FrCv11}, the
-only method that we find practical for a symmetry reduction of
-turbulent solutions of highly nonlinear flows.''}
-
-I am totally lost here. Why are \citep{rowley_reconstruction_2000,BeTh04,FrCv11} 
-cited for \mslices\ but not \refref{SiCvi10}? I mean, is there something in
-\mslices\ that we missed in \refref{SiCvi10}? The variational principle developed
-in \refref{FrCv11} is neat, but it leads exactly to the slice fixing condition
-of \citep{rowley_reconstruction_2000,SiCvi10} and even of \refref{FouBik10}  
-(\refref{BeTh04} is a bit more subtle, but also equivalent to the above).
+\item[2010-10-20 Froehlich; 2012-03-26 Predrag]
+Fair enough - I need a lawyer, what you call slice I call \slice\
+hyperplane. We need to clearly define various things, so lets start by
+editing the definitions\rf{CartanMF,FelsOlver98,FelsOlver99,OlverInv} in
+Stefan's siminos/froehlich/blog.tex and edit from there. If some of that
+has a already reputable literature established names, please edit them in
+here.
 
 
-\item[2012-03-26 Daniel] {\bf to Keith}: You are correct. gCLE just generates the finite angle
-rotation matrix. I have updated the code in /FigSrc/matlab so that it doesn't call the function,
-but basically that's what it does.
+\textbf{Definition~~}
+\textbf{\Slice.} Let $\Group$ act on a $d$-dimensional manifold $\pS$
+with its group orbits of dimension $N$ or less. We define a \emph{slice}
+to be a $(d\!-\!N)$ dimensional submanifold $\pSRed$ such that all group
+orbits that intersect $\pSRed$ do so transversally and only once.
+    \PC{dropped `regular', `through a point $\slicep$',
+    `in an open neighborhood of $\slicep$'. Does a `manifold' have to be
+    smooth, differentiable? Our slice is only continuous}
+%\end{definition}
 
-I also double checked my solution for $TW_1$ and I agree that it should be 
+\textbf{Definition~~}
+\label{def:slice}
+\index{slice}
+\textbf{\Slice\ hyperplane.}
+Pick a \emph{\template} point $\slicep \in \pS$ such that $\Group$ acts
+on it regularly, \ie, whose group orbit is of dimension $N$.
+We call the $(d\!-\!N)$-dimensional hyperplane
+\( %beq
+\braket{\sspRed}{\sliceTan{a}}=0
+    \,,\;\;
+\sliceTan{a} = \Lg_a \slicep
+\) %\ee{PCsectQ1}
+a \emph{\slice\ hyperplane}.
+    \PC{The {\template} should lie outside any of
+the invariant subspaces $\pS_H$. Were \slicep\ invariant under the group, then
+$\sliceTan{a}=0$ and the `\slice' so defined would be the entire space.
+Extend this claim to the invariant subspaces as well}
+    \PC{In constructing his return map, Lorenz, I think,
+    used projections on the invariant axes $z$ and $\dot{z}$.
+    Is that not a \slice? Rethink}
+%\end{definition}
+
+\textbf{Definition~~}
+\textbf{\ChartBord.}
+[to define]
+
+\textbf{Definition~~}
+\textbf{Ridge.}
+[to define]
+
+\textbf{Definition~~}
+\textbf{Chart, atlas.}
+[to define: Slice is described by its
+atlas]
+
+\textbf{Definition~~}
+\label{def:movingFrame}
+\index{moving frame}
+\textbf{Moving frame.}
+For any $\ssp$, the slice condition \refeq{PCsectQ1} on $\sspRed =
+\LieEl(\gSpace)\ssp$ determines the group action $\LieEl(\gSpace)$ that
+brings $ \ssp$ into the \slice.
+    \PC{dropped all this: ``The crossing has the same orientation as
+    the \template\ group orbit.
+    %\beq
+    %\braket{\groupTan_{}(\ssp)}{\sliceTan{}} > 0.
+    %\ee{SF:orientedSlice}
+    In general this will not be sufficient to select unique representative
+    and additional constraints are required. If there is a set of angles
+    $\{\gSpace_1\leq\gSpace_2\leq\cdots\leq\gSpace_k \}$ that satisfy the
+    oriented slice transversal conditions \refeq{PCsectQ1},
+    we take the smallest angle $\gSpace_1$.
+    problem: this makes sense only for \SOn{2}.
+    }
+Such a map from a point in the full \statesp\ to the group action
+$\gSpace$ is called a \emph{moving
+frame}\rf{FelsOlver98,FelsOlver99,OlverInv}.
+%\end{definition}
+
+While in general a {\slice} need not be tiled by hyperplane charts,
+we find the linear slice condition \refeq{PCsectQ1} only implementation
+of slicing fesible for high-dimensional flows.
+
+[to be finalized]
+
+\item[2012-03-26 Evangelos] In \refref{ACHKW11} the authors say:
+\emph{``Several symmetry reduction schemes are reviewed in
+\refref{SiCvi10}. Here we shall describe the \mslices\
+\citep{rowley_reconstruction_2000,BeTh04,FrCv11}, the only method that we
+find practical for a symmetry reduction of turbulent solutions of highly
+nonlinear flows.''}
+
+I am totally lost here. Why are
+\citep{rowley_reconstruction_2000,BeTh04,FrCv11} cited for \mslices\ but
+not \refref{SiCvi10}? I mean, is there something in \mslices\ that we
+missed in \refref{SiCvi10}? The variational principle developed in
+\refref{FrCv11} is neat, but it leads exactly to the slice fixing
+condition of \citep{rowley_reconstruction_2000,SiCvi10} and even of
+\refref{FouBik10} (\refref{BeTh04} is a bit more subtle, but also
+equivalent to the above).
+
+\item[2012-03-26 Predrag to Evangelos] I can see your point, too
+    tired tonight to address it.
+
+\item[2012-03-26 Daniel] {\bf to Keith}: You are correct. gCLE just
+generates the finite angle rotation matrix. I have updated the code in
+/FigSrc/matlab so that it doesn't call the function, but basically that's
+what it does.
+
+I also double checked my solution for $TW_1$ and I agree that it should be
  $$TW_1 = [8.484917778684904, \,-0.077135616169876,\,8.485619011559175,\,0,\,26.999917355371903]$$ {\bf NOT}
  $[8.4849,\,+0.077135,\,8.4856,\,0,\,26.999]$ as stated in Chaosbook. Can anybody else confirm this number?
- 
-By the way, Predrag and I fiddled around with some stuff today and we found that things might be
-getting hairy when the system approaches the z-axis. It seems like a good choice of template may be
-something on $\overline{01}$ but that is also close to the z-axis, since nasty things might happen there.
-Basically, it looks like the magnitude of the group tangent vector might get really small, which
-makes $\dot{\phi}$ blow up even though the group tangent vector and the template tangent (using $TW_1$ as a template
+
+I also noticed that somebody's code that is in DropBox uses $b = 2.7$
+instead of $b = 8/3$. This messes up the calculation big time when you
+are trying to do careful numerics. Orbits that should be closed, don't
+close, etc. Make sure you guys aren't cutting too many corners since this
+may lead to confusion.
+
+\item[2012-03-26 Daniel]
+Predrag and I fiddled around with some stuff today and we found that
+things might be getting hairy when the system approaches the z-axis. It
+seems like a good choice of template may be something on $\overline{01}$
+but that is also close to the z-axis, since nasty things might happen
+there. Basically, it looks like the magnitude of the group tangent vector
+might get really small, which makes $\dot{\phi}$ blow up even though the
+group tangent vector and the template tangent (using $TW_1$ as a template
 are still relatively orthogonal.
 
-I also noticed that somebody's code that is in DropBox uses $b = 2.7$ instead of $b = 8/3$. This messes up
-the calculation big time when you are trying to do careful numerics. Orbits that should be closed, don't close, etc.
-Make sure you guys aren't cutting too many corners since this may lead to confusion.
+\item[2012-03-26 Predrag] It is serious insight in a good way, we cannot remove
+large {\phaseVel} by slicing, because it is real, not a slicing artifact.
+The \eqv\ eigenvalues are apparently such (have to recheck old blogs -
+not sure why Evangelos and I did not spot this immediately) that the
+rapid increase in {\phaseVel} $\dot{\gSpace}$ is \emph{physical}, due to
+the strong contraction towards the invariant $z$-axis subspace, not an
+artifact of the choice of \slice. That means that we need to find another
+system to illustrate the need for at least two templates.
+
+There is Armbruster, Guckenheimer and Holmes\rf{AGHO288} flow with
+$\On{2}$ symmetry:
+\index{Armbruster-Guckenheimer-Holmes flow}
+\beq
+\begin{split}
+  \dot{z}_1 &=\bar{z}_1 z_2
+              + z_1\left(\mu_1+ e_{11}|z_1|^2+e_{12}|z_2|^2\right) \\
+  \dot{z}_2 &=\pm z_1^2
+              + z_2\left(\mu_2+ e_{21}|z_1|^2+e_{22}|z_2|^2\right)
+  \label{eq:AGH}
+\end{split}
+\eeq
+where $z_1,z_2\in \mathbf{C}$ and $\mu_j$ and $e_{jk}$ real parameters.
+This system corresponds to the first few terms in the center manifold
+reduction of a $O(2)$-symmetric partial differential equation near a
+codimension two bifurcation. It is a 2-mode system, so group orbits are
+more interesting than for \cLf.
+{\bf [2009-08-28 Predrag]} Evangelos in his thesis and
+\HREF{http://chaosbook.org/projects/index.shtml\#Kohler}{Kohler} in his
+\HREF{http://ChaosBook.org/projects}
+     {ChaosBook.org project}
+got nothing of interest out of Armbruster \etal\rf{AGHO288}.
+As far as we can tell, it exhibits no
+chaos. I would prefer some modification of it with $\SOn{2}$ symmetry
+only, and exhibiting chaos. Or some version of 2-mode model Daniel has
+been playing with which does not behave singularly. He has an unstable
+cycle close to the origin that maybe does the trick.
+
 
 \end{description}
