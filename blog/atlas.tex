@@ -1930,18 +1930,18 @@ to the pedagogical Chaos Gang paper, there is still plenty opportunity to join -
 
 
 
-\item[2012-03-26 Daniel] {\bf to Keith}: You are correct. gCLE just
+\item[2012-03-26 Daniel] {\bf to Keith}  You are correct. gCLE just
 generates the finite angle rotation matrix. I have updated the code in
 /FigSrc/matlab so that it doesn't call the function, but basically that's
 what it does.
 
 I also double checked my solution for $TW_1$ and I agree that it should be
-\(
+\[
 [8.484917778684904, \,-0.077135616169876,\,8.485619011559175,\,0,\,26.999917355371903]
 \,,
-\)
+\]
 {\bf NOT} $[8.4849,\,+0.077135,\,8.4856,\,0,\,26.999]$ as stated in
- Chaosbook. Can anybody else confirm this number?
+ Chaosbook. Can anybody else confirm this number?                       \toCB
 
 I also noticed that somebody's code that is in DropBox uses $b = 2.7$
 instead of $b = 8/3$. This messes up the calculation big time when you
@@ -2049,14 +2049,6 @@ form equations are no longer forced to be real and hence can be expected
 to acquire imaginary parts'', their Eq. (10). Play with that one.
 
 \item[2012-03-28 Daniel]
-The references are \refrefs{Rodriguez1990,Mercader2001}.
-
-At first, glance it seems like Mercader and Prat\rf{Mercader2001} might
-be a candidate if we decide to go with $\On{2}$ symmetry since really the
-Rayleigh-Benard problem has $\On{2} \times Z_2$ symmetry and they are really
-talking about breaking the $Z_2$ part. They have a reduced model, but I'm
-not sure that it is chaotic.
-
 Rodriguez and Schell\rf{Rodriguez1990} may actually be a good system.
 They are using a truncation of the Ginsberg-Landau equation, which
 results in a 4D system of ODE's. These equations have parameters regimes
@@ -2066,6 +2058,18 @@ number of parameters (3). The truncation is a two-mode truncation so it
 should provide more interesting group orbits than the one-mode Complex
 Lorenz system.
 
+``Within the two-mode approximation, and using
+the transformation
+\[ a_k = (b_k, c_k) = b_k + ic_k = r_k e^{i\theta_k}\,, \]
+the LG equation reduces
+to a set of four ordinary differential equations
+for the variables $r_0$, $r_1$, $\theta_0$, $\theta_1$; however, it is more convenient
+to replace the last two variables with the linear
+combinations $\psi_1 = \theta_1 -\theta_0$, which is a phase
+difference, and $\zeta = \theta_1 +\theta_0$, which is a phase sum.
+''
+
+\end{description}
 Their system of equations is:
 \index{Rodriguez and Schell flow}
 \beq
@@ -2077,26 +2081,137 @@ Their system of equations is:
                + \rho\,\cos(2 \pi \psi_1) - \sin(2 \pi \psi_1)\right) \\
   \dot{\psi_1} &= \left[-2 q^2 + 2 r_0^2
                   - \frac{1}{2}r_1^2 +(2 r_0^2 - r_1^2)\,\cos(2 \pi \psi_1)
-                  +\rho\,(2 r_0^2 + r_1^2)\,\sin(2 \pi \psi_1)\right]/2\pi \\
-  \dot{\zeta} &= \left[-2 q^2 + 6 r_0^2
-                  + \frac{7}{2}r_1^2 +(2 r_0^2 + r_1^2)\,\cos(2 \pi \psi_1)
-                  +\rho\,(2 r_0^2 - r_1^2)\,\sin(2 \pi \psi_1)\right]/2\pi \\
+                  +\rho\,(2 r_0^2 + r_1^2)\,\sin(2 \pi \psi_1)\right]/2\pi
   \label{eq:RSsystem}
 \end{split}
+\eeq
+\beq
+  \dot{\zeta} = \left[-2 q^2 + 6 r_0^2
+                  + \frac{7}{2}r_1^2 +(2 r_0^2 + r_1^2)\,\cos(2 \pi \psi_1)
+                  +\rho\,(2 r_0^2 - r_1^2)\,\sin(2 \pi \psi_1)\right]/2\pi
+  \label{eq:RSsysSum}
 \eeq
 
 At least two chaotic regimes are reported for this system. These occur
 for $c_0 = \rho = 0.25$ and $q < 0.9787$ or $1.029039 < q < 1.029041$.
 
-\item[2012-03-28 Predrag] I'm still in favor of trying {\bf [2012-03-27
-Predrag]} Porter and Knobloch\rf{PoKno05} above, as I prefer the most
-cited model. The exact 1 : 2 resonance ODE normal form was treated first
-by  Dangelmayr\rf{Dang86} and analyzed by the more cited Armbruster,
-Guckenheimer and Holmes\rf{AGHO288} and Jones and Proctor\rf{JoPro87}
-(for a  general reference containing this material, see Golubitsky
-\etal\rf{golubII}, ch. XX, section 1), and keeps getting cited a
-lot\rf{AshDang05,PoKno05,SmMoehHo05}.
+\begin{description}
 
+\item[2012-03-28 Predrag]
+notes on Rodr\'iguez, J. D. and Schell\rf{Rodriguez1990}.
+What baffles me is that there are no ratios of form $r_0/r_1$ in
+\refeq{eq:RSsystem}. In contrast, Daniel 2012-03-13 derived for the
+2-mode system in ChaosBook the polar coordinates form
+\begin{eqnarray}
+   \dot{r}_1 &=& -\sigma r_1 + \sigma r_1 r_2 \cos(\theta)\continue
+   \dot{r}_2 &=& -r_2 + r_1^2 ((\rho_1 - z) \cos(\theta) - \rho_2 \sin(\theta))\continue
+   \dot{\theta}_1 &=&  -\sigma r_2 \sin(\theta)\,,\quad
+   \dot{\theta}_2  =  -e + \frac{r_1^2}{r_2} ((\rho_1 -z) \sin(\theta)
+                       + \rho_2 \cos(\theta))\continue
+   \dot{z} &=& -b z + \frac{r_1^2}{r_2} \cos(\theta)
+\end{eqnarray}
+where $\theta = 2 \theta_1 - \theta_2$, and
+rewriting the angular part as $\dot{\theta} = 2 \dot{\theta_1} - \dot{\theta_2}$,
+\[
+\dot{\theta} = e - \frac{r_1^2}{r_2} ( (\rho_1- z) \sin(\theta)+\rho_2 \cos(\theta))
+- 2 r_2 \sigma \sin(\theta)
+\]
+Simulation of these equations (as well as of \cLe\ in polar coordinates
+and Dangelmayr and Armbruster, Guckenheimer and
+Holmes \refeq{eq:AGpolar} below)
+runs into both $r_j= 0$ singularities, while \refeq{eq:RSsystem} seems to
+have none. What gives?
+
+\item[2012-03-31 Predrag]
+``[...] we consider a subclass of systems with circular symmetry: those
+invariant under the rotations in the plane, i.e., operations of
+the symmetry group $\SOn{2}$\rf{golubII}.'                                  \toCB
+[...] We show that even though phase locking cannot occur in systems with
+rotational symmetry, the locking of phase differences does occur.''
+[...] we have also discovered one exception in the
+correspondence found in the previous investigation.
+[...] There exists a small interval between the regions of quasiperiodic
+behavior ($\Delta q < 10^{-6} $) in which chaos occurs. Although we were
+unable to locate this asymptotic chaos in the appropriate parameter range
+of the LG equation, we did observe ``transient chaos''.
+
+[...] it can be verified by substitution that phase
+differences, which are defined as
+\(
+\psi_1 = (\theta_1-\theta_0)/\pi \,,\;
+\cdots\,,
+\psi_j = (\theta_j-\theta_0)/\pi \,,\;
+\cdots\,,
+\)
+can become fixed and are represented in a subspace by the fixed points,
+$\psi =$ constant, $r_0= 1$, $r_j= 0$, where $j= 1,2,\dots$.
+
+[Predrag: why would they want to lock? The  locking the study happens
+prior to bifurcations to chaos, I do not think we care. What is the point
+of looking at all $r_j= 0$ ?]
+
+``[...] It may seem somewhat strange to speak of a locked phase
+difference between two modes, when one of the modes has zero amplitude.
+However the quantity $\theta_1$ is rigorously defined as the phase of a
+Fourier component whose amplitude asymptotically decays to zero and
+hence, the locked phase difference is well defined as an asymptotic limit
+for the phase difference.''
+
+\item[2012-03-31 Predrag] Stopped studying their 2-mode equations here,
+not sure it's what we want to use...
+
+\item[2012-03-28 Daniel]
+At first, glance it seems like Mercader and Prat\rf{MePrKn01} might
+be a candidate if we decide to go with $\On{2}$ symmetry since really the
+Rayleigh-Benard problem has $\On{2} \times Z_2$ symmetry and they are really
+talking about breaking the $Z_2$ part. They have a reduced model, but I'm
+not sure that it is chaotic.
+
+\item[2012-03-31 Predrag]
+notes on Mercader and Prat\rf{MePrKn01}.
+\index{Armbruster-Guckenheimer-Holmes flow}
+The effects of weak breaking of the midplane reflection symmetry on the
+1:2 steady state mode interaction in Rayleigh–B\'enard convection are
+discussed, with bifurcations galore, ala Knobloch. They do it for the
+full PDEs, but in Sect.~4 motivate results by discussing them in the
+context of $\On{2}$-equivariant amplitude equations for 1:2 mode
+interactions.
+We note that the Dangelmayr\rf{Dang86} and Armbruster, Guckenheimer and
+Holmes\rf{AGHO288} third order in the amplitudes normal form flow with
+$\On{2}$ symmetry \refeq{eq:AG} does have ratios of form $r_0/r_1$, when
+rewritten in the polar form (Eq.~(4) in the paper),
+\bea
+   \dot{r}_1 &=& \mu_1 r_1 + a_1 r_1^3  + b_1 r_1 r_2^2
+                 + c_1 r_1 r_2 \cos(\psi)\continue
+   \dot{r}_2 &=& \mu_2 r_2 + a_2 r_1^2 r_2  + b_2 r_2^3
+                 + c_2 r_1^2 \cos(\psi)\continue
+   \dot{\theta}_1 &=&  - c_1 r_2 \sin(\psi)\,,\quad
+   \dot{\theta}_2 = -e + c_2 \frac{r_1^2}{r_2} \sin(\psi)
+\,,
+\label{eq:AGpolar}
+\eea
+where $\psi = 2 \theta_1 - \theta_2$, and Predrag stuck in tentatively an
+`$e$' term because something like that is needed to break $\On{2} \to
+\SOn{2}$. Rewriting the angular part as $\dot{\psi} = 2 \dot{\theta_1} -
+\dot{\theta_2}$:
+\beq
+\dot{\psi} = e - \left(c_2 \frac{r_1^2}{r_2} + 2\,c_1 r_2\right) \sin(\psi)
+\,.
+\ee{eq:AGphase}
+The equations possess pure $n = 2$ solutions but no pure $n = 1$
+solutions (except for the discrete `midplane reflection' symmetry
+invariant subspace?). Most solutions are `mixed modes'. I do not think we
+care about the `midplane reflection' symmetry (with 5th order normal
+form), so we only need \refeq{eq:AGpolar} to determine the \reqva.
+
+\item[2012-03-28, 2012-03-31 Predrag] I'm still in favor of trying {\bf
+[2012-03-27 Predrag]} Porter and Knobloch\rf{PoKno05} above, as I prefer
+the most cited model. The exact 1:2 resonance ODE normal form was
+treated first by  Dangelmayr\rf{Dang86} and analyzed by the more cited
+Armbruster, Guckenheimer and Holmes\rf{AGHO288} and Jones and
+Proctor\rf{JoPro87} (for a  general reference containing this material,
+see Golubitsky \etal\rf{golubII}, ch. XX, section 1), and keeps getting
+cited a lot\rf{AshDang05,PoKno05,SmMoehHo05}.
 
 Making it $\SOn{2}$-equivariant is easy, just make a coefficient complex
 - I have forgotten, but that's how we got to the \cLe. If the imaginary
@@ -2164,7 +2279,40 @@ crossing condition be amended in the Chaos Gang paper?
 \item[2012-03-31 Predrag] You are correct - have now fixed that in the
 tex proper.
 
-\item[2012-03-31 Keith] Still working on parameterizing the curves/getting a return map.  If you fix the section you look at the unstable map, should the return map look different?  Some thinking makes me believe this is so, but am looking for input...Thinking of an idea for finding two slices (instead of random guessing)...I'll play with the idea for the next day or two.
+\item[2012-03-31 Keith] Still working on parameterizing the
+curves/getting a return map.  If you fix the section you look at the
+unstable map, should the return map look different?  Some thinking makes
+me believe this is so, but am looking for input...Thinking of an idea for
+finding two slices (instead of random guessing)...I'll play with the idea
+for the next day or two.
 
+\item[2012-03-31 Predrag] We do need a good algorithm for computing the
+return map, now that the ridge Poincar\'e section of 2-chart Daniel's
+slicing of \cLe\ looks so nice. If the description in ChaosBook is
+unclear, be specific about what the problems are. Also
+\HREF{http://chaosbook.org/projects/index.shtml\#Basu}
+{Basu's project} and associated links might be useful.
+
+Do not understand ``If you fix the section you look at the unstable
+map,'' but: For each section the return map looks different. They are all
+smooth conjugacies of each other, dynamically equivalent, but awkward
+sections yield awkward return maps.
+
+\item[2012-03-31 Predrag] The battle plan suggestion to ChaosGang:
+\begin{itemize}
+  \item
+        Two of you finalize drawings and text for R\"ossler sections and
+        their borders.
+  \item
+        One of you finalizes drawings and text for Daniel's 2-chart
+        sliced \cLe\ (preferably not Daniel).
+  \item
+        One of you computes (presumably numerically) \reqva\ of the
+        $\SOn{2}$-equivariant version of Dangelmayr 2-mode
+        \refeq{eq:AGpolar}, and (hopefully) their \stabmat\ \Mvar\
+        eigenvalues, plays with parameters. We would like the \reqva\ to
+        be complex-pair unstable, leading to chaos, to be visualized and
+        sliced in Cartesian coordinates \refeq{eq:AGH}.
+\end{itemize}
 
 \end{description}
