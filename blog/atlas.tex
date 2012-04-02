@@ -2338,4 +2338,17 @@ pair-wise templates are in each other's slice, and the ridge between them
 is rigid. But doubt this can be done for sets for three or more
 {\template s} on a curve surface...
 
+\item[2012-04-02 Daniel] In case anybody was wondering how we got to the two chart atlas for the complex Lorenz system, here's how I did it. At first, I tried using the relative equilibrium and various points on the $\overline{01}$ relative periodic orbit as templates. I could not get this to work as $\dot{\phi}$ always seemed to blow up to anywhere between 200 and 1500. \emph{However}, I did check $\braket{\,t\,}{\sliceTan{}{}}$ as I went and while it got small, it never quite switched signs, so technically it never really crossed the template border. I guess the large values of $\dot{\phi}$ probably had to do with the actual physical rotation induced by the strong contraction toward the z-axis. 
+
+Since thinking didn't get me anywhere and it was 3 AM, I decided to just compute. What I did was that I started with two templates (I believe one was Fr\"olich's template from eq. \ref{exmplTempl}, for no particularly good reason, and a point on $\overline{01}$), I integrated the $\overline{01}$ orbit and calculated what the maximum of $|\dot{\phi}|$ was. I then wrote a loop that added some small random vector to each of the templates, integrated the same orbit, and checked whether the max of $|\dot{\phi}|$ got smaller or bigger. If it got smaller, I kept those two new templates and started adding noise to them. I let this run over night and ended up with the following two templates, which gave me a max $|\dot{\phi}| \sim 16$ for the $\overline{01}$ orbit and $\sim 25$ for an ergodic trajectory: \\
+
+
+$\hat{x}^{(1)} = [10.6826557605063, 4.05746018793401, 3.86638880437299, 9.62155656768089, 33.3136330008352]$ \\ 
+
+$\hat{x}^{(2)} = [90.4054673767747, 22.7146855264444, 31.5729216223112, 110.683144276042, 112.538644670233]$\\
+
+The reason that the second one is so big is that I accidentally used the rand function in Matlab instead of randn, so the code was only adding positive numbers to the original point. That being said, this can be partially fixed by rescaling and adjusting the z value to whatever is convenient. This can be done because the only way that the templates come into the computation is through their group tangents, which always has a zero z-component. Rescaling is possible because the group tangent vector of the template only comes in for orthogonality checks $\braket{\,t\,}{\sliceTan{}{}} = 0$ or in the calculation of $\dot{\phi}$, where it is in both the numerator and the denominator. The magnitude of the tangent does not matter in either of these cases. Still it is kind of worrisome that one can't (or at least I haven't been able to) pick something intelligently, and that these points are not really that close to the attractor.
+
+One final note... While I did the template switching and this this looks good, the trajectories look good if you use just \emph{one} of these templates and the max of $|\dot{\phi}|$ isn't much bigger.
+
 \end{description}
