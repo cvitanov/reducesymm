@@ -2138,20 +2138,22 @@ notes on Rodr\'iguez, J. D. and Schell\rf{Rodriguez1990}.
 What baffles me is that there are no ratios of form $r_0/r_1$ in
 \refeq{eq:RSsystem}. In contrast, Daniel 2012-03-13 derived for the
 2-mode system in ChaosBook the polar coordinates form
-\begin{eqnarray}
+\bea
    \dot{r}_1 &=& -\sigma r_1 + \sigma r_1 r_2 \cos(\theta)\continue
    \dot{r}_2 &=& -r_2 + r_1^2 ((\rho_1 - z) \cos(\theta) - \rho_2 \sin(\theta))\continue
    \dot{\theta}_1 &=&  -\sigma r_2 \sin(\theta)\,,\quad
    \dot{\theta}_2  =  -e + \frac{r_1^2}{r_2} ((\rho_1 -z) \sin(\theta)
                        + \rho_2 \cos(\theta))\continue
    \dot{z} &=& -b z + \frac{r_1^2}{r_2} \cos(\theta)
-\end{eqnarray}
+\,,
+\label{eq:2meRpol}
+\eea
 where $\theta = 2 \theta_1 - \theta_2$, and
 rewriting the angular part as $\dot{\theta} = 2 \dot{\theta_1} - \dot{\theta_2}$,
-\[
+\beq
 \dot{\theta} = e - \frac{r_1^2}{r_2} ( (\rho_1- z) \sin(\theta)+\rho_2 \cos(\theta))
 - 2 r_2 \sigma \sin(\theta)
-\]
+\ee{eq:2meRangl}
 Simulation of these equations (as well as of \cLe\ in polar coordinates
 and Dangelmayr and Armbruster, Guckenheimer and
 Holmes \refeq{eq:AGpolar} below)
@@ -2214,7 +2216,7 @@ context of $\On{2}$-equivariant amplitude equations for 1:2 mode
 interactions.
 We note that the Dangelmayr\rf{Dang86} and Armbruster, Guckenheimer and
 Holmes\rf{AGHO288} third order in the amplitudes normal form flow with
-$\On{2}$ symmetry \refeq{eq:AG} does have ratios of form $r_0/r_1$, when
+$\On{2}$ symmetry \refeq{eq:AGH} does have ratios of form $r_0/r_1$, when
 rewritten in the polar form (Eq.~(4) in the paper),
 \bea
    \dot{r}_1 &=& \mu_1 r_1 + a_1 r_1^3  + b_1 r_1 r_2^2
@@ -2362,18 +2364,47 @@ pair-wise templates are in each other's slice, and the ridge between them
 is rigid. But doubt this can be done for sets for three or more
 {\template s} on a curve surface...
 
-\item[2012-04-02 Daniel] In case anybody was wondering how we got to the two chart atlas for the complex Lorenz system, here's how I did it. At first, I tried using the relative equilibrium and various points on the $\overline{01}$ relative periodic orbit as templates. I could not get this to work as $\dot{\phi}$ always seemed to blow up to anywhere between 200 and 1500. \emph{However}, I did check $\braket{\,t\,}{\sliceTan{}{}}$ as I went and while it got small, it never quite switched signs, so technically it never really crossed the template border. I guess the large values of $\dot{\phi}$ probably had to do with the actual physical rotation induced by the strong contraction toward the z-axis.
+\item[2012-04-02 Daniel]
+In case anybody was wondering how we
+ere's how I got my two chart atlas for the
+\cLe. At first, I tried using the
+\reqv\ and various points on the $\overline{01}$ relative
+periodic orbit as templates. I could not get this to work as $\dot{\phi}$
+always seemed to blow up to anywhere between 200 and 1500.
+\emph{However}, I did check $\braket{\,t\,}{\sliceTan{}{}}$ as I went and
+while it got small, it never quite switched signs, so technically it
+never really crossed the template border. I guess the large values of
+$\dot{\phi}$ probably had to do with the actual physical rotation induced
+by the strong contraction toward the z-axis.
 
 Since thinking didn't get me anywhere and it was 3 AM, I decided to just compute. What I did was that I started with two templates (I believe one was Fr\"olich's template from eq. \ref{exmplTempl}, for no particularly good reason, and a point on $\overline{01}$), I integrated the $\overline{01}$ orbit and calculated what the maximum of $|\dot{\phi}|$ was. I then wrote a loop that added some small random vector to each of the templates, integrated the same orbit, and checked whether the max of $|\dot{\phi}|$ got smaller or bigger. If it got smaller, I kept those two new templates and started adding noise to them. I let this run over night and ended up with the following two templates, which gave me a max $|\dot{\phi}| \sim 16$ for the $\overline{01}$ orbit and $\sim 25$ for an ergodic trajectory: \\
 
+$\slicep{}^{(1)} = [10.6826557605063, 4.05746018793401, 3.86638880437299, 9.62155656768089, 33.3136330008352]$ \\
 
-$\hat{x}^{(1)} = [10.6826557605063, 4.05746018793401, 3.86638880437299, 9.62155656768089, 33.3136330008352]$ \\
-
-$\hat{x}^{(2)} = [90.4054673767747, 22.7146855264444, 31.5729216223112, 110.683144276042, 112.538644670233]$\\
+$\slicep{}^{(2)} = [90.4054673767747, 22.7146855264444, 31.5729216223112, 110.683144276042, 112.538644670233]$\\
 
 The reason that the second one is so big is that I accidentally used the rand function in Matlab instead of randn, so the code was only adding positive numbers to the original point. That being said, this can be partially fixed by rescaling and adjusting the z value to whatever is convenient. This can be done because the only way that the templates come into the computation is through their group tangents, which always has a zero z-component. Rescaling is possible because the group tangent vector of the template only comes in for orthogonality checks $\braket{\,t\,}{\sliceTan{}{}} = 0$ or in the calculation of $\dot{\phi}$, where it is in both the numerator and the denominator. The magnitude of the tangent does not matter in either of these cases. Still it is kind of worrisome that one can't (or at least I haven't been able to) pick something intelligently, and that these points are not really that close to the attractor.
 
 One final note... While I did the template switching and this this looks good, the trajectories look good if you use just \emph{one} of these templates and the max of $|\dot{\phi}|$ isn't much bigger.
+
+\item[2012-04-03 Predrag to Daniel] It seems fixing a template amounts only to defining a ray in the
+$2 + 2$-dimensional $m=1$ subspace, the only object that matters for charts, borders, ridges is
+\bea
+\sliceTan{}{}^{(1)} &=& c_1 (4.05746018793401, -10.6826557605063,  9.62155656768089, -3.86638880437299, 0)
+    \continue
+\sliceTan{}{}^{(2)} &=& c_2 (22.7146855264444, -90.4054673767747, 110.683144276042, -31.5729216223112, 0)
+\,,
+\label{DanielTmpls}
+\eea
+with $c_1$ and $c_2$ arbitrary factors. You can chose them so
+$\sliceTan{}{}^{(j)}$ are unit vectors, if you wish. Can you look for
+minima of
+$1-\groupTan{\sspRed{\zeit}} \cdot \sliceTan{}{}^{(j)}
+   / \Norm{\groupTan{\sspRed{\zeit}}} \Norm{\sliceTan{}{}^{(j)}}$, $\sspRed{0} \in \pS_{110}$?
+Maybe then you could move the \template\ onto the cycle; it would be
+nicer if the templates were on invariant solutions... Better still, find
+parameter values for which the 2-chart atlas for 2-mode system is a
+better example than this.
 
 \item[2012-04-02 Evangelos to Daniel] Did you use some kind of end condition in
 your loop or is this just what you got after many iterations? I try to understand
@@ -2382,36 +2413,69 @@ I wonder if there is any variational principle that could drive the search of
 a good set of template points.
 Also, it would be interesting to plot the trajectories in each of the two slices.
 
-In our paper \refref{SiCvi10} I've tried to avoid singularities by modifying the
+\item[2012-04-03 Evangelos]
+In \refref{SiCvi10} I've tried to avoid singularities by modifying the
 template point in a way that seemed intuitive to me back then (that I was immersed
 into the problem) and I don't understand anymore. I claim that if we pick a template
-with larger $y_2/y_1$ than the relative equilibrium we can avoid
+with larger $y_2/y_1$ than the \reqv\ we can avoid
 the singularity. See Sec. 6.3 and Fig 7(b).
 (There is a discrepancy between what I plot in the figure and what I say in the
 text, which I think is due to an inconsistency in rotating and rescaling the
 template and should not be essential).
 
+\item[2012-04-03 Predrag to Evangelos] We have learned several important things since
+2010.
+\begin{enumerate}
+  \item
+    please study and either understand \chartBord s and ridges, or show
+    why the construction is wrong. A chart \emph{is not} the hyperplane,
+    it is flat tile carved out of the hyperplane that \emph{by construction}
+    slices group orbits in template's neighborhood \emph{only once}.
+  \item
+    it appears that the \cLe\ strange attractor we are studying never
+    gets as far as the \chartBord\ (where \refeq{sliceSingl0} changes
+    sign) but only gets squished close to the $z$-axis, with
+    \refeq{sliceSingl0} maintaining sign. So there is a dynamical reason
+    for large $\dot{\gSpace}$ which is not an artifact of slicing. That's
+    not what we are trying to illustrate here. That is why I keep
+    suggesting that Gang of Chaos constructs a more interesting 2-chart
+    atlas for 2-mode systems such as \refeq{eq:AGH} and\refeq{eq:AGpolar}.
+\end{enumerate}
 
-\item[2012-04-02 Keith] Have working return map for the R\"ossler...Hopefully the image is attached above.  I will post the code when I clean it up and comment it; it is too Keith cluttered currently.  Does anyone know how to put an \"o into matlab titles/strings?
+
+\item[2012-04-02 Keith] Have working return map for the
+R\"ossler... Hopefully the image is attached above.  I will post the code
+when I clean it up and comment it; it is too Keith cluttered currently.
+Does anyone know how to put an \"o into matlab titles/strings?
+
+\item[2012-04-03 Predrag to Keith] You do not want to insert text like
+'R\"ossler blah blah' into figures; that belongs to the caption. Keep
+figures lean, clean and mean.
 
 \begin{figure}
 \begin{center}
-  \includegraphics[width=0.6\textwidth,clip=true]{RosReturnMap.png}
+\includegraphics[width=0.6\textwidth,clip=true]{RosReturnMap}
 \end{center}
   \caption{
-  R\'ossler return map.}
+  R\"ossler return map.
+  }
 \label{fig:RosRetMap}
 \end{figure}
 
 \begin{figure}
 \begin{center}
-  \includegraphics[width=0.6\textwidth,clip=true]{Rossler1Period.png}
+\includegraphics[width=0.6\textwidth,clip=true]{Rossler1Period}
 \end{center}
   \caption{
-  R\'ossler periodic orbit.}
+R\"ossler \po\ \cycle{1}.
+  }
 \label{fig:Ros1Per}
 \end{figure}
 
-
+\item[2012-04-03 Predrag] Presumably \reffig{fig:RosRetMap} is obtained
+by starting close to the \eqv\ $\EQV{0}$ and then indicating the
+Poincar\'e section returns, iterating so long enough that you start
+filling out the strange attractor. You want to draw instead the unstable
+manifold of $\EQV{0}$ up to the turnback, as a line.
 
 \end{description}
