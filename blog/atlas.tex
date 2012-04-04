@@ -2377,15 +2377,41 @@ never really crossed the template border. I guess the large values of
 $\dot{\phi}$ probably had to do with the actual physical rotation induced
 by the strong contraction toward the z-axis.
 
-Since thinking didn't get me anywhere and it was 3 AM, I decided to just compute. What I did was that I started with two templates (I believe one was Fr\"olich's template from eq. \ref{exmplTempl}, for no particularly good reason, and a point on $\overline{01}$), I integrated the $\overline{01}$ orbit and calculated what the maximum of $|\dot{\phi}|$ was. I then wrote a loop that added some small random vector to each of the templates, integrated the same orbit, and checked whether the max of $|\dot{\phi}|$ got smaller or bigger. If it got smaller, I kept those two new templates and started adding noise to them. I let this run over night and ended up with the following two templates, which gave me a max $|\dot{\phi}| \sim 16$ for the $\overline{01}$ orbit and $\sim 25$ for an ergodic trajectory: \\
+Since thinking didn't get me anywhere and it was 3 AM, I decided to just
+compute. What I did was that I started with two templates (I believe one
+was Fr\"olich's template from eq. \ref{exmplTempl}, for no particularly
+good reason, and a point on $\overline{01}$), I integrated the
+$\overline{01}$ orbit and calculated what the maximum of $|\dot{\phi}|$
+was. I then wrote a loop that added some small random vector to each of
+the templates, integrated the same orbit, and checked whether the max of
+$|\dot{\phi}|$ got smaller or bigger. If it got smaller, I kept those two
+new templates and started adding noise to them. I let this run over night
+and ended up with the following two templates, which gave me a max
+$|\dot{\phi}| \sim 16$ for the $\overline{01}$ orbit and $\sim 25$ for an
+ergodic trajectory:
 
 $\slicep{}^{(1)} = [10.6826557605063, 4.05746018793401, 3.86638880437299, 9.62155656768089, 33.3136330008352]$ \\
 
 $\slicep{}^{(2)} = [90.4054673767747, 22.7146855264444, 31.5729216223112, 110.683144276042, 112.538644670233]$\\
 
-The reason that the second one is so big is that I accidentally used the rand function in Matlab instead of randn, so the code was only adding positive numbers to the original point. That being said, this can be partially fixed by rescaling and adjusting the z value to whatever is convenient. This can be done because the only way that the templates come into the computation is through their group tangents, which always has a zero z-component. Rescaling is possible because the group tangent vector of the template only comes in for orthogonality checks $\braket{\,t\,}{\sliceTan{}{}} = 0$ or in the calculation of $\dot{\phi}$, where it is in both the numerator and the denominator. The magnitude of the tangent does not matter in either of these cases. Still it is kind of worrisome that one can't (or at least I haven't been able to) pick something intelligently, and that these points are not really that close to the attractor.
+The reason that the second one is so big is that I accidentally used the
+rand function in Matlab instead of randn, so the code was only adding
+positive numbers to the original point. That being said, this can be
+partially fixed by rescaling and adjusting the z value to whatever is
+convenient. This can be done because the only way that the templates come
+into the computation is through their group tangents, which always has a
+zero z-component. Rescaling is possible because the group tangent vector
+of the template only comes in for orthogonality checks
+$\braket{\,t\,}{\sliceTan{}{}} = 0$ or in the calculation of
+$\dot{\phi}$, where it is in both the numerator and the denominator. The
+magnitude of the tangent does not matter in either of these cases. Still
+it is kind of worrisome that one can't (or at least I haven't been able
+to) pick something intelligently, and that these points are not really
+that close to the attractor.
 
-One final note... While I did the template switching and this this looks good, the trajectories look good if you use just \emph{one} of these templates and the max of $|\dot{\phi}|$ isn't much bigger.
+One final note... While I did the template switching and this this looks
+good, the trajectories look good if you use just \emph{one} of these
+templates and the max of $|\dot{\phi}|$ isn't much bigger.
 
 \item[2012-04-03 Predrag to Daniel] It seems fixing a template amounts only to defining a ray in the
 $2 + 2$-dimensional $m=1$ subspace, the only object that matters for charts, borders, ridges is
@@ -2478,10 +2504,79 @@ Poincar\'e section returns, iterating so long enough that you start
 filling out the strange attractor. You want to draw instead the unstable
 manifold of $\EQV{0}$ up to the turnback, as a line.
 
-\item[2012-04-03 Daniel to Evangelos] It was not a particularly smart way to go about it. I just took a set of templates, ran a simulation of one period of $\overline{01}$ (calculated on the slices as per Eqs. \ref{reconstrEq} and \ref{EqMotMFrame}  and switching from $\hat{x}^{(1)}$ to $\hat{x}^{(2)}$ whenever necessary as per Eq. \ref{eq:chartBord}), calculated $\max |\dot{\phi}|$ for the time series, and figured out whether it was smaller or larger. If it was better, I saved it as my new ``standard'' to compare to. The next calculation started with the best templates so far plus some noise. I just let it run until the morning and saw what the best one that it had found was. There is no guarantees that the are the best. They are just the best that the dumb algorithm found. There are other templates (beyond the rescaling that Predrag mentioned above) that work similarly.
+\item[2012-04-03 Daniel to Evangelos]
+It was not a particularly smart way to go about it. I just took a set of
+templates, ran a simulation of one period of $\overline{01}$ (calculated
+on the slices as per \refeq{reconstrEq} and \refeq{EqMotMFrame}  and
+switching from $\hat{x}^{(1)}$ to $\hat{x}^{(2)}$ whenever necessary as
+per \refeq{eq:chartBord}), calculated $\max |\dot{\phi}|$ for the time
+series, and figured out whether it was smaller or larger. If it was
+better, I saved it as my new ``standard'' to compare to. The next
+calculation started with the best templates so far plus some noise. I
+just let it run until the morning and saw what the best one that it had
+found was. There is no guarantees that the are the best. They are just
+the best that the dumb algorithm found. There are other templates (beyond
+the rescaling that Predrag mentioned above) that work similarly.
 
-\item[2012-04-03 Daniel to Keith] I agree with Predrag leave titles and such out of the figure and just caption it. However, you can do it by \begin{verbatim} title('R\"{o}ssler','Interpreter','latex')} \end{verbatim} or by just putting in the \"o directly (as in using the ASCII character for it). This may require you to use escape sequences (ALT + \#) or configure your keyboard differently.
+\item[2012-04-03 Daniel to Keith] I agree with Predrag leave titles and
+such out of the figure and just caption it. However, you can do it by
+\begin{verbatim}
+title('R\"{o}ssler','Interpreter','latex')}
+\end{verbatim}
+or by just putting in the \"o directly (as in using the
+ASCII character for it). This may require you to use escape sequences
+(ALT + \#) or configure your keyboard differently.
 
-\item[2012-04-03 Daniel to Predrag] I played around with the parameters in Eq. \ref{eq:AGpolar} all afternoon and couldn't find anything chaotic. Everything was either attractive fixed points or periodic orbits, which I guess are relative equilibria/periodic orbits, since the symmetry is quotiented out by going to polar coordinates. I guess I'll turn to the literature to see if somebody has a set of parameters where they see chaos... 
+\item[2012-04-03 Daniel to Predrag] I played around with the parameters
+in \refeq{eq:AGpolar} all afternoon and couldn't find anything chaotic.
+Everything was either attractive fixed points or periodic orbits, which I
+guess are relative equilibria/periodic orbits, since the symmetry is
+quotiented out by going to polar coordinates. I guess I'll turn to the
+literature to see if somebody has a set of parameters where they see
+chaos...
+
+\item[2012-04-03 Predrag to Lei]
+We have to move on with ChaosGang paper. Please follow ChaosBook
+teachings on how to analyze a dynamical system (it is not by blindly
+simulating):
+\begin{enumerate}
+  \item
+        determine \emph{numerically} the \reqva\ of the
+        $\SOn{2}$-equivariant Dangelmayr 2-mode system in polar coordinates
+\bea
+   0 &=& \mu_1 r_1 + a_1 r_1^3  + b_1 r_1 r_2^2
+                 + c_1 r_1 r_2 \cos(\psi)\continue
+   0 &=& \mu_2 r_2 + a_2 r_1^2 r_2  + b_2 r_2^3
+                 + c_2 r_1^2 \cos(\psi)\continue
+   0 &=&  e - \left(c_2 \frac{r_1^2}{r_2} + 2\,c_1 r_2\right) \sin(\psi)
+\,,
+\label{eq:AGpolarREQV}
+\eea
+        Here I stuck in tentatively an `$e$' term because something like
+        that is needed to break $\On{2} \to \SOn{2}$, verify that it
+        really does that. The first two equations are cubic, the third one you can use
+        to eliminate $\cos(\psi)$, so my guess is that there could  be up to six real
+        roots, but I have not thought it through. Once you have found parameters
+        for which there are interesting \reqv\ solutions, then
+  \item
+        compute analytically the \stabmat\ \Mvar\ in polar coordinates
+  \item
+        Study eigenvalues, keep playing with parameters. We would like
+        -preferably- no \reqv\ to be attracting limit cycle, and several of
+        the \reqva\ to be complex-pair unstable, leading to chaos, to be
+        visualized and sliced in Cartesian coordinates \refeq{eq:AGH}.
+  \item
+        If you find a nice chaotic attractors, others can join in
+        constructing an atlas for it. We just need one and only one
+        example with non-trivial \chartBord s and at least 2 charts.
+\end{enumerate}
+Please read the blog entries above, my writing is starting to get a bit
+repetitive - a look at
+\HREF{http://chaosbook.org/projects/index.shtml\#Kohler}{Kohler} in his
+\HREF{http://ChaosBook.org/projects}{ChaosBook.org project} might be
+helpful, but we \emph{do not} want to study $\On{2}$ discrete symmetry
+invariant subspaces. The papers discussed above exhibit some stable \reqv
+a and \rpo s for specific (out-of the hat) parameter choices. You want to
+screw up some parameters higher so these solutions go unstable.
 
 \end{description}
