@@ -60,9 +60,9 @@ There are plenty examples which illustrate the mechanism initiating baroclinic f
 
 Consider the situation shown in Figure \ref{f:drivedrag}.a, where two fluids of different densities, initially separated at $x_o$, are suddenly allowed to interact. The situation is clearly unstable; a pressure gradient would exist at all levels, except for the surface, going from the heavier fluid to thee lighter one. This would create both subsurface and surface currents, one due to the pressure gradient in the bottom, and the other due to mass conservation in the surface. Intuitively we can imagine that the system would finally settle to a configuration where the heavier fluid would lay on the bottom and the lighter one on top. That is, a configuration where the potential energy is minimized.
 
-Thinking about this problem in terms of surface of constant pressure and density we can understand the instability that causes this type of behavior. In the initial configuration, the isopycnals are orthogonal to the isobars Figure \ref{f:drivedrag}.b, so that the mentioned pressure gradient is generated at $x_o$. Later, as the denser fluid starts to settle in the lower layer, this pressure gradient starts to spread out; but it will always exist as long as there is a inclination is the isopycnals. At the end, when all the transient motions are settled and equilibrium is reached, both  the isobars and the isopycnals are parallel; leaving the system in a lower potential energy state. A fundamental concept can be extracted from this: 
+Thinking about this problem in terms of surface of constant pressure and density we can understand the instability that causes this type of behavior. In the initial configuration, the isopycnals are orthogonal to the isobars Figure \ref{f:drivedrag}.b, so that the mentioned pressure gradient is generated at $x_o$. Later, as the denser fluid starts to settle in the lower layer, this pressure gradient starts to spread out; but it will always exist as long as there is a inclination is the isopycnals. At the end, when all the transient motions are settled and equilibrium is reached, both  the isobars and the isopycnals are parallel; leaving the system in a lower potential energy state. A fundamental concept can be extracted from this:
 
-\emph{In the absence of rotation, and an external forcing, equilibrium of a fluid is reached when isopycnals and isobars are parallel to each other}. 
+\emph{In the absence of rotation, and an external forcing, equilibrium of a fluid is reached when isopycnals and isobars are parallel to each other}.
 
 If this condition is not met, transient motions would be generated to extract the excess  potential energy, and leave the system in its lower energy state.
 
@@ -235,11 +235,21 @@ capture two basic properties of the flow (as shown in
 \refsect{s:examples}): the nearly geostrophic motions of the fluid and its vertical
 structure as given by Equations \refeq{TWE1} and \refeq{TWE2}. One of the simplest mathematical systems that would capture
 this type of behavior \refref{phillips51}, is a quasigeostrophic set of equations discretized
-for two vertical layers. A quick derivation is given here. For more in
+for two vertical layers. A quick derivation is given here\footnote{We follow a intuitively approach for the sake of simplicity. However a much more systematic derivation can be made with asymptotic methods and the reader is advise to explore them (see for instance \refrefs{Vallis06, Majda03, Hasha05}), as they expose how different approximations relate to each other.}. For more in
 depth derivations the  reader is referred to
 \refrefs{Vallis06,Holton79,Salmon98,phillips51}.
 
 Consider the situation in Figure \ref{f:twolayer}, where we have two layer of different densities, equal depths $H$, and the Rossby number is small enough so that we can use the quasi-geostrophic approximation. The potential vorticity of each layer can then be written as:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[t]
+\begin{center}
+    \includegraphics[width=0.6\textwidth, clip=true]{twolayermodel}
+\end{center}
+\caption{Two layer model considered in the simulations}
+\label{f:twolayer}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \beq
 q_i=\frac{\eta_i+f}{h_i}
 \ee{PV}
@@ -314,7 +324,7 @@ q_1=\beta y + \nabla^2 \psi_1 + \frac{f_o^2}{g'H}(\psi_2-\psi_1)-\frac{f_o^2}{gH
 q_2=\beta y + \nabla^2 \psi_2 + \frac{f_o^2}{g'H}(\psi_1-\psi_2)
 \ee{LE2}
 
-where the term $f_o^2 \psi_1/gH$ is much smaller and can be dropped from the equations. 
+where the term $f_o^2 \psi_1/gH$ is much smaller and can be dropped from the equations.
 
 Note, that we now have a closed set of equation to solve. The equations above are only dependent on $\psi_1$ and $\psi_2$, and as they are the potential vorticity for each layer, they are exactly conserved ($d q_i/dt=0$). Nonetheless, it is convenient to nondimensionalize the variables; and we use the same scales as in \refref{Bracco03} for this purposes. That is, we use $U$ for the characteristic velocity of the flow, $L_R=(g'H)^{1/2}/f_o$ the internal Rossby deformation radius as the horizontal scale, and $L_R/U$ for the time scale. This way, Equations \refeq{LE1} and \refeq{LE2} transform to:
 
@@ -342,9 +352,15 @@ Lastly, it is also convenient to introduce some sort of dissipation in the syste
 \frac{d q_i}{dt}=\frac{\partial q_i}{\partial t}+J(\psi_i,q_i)=\nu \nabla^4 \psi_i
 \ee{Cons}
 
-where $J(\psi,q)=\psi_x q_y - \psi_y q_x$ and $\nu$ is a nondimensional viscosity coefficient.
+where $J(\psi,q)=\psi_x q_y - \psi_y q_x$ and $\nu$ is a nondimensional viscosity coefficient. Equivalently this three las equations can be rewritten as:
 
-Equations \refeq{LEND1a} and \refeq{LEND2b} together with \refeq{Cons} constitute a closed set for $\psi_1$ and $\psi_2$, far more convenient than its dimensional form, as on these all term are scaled so that its magnitude is $O(1)$. We can now use this model as a simplified version to study baroclinic instability. However, note that nonlinear terms are retained, so that its dynamics still is rich and not fully understand up to date.
+\begin{eqnarray}
+\frac{\partial}{\partial t} \left(\nabla^2 \psi_1 + F(\psi_2-\psi_1)\right)+\textbf{u} \cdot \nabla \left(\nabla^2 \psi_1 + F(\psi_2-\psi_1)\right)+\beta \frac{\partial \psi_1}{\partial x} = \nu \nabla^4 \psi_1 \nonumber \\
+\frac{\partial}{\partial t} \left(\nabla^2 \psi_2 + F(\psi_1-\psi_2)\right)+\textbf{u} \cdot \nabla \left(\nabla^2 \psi_2 + F(\psi_1-\psi_2)\right)+\beta \frac{\partial \psi_2}{\partial x} =\nu \nabla^4 \psi_2 \nonumber \\
+ \label{LEND3}
+\end{eqnarray}
+
+The last two equations constitute a closed set for $\psi_1$ and $\psi_2$, far more convenient than its dimensional form, as on these all term are scaled so that its magnitude is $O(1)$. We can now use this model as a simplified version to study baroclinic instability. However, note that nonlinear terms are retained, so that its dynamics still is rich and not fully understand up to date.
 %We begin by considering Boussinesq approximation to Navier-Stokes
 %equations. This arise when the density variations are small compared to
 %the absolute value of itself (as is often found in the ocean), and the
@@ -353,7 +369,82 @@ Equations \refeq{LEND1a} and \refeq{LEND2b} together with \refeq{Cons} constitut
 
 \section{Stability Theory}
 \label{s:stability}
+As we seen in the previous chapter, geostrophy is an equilibrium state of the Navier-Stokes equations. It is now convenient to ask how stable this state is, that is, how much does the isopycnals need to slope in order for baroclinic instability to develop, or equivalently, how fast the winds must be. For this we assume a background state of the flow, linearize the equations of motion around this state, assume a sinusoidal form for the disturbances and extract stability coefficients from the analysis (i.e. a bifurfication analysis is performed). It is fair to say that this has been the most common approach when dealing with baroclinic instability. And there have been great studies which differ in their assumptions. Here we focus in the particular set of equations derived in the previous sections (commonly called the Philip problem). However, more general forms of this analysis exist, where the equations for a continuously stratified atmosphere are considered (for example in the Eady or the Charney problems).
 
+It is also important to keep in mind the limitations of this kind of analysis. They are highly idealized as they consider linearized relationships around simple background flows. Nevertheless, they are indispensable to understand atmospheric and oceanic circulation
+
+We follow the procedure outlined by \refref{Hasha05} or in a simpler fashion in \refref{Salmon98}, as it is an elegant systematic approach which borrows notation from quantum mechanics. First, assume a shear flow with mean velocities $U$ in the upper layer and $-U$ in the lower one. This implies that the stream functions can be computed as:
+
+\begin{eqnarray}
+\psi_1 = -U y + \psi_1' \nonumber \\
+\psi_2 =  U y + \psi_2' \label{psi_base}
+\end{eqnarray}
+
+where the primes denote perturbations around the mean state. Replacing this in Equations \refeq{LEND3}, and ignoring the high order perturbation terms and viscous dissipation \SOA{I have ignored dissipation here so I think that the same results as in Vallis' should be obtained. However, notation is a but different.}, one obtains:
+
+\begin{eqnarray}
+\left(\frac{\partial}{\partial t}+U \frac{\partial}{\partial x}\right)\left(\nabla^2 \psi_1 + F(\psi_2-\psi_1)\right) +\frac{\partial \psi_1}{\partial x}(\beta + 2FU) = 0 \nonumber \\
+\left(\frac{\partial}{\partial t}+U \frac{\partial}{\partial x}\right)\left(\nabla^2 \psi_2 + F(\psi_1-\psi_2)\right) +\frac{\partial \psi_2}{\partial x}(\beta - 2FU) = 0 \nonumber \\
+\end{eqnarray}
+
+where we have dropped the primes. This can be written in matrix form as:
+
+\beq
+\left(\frac{\partial}{\partial t} M - L\right) \Psi=0
+\ee{MF}
+
+where
+
+\begin{equation}
+\begin{pmatrix}
+  \nabla ^2 - F & F \\
+  F & \nabla^2 - F \\
+\end{pmatrix}
+\label{Mmatrix}
+\end{equation}
+
+\begin{equation}
+\begin{pmatrix}
+  -U \frac{\partial}{\partial x}(\nabla ^2-F)-(\beta+2FU)\frac{\partial}{\partial x}
+   & -U F \frac{\partial}{\partial x} \\
+   U F \frac{\partial}{\partial x}
+   & U \frac{\partial}{\partial x}(\nabla ^2-F)-(\beta-2FU)\frac{\partial}{\partial x}
+\end{pmatrix}
+\label{Mmatrix2}
+\end{equation}
+
+seeking solutions of the form 
+\begin{equation}
+\Psi (x,y,t)=\hat{\Psi} (k,m,U) e^{i(kx+my-\omega t)}
+\label{PRT}
+\end{equation}
+
+where $k$, $m$ are the horizontal wave numbers and $\omega$ the frequency of the perturbation, one obtains new matrixes $\hat{M}$ and $\hat{L}$ as functions of this new variables (see \refref{Hasha05}), so that: \SOA{This might be becoming a little to cryptic here. Do you think we should expand on the procedure?}
+\beq
+\left( \hat{L}+i \omega \hat{M}\right) \Psi=0
+\ee{MF}
+
+in order to have nontrivial solution the determinant of $\left( \hat{L}+i \omega \hat{M}\right)$ must vanish, which gives the following relation for $\omega$ (i.e. the dispersion relationship for the perturbations)\SOA{Currently making the calculations for this case, just to make sure that I have the correct dispersion relationship. I don't know if it is as easy as setting r = 0 in Hasha report. I was also thinking about making the calculations considering the term $\nabla ^4 \eta$. But probably is done somewhere else. Let me know if you think it is important to do so.}
+
+\beq
+\omega = ...%-\frac{\beta k}{K^2}\frac{K^2+F}{K^2+2F} \pm \frac{\sqrt{k^2K^4(K^4-4F^2)U^2+F^2(\beta k)^2}}{K^2(K^2+2F)}
+\ee{Dis}
+
+the model is then unstable if $\omega$ has an imaginary component, which is only possible if:
+\beq
+%k^2K^4(K^4-4F^2)U^2+F^2(\beta k)^2<0
+\ee{condition}
+
+Then the critical velocity for the instability is given by:
+
+\beq
+U_c=%\sqrt{\frac{F^2(\beta k)^2}{k^2K^4(K^4-4F^2)U^2}}
+\ee{condition}
+
+and a higher velocity would make the flow unstable. 
+
+Thinking in terms of state space for the dynamical system (see \refref{{DasBuch}} \footnote{That is, decomposing the PDE of the flow into a series of ODE for the amplitude of the harmonics}, what was has been done up to here, is to find an equilibrium point of the system and analyze its bifurcations. This is no small task, and that is the reason of the vast amount of literature published in the subject.
+Now we are interested in what happens next. And we will try to analyze this by making use of the symmetries of the flow. 
 \section{Nonlinear Theory}
 \label{s:nonlinear}
 \section{Setup}
