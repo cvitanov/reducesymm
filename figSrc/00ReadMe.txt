@@ -13,6 +13,16 @@ read also
 TO ALL:
     please save, clearly document here the source code for your figures
 
+----------------------------------------------------------------------------
+                                        Borrero 2012-04-09
+
+siminos/figSrc/matlab/Wurst01.m
+An updated version of TWand01.m. Draws 3D surface to represent group orbit
+of 01 rpo. This figured is referenced as fig:CLf01group in the atlas blog/paper.
+Comments in the code should be pretty self explanatory. Has some ancillary code 
+saved with it: ComplexLorenzEOM.m, gCLE.m, GroupOrbit.m, and 
+mArrow3.m, so don't go deleting those.
+
 ----------------------------------------------------------------
                                         Borrero 2012-03-23
 
