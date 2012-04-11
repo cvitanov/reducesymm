@@ -23,7 +23,7 @@ TWEQ = [ 8.48490000000000;... % Relative equilibrium as per blog discussion
          26.9990000000000;]
 
 % Move equilibrium around group orbit by -pi/2 (looks better on final plot)
-g = gCLE(-pi/2);
+g = gCLE(-3*pi/4);
 TWEQ = g*TWEQ;
 
 Tp = 1.54203890921923; % period of 01 orbit from Siminos
@@ -45,8 +45,10 @@ plot3(GX(:,1),GX(:,2),GX(:,5),'--b','LineWidth',2),hold on
 plot3(Xi(1),Xi(2),Xi(5),'Marker','o','MarkerFaceColor',[0 0 1], 'Color', [0 0 1],'MarkerSize',8)
 
 % Plot TW_1 and its group orbit
-plot3(GTW(:,1),GTW(:,2),GTW(:,5),'--r','LineWidth',2)
+plot3(GTW(1:13,1),GTW(1:13,2),GTW(1:13,5),'-r','LineWidth',2)
+plot3(GTW(14:52,1),GTW(14:52,2),GTW(14:52,5),'--r','LineWidth',2)
 plot3(TWEQ(1),TWEQ(2),TWEQ(5),'Marker','o','MarkerFaceColor',[1 0 0], 'Color', [1 0 0],'MarkerSize',8)
+plot3(GTW(14,1),GTW(14,2),GTW(14,5),'Marker','o','MarkerFaceColor',[1 0 0], 'Color', [1 0 0],'MarkerSize',8)
 
 % Calculate N = n+1 (16) periods of the 01 relative periodic orbit,
 % making sure to avoid exponential blow up advancing the phase by
@@ -66,25 +68,25 @@ for n = 0:15
         plot3(Y(end,1),Y(end,2),Y(end,5),'Marker','o','MarkerFaceColor',[0 0 1], 'Color', [0 0 1],'MarkerSize',8)
     % For other periods, plot faint dotted lines
     else
-        plot3(Y(:,1),Y(:,2),Y(:,5),'Color',[0 0.5 0.5],'Linewidth',1,'LineStyle',':')
+        plot3(Y(:,1),Y(:,2),Y(:,5),'Color',[0 0.4 0.4],'Linewidth',1,'LineStyle',':')
     end
     drawnow
 end
 
 
-% Calculate and plot group orbit for a few select points on 01
-% (may be confusing, but helps enhance 3D effect of surface drawn later)
-% Comment this section to skip this step.
-for j = 1:250:length(Y(:,1))
-   GX = GroupOrbit(Y(j,1:5));
-   plot3(GX(:,1),GX(:,2),GX(:,5),'Color',[0 .5 .5],'Linewidth',1,'LineStyle',':')
-end
+% % Calculate and plot group orbit for a few select points on 01
+% % (may be confusing, but helps enhance 3D effect of surface drawn later)
+% % Comment this section to skip this step.
+% for j = 1:250:length(Y(:,1))
+%    GX = GroupOrbit(Y(j,1:5));
+%    plot3(GX(:,1),GX(:,2),GX(:,5),'Color',[0 .5 .5],'Linewidth',1,'LineStyle',':')
+% end
 
 
 % Calculate distances from z-axis for select point on 01 orbit
 % and extract their z-positions as a vector
-R = sqrt(Y(1:150:end,1).^2 + Y(1:150:end,2).^2);
-Z = Y(1:150:end,5);
+R = sqrt(Y(1:100:end,1).^2 + Y(1:100:end,2).^2);
+Z = Y(1:100:end,5);
 
 % Caculate the surface coordinates for cylinders having the radii
 % saved in R
@@ -104,7 +106,7 @@ alpha(0.12) % Set transparency value for surface (values between 0.1 and 0.2 see
 % Set camera view. This can be adjusted by hand once the figure is rendered 
 % but lighting may have to be adjusted for it to look good.
 rotate3d
-view([115 12]) % [Azymuthal rotation, elevation angle]
+view([106 10]) % [Azymuthal rotation, elevation angle]
 drawnow
 
 % Set axes limits and hide tick marks

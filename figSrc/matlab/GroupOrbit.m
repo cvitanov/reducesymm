@@ -2,7 +2,7 @@
 % 5D complex Lorenz system
 function X = GroupOrbit(x)
 
-theta = linspace(0,2*pi,50);
+theta = linspace(0,2*pi,52);
 
 for j = 1:length(theta)
     g = gCLE(theta(j));  
