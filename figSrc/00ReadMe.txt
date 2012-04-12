@@ -13,15 +13,26 @@ read also
 TO ALL:
     please save, clearly document here the source code for your figures
 
-----------------------------------------------------------------------------
+
+----------------------------------------------------------------
+                                        Sarah Flynn 2012-04-12
+
+www.sagemath.org
+    generates cool graphics in python
+www.texample.net/tikz/
+    can generate animations that can be embedded into pdf files
+www.texample.net/tikz/examples/tag/animations/
+
+----------------------------------------------------------------
                                         Borrero 2012-04-09
 
 siminos/figSrc/matlab/Wurst01.m
-An updated version of TWand01.m. Draws 3D surface to represent group orbit
-of 01 rpo. This figured is referenced as fig:CLf01group in the atlas blog/paper.
-Comments in the code should be pretty self explanatory. Has some ancillary code 
-saved with it: ComplexLorenzEOM.m, gCLE.m, GroupOrbit.m, and 
-mArrow3.m, so don't go deleting those.
+    An updated version of TWand01.m. Draws 3D surface to represent group
+    orbit of 01 rpo. This figured is referenced as fig:CLf01group in the
+    atlas blog/paper. Comments in the code should be pretty self
+    explanatory. Has some ancillary code saved with it:
+    ComplexLorenzEOM.m, gCLE.m, GroupOrbit.m, and mArrow3.m, so don't go
+    deleting those.
 
 ----------------------------------------------------------------
                                         Borrero 2012-03-23
@@ -94,21 +105,17 @@ pdflatex), keep eps files for APS submission.
 ----------------------------------------------------------------
                                         Evangelos 2011-03-15
 
-I've recently started using matplotlib for visualization:
+    I've recently started using matplotlib for visualization:
+matplotlib.sourceforge.net
+    It is a matlab-like python library, that can be used either
+    interactively or through scripts. Excellent! Perhaps it only
+    lags behind matlab and mathematica in 3D capabilities.
 
-http://matplotlib.sourceforge.net/
-
-It is a matlab-like python library, that can be used either
-interactively or through scripts. Excellent! Perhaps it only
-lags behind matlab and mathematica in 3D capabilities.
-
-I've also noticed asymptote
-
-http://asymptote.sourceforge.net/
-
-produces high-quality figures in 2D and 3D. I think it is
-intended mostly for drawing, rather than for data visualization.
-I haven't tried it.
+    I've also noticed asymptote
+asymptote.sourceforge.net
+    produces high-quality figures in 2D and 3D. I think it is intended
+    mostly for drawing, rather than for data visualization. I haven't
+    tried it.
 
 ----------------------------------------------------------------
                                         Predrag 2010-04-02
@@ -117,15 +124,15 @@ talked to Zbigniew Nitecki,  www.tufts.edu/~znitecki who is
 writing a honors calculus texbook. He does everything in
 pstricks, says, use
 
-http://tug.org/PSTricks/
-http://en.wikipedia.org/wiki/PSTricks
-http://www.ctan.org/tex-archive/help/Catalogue/entries/pst-3d.html
+tug.org/PSTricks/
+en.wikipedia.org/wiki/PSTricks
+www.ctan.org/tex-archive/help/Catalogue/entries/pst-3d.html
 
 and for 3D with shadows:
-http://melusine.eu.org/syracuse/pstricks/
+melusine.eu.org/syracuse/pstricks/
 
 also, get the German edition of
-http://www.amazon.com/PSTricks-Graphics-PostScript-TeX-LaTeX/dp/1906860130/
+www.amazon.com/PSTricks-Graphics-PostScript-TeX-LaTeX/dp/1906860130/
 
 
 					Vaggelis Mar 28 2009
@@ -259,7 +266,7 @@ Use ImageMagick to convert eps to png:
 Option +antialias will reduce number of colors used. Usually this greatly reduces size
 without significant loss in quality over true-color.
 
-Then use program bmeps ( download from http://bmeps.sourceforge.net/, be sure to install
+Then use program bmeps ( download from bmeps.sourceforge.net/, be sure to install
 all required programs including the developer versions before compiling) to generate
 reduced size eps:
 
