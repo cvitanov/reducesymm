@@ -13,58 +13,19 @@ proper - clip  it and paste it into here, for possible reuse later.
 \subsection{Introduction}
 \label{s:introFlot}
 
-Making full use of these ideas necessitates reexamination of two of the
-basic tools of the theory of dynamical systems, Poincar\'e sections and
-symmetry reduction.
+This paper has two ideas:
+\begin{enumerate}
+  \item slice locally
+  \item chart globally
+\end{enumerate}
+
+    \begin{itemize}
+      \item closest point on a group orbit
+      \item variation $\to$ \slice\ hyperplane
+    \end{itemize}
 
     in order to motivate the need for continuous symmetry reduction , explain
     what it is, and how with it the geometry of \statesp\ dynamics is revealed;
-
-
-The importance of a given invariant solution is made precise by periodic
-orbit theory which assigns a deterministic weight with which the solution
-contributes to any dynamical average over the chaotic component of the
-flow \rf{DasBuch}. Consideration of continuous symmetries extends this
-theory to sums over \emph{relative} periodic orbits\rf{Cvi07},
-time-dependent solutions which recur periodically in co-moving frames
-translating along and/or rotating about the axes of symmetry with
-different translational and rotational velocities for each solution.
-
-The $\infty$-dimensional \stateDsp\
-representation\rf{GHCW07} of PDEs, such as \reffig{f:MeanVelocityFrame},
-enables us to track the unstable manifolds of invariant
-solutions, the heteroclinic connections between them\rf{GHCV08}, and
-{provides us with} new insights into the nonlinear \statesp\ geometry and
-dynamics of moderate \Reynolds\ wall-bounded flows.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% 2011-10-23 Predrag: replace this Ashley' simulation
-%            continuous.tex overheads, and ChaosBook
-% TEMPORARY: from siminos/rpo_ks/arxiv-v2/figs, \refref{cont:SCD07})
-%
-\begin{figure}
-\centering
-(a)%\includegraphics[width=0.45\textwidth,clip=true]{2841GO3a}
-~~(b)%\includegraphics[width=0.45\textwidth,clip=true]{2841GO3b}
-  \caption{\label{f:MeanVelocityFrame}
-Symmetry reduction $\pS \to \pSRed$ replaces each
-(a)
-full \statesp\ trajectory $\ssp(\zeit)$ by
-(b)
-a simpler \reducedsp\ trajectory $\sspRed(\zeit)$, with continuous group
-induced drifts quotiented out. Here this is illustrated by the pipe flow \rpo\
-$\RPO{36.92}$
-(a) %(red)
-traced in the full {\statesp} for two $\period{}=36.92$ periods, in the
-frame moving with the constant mean axial flow speed $U$;
-(b) %(blue)
-restricted to the symmetry-\reducedsp. Both are projected onto the
-$3$\dmn\ frame \refeq{FrenetFrame1}. In the full \statesp\ a \rpo\ traces
-out quasi-periodically a highly contorted 2-torus; in the \reducedsp\ it
-closes a \po\ in one period $\period{}$.
-            }
-\end{figure}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 We review  ??? flows, their visualization, and their symmetries in
 \refsect{s:review}. The {\mslices}  is described in \refsect{s:slice},
@@ -78,36 +39,6 @@ discussed in \refsect{s:concl}.
 % \label{s:reviewFlot}
 % former siminos/atlas/review.tex    master file: main.tex
 
-As long as one is focusing on a single solution of \NSe, there are many
-excellent, physically insightful $3D$ visualizations of the flow:
-velocity fields on flow sections, isovorticity surfaces, videos of the
-flow, and so on. But today we own dozens of exact \eqv\ and \reqv\
-solutions for a given turbulent flow, and we are commencing an exploration of
-states of turbulent fluids in terms of the unstable \po\ solutions whose
-number, as a function of the increasing period, is growing exponentially.
-How are we to visualize \emph{the totality} of these solutions in one go?
-
-The answer was given by \cite{hopf48}, who envisioned the function space
-of {\NS} velocity fields as an infinite-dimensional \statesp\ $\pS$ in
-which each instantaneous state of $3D$ fluid velocity field $\vec{u}(\bx)$ is
-represented as a unique point $\ssp$. In our particular application we
-can represent $\ssp = (\vec{u}_{nkm})$ as a vector whose elements are the
-primitive discretization variables \refeq{pipeDiscr}. The $3D$ velocity
-field given by $\vec{u}_{knm}(\zeit)$, obtained from integration of the
-\NSe\ in time, can hence be seen as trajectory $\ssp(\zeit)$ in
-$\approx 100,000$ dimensional space spanned by the free variables of our
-numerical discretization, with the \NS\ equations \refeq{NavStokesDev}
-rewritten as
-\beq
-   \dot{\ssp} = \vel(\ssp) ,
-   \qquad
-   \ssp(\zeit) = \ssp(0)
-            + \int_0^\zeit \! \mathrm{d}\zeit' \, \vel(\ssp(\zeit'))
-\,,
-\ee{symbolicNS}
-where the current state of the fluid $ \ssp(\zeit)$ is the time-$\zeit$
-forward map of the initial fluid state  $\ssp(0)$.
-
 On perils of thinking linearly: bases such as Fourier modes are
 perfectly natural for problems such a bifurcation of a steady state, and
 other weak perturbations. They are absolutely unnatural for strongly
@@ -119,58 +50,10 @@ strongly entangled.
         nonlinear dynamics states are far away from such axes, as they
         always involve a number of such linear modes strongly entangled.
 
-In order to quantify whether two fluid states are close to or far from
-each other, one needs a notion of distance between two points in
-\statesp, measured here as
-\beq
-  \Norm{\ssp-\ssp'}^2  = \braket{\ssp-\ssp'}{\ssp-\ssp'} =
-\frac{1}{V}
-\int_\bCell \! d \bx \;
-(\vec{u}-\vec{u}') \cdot (\vec{u}-\vec{u}')
-\,.
-\ee{innerproduct}
-There is no compelling reason to use this {`energy norm'}, other than
-that velocity fields is what is given in a numerical computation. What
-norm one actually uses depends very much on the application.
-Visualizations of trajectory \refeq{symbolicNS} are of necessity
-projections onto two or three dimensions.
+\subsubsection{Experimentalist description: a video 1D to 3D arrays of pixels}
+\subsubsection{Theorist description: $\infty$-\dmn\ \statesp}
 
-Recently, \cite{GHCW07} have shown that the dynamics of different regions
-of {\statesp}, considered as a high-dimensional vector space, can be
-elucidated more profitably by a computationally straight\-forward sets of
-\emph{physical} coordinates. One identifies several prominent states of
-the flow $\vec{u}_A$, $\vec{u}_B$, $\dots$, such as {\eqv} states and
-their linearized stability eigenvectors, states in whose neighborhoods
-the turbulent flow spends most of the time, and from them constructs, by
-Gram-Schmidt or (anti)-symmetrizations, an orthonormal basis set
-$\{\be_1, \be_2, \cdots, \be_n\}$. The evolving fluid state $\bu(\zeit)$
-is then projected onto this basis using the inner product
-\refeq{innerproduct},
-\beq
-\ssp(\zeit) =(\ssp_1, \ssp_2, \cdots, \ssp_n, \cdots)(\zeit)
-    \,,\qquad
-\ssp_n(\zeit) = \braket{\vec{u}(\zeit)}{\be_n}
-\,.
-\ee{intrSspTraj}
-Low-dimensional projections of the flow can be viewed in any of the $2D$ planes
-$(\ssp_m, \ssp_n)$ or in $3D$ perspective views $(\ssp_{\ell},\ssp_m,
-\ssp_n)$. An example is the \reffig{f:MeanVelocityFrame} projection on
-the $3$\dmn\ frame $\{{\be}_1,{\be}_2,{\be}_3\}$ defined in \refeq{FrenetFrame1}.
-It is worth emphasizing that the method affords low-dimensional {\em
-visualization} without any low-dimensional {\em modeling} or dimension
-reduction; the dynamics are computed with fully-resolved direct numerical
-simulations.
-
-Such visualizations are a prerequisite to uncovering the
-interrelations between (the infinite number of) invariant solutions, and
-constructing symbolic dynamics partitions of \statesp\ needed for a
-systematic exploration of turbulent dynamics, the key challenge that we
-address here for the case of turbulent pipe flows.
-
-\subsection{Experimentalist description: a video 1D to 3D arrays of pixels}
-\subsection{Theorist description: $\infty$-\dmn\ \statesp}
-
-\subsubsection{Poincar\'e sections}
+\subsection{Poincar\'e sections}
 \label{s:PoincSecFlot}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -222,99 +105,69 @@ all local dynamics.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \label{fig:RoessNearEq1}
 \begin{figure}
-  \includegraphics[width=0.3\textwidth]{AmLeAg06Im1}
+(a)\includegraphics[width=0.3\textwidth]{AmLeAg06Im1}
+(b)\includegraphics[width=0.30\textwidth,clip=true]{RoessNearEq}
     \caption{[From \refref{AmLeAg06}]
+(a)
 R\"ossler \eqva\ and their invariant manifolds. The stable manifold of
 the inner {\eqv} $\ssp_{-}$  is 1-dimensional and the unstable one is a
 spiral-out focus. For the outer {\eqv} $\ssp_{+}$  the stable manifold is
 a spiral-in focus (basin boundary for initial conditions that either fall
 into the chaotic attractor, or escape to infinity) and the unstable
 manifold is 1-dimensional.
+(b)
+  A R\"ossler flow Poincar\'e section $\PoincS_{-}$ through the inner
+  {\eqv} $\ssp_{-}$ and its stable eigenvector.
     }
 \label{fig:AmLeAg06Im1}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \label{fig:RoessBothEq1}
 \begin{figure}%[H]
 \begin{center}
-  \includegraphics[width=0.30\textwidth,clip=true]{RoessNearEq}
-\end{center}
-  \caption{\label{fig:RoessNearEq1}
-  A R\"ossler flow Poincar\'e section $\PoincS_{-}$ through the inner
-  {\eqv} $\ssp_{-}$ and its stable eigenvector.
-}
-\end{figure}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}%[H]
-\begin{center}
-  \includegraphics[width=0.30\textwidth,clip=true]{RoessFarEq}
+(a)\includegraphics[width=0.30\textwidth,clip=true]{RoessFarEq}
+(b) \includegraphics[width=0.30\textwidth,clip=true]{RoessBothEq}
 \end{center}
   \caption[R\"ossler section, outer {\eqv}]{
-  A Poincar\'e section for R\"ossler flow
-      through the
-      outer
-  {\eqv} $\ssp_{+}$  and its unstable eigenvector.
-  } \label{fig:RoessFarEq1}
-\end{figure}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}%[H]
-\begin{center}
-  \includegraphics[width=0.30\textwidth,clip=true]{RoessBothEq}
-\end{center}
-  \caption{
+(a) A Poincar\'e section for R\"ossler flow through the outer {\eqv}
+$\ssp_{+}$  and its unstable eigenvector.
+(b)
   A two-section atlas for R\"ossler flow, with the local sections of
   \reffigs{fig:RoessNearEq}{fig:RoessFarEq} oriented and combined so that
   the ridge (intersection of the two sections, indicated by the brown
   line in individual sections) lies  approximately midway between the
   \template s.
-  } \label{fig:RoessBothEq1}
+  } \label{fig:RoessFarEq1}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \label{fig:RoessSct2} \label{fig:RoessSctAtlas}
 \begin{figure}%[H]
 \begin{center}
-  \includegraphics[width=0.30\textwidth,clip=true]{RoessSct1}
+(a)\includegraphics[width=0.30\textwidth,clip=true]{RoessSct1}
+(b) \includegraphics[width=0.30\textwidth,clip=true]{RoessSct2}
+(c) \includegraphics[width=0.30\textwidth,clip=true]{RoessSctAtlas}
 \end{center}
   \caption{\label{fig:RoessSct1}
-  A R\"ossler flow Poincar\'e section $\PoincS_{-}$ through the inner
+(a) A R\"ossler flow Poincar\'e section $\PoincS_{-}$ through the inner
   {\eqv} $\ssp_{-}$ and its stable eigenvector.
-}
-\end{figure}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}%[H]
-\begin{center}
-  \includegraphics[width=0.30\textwidth,clip=true]{RoessSct2}
-\end{center}
-  \caption[R\"ossler section, outer {\eqv}]{
+(b)
   A Poincar\'e section for R\"ossler flow
       through the
       outer
-  {\eqv} $\ssp_{+}$  and its unstable eigenvector.
-  } \label{fig:RoessSct2}
-\end{figure}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}%[H]
-\begin{center}
-  \includegraphics[width=0.30\textwidth,clip=true]{RoessSctAtlas}
-\end{center}
-  \caption{
+  {\eqv} $\ssp_{+}$  and its unstable eigenvector
+(c)
   A two-section atlas for R\"ossler flow, with the local sections of
-  \reffigs{fig:RoessSct1}{fig:RoessSct2} oriented and combined so that the ridge (intersection
-  of the two sections, indicated by the brown line in individual
-  sections) lies  approximately midway between the \template s.
-  } \label{fig:RoessSctAtlas}
+  \reffigs{fig:RoessSct1}{fig:RoessSct2} oriented and combined so that
+  the ridge (intersection of the two sections, indicated by the brown
+  line in individual sections) lies  approximately midway between the
+  \template s.
+}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -326,22 +179,10 @@ trajectories whose short-time dynamics resembles that of the \template.
 dynamics is nonlinear and qualitatively different, no single section can
 describe the neighborhoods of the both templates well.
 
-A section through a \template\ off the invariant set is bad, as it misses
-dynamics around a nearby \eqv.
-
-If an \eqv\ is chosen as a \template, the section is good - it captures
-all local dynamics.
-
 \refFig{fig:A29PoincBad}\,({\it a}) shows why \reffig{f:RosslSect} is OK for
 capturing the strange attractor, but actually bad; the lower \eqv\
 $\ssp_{-}$ does not lie on the $z$ axis, so a section that includes the
 $z$ axis misses the motions close to  $\ssp_{-}$.
-%    \DB{2012-04-10}{
-%    As of today `chart' is undefined in the text up to this point}
-      \DB{2012-04-10}{As of today \reffig{fig:A29PoincBad} about good and
-      bad Poincare sections went to Flotsam. Are we going to put it back
-      or are we dropping it and should ``correctly'' be dropped. Predrag:
-      I think we drop it, for brevity's sake}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}
@@ -417,10 +258,6 @@ three-dimensional solitary waves as quasi-particles -
 \reffig{fig:A27-pipeSymms} might be misleading. Our solutions are global,
 distributed over the whole volume.
 
-In our quest for \reqva\ and \rpo s\rf{ACHKW11} we
-find it advantageous to use a `compensatory' norm %\refeq{compensNorm}
-that enhances the weight of cross-stream velocities.
-
 Any state in the  group orbit set $\pS_{\ssp}$ is physically equivalent
 to any other. The action of a symmetry group thus stratifies the
 \statesp\ into a union of group orbits, \reffig{fig:BeThTraj}\,{(a)}.
@@ -440,27 +277,7 @@ sweeps out quasi-periodically the $3$\dmn\ group orbit $\pS_p$ without
 ever closing into a \po, unless the dynamics is restricted to a
 discrete-symmetry invariant subspace (\reffig{fig:CLf01group}).
 
-\begin{figure}
-\begin{center}
-  \includegraphics[width=0.35\textwidth,clip=true]{01grouporbit}
-\end{center}
-  \caption
-  [\CLf: $\cycle{01}$ {\rpo} group orbit]{
-  \CLf: The \reqv\ $\REQV{}{1}$ is shown by the red dot, and the dashed
-  red line is its group orbit / trajectory. One period of the
-  $\cycle{01}$ {\rpo} is shown by the solid blue line. The group orbit of
-  its (arbitrary) starting point is shown by the dashed blue line: after
-  one period the trajectory has returned to the group orbit but with a
-  different phase. The group orbit of the $\cycle{01}$ trajectory (dark
-  blue) is shown by the cyan surface. Trajectory of the further 15
-  repeats of $\cycle{01}$ (faint dotted lines) traces out ergodically the
-  torus generated by the$\cycle{01}$  group.
-  }
-\label{fig:CLf01group1}
-\end{figure}
-
-
-\subsubsection{Symmetry-induced coordinate frames}
+\subsection{Symmetry-induced coordinate frames}
 \label{s:symmIndCoo}
 
 At least locally, presence of a continuous symmetry suggests two
@@ -602,52 +419,18 @@ where $q_k = 2\pi k/L$.
 \label{s:SymmPipe}
 % former siminos/atlas/symm.tex
 
-
-
-Let $\LieEl(\phi,\shift)$ be the shift operator such that $\LieEl(\phi,0)$
-denotes an azimuthal rotation by $\phi$ about the pipe axis,
-and $\LieEl(0,\shift)$ denotes the stream-wise translation by
-$\shift$; let $\sigma$ denote reflection about the $\theta=0$ azimuthal
-angle:
-\bea
-\LieEl(\phi,\shift) \, [u,v,w,p](r,\theta,z)
-        & = & [u,v,w,p](r,\theta-\phi,z-\shift)
-			  \continue
-\sigma \, [u,v,w,p](r,\theta,z) \;\; & = & [u,-v,w,p](r,-\theta,z)
-\label{pipeSymms}
-\eea
-%
-The \NSe\ for pipe flow are equivariant under these transformations. The
-symmetry group of stream-wise periodic pipe flow is thus $\Group =
-\On{2}_\theta \times \SOn{2}_z = \Dn{1} \ltimes \SOn{2}_{\theta} \times
-\SOn{2}_z$, where $\Dn{1} = \{ e,\, \sigma \}$ denotes azimuthal
-reflection, $\ltimes$ stands for a semi-direct product (in general,
-reflections and rotations do not commute), and the subscripts $z,\theta$
-indicate stream-wise translation and azimuthal rotation respectively.
-
-
-
-\begin{figure}
-  \centering
-(a)%\includegraphics[width=0.45\textwidth]{2839GOLB}
-(b)%\includegraphics[width=0.45\textwidth]{2840GOt135M1}
-  \caption{\label{fig:2830GO6}
-    %\label{fig:M1groupOrb}
-As \reffig{fig:2840GOt135th0}, but with the
-full 2\dmn\ $\SOn{2}_{\theta} \times \SOn{2}_z$ group orbits traced out
-by shifts in both $z$ and $\theta$. Loops in solid red correspond to
-shifts in $z$, dashed blue loops to shifts in $\theta$.
-%(a) \Reqv\ N2\_LB, (b) \Reqv\ N2\_UB.
-  }
-\end{figure}
-
-
 In the literature
 (see, \eg\ \cite{Recke2010}) such \SOn{2} is often referred to as the
 circle group $S^1$, also denoted `one-torus' $T^1$.
 
 \section{How to slice}
 \label{s:algorithm}
+
+This problem is here resolved by the
+{\mslices}, in which
+the group orbit of any full-flow structure is represented by a single
+point (see \reffig{fig:BeThTraj}), the group orbit's intersection with a
+fixed hypersurface, or the \emph{`\slice'}.
 
 Our guiding principle is to chose a \slice\ such that the distance
 between a `{\template}' state {\slicep} and nearby group orbits is
@@ -684,6 +467,11 @@ symmetries and thus are not suited as choices of symmetry-reducing
 }
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In particular, if  \sspRed\ is a point on a \reqv, % \refeq{phaseVel},
+the full \statesp\ velocity equals the {\phaseVel}, and $\velRed(\sspRed)
+= 0$, \ie, \reqva\ are always reduced to \eqva\ in the \reducedsp.
+
 
 \subsection{Rotation into the \slice}
 
@@ -752,33 +540,37 @@ The apparent divergence in {\phaseVel} \refeq{reconstrEq} is a
 non-physical artifact of the symmetry reduction by tangent hyperplanes,
 but a numerical nuisance nevertheless. Here is how we avoid it.
 
+Thus, in order to chart the \statesp\ of a chaotic flow, a set
+of local \slice\ hyperplanes is needed to capture all of the asymptotic
+dynamics. The choice of local \slice s should reflect the dynamically
+dominant patterns seen in the solutions of nonlinear PDEs.
+
+``The origin'' or the invariant, fixed-point subspace is a
+high-dimensional center space of points not moved by $\Lg_{\theta}$. For
+\pCf\ it is the space plumbers prefer to compute in, even though all
+turbulence is in the full \statesp. The reason why I really, really want
+us to understand what is going on with our atlas in \reffig{fig:A29-2slices}
+is that the singularities might be genuine, due to close passages to this
+center space, and not taken care of by $\sspRSing$ (which all also
+include the `origin'), not just due to bad choice of \template s.
+
+In general, these polynomials are non-unique and $m \geq d$, so
+that the flow becomes embedded in a larger m-dimensional state space.
+While these polynomials are linearly independent, they are functionally
+dependent by a set of relations called syzygies. The syzygies constrain
+the flow to lower dimensional, but non-trivial, manifolds in the
+m-dimensional space.
+
+Sometimes the determination of a Hilbert basis can be informed by
+intuition about nonlinear preserved quantities such as rotationally
+invariant length $r^2 = x_1^2 + x_2^2 + ... + x_d^2$. In general,
+however, there is no general strategy for creating a useful Hilbert
+basis.
+
 \subsection{Physical dimension: covariant Lyapunov vectors}
 
 \subsection{Dynamically important solutions and Newton's method}
 \label{s:reqva}
-
-The way in which the \mslices\ enables to find initial
-guesses for $(\vec{u}(0),\period{},\shift)$, is the main differences
-between this study and the previous ones.
-
-Here we take as initial guesses samples of nearly recurrent velocity
-fields generated by long-time simulations of turbulent dynamics
-\rf{pchaot,CviGib10}. The intent is to find the {\em dynamically most
-important} solutions, by sampling the turbulent flow's natural measure.
-In practice, sufficiently good full \statesp\ initial guesses for
-$(\vec{u}(0),\period{},\shift)$ would be almost impossible to find.
-Checking correlations between $\vec{u}(\zeit)$ and
-$\LieEl(0,\shift)\,\vec{u}(\zeit-\period{})$ for each $\period{}$, and
-more problematically, for all possible shifts $(\phi,\shift)$, is an
-unrealistic task. The \mslices, however, enables us determine close
-recurrences  from the symmetry-reduced time series, and locates the
-dynamically most important solutions, \ie, those trajectories that are
-most likely to be observed in a long-time turbulent simulation. The \rpo
-s are reduced to \po s, whose unstable manifolds are much easier to track
-in the \reducedsp. The \rpo\ shift $\shift$ is given by the
-reconstruction equation, \refeq{reconstrEq}, or, in practice, by phase
-shift $\shift(\period{})-\shift(0)$ accumulated by the intermediate
-Newton steps that keep the orbit within the slice.
 
 Without symmetry reduction, the detection of the nearest recurrence of a
 state near a previous state, earlier on the the same trajectory, would
@@ -800,8 +592,6 @@ reduction is likely.
         into a \slice\ {\em is not} an average over the 3D pipe azimuthal
         angle, it is the full snapshot of the flow embedded in the
         $\infty$-dimensional \statesp.
-
-the Cartan derivative \refeq{CartanDer}.
 
 As a generic \slice\ \refeq{PCsectQ0} is the set of all group-orbit
 points closest to a given {\template}, it slices the group orbits of
