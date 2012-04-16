@@ -49,7 +49,7 @@ manuscript DUE DATE,
     appendices, and references.
 [ ] The title of a paper should be as concise as possible but informative
     enough to facilitate information retrieval.
-[ ] The Abstract should be self-contained (contain no footnotes). It
+[x] The Abstract should be self-contained (contain no footnotes). It
     should be adequate as an index (giving all subjects, major and minor,
     about which new information is given) and as a summary (giving the
     conclusions and all results of general interest in the article). It
@@ -57,14 +57,14 @@ manuscript DUE DATE,
     words. The abstract should be written as
     [ ] one paragraph
     [ ] should not contain displayed mathematical equations
-[ ] Authors' names should preferably be written in a standard form for
+[x] Authors' names should preferably be written in a standard form for
     all publications to facilitate indexing and avoid ambiguities.
 [ ] Authors with Chinese names may choose to have their names published
     in their own language alongside the English versions of their names
     in the author list of their publications, in either Simplified or
     Traditional characters: www.aip.org/pubservs/cjk_instructions.html
 
-[ ] The first paragraph of the article should be a Lead Paragraph and
+[x] The first paragraph of the article should be a Lead Paragraph and
     will be highlighted in the journal in boldface type. This paragraph,
     which essentially advertises the main points of the article, must
     describe in terms accessible to the nonspecialist reader the context
