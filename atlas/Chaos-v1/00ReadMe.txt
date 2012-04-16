@@ -2,7 +2,7 @@ siminos/atlas/Chaos-v1/00ReadMe.txt
 $Author$
 $Date$
 ------------------------------------------------------------
-submitted     April 16, 2012
+submitted     April 16, 2012   FROZEN, NO FURTHER EDITS
 
 Slice & chart pedagogical introduction
 ====================

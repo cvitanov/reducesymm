@@ -56,6 +56,7 @@ Chaos J submission
 --------------
     submitted     April 16, 2012
     for details, please see/edit ../Chaos-v1/00ReadMe.txt
+    ../Chaos-v1/ directory FROZEN, NO FURTHER EDITS
 
 -------------------------------------------------------------
 Predrag ver. 0.7, submitted to Chaos J  Apr 16 2012
