@@ -3,15 +3,19 @@ $Author$
 $Date$
 ------------------------------------------------------------
 
-Slice & chart letter
+Slice & chart pedagogical introduction
 ====================
-	Reduction of continuous symmetries of chaotic flows
-	by the method of slices
+	Cartography of high-dimensional flows:
+    A visual guide to sections and slices
 
 Predrag Cvitanovic
+Daniel Borrero-Echeverry
+Keith M. Carroll
+Bryce Robbins
+Evangelos Siminos
+Lei Zhang
 
--------------------------------------------------------------
-Predrag ver. 0.1, 						Dec 10 2011
+Focus issue for Chaos: "50 Years of Chaos"
 
 -------------------------------------------------------------
 
@@ -43,15 +47,20 @@ Predrag:						      Apr 1 2009
         PCedit\{...\}, etc in defslice.tex,
     then go back to B&W for the final resubmission
 
-Chaos J submission
---------------
-     for details, please see/edit ../Chaos-v1/00ReadMe.txt
-
-
 arXiv submission
 ----------------
 arxiv article-id:       1101.????
      for details, please see/edit ../arxiv-v1/00ReadMe.txt
+
+Chaos J submission
+--------------
+    submitted     April 16, 2012
+    for details, please see/edit ../Chaos-v1/00ReadMe.txt
+
+-------------------------------------------------------------
+Predrag ver. 0.7, submitted to Chaos J  Apr 16 2012
+Predrag ver. 0.2, 						Feb 22 2012
+Predrag ver. 0.1, 						Dec 10 2011
 
 ===========================================================
 Processing

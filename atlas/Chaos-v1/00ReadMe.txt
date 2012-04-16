@@ -2,25 +2,28 @@ siminos/atlas/Chaos-v1/00ReadMe.txt
 $Author$
 $Date$
 ------------------------------------------------------------
-submit before     April 16, 2012
+submitted     April 16, 2012
 
 Slice & chart pedagogical introduction
 ====================
-	Reduction of continuous symmetries of chaotic flows
-	by the method of slices
+	Cartography of high-dimensional flows:
+    A visual guide to sections and slices
 
-Predrag Cvitanovic et al
-
+Predrag Cvitanovic
+Daniel Borrero-Echeverry
+Keith M. Carroll
+Bryce Robbins
+Evangelos Siminos
+Lei Zhang
 -------------------------------------------------------------
+Predrag ver. 0.7, submitted to Chaos J  Apr 15 2012
 Predrag ver. 0.2, 						Feb 22 2012
 Predrag ver. 0.1, 						Dec 10 2011
 
 Focus issue for Chaos: "50 Years of Chaos"
 chaos.peerx-press.org website is currently open to accept papers for this
 focus issue, and you may submit your papers at any point through the
-manuscript DUE DATE,
-
-                April 16, 2012.
+manuscript DUE DATE, April 16, 2012.
 
 -------------------------------------------------------------
 
@@ -32,22 +35,22 @@ manuscript DUE DATE,
 
 ----- NOTES        ------------------------------------------
 
-[ ] www.aip.org/pubservs/compuscript.html#prepare
-[ ] style files work with REVTeX 4.1 and are included in REVTeX 4.1 package
+[x] www.aip.org/pubservs/compuscript.html#prepare
+[x] style files work with REVTeX 4.1 and are included in REVTeX 4.1 package
     tex.stackexchange.com/tags/revtex/info
     [ ] udpated 12/27/2011, install this version or later
-[ ] The Manuscript, including the abstract, references, and captions,
+[x] The Manuscript, including the abstract, references, and captions,
     should be set up for 21.6 x 28 cm (8-1/2 x 11 in. or A4) paper with
     ample margins. It is essential that the motivations, central results,
     and conclusion be stated in a nontechnical manner that is
     intelligible to a broad audience.
-[ ] Be sure that your manuscript contains page numbers.
-[ ] The title page should contain the title of the article, the names of
+[x] Be sure that your manuscript contains page numbers.
+[x] The title page should contain the title of the article, the names of
     the authors, a suitable byline, and a short abstract.
-[ ] Parts of the manuscript should be arranged in the following order:
+[x] Parts of the manuscript should be arranged in the following order:
     title, author, affiliation, abstract, text, acknowledgments,
     appendices, and references.
-[ ] The title of a paper should be as concise as possible but informative
+[x] The title of a paper should be as concise as possible but informative
     enough to facilitate information retrieval.
 [x] The Abstract should be self-contained (contain no footnotes). It
     should be adequate as an index (giving all subjects, major and minor,
@@ -55,8 +58,8 @@ manuscript DUE DATE,
     conclusions and all results of general interest in the article). It
     should be about 5% of the length of the article, but less than 500
     words. The abstract should be written as
-    [ ] one paragraph
-    [ ] should not contain displayed mathematical equations
+    [x] one paragraph
+    [x] should not contain displayed mathematical equations
 [x] Authors' names should preferably be written in a standard form for
     all publications to facilitate indexing and avoid ambiguities.
 [ ] Authors with Chinese names may choose to have their names published
@@ -72,24 +75,24 @@ manuscript DUE DATE,
     of the results. The Editors will pay special attention to the clarity
     and accessibility of this paragraph, and in many cases may rewrite it
 
-[ ] References and footnotes should be in the form shown in recent issues
+[x] References and footnotes should be in the form shown in recent issues
     of this journal. They should be given in a double-spaced list at the
     end of the text.
-    [ ] The names, including initials, of all authors in
+    [x] The names, including initials, of all authors in
     each reference should be given (in the text, the use of et al. is
     permissible).
-    [ ] By number, in the order of first appearance, giving the names of
+    [x] By number, in the order of first appearance, giving the names of
     the authors, the journal name, volume, year, and first page number
     only, as in:
     V. Bargmann, Proc. Natl. Acad. Sci. USA 38, 961 (1952).
-[ ] For footnotes to title and bylines use a), b), c), etc.
+[x] For footnotes to title and bylines use a), b), c), etc.
     Avoid lengthy footnotes by inserting them in the text, except for the
     references.
 
-[ ] adhere to these guidelines when preparing your illustrations for
+[x] adhere to these guidelines when preparing your illustrations for
     submission:
     chaos.aip.org/authors/information_for_contributors/how_to_prepare_illustrations
-    [ ] figures must be in the final published size, not oversized.
+    [x] figures must be in the final published size, not oversized.
 
 [ ] Multimedia files can be included in the online version of published papers.
     chaos.aip.org/authors/information_for_contributors/guidelines_for_multimedia
@@ -111,16 +114,16 @@ Chaos submission
 ----------------
 
 Submit  via http://chaos.peerx-press.org.
-[ ] Focus issue for Chaos: "50 Years of Chaos"
-[ ] Cover letter
+[x] Focus issue for Chaos: "50 Years of Chaos"
+[-] Cover letter
         siminos/atlas/letters/submLett.doc
     title, authors, contact information, and mention this Focus issue
     Journal, corresponding author's e-mail address, any special requests.
 [ ] a double-spaced manuscript/article file in LaTeX/REVTeX.
-    [ ] a TeX file must be one file - no support for call-ins, BibTeX.
-[ ] create your own .bbl
-    [ ] include it as the bibliography section in the main .tex file.
-[ ] Commands to include figures may be used. Ensure that the figure
+    [x] a TeX file must be one file - no support for call-ins, BibTeX.
+[x] create your own .bbl
+    [x] include it as the bibliography section in the main .tex file.
+[x] Commands to include figures may be used. Ensure that the figure
     filename cited in the command matches that of the actual file upload;
     use only the simple filename, not a complete directory path;
     [ ] invitation letter: individual figures in high-quality PDF format
@@ -133,9 +136,9 @@ Submit  via http://chaos.peerx-press.org.
     [?] website: only include figures in .eps format (not .tif or .pdf).
         If an EPS file contains a thumbnail preview, it may not render in
         the article PDF generated via the TeX (Predrag - ignore this)
-[ ] Do not use the "\footnote" command; use the standard "\cite" command
+[x] Do not use the "\footnote" command; use the standard "\cite" command
     for footnotes as well as references.
-[ ] http://chaos.peerx-press.org, fill out Transfer of Copyright Agreement.
+[x] http://chaos.peerx-press.org, fill out Transfer of Copyright Agreement.
 
 To redo the TeX processing, e.g., after uploading a new or
     revised figure file, do a Replace on the .tex Article File. Doing a

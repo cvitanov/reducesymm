@@ -1,10 +1,4 @@
-% $Author: brobbins30 $ $Date: 2012-04-15 21:03:34 -0400 (Sun, 15 Apr 2012) $
-% http://www.cns.gatech.edu/~predrag/papers/atlas12.pdf
-
-% siminos/atlas/atlas12.tex    pdflatex atlas12
-%     then:    pdflatex atlas12; bibtex atlas12; pdflatex atlas12; pdflatex atlas12
-% for public version, toggle \draftfalse in setupAtlas.tex
-%     (that removes all comments, the blog)
+% $Author: dborrero $ $Date: 2012-04-15 23:59:15 -0400 (Sun, 15 Apr 2012) $
 
 \documentclass[aip,cha,reprint,
 secnumarabic,
@@ -15,36 +9,549 @@ groupedaddress
 %author-year,%
 %author-numerical,%
 ]{revtex4-1}
-% aip,cha,preprint,numerical, nofootinbib,
-% You should use BibTeX and apsrev.bst for references
-% Choosing a journal automatically selects the correct APS
-% BibTeX style file (bst file), so only uncomment the line
-% below if necessary.
-%\bibliographystyle{apsrev4-1}
 
-\newcommand{\version}{atlas ver. 0.7, Apr 15 2012}
-% Predrag Chaos J submit.   ver. 0.7, Apr 15 2012}
-% Predrag 					ver. 0.6, Apr 14 2012}
-% Predrag 					ver. 0.5, Apr 11 2012}
-% Predrag 					ver. 0.4, Mar 10 2012}
-% Predrag 					ver. 0.3, Mar 10 2012}
-% Predrag 					ver. 0.2, Dec 10 2011}
-% Predrag 					ver. 0.1, Apr 28 2011}
+                        %% logical setup, no need to edit %%%%%%%%%%
+                        \newif\ifpaper \newif\ifPDF               %%
+                        \newif\ifOUP \newif\ifdraft               %%
+                        \newif\ifdasbuch                          %%
+                        \newif\ifsolutions \newif\ifblog          %%
+                        \blogtrue                                 %%
+                        \draftfalse      %% commented, WWW/drafts %%
+                        \dasbuchtrue %% DasBuch, not QFT lectures %%
+                        \solutionstrue %% include solutions       %%
+                        \paperfalse\PDFtrue %% hyperlinked        %%
+                        \OUPfalse                %% ChaosBook %%%%%%
 
-        \input setupAtlas
-        \input def
-        \input defAtlas
+%%%%% UNCOMMENT THESE: %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %\colorfigsfalse % For black and white JFM submission
+%%%%% Remember to pick one of these in defAtlas.tex:
+   %\newcommand{\edit}[1]{{\color{blue}#1}} % for referees
+   %\newcommand{\edit}[1]{#1}               % for the journal
+
+\usepackage{float}
+\usepackage{natbib}
+\usepackage{amsmath,amsfonts,amssymb,amsbsy,amscd,amsgen}
+\usepackage{dcolumn}% Align table columns on decimal point
+\usepackage{bm}% bold math
+\usepackage[pdftex]{graphicx}
+\usepackage{url}
+\usepackage{subfigure}
+\usepackage{ifthen}
+
+\usepackage[pdftex,colorlinks]{hyperref} %% hyperlinks, LAST package called
+
+
+        \newcommand{\wwwcb}[1]{       % keep homepage flexible:
+                  {\tt \href{http://ChaosBook.org#1}
+              {ChaosBook.org#1}}}
+       \newcommand{\wwwgt}{{\tt \href{http://birtracks.eu}
+              {birtracks.eu}}}
+       \newcommand{\wwwQFT}[1]{
+                  {\tt \href{http://ChaosBook.org/FieldTheory#1}
+              {ChaosBook.org/\-Field\-Theory#1}}}
+       \newcommand{\wwwcnsQFT}[1]{
+                  {\tt \href{http://ChaosBook.org/FieldTheory#1}
+              {ChaosBook.org/\-Field\-Theory#1}}}
+       \newcommand{\weblink}[1]{{\tt \href{http://#1}{#1}}}
+       \newcommand{\HREF}[2]{
+              {\href{#1}{#2}}}
+       \newcommand{\mpArc}[1]{
+              {\tt \href{http://www.ma.utexas.edu/mp_arc-bin/mpa?yn=#1}
+                   {\goodbreak mp\_arc~#1}}}
+       \newcommand{\arXiv}[1]{
+              {\tt \href{http://arXiv.org/abs/#1}{\goodbreak arXiv:#1}}}
+
+%%%%%%%%%%%%%%% EQUATIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\continue}{\nonumber \\ }
+\newcommand{\nnu}{\nonumber}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\ee}[1] {\label{#1} \end{equation}}
+\newcommand{\bea}{\begin{eqnarray}}
+\newcommand{\ceq}{\nonumber \\ & & }
+\newcommand{\eea}{\end{eqnarray}}
+\newcommand{\barr}{\begin{array}}
+\newcommand{\earr}{\end{array}}
+
+%%%%%%%%%%%%%%% REFERENCING EQUATIONS ETC. %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\rf}     [1] {~\cite{#1}}
+\newcommand{\refref} [1] {ref.~\cite{#1}}
+\newcommand{\refRef} [1] {Ref.~\cite{#1}}
+\newcommand{\refrefs}[1] {refs.~\cite{#1}}
+\newcommand{\refRefs}[1] {Refs.~\cite{#1}}
+\newcommand{\refeq}  [1] {(\ref{#1})}
+\newcommand{\refeqs} [2]{(\ref{#1}--\ref{#2})}
+\newcommand{\refpage}[1] {page~\pageref{#1}}
+\newcommand{\reffig} [1] {figure~\ref{#1}}
+\newcommand{\reffigs} [2] {figures~\ref{#1} and~\ref{#2}}
+\newcommand{\refFig} [1] {Figure~\ref{#1}}
+\newcommand{\refFigs} [2] {Figures~\ref{#1} and~\ref{#2}}
+\newcommand{\reftab} [1] {table~\ref{#1}}
+\newcommand{\refTab} [1] {Table~\ref{#1}}
+\newcommand{\reftabs}[2] {tables~\ref{#1} and~\ref{#2}}
+\newcommand{\refsect}[1] {sect.~\ref{#1}}
+\newcommand{\refsects}[2] {sects.~\ref{#1} and \ref{#2}}
+\newcommand{\refSect}[1] {Sect.~\ref{#1}}
+\newcommand{\refSects}[2] {Sects.~\ref{#1} and \ref{#2}}
+\newcommand{\refchap}[1] {chapter~\ref{#1}}
+\newcommand{\refChap}[1] {Chapter~\ref{#1}}
+\newcommand{\refchaps}[2] {chapters~\ref{#1} and~\ref{#2}}
+\newcommand{\refchaptochap}[2] {chapters~\ref{#1} to~\ref{#2}}
+\newcommand{\refappe}[1] {appendix~\ref{#1}}
+\newcommand{\refappes}[2] {appendices~\ref{#1} and~\ref{#2}}
+\newcommand{\refAppe}[1] {Appendix~\ref{#1}}
+\newcommand{\refrem} [1] {remark~\ref{#1}}
+\newcommand{\refexam}[1] {example~\ref{#1}}
+\newcommand{\refExam}[1] {Example~\ref{#1}}
+\newcommand{\refexer}[1] {exercise~\ref{#1}}
+\newcommand{\refExer}[1] {Exercise~\ref{#1}}
+\newcommand{\refsolu}[1] {solution~\ref{#1}}
+\newcommand{\refSolu}[1] {Solution~\ref{#1}}
+
+%%%%%%%%%%%%%%  Abbreviations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% APS (American Physiology Society, it seems) style:
+%%%     Latin or foreign words or phrases should be roman, not italic.
+%%%     Insert a `hard' space after full points
+%%%                                         that do not end sentences.
+
+\newcommand{\etc}{{etc.}}       % APS
+\newcommand{\etal}{{\em et al.}}    % etal in italics, APS too
+\newcommand{\ie}{{i.e.}}        % APS
+\newcommand{\cf}{{\em cf.\ }}     % APS
+\newcommand{\eg}{{e.g.\ }}        % APS, OUP, hard space '\eg\ NextWord'
+
+%%%%%%%%%%%%%%% ChaosBook Abbreviations %%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\evOper}{evolution oper\-ator}
+\newcommand{\EvOper}{Evolution oper\-ator}
+ %% \newcommand{\evOp}{Ruelle operator} %could be ``evolution'' instead?
+%\newcommand{\FPoper}{Frobenius-Perron oper\-ator}
+\newcommand{\FPoper}{Perron-Frobenius oper\-ator} % Pesin's ordering
+\newcommand{\FP}{Perron-Frobenius}
+\newcommand{\statesp}{state space}
+\newcommand{\Statesp}{State space}
+\newcommand{\fixedpnt}{fixed point}
+\newcommand{\Fixedpnt}{fixed point}
+\newcommand{\maslov}{topological}
+\newcommand{\Maslov}{Topological}
+%\newcommand{\Maslov}{Keller-Maslov}
+\newcommand{\jacobian}{Jacobian}        % determinant
+\newcommand{\jacobianM}{Jacobian matrix}  % back to Predrag's name 20oct2009
+\newcommand{\jacobianMs}{Jacobian matrices}   % matrices
+\newcommand{\JacobianM}{Jacobian matrix} %
+\newcommand{\JacobianMs}{Jacobian matrices}  %
+\newcommand{\FloquetM}{Floquet matrix} % specialized to periodic orb
+\newcommand{\FloquetMs}{Floquet matrices}  %
+% \newcommand{\stabmat}{matrix of variations}   % Arnold, says Vattay
+\newcommand{\stabmat}{stability matrix}     % stability matrix, velocity gradients
+\newcommand{\Stabmat}{Stability matrix}     % Stability matrix
+\newcommand{\stabmats}{stability matrices}
+\newcommand{\monodromyM}{monodromy matrix} % monodromy matrix, Poincare cut
+\newcommand{\MonodromyM}{Monodromy matrix} % monodromy matrix, Poincare cut
+\newcommand{\dzeta}{dyn\-am\-ic\-al zeta func\-tion}
+\newcommand{\Dzeta}{Dyn\-am\-ic\-al zeta func\-tion}
+\newcommand{\tzeta}{top\-o\-lo\-gi\-cal zeta func\-tion}
+\newcommand{\Tzeta}{Top\-o\-lo\-gi\-cal zeta func\-tion}
+\newcommand{\BERzeta}{BER zeta func\-tion}
+%\newcommand{\tzeta}{Artin-Mazur zeta func\-tion} %alternative to topological
+\newcommand{\qS}{semi\-classical zeta func\-tion}
+%\newcommand{\qS}{Gutz\-willer-Voros zeta func\-tion}
+\newcommand{\Gt}{Gutz\-willer trace formula}
+\newcommand{\Fd}{spec\-tral det\-er\-min\-ant}
+%\newcommand{\fd}{spec\-tral det\-er\-min\-ant} %in many articles
+\newcommand{\FD}{Spec\-tral det\-er\-min\-ant}
+\newcommand{\cFd}{semiclass\-ic\-al spec\-tral det\-er\-mi\-nant}
+\newcommand{\cFD}{Semiclass\-ic\-al spec\-tral det\-er\-mi\-nant}
+% \newcommand{\cFd}{semiclass\-ic\-al Fred\-holm det\-er\-mi\-nant}
+\newcommand{\Vd}{Vattay det\-er\-mi\-nant}
+\newcommand{\cycForm}{cycle averaging formula}
+\newcommand{\CycForm}{Cycle averaging formula}
+\newcommand{\freeFlight}{mean free flight time}
+\newcommand{\FreeFlight}{Mean free flight time}
+\newcommand{\pdes}{partial differential equations}
+\newcommand{\Pdes}{Partial differential equations}
+\newcommand{\dof}{dof}         % Hamiltonian deegree of freedom
+% \newcommand{\dof}{deegree of freedom}
+
+%%%%%%%%%%%%%%% VECTORS, MATRICES, NORMS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\braket}[2]
+		   {\langle{#1}\vphantom{#2}|\vphantom{#1}{#2}\rangle}
+\newcommand{\bra}[1]{\langle{#1}\vphantom{ }|}
+\newcommand{\ket}[1]{|\vphantom{}{#1}\rangle}
+%                        {#2}\right\rangle}
+
+\newcommand{\dual}[1]{{#1}^\ast}
+
+%%%%%%%%%%%%%%% Sundry symbols within math eviron.: %%%%%%%%%%%%
+
+\newcommand{\obser}{\ensuremath{a}}     % an observable from phase space to R^n
+\newcommand{\Obser}{\ensuremath{A}}     % time integral of an observable
+\newcommand{\onefun}{\iota} % the function that returns one no matter what
+\newcommand{\defeq}{=}      % the different equal for a definition
+\newcommand {\deff}{\stackrel{\rm def}{=}}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\integers}{\mathbb{Z}}
+\newcommand{\rationals}{\mathbb{Q}}
+\newcommand{\naturals}{\mathbb{N}}
+\newcommand{\LieD}{{{\cal L}\!\!\llap{-}\,\,}}  % {{\pound}} % Lie Derivative
+\newcommand{\half}{{\scriptstyle{1\over2}}}
+\newcommand{\pde}{\partial}
+\newcommand{\pdfrac}[2]{{\partial #1 \over \partial #2}}
+\renewcommand\Im{\ensuremath{{\rm Im}\,}}
+\renewcommand\Re{\ensuremath{{\rm Re}\,}}
+\renewcommand{\det}{\mbox{\rm det}\,}
+\newcommand{\Det}{\mbox{\rm Det}\,}
+\newcommand{\tr}{\mbox{\rm tr}\,}
+\newcommand{\Tr}{\mbox{\rm tr}\,}
+%\newcommand{\Tr}{\mbox{Tr}\,}
+\newcommand{\sign}[1]{\sigma_{#1}}
+%\newcommand{\sign}[1]{{\rm sign}(#1)}
+\newcommand{\mInv}{{I}}                 % material invariant
+\newcommand{\msr}{\ensuremath{\rho}}                % measure
+\newcommand{\Msr}{{\mu}}                % coarse measure
+\newcommand{\dMsr}{{d\mu}}              % measure infinitesimal
+\newcommand{\SRB}{{\rho_0}}             % natural measure
+\newcommand{\vol}{{V}}                  % volume of i-th tile
+\newcommand{\prpgtr}[1]{\delta\negthinspace\left( {#1} \right)}
+%\newcommand{\Zqm}{\ensuremath{Z_{qm}}}         % Gutz-Voros zeta function
+\newcommand{\Zqm}{\ensuremath{\det(\hat{H} - E)_{sc} }} % semicls spectr. det:
+\newcommand{\Fqm}{\ensuremath{F_{qm}}}
+\newcommand{\zfct}[1]{\zeta ^{-1}_{#1}}
+\newcommand{\zetaInv}{\ensuremath{1/\zeta}}
+% \newcommand{\zetaInv}{{\zeta^{-1}}}
+\newcommand{\zetatop}{\ensuremath{1/\zeta_{\mbox{\footnotesize top}} }}
+\newcommand{\zetaInvBER}[1]{1/\zeta_{\mbox{\footnotesize BER}}(#1)}
+\newcommand{\BER}[1]{{\mbox{\footnotesize BER}}} % Baladi-Ruelle-Eckmann
+\newcommand{\eigCond}{\ensuremath{F}}           % eigenvalue cond. function
+\newcommand{\expct}    [1]{\left\langle {#1} \right\rangle}
+\newcommand{\spaceAver}[1]{\left\langle {#1} \right\rangle}
+\newcommand{\timeAver} [1]{\overline{#1}}
+\newcommand{\norm}[1]{\left\Arrowvert \, #1 \, \right\Arrowvert}
+\newcommand{\pS}{\ensuremath{{\cal M}}}          % symbol for state space
+\newcommand{\ssp}{\ensuremath{x}}                % state space point
+\newcommand{\tissp}{\tilde{\Delta\ssp}} % Rytis \CostFct
+\newcommand{\pSpace}{x}       % Hamiltonian phase space x=(q,p) coordinate
+\newcommand{\coord}{q}        % configuration space p coordinate
+\newcommand{\DOF}{\ensuremath{D}}          % Hamiltonian deegree of freedom
+\newcommand{\NWS}{\ensuremath{\Omega}}     % symbol for the non--wandering set
+\newcommand{\AdmItnr}{\Sigma}      % set of admissible itineraries
+\newcommand{\intM}[1]{{\int_\pS{\!d #1}\:}} %phase space integral
+\newcommand{\Cint}[1]{\oint\frac{d#1}{2 \pi i}\;} %Cauchy contour integral
+\newcommand{\PoincS}{\ensuremath{{\cal P}}}  % symbol for Poincare section
+\newcommand{\PoincM}{\ensuremath{P}}       % symbol for Poincare map
+\newcommand{\PoincC}{\ensuremath{U}}       % symbol for Poincare constraint function
+\newcommand{\arc}{\ensuremath{s}}          % symbol for billiard wall arc
+\newcommand{\mompar}{\ensuremath{p}}       % billiard wall parall. momentum
+\newcommand{\restCoeff}{\ensuremath{\gamma}}  % billiard wall restitution coeff
+\newcommand{\timeIn}[1]{{t^{-}_{#1}}} % billiard wall time of arrival
+\newcommand{\timeOut}[1]{{t^{+}_{#1}}}   % billiard wall time of departure
+%\newcommand{\PoincS}{\partial{\cal M}}          % billiard Poincare section
+\newcommand{\Lop}{\ensuremath{{\cal L}}}       % evolution operator
+\newcommand{\Uop}{\ensuremath{{\cal K}}}       % Koopman operator, Driebe notation
+\newcommand{\Aop}{\ensuremath{{\cal A}}}       % evolution generator
+\newcommand{\TrOp}{\ensuremath{{\cal T}}}       % transfer operator, like in statmech
+\newcommand{\matId}{\ensuremath{{\bf 1}}}      % matrix identity
+\newcommand{\eigenvL}{\ensuremath{s}}      % evolution operator eigenvalue
+\newcommand{\eigenvG}{\ensuremath{m}}      % compact group eigenvalues
+\newcommand{\inFix}[1]{{\in \mbox{\footnotesize Fix}f^{#1}}}
+\newcommand{\inZero}[1]{{\in \mbox{\footnotesize Zero} \, f^{#1} }}
+\newcommand{\xzero}[1]{{x_{#1}^\ast}}
+\newcommand{\fractal}{{{\cal F}}}
+\newcommand{\contract}{F}
+% \newcommand{\presentation}{P} % PC commented out 7sep2008
+\newcommand{\orderof}[1]{o(#1)} % Rytis 22mar2005
+
+     %%%%%%%%%% flows: %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\map{f}                  % other people like \phi's etc
+\newcommand\flow[2]{{f^{#1}(#2)}}
+\newcommand{\vel}{\ensuremath{v}}   % state space velocity
+
+   %%%%%%%% Siminos thesis %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\Le}{Lorenz equations}
+\newcommand{\rLor}{\rho}    % parameter r in Lorenz paper
+\newcommand{\cLe}{complex Lorenz equations}
+\newcommand{\cLf}{complex Lorenz flow}
+\newcommand{\CLe}{Complex Lorenz equations}
+\newcommand{\CLf}{Complex Lorenz flow}
+\newcommand{\RerCLor}{\rho_1}    % real      part of parameter r, CLe
+\newcommand{\ImrCLor}{\rho_2}    % imaginary part of parameter r, CLe
+% \newcommand{\AGHe}{Armbruster-Guckenheimer-Holmes flow}
+
+     %%%%%%%%%% periods: %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\period[1]{{\ensuremath{T_{#1}}}}         %continuous cycle period
+%\newcommand\period[1]{{\tau_{#1}}}
+\newcommand{\cl}[1]{{\ensuremath{n_{#1}}}}   % discrete length of a cycle, Predrag
+%\newcommand{\cl}[1]{|#1|}  % the length of a periodic orbit, Ronnie
+\newcommand{\nCutoff}{N}    % maximal cycle length
+                % maximal stability cutoff:
+\newcommand{\stabCutoff}{\ExpaEig_{\mbox{\footnotesize max}}}
+\newcommand{\timeSegm}[1]{{\tau_{#1}}}      %billiard segment time period
+\newcommand{\timeStep}{\ensuremath{{\delta \tau}}}  %integration step
+\newcommand{\deltaX}{\ensuremath{{\delta x}}}       %trajectory displacement
+\newcommand{\unitVec}{\ensuremath{\hat{n}}}     %unit vector
+
+\newcommand{\Mvar}{\ensuremath{A}}  % stability matrix
+\newcommand{\derF}[1]{\ensuremath{A(#1)}}   % Predrag stability matrix
+ %\newcommand{\derF}[1]{{DF |_{#1}}}        % Gibson stability matrix
+\newcommand{\jMps}{\ensuremath{J}}   % jacobian matrix, phase space/state space
+% \newcommand{\jMps}{\ensuremath{{\bf J}}}  % bold fundamental matrix phase space
+\newcommand{\derf}[2]{\ensuremath{{J}^{#1}(#2)}}    % Predrag fundamental matrix
+% \newcommand{\derf}[2]{\ensuremath{{\bf J}^{#1}(#2)}}  % Predrag bold fundamental matrix
+ % \newcommand{\derf}[2]{{Df^{#1}|_{#2}}}   % Gibson fundamental matrix
+\newcommand{\jMConfig}{\ensuremath{{\bf j}}}    % fundamental matrix, configuration space
+\newcommand{\jConfig}{\ensuremath{j}}      % jacobian, configuration space
+\newcommand{\jMP}{\ensuremath{\hat{J}}}   % jacobian matrix, Poincare return
+% \newcommand{\jMP}{\ensuremath{{\bf \hat{J}}}}   % bold jacobian matrix, Poincare return
+\newcommand{\monodromy}{\ensuremath{M}}   % monodromy matrix, full Poincare cut
+% \newcommand{\monodromy}{\ensuremath{{\bf M}}}   % bold monodromy matrix, full Poincare cut
+                   % Fredholm det jacobian weight:
+%\newcommand{\jEigvec}[1]{\ensuremath{{\bf e}^{(#1)}}}  % right jacobiam eigenvector
+%\newcommand{\jEigvecT}[1]{\ensuremath{{\bf e}_{(#1)}}}  % left jacobiam eigenvector
+\newcommand{\jEigvec}[1][]{\ensuremath{{\bf e}^{(#1)}}} % right jacobiam eigenvector
+\newcommand{\jEigvecT}[1][]{\ensuremath{{\bf e}_{(#1)}}} % left jacobiam eigenvector
+\newcommand{\oneMinJ}[1]
+           {\left|\det\!\left(\matId-\monodromy_p^{#1}\right)\right|}
+\newcommand{\maslovInd}{\ensuremath{m}}        % Maslov index
+\newcommand{\ExpaEig}{\ensuremath{\Lambda}}
+\newcommand{\Lyap}{\ensuremath{\lambda}}            %Lyapunov exponent
+
+%%   optional parameter comes in [\ldots], for example
+%%   \newcommand\eigRe[1][ ]{\ensuremath{\mu_{#1}}}
+%%   no subscript: \eigRe\
+%%   with subscript j: \eigRe[j]
+%%
+% \newcommand{\eigExp}[1][ ]{\ensuremath{\lambda_{#1}}}   % complex eigenexponent
+%%  Guckenheimer&Holmes:  lambda = alpha + i beta
+%%  Hirsch-Smale:         lambda = a     + i b
+%%  Boyce-di Prima:       lambda = mu    + i nu
+% \newcommand{\eigRe}[1][ ]{\ensuremath{\mu_{#1}}}    % Re eigenexponent
+% \newcommand{\eigIm}[1][ ]{\ensuremath{\nu_{#1}}}    % Im eigenexponent
+
+\newcommand{\cycle}[1]{\ensuremath{\overline{#1}}}
+
+%%%%%%%%%%%%%%% relative periodic orbits: %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\po}{periodic orbit}
+\newcommand{\Po}{Periodic orbit}
+\newcommand{\rpo}{rela\-ti\-ve periodic orbit}
+%   \newcommand{\rpo}{equi\-vari\-ant periodic orbit}
+\newcommand{\Rpo}{Rela\-ti\-ve periodic orbit}
+%   \newcommand{\Rpo}{Equi\-vari\-ant periodic orbit}
+\newcommand{\eqv}{equi\-lib\-rium}
+\newcommand{\Eqv}{Equi\-lib\-rium}
+\newcommand{\eqva}{equi\-lib\-ria}
+\newcommand{\Eqva}{Equi\-lib\-ria}
+\newcommand{\reqv}{rela\-ti\-ve equi\-lib\-rium}
+%   \newcommand{\reqv}{equi\-vari\-ant equilibrium}
+%   \newcommand{\reqv}{travelling wave}
+\newcommand{\Reqv}{Rela\-ti\-ve equi\-lib\-rium}
+%   \newcommand{\Reqv}{Equi\-variant equi\-librium}
+%   \newcommand{\Reqv}{travelling wave}
+\newcommand{\reqva}{rela\-ti\-ve equi\-lib\-ria}
+%   \newcommand{\reqva}{equivariant equilibria}
+\newcommand{\Reqva}{Rela\-ti\-ve equi\-lib\-ria}
+%   \newcommand{\Reqva}{Equivariant equilibria}
+\newcommand{\equilibrium}{equi\-lib\-rium}
+\newcommand{\equilibria}{equi\-lib\-ria}
+\newcommand{\Equilibria}{Equi\-lib\-ria}
+% \newcommand{\equilibrium}{steady state}
+% \newcommand{\equilibria}{steady states}
+% \newcommand{\Equilibria}{Steady states}
+\newcommand{\Hec}{Hetero\-clinic connect\-ion}
+\newcommand{\hec}{hetero\-clinic connect\-ion}
+\newcommand{\HeC}{Hetero\-clinic Connect\-ion}
+
+%%%%%%%%%%%%%%% SECTIONS, SLICES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Poincare}{Poincar\'e }
+\newcommand{\PoincSec}{Poincar\'e section}
+% \newcommand{\reducedsp}{orbit space}
+% \newcommand{\Reducedsp}{Orbit space}
+\newcommand{\reducedsp}{reduced state space}
+\newcommand{\Reducedsp}{Reduced state space}
+\newcommand{\fixedsp}{fixed-point subspace}
+\newcommand{\Fixedsp}{Fixed-point subspace}
+\newcommand{\csection}{cross-section} % eventually eliminate
+\newcommand{\Csection}{Cross-section} % eventually eliminate
+\newcommand{\slice}{slice}
+\newcommand{\Slice}{Slice}
+\newcommand{\mslices}{method of slices}
+\newcommand{\Mslices}{Method of slices}
+\newcommand{\mframes}{method of moving frames}
+\newcommand{\Mframes}{Method of moving frames}
+\newcommand{\chartBord}{chart border}
+\newcommand{\ChartBord}{Chart border}
+\newcommand{\poincBord}{section border}
+\newcommand{\PoincBord}{Section border}
+% \newcommand{\poincBord}{\PoincSec\ border}
+% \newcommand{\PoincBord}{\PoincSec\ border}
+% \newcommand{\poincBord}{border of transversality}
+\newcommand{\template}{template} % {slice-fixing point} % {reference state}
+\newcommand{\sliceBord}{slice border}
+\newcommand{\SliceBord}{Slice border}
+\newcommand{\Sset}{Inflection hyperplane}
+\newcommand{\sset}{inflection hyperplane} 	% {singularity hyperplane}
+											% {singular set}
+\newcommand{\pSRed}{\ensuremath{\hat{\cal M}}} % reduced state space Jan 2012
+%\newcommand{\pSRed}{\ensuremath{\bar{\cal M}}} % reduced state space
+\newcommand{\sspRed}{\ensuremath{\hat{\ssp}}}    % reduced state space point Jan 2012
+% \newcommand{\sspRed}{\ensuremath{y}}    % reduced state space point, experiment
+% \newcommand{\sspRed}{\ensuremath{\bar{x}}}    % reduced state space point
+\newcommand{\velRed}{\ensuremath{\hat{\vel}}}    % ES reduced state space velocity Jan 2012
+% \newcommand{\velRed}{\ensuremath{\bar{v}}}    % PC reduced state space velocity
+% \newcommand{\velRed}{\ensuremath{u}}    % ES reduced state space velocity
+
+\newcommand{\slicep}{{\ensuremath{\sspRed'}}}   % slice-fixing point Jan 2012
+% \newcommand{\slicep}{{\ensuremath{y'}}}   % slice-fixing point, experimental
+% \newcommand{\slicep}{\ensuremath{\ssp'}}   % slice-fixing point
+%\newcommand{\sliceTan}[1]{\ensuremath{t_{#1}(y')}}    % tangent at slice-fixing, experimental
+\newcommand{\sliceTan}[1]{\ensuremath{t'_{#1}}}    % group orbit tangent at slice-fixing
+\newcommand{\groupTan}{\ensuremath{t}}    % group orbit tangent
+%\newcommand{\Group}{\ensuremath{\Gamma}}    % Siminos Lie group
+\newcommand{\Group}{\ensuremath{G}}         % Predrag Lie or discrete group
+%\newcommand{\Lg}{\mathfrak{a}}             % Siminos Lie algebra generator
+\newcommand{\Lg}{\ensuremath{\mathbf{T}}}   % Predrag Lie algebra generator
+%\newcommand{\LieEl}{\ensuremath{\mathbb{G}}}  % Wiczek project Lie group element
+\newcommand{\LieEl}{\ensuremath{g}}  % Predrag Lie group element
+
+\newcommand{\zeit}{\ensuremath{t}}  %time variable Ashley
+\newcommand{\sspSing}{\ensuremath{\ssp^\ast}} 	% inflection point
+\newcommand{\sspRSing}{\ensuremath{\sspRed^\ast}} 	% inflection point, reduced space
+
+%%%%%%%%%%%%%%% LIE GROUP PARAMETRIZATIONS %%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\gSpace}{\ensuremath{{\bf \phi}}}   % MA group rotation parameters
+% \newcommand{\gSpace}{\ensuremath{{\bf \theta}}}   % PC group rotation parameters
+\newcommand{\velRel}{\ensuremath{c}}    % relative state or phase velocity
+\newcommand{\angVel}{angular velocity}      % Froehlich
+\newcommand{\angVels}{angular velocities}   % Froehlich
+\newcommand{\phaseVel}{phase velocity}      % pipe slicing
+\newcommand{\phaseVels}{phase velocities}   % pipe slicing
+\newcommand{\PhaseVel}{Phase velocity}      % pipe slicing
+\newcommand{\PhaseVels}{Phase velocities}   % pipe slicing
+
+%%%%%%%% Siminos macros %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\Rls}[1]{\ensuremath{\mathbb{R}^{#1}}}
+%\newcommand{\Idg}{\ensuremath{\mathbf{1}}}
+%\newcommand{\Clx}[1]{\ensuremath{\mathbb{C}^{#1}}}
+%\newcommand{\conj}[1]{\ensuremath{\bar{#1}}}
+%\newcommand{\trace}{\mbox{\rm trace}\,}
+%\newcommand{\On}[1]{\ensuremath{\mathbf{O}(#1)}}
+\newcommand{\Un}[1]{\ensuremath{\textrm{U}(#1)}}         % in DasBuch
+\newcommand{\On}[1]{\ensuremath{\textrm{O}(#1)}}
+%\newcommand{\SOn}[1]{\ensuremath{\mathbf{SO}(#1)}} % in Siminos thesis
+\newcommand{\SOn}[1]{\ensuremath{\textrm{SO}(#1)}}         % in DasBuch
+\newcommand{\SUn}[1]{\ensuremath{\textrm{SU}(#1)}}         % in DasBuch
+\newcommand{\Spn}[1]{\ensuremath{\textrm{Sp}(#1)}}         % in DasBuch
+%\newcommand{\Dn}[1]{\ensuremath{\mathbf{D}_{#1}}    % in Siminos thesis
+\newcommand{\Dn}[1]{\ensuremath{\textrm{D}_{#1}}}              % in DasBuch
+%\newcommand{\Zn}[1]{\ensuremath{\mathbf{Z}_{#1}}}    % in Siminos thesis
+\newcommand{\Zn}[1]{\ensuremath{\textrm{C}_{#1}}}              % in DasBuch
+%\newcommand{\Ztwo}{\ensuremath{\mathbf{Z}_2}}      % in Siminos thesis
+\newcommand{\Ztwo}{\ensuremath{\textrm{C}_2}}                % in DasBuch
+%\newcommand{\Refl}{\ensuremath{\kappa}}            % Siminos uses R for rotations.
+\newcommand{\Refl}{\ensuremath{\sigma}}             % in DasBuch
+%\newcommand{\Shift}{\ensuremath{\tau}}
+\newcommand{\Rot}[1]{\ensuremath{C^{#1}}}           % in DasBuch, e.g. C^{1/3}
+%\newcommand{\Rot}[1]{\ensuremath{R(#1)}}           % Siminos uses R for rotations.
+%\newcommand{\Drot}{\ensuremath{\zeta}}
+%\newcommand{\Lg}{\mathcal{G}}
+%\newcommand{\stab}[1]{\ensuremath{\Sigma_{#1}}}
+\newcommand{\stab}[1]{\ensuremath{G_{#1}}}
+\newcommand{\shift}{\ensuremath{d}}
+\newcommand{\Fix}[1]{\ensuremath{\mathrm{Fix}\left(#1\right)}}
+
+%%%%%%%%%%%% loopDef.tex, defCrete.tex specific %%%%%%%%%%%%%
+% Predrag   defCrete.tex             4mar2003
+% Predrag   loopDefs.tex            10jul2003
+\newcommand{\descent}{Newton descent}
+\newcommand{\Descent}{Newton Descent}
+\newcommand{\CostFct}{Cost function}    % functional to minimize
+\newcommand{\costFct}{cost function}    % functional to minimize
+\newcommand{\costF}{F^2}        % cost function,
+\newcommand{\Loop}{L}
+\newcommand{\pVeloc}{v}         % phase-space velocity
+\newcommand{\lSpace}{\tilde{x}}     % a point on a loop
+\newcommand{\lVeloc}{\tilde{v}}     % loop tangent
+\newcommand{\damp}{\Delta\tau}      % descrete fictitous time step
+% \newcommand{\pSpaceDer}[1]{x^{(#1)}}
+% \newcommand{\lSpaceDer}[1]{\tilde{x}^{(#1)}}
+
+%%%%%%%%%%%%%% ks.tex specific %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\KS}{Kuramoto-Siva\-shin\-sky}
+\newcommand{\KSe}{Kuramoto-Siva\-shin\-sky equation}
+\newcommand{\pCf}{plane Couette flow}
+\newcommand{\PCf}{Plane Couette flow}
+\newcommand{\dmn}{-dimensional}  %  experimental 220ct2009
+%\newcommand{\dmn}{\ensuremath{d}}  %  n-dimensional
+%\newcommand{\dmn}{\ensuremath{\!-\!d}}  %  n-dimensional
+\newcommand{\expctE}{\ensuremath{E}}    % E space averaged
+\newcommand{\tildeL}{\ensuremath{\tilde{L}}}
+\newcommand{\EQV}[1]{\ensuremath{EQ_{#1}}} %experimental
+% \newcommand{\EQV}[1]{\ensuremath{q_{#1}}} %ChaosBook
+% \newcommand{\EQV}[1]{\ensuremath{E_{#1}}} %Ruslan
+% E_0: u = 0 - trivial equilibrium
+% E_1,E_2,E_3, for 1,2,3-wave equilibria
+\newcommand{\REQV}[2]{\ensuremath{TW_{#1#2}}} % #1 is + or -
+% TW_1^{+,-} for 1-wave traveling waves (positive and negative velocity).
+\newcommand{\PO}[1]{\ensuremath{PO_{#1}}}
+% PO_{period to 2-4 significant digits} - periodic orbits
+\newcommand{\RPO}[1]{\ensuremath{RPO_{#1}}}
+% RPO_{period to 2-4 significant digits} - relative PO.  We use ^{+,-}
+% to distinguish between members of a reflection-symmetric pair.
+% Gibson likes:
+\newcommand{\tEQ}{\ensuremath{{EQ}}}
+
+%%%%%%%%%%%%%%%%%%%%%% CHAOS J SPECIFIC %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\reffig} [1] {Fig.~\ref{#1}}
+\renewcommand{\reffigs} [2] {Figs.~\ref{#1} and~\ref{#2}}
+\renewcommand{\refFig} [1] {Fig.~\ref{#1}}
+\renewcommand{\refFigs} [2] {Figs.~\ref{#1} and~\ref{#2}}
+\newcommand{\Template}{Template}
+\newcommand\mapRed{\ensuremath{\hat{f}}}     % other people like \phi's etc
+\newcommand\flowRed[2]{\ensuremath{\hat{f}^{#1}(#2)}}
+
+\renewcommand{\zeit}{\ensuremath{\tau}}  %time variable Predrag
+
+
+\ifpaper % prepare for B&W paper printing:
+       \renewcommand{\arXiv}[1]{ {\tt arXiv:#1}}
+       \renewcommand{\mpArc}[1]{{\tt mp\_arc~#1}}
+\else % prepare hyperlinked pdf
+       \renewcommand{\mpArc}[1]{
+              {\tt \href{http://www.ma.utexas.edu/mp_arc-bin/mpa?yn=#1}
+                   {mp\_arc~#1}}}
+       \renewcommand{\arXiv}[1]{
+              {\tt \href{http://arXiv.org/abs/#1}{arXiv:#1}}}
+\fi %%%% prepare for B&W paper printing END %%%%%%
+
+\newcommand{\stateDsp}{state-space}
+\newcommand{\StateDsp}{State-space}
+
+%%%% 3D physical flow
+\newcommand{\NS}{Navier-Stokes}
+\newcommand{\NSe}{Navier-Stokes equations}
+\newcommand{\Reynolds}{\textit{Re}}  % Reynolds number
+\newcommand{\cohStr}{coherent structure}
+\newcommand{\recurrStr}{recurrent coherent structure}
+\newcommand{\RecurrStr}{Recurrent coherent structure}
+\newcommand{\bnabla}{\ensuremath{\bf \nabla}}
+\newcommand{\Gpipe}{\ensuremath{\Gamma}} % Hoyle notation, equivariant symmetry group
+\newcommand{\bCell}{\ensuremath{\Omega}}
+\newcommand{\normVec}{\ensuremath{\mathbf{n}}}    % group orbit curvature normal
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\shift}{\ensuremath{\ell}}
+\newcommand{\bu}{\ensuremath{{\bf u}}}
+\newcommand{\be}{{\bf e}}
+\newcommand{\bx}{{\bf x}}
+\newcommand{\Norm}[1]{\|{#1}\|}
+
 
 \begin{document}
 
 \title[High-dimensional cartography]
 {Cartography of high-dimensional flows: A visual guide to sections and slices}
-
-%Predrag 2012-04-12: Continuous symmetry reduction of high-dimensional flows
-%                    by the method of slices
-%Predrag 2012-04-11: How to cut and slice a symmetry
-%Predrag 2012-04-11: Have a symmetry? How to cut and slice it
-%PC, until 2012-03-19: "Continuous symmetries, and how to slice them"
 
 \author{Predrag Cvitanovi{\'c}}
 \email{predrag@gatech.edu.}
@@ -68,7 +575,7 @@ Symmetry reduction by the method of slices quotients the continuous
 symmetries of chaotic flows by replacing the original state space by a
 set of charts, each covering a neighborhood of an important,
 qualitatively distinct class of solutions, qualitatively captured by a
-`template'. Together these charts provide an atlas of slices -a finite
+`template'. Together these charts provide an atlas of the slice -a finite
 set of hyperplane tiles- charting the regions of the curved manifold
 explored by the trajectories of interest. Within the slice, relative
 equilibria reduce to equilibria, and relative periodic orbits reduce to
@@ -107,15 +614,15 @@ will map it using a measuring tape, but first one has to deal with
 symmetries. Physicists have come to love them inordinately, but Nature
 less so: even though the governing equations are symmetric, turbulence
 breaks all symmetries, and rather than simplifying our task, for
-nonlinear systems symmetries obscure the essential dynamics. Evolution
-in time decomposes the \statesp\ into a spaghetti of time trajectories,
+nonlinear systems symmetries obscure the essential dynamics. Evolution in
+time decomposes the \statesp\ into a spaghetti of time trajectories,
 continuous spatial symmetries stratify it into layers of an onion. There
 exist many excellent methods that quotient out symmetries of
-low-dimensional systems, but so far only one, \mslices, has proven practical for
-for the extremely high-dimensional flows of turbulent fields. In this
-geometrical tour of dynamics we cut this knot and pick a
-single point for each trajectory (section it) and each group orbit (slice
-it). Once the fog of symmetries is out of the way, one can identify and
+low-dimensional systems, but so far only one, \mslices, has proven
+practical for the extremely high-dimensional flows of turbulent fields.
+In this geometrical tour of dynamics we cut this knot and pick a single
+point for each trajectory (section it) and each group orbit (slice it).
+Once the fog of symmetries is out of the way, one can identify and
 describe the prominent fluid structures by a taxonomy of its invariant
 building blocks: numerically exact solutions of \NSe, finite sets of
 \reqva\ and infinite hierarchies of \rpo s, and describe the dynamics in
@@ -189,7 +696,7 @@ A flow $\map^t$ and the \statesp\ $\pS$ on which the flow acts comprise a
 acts on a continuous time flow, each \statesp\ point owns a set of
 tangent vectors (\reffig{fig:A27wurst}\,(a)). Integrated globally, the
 velocity vector $\vel(\ssp)$ traces out the {\em trajectory}
-$\flow{\zeit}{\ssp}$ ( \reffig{fig:A27wurst}\,(b)). Applying the continuous
+$\flow{\zeit}{\ssp}$ (\reffig{fig:A27wurst}\,(b)). Applying the continuous
 transformations traces out the {group orbit} (or, from now on, just
 \emph{orbit})
 \(
@@ -199,7 +706,7 @@ transformations traces out the {group orbit} (or, from now on, just
 \) %ee{sspOrbit}
 (\reffig{fig:A27wurst}\,(c)). Together they trace out a complicated smooth
 manifold (hereafter affectionately referred to as the {\em wurst}, see
-figures~\ref{fig:A27wurst}\,(d), \ref{fig:CLf01group}\,(b) and
+Figs.~\ref{fig:A27wurst}\,(d), \ref{fig:CLf01group}\,(b) and
 \ref{fig:sliceimage}), that we shall teach you here how to slice.
 
 A flow is said to have symmetry $\Group$ if the form of evolution
@@ -214,7 +721,7 @@ symmetry, but Nature does not care: turbulence breaks all symmetries,
 and while the flow equations may be invariant under $\Group$, their
 solutions typically are not.
 
-Despite this inconvenience, we can make way in unraveling the spaghetti
+We can make headway in unraveling the spaghetti
 of 1\dmn\ trajectories with the notion of recurrence. To quantify how
 close the state of the system at its present state is to a previously
 visited state we need the notion of distance between two points in
@@ -226,7 +733,7 @@ the Euclidean norm
 (\ssp-\ssp')_j^2
 \,.
 \ee{innerproduct}
-Given a notion of distance we can talk about a 'neighborhood,' the open
+Given a notion of distance we can talk about a `neighborhood,' the open
 set of nearby states. Our main task in what follows will be to make this
 precise by defining a chart over a neighborhood and its borders. Given
 distances and neighborhoods, the next key notion is  \emph{measure}, or
@@ -234,18 +741,19 @@ how likely a typical trajectory is to visit a given neighborhood. After
 some observations of a given turbulent flow, one can identify a set of
 representative \emph{\template s}\rf{rowley_reconstruction_2000},
 {points} $\slicep{}^{(j)}$, $j=1,2,\cdots$ in the \statesp\ $\pS$, which
-are the dynamically most important unstable {\recurrStr s} of the flow.
+are the dynamically most important, frequently revisited unstable
+{\recurrStr s} of the flow.
 
 Our goals here are two-fold:
 (i) In \refsect{s:cut} we review the method of \PoincSec s, with
     emphasis on aspects applicable to high-dimensional flows:
     construction of multiple local linear `charts' and determination of
-    their borders followed by a brief study of continuous symmetries in
-    \refsect{s:symm}.
-(ii) In \refsect{s:slice} we show how the same set of tools applied to
-    reduction of continuous symmetries enables us to commence a
-    systematic charting of the long-time dynamics of high-dimensional
-    flows with continuous symmetries (\refsect{s:chart}).
+    their borders.
+(ii) In \refsect{s:symm} we discuss effect of continuous symmetries on
+    nonlinear flows, and in \refsect{s:slice} we show how the same set of
+    tools applied to reduction of continuous symmetries enables us to
+    commence a systematic charting of the long-time dynamics of
+    high-dimensional flows (\refsect{s:chart}).
 
 
 \section{Section}
@@ -545,8 +1053,8 @@ with a constant {\phaseVel} $c$, and whose time evolution is thus
 confined to the group orbit; think of an unchanging body carried by a
 stream.
 
-More of a dancer is a {\em \rpo}. $\pS_p$ is a trajectory which exactly
-recurs
+A {\em \rpo} behaves more like a dancer. $\pS_p$ is a trajectory which
+exactly recurs
 \beq
 \ssp(\zeit) = \LieEl_p \, \ssp(\zeit + \period{p} )
     \,,\qquad
@@ -936,9 +1444,9 @@ shared by a pair of charts and thus satisfies both \slice\ conditions
 \braket{\sspRed^*}{\sliceTan{}{}^{(2)}} = 0
     \,.
 \ee{ridge}
-We shall refer to the neighborhood of a \template\ \slicep\ bounded by
+We shall refer to the neighborhood of a \template\ $\slicep{}^{(j)}$ bounded by
 its {\chartBord} and the ridges to other such linear neighborhoods as a
-\emph{chart} $\pSRed{}^{({\slicep})} \subset \pS/\Group$, and to
+\emph{chart} $\pSRed{}^{(j)} \subset \pS/\Group$, and to
 \refeq{sliceSingl0} and \refeq{ridge} as the \emph{border conditions}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1080,21 +1588,31 @@ $\sspRed_1$ and $\sspRed_2$ are in the section, but the third point is not
 % replace A27movFrame*.* everywhere
 \begin{figure}
  \begin{center}
-(a)\includegraphics[width=0.15\textwidth]{CLEperpReqb}%
-(b)\includegraphics[width=0.24\textwidth]{CLE2slice2na}
+ \setlength{\unitlength}{0.20\textwidth}
+(a) \begin{picture}(1,1.10816305)%
+    \put(0,0){\includegraphics[width=0.8\unitlength]{CLEunsliced}}%
+    \put(0.33026558,0.86121262){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$z$}}}%
+    \put(-0.00120214,0.07420659){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$y_2$}}}%
+    \put(0.60769025,0.10190679){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$x_2$}}}%
+  \end{picture}%
+(b) \begin{picture}(1,0.87317006)%
+    \put(0,0){\includegraphics[width=1.2\unitlength]{CLE2slice2na.pdf}}%
+    \put(0.5407327,0.8152321){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$z$}}}%
+    \put(0.17393473,0.05511623){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$y_2$}}}%
+    \put(0.80432851,0.0789796){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$x_2$}}}%
+  \end{picture}
  \end{center}
   \caption{\label{fig:cLe-2charts}
 (a)
-% \mycomment{\DBedit{\Huge [DRAW THIS!]}}{}
-Strange attractor of the \cLe, \reffig{fig:CLf01group}, reduced to a
+Strange attractor of the \cLe, \reffig{fig:CLf01group}\,(a), reduced to a
 single \slice\ hyperplane, using as the \template\ the \reqv\ $\slicep =
 \ssp_{\REQV{}{1}}$. The attractor exhibits singular jumps due to the
-(forbidden) crossings of the \chartBord (from \refref{SiCvi10}).
+forbidden crossings of the \chartBord.
 (b)
-The 2-chart atlas (sketched in \reffig{fig:A29-1ridge}) of the strange
-attractor of the \cLe, with the ridge points $\sspRed^* \in \PoincS$
-marked green and purple. The ridge act as a \PoincSec\ with green or
-purple marking the direction of the crossing.
+The 2-chart atlas (sketched in \reffig{fig:A29-1ridge}) of the same
+strange attractor encounters no \chartBord s and exhibits no
+singularities. The ridge acts as a \PoincSec\ $\PoincS$ with green or
+purple ridge points $\sspRed^*$ marking the direction of the crossing.
   }
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1106,9 +1624,9 @@ Let us summarize the voyage so far: We are charting a curved manifold,
 and it would be nice to use tools of differential geometry, but try it in
 61,506~dimensions. The only feasible way to chart this space is to (1)
 quotient all continuous symmetries, and (2) tile it with
-$(61,506-N-1)$\dmn\ tiles, or `charts'. We do it in steps, starting
-locally, with a set of \template s, and building up the goal of the whole
-construction, the \slice\ which captures all of the reduced dynamics of
+$(61,506\!-\!N\!-\!1)$\dmn\ tiles, or `charts'. We do it step by step,
+starting locally, with a set of \template s, and then building chart by
+chart to a \emph{\slice} which captures all of the reduced dynamics of
 interest.
 
 \begin{description}
@@ -1228,78 +1746,78 @@ interrelated? and for that a good atlas is a necessity.
 \label{s:bridge}
     % kvetches, still to be written
 
-Everyone encounters a symmetry sooner or later, so literature on symmetry
-reduction is vast (for a historical overview, see remarks in
-ChaosBook.org and \refref{SiCvi10}) Before asking - why the \mslices\ and
-not my [...]? a brief tour of the graveyard of obvious ideas and pet
+Everybody encounters a symmetry sooner or later, so the literature on
+symmetry reduction is vast (for a historical overview, see remarks in
+ChaosBook.org and \refref{SiCvi10}). Before asking - why the \mslices\
+and not my [...]? a brief tour of the graveyard of obvious ideas and pet
 symmetry reduction schemes is called for. They all have one thing in
-common: they do not work.
+common: they will not work for high-dimensional systems.
 
-To start with: if you are a master of quantum-mechanics / QFT and their
-irreducible representations,\rf{PCgr} you may leave your baggage at the
-door - the way symmetries act on nonlinear systems is much subtler, as we
-tried to show in this pictorial tour. The same for masters of
-bifurcations\rf{golubII} - linear theory works quite well there.
+To start with: if you are a master of quantum-mechanics or QFT symmetries
+and their linear irreducible representations,\rf{PCgr} you may leave your
+baggage at the door - the way symmetries act on nonlinear systems is much
+subtler, as we tried to show in this pictorial tour. The same for masters
+of bifurcations\rf{golubII} - linear theory works quite well there.
 
 There are purely group-theoretical approaches, with no dynamics to inform
-them. For $\SOn{2}$, the obvious idea is to go to polar coordinates. The
+them. For $\SOn{2}$, an obvious idea is to go to polar coordinates. The
 simplest nonlinear examples\rf{AGHO288} already run into $r_j \to 0$ type
 of singularities, and it is not altogether clear how one would rewrite
-\NSe\ in such a format, or integrate them numerically. For pipe flows, one
-would need cylindrical Bessel functions eigenbases, never used in
-numerical work. More sophisticated are rewrites of dynamics in terms of
-invariant polynomial bases, described clearly for low dimensions in
+the \NSe\ in such a format, or integrate them numerically. For pipe
+flows, one would need cylindrical Bessel eigenbases, which are never used
+in numerical work. A more sophisticated  approach would be to rewrite the
+dynamics in terms of invariant polynomial bases, described lucidly in
 \refref{GL-Gil07b}, with equivariant \statesp\ coordinates
 $(x_1,x_2,x_3,...,x_d)$ replaced by invariant polynomial basis
-$(u_1,u_2,u_3,...,u_m)$. With the dimension, the number of these
-polynomials grows, and so does the number of syzygies, the nonlinear
-relations amongst them. There is no guiding principle for picking a set of
-such polynomials, and no practical way to implement the
-scheme\rf{gatermannHab} for high dimensional flows: how and why would one
-go from 61,506 equivariant \statesp\ coordinates to a vast number of
-invariant polynomials replaceing them?
+$(u_1,u_2,u_3,...,u_m)$. As the dimension of the problem increases, the
+number of these polynomials grows, and so does the number of syzygies,
+the nonlinear relations amongst them. There is no guiding principle for
+picking a set of such polynomials, and no practical way to implement the
+scheme\rf{gatermannHab} for high-dimensional flows:
+why would one replace the 61,506 equivariant \statesp\ coordinates of
+hydrodynamic turbulence with a vast number of invariant polynomials?
 
-There are dynamics informed approaches, foremost among them being the method of
-{co-moving frames}. Visualizing a single `relative' trajectory in its
-co-moving frame, i.e. moving with the mean {\phaseVel} of a given solution, is
-useful if we are concerned with the individual solution and the tiny
-\rpo s (modulated-amplitude waves) that have bifurcated off of it.\rf{duguet08,mellibovsky11} A co-moving frame is useless, however, if we are
-concerned with studying collections of these trajectories, as each
+There are approaches informed by dynamics, foremost among them being the
+method of {co-moving frames}. Visualizing a single `relative' trajectory
+in its co-moving frame, \ie, moving with that solution's mean {\phaseVel},
+is useful if one is concerned with that individual solution and
+the tiny \rpo s (modulated-amplitude waves) that have bifurcated off
+it.\rf{duguet08,mellibovsky11} A co-moving frame is useless, however, if
+we are concerned with studying collections of these trajectories, as each
 solution travels with its own mean {\phaseVel}, and there is no single
 co-moving frame that can simultaneously reduce \emph{all} traveling
 solutions. The \slice s that we construct here are \emph{emphatically}
 stationary.
 
-%{\bf Marsdenmania}
-
-There are sophisticated approaches to reducing symplectic symmetries of
-mechanics\rf{MaWe74}, or use Lie symmetry reduction to rederive Eulerian
+There exist sophisticated approaches to reducing symplectic symmetries of
+mechanics\rf{MaWe74} or using Lie symmetry reduction to derive Eulerian
 velocity fields from Lagrangian trajectories\rf{MorrGree80}. Our goal
-here is different. Rather than to reduce a particular set of dynamical
+here is different. Rather than to reduce a particular set of
 equations, we seek to formulate a computationally straightforward and general
-method of reducing continuous symmetries, applicable to any
+method of reducing any continuous symmetries, applicable to any
 high-dimensional chaotic/turbulent flow. One should also note that
 ``symmetry reduction'' in general relativity and Lie theory often implies
-restriction of solution space to a subspace of higher symmetry; here we
+restricting one's solution space to a subspace of higher symmetry; here we
 always work in the full \statesp.
 
-There is one intriguing, obvious and physically informed contender,
-called ``method of connections'' by
-Marsden\rf{Smale70I,AbrMars78,rowley_reduction_2003}, illustrated in \reffig{fig:BeThMconnect}. It is a group dynamics kin of the strobing
-method of \refsect{s:cut}, and it does not reduce the dynamics to a
-lower-dimensional \reducedsp\ $\pS/\Group$. However, in field theory the
+There is, however, one intriguing, obvious and physically informed contender,
+called the ``method of connections'' by
+Marsden\rf{Smale70I,AbrMars78,rowley_reduction_2003}, which is illustrated in
+\reffig{fig:BeThMconnect}. It is the group dynamics cousin of the strobing
+method of \refsect{s:cut} and does not reduce the dynamics to a
+lower-dimensional \reducedsp\ $\pS/\Group$. In field theory the
 freedom of choosing moving frames of \reffig{fig:BeThMovFr} is called
 ``gauge freedom,'' and a particular prescription of choosing a frame is
-called ``gauge fixing,'' or a ``gauge.'' The meaning ``method of
+called ``gauge fixing,'' or a ``gauge.'' The meaning of the ``method of
 connections'' is clearest in the work of Shapere and
 Wilczek\rf{ShWi89a,ShWi06}: one can observe a swimmer (or our dancer) from
 a fixed \slice\ frame, or bring her back to observe only the
 shape-changing dynamics, no drifting. Left to herself, she will reemerge
 in the same pose someplace else: that shift is called a ``geometrical
-phase,'' which -while accruing it is the whole point of swimming- has not
-played any role in our symmetry reduction. Conversely, most gauge choices
+phase,'' which -while accruing it is the whole point of swimming- had not
+played any role in the above symmetry reduction. Conversely, most gauge choices
 in quantum field theory are covariant, and while that suffices to
-regularize path integrals, the \mslices\ says that is no symmetry
+regularize path integrals, the \mslices\ says that this is no symmetry
 reduction at all and yields no insights into the geometry of nonlinear flows.
 
 
@@ -1342,61 +1860,59 @@ tangent directions.
 \section{Conclusions}
 \label{s:concl}
 
-As a turbulent flow evolves, every so often we catch a glimpse of a
-familiar structure. For any finite spatial resolution and time, the flow follows an unstable {\cohStr} belonging to an alphabet of
-representative states, here called `\template s'. However, in the presence of
+As turbulent flow evolves, every so often we catch a glimpse of a
+familiar structure. For any finite spatial resolution and time, the flow
+follows an unstable {\cohStr} belonging to an alphabet of representative
+states, here called `\template s'. However, in the presence of
 symmetries, near recurrences can be identified only if shifted both in
 time and space.
 
 In the method of sections (along time direction) and slices (along
-spatial symmetry directions) the identification of physically close
+spatial symmetry directions), the identification of physically close
 states is achieved by cutting the group orbits with a finite set of
 hyperplanes, one for each continuous parameter, with each time trajectory
 and group orbit of symmetry-equivalent points represented by a single
-point, its  section and \slice.
-The \mslices\ is akin to (but distinct from) cutting across trajectories
-by means of sections. Both methods reduce continuous symmetries: one
-sections the continuous-time trajectories, the other slices the layers of
-the onion formed by group-orbits. Both are triggered by kin
-conditions: oriented piercing of the section, oriented piercing of the slice. Just
-as a \PoincSec\ goes bad, the \slice\ hyperplane goes bad the moment transversality is
-lost. A slice, however, is emphatically \emph{not} a \PoincSec. Instead it
-replaces a trajectory by a continuous symmetry-reduced trajectory, whereas a
-\PoincSec\ replaces a continuous time trajectory by a discrete sequence of points.
-
-%    \PC{2011-10-18 incorporate this paragraph:
-Note also that symmetry reduction is not a dimensional-reduction scheme,
-or flow modeling by fewer degrees of freedom: the \reducedsp\ retains the
-full dimensionality of the original dynamical systems. No information is
-lost, one can go freely between solutions in the full and reduced
-\statesp s by integrating the associated {reconstruction equations}.
+point, its  section and \slice. The \mslices\ is akin to (but distinct
+from) cutting across trajectories by means of sections. Both methods
+reduce continuous symmetries: one sections the continuous-time
+trajectories, the other slices the layers of the onion formed by
+group-orbits. Both are triggered by analogous conditions: oriented piercing of
+the section and oriented piercing of the slice. Just as a \PoincSec\ goes
+bad, the \slice\ hyperplane goes bad the moment transversality is lost. A
+slice, however, is emphatically \emph{not} a \PoincSec. Instead it
+replaces a trajectory by a continuous symmetry-reduced trajectory,
+whereas a \PoincSec\ replaces a continuous time trajectory by a discrete
+sequence of points.
 
 %    \BR{2012-4-15 My stab at this paragraph:
-We also emphasize that while symmetry reduction reduces the dynamics to a carefully chosen atlas (section or slice), it does not replace the dynamics with a dimension-reduced flow, i.e., no information is lost. The \reducedsp\ retains the
-full dimensionality of the original dynamical system. One can go freely between solutions in the full and reduced
-\statesp s by integrating the associated {reconstruction equations} \refeq{reconstrEq} and \refeq{EqMotMFrame}.
+%    \PC{2012-4-15 went back to my version, mostly
+Note also that symmetry reduction is not a dimensional-reduction scheme,
+or flow modeling by fewer degrees of freedom: the full dimensionality of
+the original dynamical system is retained. No information is lost, as
+one can go freely between solutions in the full and reduced \statesp s by
+integrating the associated {reconstruction equation} \refeq{reconstrEq}.
 
 The main lesson of the visual tour undertaken above is that if a
 dynamical problem has a continuous symmetry, the symmetry \emph{must} be
 reduced before any detailed analysis of the flow's \statesp\ geometry can
 take place. So far, this has only been achieved for transitionally
 turbulent numerical pipe flows\rf{ACHKW11} resulting in the discovery of
-the first \rpo s embedded in turbulence. In the future it should be the first
-step in the analysis of any turbulent data, numerical\rf{CvGr12} or
+the first \rpo s embedded in turbulence. In the future it should be the
+first step in the analysis of any turbulent data, numerical\rf{CvGr12} or
 experimental\rf{BCS12}. Once symmetry reduction is achieved, all
-solutions of a turbulent flow can be plotted in concert, as one happy
+solutions of a turbulent flow can be plotted together, as one happy
 family: all symmetry-equivalent states are represented by a single point,
 families of solutions are mapped to a single solution, \reqva\ become
-\eqva, \rpo s become \po s, and most importantly, the analysis of the global dynamical system in
-terms of invariant solutions and their stable / unstable manifolds can
-now commence.
+\eqva, \rpo s become \po s, and most importantly, the analysis of the
+global dynamical system in terms of invariant solutions and their stable
+/ unstable manifolds can now commence.
 
 \begin{acknowledgments}
 This article answers the questions asked after the talk given at
 Kyoto 2011 IUTAM Symposium on ``50 Years of Chaos: Applied and Theoretical.''
 We are indebted to
+S.~Flynn,
 S.~Froehlich,
-E.~Siminos,
 S.A.~Solla,
 and
 R.~Wilczak
@@ -1411,9 +1927,375 @@ and
 2009 Forschungspreis der Alexander von Humboldt-Stiftung.
 \end{acknowledgments}
 
+\begin{thebibliography}{35}%
+\makeatletter
+\providecommand \@ifxundefined [1]{%
+ \@ifx{#1\undefined}
+}%
+\providecommand \@ifnum [1]{%
+ \ifnum #1\expandafter \@firstoftwo
+ \else \expandafter \@secondoftwo
+ \fi
+}%
+\providecommand \@ifx [1]{%
+ \ifx #1\expandafter \@firstoftwo
+ \else \expandafter \@secondoftwo
+ \fi
+}%
+\providecommand \natexlab [1]{#1}%
+\providecommand \enquote  [1]{``#1''}%
+\providecommand \bibnamefont  [1]{#1}%
+\providecommand \bibfnamefont [1]{#1}%
+\providecommand \citenamefont [1]{#1}%
+\providecommand \href@noop [0]{\@secondoftwo}%
+\providecommand \href [0]{\begingroup \@sanitize@url \@href}%
+\providecommand \@href[1]{\@@startlink{#1}\@@href}%
+\providecommand \@@href[1]{\endgroup#1\@@endlink}%
+\providecommand \@sanitize@url [0]{\catcode `\\12\catcode `\$12\catcode
+  `\&12\catcode `\#12\catcode `\^12\catcode `\_12\catcode `\%12\relax}%
+\providecommand \@@startlink[1]{}%
+\providecommand \@@endlink[0]{}%
+\providecommand \url  [0]{\begingroup\@sanitize@url \@url }%
+\providecommand \@url [1]{\endgroup\@href {#1}{\urlprefix }}%
+\providecommand \urlprefix  [0]{URL }%
+\providecommand \Eprint [0]{\href }%
+\providecommand \doibase [0]{http://dx.doi.org/}%
+\providecommand \selectlanguage [0]{\@gobble}%
+\providecommand \bibinfo  [0]{\@secondoftwo}%
+\providecommand \bibfield  [0]{\@secondoftwo}%
+\providecommand \translation [1]{[#1]}%
+\providecommand \BibitemOpen [0]{}%
+\providecommand \bibitemStop [0]{}%
+\providecommand \bibitemNoStop [0]{.\EOS\space}%
+\providecommand \EOS [0]{\spacefactor3000\relax}%
+\providecommand \BibitemShut  [1]{\csname bibitem#1\endcsname}%
+\let\auto@bib@innerbib\@empty
+%</preamble>
+\bibitem [{\citenamefont {Gibson}, \citenamefont {Halcrow},\ and\ \citenamefont
+  {Cvitanovi{\'c}}(2008)}]{GHCW07}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.~F.}\ \bibnamefont
+  {Gibson}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Halcrow}}, \
+  and\ \bibinfo {author} {\bibfnamefont {P.}~\bibnamefont {Cvitanovi{\'c}}},\
+  }\bibfield  {title} {\enquote {\bibinfo {title} {Visualizing the geometry of
+  state-space in plane {Couette} flow},}\ }\href@noop {} {\bibfield  {journal}
+  {\bibinfo  {journal} {J. Fluid Mech.}\ }\textbf {\bibinfo {volume} {611}},\
+  \bibinfo {pages} {107--130} (\bibinfo {year} {2008})},\ \bibinfo {note}
+  {\arXiv{0705.3957}}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Willis}, \citenamefont {Cvitanovi{\'c}},\ and\
+  \citenamefont {Avila}(2012)}]{ACHKW11}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.~P.}\ \bibnamefont
+  {Willis}}, \bibinfo {author} {\bibfnamefont {P.}~\bibnamefont
+  {Cvitanovi{\'c}}}, \ and\ \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Avila}},\ }\href@noop {} {\enquote {\bibinfo {title} {Revealing the state
+  space of turbulent pipe flow by symmetry reduction},}\ } (\bibinfo {year}
+  {2012}),\ \bibinfo {note} {\arXiv{1203.3701}, submitted to J. Fluid
+  Mech.}\BibitemShut {Stop}%
+\bibitem [{\citenamefont {Rowley}\ and\ \citenamefont
+  {Marsden}(2000)}]{rowley_reconstruction_2000}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.~W.}\ \bibnamefont
+  {Rowley}}\ and\ \bibinfo {author} {\bibfnamefont {J.~E.}\ \bibnamefont
+  {Marsden}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Reconstruction
+  equations and the {Karhunen-Lo\'eve} expansion for systems with symmetry},}\
+  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Physica D}\
+  }\textbf {\bibinfo {volume} {142}},\ \bibinfo {pages} {1--19} (\bibinfo
+  {year} {2000})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Beyn}\ and\ \citenamefont
+  {Th\"ummler}(2004)}]{BeTh04}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {W.-J.}\ \bibnamefont
+  {Beyn}}\ and\ \bibinfo {author} {\bibfnamefont {V.}~\bibnamefont
+  {Th\"ummler}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Freezing
+  solutions of equivariant evolution equations},}\ }\href@noop {} {\bibfield
+  {journal} {\bibinfo  {journal} {SIAM J. Appl. Dyn. Syst.}\ }\textbf {\bibinfo
+  {volume} {3}},\ \bibinfo {pages} {85--116} (\bibinfo {year}
+  {2004})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Siminos}\ and\ \citenamefont
+  {Cvitanovi{\'c}}(2011)}]{SiCvi10}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {E.}~\bibnamefont
+  {Siminos}}\ and\ \bibinfo {author} {\bibfnamefont {P.}~\bibnamefont
+  {Cvitanovi{\'c}}},\ }\bibfield  {title} {\enquote {\bibinfo {title}
+  {Continuous symmetry reduction and return maps for high-dimensional flows},}\
+  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Physica D}\
+  }\textbf {\bibinfo {volume} {240}},\ \bibinfo {pages} {187--198} (\bibinfo
+  {year} {2011})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Froehlich}\ and\ \citenamefont
+  {Cvitanovi{\'c}}(2011)}]{FrCv11}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Froehlich}}\ and\ \bibinfo {author} {\bibfnamefont {P.}~\bibnamefont
+  {Cvitanovi{\'c}}},\ }\bibfield  {title} {\enquote {\bibinfo {title}
+  {Reduction of continuous symmetries of chaotic flows by the method of
+  slices},}\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Comm.
+  Nonlinear Sci. and Numerical Simulation}\ }\textbf {\bibinfo {volume} {17}},\
+  \bibinfo {pages} {2074--2084} (\bibinfo {year} {2011})},\ \bibinfo {note}
+  {\arXiv{1101.3037}}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {R\"ossler}(1976)}]{ross}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {O.~E.}\ \bibnamefont
+  {R\"ossler}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {An equation
+  for continuous chaos},}\ }\href@noop {} {\bibfield  {journal} {\bibinfo
+  {journal} {Phys. Lett. A}\ }\textbf {\bibinfo {volume} {57}},\ \bibinfo
+  {pages} {397} (\bibinfo {year} {1976})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Cvitanovi\'{c}}\ \emph {et~al.}(2011)\citenamefont
+  {Cvitanovi\'{c}}, \citenamefont {Artuso}, \citenamefont {Mainieri},
+  \citenamefont {Tanner},\ and\ \citenamefont {Vattay}}]{DasBuch}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {P.}~\bibnamefont
+  {Cvitanovi\'{c}}}, \bibinfo {author} {\bibfnamefont {R.}~\bibnamefont
+  {Artuso}}, \bibinfo {author} {\bibfnamefont {R.}~\bibnamefont {Mainieri}},
+  \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont {Tanner}}, \ and\ \bibinfo
+  {author} {\bibfnamefont {G.}~\bibnamefont {Vattay}},\ }\href@noop {} {\emph
+  {\bibinfo {title} {Chaos: Classical and Quantum}}}\ (\bibinfo  {publisher}
+  {Niels Bohr Inst.},\ \bibinfo {address} {Copenhagen},\ \bibinfo {year}
+  {2011})\ \bibinfo {note} {{\wwwcb{}}}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Gibson}\ and\ \citenamefont
+  {Cvitanovi{\'c}}(2011)}]{GibsonMovies}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.~F.}\ \bibnamefont
+  {Gibson}}\ and\ \bibinfo {author} {\bibfnamefont {P.}~\bibnamefont
+  {Cvitanovi{\'c}}},\ }\href@noop {} {\enquote {\bibinfo {title} {Movies of
+  plane {Couette}},}\ }\bibinfo {type} {Tech. Rep.}\ (\bibinfo  {institution}
+  {Georgia Inst. of Technology},\ \bibinfo {year} {2011})\ \bibinfo {note}
+  {{\wwwcb{/tutorials}}}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Gibbon}\ and\ \citenamefont
+  {McGuinness}(1982)}]{GibMcCLE82}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.~D.}\ \bibnamefont
+  {Gibbon}}\ and\ \bibinfo {author} {\bibfnamefont {M.~J.}\ \bibnamefont
+  {McGuinness}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {The real and
+  complex {Lorenz} equations in rotating fluids and lasers},}\ }\href@noop {}
+  {\bibfield  {journal} {\bibinfo  {journal} {Physica D}\ }\textbf {\bibinfo
+  {volume} {5}},\ \bibinfo {pages} {108--122} (\bibinfo {year}
+  {1982})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Fowler}, \citenamefont {{Gibbon}},\ and\
+  \citenamefont {{McGuinness}}(1982)}]{FowlerCLE82}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.~C.}\ \bibnamefont
+  {Fowler}}, \bibinfo {author} {\bibfnamefont {J.~D.}\ \bibnamefont
+  {{Gibbon}}}, \ and\ \bibinfo {author} {\bibfnamefont {M.~J.}\ \bibnamefont
+  {{McGuinness}}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {The
+  complex {Lorenz} equations},}\ }\href@noop {} {\bibfield  {journal} {\bibinfo
+   {journal} {Physica D}\ }\textbf {\bibinfo {volume} {4}},\ \bibinfo {pages}
+  {139--163} (\bibinfo {year} {1982})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Siminos}(2009)}]{SiminosThesis}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {E.}~\bibnamefont
+  {Siminos}},\ }\emph {\bibinfo {title} {Recurrent Spatio-temporal Structures
+  in Presence of Continuous Symmetries}},\ \href@noop {} {Ph.D. thesis},\
+  \bibinfo  {school} {School of Physics, Georgia Inst. of Technology}, \bibinfo
+  {address} {Atlanta} (\bibinfo {year} {2009}),\ \bibinfo {note}
+  {\\\wwwcb{/projects/theses.html}}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Shapere}\ and\ \citenamefont
+  {Wilczek}(2006)}]{ShWi06}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Shapere}}\ and\ \bibinfo {author} {\bibfnamefont {F.}~\bibnamefont
+  {Wilczek}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Geometry of
+  self-propulsion at low {Reynolds} number},}\ }\href@noop {} {\bibfield
+  {journal} {\bibinfo  {journal} {J. Fluid Mech.}\ }\textbf {\bibinfo {volume}
+  {198}},\ \bibinfo {pages} {557} (\bibinfo {year} {2006})}\BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Fels}\ and\ \citenamefont
+  {Olver}(1998)}]{FelsOlver98}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Fels}}\ and\ \bibinfo {author} {\bibfnamefont {P.~J.}\ \bibnamefont
+  {Olver}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Moving coframes:
+  {I. A} practical algorithm},}\ }\href@noop {} {\bibfield  {journal} {\bibinfo
+   {journal} {Acta Appl. Math.}\ }\textbf {\bibinfo {volume} {51}},\ \bibinfo
+  {pages} {161--213} (\bibinfo {year} {1998})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Fels}\ and\ \citenamefont
+  {Olver}(1999)}]{FelsOlver99}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Fels}}\ and\ \bibinfo {author} {\bibfnamefont {P.~J.}\ \bibnamefont
+  {Olver}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Moving coframes:
+  {II. Regularization} and theoretical foundations},}\ }\href@noop {}
+  {\bibfield  {journal} {\bibinfo  {journal} {Acta Appl. Math.}\ }\textbf
+  {\bibinfo {volume} {55}},\ \bibinfo {pages} {127--208} (\bibinfo {year}
+  {1999})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Olver}(1999)}]{OlverInv}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {P.~J.}\ \bibnamefont
+  {Olver}},\ }\href@noop {} {\emph {\bibinfo {title} {Classical Invariant
+  Theory}}}\ (\bibinfo  {publisher} {Cambridge Univ. Press},\ \bibinfo
+  {address} {Cambridge},\ \bibinfo {year} {1999})\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Mostow}(1957)}]{Mostow57}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {G.~D.}\ \bibnamefont
+  {Mostow}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Equivariant
+  embeddings in {Euclidean} space},}\ }\href@noop {} {\bibfield  {journal}
+  {\bibinfo  {journal} {Ann. Math.}\ }\textbf {\bibinfo {volume} {65}},\
+  \bibinfo {pages} {432--446} (\bibinfo {year} {1957})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Palais}(1961)}]{Pal61}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.~S.}\ \bibnamefont
+  {Palais}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {On the existence
+  of slices for actions of non-compact {Lie} groups},}\ }\href@noop {}
+  {\bibfield  {journal} {\bibinfo  {journal} {Ann. Math.}\ }\textbf {\bibinfo
+  {volume} {73}},\ \bibinfo {pages} {295--323} (\bibinfo {year}
+  {1961})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Guillemin}\ and\ \citenamefont
+  {Sternberg}(1990)}]{GuiSte90}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {V.}~\bibnamefont
+  {Guillemin}}\ and\ \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Sternberg}},\ }\href@noop {} {\emph {\bibinfo {title} {Symplectic Techniques
+  in Physics}}}\ (\bibinfo  {publisher} {Cambridge Univ. Press},\ \bibinfo
+  {address} {Cambridge},\ \bibinfo {year} {1990})\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Golubitsky}, \citenamefont {Stewart},\ and\
+  \citenamefont {Schaeffer}(1988)}]{golubII}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Golubitsky}}, \bibinfo {author} {\bibfnamefont {I.}~\bibnamefont {Stewart}},
+  \ and\ \bibinfo {author} {\bibfnamefont {D.~G.}\ \bibnamefont {Schaeffer}},\
+  }\href@noop {} {\emph {\bibinfo {title} {Singularities and Groups in
+  Bifurcation Theory, vol. II}}}\ (\bibinfo  {publisher} {Springer},\ \bibinfo
+  {address} {New York},\ \bibinfo {year} {1988})\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Cvitanovi{\'c}}, \citenamefont {Davidchack},\ and\
+  \citenamefont {Siminos}(2010)}]{SCD07}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {P.}~\bibnamefont
+  {Cvitanovi{\'c}}}, \bibinfo {author} {\bibfnamefont {R.~L.}\ \bibnamefont
+  {Davidchack}}, \ and\ \bibinfo {author} {\bibfnamefont {E.}~\bibnamefont
+  {Siminos}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {On the state
+  space geometry of the {Kuramoto-Sivashinsky} flow in a periodic domain},}\
+  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {SIAM J. Appl. Dyn.
+  Syst.}\ }\textbf {\bibinfo {volume} {9}},\ \bibinfo {pages} {1--33} (\bibinfo
+  {year} {2010})},\ \bibinfo {note} {\arXiv{0709.2944}}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Cvitanovi\'c}(2008)}]{PCgr}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {P.}~\bibnamefont
+  {Cvitanovi\'c}},\ }\href@noop {} {\emph {\bibinfo {title} {Group Theory -
+  Birdtracks, {L}ie's, and Exceptional Magic}}}\ (\bibinfo  {publisher}
+  {Princeton Univ. Press},\ \bibinfo {address} {Princeton, NJ},\ \bibinfo
+  {year} {2008})\ \bibinfo {note} {{\tt birdtracks.eu}}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Armbruster}, \citenamefont {Guckenheimer},\ and\
+  \citenamefont {Holmes}(1988)}]{AGHO288}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {D.}~\bibnamefont
+  {Armbruster}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
+  {Guckenheimer}}, \ and\ \bibinfo {author} {\bibfnamefont {P.}~\bibnamefont
+  {Holmes}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Heteroclinic
+  cycles and modulated travelling waves in systems with {O(2)} symmetry},}\
+  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Physica D}\
+  }\textbf {\bibinfo {volume} {29}},\ \bibinfo {pages} {257--282} (\bibinfo
+  {year} {1988})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Gilmore}\ and\ \citenamefont
+  {Letellier}(2007)}]{GL-Gil07b}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.}~\bibnamefont
+  {Gilmore}}\ and\ \bibinfo {author} {\bibfnamefont {C.}~\bibnamefont
+  {Letellier}},\ }\href@noop {} {\emph {\bibinfo {title} {The Symmetry of
+  Chaos}}}\ (\bibinfo  {publisher} {Oxford Univ. Press},\ \bibinfo {address}
+  {Oxford},\ \bibinfo {year} {2007})\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Gatermann}(2000)}]{gatermannHab}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {K.}~\bibnamefont
+  {Gatermann}},\ }\href@noop {} {\emph {\bibinfo {title} {Computer Algebra
+  Methods for Equivariant Dynamical Systems}}}\ (\bibinfo  {publisher}
+  {Springer},\ \bibinfo {address} {New York},\ \bibinfo {year}
+  {2000})\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Duguet}, \citenamefont {Pringle},\ and\ \citenamefont
+  {Kerswell}(2008)}]{duguet08}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {Y.}~\bibnamefont
+  {Duguet}}, \bibinfo {author} {\bibfnamefont {C.~C.~T.}\ \bibnamefont
+  {Pringle}}, \ and\ \bibinfo {author} {\bibfnamefont {R.~R.}\ \bibnamefont
+  {Kerswell}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Relative
+  periodic orbits in transitional pipe flow},}\ }\href@noop {} {\bibfield
+  {journal} {\bibinfo  {journal} {Phys.\ Fluids}\ }\textbf {\bibinfo {volume}
+  {20}},\ \bibinfo {pages} {114102} (\bibinfo {year} {2008})},\ \bibinfo {note}
+  {\arXiv{0807.2580}}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Mellibovsky}\ and\ \citenamefont
+  {Eckhardt}(2011)}]{mellibovsky11}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {F.}~\bibnamefont
+  {Mellibovsky}}\ and\ \bibinfo {author} {\bibfnamefont {B.}~\bibnamefont
+  {Eckhardt}},\ }\bibfield  {title} {\enquote {\bibinfo {title}
+  {{Takens--Bogdanov} bifurcation of travelling-wave solutions in pipe flow},}\
+  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {J. Fluid Mech.}\
+  }\textbf {\bibinfo {volume} {670}},\ \bibinfo {pages} {96--129} (\bibinfo
+  {year} {2011})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Marsden}\ and\ \citenamefont
+  {Weinstein}(1974)}]{MaWe74}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.~E.}\ \bibnamefont
+  {Marsden}}\ and\ \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Weinstein}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Reduction of
+  symplectic manifolds with symmetry},}\ }\href@noop {} {\bibfield  {journal}
+  {\bibinfo  {journal} {Rep. Math. Phys.}\ }\textbf {\bibinfo {volume} {5}},\
+  \bibinfo {pages} {121--30} (\bibinfo {year} {1974})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Morrison}\ and\ \citenamefont
+  {Greene}(1980)}]{MorrGree80}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {P.~J.}\ \bibnamefont
+  {Morrison}}\ and\ \bibinfo {author} {\bibfnamefont {J.~M.}\ \bibnamefont
+  {Greene}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Noncanonical
+  {Hamiltonian} density formulation of hydrodynamics and ideal
+  magnetohydrodynamics},}\ }\href@noop {} {\bibfield  {journal} {\bibinfo
+  {journal} {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {45}},\ \bibinfo
+  {pages} {790--794} (\bibinfo {year} {1980})},\ \bibinfo {note} {see also
+  Phys. Rev. Lett. 48, 569 (1982)}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Smale}(1970)}]{Smale70I}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Smale}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Topology and
+  mechanics, {I}.}}\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
+  {Invent. Math.}\ }\textbf {\bibinfo {volume} {10}},\ \bibinfo {pages}
+  {305--331} (\bibinfo {year} {1970})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Abraham}\ and\ \citenamefont
+  {Marsden}(1978)}]{AbrMars78}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.}~\bibnamefont
+  {Abraham}}\ and\ \bibinfo {author} {\bibfnamefont {J.~E.}\ \bibnamefont
+  {Marsden}},\ }\href@noop {} {\emph {\bibinfo {title} {Foundations of
+  Mechanics}}}\ (\bibinfo  {publisher} {Benjamin-Cummings},\ \bibinfo {address}
+  {Reading, Mass.},\ \bibinfo {year} {1978})\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Rowley}\ \emph {et~al.}(2003)\citenamefont {Rowley},
+  \citenamefont {Kevrekidis}, \citenamefont {Marsden},\ and\ \citenamefont
+  {Lust}}]{rowley_reduction_2003}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.~W.}\ \bibnamefont
+  {Rowley}}, \bibinfo {author} {\bibfnamefont {I.~G.}\ \bibnamefont
+  {Kevrekidis}}, \bibinfo {author} {\bibfnamefont {J.~E.}\ \bibnamefont
+  {Marsden}}, \ and\ \bibinfo {author} {\bibfnamefont {K.}~\bibnamefont
+  {Lust}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Reduction and
+  reconstruction for self-similar dynamical systems},}\ }\href@noop {}
+  {\bibfield  {journal} {\bibinfo  {journal} {Nonlinearity}\ }\textbf {\bibinfo
+  {volume} {16}},\ \bibinfo {pages} {1257--1275} (\bibinfo {year}
+  {2003})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Shapere}\ and\ \citenamefont
+  {Wilczek}(1989)}]{ShWi89a}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Shapere}}\ and\ \bibinfo {author} {\bibfnamefont {F.}~\bibnamefont
+  {Wilczek}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Gauge
+  kinematics of deformable bodies},}\ }\href@noop {} {\bibfield  {journal}
+  {\bibinfo  {journal} {Amer. J. Physics}\ }\textbf {\bibinfo {volume} {57}},\
+  \bibinfo {pages} {514--518} (\bibinfo {year} {1989})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Cvitanovi\'c}\ and\ \citenamefont
+  {Grigoriev}(2012)}]{CvGr12}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {P.}~\bibnamefont
+  {Cvitanovi\'c}}\ and\ \bibinfo {author} {\bibfnamefont {R.~O.}\ \bibnamefont
+  {Grigoriev}},\ }\href@noop {} {\enquote {\bibinfo {title} {Slicing a heart to
+  keep it ticking: {Dreams Of Grand Schemes}},}\ } (\bibinfo {year} {2012}),\
+  \bibinfo {note} {in preparation}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Borrero-Echeverry}, \citenamefont {Schatz},\ and\
+  \citenamefont {Cvitanovi\'c}(2012)}]{BCS12}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {D.}~\bibnamefont
+  {Borrero-Echeverry}}, \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Schatz}}, \ and\ \bibinfo {author} {\bibfnamefont {P.}~\bibnamefont
+  {Cvitanovi\'c}},\ }\href@noop {} {\enquote {\bibinfo {title} {2-dimensional
+  {Landau} turbulence sliced},}\ } (\bibinfo {year} {2012}),\ \bibinfo {note}
+  {in preparation}\BibitemShut {NoStop}%
+\end{thebibliography}%
 
-% \bibliographystyle{jfm}
-% \nocite{*}
-\bibliography{../../bibtex/siminos}
 
 \end{document}
