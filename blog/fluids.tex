@@ -390,6 +390,42 @@ not pursue it, because position-dependent metric led to geodesic
 equations. We live in $d$\dmn, $d$ large, not $d=2$ of Haller and
 Beron-Vera.
 
+\item[2012-04-16 John Gibson] to Francesco Fedele and Denys Dutykh
 
+that's great that you're going to tackle periodic orbits of Euler
+flow! My codes are available for download on the web. See
+www.channelflow.org. Probably the adaptation that is of most interest
+to you is using the Newton-Krylov-hookstep search algorithm with a
+different spatial discretization and time-stepping routine. This
+adaption shouldn't be difficult, if you have you time-integrator
+worked out, and if you are ok with the object-oriented C++ style of
+coding I use.
+
+Basically, if you can encode your discretized velocity field as a
+vector, compute norms and inner products on it, and integrate it in
+time, you can slip those functions in in place of mine. My
+Newton-Krylov-hookstep code does have some free variables associated
+with the 2d translation symmetries of plane Couette and channelflow,
+which you might have to revise depending on how the symmetries of your
+flow and domain work.
+
+As for references, the overall Newton-Krylov-hookstep algorithm is from
+
+D. Viswanath, Phil. Trans. Roy. Soc., vol. 367 (2009), p. 561-576.
+D. Viswanath, J. Fluid Mech., 580 (2007), 339-358.
+
+Both of Viswanath's papers are available at
+\HREF{http://www.math.lsa.umich.edu/~divakar/}
+{www.math.lsa.umich.edu/$\sim$divakar} I found it necessary to also
+refer to Trefethen's "Numerical Linear Algebra" textbook (SIAM Press)
+to understand Arnoldi and GMRES and Dennis and Schnabel's "Numerical
+Methods for Unconstrained Optimization and Nonlinear Equations"
+(Prentice Hall) textbook to understand the hookstep algorithm. Nothing
+about either is too complicated in principal, but the control
+structure surrounding adaptation of the trust-region in the hookstep
+is in practice quite complicated, and it took me months to get it
+right and make the right thing happened in the multiplicity of cases
+one encounters. That would be the main advantage to adapting my code
+rather than rolling your own.
 
 \end{description}
