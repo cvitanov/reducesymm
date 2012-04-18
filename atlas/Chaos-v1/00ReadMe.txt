@@ -34,7 +34,22 @@ manuscript DUE DATE, April 16, 2012.
 - ../bibtex/siminos.bib
 
 ----- NOTES        ------------------------------------------
-
+[x] 2012-04-16 Chaos J: Cover Letter file (using "add file"),
+    120418toEditor.txt
+    [x] title, authors, contact information
+    [x] any special notes for the Editor
+[ ] 2012-04-16 Chaos J:  missing the figure file for Fig. 8(a).
+[x] permissions for all materials for which you are not the copyright holder
+    (Figs. 4, 6, 7, 12, 13, and 14).
+    need to obtain permission for reuse of any previously published
+    material and include proper citation information within the
+    manuscript (insert a credit line in the figure caption that is
+    requested by the publisher of the figure--perhaps "Used with
+    permission from ChaosBook.org").
+[ ] 2012-04-18 update the retraced figures
+[ ] 2012-04-18 update the submission file atlas12.tex
+[x] electronically signed copyright.pdf
+[x] saved ChosHell.png, the screen capture of individual file list
 [x] www.aip.org/pubservs/compuscript.html#prepare
 [x] style files work with REVTeX 4.1 and are included in REVTeX 4.1 package
     tex.stackexchange.com/tags/revtex/info
