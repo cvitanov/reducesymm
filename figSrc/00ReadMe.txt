@@ -4,15 +4,25 @@
 Siminos, Froehlich, ... source programs for figures
 ===================================================
 
+TO ALL:
+    please save, clearly document here the source code for your figures
+
 read also
     halcrow/figSrc/00ReadMe.txt
     dasbuch/book/FigSrc/00ReadMe.txt
 
 ----------------------------------------------------------------
-                                        Predrag 2010-12-21
-TO ALL:
-    please save, clearly document here the source code for your figures
+                                        Predrag 2012-04-20
+To Daniel
+	siminos/figSrc/Rossler No Arrows/
+	the figs look nice, but not tightly cropped (acres of white)
+[x] trajectorynoarrows.png
+[ ] nearequilibriumnoarrows.png
+   make the same size as other 3, to facilitate inkscaping
+[x] bothsectionnoarrows.png     
+[x] farequilibriumnoarrows.png
 
+[ ] remebr to remove siminos/figSrc/Rossler Arrows/
 
 ----------------------------------------------------------------
                                         Sarah Flynn 2012-04-12
