@@ -3500,8 +3500,10 @@ Here are some comments on the \PoincSec part of our paper that I think should be
 		Will try to play around with Keith and Bryce's code.
 	\end{itemize}
 
-\item[2012-04-17 Keith]  Back early and had a chance to finally read through a bunch of the references rather than sift through them.  I do want to address that \refref{FrCv11}, you cite the slice condition as being
-
+\item[2012-04-17 Keith]  Back early and had a chance to finally read
+through a bunch of the references rather than sift through them.  I do
+want to address that \refref{FrCv11}, you cite the slice condition as
+being
 \[
 \frac{\partial}{\partial \gSpace} \Norm{\ssp - \LieEl(\gSpace)\,\slicep}^2
    =
@@ -3511,26 +3513,82 @@ Here are some comments on the \PoincSec part of our paper that I think should be
 \sliceTan{} = \Lg \slicep
 \,,
 \]
-
-Which agrees with this paper, but also with the condition that it is a minimum; you go onto explain that it the condition is a positive curvature for:
-
+Which agrees with this paper, but also with the condition that it is a
+minimum; you go onto explain that it the condition is a positive
+curvature for:
 \[
 \frac{\partial^2}{\partial \gSpace^2} \Norm{\ssp - \LieEl(\gSpace)\,\slicep}^2
    =
 -2\, \braket{\sspRed}{T^2 \slicep}
 \]
+This was my point on Friday last week: you need to check you are on the
+right side of the slice.  I believe this was the point made recently,
+your condition for crossing the border states only that you have the
+checked the dot product with the \sliceTan{} but you never check if the
+above still holds.  In other words, the slice condition is the exact same
+if you are at:
 
-This was my point on Friday last week: you need to check you are on the right side of the slice.  I believe this was the point made recently, your condtion for crossing the border states only that you have the checked the dot product with the \sliceTan{} but you never check if the above still holds.  In other words, the slice condition is the exact same if you are at:
 $\slicep{}^{(1)} = [x_{1}, x_{2}, y_{1}, y_{2}, z]$
 and
 $\slicep{}^{(2)} = [-x_{1}, -x_{2}, -y_{1}, -y_{2}, z]$
 
-The condition to check if you crossed to the right side is the same as the curvature condition.  Was this checked for \reffig{fig:cLe-2charts}?  This could explain the weird jumping thing you were seeing Daniel, because the only thing that would change if you are on the wrong side of the slice is the sign of the phase factor (ie it would push you back to the other chart rather than continuing).
+The condition to check if you crossed to the right side is the same as
+the curvature condition.  Was this checked for \reffig{fig:cLe-2charts}?
+This could explain the weird jumping thing you were seeing Daniel,
+because the only thing that would change if you are on the wrong side of
+the slice is the sign of the phase factor (ie it would push you back to
+the other chart rather than continuing).
 
-\item[2012-04-18 Daniel in response to Keith] Yeah... I'm pretty sure that is what was happening and it was aggravated by the fact that I didn't carefully track the crossing. That's why the two slices get mixed in \reffig{fig:2chartfail}. The fix for \reffig{fig:cLe-2charts} was to check which way the sign was changing as the dot product went through zero. Then one only takes zero crossings that go from positive to negative but not from negative to positive (or vice-versa, I would have to check). This guarantees that you switch correctly (at least in the \cLe\ case. That worked in practice, but probably has a more formal mathematical statement in terms of a variational principle, similar to what you mentioned above. I think your color coding scheme in \reffig{fig:4chart}, might be different from what I used in \reffig{fig:2chartfail} in the sense that you may be on the slice hyperplanes for the two templates but be coloring them based on what side of the ridge you are on, rather than what slice hyperplane you are on. I would need to check to see what my code returns if I use the templates that you used above but don't check the directional condition. What did you use as your initial condition? Is that $\overline{011}$? $\overline{001}$?
-    
-    \item[2012-04-18 Keith to Daniel] $\overline{001}$.  The slices are the given above if you want to compare to what I had.  When you say crossings that go from positive to negative and not from negative to positive, what do you mean?  The crossing condition you programmed only checks a crossing or does it check the directionality of crossing?  or was that in reference the minimum condition?  
-        I am curious to see the result and I can run it if you want, but which is the code?
+\item[2012-04-19 Predrag]                       \toCB
+The discrete charm of a \emph{chart} is that it is defined by minimal
+distance, so no need to check the curvatures - that you would do only if
+you were looking at the set of solutions to the slice condition. Here you
+are guaranteed to have the right one. The moment you cross the
+\chartBord\ the curvature changes, but as it is {\color{red} verbotten}
+the cross that border, there is never any ambiguity. Charts are
+brilliant, nein?
 
-\item[2012-04-18 Daniel to Keith] My code isn't really ready for general consumption. I'll clean it up, comment it, and post it for the masses later. Anyway, the crossing condition is basically checking when the dot product of the target template tangent and x crosses zero (which is equivalent to checking the extremal condition (first derivative = 0), but not the full minimum condition (first derivative = 0, second derivative > 0). When you cross the ridge one way, $\braket{\sspRed - \slicep}{\sliceTan{}}$ goes from positive to negative, when you go the other way it goes from negative to positive. I just make sure that I only count crossings going one way.
+\item[2012-04-18 Daniel in response to Keith] Yeah... I'm pretty sure
+that is what was happening and it was aggravated by the fact that I
+didn't carefully track the crossing. That's why the two slices get mixed
+in \reffig{fig:2chartfail}. The fix for \reffig{fig:cLe-2charts} was to
+check which way the sign was changing as the dot product went through
+zero. Then one only takes zero crossings that go from positive to
+negative but not from negative to positive (or vice-versa, I would have
+to check). This guarantees that you switch correctly (at least in the
+\cLe\ case. That worked in practice, but probably has a more formal
+mathematical statement in terms of a variational principle, similar to
+what you mentioned above. I think your color coding scheme in
+\reffig{fig:4chart}, might be different from what I used in
+\reffig{fig:2chartfail} in the sense that you may be on the slice
+hyperplanes for the two templates but be coloring them based on what side
+of the ridge you are on, rather than what slice hyperplane you are on. I
+would need to check to see what my code returns if I use the templates
+that you used above but don't check the directional condition. What did
+you use as your initial condition? Is that $\overline{011}$?
+$\overline{001}$?
+
+\item[2012-04-18 Keith to Daniel] $\overline{001}$.  The slices are the
+given above if you want to compare to what I had.  When you say crossings
+that go from positive to negative and not from negative to positive, what
+do you mean?  The crossing condition you programmed only checks a
+crossing or does it check the directionality of crossing?  or was that in
+reference the minimum condition? I am curious to see the result and I can
+run it if you want, but which is the code?
+
+\item[2012-04-18 Daniel to Keith] My code isn't really ready for general
+consumption. I'll clean it up, comment it, and post it for the masses
+later. Anyway, the crossing condition is basically checking when the dot
+product of the target template tangent and x crosses zero (which is
+equivalent to checking the extremal condition (first derivative = 0), but
+not the full minimum condition (first derivative = 0, second derivative >
+0). When you cross the ridge one way, $\braket{\sspRed -
+\slicep}{\sliceTan{}}$ goes from positive to negative, when you go the
+other way it goes from negative to positive. I just make sure that I only
+count crossings going one way.
+
+\item[2012-04-19 Predrag] You really want \reffig{fig:slice} to be
+Victoria Secret (or Secret Service) pink? Whatever...
+
+
 \end{description}
