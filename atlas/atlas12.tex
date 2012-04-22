@@ -136,21 +136,28 @@ determination of \rpo s that help shape the turbulence observed in pipe
 flows.\rf{ACHKW11} Navigating and charting the geometry of these
 extremely high-dimensional \statesp s necessitates a reexamination of two
 of the basic tools of the theory of dynamical systems: \PoincSec s and
-symmetry reduction.\rf{rowley_reconstruction_2000,BeTh04,SiCvi10,FrCv11}
+symmetry reduction.
 
 In quantum-mechanical calculations one always starts out by making sure
 that the Hamiltonian has been brought to its block-diagonal, irreducible
 representation, anything else would be sheer masochism.
 \PCedit{
-The dynamical theory of turbulence is still in its infancy, and symmetry
-reduction is not yet a common practice in post-processing  turbulence
+The dynamical theory of turbulence is still in its infancy, and such
+symmetry reduction is not yet a common practice in processing  turbulence
 data collected in experimental measurements and numerical simulations.
-}
+
 We show here how to bring the numerical / experimental data to a
-symmetry-reduced format, \emph{before} any analysis of it takes place. We
-strive to explain the key geometrical ideas in simple but illustrative
-settings, eschewing the fluid dynamical and group theoretical
-technicalities.
+symmetry-reduced format, \emph{before} any further analysis of it takes
+place. Our tool of choice is the
+\mslices,\rf{rowley_reconstruction_2000,BeTh04,SiCvi10,FrCv11} previously
+applied to study of traveling waves. Here we show how this local method
+can be extended to a global reduction of a turbulent flow, by defining
+local `charts', their borders, and the ridges which glue these linear tiles
+into an atlas that spans across the entire ergodic \statesp\ region of
+interest. We strive to explain the key geometrical ideas in simple but
+illustrative settings, eschewing the fluid dynamical and group
+theoretical technicalities.
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}
@@ -233,14 +240,14 @@ the Euclidean norm
 For experimental data, a better norm might be a distance between digitized
 images. While in this paper we simply assume that a norm is given, its
 importance cannot be overstated: the construction of invariant, PDE
-discretization independent \statesp\ charts,\rf{GHCW07} the symmetry
+discretization independent \statesp\ coordinates,\rf{GHCW07} the symmetry
 reduction by minimization of the distance between group orbits undertaken
 in what follows, and the utility of the charts so constructed all depend on a
 well-chosen notion of distance in the high-dimensional \statesp s we are
 charting here.
     }
 
-Given a notion of distance, we can talk about a `neighborhood,' an open
+Given a notion of distance, we can talk about a `neighborhood', an open
 set of nearby states with qualitatively similar dynamics. Our main task
 in what follows will be to make this precise by defining a chart over a
 neighborhood and its borders. Given distances and neighborhoods, the next
@@ -903,7 +910,7 @@ $\sliceTan{}$. Beyond this boundary, the group orbits pierce the \slice\
 hyperplane in the wrong direction, so \emph{only} the half-hyperplane
 that contains the \template\ belongs to the slice. The {\chartBord} is
 not easy to visualize; For the lack of dimensions, here it is drawn as a
-`line,' the $z$ axis in this 3\dmn\ sketch. (a) If the equivariant
+`line', the $z$ axis in this 3\dmn\ sketch. (a) If the equivariant
 coordinates transform only under the $m=1$ representation of $\SOn{2}$,
 every group orbit is a circle, and crosses any slice hyperplane exactly
 twice. However, if there are coordinates that transform as higher $m$,
@@ -993,12 +1000,86 @@ thus satisfying the \slice\ condition \refeq{PCsectQ0} for both,
 Ridge is a \PoincSec\ $\PoincS{}^{(ij)}$ that serves as
 a toll bridge, crossed by any transit from a chart $\pSRed{}^{(j)}$ to an
 adjacent chart $\pSRed{}^{(i)}$.
-In \reffig{fig:A29-2slices}\,(c) a ridge is visualized as a `line,' and
+In \reffig{fig:A29-2slices}\,(c) a ridge is visualized as a `line', and
 in \reffig{fig:A29-1ridge} as a `plane' of intersection of two volumes.
 We shall refer to the neighborhood of a \template\ $\slicep{}^{(j)}$
 bounded by its {\chartBord} and the ridges to other such linear
 neighborhoods as a \emph{chart} $\pSRed{}^{(j)} \subset \pS/\Group$, and
 to \refeq{sliceSingl0} and \refeq{ridge} as the {border conditions}.
+
+\section{Charting the \slice}
+\label{s:chart}
+
+Let us summarize the voyage so far: We are charting a curved manifold,
+and it would be nice to use tools of differential geometry, but try it in
+61,506~dimensions. The only feasible way to chart this space is to (1)
+quotient all continuous symmetries, and (2) tile it with flat
+$(61,506\!-\!N\!-\!1)$\dmn\ tiles, or charts. We do it step by step,
+starting locally, with a set of \template s, and then building chart by
+chart to a \emph{\slice} which captures all of the reduced dynamics of
+interest (but not all of the possible dynamics). Here are the steps along
+the way:
+
+
+\begin{description}
+
+\item[\Template]
+Pick a {\template} $\slicep$ such that $\Group$ acts on it
+regularly with a group orbit of dimension $N$.
+
+\item[\Slice\ hyperplane]
+The $(d\!-\!N)$-dimensional hyperplane satisfying
+\( %beq
+\braket{\sspRed}{\sliceTan{a}}=0
+\,,
+\) %\ee{PCsectQ1}
+normal to group transformation directions at the {\template} $\slicep$.
+\index{slice}
+
+\item[Moving frame]
+For any $\ssp$, the \slice\ condition $\braket{\sspRed}{\sliceTan{}}=0$
+on $\ssp = \LieEl(\gSpace)\sspRed$ determines the moving frame, \ie, the
+group action $\LieEl(\gSpace)$ that brings $ \ssp$ into the \slice\
+hyperplane.
+\index{moving frame}
+
+\item[\ChartBord]
+The set of points in \slice\ hyperplane whose group orbits are grazed
+tangentially, with both points $\sspRSing$ and their group tangents
+$\groupTan(\sspRSing)$  in the \slice\ hyperplane,
+$\braket{\sspRSing}{\sliceTan{}} \,=\,
+\braket{\groupTan(\sspRSing)}{\sliceTan{}} \,=\, 0 \,.$
+
+    \PCedit{
+\item[Flow invariant subspace]
+If a subset or all of the group tangents of a \chartBord\ point
+$\sspRSing$ vanish, $\groupTan_a(\sspRSing)=0$, its time  trajectory
+remains within a flow-invariant subspace for all times.
+        }
+
+\item[Ridge]
+A hyperplane of points $\sspRed^* \in \PoincS{}^{(21)}$ formed by the
+intersection of a pair of \slice\ hyperplanes $\pSRed{}^{(1)}$ and
+$\pSRed{}^{(2)}$.
+
+\item[Chart]
+The neighborhood of a \template\ $\slicep{}^{(j)}$, bounded by the
+{\chartBord} and the ridges to other linear neighborhoods, comprises
+a \emph{chart} $\pSRed{}^{(j)} \subset \pS/\Group$. The borders ensure
+that there is no more than one oriented group orbit traversal per chart;
+a group orbit either pierces one chart, or no charts at all.
+
+\item[Atlas]
+A set of $(d\!-\!N)$\dmn\ contiguous charts $\pSRed{}^{(1)},
+\pSRed{}^{(2)}, \cdots$
+
+\item[\Slice]
+Let $\Group$ act on a $d$-dimensional manifold $\pS$, with group
+orbits of dimension $N$ or less. A \emph{\slice} is a $(d\!-\!N)$
+dimensional submanifold $\pSRed$ such that all group orbits that
+intersect $\pSRed$ do so transversally and only once.
+
+\end{description}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% A29-2tmplts.* A29-2tmplSl.*
@@ -1084,7 +1165,7 @@ $\sliceTan{}{}^{(1)}$ and $\sliceTan{}{}^{(2)}$ have different
 orientations, so they define two distinct charts
 $\pSRed{}^{(1)}$ and $\pSRed{}^{(2)}$ which intersect in the
 \emph{ridge}, a hyperplane of dimension $(d\!-\!2)$ (here drawn as a
-`line,' and in \reffig{fig:A29-1ridge} as intersection of two `volumes')
+`line', and in \reffig{fig:A29-1ridge} as intersection of two `volumes')
 shared by the template pair that satisfies both \slice\ conditions
 \refeq{ridge}. The chart for the neighborhood of each template (a page of
 the atlas in part (d)) extends only as far as this ridge. If the
@@ -1102,110 +1183,6 @@ consisting of $(d\!-\!1)$\dmn\ charts $\pSRed{}^{(1)}, \pSRed{}^{(2)},
  \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% A29-1ridge.*
-%% Predrag 2012-03-30: see dasbuch/book/FigSrc/inkscape/00ReadMe.txt
-%% remember to insert A29-1ridge.eps into ChaosBook
- \begin{figure}
- \begin{center}
-  \setlength{\unitlength}{0.30\textwidth}
-  %% \unitlength = units used in the Picture Environment
-  \begin{picture}(1,0.89907101)%
-    \put(0,0){\includegraphics[width=\unitlength]{A29-1ridge}}%
-    \put(0.00894598,0.81885604){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\sspRed(0)$}}}%
-    \put(0.88743345,0.05105926){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\sspRed(\zeit)$}}}%
-    \put(0.78614059,0.43443027){\color[rgb]{0,0,0}\rotatebox{-25.76142111}{\makebox(0,0)[lb]{\smash{$\pSRed{}^{(2)}$}}}}%
-    \put(0.37048948,0.79485578){\color[rgb]{0,0,0}\rotatebox{-61.41291822}{\makebox(0,0)[lb]{\smash{$\pSRed{}^{(1)}$}}}}%
-    \put(0.2429401,0.27697318){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\sspRed_2$}}}%
-    \put(0.47832196,0.33514069){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\sspRed_1$}}}%
-  \end{picture}%
- \end{center}
- \caption{\label{fig:A29-1ridge}
-Here the two charts of \reffig{fig:A29-2slices}\,(c) are drawn as
-two $(d\!-\!1)$\dmn\ slabs. Ridge, their $(d\!-\!2)$\dmn\ intersection
-can then be drawn as the shaded plane. This hyperplane cuts across the
-symmetry-reduced trajectory $\sspRed(\zeit)$ and thus serves as a
-\PoincSec\ $\PoincS{}^{(21)}$ that captures all transits from the
-neighborhood of {\template} $\slicep{}^{(1)}$ to the neighborhood of
-{\template} $\slicep{}^{(2)}$. \PoincSec\ transits are oriented, so
-$\sspRed_1$ and $\sspRed_2$ are in the section, but the third point is not
-(from \wwwcb{}).
- }
- \end{figure}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Charting the \slice}
-\label{s:chart}
-
-Let us summarize the voyage so far: We are charting a curved manifold,
-and it would be nice to use tools of differential geometry, but try it in
-61,506~dimensions. The only feasible way to chart this space is to (1)
-quotient all continuous symmetries, and (2) tile it with flat
-$(61,506\!-\!N\!-\!1)$\dmn\ tiles, or charts. We do it step by step,
-starting locally, with a set of \template s, and then building chart by
-chart to a \emph{\slice} which captures all of the reduced dynamics of
-interest (but not all of the possible dynamics). Here are the steps along
-the way:
-
-\begin{description}
-
-\item[\Template]
-Pick a {\template} $\slicep$ such that $\Group$ acts on it
-regularly with a group orbit of dimension $N$.
-
-\item[\Slice\ hyperplane]
-The $(d\!-\!N)$-dimensional hyperplane satisfying
-\( %beq
-\braket{\sspRed}{\sliceTan{a}}=0
-\,,
-\) %\ee{PCsectQ1}
-normal to group transformation directions at the {\template} $\slicep$.
-\index{slice}
-
-\item[Moving frame]
-For any $\ssp$, the \slice\ condition $\braket{\sspRed}{\sliceTan{}}=0$
-on $\ssp = \LieEl(\gSpace)\sspRed$ determines the moving frame, \ie, the
-group action $\LieEl(\gSpace)$ that brings $ \ssp$ into the \slice\
-hyperplane.
-\index{moving frame}
-
-\item[\ChartBord]
-The set of points in \slice\ hyperplane whose group orbits are grazed
-tangentially, with both points $\sspRSing$ and their group tangents
-$\groupTan(\sspRSing)$  in the \slice\ hyperplane,
-$\braket{\sspRSing}{\sliceTan{}} \,=\,
-\braket{\groupTan(\sspRSing)}{\sliceTan{}} \,=\, 0 \,.$
-
-    \PCedit{
-\item[Flow invariant subspace]
-If a subset or all of the group tangents of a \chartBord\ point
-$\sspRSing$ vanish, $\groupTan_a(\sspRSing)=0$, its time  trajectory
-remains within a flow-invariant subspace for all times.
-        }
-
-\item[Ridge]
-A hyperplane of points $\sspRed^* \in \PoincS{}^{(21)}$ formed by the
-intersection of a pair of \slice\ hyperplanes $\pSRed{}^{(1)}$ and
-$\pSRed{}^{(2)}$.
-
-\item[Chart]
-The neighborhood of a \template\ $\slicep{}^{(j)}$, bounded by the
-{\chartBord} and the ridges to other linear neighborhoods, comprises
-a \emph{chart} $\pSRed{}^{(j)} \subset \pS/\Group$. The borders ensure
-that there is no more than one oriented group orbit traversal per chart;
-a group orbit either pierces one chart, or no charts at all.
-
-\item[Atlas]
-A set of $(d\!-\!N)$\dmn\ contiguous charts $\pSRed{}^{(1)},
-\pSRed{}^{(2)}, \cdots$
-
-\item[\Slice]
-Let $\Group$ act on a $d$-dimensional manifold $\pS$, with group
-orbits of dimension $N$ or less. A \emph{\slice} is a $(d\!-\!N)$
-dimensional submanifold $\pSRed$ such that all group orbits that
-intersect $\pSRed$ do so transversally and only once.
-
-\end{description}
 
 In literature\rf{Mostow57,Pal61,GuiSte90} `\slice' refers to any
 co-dimension~$N$ manifold that slices transversally. Here we define
@@ -1266,6 +1243,38 @@ section and slice plus time and shift constraints does the job. 60,000
 invariant solution, the question is: How is this totality of solutions
 interrelated? and for that a good atlas is a necessity.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% A29-1ridge.*
+%% Predrag 2012-03-30: see dasbuch/book/FigSrc/inkscape/00ReadMe.txt
+%% remember to insert A29-1ridge.eps into ChaosBook
+ \begin{figure}
+ \begin{center}
+  \setlength{\unitlength}{0.30\textwidth}
+  %% \unitlength = units used in the Picture Environment
+  \begin{picture}(1,0.89907101)%
+    \put(0,0){\includegraphics[width=\unitlength]{A29-1ridge}}%
+    \put(0.00894598,0.81885604){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\sspRed(0)$}}}%
+    \put(0.88743345,0.05105926){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\sspRed(\zeit)$}}}%
+    \put(0.78614059,0.43443027){\color[rgb]{0,0,0}\rotatebox{-25.76142111}{\makebox(0,0)[lb]{\smash{$\pSRed{}^{(2)}$}}}}%
+    \put(0.37048948,0.79485578){\color[rgb]{0,0,0}\rotatebox{-61.41291822}{\makebox(0,0)[lb]{\smash{$\pSRed{}^{(1)}$}}}}%
+    \put(0.2429401,0.27697318){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\sspRed_2$}}}%
+    \put(0.47832196,0.33514069){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\sspRed_1$}}}%
+  \end{picture}%
+ \end{center}
+ \caption{\label{fig:A29-1ridge}
+Here the two charts of \reffig{fig:A29-2slices}\,(c) are drawn as
+two $(d\!-\!1)$\dmn\ slabs. Ridge, their $(d\!-\!2)$\dmn\ intersection
+can then be drawn as the shaded plane. This hyperplane cuts across the
+symmetry-reduced trajectory $\sspRed(\zeit)$ and thus serves as a
+\PoincSec\ $\PoincS{}^{(21)}$ that captures all transits from the
+neighborhood of {\template} $\slicep{}^{(1)}$ to the neighborhood of
+{\template} $\slicep{}^{(2)}$. \PoincSec\ transits are oriented, so
+$\sspRed_1$ and $\sspRed_2$ are in the section, but the third point is not
+(from \wwwcb{}).
+ }
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 \section{Bridges to nowhere}
 \label{s:bridge}
@@ -1274,23 +1283,33 @@ interrelated? and for that a good atlas is a necessity.
 Everybody encounters a symmetry sooner or later, so the literature on
 symmetry reduction is vast (for a historical overview, see remarks in
 ChaosBook.org and \refref{SiCvi10}). Before asking - why the \mslices\
-and not [...]? a brief tour of the graveyard of obvious ideas and pet
-symmetry reduction schemes is called for. They all have one thing in
-common: they will not work for high-dimensional systems.
+and not [...]? a brief tour of
+        \PCedit{
+the more familiar symmetry reduction schemes is called for. They all have
+one thing in common: they will not work for high-dimensional nonlinear systems.
 
-To start with: if you are a master of quantum-mechanics or QFT symmetries
-and their linear irreducible representations,\rf{PCgr} you may leave your
-baggage at the door - the way symmetries act on nonlinear systems is much
-subtler, as we tried to show in this pictorial tour. The same for masters
-of bifurcations\rf{ruell73,golubII} - linear theory works quite well at a
-bifurcation, not so globally.
+To start with: mastery of quantum-mechanics or bifurcation
+theory\rf{ruell73,golubII} symmetry reduction to linear irreducible
+representations,\rf{PCgr} helps only part of the way; linear theory works
+quite well for linear unitary operators or close to a bifurcation, but,
+as we tried to show in this pictorial tour, the way symmetries act on
+nonlinear systems is much subtler. For flows with strongly nonlinearly
+coupled modes both time trajectories and  group orbits are complicated,
+so choices of sections and \slice s requires insight in the geometry of
+the particular flow, there exists no general theory of linear
+transformations into symmetry irreducible coordinates that would do the
+job.
 
 There are purely group-theoretical approaches, with no dynamics to inform
-them. For $\SOn{2}$, an obvious idea is to go to polar coordinates. The
+them, inspired by the observation that while coordinates $x_i$ are
+equivariant, the squared length $r^2 = \sum x_i^2$ is \emph{invariant}
+under $\SOn{d}$ transformations.
+}
+For $\SOn{2}$, an obvious idea is to go to polar coordinates. The
 simplest nonlinear examples\rf{AGHO288} already run into $r_j \to 0$ type
 of singularities, and it is not altogether clear how one would rewrite
 the \NSe\ in such a format, or integrate them numerically. A more
-sophisticated  approach would be to rewrite the dynamics in terms of
+sophisticated  approach is to rewrite the dynamics in terms of
 invariant polynomial bases, described lucidly in \refref{GL-Gil07b}, with
 equivariant \statesp\ coordinates $(x_1,x_2,x_3,...,x_d)$ replaced by
 invariant polynomial basis $(u_1,u_2,u_3,...,u_m)$. As the dimension of
@@ -1311,7 +1330,7 @@ it.\rf{duguet08,mellibovsky11} A co-moving frame is useless, however, if
 we are concerned with studying collections of these trajectories, as each
 solution travels with its own mean {\phaseVel}, and there is no single
 co-moving frame that can simultaneously reduce \emph{all} traveling
-solutions. The \slice\ that we construct here is not `co-moving,' but
+solutions. The \slice\ that we construct here is not `co-moving', but
 \emph{emphatically} stationary.
 
 There exist a beautiful theory of symplectic symmetry reduction for the
@@ -1322,35 +1341,10 @@ be applicable to problems considered here, and anyway, the goal is
 different. Rather than to reduce a particular set of equations, we seek
 to formulate a computationally straightforward and general method of
 reducing any continuous symmetry, for \emph{any} high-dimensional
-chaotic/turbulent flow. One should also note that ``symmetry reduction''
+chaotic/turbulent flow. One should also note that `symmetry reduction'
 in general relativity\rf{SKMacHH09} and Lie theory often implies
 restricting one's solution space to a subspace of higher symmetry; here
 we always work in the full \statesp.
-
-There is, however, one intriguing, compelling  and physically informed
-contender.
-In mechanics and field theory it is natural to separate the flow {\em
-locally} into group dynamics and a transverse, `horizontal'
-flow,\rf{Smale70I,AbrMars78} by the `method of
-connections,'\rf{rowley_reduction_2003} illustrated in \reffig{fig:BeThMconnect}.
-A group dynamics cousin of the strobing method of \refsect{s:cut},
-this approach does not reduce the dynamics to a lower-dimensional \reducedsp\
-$\pS/\Group$. In field theory, the freedom of choosing moving frames shown in
-\reffig{fig:BeThMovFr} is called ``gauge freedom,'' and a particular
-prescription of choosing a frame is called ``gauge fixing,'' or a
-``gauge.'' The meaning of the ``method of
-connections'' in classical dynamics is clearest in the work of Shapere and
-Wilczek:\rf{ShWi89a,ShWi06} one can observe a swimmer (or our dancer)
-from a fixed \slice\ frame, or bring her back to observe only the
-shape-changing dynamics, no drifting. Left to herself, she will reemerge
-in the same pose someplace else: that shift is called a ``geometrical
-phase,'' which -while accruing it is the whole point of swimming- has not
-played any role our discussion of symmetry reduction. Conversely, most gauge
-choices in quantum field theory are covariant, and while that suffices to
-regularize path integrals, the \mslices\ says that this is no symmetry
-reduction at all, and it yields no insight into the geometry of nonlinear
-flows.
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}
@@ -1386,6 +1380,30 @@ tangent directions.
 }
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+There is, however, one intriguing, compelling  and physically informed
+contender. In mechanics and field theory it is natural to separate the
+flow {\em locally} into group dynamics and a transverse, `horizontal'
+flow,\rf{Smale70I,AbrMars78} by the `method of
+connections',\rf{rowley_reduction_2003} illustrated in
+\reffig{fig:BeThMconnect}. A group dynamics cousin of the strobing method
+of \refsect{s:cut}, this approach does not reduce the dynamics to a
+lower-dimensional \reducedsp\ $\pS/\Group$. In field theory, the freedom
+of choosing moving frames shown in \reffig{fig:BeThMovFr} is called
+`gauge freedom', and a particular prescription of choosing a frame is
+called `gauge fixing', or a `gauge'. The meaning of the `method of
+connections' in classical dynamics is clearest in the work of Shapere
+and Wilczek:\rf{ShWi89a,ShWi06} one can observe a swimmer (or our dancer)
+from a fixed \slice\ frame, or bring her back to observe only the
+shape-changing dynamics, no drifting. Left to herself, she will reemerge
+in the same pose someplace else: that shift is called a `geometrical
+phase', which -while accruing it is the whole point of swimming- has not
+played any role our discussion of symmetry reduction. Conversely, most
+gauge choices in quantum field theory are covariant, and while that
+suffices to regularize path integrals, the \mslices\ says that this is no
+symmetry reduction at all, and it yields no insight into the geometry of
+nonlinear flows.
+
 
 
 \section{Conclusions}
@@ -1432,7 +1450,7 @@ global dynamical system in terms of invariant solutions and their stable
 
 \begin{acknowledgments}
 This article addresses the questions asked after the talk given at
-Kyoto 2011 IUTAM Symposium on ``50 Years of Chaos: Applied and Theoretical.''
+Kyoto 2011 IUTAM Symposium on `50 Years of Chaos: Applied and Theoretical'.
 We are indebted to
 S.~Flynn,
 S.~Froehlich,
