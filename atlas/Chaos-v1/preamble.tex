@@ -1,3 +1,47 @@
+% $Author$ $Date$
+% prepend  this preamble.tex to the CHAOS submission version of atlas12.tex
+% append   atlas12.bbl insert
+
+\documentclass[aip,cha,reprint,
+secnumarabic,
+nofootinbib, tightenlines,
+nobibnotes, showkeys, showpacs,
+groupedaddress
+%preprint,%
+%author-year,%
+%author-numerical,%
+]{revtex4-1}
+
+                        %% logical setup, no need to edit %%%%%%%%%%
+                        \newif\ifpaper \newif\ifPDF               %%
+                        \newif\ifOUP \newif\ifdraft               %%
+                        \newif\ifdasbuch                          %%
+                        \newif\ifsolutions \newif\ifblog          %%
+                        \blogtrue                                 %%
+                        \draftfalse      %% commented, WWW/drafts %%
+                        \dasbuchtrue %% DasBuch, not QFT lectures %%
+                        \solutionstrue %% include solutions       %%
+                        \paperfalse\PDFtrue %% hyperlinked        %%
+                        \OUPfalse                %% ChaosBook %%%%%%
+
+%%%%% UNCOMMENT THESE: %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %\colorfigsfalse % For black and white JFM submission
+%%%%% Remember to pick one of these in defAtlas.tex:
+   %\newcommand{\edit}[1]{{\color{blue}#1}} % for referees
+   %\newcommand{\edit}[1]{#1}               % for the journal
+
+\usepackage{float}
+\usepackage{natbib}
+\usepackage{amsmath,amsfonts,amssymb,amsbsy,amscd,amsgen}
+\usepackage{dcolumn}% Align table columns on decimal point
+\usepackage{bm}% bold math
+\usepackage[pdftex]{graphicx}
+\usepackage{url}
+\usepackage{subfigure}
+\usepackage{ifthen}
+
+\usepackage[pdftex,colorlinks]{hyperref} %% hyperlinks, LAST package called
+
 
         \newcommand{\wwwcb}[1]{       % keep homepage flexible:
                   {\tt \href{http://ChaosBook.org#1}
@@ -275,18 +319,6 @@
 \newcommand{\ExpaEig}{\ensuremath{\Lambda}}
 \newcommand{\Lyap}{\ensuremath{\lambda}}            %Lyapunov exponent
 
-%%   optional parameter comes in [\ldots], for example
-%%   \newcommand\eigRe[1][ ]{\ensuremath{\mu_{#1}}}
-%%   no subscript: \eigRe\
-%%   with subscript j: \eigRe[j]
-%%
-% \newcommand{\eigExp}[1][ ]{\ensuremath{\lambda_{#1}}}   % complex eigenexponent
-%%  Guckenheimer&Holmes:  lambda = alpha + i beta
-%%  Hirsch-Smale:         lambda = a     + i b
-%%  Boyce-di Prima:       lambda = mu    + i nu
-% \newcommand{\eigRe}[1][ ]{\ensuremath{\mu_{#1}}}    % Re eigenexponent
-% \newcommand{\eigIm}[1][ ]{\ensuremath{\nu_{#1}}}    % Im eigenexponent
-
 \newcommand{\cycle}[1]{\ensuremath{\overline{#1}}}
 
 %%%%%%%%%%%%%%% relative periodic orbits: %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -460,4 +492,60 @@
 % Gibson likes:
 \newcommand{\tEQ}{\ensuremath{{EQ}}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%% CHAOS J SPECIFIC %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\reffig} [1] {Fig.~\ref{#1}}
+\renewcommand{\reffigs} [2] {Figs.~\ref{#1} and~\ref{#2}}
+\renewcommand{\refFig} [1] {Fig.~\ref{#1}}
+\renewcommand{\refFigs} [2] {Figs.~\ref{#1} and~\ref{#2}}
+\newcommand{\Template}{Template}
+\newcommand\mapRed{\ensuremath{\hat{f}}}     % other people like \phi's etc
+\newcommand\flowRed[2]{\ensuremath{\hat{f}^{#1}(#2)}}
+
+\renewcommand{\zeit}{\ensuremath{\tau}}  %time variable Predrag
+
+
+\ifpaper % prepare for B&W paper printing:
+       \renewcommand{\arXiv}[1]{ {\tt arXiv:#1}}
+       \renewcommand{\mpArc}[1]{{\tt mp\_arc~#1}}
+\else % prepare hyperlinked pdf
+       \renewcommand{\mpArc}[1]{
+              {\tt \href{http://www.ma.utexas.edu/mp_arc-bin/mpa?yn=#1}
+                   {mp\_arc~#1}}}
+       \renewcommand{\arXiv}[1]{
+              {\tt \href{http://arXiv.org/abs/#1}{arXiv:#1}}}
+\fi %%%% prepare for B&W paper printing END %%%%%%
+
+\newcommand{\stateDsp}{state-space}
+\newcommand{\StateDsp}{State-space}
+
+%%%% 3D physical flow
+\newcommand{\NS}{Navier-Stokes}
+\newcommand{\NSe}{Navier-Stokes equations}
+\newcommand{\Reynolds}{\textit{Re}}  % Reynolds number
+\newcommand{\cohStr}{coherent structure}
+\newcommand{\recurrStr}{recurrent coherent structure}
+\newcommand{\RecurrStr}{Recurrent coherent structure}
+\newcommand{\bnabla}{\ensuremath{\bf \nabla}}
+\newcommand{\Gpipe}{\ensuremath{\Gamma}} % Hoyle notation, equivariant symmetry group
+\newcommand{\bCell}{\ensuremath{\Omega}}
+\newcommand{\normVec}{\ensuremath{\mathbf{n}}}    % group orbit curvature normal
+
+\renewcommand{\shift}{\ensuremath{\ell}}
+\newcommand{\bu}{\ensuremath{{\bf u}}}
+\newcommand{\be}{{\bf e}}
+\newcommand{\bx}{{\bf x}}
+\newcommand{\Norm}[1]{\|{#1}\|}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% insert the editing version of siminos/atlas/atlas12.tex here
+% \begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       blah blah, until end of
+%\end{acknowledgments}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \begin{thebibliography}{35}%
+%                       clip from atlas12.bbl
+%\end{thebibliography}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\end{document}

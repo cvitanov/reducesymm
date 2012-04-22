@@ -34,7 +34,7 @@ manuscript DUE DATE, April 16, 2012.
 - ../bibtex/siminos.bib
 
 ----- NOTES        ------------------------------------------
-[x] 2012-04-16 Chaos J: Cover Letter file (using "add file"),
+[ ] 2012-04-22 Chaos J: Cover Letter file (using "add file"),
     120418toEditor.txt
     [x] title, authors, contact information
     [x] any special notes for the Editor
@@ -46,10 +46,10 @@ manuscript DUE DATE, April 16, 2012.
     manuscript (insert a credit line in the figure caption that is
     requested by the publisher of the figure--perhaps "Used with
     permission from ChaosBook.org").
-[ ] 2012-04-18 update the retraced figures
-[ ] 2012-04-18 update the submission file atlas12.tex
+[ ] 2012-04-22 update the retraced figures
+[ ] 2012-04-22 update the submission file atlas12.tex
 [x] electronically signed copyright.pdf
-[x] saved ChosHell.png, the screen capture of individual file list
+[x] saved ChaosHell.png, the screen capture of individual file list
 [x] www.aip.org/pubservs/compuscript.html#prepare
 [x] style files work with REVTeX 4.1 and are included in REVTeX 4.1 package
     tex.stackexchange.com/tags/revtex/info
@@ -59,12 +59,14 @@ manuscript DUE DATE, April 16, 2012.
     ample margins. It is essential that the motivations, central results,
     and conclusion be stated in a nontechnical manner that is
     intelligible to a broad audience.
+[ ] atlas12.tex should assembled into one file in the following order:
+    [ ] preamble.tex
+    [ ] title, author, affiliation, abstract, text,
+        acknowledgments, appendices
+    [ ] atlas12.bbl
 [x] Be sure that your manuscript contains page numbers.
 [x] The title page should contain the title of the article, the names of
     the authors, a suitable byline, and a short abstract.
-[x] Parts of the manuscript should be arranged in the following order:
-    title, author, affiliation, abstract, text, acknowledgments,
-    appendices, and references.
 [x] The title of a paper should be as concise as possible but informative
     enough to facilitate information retrieval.
 [x] The Abstract should be self-contained (contain no footnotes). It
@@ -81,7 +83,6 @@ manuscript DUE DATE, April 16, 2012.
     in their own language alongside the English versions of their names
     in the author list of their publications, in either Simplified or
     Traditional characters: www.aip.org/pubservs/cjk_instructions.html
-
 [x] The first paragraph of the article should be a Lead Paragraph and
     will be highlighted in the journal in boldface type. This paragraph,
     which essentially advertises the main points of the article, must
@@ -89,7 +90,6 @@ manuscript DUE DATE, April 16, 2012.
     and significance of the research problem studied and the importance
     of the results. The Editors will pay special attention to the clarity
     and accessibility of this paragraph, and in many cases may rewrite it
-
 [x] References and footnotes should be in the form shown in recent issues
     of this journal. They should be given in a double-spaced list at the
     end of the text.
