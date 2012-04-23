@@ -1,3 +1,5 @@
+(* ::Package:: *)
+
 (*Given a set of parameters, find equilibrium points and corresponding eigenvalues*)
 
 a1 = 1
@@ -29,7 +31,7 @@ a[[3,1]] = -c2*2*r1/r2*Sin[psi]
 a[[3,2]] = c2*r1^2/(r2^2)*Sin[psi]-2*c1*Sin[psi]
 a[[3,3]] = -(c2*r1^2/r2+2*c1*r2)*Cos[psi]
 
-eigs_1 = Eigenvalues[a]
+eigs[1] = Eigenvalues[a]
 
 
 (*second equilibrium*)
@@ -48,4 +50,7 @@ a[[3,1]] = -c2*2*r1/r2*Sin[psi]
 a[[3,2]] = c2*r1^2/(r2^2)*Sin[psi]-2*c1*Sin[psi]
 a[[3,3]] = -(c2*r1^2/r2+2*c1*r2)*Cos[psi]
 
-eigs_2 = Eigenvalues[a]
+eigs[2] = Eigenvalues[a]
+
+
+
