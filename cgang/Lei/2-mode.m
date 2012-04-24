@@ -2,15 +2,15 @@
 
 (*Given a set of parameters, find equilibrium points and corresponding eigenvalues*)
 
-a1 = 1
-a2 = 1
-b1 = 1
-b2 = 1
+a1 = -0.245
+a2 = -3.44
+b1 = 1.326
+b2 = -0.47
 c1 = 1
-c2 = 1
-m1 = -1
-m2 = -1
-e = 1
+c2 = -1
+m1 = -0.14
+m2 = 1.175
+e = 0.855
 
 sol={x,y} /. NSolve[{(m1*x+a1*x^3+b1*x*y^2)^2/(c1^2*x^2*y^2)+(y^2*e^2)/(c2*x^2+2*c1*y^2)^2==1,(m2*y+a2*x^2*y+b2*y^3)^2/(c2^2*x^4)+(y^2*e^2)/(c2*x^2+2*c1*y^2)^2==1, x>=0, y>=0},{x,y},Reals]
 
