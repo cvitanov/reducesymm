@@ -188,7 +188,77 @@ symmetry reduction, but it not necessary to illustrate symmetry
 reduction.
 
 \item[2012-04-25 Sebastian]
-Will try to do so. But the representation as in \refeq{DS} is still not clear to me from the code. The vorticity and the stream functions both change in time and one depends on the other ($\xi=\nabla^2\phi$). However, the equations are solved for the vorticity with a Adams-Bashforth integration. So maybe I can just forget about the stream functions and think of the system as $d\widehat{\xi}/dt=F(\widehat{\xi},\nabla})$, but I am not sure. For this I should derive the equations used in the spectral method, so I have to study more about it first; in the code FFT is used in several steps, so the exact form of the spectral equations is not completely clear for me. Thus, I am not sure how to compute the generator \textbf{T} either.
-Let me know if you have any advise for this.
+Will try to do so. But the representation as in \refeq{DS} is still not
+clear to me from the code. The vorticity and the stream functions both
+change in time and one depends on the other ($\xi=\nabla^2\phi$).
+However, the equations are solved for the vorticity with a
+Adams-Bashforth integration. So maybe I can just forget about the stream
+functions and think of the system as
+$d\widehat{\xi}/dt=F(\widehat{\xi},\nabla)$, but I am not sure. For this
+I should derive the equations used in the spectral method, so I have to
+study more about it first; in the code FFT is used in several steps, so
+the exact form of the spectral equations is not completely clear for me.
+Thus, I am not sure how to compute the generator \Lg\ either.
+Let me know if you have any advice for this.
+
+\item[2012-04-25 Predrag] Whatever Adams-Bashforth integration are your
+\statesp\ coordinates. The FFT must be used in the stream-wise direction -
+when you are in the Fourier representation, use this to implement a rotation
+on each mode separately.
+
+                                                    \toCB
+For the one-parameter rotation group \SOn{2}
+acting on a smooth periodic function $u(\gSpace + 2\pi) = u(\gSpace)$
+defined on domain $x
+\in [0,2\pi)$ we can be explicit. The
+\statesp\ matrix representation of the \SOn{2}\ rotation $\LieEl(\phi)
+u(\gSpace) = u(\gSpace+\phi)$ by angle $\phi$ is block-diagonal, acting
+on the $m$th Fourier coefficient pair $(a_m,b_m)$ in the Fourier series,
+\beq
+u(\gSpace) = a_0 + \sum_{m=1}^\infty \left(
+a_m \cos m \gSpace + b_m \sin m \gSpace
+                               \right)
+\,,
+\ee{FourierExp}
+by multiplication by
+\beq
+\LieEl^{(m)}(\phi) \,=\,  \left(\barr{cc}
+ ~\cos m \phi  & \sin m \phi \\
+ -\sin m \phi  & \cos m \phi
+    \earr\right)
+                \,,\qquad
+\Lg^{(m)} \,=\,   \left(\barr{cc}
+    0  &  m  \\
+   -m  &  0
+    \earr\right)
+\,.
+\ee{SO2irrepAlg-m}
+%\ee{SO2irrepAlg-Lg}
+In complex representation
+the shifts along the streamwise periodic direction
+$z$ is given by
+\beq
+   \vec{u}' = \LieEl(\phi,\shift) \vec{u} \, : \qquad
+   \vec{u}_{nkm}' = \vec{u}_{nkm} \,
+   \mathrm{e}^{-\mathrm{i}(m_0 m\phi+\alpha k \shift)} ,
+\eeq
+The $\SOn{2}$ group tangent  \refeq{GroupTangField} to
+\statesp\ point $\ssp$ within the $m$th invariant subspace
+is
+\beq
+ \groupTan^{(m)}(\ssp)
+\,=\, m \,\left(\barr{c}
+   ~b_m  \\
+   -a_m
+    \earr\right)
+\,.
+\ee{u:x:tang}
+
+\item[2012-04-25 Predrag] You might want to form a Slicers (Slashers? a
+word we have not misused yet) Anonymous Support Group with Luis - he is
+supposed to doe exactly the same PDE slicing as you, except his symmetry
+is $E(2)$ Euclidean group. In his case I suggested that he does not touch
+the code, but post-process by turning the full space trajectory into the
+\slice\ by finite angles.
 
 \end{description}
