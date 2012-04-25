@@ -3,6 +3,7 @@ $Author$
 $Date$
 ------------------------------------------------------------
 submitted     April 16, 2012   FROZEN, NO FURTHER EDITS
+Manuscript #: 12259CAT
 
 Slice & chart pedagogical introduction
 ====================
@@ -22,7 +23,8 @@ Predrag ver. 0.7, submitted to Chaos J  Apr 15 2012
 Predrag ver. 0.2, 						Feb 22 2012
 Predrag ver. 0.1, 						Dec 10 2011
 
-Focus issue for Chaos: "50 Years of Chaos"
+Chaos: An Interdisciplinary Journal of Nonlinear Science.
+Focus issue: "50 Years of Chaos"
 chaos.peerx-press.org website is currently open to accept papers for this
 focus issue, and you may submit your papers at any point through the
 manuscript DUE DATE, April 16, 2012.
@@ -36,6 +38,15 @@ manuscript DUE DATE, April 16, 2012.
 - ../bibtex/siminos.bib
 
 ----- NOTES        ------------------------------------------
+[x] 2012-04-25 manuscript has been assigned the Manuscript #: 12259CAT.
+    Check Manuscript Status" linkL:
+<http://chaos.peerx-press.org/cgi-bin/main.plex?el=A7C2PGJ4A7eT4F2A9PIwORRuPQfQMOSuftmOVRgZ>
+    Linda Boniello
+    Chaos Editorial Office
+    American Institute of Physics
+    2 Huntington Quadrangle, Suite 1NO1
+    Melville, NY 11747-4502
+        516 576-2616 ph  chaos@aip.org
 [x] 2012-04-25 to Chaos J:  updated figures (see below)
 [x] 2012-04-25 to Chaos J:  updated atlas12.tex
     atlas12.tex assembled into one file in the following order:
