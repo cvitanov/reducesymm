@@ -15,7 +15,9 @@ Keith M. Carroll
 Bryce Robbins
 Evangelos Siminos
 Lei Zhang
+
 -------------------------------------------------------------
+Predrag ver. 1.1, Chaos J figs update   Apr 25 2012
 Predrag ver. 0.7, submitted to Chaos J  Apr 15 2012
 Predrag ver. 0.2, 						Feb 22 2012
 Predrag ver. 0.1, 						Dec 10 2011
@@ -34,7 +36,14 @@ manuscript DUE DATE, April 16, 2012.
 - ../bibtex/siminos.bib
 
 ----- NOTES        ------------------------------------------
-[ ] 2012-04-22 Chaos J: Cover Letter file (using "add file"),
+[x] 2012-04-25 to Chaos J:  updated figures (see below)
+[x] 2012-04-25 to Chaos J:  updated atlas12.tex
+    atlas12.tex assembled into one file in the following order:
+    [x] preamble.tex
+    [x] title, author, affiliation, abstract, text,
+        acknowledgments, appendices
+    [x] atlas12.bbl
+[x] 2012-04-22 to Chaos J: Cover Letter file (using "add file"),
     120418toEditor.txt
     [x] title, authors, contact information
     [x] any special notes for the Editor
@@ -59,11 +68,6 @@ manuscript DUE DATE, April 16, 2012.
     ample margins. It is essential that the motivations, central results,
     and conclusion be stated in a nontechnical manner that is
     intelligible to a broad audience.
-[ ] atlas12.tex should assembled into one file in the following order:
-    [ ] preamble.tex
-    [ ] title, author, affiliation, abstract, text,
-        acknowledgments, appendices
-    [ ] atlas12.bbl
 [x] Be sure that your manuscript contains page numbers.
 [x] The title page should contain the title of the article, the names of
     the authors, a suitable byline, and a short abstract.
@@ -184,14 +188,44 @@ Things to fix
 -------------
     [when fixed, move the line to the FIXED section at the end]
 
-= see 00edits.txt
-
-
-Style files
------------
-
 Preparation of figures
 ----------------------
+
+[x] 2012-04-25 to Chaos J:  updated figures
+      Fig     *.pdf
+      1a      A28tangent3
+      1b      A27traj
+      1c      A27gOrbit
+      1d      A27wurst
+      2a      RoessTrajLbld
+      2b      RoessNeareqLbld
+      2c      RoessFareqLbld
+      2d      RoessBotheqLbld
+      3a      A27a-pipeSymms
+      3b      A27b-pipeSymms
+      3c      A27c-pipeSymms
+      3d      A27d-pipeSymms
+      4a      CLEattractor
+      4b      CLEWurst01
+      4c      CLE1SliceSmall
+      4d      CLE2slicesmall
+      5a      BeThTrajTeX
+      5b      BeThMovFr
+      5c      BeThRedTeX
+      5d      A28extremum2
+      6a      slice
+      6b      rpoSlice
+      7a      chartBord-m1
+      7b      chartBord-m2
+      8       A29sliceWurst
+      9a      A29-2tmplts
+      9b      A29-2tmplSl
+      10a     A29-2slices
+      10b     A29-2charts
+      11      A29-1ridge
+      12a     A28tangents
+      12b     BeThMconnect
+
 
 ==============================================================
 FORMERLY OUTSTANDING ITEMS, NOW DISPOSED OFF:
