@@ -16,9 +16,11 @@
 The concept of baroclinic instability is perhaps one of the harder ones
 to grasp in geophysical fluid mechanics. However, it is also one of the
 most fundamental concepts on this field, as it is the main driver for the
-large scale circulations in the atmosphere and important circulations in the
-ocean. It is by this mechanism that the atmosphere redistributes heat from
-low latitudes to high latitudes, that it sustains synoptic weather system and by which some oceanic eddies develop. Its importance can not be overstated.
+large scale circulations in the atmosphere and important circulations in
+the ocean. It is by this mechanism that the atmosphere redistributes heat
+from low latitudes to high latitudes, that it sustains synoptic weather
+system and by which some oceanic eddies develop. Its importance can not
+be overstated.
 
     \SOA{Here I am mostly speculating. However, this is the impression I
     have so far}
@@ -554,49 +556,104 @@ At this point we have a good idea of what baroclinic instability is and how it h
 We will need a smart way to solve our equations of motion, and an even smarter way to represent their solutions.
 
 The first step is to think about our equations in a dynamical framework; that is, in state space. Thus, writing the system as follows:
-
 \beq
 \frac{d X_i}{d t} = F(X_i)
 \ee{DS}
-
- where each $X_i$ correspond to a coordinate in this space. Clearly, not the case of \refeq{NS1}, where $\textbf{u}$ is a dependent variable of both space and time. Nonetheless, we can formulate it in this form by the use of spectral methods expressing the velocity as:
-
- \beq
+where each $X_i$ correspond to a coordinate in this space. Clearly, not
+the case of \refeq{NS1}, where $\textbf{u}$ is a dependent variable of
+both space and time. Nonetheless, we can formulate it in this form by the
+use of spectral methods expressing the velocity as:
+\beq
 \textbf{u}=\sum \widehat{u} \phi (\textbf{x})
 \ee{DS2}
-
- where $\phi$ are basis function defined for the entire domain\footnote{This could be any set of orthogonal functions (i.e. Fourier, Legendre or Chebyshev series)} and $\widehat{u}$ their respective amplitudes. Replacing this into \refeq{NS1}, and using and appropriate relationship to account for the pressure, we obtain a system like \refeq{DS} for the amplitudes of the basis functions. That is:
-
+where $\phi$ are basis function defined for the entire
+domain\footnote{This could be any set of orthogonal functions (i.e.
+Fourier, Legendre or Chebyshev series)} and $\widehat{u}$ their
+respective amplitudes. Replacing this into \refeq{NS1}, and using and
+appropriate relationship to account for the pressure, we obtain a system
+like \refeq{DS} for the amplitudes of the basis functions. That is:
 \beq
 \frac{d \widehat{u}_i}{d t} = G(\widehat{u}_i)
 \ee{DS3}
+system which can be relatively easily integrated.
+    \PC{will believe it when I see the results}
+It should be noted that the above is much more than just a convenient
+method to solve the Navier-Stokes equations; it is a framework to study
+continuum equations as dynamical systems. In state space, a point
+represents a physical state of the full system, i.e. the three
+dimensional velocity field. This implies that Navier-Stokes equations can
+be thought as an infinite dimensional space where the harmonics represent
+each dimension of it \footnote{This view is due to Hopf, who's insight on
+turbulence where way ahead of his time; and have proven to be an
+invaluable tool (see \refref{hopf48})}. However, the number of dimension
+consider in practice is finite and limited either by the computer power
+available, or the smallest scale one can actually solve. So that there
+was a time were considering only a handful of dimensions was possible.
+Nowadays, computer power is such that DNS\footnote{Direct Numerical
+Simulations. The approach of this method is to solve Navier-Stoke
+equations up to the scale where dissipation occurs and kinetic energy is
+converted to heat.} are possible and considering 100,000 dimensions or
+more is common for small domains.
 
-system which can be relatively easily integrated. It should be noted that the above is much more than just a convenient method to solve the Navier-Stokes equations; it is a framework to study continuum equations as dynamical systems. In state space, a point represents a physical state of the full system, i.e. the three dimensional velocity field. This implies that Navier-Stokes equations can be thought as an infinite dimensional space where the harmonics represent each dimension of it \footnote{This view is due to Hopf, who's insight on turbulence where way ahead of his time; and have proven to be an invaluable tool (see \refref{hopf48})}. However, the number of dimension consider in practice is finite and limited either by the computer power available, or the smallest scale one can actually solve. So that there was a time were considering only a handful of dimensions was possible. Nowadays, computer power is such that DNS\footnote{Direct Numerical Simulations. The approach of this method is to solve Navier-Stoke equations up to the scale where dissipation occurs and kinetic energy is converted to heat.} are possible and considering 100,000 dimensions or more is common for small domains.
+But given the exuberant number of dimensions, how are we to visualize the
+flows in state space? there is not need to panic about this, although
+visualizations is challenging the important dynamics are embedded in
+lower dimensional manifolds. This was first noted by Hopf, who speculated
+that viscosity must lower the effective dimensions of the system. An
+example would be a laminar flow which is embedded in a infinite space;
+which due to its high viscosity is effectively represented by a single
+point in this space (for instance see \refref{GHCW07}). In the case of a
+turbulent flow invariant solutions (periodic orbits, \rpo s, equilibrium
+points and traveling waves) are starting point for finding the lower
+dimensional invariant manifolds to consider. These solutions are usually
+unstable, which makes imperative the use of a search algorithm in order
+to find them.
 
-But given the exuberant number of dimensions, how are we to visualize the flows in state space? there is not need to panic about this, although visualizations is challenging the important dynamics are embedded in lower dimensional manifolds. This was first noted by Hopf, who speculated that viscosity must lower the effective dimensions of the system. An example would be a laminar flow which is embedded in a infinite space; which due to its high viscosity is effectively represented by a single point in this space (for instance see \refref{GHCW07}). In the case of a turbulent flow invariant solutions (periodic orbits, relative periodic orbits, equilibrium points and traveling waves) are starting point for finding the lower dimensional invariant manifolds to consider. These solutions are usually unstable, which makes imperative the use of a search algorithm in order to find them.
+Nonetheless, their role in dynamics is of such importance (see
+\refref{skeleton}) that these intrinsic difficulties should not
+discourage us from seeking for them. Invariant solutions play important
+roles in the dynamics of the system, and they can be thought to represent
+the coherent structures that characterize turbulent dynamics (see
+\refrefs{Christiansen96,Visw07b}). In this view, the system spends some
+time in a neighbor near one of this solutions, then jumps to the next and
+spends some time there until it jumps to another, and so on. What it is
+most striking is that this cycles resemble closely turbulent
+trajectories, and are hard to tell apart from them. In fact, the
+measurable quantities of a system depend mostly on these invariant
+solutions (see \refref{DasBuch}), so that finding them gives a better
+understanding of the system.
 
-Nonetheless, their role in dynamics is of such importance (see \refref{skeleton}) that this intrinsic difficulties should not demotivate seeking for them. Invariant solutions play important roles in the dynamics of the system, and they can be thought to represent the coherent structures that characterize turbulent dynamics (see \refrefs{Christiansen96,Visw07b}). In this view, the system spends some time in a neighbor near one of this solutions, then jumps to the next and spends some time there until it jumps to another, and so on. What it is most striking is that this cycles resemble closely turbulent trajectories, and are hard to tell apart from them. In fact, the measurable quantities of a system depend mostly on these invariant solutions (see \refref{DasBuch}), so that finding them gives a better understanding of the system.
-
-Obviously, it is necessary to define this invariant solutions in a quantitative manner before we can start looking for them. For this, let us think again in terms of the physical space \refeq{NS1}. Note that we can write the system as:
-
+We need to define these invariant solutions in a quantitative manner
+before we can start looking for them. For this, let us think again in
+terms of the physical space \refeq{NS1}. Note that we can write the
+system as:
 \begin{eqnarray}
-\frac{\partial \textbf{u}}{\partial t}=F(\textbf{u}), \quad f^{t}(\textbf{u})=\textbf{u}+\int_{0}^{t}{F(\textbf{u}) d \tau}
+\frac{\partial \textbf{u}}{\partial t}
+=F(\textbf{u})
+    \,,\quad
+f^{t}(\textbf{u})=\textbf{u}+\int_{0}^{t}{F(\textbf{u}) d \tau}
+\,,
 \label{NS4}
 \end{eqnarray}
-
 thus we are seeking solutions of the following form (as shown in \refref{GHCW07}):
-
 \begin{eqnarray}
-F(\textbf{u}_{EQ})=0 \nonumber \\
-F(\textbf{u}_{TW})=-c \cdot \nabla \textbf{u}_{TW} \nonumber \\
-f^{T_p}(\textbf{u}_{p})=u_p \nonumber \\
-f^{T_p}(\textbf{u}_{p})=u_p \nonumber \\
+F(\textbf{u}_{EQ}) &=& 0 \continue
+F(\textbf{u}_{TW}) &=& -c \cdot \nabla \textbf{u}_{TW} \continue
+f^{T_p}(\textbf{u}_{p}) &=& u_p \continue
+f^{T_p}(\textbf{u}_{p}) &=& u_p
+\,,
 \label{NS_Solutions}
-\end{eqnarray} \SOA{I have to fix the second equation justification.}
+\end{eqnarray}
+    \SOA{I have to fix the second equation justification.}
+where this represent respectively equilibrium points, relative equilibrium points, periodic orbits
+and \rpo s.
 
-where this represent respectively equilibrium points, relative equilibrium points, periodic orbits and relative periodic orbits.
-
-Finally, note that one additionally aspect  one should care about is the connection between these different solutions. That is, how is one to get from one recurrent pattern to the other. For this it is common to study heteroclitic connections (the path that exactly connect one invariant solution to another; see for instance \refref{GHCV08}), as these organize how the flow transits from one manifold to the next.
+Finally, note that one additionally aspect  one should care about is the
+connection between these different solutions. That is, how is one to get
+from one recurrent pattern to the other. For this it is common to study
+heteroclitic connections (the path that exactly connect one invariant
+solution to another; see for instance \refref{GHCV08}), as these organize
+how the flow transits from one manifold to the next.
 
 \subsection{Finding invariant solutions}
 
