@@ -15,3 +15,9 @@ Calculates the equations of motion for the 2-mode (Dangelmayr)
 system as system of 4 real valued equation in Cartesian coordinates,
 a system of 2 polar coordinate pairs, and a 3D system with 2 radial
 and 1 angular coordinates.
+
+TwoModeSymmetryCheck.m by Daniel Borrero 4/26/2012
+------------------------------------------------
+Checks that the 2-mode equations are SO(2) equivariant
+with z1 equivariant for m = 1 and z2 equivariant for the m = 2 mode
+by analytically verifying that its Lie derivative vanishes everywhere.
