@@ -1,6 +1,6 @@
 siminos/cgang/00ReadMe.txt
-$Author: predrag $
-$Date: 2012-04-16 02:08:30 -0400 (Mon, 16 Apr 2012) $
+$Author$
+$Date$
 ------------------------------------------------------------
 
 Slice & chart term project
