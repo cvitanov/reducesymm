@@ -4,7 +4,7 @@
 % system as system of 4 real valued equation in Cartesian coordinates,
 % a system of 2 polar coordinate pairs, and a 3D system with 2 radial
 % and 1 angular coordinates.
-function EOMComplexTo4D
+
 clear all
 
 % Intialize symbolic variables
@@ -51,11 +51,10 @@ theta1dot = simple(S.theta1dot)
 r2dot = simple(S.r2dot)
 theta2dot = simple(S.theta2dot)
 
-disp('Notice that theta1 and theta2 only appear in the combination (2*theta1 - theta)')
-disp('Recasting the equations in terms of Psi = 2*theta1 - theta,')
+disp('Notice that theta1 and theta2 only appear in the combination (2*theta1 - theta2)')
+disp('Recasting the equations in terms of Psi = 2*theta1 - theta2,')
 disp('we can reduce the problem to a 3D system')
 r1dot = subs(r1dot,2*theta1-theta2,Psi)
 r2dot = subs(r2dot,2*theta1-theta2,Psi)
 psidot = subs(2*theta1dot - theta2dot,2*theta1-theta2,Psi)
 
-end
