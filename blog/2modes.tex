@@ -894,7 +894,7 @@ using Matlab's symbolic math toolbox, so these should be correct.
 $z_1 = x_1 + i x_2$ and $z_2 = y_1 + i y_2$ (so rotations are in `x' and
 `y' planes - this mixes them up). Might be confusing in the time to come.
 
-\item[2012-04-28 Daniel] Well, it's sort of trivially easy fix. I just thought I'd keep 1's together and 2's together since that's the way they appear in eqs. \refeq{eq:AGpolar} and \refeq{eq:DangSO2}. Want me to change them to $z_1 = x_1 + x_2$ and $z_2 = y_1 + y_2$? I would take me 5 minutes. 
+\item[2012-04-28 Daniel] Well, it's sort of trivially easy fix. I just thought I'd keep 1's together and 2's together since that's the way they appear in eqs. \refeq{eq:AGpolar} and \refeq{eq:DangSO2}. Want me to change them to $z_1 = x_1 + x_2$ and $z_2 = y_1 + y_2$? I would take me 5 minutes.
 
 \item[2012-04-26 Daniel to Evangelos] Just tried to figure out how the parameters
 in our {\twoMode} system \refeq{eq:DangSO2} are related to the paramters
@@ -941,13 +941,15 @@ Dangelmayr considers a  system constructed from two arbitrary Fourier modes,
 a representation
 of the symmetry group $\On{2}$ which is defined by the operations of
 rotation and reflection,
-\bea
-(z_1,z_2) &\rightarrow&  (e^{im {\gSpace}}z_1,e^{in {\gSpace}} z_2)
-    \continue
-(z_1,z_2) &\rightarrow&  (\overline{z}_1,\overline{z}_2)
+\begin{subequations}\label{Dang86(1.1)}
+\beq
+(z_1,z_2) \rightarrow   (e^{im {\gSpace}}z_1,e^{in {\gSpace}} z_2)
+\ee{Dang86(1.1)a}
+\beq
+(z_1,z_2) \rightarrow   (\overline{z}_1,\overline{z}_2)
 \,,
-\label{Dang86(1.1)}
-\eea
+\ee{Dang86(1.1)b}
+\end{subequations}
 respectively, acting on complex vectors $(z_1,z_2) \in \complex^2 \simeq
 \reals^4 $. Here, $m, n$ are positive integers where $(m, n)$ satisfies
 either $2 \leq m < n$ with  $(m, n)$ relatively prime or $m = 1 <n$, and
@@ -1001,21 +1003,15 @@ and thus breaking the reflection invariance, $\dot{\overline{z}}_j \neq
 \dot{\overline{f}}_j \,.$ As Dangelmayr consider only the real case,
 calling our system a special case of {\twoMode} is fair enough.
 
-\item[2012-04-21 Evangelos] The Dangelmayr system\rf{Dang86} written in complex
-coordinates $z_1,z_2$ reads
-\begin{subequations}\label{eq:DangSO2}
-\begin{align}
-  \dot{z}_1 &= \mu_1\,z_1+a_1\,z_1|z_1|^2+b_1\,z_1|z_2|^2+c_1\,\overline{z}_1\,z_2\,\\
-  \dot{z}_2 &= (\mu_2-\ii\, e_2)\,\ESedit{z_2}+a_2\,z_2|z_1|^2+b_2\,z_2|z_2|^2+c_2\,z_1^2
-\end{align}
-\end{subequations}
-(I have replaced symmetry breaking term $e$ here and in \refeq{eq:AGpolar}
-with $e_2$ since in this constant is naturally paired with $\mu_2$.)
-See also Armbruster, Guckenheimer and Holmes\rf{AGHO288} flow with
-$\On{2}$ symmetry, Eq. \refeq{eq:AGH} above.
-In \texttt{siminos/cgang/Evangelos/dangelmayr\_so2\_int.nb}
-I integrate \refeq{eq:DangSO2} rather than the polar form \refeq{eq:AGpolar},
-as the former has no dangerous denominators.
+\item[2012-04-21 Evangelos]
+The Dangelmayr system\rf{Dang86} written in complex coordinates $z_1,z_2$
+is given in \refeq{eq:DangSO2} I have replaced symmetry breaking term $e$
+here and in \refeq{eq:AGpolar} with $e_2$ since in this constant is
+naturally paired with $\mu_2$. See also Armbruster, Guckenheimer and
+Holmes\rf{AGHO288} flow with $\On{2}$ symmetry, here \refeq{eq:AGH}. In
+\texttt{siminos/cgang/Evangelos/dangelmayr\_so2\_int.nb} I integrate
+\refeq{eq:DangSO2} rather than the polar form \refeq{eq:AGpolar}, as the
+former has no dangerous denominators.
 
 \item[2012-04-21 Evangelos] For future reference I note that the
 connection of the constants in \refeq{eq:DangSO2} with $e_2=0$ to the
@@ -1024,120 +1020,33 @@ $n=2$, $m=1$ is $\mu_1=\nu\epsilon\alpha$,
 $a_1=-\nu\epsilon$, $b_1=-\nu\epsilon\rho$, $c_1=-\nu\mu$, $\mu_2=\epsilon\beta$,
 $a_2=-\epsilon\kappa$, $b_2=-\epsilon\epsilon'$, $c_2=\mu\mu'$.
 
-\item[2012-04-27 Predrag] because I stood on shoulders of Dangelmayr:
-There is this really cool book,\rf{DasBuch} so I'll just follow it. As
-$\SOn{2}$ is a \emph{subgroup} of $\On{2}$ that has to satisfy invariance
-constraints in addition to those of $\On{2}$, it has one more invariant
-polynomial in its basis, called $q$ in what follows. $\SOn{2}$ invariants
-are
-\bea
-u &=& {z}_1 \overline{z}_1
-    \,,\quad
-v = {z}_2 \overline{z}_2
-    \continue
-w &=& z_1^2 \overline{z}_2 + \overline{z}_1^2 {z}_2
-   = \Re(z_1^2 \overline{z}_2) = u |v|^{1/2} \cos \psi
-    \continue
-q &=& (z_1^2 \overline{z}_2 - \overline{z}_1^2 {z}_2)/2i
-   = \Im(z_1^2 \overline{z}_2) = u |v|^{1/2} \sin \psi
-\,,
-\label{Dang86(1.2)PK}
-\eea
-where in polar coordinates $ {z}_1 = |u|^{1/2} e^{\DBedit{i}\theta_1}$, $ {z}_2 =
-|v|^{1/2} e^{\DBedit{i}\theta_2}$, and the relative angle in the $w$ invariant is
-$\psi = 2 \theta_1 - \theta_2$. The polynomials $\{u,v,w,q\}$ are
-linearly independent, but related through one syzygy,
-\beq
-w^2+q^2 - u^2v =0
-  \,,
-\label{eq:syzPK}
-\eeq
-yielding a 3-dim\-ens\-ion\-al $\pS/\SOn{2}$ \reducedsp, a
-symmetry-invariant repre\-sent\-ati\-on of the 4-dim\-ens\-ion\-al
-\SOn{2} equivariant dynamics. The basic equivariants include
-\beq
-  \{{z}_1\,,\overline{z}_1 {z}_2 \}
-            \,,\qquad
-  \{{z}_2 \,, z_1 \overline{z}_2\}
-\,.
-\label{Dang86(1.3)PK}
-\eeq
-We have equations \refeq{eq:DangSO2} for $\{{z}_1\,,\overline{z}_1\,,
-{z}_2\,,\overline{z}_2 \}$ but perhaps need equations for the
-equivariants \refeq{Dang86(1.3)PK} - have not thought this through.
-ChaosBook.org says: The dynamical equations follow from the chain rule
-\beq
- \dot{ u}_i=\frac{\partial u_i}{\partial x_j} \, \dot{x}_j
- \,,
-\ee{HilbChainRl}
-upon substitution
-$\{x_1,x_2,\cdots,x_d\}$ $\to$ $\{u_1,u_2,\cdots,u_m\}$. This yields
-\bea
-  \dot{u} &=& \overline{z}_1 \dot{z}_1 + {z}_1 \dot{\overline{z}}_1
-\continue
-  \dot{v} &=& \overline{z}_2 \dot{z}_2 + {z}_2 \dot{\overline{z}}_2
-\continue
-  \dot{w} &=& 2 \,\overline{z}_2 {z}_1 \dot{z}_1
-           + 2 \,{z}_2 \overline{z}_1 \dot{\overline{z}}_1
-           + {z}_1^2 \dot{\overline{z}}_2
-           + \overline{z}_1^2 \dot{z}_2
-\continue
-  \dot{q} &=& - 2\,\ii\, ( \overline{z}_2 {z}_1 \dot{z}_1
-           - {z}_2 \overline{z}_1 \dot{\overline{z}}_1) + \cdots
-\label{PKinvEqs}
-\eea
-Substituting Dangelmayr equations
-\label{eq:DangSO2} for $\{{z}_1\,,\overline{z}_1\,,
-{z}_2\,,\overline{z}_2 \}$ I obtain
-\bea
-  \dot{u} &=& 2\,\mu_1\,u+2\,a_1\,u^2+2\,b_1\,u\,v+c_1\,w
-\continue
-  \dot{v} &=& 2\,\mu_2\,u+2\,a_2\,u\,v+2\,b_2\,v^2+c_2\,w
-\continue
-  \dot{w} &=& \mu_1\,w+a_1\,u\,w+b_1\,v\,w+c_1\,u\,v
-             + \mu_2\,w+a_2\,u\,w+b_2\,v\,w+c_2\,w
-             + e_2\,q
-\continue
-  \dot{q} &=& \mbox{(please recheck and complete)}
-\label{PKinvEqs1}
-\eea
-One can either rewrite the dynamics in this basis or plot the `image' of
-solutions computed in the original, equivariant basis in terms of these
-invariant polynomials.
-This could be more elegant - I made only $(\mu_2-\ii\, e_2)$ imaginary,
-and I am not sure why I am breaking the reflection symmetry of $m=2$ mode
-(that also breaks it in the $m=2$ flow-invariant subspace), but that's
-what we have done so far. Finding \eqva\ using these equations should be
-easy - they are like the polar equations but more elegant, extracting
-$\dot{\psi}$ is silly - $w$, $q$ tell you you want equations for $(\cos
-\psi, \sin \psi)$ instead.
+\item[2012-04-27 Predrag]
+% because I stood on shoulders of Dangelmayr:
+% There is this really cool book,\rf{DasBuch} so I'll just follow it.
+$\SOn{2}$ is a {subgroup} of $\On{2}$, without the reflection group
+element \refeq{Dang86(1.1)b}. As a subgroup, it has to satisfy invariance
+constraints in addition to those of $\On{2}$, with one more invariant
+polynomial in its basis, called $q$ in what follows. The next entry is a
+stand-alone write up is in \refsect{s:twoMode}.
 
-\item[2012-04-28 Lei] rechecked equation
-\refeq{PKinvEqs1}, and got
-\bea
-  \dot{u} &=& 2\,\mu_1\,u+2\,a_1\,u^2+2\,b_1\,u\,v+c_1\,w
-\continue
-  \dot{v} &=& 2\,\mu_2\,u+2\,a_2\,u\,v+2\,b_2\,v^2+c_2\,w
-\continue
-  \dot{w} &=& (2\mu_1+\mu_2)\,w+(2a_1+a_2)\,u\,w+(2b_1+b2)\,v\,w+2c_1\,u\,v
-             +2c_2\,u^2
-             -2e_2\,q
-\continue
-  \dot{q} &=& (2\mu_1+\mu_2)\,q+(2a_1+a_2)\,u\,q+(2b_1+b2)\,v\,q
-             +\frac{e_2}{2}\,w
-\label{PKinvEqs2}
-\eea
 
-\item[2012-04-28 Evangelos] Indeed, using \refeq{PKinvEqs2} should be the 
+\item[2012-04-27 Predrag] This could be more elegant - I made only
+$(\mu_2-\ii\, e_2)$ imaginary, and I am not sure why I am breaking the
+reflection symmetry of $m=2$ mode (that also breaks it in the $m=2$
+flow-invariant subspace), but that's what we have done so far. Finding
+\eqva\ using these equations should be easy - they are like the polar
+equations but more elegant, extracting $\dot{\psi}$ is silly - $w$, $q$
+tell you you want equations for $(\cos \psi, \sin \psi)$ instead.
+
+\item[2012-04-28 Evangelos] Indeed, using \refeq{PKinvEqs1} should be the
 cleanest way to compute relative equilibria, as equations are given in
-a clear polynomial form. 
+a clear polynomial form.
 To find relative equilibria in $u,v,w,q$ basis
-one would have to solve $\dot{u}=\dot{v}=\dot{w}=\dot{q}=0$ in \refeq{PKinvEqs2}
-together with the syzygy \refeq{eq:syzPK} [$w^2+q^2 - u^2v =0$], right? 
+one would have to solve $\dot{u}=\dot{v}=\dot{w}=\dot{q}=0$ in \refeq{PKinvEqs1}
+together with the syzygy \refeq{eq:syzPK} [$w^2+q^2 - u^2v =0$], right?
 In other words, \refeq{eq:syzPK} is a constraint in allowable solutions which
 dynamics knows about, but when solving algebraic equations for (relative)
 equilibria, don't we have to impose it?
-
 
 \item[2012-04-25 Evangelos] Yet another snapshot of {\twoMode}
 system with Predrag's modification, for different parameters. This looks
@@ -1511,7 +1420,8 @@ Time to go to bed...
 Perspective around the other relative equilibrium.
 Finding the best angles to do this was difficult, so if you want an
 interactive version, I can post it. The parameters are given as:
-    $\mu_1 = 2.0 ,\, \mu_2 = 1.0,\, a_1 = -7.5,\, a_2 = -2,\, b_1 = -4,\,  b_2 = -2.25,\, c_1 = 10,\, c_2 = -35,\, e_2 = 2$
+    $\mu_1 = 2.0 ,\, \mu_2 = 1.0,\, a_1 = -7.5,\, a_2 = -2,\, b_1 = -4,\,
+       b_2 = -2.25,\, c_1 = 10,\, c_2 = -35,\, e_2 = 2$
 }
 \label{fig:2moderedmultieq}
 \end{figure}
@@ -1531,5 +1441,9 @@ It seems I don't know the password.
 
 \item[2012-04-28 Predrag] cnsuser cnsweb
 
+\item[2012-04-28 Predrag]
+A stand-alone write up of invariant polynomials formulation of {\twoMode}
+is now in \refsect{s:twoMode}. Edit and improve it there, in the project
+proper.
 
 \end{description}

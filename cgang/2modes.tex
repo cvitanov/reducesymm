@@ -167,20 +167,125 @@ As an example consider the  [blah blah],
 
 \section{Dynamics and symmetry}
 \label{s:symm}
-To do:
+
+\subsection{\twoMode\ $\SOn{2}$-equivariant flow}
+\label{s:twoMode}
+
+% \item[2012-04-28 Predrag]
+Consider a system constructed from Fourier modes
+$m=(1,2)$,\rf{Dang86,AGHO288,PoKno05}, a representation of the symmetry
+group $\SOn{2}$ (or `circl group') defined by rotation
+\beq
+(z_1,z_2) \rightarrow   (e^{i {\gSpace}}z_1,e^{i 2\,{\gSpace}} z_2)
+\ee{Dang86(1.1)aa}
+$\SOn{2}$ invariant polynomials are
+\bea
+u &=& {z}_1 \overline{z}_1
+    \,,\quad
+v = {z}_2 \overline{z}_2
+    \continue
+w &=& z_1^2 \overline{z}_2 + \overline{z}_1^2 {z}_2
+    \,,\quad
+q =  \PCedit{
+      (z_1^2 \overline{z}_2 - \overline{z}_1^2 {z}_2)/\ii
+    }
+\,,
+\label{Dang86(1.2)PK}
+\eea
+In polar coordinates $ {z}_1 = |u|^{1/2} e^{\ii\theta_1}$, $ {z}_2 =
+|v|^{1/2} e^{\ii\theta_2}$ the  $w, q$ invariants take form
+\bea
+w &=& \PCedit{
+      2\,\Re(z_1^2 \overline{z}_2) = 2\,u |v|^{1/2} \cos \psi
+      }
+    \continue
+q &=&  \PCedit{ 2\,\Im(z_1^2 \overline{z}_2) = 2\,u |v|^{1/2} \sin \psi
+    }
+\,,
+\label{Dang86(1.2)polar}
+\eea
+where $\psi = 2 \theta_1 - \theta_2$. The polynomials $\{u,v,w,q\}$ are
+linearly independent, but related through one syzygy,
+\beq
+w^2+q^2 - u^2v =0
+  \,,
+\label{eq:syzPK}
+\eeq
+yielding a 3-dim\-ens\-ion\-al $\pS/\SOn{2}$ \reducedsp, a
+symmetry-invariant repre\-sent\-ati\-on of the 4-dim\-ens\-ion\-al
+\SOn{2} equivariant dynamics.
+The dynamical equations for $\{u,v,w,q\}$ follow from the chain rule
+\( %beq
+ \dot{ u}_i= ({\partial u_i}/{\partial x_j}) \, \dot{x}_j
+ \,,
+\) %ee{HilbChainRl}
+upon substitution
+$\{{z}_1\,,\overline{z}_1\,, {z}_2\,,\overline{z}_2 \}$ $\to$
+$\{u,v,w,q\}$. This yields
+\bea
+  \dot{u} &=& \overline{z}_1 \dot{z}_1 + {z}_1 \dot{\overline{z}}_1
+\,,\qquad
+  \dot{v} = \overline{z}_2 \dot{z}_2 + {z}_2 \dot{\overline{z}}_2
+\continue
+  \dot{w} &=& 2 \,\overline{z}_2 {z}_1 \dot{z}_1
+           + 2\,{z}_2 \overline{z}_1 \dot{\overline{z}}_1
+           + {z}_1^2 \dot{\overline{z}}_2
+           + \overline{z}_1^2 \dot{z}_2
+\continue
+  \dot{q} &=&  (2\,\overline{z}_2 {z}_1 \dot{z}_1
+           - 2\,{z}_2 \overline{z}_1 \dot{\overline{z}}_1
+           + {z}_1^2 \dot{\overline{z}}_2
+           - \overline{z}_1^2 \dot{z}_2
+           )/\ii
+\label{PKinvEqs}
+\eea
+
+Dangelmayr,\rf{Dang86} Armbruster, Guckenheimer and Holmes,\rf{AGHO288}
+Jones and Proctor,\rf{JoPro87} and Porter and Knobloch\rf{PoKno05} (see
+Golubitsky \etal\rf{golubII}, Sect. XX.1) have investigated bifurcations
+in 1:2 resonance ODE normal form models to third order in the amplitudes.
+We shall use here such a system with $\SOn{2}$ symmetry,
+\begin{subequations}\label{eq:DangSO2}
+\begin{align}
+  \dot{z}_1 &= \mu_1\,z_1+a_1\,z_1|z_1|^2+b_1\,z_1|z_2|^2+c_1\,\overline{z}_1\,z_2\,\\
+  \dot{z}_2 &= (\mu_2-\ii\, e_2)\,{z_2}+a_2\,z_2|z_1|^2+b_2\,z_2|z_2|^2+c_2\,z_1^2
+\,,
+\end{align}
+\end{subequations}
+with $z_1,\,z_2$  complex, and real valued  parameters. For parameters
+far from bifurcation values the model has no physical motivation (in
+particular, the parameter $(\mu_2-\ii\, e_2)$ is one of the many ways in
+which $\On{2}$ symmetry can be broken), we use it purely to compare and
+illustrate different symmetry reduction methods when dynamics is chaotic.
+We shall refer to \refeq{eq:DangSO2} as the {\twoMode} system.
+Substituting \refeq{eq:DangSO2} into \refeq{PKinvEqs} we obtain a set of
+4 equations,
+    \PC{2012-04-27 by Lei and Predrag, please recheck}
+\bea
+  \dot{u} &=& 2\,\mu_1\,u+2\,a_1\,u^2+2\,b_1\,u\,v+c_1\,w
+\continue
+  \dot{v} &=& 2\,\mu_2\,u+2\,a_2\,u\,v+2\,b_2\,v^2+c_2\,w
+\continue
+  \dot{w} &=& (2\,\mu_1+\mu_2)\,w+(2a_1+a_2)\,u\,w+(2b_1+b_2)\,v\,w
+\ceq
+             +2\,c_1\,u\,v +2\,c_2\,u^2 -2\,e_2\,q
+\label{PKinvEqs1}\\
+  \dot{q} &=& (2\mu_1+\mu_2)\,q+(2a_1+a_2)\,u\,q+(2b_1+b_2)\,v\,q
+             +\frac{e_2}{2}\,w
+\nnu
+\eea
+One can now either investigate the dynamics in this invariant basis or
+plot the `image'\rf{GL-Gil07b} of solutions computed in the original,
+equivariant basis in terms of these invariant polynomials.
+
+\subsection{To do}
+\label{s:ToDo}
 
 \begin{itemize}
 	\item[10.?] The \twoMode system: An $\SOn{2}$-equivariant flow with two Fourier modes
 		\begin{itemize}
-			\item(a) Show that the complex \twoMode\ system
-			\begin{subequations}
-				\begin{align}
-  				\dot{z}_1 &= \mu_1\,z_1+a_1\,z_1|z_1|^2+b_1\,z_1|z_2|^2+c_1\,\overline{z}_1\,z_2\,\\
-  				\dot{z}_2 &= (\mu_2-\ii\, e_2)\,\ESedit{z_2}+a_2\,z_2|z_1|^2+b_2\,z_2|z_2|^2+c_2\,z_1^2
-				\end{align}
-			\end{subequations}
-			where $z_1$ and $z_2$ are complex variables and all the other symbols are real valued parameters, may be rewritten as a 				4-dimensional first order ODE system
-			
+			\item(a) Show that the complex \twoMode\ system \refeq{eq:DangSO2}
+			 may be rewritten as a 				 4-dimensional first order ODE system			
 			\bea
 				\dot{x}_1 &=& a_1 x_1^3 + b_1 x_1 x_2^2 + c_1 x_1 x_2 + a_1 x_1 y_1^2 + b_1 x_1 y_2^2 + \mu_1 x_1 + c_1 y_1 y_2
 				\continue
@@ -193,7 +298,7 @@ To do:
 			
 			by substituting $z_1 = x_1 + i y_1$ and $z_2 = x_2 + i y_2$.
 			
-			\item(b) Nowe, Show that the stability matrix ({\color{red}insert DasBuch eq. ref here, originally eq. 4.3}) A for this 				system is given by
+			\item(b) Now, show that the stability matrix ({\color{red}insert DasBuch eq. ref here, originally eq. 4.3}) A for this 				system is given by
 
 \beq
 A  \, =
@@ -236,116 +341,15 @@ and A into into the equivariance condition ({\color{red}insert DasBuch eq. ref. 
 \end{itemize}
 
 
-Armbruster, Guckenheimer and Holmes\rf{AGHO288} flow with
-$\On{2}$ symmetry:
-\index{Armbruster-Guckenheimer-Holmes flow}
-\beq
-\begin{split}
-  \dot{z}_1 &=\bar{z}_1 z_2
-              + z_1\left(\mu_1+ e_{11}|z_1|^2+e_{12}|z_2|^2\right) \\
-  \dot{z}_2 &=\pm z_1^2
-              + z_2\left(\mu_2+ e_{21}|z_1|^2+e_{22}|z_2|^2\right)
-  \label{eq:2modesAGH}
-\end{split}
-\eeq
-where $z_1,z_2\in \mathbf{C}$ and $\mu_j$ and $e_{jk}$ real parameters.
-This system corresponds to the first few terms in the center manifold
-reduction of a $\On{2}$-symmetric partial differential equation near a
-codimension two bifurcation. It is a {\twoMode} system, so group orbits are
-more interesting than for \cLf.
-{\bf [2009-08-28 Predrag]} Evangelos in his thesis and
-\HREF{http://chaosbook.org/projects/index.shtml\#Kohler}{Kohler} in his
-\HREF{http://ChaosBook.org/projects}
-     {ChaosBook.org project}
-got nothing of interest out of Armbruster \etal\rf{AGHO288}. As far as we
-can tell, it exhibits no chaos. I would prefer some modification of it
-with $\SOn{2}$ symmetry only, and exhibiting chaos (done! see 2012-03-27
-remark below). Or some version of {\twoMode} model Daniel has been playing
-with which does not behave singularly. He has an unstable cycle close to
-the origin that maybe does the trick.
-
-{\twoMode}\rf{PoKno05}
-(\HREF{http://ChaosBook.org/library/PoKno05.pdf}{click here})
-write: ``Chossat\rf{Choss93} has shown that breaking the symmetry
-$\On{2}$ down to $\SOn{2}$ through the addition of small terms that break
-reflection symmetry generically destroys the heteroclinic cycles and
-replaces them by a quasiperiodic orbit characterized by two small
-frequencies, one associated with the broken heteroclinic connection and
-one with a slow drift along the group orbit of translations. Ashwin
-\etal\rf{AshBoMe96} showed that this perturbation must be dispersive: if
-reflection symmetry is broken by adding a constant through flow the cycle
-will persist.''
-
-This shows us how to get an $\SOn{2}$-equivariant model rather than
-the Armbruster, Guckenheimer and Holmes\rf{AGHO288}:
-``When the reflection symmetry is broken, the coefficients in the normal
-form equations are no longer forced to be real and hence can be expected
-to acquire imaginary parts'', their Eq. (10). Play with that one.
-
  [blah blah]
 
 Mercader and Prat\rf{MePrKn01} might
 be a candidate if we decide to go with $\On{2}$ symmetry since really the
 Rayleigh-Benard problem has $\On{2} \times Z_2$ symmetry and they are really
-talking about breaking the $Z_2$ part. They have a reduced model, but I'm
-not sure that it is chaotic.
-
-notes on Mercader and Prat\rf{MePrKn01}.
-\index{Armbruster-Guckenheimer-Holmes flow}
-The effects of weak breaking of the midplane reflection symmetry on the
-1:2 steady state mode interaction in Rayleigh-B\'enard convection are
-discussed, with bifurcations galore, ala Knobloch. They do it for the
-full PDEs, but in Sect.~4 motivate results by discussing them in the
-context of $\On{2}$-equivariant amplitude equations for 1:2 mode
-interactions.
-We note that the Dangelmayr\rf{Dang86} and Armbruster, Guckenheimer and
-Holmes\rf{AGHO288} third order in the amplitudes normal form flow with
-$\On{2}$ symmetry \refeq{eq:2modesAGH} does have ratios of form $r_0/r_1$, when
-rewritten in the polar form (Eq.~(4) in the paper),
-\bea
-   \dot{r}_1 &=& \mu_1 r_1 + a_1 r_1^3  + b_1 r_1 r_2^2
-                 + c_1 r_1 r_2 \cos(\psi)\continue
-   \dot{r}_2 &=& \mu_2 r_2 + a_2 r_1^2 r_2  + b_2 r_2^3
-                 + c_2 r_1^2 \cos(\psi)\continue
-   \dot{\theta}_1 &=&  - c_1 r_2 \sin(\psi)\,,\quad
-   \dot{\theta}_2 = -e_2 + c_2 \frac{r_1^2}{r_2} \sin(\psi)
-\,,
-\label{eq:2modesAGpolar}
-\eea
-where $\psi = 2 \theta_1 - \theta_2$, and Predrag stuck in tentatively an
-`$e_2$' term because something like that is needed to break $\On{2} \to
-\SOn{2}$. Rewriting the angular part as $\dot{\psi} = 2 \dot{\theta_1} -
-\dot{\theta_2}$:
-\beq
-\dot{\psi} = e_2 - \left(c_2 \frac{r_1^2}{r_2} + 2\,c_1 r_2\right) \sin(\psi)
-\,.
-\ee{eq:AGphase}
-The equations possess pure $n = 2$ solutions but no pure $n = 1$
-solutions (except for the discrete `midplane reflection' symmetry
-invariant subspace?). Most solutions are `mixed modes'. I do not think we
-care about the `midplane reflection' symmetry (with 5th order normal
-form), so we only need \refeq{eq:2modesAGpolar} to determine the \reqva.
+talking about breaking the $Z_2$ part.
 
 
  [blah blah]
-
-I'm still in favor of trying {\bf
-[2012-03-27 Predrag]} {\twoMode}\rf{PoKno05} above, as I prefer
-the most cited model. The exact 1:2 resonance ODE normal form was
-treated first by  Dangelmayr\rf{Dang86} and analyzed by the more cited
-Armbruster, Guckenheimer and Holmes\rf{AGHO288} and Jones and
-Proctor\rf{JoPro87} (for a  general reference containing this material,
-see Golubitsky \etal\rf{golubII}, ch.~XX, sect.~1), and keeps getting
-cited a lot\rf{AshDang05,PoKno05,SmMoehHo05}.
-
-Making it $\SOn{2}$-equivariant is easy, just make a coefficient complex
-- I have forgotten, but that's how we got to the \cLe. If the imaginary
-part is small, then you turn orbits that used to be \po s into \rpo s.
-That's why {\bf [2012-03-22 Bryce]} \rpo s were nearly periodic. But
-truncations of the Ginsberg-Landau equation have their market too.
-
-Play with them both, we pick one eventually that illustrates multiple
-charts better.
 
 
  [blah blah]
