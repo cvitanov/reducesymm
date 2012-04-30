@@ -51,3 +51,11 @@ the stability matrix for the Porter-Knobloch system in
 for a generic point given in the 4D Cartesian representation
 (X1,Y1,X2,Y2) for a given array of parameters
 params = {a1,a2,b1,b2,c1,c2,mu1,mu2,2}.
+
+PKComplexToInvariant.m by Daniel Borrero 4/29/2012
+------------------------------------------------
+This code verifies the various transformations
+between the complex formulation of the Porter-Knobloch
+system and its formulation in terms of the invariant
+bases u, v, w, and q as described in section s:twoMode
+of the 2mode project/report.
