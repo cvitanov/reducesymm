@@ -287,8 +287,6 @@ This means that the vorticity can be expressed as:
     \ee{120429_1}
 So as stated in \refref{ACHKW11}, $g(\phi)=diag(e^{-2 \pi i k \phi /M})$
 and $\Lg=diag(-2 \pi i k/M)$.
-        \PC{Remember that if you are going to work in complex representation.
-        transpose is replaced by complex conjugate.}
 
 Now, the slice condition is given by $g( a_{kl}^T \phi(t))^T \Lg a'_{kl}$,
 so I express the matrix as a vector:
@@ -376,31 +374,71 @@ the group element, the $d/d\gSpace$ derivative you need for Newton.
 Complex Newton formula is the same as for real functions, thanks to
 analyticity (analyticity assures that complex derivatives make sense).
 
+\item[2012-04-30 Sebastian]
+I do not understand why the transpose gets replaced by a complex
+conjugate. I see in matlab what you mean by the transpose of the matrix.
+But why does the complex conjugate gets involved in the transpose.
+
+\item[2012-04-30 Predrag] If you are going to work in complex
+representation, the norm of a complex vector $\ssp \in \complex^d$ is
+$\norm{\ssp}^2 = \ssp^* \cdot \ssp$, and $(\LieEl\ssp)^*
+=\ssp^*\LieEl^\dagger$, where $\LieEl^\dagger$ is the hermitian conjugate
+= transpose + complex conjugate.
+
 \item[2012-04-30 Predrag] Before getting into the Newton for this - make
 sure that your $\LieEl(\gSpace)$ applied to a baroclinic state $\ssp$
 does shift it by $\gSpace$, \ie,  $\LieEl(\gSpace)\ssp$ is the same $2D$
 picture, but shifted by $\gSpace$.
 
-\item[2012-04-30 Predrag] To view just the project (without this blog)
-toggle the \texttt{boyscoutfalse} switch, top of
-\texttt{siminos/baroclinic/BrCv12.tex}.
+\item[2012-04-30 Sebastian]
+I have made a Matlab code that shifts the image by a $\phi$. Using
+$g(\phi)=diag(e^{-2 \pi i k \phi /M})$. Looks as expected when converted
+back to physical space.
 
 \item[2012-04-30 Sebastian]
-I reshape a matrix into a vector as Matlab's FFT works by columns. What I have is a matrix that represents a vorticity field \SOA{which actually is given as a vector from Annalisa's code, but I reshape it into a matrix before doing anything in matlab} so what I do is to make a Fast Sine Transform (FST) in Y and a FFT in X. This is something similar to performing a 2D FFT. But to move all the fourier coefficients in X, I reshape everything again as a vector. And then carry out the slicing condition (all this in paper, in Matlab I have go up to the FFT transform representation). So I think this would be equivalent only to a shift in X.
+I reshape a matrix into a vector as Matlab's FFT works by columns. What I
+have is a matrix that represents a vorticity field \SOA{which actually is
+given as a vector from Annalisa's code, but I reshape it into a matrix
+before doing anything in matlab} so what I do is to make a Fast Sine
+Transform (FST) in Y and a FFT in X. This is something similar to
+performing a 2D FFT. But to move all the fourier coefficients in X, I
+reshape everything again as a vector. And then carry out the slicing
+condition (all this in paper, in Matlab I have go up to the FFT transform
+representation). So I think this would be equivalent only to a shift in
+X.
 
-Vector turns out to be huge, $262144$ dimensions for complex numbers; so really is like $524288$ dimension. But a bit less than half of them are just complex conjugates.
+Vector turns out to be huge, $262144$ dimensions for complex numbers; so
+really is like $524288$ dimension. But a bit less than half of them are
+just complex conjugates.
 
-The term $a(l)_{k}$ means actually $a(l, t)_{k}$. I use it just to emphasize that the transform in $x$, which is related with $k$, is performed after a FST is made on the data for the $y$ direction. The subindex $l$ is related to $y$. So $a(l)_{k}$, or perhaps better to write $a_{lk}$, is a matrix (as shown in \reffig{f:fouriervort}), that I have to reshape to rotate into the slice.  But I am not really sure why you think it should be a vector.
+The term $a(l)_{k}$ means actually $a(l, t)_{k}$. I use it just to
+emphasize that the transform in $x$, which is related with $k$, is
+performed after a FST is made on the data for the $y$ direction. The
+subindex $l$ is related to $y$. So $a(l)_{k}$, or perhaps better to write
+$a_{lk}$, is a matrix (as shown in \reffig{f:fouriervort}), that I have
+to reshape to rotate into the slice.  But I am not really sure why you
+think it should be a vector.
 
-I think the general procedure of what I did yesterday is ok.I have been making the calculations this morning again. I believe is similar to what you did in \refeq{eq:so2sing}, just that in complex space. By the way, how do you get $e^{-\gSpace \Lg}$ to multiply $t'$ directly? Is it because there should be a transpose in $e^{-\gSpace \Lg} x$?
+\item[2012-04-30 Predrag]
+Not sure why things got so huge? No point using Matlab for this - it is
+fast and simple writing a dot product in C++ or Fortran. This is
+Annalisa's department.
 
-Also, I do not understand why the transpose gets replaced by a complex conjugate.
+\item[2012-04-30 Sebastian]
+I think the general procedure of what I did yesterday is OK. I have been
+making the calculations this morning again. I believe is similar to what
+you did in \refeq{eq:so2sing}, just that in complex space. By the way,
+how do you get $e^{-\gSpace \Lg}$ to multiply $t'$ directly? Is it
+because there should be a transpose in $e^{-\gSpace \Lg} x$?
 
-Advise or comments greatly appreciated.
+\item[2012-04-30 Sebastian]
+Advise greatly appreciated.
 
-Note: I have made a matlab code that shifts the image by a $\phi$. Using $g(\phi)=diag(e^{-2 \pi i k \phi /M})$. Looks as expected when converted back to physical space.
+\item[2012-04-30 Predrag]
+`advise' $\to$ `advice'.
 
-\item[2012-04-30 Sebastian] Just saw in matlab what you mean by the transpose of the matrix. But, I am not really sure why the complex conjugate gets involved in the transpose.
-    
+\item[2012-04-30 Predrag] To view just the project (without this blog)
+toggle the \texttt{boyscoutfalse} switch, towards the top of
+\texttt{siminos/baroclinic/BrCv12.tex} file.
 
 \end{description}
