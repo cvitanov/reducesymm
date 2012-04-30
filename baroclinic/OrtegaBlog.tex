@@ -261,4 +261,65 @@ is $E(2)$ Euclidean group. In his case I suggested that he does not touch
 the code, but post-process by turning the full space trajectory into the
 \slice\ by finite angles.
 
+\item[2012-04-29 Sebastian] Hi Professor I have been having a bit of trouble figuring out how to calculate the rotating frame for each point. However, I think I am close to make it. Here is how I have been trying to do it:
+    I have been using the postprocessing approach converting the vorticity output from the model back to spectral space with a fast sine transform for Y and a fast fourier transform for X (I think this is how it's done in Annalisa's code). The results of the transform are shown in \ref{f:fouriervort}.
+    This means that the vorticity can be expressed as:
+    
+    \begin{figure}[t]
+    \begin{center}
+    \includegraphics[width=0.9\textwidth, clip=true]{fouriervort}
+    \end{center}
+    \caption{Top: Vorticity field. Bottom: Spectral representation ($ln(1+abs(\xi))$). Note that some frequencies are just the complex conjugate of others.}
+    \label{f:fouriervort}
+    \end{figure}
+    
+    \beq
+    \xi(x,y)=\sum a(l)_{k} e^{-2 i \pi k x/M}
+    \ee{120429_1}
+    
+    So as stated in \refref{ACHKW11},$g(\phi)=diag(e^{-2 \pi i k \phi /M})$ and $T=diag(-2 \pi i k/M)$. 
+    Now, the slice condition is given by $g(\phi(t))^T a_{kl}^T T a'_{kl}$, so I express the matrix as a vector:
+    
+    \beq
+    a_{kl}=
+    \begin{pmatrix}
+    a_{11} & a_{12}& \cdots & a_{1N}&\cdots&a_{MN}\\
+    \end{pmatrix}^T
+    \ee{120429_2}
+    
+    and carry out the slice condition, which looks something as:
+    \bea  
+    \begin{pmatrix}
+    a_{11} \\ a_{12}\\ \cdots \\ a_{1N}\\\cdots\\a_{MN}\\
+    \end{pmatrix}^T
+    \begin{pmatrix}
+    e^{-2 \pi i \phi /M} & 0& \cdots & 0\\
+    0 &  e^{-4 \pi i \phi /M}& \cdots & 0\\
+    \vdots & \ddots& \ddots & \vdots\\
+    0 & 0& \cdots & e^{-2 N \pi i \phi /M}
+    \end{pmatrix}\\
+    \continue
+    \cdot
+    \begin{pmatrix}
+    -2 \pi i /M & 0& \cdots & 0\\
+    0 &  -4 \pi i \phi /M& \cdots & 0\\
+    \vdots & \ddots& \ddots & \vdots\\
+    0 & 0& \cdots & -2 N \pi i  /M
+    \end{pmatrix}
+    \begin{pmatrix}
+    a'_{11} \\ a'_{12}\\ \cdots \\ a'_{1N}\\\cdots\\a'_{MN}\\
+    \end{pmatrix}^T = 0
+    \label{120429_3}
+    \eea 
+    
+    which after carrying it out gives me something as (but I have to check the algebra):
+    
+    \beq
+    g(\phi(t))^T a_{kl}^T T a'_{kl}=\sum_{n=1} \left[n e^{-i n \phi}\left(\sum_{m=1}a_{mn}a'_{mn}\right)\right]=0
+    \ee{120429_4}
+    
+    I guess the next step would be to apply a Newton-Raphson to \refeq{120429_4}. However, I am not sure how this would work, as the equation have quite a large amount of terms, and has also an imaginary component. Let me know if you have any advise for this.
+    
+    Note: I will check the algebra tomorrow again; most likely I made an embarrassing amount of mistakes while writing this. It is to late now.
+    
 \end{description}
