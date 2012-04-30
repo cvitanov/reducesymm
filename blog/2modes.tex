@@ -1573,26 +1573,22 @@ insights that I gained in the chaos course.  [2012-04-29 Keith] I did not write 
 
 \item[2012-04-28 Predrag]
 I have a really important paper to write, but doing algebra by hand is so
-much easier: how to solve for \eqva\ of \refeq{PKinvEqs}? Can rewrite it
-as
+much easier: how to solve for \eqva\ of \refeq{PKinvEqs}? Define
+\beq
+A_1= \mu_1+a_1\,u+b_1\,v
+    \,,\qquad
+A_2 = \mu_2+a_2\,u+b_2\,v
+\ee{PKinvEqs2a}
+then rewrite \refeq{PKinvEqs} as
 \bea
-  0  &=& 2\,u\,(\mu_1+a_1\,u+b_1\,v) +c_1\,w
-      =  2\,A_1\,u +c_1\,w
+  0  &=&  2\,A_1\,u +c_1\,w
+    \,,\qquad
+  0  =  2\,A_2\,v +c_2\,w
 \continue
-  0  &=& 2\,v\,(\mu_2+a_2\,u+b_2\,v) +c_2\,w
-      =  2\,A_2\,v +c_2\,w
-\continue
-  0  &=& [2\,\mu_1+\mu_2+(2a_1+a_2)\,u+(2b_1+b_2)\,v]\,w
-\ceq
-             +2\,c_1\,u\,v + c_2\,u^2 -e_2\,q
-\continue
-     &=& (2\,A_1+ A_2)\,w
+  0  &=& (2\,A_1+ A_2)\,w
              +\left(c_2\,u+2\,c_1\,v\right)\,u -e_2\,q
 \label{PKinvEqs3}\\
-  0  &=& [2\,\mu_1+\mu_2+(2a_1+a_2)\,u+(2b_1+b_2)\,v]\,q
-             +e_2\,\,w
-\continue
-     &=& (2\,A_1+ A_2)\,q + e_2\,\,w
+  0  &=& (2\,A_1+ A_2)\,q + e_2\,\,w
 \nnu
 \eea
 We already know $[0,0,0,0]$ and $[0,v,0,0]$ roots, so we are looking only
@@ -1608,28 +1604,63 @@ can be eliminated by rewriting \refeq{PKinvEqs3} as:
   q  &=& \frac{1}{e_2}
      \left(- {w^2}/{2\,u\,v} + \,u\right)\left(c_2\,u+2\,c_1\,v\right)
 \label{PKinvEqs4}\\
-  w  &=& -\frac{2}{e_2} A\,q
+  w  &=& -\frac{2}{e_2} (2\,A_1+ A_2)\,q
      \,,\quad\to\quad
   q = \frac{e_2\,u\,v}{c_2\,u+2\,c_1\,v}
   \,,
 \nnu
 \eea
-We obtain \textbf{our main result}, two (bivariate)  polynomials in two variables $\{u,v\}$ with
-constant coefficients
+We obtain \textbf{our main result}, two (bivariate)  polynomials in two
+variables $\{u,v\}$ with constant coefficients
 \bea
-0 &=&
+f(u,v) &=&
   c_2\,u\,(\mu_1+a_1\,u+b_1\,v)
      -
-  c_1\,v\,(\mu_2+a_2\,u+b_2\,v)
+  c_1\,v\,(\mu_2+a_2\,u+b_2\,v) = 0
+\,,\qquad  deg(f) = 2
 \continue
-0 &=&
+g(u,v) &=&
  \left(w^2 -  2\,u^2 v\right)\left(c_2\,u+2\,c_1\,v\right)^2
- +\,2\,e_2^2\,u^2\,v^2
+ +\,2\,e_2^2\,u^2\,v^2 = 0
+\,,\qquad  deg(g) = 6
 \,,
 \label{PKinvEqs5}
 \eea
 where $w$ is to be inserted from either of the first two equations in
-\refeq{PKinvEqs4}, or their average.
+\refeq{PKinvEqs4}, or their average. Lots of coefficients, but we can
+absorb some into rescaled quantities
+$\tilde{u} = c_2\,u$,
+$\tilde{v} = c_1\,v$,
+$\tilde{a_1} = a_1/c_2$,
+$\tilde{b_1} = b_1/c_1$,
+$\tilde{a_2} = a_2/c_2$,
+$\tilde{b_2} = b_2/c_1$,
+and by using $A_1$ expression for $w$ factored out the pair of $u=0$
+roots:
+\bea
+\tilde{f}(\tilde{u},\tilde{v}) &=&
+  \tilde{u}\,A_1 - \tilde{v}\,A_2 = 0
+\,,\qquad  deg(f) = 2
+\continue
+\tilde{g}(\tilde{u},\tilde{v}) &=&
+ \left(2\,A_1^2
+ - c_1\,\tilde{v}\right)
+ \left(\tilde{u}+2\,\tilde{v}\right)^2
+ +\,e_2^2\,\tilde{v}^2 = 0
+\,,\qquad  deg(g) = 4
+\continue
+\mbox{where } &&
+A_1 = \mu_1+\tilde{a_1}\,\tilde{u}+\tilde{b_1}\,\tilde{v}
+\,,\qquad
+A_2 = \mu_2+\tilde{a_2}\,\tilde{u}+\tilde{b_2}\,\tilde{v}
+\,,
+\label{PKinvEqs5a}
+\eea
+so we are down to 10 coefficients. Note that $e_2 \in \reals_{+}$, and if
+we agree that  $\mu_1 > -\mu_2 > 0$ vi can rescale the first equation so
+that in new time units $\tilde{\mu}_1 =1$, $\tilde{\mu}_2 = \mu_2/\mu_1
+\in \reals_{-}$, so there are 9 coefficients in all. I see no further
+rescaling simplification.
 
 \item[2012-04-29 Predrag]
 Up to a factor of 2 this equation as what Lei had as of {[2012-04-26]}
@@ -1816,18 +1847,80 @@ bivariate polynomials is not easy.'' It seems to be front-line research
 topic in algebraic varieties that you can learn about at 5pm today.
 Uurgh.
 
-\item[2012-04-29 Daniel] Stupid AT\&T... my internet has been down. Been working
-on a slightly different tangent that may \emph{perhaps} be useful, so I'll
-report it. Setting the equation for $\dot{\psi}$ in the polar form of
-the \twoMode\ system to zero, one can solve for $\sin{\psi}$. Since $-1 \leq \sin{\psi}\leq 1$, 
-one can show that any solution must satisfy the following two conditions in
-$(r_1,r_2)$ space:
+\item[2012-04-29 Daniel] Stupid AT\&T... my internet has been down. Been
+working on a slightly different tangent that may \emph{perhaps} be
+useful, so I'll report it. Setting the equation for $\dot{\psi}$ in the
+polar form of the \twoMode\ system to zero, one can solve for
+$\sin{\psi}$. Since $-1 \leq \sin{\psi}\leq 1$, one can show that any
+solution must satisfy the following two conditions in $(r_1,r_2)$ space:
+\beq
+\dfrac{c_2}{2 c_1}r_1^2 + \left(r_2 \pm \dfrac{e_2}{4 c_1}\right)^2
+  \geq \left(\dfrac{e_2}{4 c_1}\right)^2
+\ee{2modeSinCond}
+The $+$ condition is satisfied for any $r_1,\,r_2\,\geq 0$, but the $-$
+condition is an additional constraint on what $r_1$ and $r_2$ can be.
+Might prove useful if we have to brute force search for roots.
 
-$$\dfrac{c_2}{2 c_1}r_1^2 + \left(r_2 \pm \dfrac{e_2}{4 c_1}\right)^2 \geq \left(\dfrac{e_2}{4 c_1}\right)^2$$
+\item[2012-04-29 Predrag to Daniel] This looks promising. Repeat the
+argument for invariant polynomials using \refeq{Dang86(1.2)polar}.
+From \refeq{PKinvEqs4}
+\bea
+  q &=&  2\,u |v|^{1/2} \sin \psi = \frac{e_2\,u\,v}{c_2\,u+2\,c_1\,v}
+  \,,
+\label{PKinvEqs7}
+\eea
+and you might get similar useful bounds from the formulas for $w$.
 
-The $+$ condition is satisfied for any $r_1,\,r_2\,\geq 0$, but the $-$ condition is an additional constraint on what $r_1$ and $r_2$ can be. Might prove useful if we have to brute force search for roots.
 
-\item[2012-04-29 Daniel to Gang] {\bf \color{red}IMPORTANT!} Updated notation in 2mode "paper", blog, and MY matlab codes from $z_1 = x_1 + i y_1$ and $z_2=x_2 + i y_2$ to $z_1 = x_1 + i x_2$ and $z_2 = y_1+ i y_2$ to reflect notation used in analysis of Complex Lorenz in DasBuch as per Predrag's request. Although we've sort of moved on to $(u,v,w,q)$, I suggest that everybody take notice and start using this notation if you need to use 4D cartesian coordinates for anything. In fact, if you have used the notation $z_1 = x_1 + i y_1$ and $z_2=x_2 + i y_2$ in your codes, take 15 minutes and update it (simple find and replace works wonders here. First, rename $y_1$ to something else, say $k$, then rename $x_2$ to $y_1$, and finally replace $k$ with $x_2$.) so it doesn't come back and bite us later.
+\item[2012-04-29 Daniel to Gang] {\bf \color{red}IMPORTANT!} Updated
+notation in 2mode "paper", blog, and MY matlab codes from $z_1 = x_1 + i
+y_1$ and $z_2=x_2 + i y_2$ to $z_1 = x_1 + i x_2$ and $z_2 = y_1+ i y_2$
+to reflect notation used in analysis of Complex Lorenz in DasBuch as per
+Predrag's request. Although we've sort of moved on to $(u,v,w,q)$, I
+suggest that everybody take notice and start using this notation if you
+need to use 4D cartesian coordinates for anything. In fact, if you have
+used the notation $z_1 = x_1 + i y_1$ and $z_2=x_2 + i y_2$ in your
+codes, take 15 minutes and update it (simple find and replace works
+wonders here. First, rename $y_1$ to something else, say $k$, then rename
+$x_2$ to $y_1$, and finally replace $k$ with $x_2$.) so it doesn't come
+back and bite us later.
+
+\item[2012-04-29 Predrag] We are using the invariant polynomials
+$\{u,v,w,q\}$ dynamics only to develop intuition, everything has to do be
+done in $\pS = \{x_1,x_2,y_1,y_2\}$ and \slice\ $\pSRed$ as well. You can
+see that even for the simplest conceivable $\SOn{2}$ 4-dimensional flow
+one has to think about how to construct the invariant polynomial basis,
+and I cannot imagine anyone could do it for high\dmn\ flows.
+
+\item[2012-04-29 Predrag] Went to talk, told Jason Cantarella about our
+bivariate polynomials. As we are interested in the positive $u,v > 0$
+quadrant only, he suggest constructing vector fields from our two
+polynomials, and checking the flow on $u=0$ and $v=0$ axes, and some
+enclosing curve; then use Hopf index theorem to count the minimal number of
+enclosed zeros.
+
+\item[2012-04-29 Predrag] Factored out the pair of $u=0$ roots and got
+our \reqv\ equations down to \refeq{PKinvEqs5a}, of degree $deg(f) \cdot
+deg(g) = 2 \cdot 4$ and we are down to 9 coefficients, of which one is
+positive and one is negative. {\color{red}Please check my algebra},
+confirm here when done.
+
+$g(u,v)$ and especially $f(u,v)$ in \refeq{PKinvEqs5} look pretty simple,
+so I'm thinking one can simply color-code their signs (zeros are then
+'nulclines'). The \eqva\ are the intersections of two sets of curves -
+might be a quick way to develop an intuition about roles of various
+parameters, especially if you code it as something interactive where
+parameters are sliders.
+
+\item[2012-04-29 Predrag to Bryce and Lei] Just to make command and
+control structure clear: you are writing the \twoMode\
+\HREF{http://www.cns.gatech.edu/~predrag/courses/PHYS-7224-12/grading.html}
+{project report}. Keith is writing a separate one on return maps, and
+Daniel will continue being your adviser; he will join you later in a write-up
+if we use it for a publication or include it into ChaosBook. To view just
+the project (without this blog) toggle the \texttt{draftfalse} switch in
+siminos/cgang/setup2modes.tex.
+
 
 
 \end{description}
