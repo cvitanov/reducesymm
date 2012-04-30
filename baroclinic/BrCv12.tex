@@ -10,11 +10,11 @@
                         \paperfalse\PDFtrue %% hyperlinked        %%
                         \OUPfalse \articlefalse  %% ChaosBook %%%%%%
 
-    \ifarticle
-\documentclass[letter,10pt,openany]{article}
-    \else
+\ifboyscout % blog / project switch
 \documentclass[letter,10pt,openany]{book}
-    \fi %end of article switch
+    \else
+\documentclass[letter,10pt,openany]{article}
+    \fi %end of project switch
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{color}\usepackage{url}
 \usepackage{fancyhdr}\usepackage{alltt}
@@ -25,8 +25,8 @@
 
 \input ../inputs/setupBlog      %% logical chores (nothing to edit)
 %%%% Toggle between draft and non-draft versions
-  %\boyscoutfalse               % public, for hyperlinked ChaosBook/projects
-    % Toggle between draft and non-draft for article
+  \boyscoutfalse               % public, for hyperlinked ChaosBook.org/projects/
+
 \input ../inputs/editsDasbuch   %% editing comments, DasBuch style
 \input ../inputs/def            %% do not edit; always update by copying
                                 %% dasbuch/book/inputs/def.tex
@@ -69,11 +69,18 @@
 
 \begin{document}
 
+    \ifboyscout
 \input blogTitle
+    \else
+\input projectTitle
+    \fi
 \maketitle
 
+    \ifboyscout
 \thispagestyle{empty}
 \tableofcontents
+    \fi
+
 \input intro
     \ifboyscout
 %% the remaining files: templates for an article
