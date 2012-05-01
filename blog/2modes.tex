@@ -1904,7 +1904,10 @@ From \refeq{PKinvEqs4}
 \eea
 and you might get similar useful bounds from the formulas for $w$.
 
-\item[2012-04-30 Daniel] Using \refeq{PKinvEqs7}, basically yields eq. \refeq{2modeSinCond} written in $u$'s and $v$'s. Using the equations for $w$ may result seems to result in a different condition, though. Will double check what I have on MARTA and post it when I get to Tech.
+\item[2012-04-30 Daniel] Using \refeq{PKinvEqs7}, basically yields eq.
+\refeq{2modeSinCond} written in $u$'s and $v$'s. Using the equations for
+$w$ may result seems to result in a different condition, though. Will
+double check what I have on MARTA and post it when I get to Tech.
 
 \item[2012-04-29 Daniel to Gang] {\bf \color{red}IMPORTANT!} Updated
 notation in 2mode "paper", blog, and MY matlab codes from $z_1 = x_1 + i
@@ -2024,26 +2027,71 @@ I'm thinking not to switch back. The reason is that $c_1$ and $c_2$ in
 Dangelmayr's paper can only take the values $\pm1$ and I follow this in
 \texttt{dangelmayr\_so2\_int.nb}, so the gain in search space reduction is
 not huge compared to the potential errors if I use 2 sets of parameters.
-Also it keeps the code more readable. If we relax 
+Also it keeps the code more readable. If we relax
 restrictions on $c_1$, $c_2$, I will certainly switch to scaled variables.
 
-\item[2012-04-30 Evangelos] In \texttt{siminos/cgang/Evangelos/dangelmayr\_so2\_int.nb} 
+\item[2012-04-30 Evangelos] In \texttt{siminos/cgang/Evangelos/dangelmayr\_so2\_int.nb}
 I plot nullclines of \refeq{PKinvEqs5} to help with counting the number of
 zeros. You can use some slidebars to vary parameters and experiment. You can
 also experiment with phase-space plots of a typical trajectory and any relative
-equilibria found numerically. 
+equilibria found numerically.
 
 \item[2012-04-30 Evangelos] In \texttt{dangelmayr\_so2\_int.nb}, apart from
 the nullclines, I plot the zero contour of $w^2+q^2-4u^2v$ to check whether
 the syzygy is satisfied. It appears that the latter coincides with the $g(u,v)=0$
 contour. Where does this come from? In deriving $f(u,v)=g(u,v)=0$ we did not
 use the syzygy (at least not when I rederived it), so I thought it would impose
-a further constraint satisfied exactly at the intersection of $f(u,v)=0$, 
+a further constraint satisfied exactly at the intersection of $f(u,v)=0$,
 $g(u,v)=0$ for valid solutions. Why does it instead coincide with $g(u,v)$?
 
 \item[2012-04-30 Evangelos to Predrag] I've tried your $\mu_1>-\mu_2>0$
-suggestion but I cannot detect an interesting case. On the other hand with 
+suggestion but I cannot detect an interesting case. On the other hand with
 $\mu_2>-\mu_1>0$ I find chaos but no relative equilibria. We need to get more
 insight into stability of relative equilibria.
+
+Unitary transformations preserve the magnitude of a complex vector
+$\norm{\ssp} = \norm{\LieEl(\gSpace)\ssp}$, so $\LieEl^\dagger\LieEl=1$.
+Expanding the norm to leading order in $\gSpace$
+$\braket{(1+\gSpace\Lg)}{(1+\gSpace\Lg)}$ shows that the generators
+are antihermitian, $\Lg^\dagger = - \Lg$, and from that it follows by complex conjugation
+of the dot product $\ssp\dagger \Lg \ssp$ that
+$\ssp^\dagger \Lg \ssp =0$ for any vector $\ssp \in \reals^d$.
+
+\item[2012-04-30 Predrag]                           \toCB
+To evaluate the slice condition for unitary groups (like our
+$\Un{1}$-equivariant \twoMode\ system)
+\beq
+\frac{\partial}{\partial \gSpace} \norm{\ssp-\LieEl\slicep}^2 =0
+\,,
+\ee{120429_5}
+start by expanding
+\[
+    (\ssp-\LieEl\slicep)^\dagger (\ssp-\LieEl\slicep)
+= \norm{\ssp}^2
+  - \slicep{}^\dagger\LieEl^\dagger\ssp - \ssp^\dagger\LieEl\slicep
+  + \norm{\slicep}^2
+\]
+ so
+\bea
+\frac{\partial}{\partial \gSpace}
+    (\ssp-\LieEl\slicep)^\dagger (\ssp-\LieEl\slicep)
+&=& -\frac{\partial}{\partial \gSpace}
+(\slicep{}^\dagger\LieEl^\dagger\ssp - \ssp^\dagger\LieEl\slicep)
+ = -2\,\Re \left(\ssp^\dagger \frac{\partial \LieEl}{\partial \gSpace} \slicep\right)
+\continue
+&=& - 2\,\Re \left(\ssp^\dagger \LieEl \Lg \slicep\right)
+\,.
+\label{120429_6}
+\eea
+Substitute $\ssp=\LieEl\sspRed$.
+    \PC{This is OK for abelian groups, as $\LieEl \Lg = \LieEl \Lg$, but
+    have to redo it more carefully for nonabelian groups.}
+This yields the \emph{slice condition} for unitary groups:
+\beq
+    \Re(\sspRed^\dagger \Lg \slicep)=0
+\ee{120430_11}
+We will need it, if the C Gang prefers to work with a \statesp\ in
+$\complex^2$ rather than $\reals^4$. My problem is that I cannot
+visualize $\complex^2$, hence I am stuck in the material world.
 
 \end{description}
