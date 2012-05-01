@@ -482,6 +482,7 @@ where the primes denote perturbations around the mean state. Replacing this in \
 \begin{eqnarray}
 \left(\frac{\partial}{\partial t}+U \frac{\partial}{\partial x}\right)\left(\nabla^2 \psi_1 + F(\psi_2-\psi_1)\right) +\frac{\partial \psi_1}{\partial x}(\beta + 2FU) = 0 \nonumber \\
 \left(\frac{\partial}{\partial t}+U \frac{\partial}{\partial x}\right)\left(\nabla^2 \psi_2 + F(\psi_1-\psi_2)\right) +\frac{\partial \psi_2}{\partial x}(\beta - 2FU) = 0 \nonumber \\
+\label{model_eq}
 \,,
 \end{eqnarray}
 where we have dropped the primes. This can be written in matrix form as:
@@ -594,8 +595,8 @@ each dimension of it \footnote{This view is due to Hopf, who's insight on
 turbulence where way ahead of his time; and have proven to be an
 invaluable tool (see \refref{hopf48})}. However, the number of dimension
 consider in practice is finite and limited either by the computer power
-available, or the smallest scale one can actually solve. So that there
-was a time were considering only a handful of dimensions was possible.
+available, or the smallest scale one can actually solve. No long time ago
+considering only a handful of dimensions was possible.
 Nowadays, computer power is such that DNS\footnote{Direct Numerical
 Simulations. The approach of this method is to solve Navier-Stoke
 equations up to the scale where dissipation occurs and kinetic energy is
@@ -618,8 +619,7 @@ to find them.
 
 Nonetheless, their role in dynamics is of such importance (see
 \refref{skeleton}) that these intrinsic difficulties should not
-discourage us from seeking for them. Invariant solutions play important
-roles in the dynamics of the system, and they can be thought to represent
+discourage us from seeking for them. For instance, invariant solutions can be thought to represent
 the coherent structures that characterize turbulent dynamics (see
 \refrefs{Christiansen96,Visw07b}). In this view, the system spends some
 time in a neighbor near one of this solutions, then jumps to the next and
@@ -628,12 +628,24 @@ most striking is that this cycles resemble closely turbulent
 trajectories, and are hard to tell apart from them. In fact, the
 measurable quantities of a system depend mostly on these invariant
 solutions (see \refref{DasBuch}), so that finding them gives a better
-understanding of the system.
+understanding of the system. In this study we give the first steps towards
+finding these solutions in a baroclinic instability model by showing a plausible way to reduce the symmetries of the system.
 
-We need to define these invariant solutions in a quantitative manner
-before we can start looking for them. For this, let us think again in
-terms of the physical space \refeq{NS1}. Note that we can write the
-system as:
+Reducing the symmetries greatly simplifies the search of this structures. As solution do not
+wonder as much in the reduced state space. In this space, traveling waves
+reduce to equilibrium points, relative periodic orbits to periodic orbits and equilibrium points
+are conserved. Our tool of choice for this reduction is the method of slices. We are interested
+in rotating all the solutions to a hyperplane which intersects all symmetry group tangents. For
+this we impose the condition:
+
+\beq
+\frac{\partial}{\partial \gSpace} \norm{\ssp-\LieEl\slicep}^2 =0
+\,,
+\ee{mini}
+
+where $\ssp$ is our vector in state space, $\gSpace$ the rotatting frame (i.e. the angle is solution is rotated) and $\slicep$ a template representative of our local dynamics. Of course, our slice would not be good for the entire manifold, and it is necessary to consider a set of this slices in order to capture the entire dynamics of the system \refref{atlas12}. More details of this will be given in the next section.
+
+Once we are done with the slicing, the hope is that this makes it easier to look for this invariant solutions. After all, the "dancing" solutions have been settled to the slice. But first, we need to define them in a quantitative manner so it is clear what we mean by invariant solutions. First, let's think again in terms of physical space \refeq{NS1}. Note that we can write the system as:
 \begin{eqnarray}
 \frac{\partial \textbf{u}}{\partial t}
 =F(\textbf{u})
@@ -642,7 +654,7 @@ f^{t}(\textbf{u})=\textbf{u}+\int_{0}^{t}{F(\textbf{u}) d \tau}
 \,,
 \label{NS4}
 \end{eqnarray}
-thus we are seeking solutions of the following form (as shown in \refref{GHCW07}):
+thus, we are seeking solutions of the following form (as shown in \refref{GHCW07}):
 \begin{eqnarray}
 F(\textbf{u}_{EQ}) &=& 0 \continue
 F(\textbf{u}_{TW}) &=& -c \cdot \nabla \textbf{u}_{TW} \continue
@@ -657,22 +669,81 @@ and \rpo s.
 
 Finally, note that one additionally aspect  one should care about is the
 connection between these different solutions. That is, how is one to get
-from one recurrent pattern to the other. For this it is common to study
-heteroclitic connections (the path that exactly connect one invariant
-solution to another; see for instance \refref{GHCV08}), as these organize
+from one recurrent pattern to the other. Heteroclitic connections (the path that exactly connect one invariant
+solution to another; see for instance \refref{GHCV08}), are commonly studied for this purposes as these organize
 how the flow transits from one manifold to the next.
+
+As stated, we limit ourselves to show how to make the slicing, hoping this would encourage more in depth study of the subject. However, we briefly discuss next how to start searching for the recurrences in the system one the slicing is completed.
 
 \subsection{Finding invariant solutions}
 
-Finding invariant solution of a system with high number of dimension is not an easy task. In doing so one is required to use a numerical method to find them. However, due to the fact that huge Jacobian matrix would have to be computed, implementing the Newton-Raphson standard search method is not an option. Moreover, when other algorithms are used, the initial guess for the periodic orbit must be good enough so that the algorithm converges to the desired solution.
+Finding invariant solution of a system with high number of dimension is not an easy task. And it is even harder if we do not reduce the symmetries first. In doing so one is required to use a numerical method to find them. However, due to the fact that huge Jacobian matrix would have to be computed, implementing the Newton-Raphson standard search method is not an option. Moreover, when other algorithms are used, the initial guess for the periodic orbit must be good enough so that the algorithm converges to the desired solution.
 
-To search for periodic orbits a basic approach is to use ... \SOA{I plan to talk about some search algorithm here}
+But not all hopes are lost. Algorithms to find this structures have been implemented and used successfully in a variety of simulations\SOA{Insert references in the future)} (see for instance \refref{Visw07b}). This methods depend on initial guesses of this periodic orbits, and there are several approaches one can take to make the right ones. One of this approaches is given in \refref{Visw07b}, where the rate of energy dissipation and energy input for a system is computed based on the velocity field, and then plotted together. This way the entire multidimensional system is projected into two physical meaningful dimensions and guesses are made based on approximate recurrences of the traced curve.  \SOA{FIGURE I will put her one of the figures of Viswanath's paper}
 
-An approach to find initial guesses is given by Viswanath (\refref{Visw07b}). Where the rate of energy dissipation and energy input for a system is computed based on the velocity field, and the trajectories for this two dimensional projection plotted (FIGURE \SOA{I will put her one of the figures of Viswanath's paper}).
-
-In this study we focus on finding the possibility of a periodic orbit based on Viswanath's criteria to find initial guesses (\refsect{s:model}). That is, we search for close recurrences of the flow based on two dimensional projections of the d-dimensional space. We hope that this shows the possibility of the existence of periodic orbits in this setup of baroclinic instability, and motivates a search for them in the near future.
+After reducing the symmetries, the next step would be to evaluate the possibility of a periodic orbit based on Viswanath's criteria discussed here. That is, to search for close recurrences of the flow based on two dimensional projections of the d-dimensional space. However, we proceed one step at a time. So let us go back to reducing the symmetry.
 
 \subsection{Symmetry Reduction}
+Up to here we have gather enough background to start making attempts to reduce the symmetry. The system to consider is that of Section \ref{s:qg}. And the code is the same as the one programmed by Bracco in \refref{Bracco03}\footnote{Without bottom topography or beta effect.}. The typical results of the simulation are shown in figure \ref{f:fouriervort3}.
 
-\section{Invariant Solutions in the nonlinear baroclinic stability model}
-\label{s:model}
+    \begin{figure}[t]
+    \begin{center}
+    \includegraphics[width=0.9\textwidth, clip=true]{Vort_example}
+    \end{center}
+    \caption{Vorticity field ($\xi$) for the top layer in the model.}
+    \label{f:fouriervort2}
+    \end{figure}
+
+The code makes uses a pseudo-spectral method to solve the nonlinear PDE given in \ref{model_eq} but with $\beta=0$ and $\psi_2 =  U y + \psi_2'$. For this Fast Sine Transforms are used along the $y$ direction, and Fast Fourier Transforms along the $x$ direction . This means that the vorticity can be represented as:
+
+    \begin{figure}[t]
+    \begin{center}
+    \includegraphics[width=0.9\textwidth, clip=true]{fourier_example}
+    \end{center}
+    \caption{Spectral representation of the vorticity field
+    ($ln(1+abs(a_{lk}))$). Note that some frequencies are just the complex
+    conjugate of others.}
+    \label{f:fouriervort3}
+    \end{figure}
+
+    \beq
+    \xi(x,y)=\sum_{k=0}^{N-1} a_{lk} e^{-2 i \pi k x/N}
+    \ee{fft}
+
+Additionally the system has periodic boundaries along the $x$ axis, so it has a continuous symmetry along this axis $\xi(x)=\xi(x+L_x)$; where $L_x$ stands for the length of the domain. The one-parameter rotation group acting on this variable, would be then given by (see \refref{ACHKW11}):
+
+\beq
+\LieEl(\gSpace)=\textrm{diag}\{e^{-2 i \pi k \gSpace/N}\}
+\ee{gpara}
+
+When acting on a point in stat space ($\LieEl(\gSpace) a$), the effect of $\LieEl$ is to translate the solution along $x$ without changing any o the properties of the simulation. In state space, the group orbit traces a trajectory which topologically is a circle. The group tangent of the circle at point $a$ is given by the derivative of $\LieEl$:
+
+\beq
+\textbf{T}=\textrm{diag}\{-2 i \pi k /N\}
+\ee{gpara2}
+
+Now, to reduce the symmetry, we select a template representative our our physical simulation (the slice $a'$), and seek for the rotating frame $\gSpace(t)$ that continually rotates a trajectory back to the slice. This, by making use of condition \ref{mini}. Care is taken as we are dealing with complex vectors, so that the norm represents the multiplication of a vector with its conjugate transform. That is, starting with:
+
+\beq
+\frac{\partial}{\partial \gSpace} \norm{\ssp-\LieEl\slicep}^2 =0
+\,,
+\ee{min2}
+
+expanding, simplifying and noting that $\Re(\ssp^\dagger \Lg \ssp)=0$ one arrives at the slicing condition:
+
+\beq
+    \Re(\sspRed^\dagger \Lg \slicep)=0
+\ee{min3} 
+
+which is surprisingly similar to the one obtained for real cases. Translating it into a somewhat more implementable equation gives:
+
+\beq
+    \Re(\sspRed^\dagger \Lg \slicep)=Re\left(\frac{-2 \pi i}{N} \sum_{k=0}^{N-1} \sum_{k=0}^{M-1} \overline{u_{lk}} u'_{lk} k e^{\frac{-2 \pi i k}{N} \gSpace}\right)=0
+\ee{min4} 
+
+Now we are all set to seek for this solutions. A Newton-Raphson seeking method can be implemented by using $F(\gSpace)=\Re(\sspRed^\dagger \Lg \slicep)$ and $F'(\gSpace)=\frac{\partial}{\partial \gSpace}\Re(\sspRed^\dagger \Lg \slicep)$ for each time step. Effort are being carried right now to implement this algorithm, however for the time being we only provide here the methodology.
+
+\section{Acknowledgments}
+The author would like to acknowledge the valuable discussions and advise obtained during the course of the semester from Professors Predrag Cvitanovi{\'c}, Annalisa Bracco and Peter J. Webster. 
+%\section{Invariant Solutions in the nonlinear baroclinic stability model}
+%\label{s:model}
