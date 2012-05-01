@@ -1880,35 +1880,6 @@ bivariate polynomials is not easy.'' It seems to be front-line research
 topic in algebraic varieties that you can learn about at 5pm today.
 Uurgh.
 
-\item[2012-04-29 Daniel] Stupid AT\&T... my internet has been down. Been
-working on a slightly different tangent that may \emph{perhaps} be
-useful, so I'll report it. Setting the equation for $\dot{\psi}$ in the
-polar form of the \twoMode\ system to zero, one can solve for
-$\sin{\psi}$. Since $-1 \leq \sin{\psi}\leq 1$, one can show that any
-solution must satisfy the following two conditions in $(r_1,r_2)$ space:
-\beq
-\dfrac{c_2}{2 c_1}r_1^2 + \left(r_2 \pm \dfrac{e_2}{4 c_1}\right)^2
-  \geq \left(\dfrac{e_2}{4 c_1}\right)^2
-\ee{2modeSinCond}
-The $+$ condition is satisfied for any $r_1,\,r_2\,\geq 0$, but the $-$
-condition is an additional constraint on what $r_1$ and $r_2$ can be.
-Might prove useful if we have to brute force search for roots.
-
-\item[2012-04-29 Predrag to Daniel] This looks promising. Repeat the
-argument for invariant polynomials using \refeq{Dang86(1.2)polar}.
-From \refeq{PKinvEqs4}
-\bea
-  q &=&  2\,u |v|^{1/2} \sin \psi = \frac{e_2\,u\,v}{c_2\,u+2\,c_1\,v}
-  \,,
-\label{PKinvEqs7}
-\eea
-and you might get similar useful bounds from the formulas for $w$.
-
-\item[2012-04-30 Daniel] Using \refeq{PKinvEqs7}, basically yields eq.
-\refeq{2modeSinCond} written in $u$'s and $v$'s. Using the equations for
-$w$ may result seems to result in a different condition, though. Will
-double check what I have on MARTA and post it when I get to Tech.
-
 \item[2012-04-29 Daniel to Gang] {\bf \color{red}IMPORTANT!} Updated
 notation in 2mode "paper", blog, and MY matlab codes from $z_1 = x_1 + i
 y_1$ and $z_2=x_2 + i y_2$ to $z_1 = x_1 + i x_2$ and $z_2 = y_1+ i y_2$
@@ -2101,5 +2072,42 @@ visualize $\complex^2$, hence I am stuck in the material world.
 \item[2012-05-01 Lei] Discussed with Bryce and trying to finish our term paper by summarize all we have about PK system. I'm really confused about the LaTeX templates used in the paper, so I wrote in my own templates and put it in cgang/2-mode-Bryce-Lei. Other sections just copied from the previous paper, rewrite a little using my own words. Just begins, keep moving.
 
 \item[2012-05-01 Lei to Predrag] Still can't login using cnsuser cnsweb...
+
+\item[2012-05-01 Daniel] Following up on Predrag's cry in the wilderness of 2012-04-29, we need the trace of the stability matrix, 
+\(
+tr(A) = \sum \lambda_e > - \sum \lambda_c
+\,,\) 
+to be greater than zero. For future reference, the trace of the stability matrix for a generic point is given by
+\begin{equation}
+tr(A) = 2(\mu_1\,+\,\mu_2)\,+\,(4 a_1\,+\,2 a_2)\,u\,+\,(2 b_1\,+\,4 b_2)\,v
+\label{2ModeStabTrace}
+\end{equation}
+This agrees with my earlier result of 2012-04-27 for the origin, but may allow us to put further constraints on the parameter choices, especially since $u,\,v \geq 0$.
+
+\item[2012-04-29 Daniel] Here's a couple of other results that may be useful
+for constraining paramter choices or looking for \reqva. 
+Setting the equation for $\dot{\psi}$ in the
+polar form of the \twoMode\ system to zero or starting from the equation for $q$ in eqs. \refeq{PKinvEqs4} and the fact the fact that $q =  2\,u |v|^{1/2} \sin \psi$, one can solve for
+$\sin{\psi}$. Since $-1 \leq \sin{\psi}\leq 1$, one can show that any
+solution must satisfy the following two conditions in $(r_1,r_2)$ space:
+\beq
+\dfrac{c_2}{2 c_1}r_1^2 + \left(r_2 \pm \dfrac{e_2}{4 c_1}\right)^2
+  \geq \left(\dfrac{e_2}{4 c_1}\right)^2
+\ee{2modeSinCond}
+The $+$ condition is satisfied for any $r_1,\,r_2\,\geq 0$, but the $-$
+condition is an additional constraint on what $r_1$ and $r_2$ (or $u$ and $v$) can be.
+Might prove useful if we have to brute force search for roots.
+
+If one starts with the $A_1$ equation for $w$ in \refeq{PKinvEqs4} and $w =  2\,u |v|^{1/2} \cos \psi$ and uses the constraint that $\cos{\psi} \leq 1$, you can work out that
+\beq
+\dfrac{a_1}{b_1}r_1^2\,+\,\left(r_2\,+\,\dfrac{c_1}{2 b_1}\right)^2\,\geq\,\dfrac{c_1^2\,-\,4 \mu_1 b_1}{4 b_1^2}
+\ee{2ModeCosCond1}
+
+This result and the conditions from the range of $\sin$ \refeq{2modeSinCond} are nice but not great because they tell us that the $r$'s must lie \emph{outside} of particular ellipses (i.e., where the root are not, but not where the roots \emph{are}). However, it
+seems (unless I messed up the algebra, so {\color{red} somebody please double check this and report back here}) that the final condition $\cos{\psi} \geq -1$ gives the more powerful constraint
+\beq
+\dfrac{a_1}{b_1}r_1^2\,+\,\left(r_2\,-\,\dfrac{c_1}{2 b_1}\right)^2\,\leq\,\dfrac{c_1^2\,-\,4 \mu_1 b_1}{4 b_1^2}
+\ee{2ModeCosCond2}
+This constraint tells us that valid $r$'s need to be \emph{inside} of a certain ellipse, which really cuts down on the available \statesp! Furthermore, the lefthand side of the inequality is non-negative, so the righthand side must also be non-negative.
 
 \end{description}

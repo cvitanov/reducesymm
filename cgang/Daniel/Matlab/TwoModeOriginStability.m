@@ -28,7 +28,8 @@ V = [x1dot x2dot y1dot y2dot]';
 
 % Calculate the stability matrix
 disp('Then, we calculate stability matrix, A = jacobian(V,X) at {0,0,0,0}')
-A = jacobian(V,X);
+A = jacobian(V,X)
+tr = simple(trace(A) - (2*(mu1 + mu2) + (4*a1+2*a2)*(x1^2+x2^2) + (2*b1+ 4*b2)*(y1^2+y2^2)))
 
 A = subs(A,{x1,x2,y1,y2},{0,0,0,0})
 
