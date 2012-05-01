@@ -285,10 +285,10 @@ This means that the vorticity can be expressed as:
     \beq
     \xi(x,y)=\sum a(l)_{k} e^{-2 i \pi k x/M}
     \ee{120429_1}
-So as stated in \refref{ACHKW11}, $g(\phi)=diag(e^{-2 \pi i k \phi /M})$
+So as stated in \refref{ACHKW11}, $\LieEl(\gSpace)=diag(e^{-2 \pi i k \gSpace /M})$
 and $\Lg=diag(-2 \pi i k/M)$.
 
-Now, the slice condition is given by $g( a_{kl}^T \phi(t))^T \Lg a'_{kl}$,
+Now, the slice condition is given by $\LieEl( a_{kl}^T \gSpace(t))^T \Lg \slicep_{kl}$,
 so I express the matrix as a vector:
     \beq
     a_{kl}=
@@ -302,28 +302,28 @@ and carry out the slice condition, which looks something as:
     a_{11} \\ a_{12}\\ \cdots \\ a_{1N}\\\cdots\\a_{MN}\\
     \end{pmatrix}^T
     \begin{pmatrix}
-    e^{-2 \pi i \phi /M} & 0& \cdots & 0\\
-    0 &  e^{-4 \pi i \phi /M}& \cdots & 0\\
+    e^{-2 \pi i \gSpace /M} & 0& \cdots & 0\\
+    0 &  e^{-4 \pi i \gSpace /M}& \cdots & 0\\
     \vdots & \ddots& \ddots & \vdots\\
-    0 & 0& \cdots & e^{-2 N \pi i \phi /M}
+    0 & 0& \cdots & e^{-2 N \pi i \gSpace /M}
     \end{pmatrix}\\
     \continue
     \cdot
     \begin{pmatrix}
     -2 \pi i /M & 0& \cdots & 0\\
-    0 &  -4 \pi i \phi /M& \cdots & 0\\
+    0 &  -4 \pi i \gSpace /M& \cdots & 0\\
     \vdots & \ddots& \ddots & \vdots\\
     0 & 0& \cdots & -2 N \pi i  /M
     \end{pmatrix}
     \begin{pmatrix}
-    a'_{11} \\ a'_{12}\\ \cdots \\ a'_{1N}\\\cdots\\a'_{MN}\\
+    \slicep_{11} \\ \slicep_{12}\\ \cdots \\ \slicep_{1N}\\\cdots\\\slicep_{MN}\\
     \end{pmatrix}^T = 0
     \label{120429_3}
     \eea
 which after carrying it out gives me something as (but I have to check the algebra):
     \beq
-    g(\phi(t))^T a_{kl}^T T a'_{kl}
-     =\sum_{n=1} \left[n e^{-i n \phi}\left(\sum_{m=1}a_{mn}a'_{mn}\right)\right]=0
+    \LieEl(\gSpace(t))^T a_{kl}^T T \slicep_{kl}
+     =\sum_{n=1} \left[n e^{-i n \gSpace}\left(\sum_{m=1}a_{mn}\slicep_{mn}\right)\right]=0
     \ee{120429_4}
 I guess the next step would be to apply a Newton-Raphson to
 \refeq{120429_4}. However, I am not sure how this would work, as the
@@ -391,8 +391,8 @@ does shift it by $\gSpace$, \ie,  $\LieEl(\gSpace)\ssp$ is the same $2D$
 picture, but shifted by $\gSpace$.
 
 \item[2012-04-30 Sebastian]
-I have made a Matlab code that shifts the image by a $\phi$. Using
-$g(\phi)=diag(e^{-2 \pi i k \phi /M})$. Looks as expected when converted
+I have made a Matlab code that shifts the image by a $\gSpace$. Using
+$\LieEl(\gSpace)=diag(e^{-2 \pi i k \gSpace /M})$. Looks as expected when converted
 back to physical space.
 
 \item[2012-04-30 Sebastian]
@@ -442,50 +442,85 @@ toggle the \texttt{boyscoutfalse} switch, towards the top of
 \texttt{siminos/baroclinic/BrCv12.tex} file.
 
 \item[2012-04-30 Sebastian]
-I think I now got the slicing condition. If it is not too late now, I would like to know what you think about it. I start with:
+How do you show that $\slicep^\dagger \Lg \slicep =0$?
 
+\item[2012-04-30 Predrag]
+Unitary transformations preserved the magnitude of a complex vector
+$\norm{\ssp} = \norm{\LieEl(\gSpace)\ssp}$, so $\LieEl^\dagger\LieEl=1$.
+Make $\gSpace$ infinitesimal, and expand
+$\braket{(1+\gSpace\Lg)}{(1+\gSpace\Lg)}$ to leading order in $\gSpace$.
+You should get $\Lg^\dagger = - \Lg$, and from that it follows by complex conjugation
+of the dot product $\slicep^\dagger \Lg \slicep$ that
+$\slicep^\dagger \Lg \slicep =0$.
+
+\item[2012-04-30 Sebastian, Predrag]                                            \toCB
+Derivation of the slice condition for unitary groups:
 \beq
-\frac{\partial}{\partial \phi} \|a-g a'\|^2=0
+\frac{\partial}{\partial \gSpace} \norm{a-\LieEl\slicep}^2 =0
+\,,
 \ee{120429_5}
-
-then
-
+Expand
+\[
+    (a-\LieEl\slicep)^\dagger (a-\LieEl\slicep)
+= \norm{\ssp}^2
+  - \slicep^\dagger\LieEl^\dagger\ssp - \ssp^\dagger\LieEl\slicep
+  + \norm{\LieEl\slicep}^2
+\]
+ so
+\bea
+\frac{\partial}{\partial \gSpace}
+    (a-\LieEl\slicep)^\dagger (a-\LieEl\slicep)
+&=& -\frac{\partial}{\partial \gSpace}
+(\slicep^\dagger\LieEl^\dagger\ssp - \ssp^\dagger\LieEl\slicep)
+ = -2\,\Re \left(\ssp^\dagger \frac{\partial \LieEl}{\partial \gSpace} \slicep\right)
+\continue
+&=& - 2\,\Re \left(\ssp^\dagger \LieEl \Lg \slicep\right)
+\,.
+\label{120429_6}
+\eea
+Substitute $\ssp=\LieEl\sspRed$.
+    \PC{This is OK for abelain groups, as $\LieEl \Lg = \LieEl \Lg$, but
+    have to redo it more carefully for nonabelian groups.}
+This yields the \emph{slice condition} for unitary groups:
 \beq
-\frac{\partial}{\partial \phi} \left((a-g a')^+ (a-g a')\right)=0
-\ee{120429_6}
+\Re(\sspRed^\dagger \Lg \slicep)=0
+\ee{120430_11}
+%\beq
+%\frac{\partial}{\partial \gSpace}
+%\left(a^\dagger a - a^\dagger g\slicep -(g\slicep )^\dagger a+(g\slicep)^\dagger g\slicep \right)
+%\,,
+%\ee{120429_7}
+%carrying out the derivative, nothing that $\partial g/\partial \gSpace =
+%\Lg g$ and grouping terms I arrive to:
+%\beq
+%(a-g\slicep)^\dagger \Lg \LieEl\slicep +(\Lg \LieEl\slicep)^\dagger (a-g\slicep )=0
+%\,.
+%\ee{120429_8}
+%As both terms are a complex numbers and one is the complex conjugate of
+%the other, this means that the imaginary term vanish and the condition
+%can be written:
+%\beq
+%2 \Re[(a-g\slicep)^\dagger \Lg \LieEl\slicep ]=0
+%\,,
+%\ee{120429_9}
+%and $a=g\widehat{a}$, so that
+%\beq
+%2 \Re[(\widehat{a}-\slicep)^\dagger g^\dagger \Lg \LieEl\slicep]=0
+%\ee{120429_10}
+%but
+%$g^\dagger=diag[\overline{e^{-im\gSpace}}]=diag[e^{\overline{-im\gSpace}}]
+%=diag[e^{im\gSpace}]$ so that $g^\dagger \Lg g=\Lg$ an the condition becomes:
+%\beq
+%2 \Re[(\widehat{a}-\slicep)^\dagger \Lg \slicep ]=0
+%\ee{120429_11}
+Now one use condition \refeq{120430_11} for Newton-Raphson now.
 
-expanding
-
-\beq
-\frac{\partial}{\partial \phi} \left(a^+ a - a^+ga'-(ga')^+a+(ga')^+ga'\right)=0
-\ee{120429_7}
-
-carrying out the derivative, nothing that $\partial g/\partial \phi = T g$ and grouping terms I arrive to:
-
-\beq
-(a-ga')^+T g a'+(T g a')^+(a-ga')=0
-\ee{120429_8}
-
-now, as both terms are a complex numbers and one is the complex conjugate of the other, this means that the imaginary term vanish and the condition can be written:
-
-\beq
-2 Re[(a-ga')^+T g a']=0
-\ee{120429_9}
-
-now, $a=g\widehat{a}$ so that
-
-\beq
-2 Re[(\widehat{a}-a')^+g^+T g a']=0
-\ee{120429_10}
-
-but $g^+=diag[\overline{e^{-im\phi}}]=diag[e^{\overline{-im\phi}}]=diag[e^{im\phi}]$ so that $g^+T g=T$ an the condition becomes:
-
-\beq
-2 Re[(\widehat{a}-a')^+T a']=0
-\ee{120429_11}
-
-In the turbulent pipe article, it is argued that as $T a'$ is perpendicular to $a'$ then $a'^+T a'=0$. Since up to here my results have been similar I guess this would also happen. However it is not clear for me that $a'^+T a'=0$. Anyway I guess I could use condition \refeq{120429_11} for Newton-Raphson now.
-
-By the way, I tried to run the model changing the resolution, but results do not look well. Not much happened, energy did not traveled up scale. Small scales are important. I think the simulation starts looking good from 512X128 so I might change to that one. But there is always the chance that I did not change some parameter in the simulation needed when changing scales. I would have to check with Annalisa.
+\item[2012-04-30 Sebastian]
+I tried to run the model changing the resolution, but results
+do not look \PCedit{good}. Not much happened, energy did not traveled up scale.
+Small scales are important. I think the simulation starts looking good
+from $512 \times 128$ so I might change to that one. But there is always the
+chance that I did not change some parameter in the simulation needed when
+changing scales. I would have to check with Annalisa.
 
 \end{description}
