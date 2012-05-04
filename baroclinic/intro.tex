@@ -145,7 +145,7 @@ that case we would have to consider the apparent forces that develop on
 the individual fluid parcels of our flow, one proportional to the
 position (the centrifugal acceleration) and other proportional to the
 velocity (the Coriolis force) of each parcel. However, in geophysical
-applications the former one is often unimportant\footnote{Due to the 
+applications the former one is often unimportant\footnote{Due to the
 departure from sphericity of the earth}\rf{Holton79}, and only the
 effects of the Coriolis Force needs to be consider. Thus, if we repeat
 our experiment from a initial state as before, the motion of the fluid
@@ -213,7 +213,7 @@ to develop the relations between flow properties that need to be meet in
 order for it to remain stable, or become unstable. The study of the motions that
 develops after the initial instability is a more challenging problem as
 nonlinear terms now become important. The hopes are that nonlinear theory
-allow us to extract important knowledge about this phenomena even in high dimensional 
+allow us to extract important knowledge about this phenomena even in high dimensional
 simulations.
 
 \section{Vorticity Equation}
@@ -341,7 +341,7 @@ property must be conserved by each layer, then:
 where the approximation is only valid when Rossby number is small. $H_i$
 is the unperturbed layer thickness, and $h_i'$ is the thickness
 perturbation for layer $i$. Now let us introduce the geostrophic
-equations to approximate the wind and the vorticity. 
+equations to approximate the wind and the vorticity.
 
 First note that from \refeq{Geostrophic} that the velocities only depend on the pressure gradient,
 and that the fluid can be regarded as incompressible if we assume that the vertical gradient of $w$ is small.
@@ -524,7 +524,7 @@ In order to have nontrivial solution the determinant of $\left( \hat{L}+i
 \omega \hat{M}\right)$ must vanish, which gives a relation
 for $\omega$ (i.e. the dispersion relationship for the
 perturbations) and a critical velocity for the flow to be unstable.
-However, in our specific case we would set $\beta =0$ so that the flow would always 
+However, in our specific case we would set $\beta =0$ so that the flow would always
 be unstable.\footnote{Unless the domain is not wide enough for the instability to occur.}
 %    \SOA{Currently making the calculations for this case, just to make
 %    sure that I have the correct dispersion relationship. I don't know if
@@ -547,7 +547,7 @@ Thinking in terms of \statesp\ for the dynamical system
 \footnote{
     That is, decomposing the PDE of the flow into
     a series of ODE for the amplitude of the harmonics.
-} 
+}
 (see\refref{DasBuch}), what was has been done up to here, is to find an equilibrium point of
 the system and analyze its bifurcations. This is no small task, and that
 is the reason of the vast amount of literature published in the subject.
@@ -675,17 +675,22 @@ In this project, we limit ourselves to show how to make the slicing, hoping this
 
 \subsection{Finding invariant solutions}
 
-Finding invariant solution of a system with a high number of dimension is not an easy task. And it is even harder if we do not reduce the symmetries first. In doing so one is required to use a numerical method to find them. However, due to the fact that huge Jacobian matrix would have to be computed, implementing the Newton-Raphson standard search method is not an option. 
+Finding invariant solution of a system with a high number of dimension is not an easy task. And it is even harder if we do not reduce the symmetries first. In doing so one is required to use a numerical method to find them. However, due to the fact that huge Jacobian matrix would have to be computed, implementing the Newton-Raphson standard search method is not an option.
 %Moreover, when other algorithms are used, the initial guess for the periodic orbit must be good enough so that the algorithm converges to the desired solution.
 
 But not all hopes are lost. Algorithms to find this structures have been implemented and used successfully in a variety of simulations\SOA{Insert references in the future)} (see for instance \refref{Visw07b}). This methods depend on initial guesses of this periodic orbits, and there are several approaches one can take to make the right ones. One of this approaches is given in \refref{Visw07b}, where the rate of energy dissipation and energy input for a system is computed based on the velocity field, and then plotted together. This way the entire multidimensional system is projected into two physical meaningful dimensions and guesses are made based on approximate recurrences of the traced curve.  \SOA{FIGURE I will put her one of the figures of Viswanath's paper}
 
-After reducing the symmetries, the next step would be to evaluate the possibility of a periodic orbit based on the criteria discussed here. 
-%That is, to search for close recurrences of the flow based on two dimensional projections of the d-dimensional space. 
+After reducing the symmetries, the next step would be to evaluate the possibility of a periodic orbit based on the criteria discussed here.
+%That is, to search for close recurrences of the flow based on two dimensional projections of the d-dimensional space.
 However, we proceed one step at a time. So let us go back to reducing the symmetry.
 
 \subsection{Symmetry Reduction}
-Up to here we have gather enough background to start making attempts to reduce the symmetry. The system to consider is that of Section \ref{s:qg}. And the code is the same as the one programmed by Bracco in \refref{Bracco03}\footnote{Without bottom topography or beta effect.}. The typical results of the simulation are shown in figure \ref{f:fouriervort3}.
+Up to here we have gather enough background to start making attempts to
+reduce the symmetry. The system to consider is that of Section
+\ref{s:qg}. And the code is the same as the one programmed by Bracco in
+\refref{Bracco03}\footnote{Without bottom topography or beta effect.}.
+The typical results of the simulation are shown in figure
+\ref{f:fouriervort3}.
 
     \begin{figure}[t]
     \begin{center}
@@ -695,7 +700,11 @@ Up to here we have gather enough background to start making attempts to reduce t
     \label{f:fouriervort2}
     \end{figure}
 
-The code makes uses a pseudo-spectral method to solve the nonlinear PDE given in \ref{model_eq} but with $\beta=0$ and $\psi_2 =\psi_2'$. For this, Fast Sine Transforms are used along the $y$ direction, and Fast Fourier Transforms along the $x$ direction . This means that the vorticity can be represented as:
+The code makes uses a pseudo-spectral method to solve the nonlinear PDE
+given in \ref{model_eq} but with $\beta=0$ and $\psi_2 =\psi_2'$. For
+this, Fast Sine Transforms are used along the $y$ direction, and Fast
+Fourier Transforms along the $x$ direction . This means that the
+vorticity can be represented as:
 
     \begin{figure}[t]
     \begin{center}
@@ -711,38 +720,53 @@ The code makes uses a pseudo-spectral method to solve the nonlinear PDE given in
     \xi(x,y)=\sum_{k=0}^{N-1} a_{lk} e^{-2 i \pi k x/N}
     \ee{fft}
 
-Additionally, the system has periodic boundaries along the $x$ axis, so it has a continuous symmetry along this axis $\xi(x)=\xi(x+L_x)$; where $L_x$ stands for the length of the domain. The one-parameter rotation group acting on this variable, would be then given by (see \refref{ACHKW11}):
-
+Additionally, the system has periodic boundaries along the $x$ axis, so
+it has a continuous symmetry along this axis $\xi(x)=\xi(x+L_x)$; where
+$L_x$ stands for the length of the domain. The one-parameter rotation
+group acting on this variable, would be then given by (see
+\refref{ACHKW11}):
 \beq
 \LieEl(\gSpace)=\textrm{diag}\{e^{-2 i \pi k \gSpace/N}\}
 \ee{gpara}
 
-When acting on a point in state space ($\LieEl(\gSpace) a$), the effect of $\LieEl$ is to translate the solution along $x$ without changing any o the properties of the simulation. Furthermore, in state space the group orbit traces a trajectory which topologically is a circle, and the group tangent of the circle at point $a$ is given by the derivative of $\LieEl$:
-
+When acting on a point in state space ($\LieEl(\gSpace) a$), the effect
+of $\LieEl$ is to translate the solution along $x$ without changing any o
+the properties of the simulation. Furthermore, in state space the group
+orbit traces a trajectory which topologically is a circle, and the group
+tangent of the circle at point $a$ is given by the derivative of
+$\LieEl$:
 \beq
 \textbf{T}=\textrm{diag}\{-2 i \pi k /N\}
 \ee{gpara2}
 
-Now, to reduce the symmetry, we select a template representative our our physical simulation (the slice $a'$), and seek for the rotating frame $\gSpace(t)$ that continually rotates a trajectory back to the slice. This, by making use of condition \ref{mini}. Care is taken as we are dealing with complex vectors, so that the norm represents the multiplication of a vector with its conjugate transform. That is, starting with:
-
+Now, to reduce the symmetry, we select a template representative our our
+physical simulation (the slice $a'$), and seek for the rotating frame
+$\gSpace(t)$ that continually rotates a trajectory back to the slice.
+This, by making use of condition \ref{mini}. Care is taken as we are
+dealing with complex vectors, so that the norm represents the
+multiplication of a vector with its conjugate transform. That is,
+starting with:
 \beq
 \frac{\partial}{\partial \gSpace} \norm{\ssp-\LieEl\slicep}^2 =0
 \,,
 \ee{min2}
-
-expanding, simplifying and noting that $\Re(\ssp^\dagger \Lg \ssp)=0$ one arrives at the slicing condition:
-
+expanding, simplifying and noting that $\Re(\ssp^\dagger \Lg \ssp)=0$ one
+arrives at the slicing condition:
 \beq
     \Re(\sspRed^\dagger \Lg \slicep)=0
 \ee{min3}
-
-which is surprisingly similar to the one obtained for real cases. Translating it into a somewhat more implementable equation gives:
-
+which (to Sebastian) is surprisingly similar to the one obtained for real cases.
+Translating it into a somewhat more implementable equation gives:
 \beq
     \Re(\sspRed^\dagger \Lg \slicep)=Re\left(\frac{-2 \pi i}{N} \sum_{k=0}^{N-1} \sum_{k=0}^{M-1} \overline{a_{lk}} a'_{lk} k e^{\frac{-2 \pi i k}{N} \gSpace}\right)=0
 \ee{min4}
-
-Now we are all set to seek for this solutions. A Newton-Raphson, or similar, seeking method can be implemented by using $F(\gSpace)=\Re(\sspRed^\dagger \Lg \slicep)$ and $F'(\gSpace)=\frac{\partial}{\partial \gSpace}\Re(\sspRed^\dagger \Lg \slicep)$ for each time step. Effort are being carried right now to implement this algorithm, however for the time being we only provide the methodology.
+Now we are all set to seek for this solutions. A Newton-Raphson, or
+similar, seeking method can be implemented by using
+$F(\gSpace)=\Re(\sspRed^\dagger \Lg \slicep)$ and
+$F'(\gSpace)=\frac{\partial}{\partial \gSpace}\Re(\sspRed^\dagger \Lg
+\slicep)$ for each time step. Effort are being carried right now to
+implement this algorithm, however for the time being we only provide the
+methodology.
 
 \section{Acknowledgments}
 The author would like to acknowledge the valuable discussions and advise obtained during the course of the semester from Professors Predrag Cvitanovi{\'c}, Annalisa Bracco and Peter J. Webster. Also the students and researchers that attended to "PHY-7224 Nonlinear Dynamics". This was a very enjoyable and enlightening experience.
