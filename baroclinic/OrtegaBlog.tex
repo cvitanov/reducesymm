@@ -597,6 +597,9 @@ To isolate the problem, maybe sidestep the integrator, replace it by any
 instantaneous state that you shift using the translation operator
 (instead of integrating the PDEs). That is a mock-up of a \reqv, and your
 Newton should make it stationary in the \slice.
+\item[2012-05-05 Sebastian]
+The sidestep approach should be a good test. I will also try that.
+% Let me know what you think. As always any advice is welcome.
 
 \item[2012-05-05 Sebastian]
 I use \refeq{min4} for the slice condition in Newton Method. But I am not
@@ -617,15 +620,54 @@ $L2$ one, in the streamwise direction
 \eeq
 
 \item[2012-05-05 Sebastian]
-I have been thinking about the reason my post-processing slicing does not work. I went over the code and derivation today, but couldn't find what is wrong with it.
-So I think it is not an implementation issue but something else.  Maybe in this case (after the FFT is used), it might not be correct to regard the rotating frame as continuous variable; as the rotation of the FFT only makes sense (and only works) when the rotating frame is an integer ($\gSpace$ in \refeq{min4}). This way, we might need a discrete version of the Newton-Raphson algorithm.
+I have been thinking about the reason my post-processing slicing does not
+work. I went over the code and derivation today, but couldn't find what
+is wrong with it.
+So I think it is not an implementation issue but something else.  Maybe
+in this case (after the FFT is used), it might not be correct to regard
+the rotating frame as continuous variable; as the rotation of the FFT
+only makes sense (and only works) when the rotating frame is an integer
+($\gSpace$ in \refeq{min4}). This way, we might need a discrete version
+of the Newton-Raphson algorithm.
 
-I will search for an algorithm for this; although it should be easy to create one from scratch; we just have to evaluate $\gSpace$ in \refeq{min4} form $1$ to $1024$, and see where the values goes from positive to negative. If we select a good initial value for \refeq{min4}, and if we are lucky enough, then it should work. Of course, we wont be able to find a value that makes \refeq{min4} zero, but this is a resolution issue.
+I will search for an algorithm for this; although it should be easy to
+create one from scratch; we just have to evaluate $\gSpace$ in
+\refeq{min4} from $1$ to $1024$, and see where the values goes from
+positive to negative. If we select a good initial value for \refeq{min4},
+and if we are lucky enough, then it should work. We won't be able to find
+a value that makes \refeq{min4} zero, but this is a resolution issue.
+Note also that we do not always need to evaluate $\gSpace$ in
+\refeq{min4} form $1$ to $1024$. With a good initial guess fewer points
+should be necessary.
 
-The sidestep approach should be a good test. I will also try that.
+\item[2012-05-05 Predrag]                                   \toCB
+Mhm - I have been wondering about this since 1993, when Eckhardt and
+I\rf{CvitaEckardt} worked out how to
+\HREF{http://ChaosBook.org/paper.shtml\#discrete} {quotient discrete
+symmetries}. There you learn that if you can cut a `pizza' into $n$
+equivalent slices, you should work in a single sliver, or fundamental
+domain. I tried to quotient $\SOn{2}$ as a limit $ n \to \infty$ of
+discrete cyclic group symmetry $\Zn{n}$ (in your case $n=1024$), and in
+retrospect I believe it was a wrong path that kept me from doing the
+right thing (slicing) for many years. The problem is that in the discrete
+quotienting you make the \reducedsp\ smaller (by replacing the full
+\statesp\ by a sliver) but the dimensionality of the space remains the
+same. In reduction of continuous symmetries you decrease the dimension of
+\statesp\ by one, for each continuous symmetry parameter. I do not see how
+one would get to this $\lim_{n \to \infty} \Zn{n} = \SOn{2}$ limit by
+the fundamental domain approach.
+    \PC{to Predrag - copy this to pipes/blog}
 
-Let me know what you think. As always any advice is welcome.
+I think what you should do is keep $\gSpace$ continuous, and interpolate,
+meaning that in the Fourier rep you shift by the continuous phase, and
+then FFT back to space; result will not be $j/1024$ shift but something
+in between.
 
-\item[2012-05-05 Sebastian]
-Note: Of course, we do not always need to evaluate $\gSpace$ in \refeq{min4} form $1$ to $1024$. With a good initial guess much lees pints should be necessary.
+\item[2012-05-05 Predrag]                                   \toCB
+We have the same problem in slicing experimental data - it is digitized,
+and the slice condition will not respect the discrete pixel size, so
+sliced video has to be re-digitized. As this can be done as
+post-processing, I see no danger of introducing numerical errors into the
+data set.
+
 \end{description}
