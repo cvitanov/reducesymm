@@ -670,4 +670,65 @@ sliced video has to be re-digitized. As this can be done as
 post-processing, I see no danger of introducing numerical errors into the
 data set.
 
+
+\item[2012-05-07 Sebastian]
+I implemented a discrete Newton-Raphson method and it seems to work. I
+think I have sliced baroclinic instability. Of course, I have to think
+more about the transversality condition. I will upload the code at night
+(I don't have my laptop in the office).
+
+\item[2012-05-07 Predrag to Ashley] Do you understand why one would have a
+\emph{discrete} Newton-Raphson? Do not even know what it means... In your pipe
+slicing $\gSpace$ is continuous, right?
+
+
+\item[2012-05-07 Sebastian] Here is the first animation of sliced baroclinic
+instability:
+    \PC{the animation is not in the repository to save space - if you
+    want to have a look, I can place it in the DropBox.com}
+
+\begin{quote}
+\HREF{../movies/BaroclinicSlice.avi}{../movies/BaroclinicSlice.avi}.
+\end{quote}
+
+As expected, the slice seems to be useful only for a limited time. But
+ignore the transversality condition in the moment. It might be correct,
+but I have to check.
+
+\item[2012-05-07 Predrag to Sebastian] Slicing does seem to stop the flow
+from drifting, but otherwise not much simplification - it will be
+hopefully more striking once you start plotting trajectories in the \statesp.
+
+Do not know what is the `transversality condition'. Do you mean the
+{\chartBord} condition \refeq{sliceSingl0},
+\[ %beq
+\braket{\groupTan(\sspRSing)}{\sliceTan{}} \,=\, 0
+\,?
+% \label{sliceSingl0}
+\] %\eeq
+I'm bothered by $10^{-5}$ magnitude of whatever you are plotting. How about
+plotting just the $\cos$ of the angle between the two tangent vectors,
+\beq
+\cos \theta = \frac{\Re
+            \braket{\groupTan(\sspRSing(\zeit))}{\sliceTan{}}
+                    }{
+            \Norm{\groupTan(\sspRSing(\zeit))}\,\,{\Norm{\sliceTan{}}}
+                    }
+\,,
+\label{chartBordAng}
+\eeq
+using \refeq{min5} and \refeq{min6}? Whenever this goes through zero,
+$\sspRed(\zeit)=\sspRSing(\zeit)$, you have fallen off the {\chartBord}.
+It should be doing it smoothly, as the \template\ is arbitrary, so there
+is nothing special for the full \statesp\ trajectory happening at that
+instant. Plot $\Norm{\groupTan(\sspRed(\zeit))}$ as well; it should also
+vary smoothly, and \emph{not} get very small: if it does, alert me - it indicates
+that you the trajectory is passing very close to an invariant subspace,
+and physically that is very important.
+
+Ashley is measuring the same thing for the pipe flow, you two might want
+to compare experiences.
+
+
+
 \end{description}
