@@ -1,18 +1,18 @@
 %Simulations Constants
 % clc; clear;
-cd('./run4')
-nt=200;
-nx=512*2;
-ny=nx/4;
+% cd('./run4')
+% path(path,'../')
+% nt=200;
+% nx=512*2;
+% ny=nx/4;
 % load vort1.dat
 % load vort2.dat
 % rv1=reshape(vort1,nx,ny,nt);
 % rv2=reshape(vort2,nx,ny,nt);
-% save data_run9
-% load data_run9
+% save data_run4
+% load data_run4
 
 %% The real Thing. Reducing this symmetry.
-%NOTE: NOT FUNCTIONAL AT THE MOMENT!!! ISSUES WITH THE ROTATING FRAME!!
 %Select the template (ap)
 %-------------------------------------------------------------------------%
 tp=100;
@@ -37,10 +37,10 @@ rv1_rot=zeros(nx,ny,nt-tp);
 rv2_rot=zeros(nx,ny,nt-tp);
 rotf=zeros(nt-tp,1);
 nextguess=zeros(nt-tp,1);
-nextguess(t1+1)=-100;
+nextguess(t1+1)=0;
 test=zeros(nt-tp,1);
 condition=zeros(nt-tp,1);
-for t =(tp+1):nt
+for t =tp:nt
     t1=t1+1;
     %Go to spectral space
     % Layer1
@@ -55,42 +55,31 @@ for t =(tp+1):nt
     %---------------------------%
     %Chose a initial guess for the rotating frame
     rf=nextguess(t1);
-    e=1;
-    while e>0.000001
-        aux1=0;
-        aux2=0;
-        aux=0;
-        %Construct ap+Tap
-        for n=1:2
-            if n==1
-                u=a1;
-                up=a1p;
-            elseif n==2
-                u=b1;
-                up=b1p;
-            end
-            for k=1:nx-1
-                k1=k+1;
-                for l=0:ny-1
-                    l1=l+1;
-                    aux=k*conj(u(l1,k1))*up(l1,k1)*exp(-2*pi*1i*rf*k/nx);
-                    aux1=aux1+aux;
-                    aux2=aux2+k*aux;
-                end
-            end
-        end
-        
-        F1=-(2*pi*1i/nx)*aux1;
-        F=real(F1);
-        Fp=real(-(4*pi^2/nx^2)*aux2);
-        rf1=rf-F/Fp;
+    e=1; 
+    stop=0;
+    count=0;
+    while stop==0
+        %Define the funvtion value.
+        F=sliceFunction(a1,a1p,b1,b1p,rf,nx,ny);
+        Fp1=sliceFunction(a1,a1p,b1,b1p,rf+1,nx,ny);
+        Fm1=sliceFunction(a1,a1p,b1,b1p,rf-1,nx,ny);
+        Fp=(Fp1-Fm1)/2;
+        %Next rotating frame
+        rf1=rf-round(F/Fp);
         e=abs(rf1-rf);
-        rf=rf1;
+        %Looping count
+        if rf+1==rf1 || rf-1==rf1
+            count=count+1;
+        end
+        %Stop condition
+        if rf==rf1 || count>3;
+            stop=1;
+        end
+        rf=rf1;        
     end
+    nextguess(t1+1)=rf1;
     rotf(t1)=rf1;
-    nextguess(t1+1)=rotf(t1);
     test(t1)=e;
-    
     %Rotate to Slice
     %---------------------------%
     for k=0:nx-1
@@ -109,8 +98,8 @@ for t =(tp+1):nt
      rv1_rot(:,:,t1)=a1_rot';
      rv2_rot(:,:,t1)=b1_rot';
 
-    
-    %Check Borders
+    %Check Borders. 
+	%WARNING: THE FOLLOWING CONDITION IS PROBABLY WRONG!!! UPDATE ON ITS WAY!
     %---------------------------%
     aux=0;
     for n=1:2
@@ -132,8 +121,9 @@ for t =(tp+1):nt
     condition(t1)=-4*pi*aux/nx^2;
     %Run Info
     %---------------------------%   
-    aux_txt=[num2str((t-tp)/(nt-tp)*100) '% Completed.'];
+    aux_txt=[num2str((t-tp)/(nt-tp)*100) '% Completed.' 'RotFrame:' num2str(rf1)];
     display(aux_txt);
+    
 end
 
 %Deleted Code
