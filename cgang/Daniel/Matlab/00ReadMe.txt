@@ -59,3 +59,11 @@ between the complex formulation of the Porter-Knobloch
 system and its formulation in terms of the invariant
 bases u, v, w, and q as described in section s:twoMode
 of the 2mode project/report.
+
+W0EquilibriumCheck.m by Daniel Borrero 5/8/2012
+--------------------------------------------------
+Checks that the equilibrium (expressed in the invariant
+polynomial basis) reported by Bryce Robbins 
+in the two mode blog on 4/28 is indeed a fixed point of the flow
+(after correcting some factors of two that were missing in the
+original equations of motion that Bryce used)
