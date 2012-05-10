@@ -11,7 +11,6 @@
 % rv2=reshape(vort2,nx,ny,nt);
 % save data_run4
 % load data_run4
-
 %% The real Thing. Reducing this symmetry.
 %Select the template (ap)
 %-------------------------------------------------------------------------%
@@ -25,6 +24,26 @@ a1p=fft(a1p')';
 b1p=rv2(:,:,tp)';
 b1p=dst(b1p);
 b1p=fft(b1p')';
+%Magnitude of tangent vector
+%Check Borders
+%---------------------------%
+aux_s=0;
+for n=1:2
+    if n==1
+        up=a1p;
+    elseif n==2
+        up=b1p;
+    end
+    for k=1:nx-1
+        k1=k+1;
+        for l=0:ny-1
+            l1=l+1;
+            aux_s=aux_s+k^2*conj(up(l1,k1))*up(l1,k1);
+        end
+    end
+end
+condition_s=real(-4*pi^2*aux_s/nx^2);
+
 %-------------------------------------------------------------------------%
 
 %Interesting stuff wonder far away from the random inital conditions.
@@ -39,6 +58,8 @@ rotf=zeros(nt-tp,1);
 nextguess=zeros(nt-tp,1);
 nextguess(t1+1)=0;
 test=zeros(nt-tp,1);
+condition_c=zeros(nt-tp,1);
+condition_p=zeros(nt-tp,1);
 condition=zeros(nt-tp,1);
 for t =tp:nt
     t1=t1+1;
@@ -98,9 +119,11 @@ for t =tp:nt
      rv1_rot(:,:,t1)=a1_rot';
      rv2_rot(:,:,t1)=b1_rot';
 
-    %Check Borders. 
-	%WARNING: THE FOLLOWING CONDITION IS PROBABLY WRONG!!! UPDATE ON ITS WAY!
+    
+    %Check Borders
     %---------------------------%
+    aux_c=0;
+    aux_p=0;
     aux=0;
     for n=1:2
         if n==1
@@ -114,11 +137,14 @@ for t =tp:nt
             k1=k+1;
             for l=0:ny-1
                 l1=l+1;
-                aux=aux+u(l1,k1)*up(l1,k1);
+                aux_c=aux_c+k^2*conj(u(l1,k1))*up(l1,k1);
+                aux_p=aux_p+k^2*conj(u(l1,k1))*u(l1,k1);
             end
         end
     end
-    condition(t1)=-4*pi*aux/nx^2;
+    condition_c(t1)=real(-4*pi^2*aux_c/nx^2);
+    condition_p(t1)=real(-4*pi^2*aux_p/nx^2);
+    condition(t1)=condition_c(t1)/(condition_s*condition_p(t1));
     %Run Info
     %---------------------------%   
     aux_txt=[num2str((t-tp)/(nt-tp)*100) '% Completed.' 'RotFrame:' num2str(rf1)];
