@@ -42,7 +42,7 @@ for n=1:2
         end
     end
 end
-condition_s=real(-4*pi^2*aux_s/nx^2);
+condition_s=real(4*pi^2*aux_s/nx^2);
 
 %-------------------------------------------------------------------------%
 
@@ -142,9 +142,9 @@ for t =tp:nt
             end
         end
     end
-    condition_c(t1)=real(-4*pi^2*aux_c/nx^2);
-    condition_p(t1)=real(-4*pi^2*aux_p/nx^2);
-    condition(t1)=condition_c(t1)/(condition_s*condition_p(t1));
+    condition_c(t1)=real(4*pi^2*aux_c/nx^2);
+    condition_p(t1)=real(4*pi^2*aux_p/nx^2);
+    condition(t1)=condition_c(t1)/(sqrt(condition_s)*sqrt(condition_p(t1)));
     %Run Info
     %---------------------------%   
     aux_txt=[num2str((t-tp)/(nt-tp)*100) '% Completed.' 'RotFrame:' num2str(rf1)];
