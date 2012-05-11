@@ -248,10 +248,11 @@ From vector calculus we note that:
 \beq
 (\textbf{u} \cdot \nabla)\textbf{u}=\frac{\nabla (\textbf{u} \cdot \textbf{u})}{2}- \textbf{u} \times \omega
 \ee{VE0}
-where $\omega$ is the vorticity. So that we can rewrite Navier-Stokes equation in the following way:
+where $\omega$ is the vorticity. So that we can rewrite Navier-Stokes
+equation in the following way:
 \beq
 \frac{\partial \textbf{u}}{\partial t}+(\omega+2\Omega) \times \textbf{u} = -\frac{1}{\rho} \nabla p -\frac{\textbf{u} \cdot \textbf{u}}{2}
-\ee{NS1}
+\ee{NS2}
 Taking the curl of this equation (noting that $\omega = \nabla \times
 \textbf{u}$) gives:
 \beq
@@ -262,7 +263,7 @@ Finally using the identity $\nabla \times (A \times B) = A (\nabla
 chain rule for the pressure $\frac{1}{\rho} \nabla p = \nabla (p/\rho)-p
 \nabla (1/\rho)$, and the fact that the curl of a gradient is zero, the
 desired expression for the vorticity it is obtained from
-\refeq{NS1} (see \refref{Salmon98}). That is:
+\refeq{NS2} (see \refref{Salmon98}). That is:
 \beq
 \frac{d}{d t}\left(\frac{\omega_a}{\rho}\right)
 =\left[\left(\frac{\omega_a}{\rho}\right) \cdot \nabla \right] \textbf{u}
@@ -487,7 +488,7 @@ where we have dropped the primes. This can be written in matrix form as:
 \beq
 \left(\frac{\partial}{\partial t} M - L\right) \Psi=0
 \,,
-\ee{MF}
+\ee{MF1}
 where
 \begin{equation}
 \begin{pmatrix}
@@ -519,7 +520,7 @@ functions of this new variables (see \refref{Hasha05}), so that:
 \beq
 \left( \hat{L}+i \omega \hat{M}\right) \Psi=0
 \,.
-\ee{MF}
+\ee{MF2}
 In order to have nontrivial solution the determinant of $\left( \hat{L}+i
 \omega \hat{M}\right)$ must vanish, which gives a relation
 for $\omega$ (i.e. the dispersion relationship for the
@@ -575,7 +576,7 @@ use of spectral methods expressing the velocity as:
 where $\phi$ are basis function defined for the entire
 domain\footnote{This could be any set of orthogonal functions (i.e.
 Fourier, Legendre or Chebyshev series)} and $\widehat{u}$ their
-respective amplitudes. Replacing this into \refeq{NS1}, and using and
+respective amplitudes. Substituting this in \refeq{NS2}, and using and
 appropriate relationship to account for the pressure, we obtain a system
 like \refeq{DS} for the amplitudes of the basis functions. That is:
 \beq
@@ -635,15 +636,23 @@ reduce to equilibrium points, relative periodic orbits to periodic orbits and eq
 are conserved. Our tool of choice for this reduction is the method of slices. We are interested
 in rotating all the solutions to a hyperplane which intersects all symmetry group tangents (see \refref{DasBuch} for details). For
 this we impose the condition:
-
 \beq
 \frac{\partial}{\partial \gSpace} \norm{\ssp-\LieEl\slicep}^2 =0
 \,,
 \ee{mini}
+where $\ssp$ is our vector in state space, $\gSpace$ the rotating frame
+(i.e. the angle by which the solution is rotated) and $\slicep$ a
+template representative of our local dynamics. Of course, our slice would
+not be good for the entire manifold, and it is necessary to consider a
+set of this slices in order to capture the entire dynamics of the system
+\refref{atlas12}. More details of this will be given in the next section.
 
-where $\ssp$ is our vector in state space, $\gSpace$ the rotating frame (i.e. the angle by which the solution is rotated) and $\slicep$ a template representative of our local dynamics. Of course, our slice would not be good for the entire manifold, and it is necessary to consider a set of this slices in order to capture the entire dynamics of the system \refref{atlas12}. More details of this will be given in the next section.
-
-Once we are done with the slicing, the hope is that this makes it easier to look for this invariant solutions. After all, the "dancing" solutions have been settled to the slice. But first, we need to define them in a quantitative manner so it is clear what we mean by invariant solutions. First, let's think again in terms of physical space \refeq{NS1}. Note that we can write the system as:
+Once we are done with the slicing, the hope is that this makes it easier
+to look for this invariant solutions. After all, the "dancing" solutions
+have been settled to the slice. But first, we need to define them in a
+quantitative manner so it is clear what we mean by invariant solutions.
+First, let's think again in terms of physical space \refeq{NS2}. Note
+that we can write the system as:
 \begin{eqnarray}
 \frac{\partial \textbf{u}}{\partial t}
 =F(\textbf{u})
@@ -662,27 +671,50 @@ f^{T_p}(\textbf{u}_{p}) &=& u_p
 \label{NS_Solutions}
 \end{eqnarray}
     \SOA{I have to fix the second equation justification.}
-where this represent respectively equilibrium points, relative equilibrium points, periodic orbits
-and \rpo s.
+where this represent respectively equilibrium points, relative
+equilibrium points, periodic orbits and \rpo s.
 
 Finally, note that one additionally aspect  one should care about is the
 connection between these different solutions. That is, how is one to get
-from one recurrent pattern to the other? Heteroclitic connections (i.e. the trajectories which exactly connect invariant
-solutions; see for instance \refref{GHCV08}), are commonly studied for this purposes as these organize
-how the flow transits from one manifold to the next.
+from one recurrent pattern to the other? Heteroclitic connections (i.e.
+the trajectories which exactly connect invariant solutions; see for
+instance \refref{GHCV08}), are commonly studied for this purposes as
+these organize how the flow transits from one manifold to the next.
 
-In this project, we limit ourselves to show how to make the slicing, hoping this would encourage more in depth study of the subject. However, we briefly discuss next how to start searching for the recurrences in the system one the slicing is completed.
+In this project, we limit ourselves to show how to make the slicing,
+hoping this would encourage more in depth study of the subject. However,
+we briefly discuss next how to start searching for the recurrences in the
+system one the slicing is completed.
 
 \subsection{Finding invariant solutions}
 
-Finding invariant solution of a system with a high number of dimension is not an easy task. And it is even harder if we do not reduce the symmetries first. In doing so one is required to use a numerical method to find them. However, due to the fact that huge Jacobian matrix would have to be computed, implementing the Newton-Raphson standard search method is not an option.
+Finding invariant solution of a system with a high number of dimension is
+not an easy task. And it is even harder if we do not reduce the
+symmetries first. In doing so one is required to use a numerical method
+to find them. However, due to the fact that huge Jacobian matrix would
+have to be computed, implementing the Newton-Raphson standard search
+method is not an option.
 %Moreover, when other algorithms are used, the initial guess for the periodic orbit must be good enough so that the algorithm converges to the desired solution.
 
-But not all hopes are lost. Algorithms to find this structures have been implemented and used successfully in a variety of simulations\SOA{Insert references in the future)} (see for instance \refref{Visw07b}). This methods depend on initial guesses of this periodic orbits, and there are several approaches one can take to make the right ones. One of this approaches is given in \refref{Visw07b}, where the rate of energy dissipation and energy input for a system is computed based on the velocity field, and then plotted together. This way the entire multidimensional system is projected into two physical meaningful dimensions and guesses are made based on approximate recurrences of the traced curve.  \SOA{FIGURE I will put her one of the figures of Viswanath's paper}
+But not all hope is lost. Algorithms to find this structures have been
+implemented and used successfully in a variety of simulations\SOA{Insert
+references in the future)} (see for instance \refref{Visw07b}). This
+methods depend on initial guesses of this periodic orbits, and there are
+several approaches one can take to make the right ones. One of this
+approaches is given in \refref{Visw07b}, where the rate of energy
+dissipation and energy input for a system is computed based on the
+velocity field, and then plotted together. This way the entire
+multidimensional system is projected into two physical meaningful
+dimensions and guesses are made based on approximate recurrences of the
+traced curve.
+    \SOA{FIGURE I will put her one of the figures of
+        Viswanath's paper}
 
-After reducing the symmetries, the next step would be to evaluate the possibility of a periodic orbit based on the criteria discussed here.
+After reducing the symmetries, the next step would be to evaluate the
+possibility of a periodic orbit based on the criteria discussed here.
 %That is, to search for close recurrences of the flow based on two dimensional projections of the d-dimensional space.
-However, we proceed one step at a time. So let us go back to reducing the symmetry.
+However, we proceed one step at a time. So let us go back to reducing the
+symmetry.
 
 \subsection{Symmetry Reduction}
 Up to here we have gather enough background to start making attempts to

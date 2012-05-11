@@ -26,8 +26,10 @@ Adviser: Predrag Cvitanovic
 
 ----- NOTES        ------------------------------------------
 
--------------------------------------------------------------
-
+Predrag                                 May 11 2012
+remember to remove
+    siminos/cgang/2modes-Bryce-Lei/
+so this embarrassment does not trip up anybody's career
 
 ==============================================================
 FORMERLY OUTSTANDING ITEMS, NOW DISPOSED OFF:
