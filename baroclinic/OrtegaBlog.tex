@@ -273,7 +273,7 @@ code). The results of the transform are shown in \reffig{f:fouriervort}.
     \begin{center}
     \includegraphics[width=0.9\textwidth, clip=true]{fouriervort}
     \end{center}
-    \caption{Top: Vorticity field. Bottom: Spectral representation
+    \caption{(top) Vorticity field. (bottom) Spectral representation
     ($ln(1+abs(\xi))$). Note that some frequencies are just the complex
     conjugate of others.}
     \label{f:fouriervort}
@@ -759,7 +759,7 @@ paper\rf{ACHKW11}
 discrete...
 
 \item[2012-05-09 Sebastian]
-I implemented the correct version of the chart border condition.
+I implemented the correct version of the \chartBord\ condition.
 \begin{quote}
 \HREF{../movies/BaroclinicSlice1.avi}{../movies/BaroclinicSlice1.avi}.
 \end{quote}
@@ -808,15 +808,31 @@ into repository and we can maybe edit it a bit to make a stronger
 climatology case.
 
 \item[2012-05-09 Sebastian]
-I think Newton-Raphson becomes discrete as there is no meaning for something as a non-integer rotating frame when you think about it in terms of the FFT. If one tries to plot a shifted imaged using non-integer rotating frames in \refeq{gpara} the resulting image after the inverse transformation gets distorted, if one uses integer values the image is just shifted. So maybe when non-integer values are used to calculate \ref{min4} the values are affected by this resolution issues.
+I think Newton-Raphson becomes discrete as there is no meaning for
+something as a non-integer rotating frame when you think about it in
+terms of the FFT. If one tries to plot a shifted imaged using non-integer
+rotating frames in \refeq{gpara} the resulting image after the inverse
+transformation gets distorted, if one uses integer values the image is
+just shifted. So maybe when non-integer values are used to calculate
+\ref{min4} the values are affected by this resolution issues.
 
-When ones thinks in terms of finding the shifted state ($\LieEl(\gSpace) a$) which best compares to the slice ($a'$) for a given time, there is no sense in considering one for which $\gSpace$ equals something as $23.43$ (or any other non-integer value), there is simply no state (image) defined there, one needs to compare those values where $\gSpace$ is an integer, for only there we have states (images).
+When ones thinks in terms of finding the shifted state ($\LieEl(\gSpace)
+a$) which best compares to the slice ($a'$) for a given time, there is no
+sense in considering one for which $\gSpace$ equals something as $23.43$
+(or any other non-integer value), there is simply no state (image)
+defined there, one needs to compare those values where $\gSpace$ is an
+integer, for only there we have states (images).
 
-I would go again trough the implementation of the chart border again, then I will upload the files and equations. I will go trough \HREF{http://chaosbook.org/tutorials/statespFrames.html}{\statesp\
+I would go again trough the implementation of the \chartBord\ again,
+then I will upload the files and equations. I will go trough
+\HREF{http://chaosbook.org/tutorials/statespFrames.html}{\statesp\
 tutorial} also.
 
 \item[2012-05-09 Sebastian]
-Focusing my thesis in predictability in the tropics might be the right path for my Phd. Right now I am working in convectively coupled waves in the tropics, and there are some models one could use to explore dynamics, or one could also explore data. I will think more about this.
+Focusing my thesis in predictability in the tropics might be the right
+path for my Phd. Right now I am working in convectively coupled waves in
+the tropics, and there are some models one could use to explore dynamics,
+or one could also explore data. I will think more about this.
 
 \item[2012-05-09 Ashley to Sebastian]
 Firstly, hi!
@@ -826,68 +842,127 @@ Please take a look at the first couple of paragraphs of \S2.3 in
 \rf{ACHKW11}
 [\HREF{http://www.cns.gatech.edu/~predrag/papers/preprints.html\#ACHKW11}
 {click here}],
-only about 10 lines.
-Note that $\gSpace$ is a length or angle and is therefore continous,
-it can take any value.
-Applying a shift in the Fourier space, the new
-coefficients are
-$b_m=\mathrm{e}^{-\mathrm{i}m\gSpace}a_m$,
-which can be calculated to numerical precision.
-There is no distortion.
-Perhaps you are thinking of the data on a discretised grid.  Don't worry
-about the grid --- once you have the Fourier coefficients you can evaluate the sum on as many spatial points as you like.
+only about 10 lines. Note that $\gSpace$ is a length or angle and is
+therefore continous, it can take any value. Applying a shift in the
+Fourier space, the new coefficients are
+$b_m=\mathrm{e}^{-\mathrm{i}m\gSpace}a_m$, which can be calculated to
+numerical precision. There is no distortion. Perhaps you are thinking of
+the data on a discretised grid.  Don't worry about the grid --- once you
+have the Fourier coefficients you can evaluate the sum on as many spatial
+points as you like.
 
-The dot product of two vectors is a real number, and the inner product
-is a normalised integral over the dot products.  It should therefore
-also be real.  I suspect your taking the real part is a
-numerical artifact that may be related to the condition that
-$a_m=a^*_{-m}$.  In my case I only store coefficients for $m\ge 0$,
-then to evaluate the norm I get the contribution for the $m=0$ mode, then double the real part of the contribution from the $m>0$ modes.  The complex
-part would have cancelled if I did the actual sum over negative and
-positive $m$.
+The dot product of two vectors is a real number, and the inner product is
+a normalised integral over the dot products.  It should therefore also be
+real.  I suspect your taking the real part is a numerical artifact that
+may be related to the condition that $a_m=a^*_{-m}$.  In my case I only
+store coefficients for $m\ge 0$, then to evaluate the norm I get the
+contribution for the $m=0$ mode, then double the real part of the
+contribution from the $m>0$ modes.  The complex part would have cancelled
+if I did the actual sum over negative and positive $m$.
 
 \item[2012-05-11 Sebastian to Predrag]
-Answering some other questions:
+The state which is used as the template is the first frame. I am not
+really sure what happens when it fall off the borders. From the
+animations I sent you it seems that not much happens, the drift keeps
+getting removed; as you stated, I have to go to state space to appreciate
+what happens. I will start by plotting the first harmonics of first
+layer.
 
-The state which is used as the template is the first frame. I am not really sure what happens when it fall off the borders. From the animations I sent you it seems that not much happens, the drift keeps getting removed; as you stated, I have to go to state space to appreciate what happens. I will start by plotting the first harmonics of first layer.
+\item[2012-05-11 Predrag to Sebastian]
+Absolutely \emph{no} harmonics, please - that is obsolete, 20th century
+way of looking at the \statesp. Please use Gibson and mine physical
+coordinate frames, as described in the tutorial and
+\refrefs{GHCW07,HGC08,ACHKW11}. You will be a century ahead of
+competitors, as it looks like no-one among plumbers and weathermen has
+grasped that this is something they do not understand and do not do.
 
-There is nothing qualitatively different in the movie either, basically is the same movie only that the chart border conditions is calculated differently.
+\item[2012-05-11 Sebastian to Predrag]
+There is nothing qualitatively different in the movie either, basically
+is the same movie, only now the \chartBord\ condition is calculated
+differently.
 
-I got different results for \refeq{min5} and \refeq{min6}. For the former I got:
-
+I got different results for \refeq{min5} and \refeq{min6}. For the former
+I got:
 \beq
 \Norm{\groupTan(\ssp)}^2
     = \braket{\groupTan(\ssp)}{\groupTan(\ssp)}
     = \frac{4 \pi^2}{N^2} \sum_{k=0}^{N-1} \sum_{l=0}^{M-1}
        k^2 \, \overline{a_{lk}} a_{lk}
 \ee{min5_2}
-
 and for the latter:
-
 \beq
  \braket{\groupTan(\sspRSing)}{\sliceTan{}}= \sspRed^\dagger \Lg^2 \slicep=
     \frac{4 \pi^2}{N^2} \sum_{k=0}^{N-1} \sum_{l=0}^{M-1}
-    k^2 \overline{a_{lk}} a'_{lk} 
+    k^2 \overline{a_{lk}} a'_{lk}
 \ee{min6_2}
+I use this equation in the implementation. I had a sign difference in the
+previous code, and forgot to take square roots of \refeq{min5_2}; hence
+the strange numbers for $\cos \gSpace$. I think it is better this time (see
+\reffig{f:chartBorder1})
 
-I use this equation in the implementation. I had a sign difference in the previous code, and forgot to take square roots of \refeq{min5_2}; hence the rare numbers for $cos \gSpace$. I think it is better this time (see \reffig{f:chartBorder1})
+\item[2012-05-11 Predrag] That now looks about right.
+\begin{itemize}
+  \item At $\zeit =19$ and $95$ you are crossing the \chartBord, so your
+    slice condition determined $\gSpace$ should jump discontinuously, if
+    we are doing the right thing\rf{FrCv11} I think it should jump by $\pi$.
+
+  \item Why does the curve look so kinky? Because of your discretization
+    by 1024 (that I pray is going away soon)?
+
+  \item what's going on at $\zeit =1$?
+
+  \item what's going on at $\zeit =38$ and $55$?
+
+\end{itemize}
+It could be that the kinkiness is real, as you have a huge Reynolds
+number, \ie\ structures on scales much smaller than the channel width.
 
 \begin{figure}
   % Requires \usepackage{graphicx}
   \includegraphics[width=0.9\textwidth]{chartBorder1}\\
-  \caption{Chart border calculated as in \refeq{chartBordAng}. }\label{f:chartBorder1}
+  \caption{\ChartBord\ calculated as in \refeq{chartBordAng}. }
+  \label{f:chartBorder1}
 \end{figure}
 
+\item[2012-05-11 Sebastian to Predrag]
+My impression from the \statesp\ tutorial is that we first need to find
+some \reqva\ to make really striking visualizations. The only
+one we have right now is the trivial one, far away from the interesting
+dynamics. So I think the first step is to search for them looking at
+Annalisa's energy/dissipation plots. For this I think we need good charts
+of the dynamics, so I will try to define more slices. Please let me know
+if this is the case.
 
-My impression from the state space tutorial is that we first need to find some equilibrium points to make really stinking visualizations. The only one we have right now is the trivial one, far away from the interesting dynamics. So I think the first step is to search for them looking at Annalisa's energy/dissipation plots. For this I think we need good charts of the dynamics, so I will try to define more slices. Please let me know if this is the case. 
+\item[2012-05-11 Predrag] I believe that at this stage exact \reqva\ are
+only a distraction. You have to pick some typical snapshots of the flow
+as your \templates, like you do at $\zeit=0$, to make really striking
+visualizations. No need for exact solutions. This is important, because I
+want experimentalist to slice their data as well, and they will never
+have any exact solutions.
 
 \item[2012-05-11 Sebastian to Ashley]
 Hi Ashley!
 
-I did used a different notation that the usual one in Chaosbook. I think $\gSpace$ (as in \refeq{gpara}) is continuous in the physical sense, only that it has to be regarded as discrete when one tries to implement it. When I tried a continuous Newton-Raphson for this it failed to converge to something meaningful. Maybe if I had followed the convention and used something as $\gSpace' = 2 \pi \gSpace/N$ to iterate, then I would have not had this problem.
+I did used a different notation that the usual one in Chaosbook. I think
+$\gSpace$ (as in \refeq{gpara}) is continuous in the physical sense, only
+that it has to be regarded as discrete when one tries to implement it.
+When I tried a continuous Newton-Raphson for this it failed to converge
+to something meaningful. Maybe if I had followed the convention and used
+something as $\gSpace' = 2 \pi \gSpace/N$ to iterate, then I would have
+not had this problem.
 
-Regarding the dot product in equation \refeq{min6} I actually got something as in \refeq{min6_2} (I will correct \refeq{min6} afterwards). In the code I only consider the real part of \refeq{min6_2}, however the imaginary component is not zero. I think it should not vanish in general. But I might be missing something, please let me know why you think it should vanish.
+Regarding the dot product in equation \refeq{min6} I actually got
+something as in \refeq{min6_2} (I will correct \refeq{min6} afterwards).
+In the code I only consider the real part of \refeq{min6_2}, however the
+imaginary component is not zero. I think it should not vanish in general.
+But I might be missing something, please let me know why you think it
+should vanish.
 
-I would fix the code to take advantage of the $a_m=a^*_{-m}$ property.
+I will fix the code to take advantage of the $a_m=a^*_{-m}$ property.
+
+\item[2012-05-11 Predrag]
+After you have implemented the $a_m=a^*_{-m}$ property, replot
+\reffig{f:fouriervort}. Your `spectral representation' should be just the
+right half, no reflection symmetry.
 
 \end{description}
