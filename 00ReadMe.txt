@@ -52,11 +52,9 @@ www/
     Siminos home pages (tres elegantes)
 	--> moved to repository siminoswww
 
-talks/
-    all symmetry reduction talks
+presentations/
+    all symmetry reduction talks and posters
     Tufts10/    Predrag seminar, 2010-04-02
-
-posters/
 
 scripts/
     potentially useful scripts 
