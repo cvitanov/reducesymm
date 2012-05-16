@@ -756,9 +756,13 @@ results or just explore the system with the parameters given here.
 ``attractor'' for $\mu_1 = -0.337,\, \mu_2 = 0.27,\, c_1 = 1,\, c_2 =
 -1,\, a_1 = -1.5,\, a_2 = -6.19,\, b_1 = 1.583,\,  b_2 = -0.115,\, e_2 =
 1.211$
-(a) in original state space variables $\Re z_1,\,\Im z_1,\,\Re z_2$.
-(b) in invariant coordinates used by
-Armbruster \etal\rf{AGHO288} $|z_1|,\, |z_2|,\, z_1^2 \bar{z}_2 + \bar{z}_1^2 z_2$.
+(a) in equivariant \statesp\ coordinates
+    $\{x_1, y_1 ,x_2, y_2\}$
+    % $\Re z_1,\,\Im z_1,\,\Re z_2$.
+(b) in invariant coordinates
+    $\{\sqrt{u}, \sqrt{v}, w\}$
+% used by Armbruster \etal\rf{AGHO288}
+% $|z_1|,\, |z_2|,\, z_1^2 \bar{z}_2 + \bar{z}_1^2 z_2$.
 }
  \label{fig:dangelmayrChaos}
 \end{figure}
@@ -854,14 +858,15 @@ Here's Siminos's \refeq{eq:DangSO2} in terms of 4 real variables,
 such that $z_1 = x_1 + i x_2$ and $z_2 = y_1 + i y_2$. I did the algebra
 using Matlab's symbolic math toolbox, so these should be correct.
 \bea
-\dot{x}_1 &=& a_1 x_1^3 + b_1 x_1 y_1^2 + c_1 x_1 y_1 + a_1 x_1 x_2^2 + b_1 x_1 y_2^2 + \mu_1 x_1 + c_1 x_2 y_2
+\dot{x}_1 &=& \mu_1 x_1 + a_1 x_1^3 + b_1 x_1 y_1^2 + c_1 x_1 y_1 + a_1 x_1 x_2^2 + b_1 x_1 y_2^2 + c_1 x_2 y_2
 \continue
-\dot{y}_1 &=& a_1 x_1^2 x_2 + c_1 x_1 y_2 + b_1 y_1^2 x_2 - c_1 y_1 x_2 + a_1 x_2^3 + b_1 x_2 y_2^2 + \mu_1 x_2
+\dot{y}_1 &=& \mu_1 x_2 + a_1 x_1^2 x_2 + c_1 x_1 y_2 + b_1 y_1^2 x_2 - c_1 y_1 x_2 + a_1 x_2^3
+              + b_1 x_2 y_2^2
 \continue
-\dot{x}_2 &=& a_2 x_1^2 y_1 + c_2 x_1^2 + b_2 y_1^3 + a_2 y_1 x_2^2 + b_2 y_1 y_2^2 + \mu_2 y_1 - c_2 x_2^2 + e_2 y_2
+\dot{x}_2 &=& \mu_2 y_1 + a_2 x_1^2 y_1 + c_2 x_1^2 + b_2 y_1^3 + a_2 y_1 x_2^2 + b_2 y_1 y_2^2  - c_2 x_2^2 + e_2 y_2
 \continue
-\dot{y}_2 &=& a_2 x_1^2 y_2 + 2 c_2 x_1 x_2 + b_2 y_1^2 y_2 - e_2 y_1 + a_2 x_2^2 y_2 + b_2 y_2^3 + \mu_2 y_2
-\label{2mode4D}
+\dot{y}_2 &=& \mu_2 y_2 + a_2 x_1^2 y_2 + 2 c_2 x_1 x_2 + b_2 y_1^2 y_2 - e_2 y_1 + a_2 x_2^2 y_2 + b_2 y_2^3
+\label{2mode4Da}
 \eea
 
 \item[2012-04-26 Daniel to Evangelos] Just tried to figure out how the parameters
@@ -1227,7 +1232,7 @@ order of the polynomial down.
 uncharted territory, but here are some previously undocumented results
 for meager fixed points and the easy \reqva.
 	\begin{itemize}
-		\item By using Matlab to symbolically solve  \refeq{2mode4D},
+		\item By using Matlab to symbolically solve  \refeq{2mode4Da},
              I found that the only fixed point is the origin, independent
              of parameter choices.
 {\bf [2012-03-31 Predrag]} Most solutions are `mixed modes'. However,
@@ -1291,7 +1296,7 @@ probably does not matter much, but if you can make it unstable, do so.
 that nobody read into your text.
 
 \item[2012-04-25 Bryce] Nothing fancy here but I've written code to
-symmetry reduce \refeq{2mode4D}. I am currently choosing a random slice
+symmetry reduce \refeq{2mode4Da}. I am currently choosing a random slice
 (no thinking yet!) just to see if it worked and the results were quite
 surprising \reffig{fig:pkfig1}.
 
@@ -1300,7 +1305,7 @@ surprising \reffig{fig:pkfig1}.
  (a) \includegraphics[width=0.35\textwidth]{pkTraj1}
  (b) \includegraphics[width=0.35\textwidth]{pkTraj1Reduced}
 
-\caption{Projection of Dangelmayr system \refeq{2mode4D}
+\caption{Projection of Dangelmayr system \refeq{2mode4Da}
 ``attractor'' for $\mu_1 = -0.337,\, \mu_2 = 0.27,\, c_1 = 1,\, c_2 =
 1,\, a_1 = -1.4,\, a_2 = -6,\, b_1 = 1.6,\,  b_2 = -0.1,\, e_2 = 1.217$.
 (a) Projection onto original state space:
@@ -1320,7 +1325,7 @@ to strain so I'm throwing the towel in for now in favor of some food.
 \centering
  (a) \includegraphics[width=0.35\textwidth]{pkTraj2}
  (b) \includegraphics[width=0.35\textwidth]{pkTraj2Reduced}
-\caption{Projection of Dangelmayr system \refeq{2mode4D}
+\caption{Projection of Dangelmayr system \refeq{2mode4Da}
 ``attractor'' for $\mu_1 = -0.337,\, \mu_2 = 0.27,\, c_1 = 1,\, c_2 =
 1,\, a_1 = -1.4,\, a_2 = -6,\, b_1 = 1.6,\,  b_2 = 0.1,\, e_2 = 1.217$.
 (a) Projection onto original state space:
@@ -1395,7 +1400,7 @@ It seems I don't know the password.
 \item[2012-04-28 Predrag] cnsuser cnsweb
 
 \item[2012-04-27 Predrag] Regarding \refeq{eq:DangSO2} in terms of 4 real
-variables \refeq{2mode4D}- unfortunately for \cLe\ one writes $z_1 = x_1
+variables \refeq{2mode4Da}- unfortunately for \cLe\ one writes $z_1 = x_1
 + i x_2$ and $z_2 = y_1 + i y_2$ (so rotations are in `x' and `y' planes
 - this mixes them up). Might be confusing in the time to come.
 
@@ -1404,7 +1409,7 @@ thought I'd keep 1's together and 2's together since that's the way they
 appear in eqs. \refeq{eq:AGpolar} and \refeq{eq:DangSO2}. Want me to
 change them to $z_1 = x_1 + \ii x_2$ and $z_2 = y_1 + \ii y_2$? I would
 take me 5 minutes. [2012-04-29 Daniel] Changed all 4D Cartesian representations
-of $z_1$ and $z_2$ in blog and \emph{my} Matlab codes to be consistent with the substituion used in DasBuch for
+of $z_1$ and $z_2$ in blog and \emph{my} Matlab codes to be consistent with the substitution used in DasBuch for
 the \cLe\ system as outlined by Predrag in the previous post.
 
 \item[2012-04-28 Predrag] Low priority, but if only 5 minutes, do it sometime.
@@ -2158,6 +2163,16 @@ You might want to try to turn \texttt{Evangelos/dangelmayr\_so2\_int.nb}
 into a {\twoMode} Wolfram CDF demonstration - it has sliders for various
 parameters, and it should just work off the bat. We still have to settle
 on a good example of chaos that requires two templates.
+
+\item[2012-05-16 Predrag to  Daniel]
+Regarding [2012-04-27 Predrag], [2012-04-28 Daniel], and [2012-04-29
+Daniel] above: Have you really changed to $z_1 = x_1 + \ii x_2$
+and $z_2 = y_1 + \ii y_2$? Left-hand-side of \refeq{2mode4D} and
+\refeq{2mode4Da} looks like the old version; $\mu_i$ factors do not match
+up. Please recheck.
+
+
+
 
 \item[2012-05-07  Predrag to Chaos Gang] It's not over until it is over.
 
