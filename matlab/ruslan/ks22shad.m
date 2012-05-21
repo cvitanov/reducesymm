@@ -146,17 +146,25 @@ minanglpos=find( angl(:,1) == min(angl(:,1)));
 fig4=figure();
 hold on;
 
-[AX,H1,H2] =plotyy(pos*h,d,tt0,angl(:,1)/pi,'semilogy');
+[AX,H1,H2] =plotyy(pos*h,d,tt0,angl(:,1)/pi);
+
+% set(AX,'YTick', []);
+% set(AX(2),'YMinorTick', 'off');
+
 
 set(H1,'LineStyle','v', 'Color', [0 0 0.8]);
 set(H2,'LineStyle','-', 'Color', [0.8 0 0], 'LineWidth', 2);
 
-semilogy(pos1*h,d1,'x','Color', [0 0.8 0]);
+plot(pos1*h,d1,'x','Color', [0 0.8 0]);
 
+set(AX,'YScale', 'log');
+
+set(AX(1),'Box','off');
 set(AX(1),'YLim', [1e-3 0.11]);
 set(AX(1),'YTick', [1e-3 1e-2 1e-1 1]);
 set(AX(2),'YLim', [1e-2 1]);
-set(AX(2),'YTick', [1e-3 1e-2 1e-1 1]);
+set(AX(2),'YTick', [1e-3 1e-2 1e-1 1]); 
+
 set(AX(1),'YColor', 'k', 'FontSize', 11); 
 set(AX(2),'YColor', 'k', 'FontSize', 11); 
 set(get(AX(1),'Ylabel'),'String','d','FontSize', 12);
@@ -166,7 +174,7 @@ xlabel('t');
 l1=['d(' num2str(rpo(ipo).T,4) ', ' num2str(ppo(refpo).T,4) ')'];
 l3=['\theta_{1,2} for PO(' num2str(ppo(refpo).T,4) ')'];
 l2=['d(' num2str(rpo(ipo1).T,4) ', ' num2str(ppo(refpo).T,4) ')'];
-legend(l1,l2,l3, 'Location', 'NorthWest' );
+legend(l1,l2,l3, 'Location', 'SouthWest' );
 
 saveas(fig4, ['ks22ppoT', '7035', 'angl_dist.png']);
 saveas(fig4, ['ks22ppoT', '7035', 'angl_dist.pdf']);
@@ -283,17 +291,25 @@ minanglpos=find( angl(:,1) == min(angl(:,1)));
 fig4=figure();
 hold on;
 
-[AX,H1,H2] =plotyy(pos*h,d,tt0,angl(:,1)/pi,'semilogy');
+[AX,H1,H2] =plotyy(pos*h,d,tt0,angl(:,1)/pi);
+
+% set(AX,'YTick', []);
+% set(AX(2),'YMinorTick', 'off');
+
 
 set(H1,'LineStyle','v', 'Color', [0 0 0.8]);
 set(H2,'LineStyle','-', 'Color', [0.8 0 0], 'LineWidth', 2);
 
-semilogy(pos1*h,d1,'x','Color', [0 0.8 0]);
+plot(pos1*h,d1,'x','Color', [0 0.8 0]);
 
+set(AX,'YScale', 'log');
+
+set(AX(1),'Box','off');
 set(AX(1),'YLim', [1e-3 0.1]);
 set(AX(1),'YTick', [1e-3 1e-2 1e-1 1]);
 set(AX(2),'YLim', [1e-3 2.5]);
 set(AX(2),'YTick', [1e-3 1e-2 1e-1 1]);
+
 set(AX(1),'YColor', 'k', 'FontSize', 11); 
 set(AX(2),'YColor', 'k', 'FontSize', 11); 
 set(get(AX(1),'Ylabel'),'String','d','FontSize', 12);
@@ -303,7 +319,7 @@ xlabel('t');
 l1=['d(' num2str(ppo(ipo).T,4) ', ' num2str(ppo(refpo).T,4) ')'];
 l3=['\theta_{1,2} for PO(' num2str(ppo(refpo).T,4) ')'];
 l2=['d(' num2str(ppo(ipo1).T,4) ', ' num2str(ppo(refpo).T,4) ')'];
-legend(l1,l2,l3, 'Location', 'NorthWest' );
+legend(l1,l2,l3, 'Location', 'SouthEast' );
 
 saveas(fig4, ['ks22ppoT', '10235', 'angl_dist.png']);
 saveas(fig4, ['ks22ppoT', '10235', 'angl_dist.pdf']);
@@ -311,7 +327,7 @@ saveas(fig4, ['ks22ppoT', '10235', 'angl_dist.eps']);
 
 %%%% ppo 41 might be shadowed by ppo 5 and ppo 6.
 
-%% Shadowing of PO(90.22)
+%% Shadowing of PO(90.22) -- Defunct (missing data?)
 
 clear; load ks22f90h25.mat;
 h=0.25; N=16; L=22;
@@ -415,24 +431,32 @@ fexp_ipo1 = [log(abs(ppo(ipo1).e(1)))/ppo(ipo1).T, log(abs(ppo(ipo1).e(4)))/ppo(
 
 %%%%%
 
-angl=load('ks22ppo_angl_54.dat');
+angl=load('ks22ppo_angl_97.dat');
 
 minanglpos=find( angl(:,1) == min(angl(:,1)));
 
 fig4=figure();
 hold on;
 
-[AX,H1,H2] =plotyy(pos*h,d,tt0,angl(:,1)/pi,'semilogy');
+[AX,H1,H2] =plotyy(pos*h,d,tt0,angl(:,1)/pi);
+
+% set(AX,'YTick', []);
+% set(AX(2),'YMinorTick', 'off');
+
 
 set(H1,'LineStyle','v', 'Color', [0 0 0.8]);
 set(H2,'LineStyle','-', 'Color', [0.8 0 0], 'LineWidth', 2);
 
-semilogy(pos1*h,d1,'x','Color', [0 0.8 0]);
+plot(pos1*h,d1,'x','Color', [0 0.8 0]);
 
+set(AX,'YScale', 'log');
+
+set(AX(1),'Box','off');
 set(AX(1),'YLim', [1e-3 0.1]);
 set(AX(1),'YTick', [1e-3 1e-2 1e-1 1]);
 set(AX(2),'YLim', [1e-3 2.5]);
 set(AX(2),'YTick', [1e-3 1e-2 1e-1 1]);
+
 set(AX(1),'YColor', 'k', 'FontSize', 11); 
 set(AX(2),'YColor', 'k', 'FontSize', 11); 
 set(get(AX(1),'Ylabel'),'String','d','FontSize', 12);
