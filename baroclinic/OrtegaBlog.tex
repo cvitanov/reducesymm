@@ -918,7 +918,6 @@ It could be that the kinkiness is real, as you have a huge Reynolds
 number, \ie\ structures on scales much smaller than the channel width.
 
 \begin{figure}
-  % Requires \usepackage{graphicx}
   \includegraphics[width=0.9\textwidth]{chartBorder1}\\
   \caption{\ChartBord\ calculated as in \refeq{chartBordAng}. }
   \label{f:chartBorder1}
@@ -1013,37 +1012,33 @@ In my previous implementation things where a lot more smoother (see figure \ref{
 I was wondering how complicated was to implement this for pipe flow, and if you ran into similar difficulties. I will keep thinking about what is wrong. Let me know if you have any advice.
 
 \begin{figure}
-  % Requires \usepackage{graphicx}
   \includegraphics[width=1\textwidth]{SliceCondition}\\
   \caption{Graph of \refeq{min4} using half of the coefficients.}\label{SliceCondition}
 \end{figure}
 
 \begin{figure}
-  % Requires \usepackage{graphicx}
   \includegraphics[width=1\textwidth]{ChartBorder}\\
-  \caption{Cosine of the angle between the tangent vectors using half of the coefficients. This is calculated using \refeq{min5_3} and \refeq{min6_3}}\label{ChartBorder}
+  \caption{Cosine of the angle between the tangent vectors using half of
+  the coefficients. This is calculated using \refeq{min5_3} and
+  \refeq{min6_3}}\label{ChartBorder}
 \end{figure}
 
 \begin{figure}
-  % Requires \usepackage{graphicx}
   \includegraphics[width=1\textwidth]{RotatingFrame}\\
   \caption{Calculated rotating frame using half of the coefficients. The jump in the rotating frame is due to something I impose in the code (my rotating frame is limited to change between $0$ and $1024$). I think my implementation might remove jumps of $512$ in the rotating frame (equivalent to $\pi$ in the usual definition) when they occur,  as it limits the search area for the zeros of \refeq{min4_2}}\label{RotatingFrame}
 \end{figure}
 
 \begin{figure}
-  % Requires \usepackage{graphicx}
   \includegraphics[width=1\textwidth]{FullFourier}\\
   \caption{Rotating frame calculated using the full coefficients of the FFT representation (Blue) and half of them (Red)}\label{FullFourier}
 \end{figure}
 
 \begin{figure}
-  % Requires \usepackage{graphicx}
   \includegraphics[width=1\textwidth]{FullFourier2}\\
   \caption{Rotating frame calculated using the full coefficients of the FFT representation (Blue) and half of them (Red)}\label{FullFourier2}
 \end{figure}
 
 \begin{figure}
-  % Requires \usepackage{graphicx}
   \includegraphics[width=1\textwidth]{SliceCondition2}\\
   \caption{Slice function with the full fourier representation \refeq{min4} calculated using integer values for the rotating frame (Blue) and steps of 0.25 for the same variable (Red)}\label{SliceCondition2}
 \end{figure}
@@ -1062,27 +1057,76 @@ Hi Pedrag! I am glad you are in again.
 Great webpage. I am not sure I understand which is the ultimate goal you are refereing; but I guess great visualizations is part of it.
 
 \item[2012-06-04 Sebastian]
-I think the discrete implementation had some issues with aliasing; I was using frequencies higher that that of Nyquist. Nonetheless, somehow results seemed smoother\footnote{In the uploaded movie one can see the drifting is not removed as smooth as before. So maybe a smaller time step needs to be considered.}.
+I think the discrete implementation had some issues with aliasing; I was
+using frequencies higher that that of Nyquist. Nonetheless, somehow
+results seemed smoother. In the DropBox uploaded movie
+\texttt{BaroclinicSlice2.avi} (now in Predrag's \texttt{siminos/movies/},
+not in the repository) one can see the drifting is not removed as
+smoothly as before. So maybe a smaller time step needs to be considered.
 But probably is because I am missing something.
 
-Additionally, I tried to do a projection into 2D form the slice today. I defined the vector basis as the slice vector and a reflection of it about the $x$ axis (as in figure \ref{Projectionvectors}). And projected trajectories with:
-
+Additionally, I tried a projection into a pair of \statesp\ coordinates. I
+defined the vector basis as the slice vector and a reflection of it about
+the $x$ axis (as in \reffig{Projectionvectors}). And projected
+trajectories with:
 \beq
 e^i \cdot u =\Re \left[\sum_{n=1}^2\sum_{l=0}^{M-1}\sum_{k=0}^{N/2} u_{l,k,n} e^i_{l,k,n} \right]
 \ee{dotProduct}
+where $i=1,2$ defines the basis vector, $n$ accounts for the layers and
+$m$ for the longitudinal direction. I uploaded the results to Dropbox's
+Chaos folder. Of course, this might not mean much if the transversality
+condition in \reffig{ChartBorder} is correct.
 
-where $i=1,2$ defines the basis vector, $n$ accounts for the layers and $m$ for the longitudinal direction. I uploaded the results to Dropbox's Chaos folder. Of course, this might not mean much if the transversality condition in \ref{ChartBorder} is correct.
-
-I think the movie shows some recurrences. But I am not so happy with the slicing, and I am not sure if they really mean something, as I have to figure out what is wrong with the implementation.
+I think the movie shows some recurrences. But I am not so happy with the
+slicing, and I am not sure if they really mean something, as I have to
+figure out what is wrong with the implementation.
 
 \begin{figure}
-  % Requires \usepackage{graphicx}
-  \includegraphics[width=0.9\textwidth]{Projectionvectors}\\
-  \caption{Projection vectors (only the first layer is shown). e1: slice vector. e2: reflection of e1 about the x axis.}\label{Projectionvectors}
+  \includegraphics[width=0.9\textwidth]{Projectionvectors}
+  \caption{Projection vectors (only the first layer is shown). e1: slice
+  vector. e2: reflection of e1 about the $x$
+  axis.}\label{Projectionvectors}
 \end{figure}
-    
-    
-    
-    
+
+\item[2012-06-06 Predrag]
+Can you read \refsect{s:chart} and use the same names? I think your
+`slice vector' is a our `\template' \slicep, which you chose to be an
+instantaneous snapshot of a steady turbulent state at arbitrary fixed time
+$\zeit$, or a `prominent state of the flow
+\[
+\slicep = \bu = \bu(x,y) = \bu(x,y,\zeit) \,.
+\]
+You want to construct an orthonormal basis set
+$\{\be_1, \be_2, \cdots, \be_n\}$, with $\Norm{\be_j}=1$
+(using notation of \refsect{s:visualStatSp}).
+
+Do you ever define the model, draw a picture that says what is $x$ and what is $y$?
+If you do, refer to the place in the text it happens, and if you do not, define it in the
+text of your project (edit it freely, we can always update the ChaosBook.org posting by an
+improved version), and
+draw a clear picture what is what.
+
+I believe $x$ is streamwise, $y$ is spanwise. There is no
+streamwise reflection invariance of the flow, so I would not use $x$ reflection of
+$\bu(x,y) \to \bu(-x,y)$ in constructing the orthonormal basis set. The spanwise reflection
+is a symmetry (I believe), so you want to construct
+$\{\be_1, \be_2\}$ from the orthogonal pair of vectors $\bu(x,y) \pm \bu(x,-y)$.
+To be really explicit:
+\[
+\be_{1,2} = \left(\bu(x,y) \pm \bu(x,-y)\right) / Norm{\bu(x,y) \pm \bu(x,-y)}
+\,.
+\]
+
+The time steps do look too big in your current (non-orthogonalized)
+$\{\ssp_1, \ssp_2\}$ projection.
+
+What is the `transversality
+condition' and how is it illustrated by \reffig{ChartBorder}? \ChartBord?
+
+Do you understand {\bf [2012-05-09 Ashley]}, {\bf [2012-05-14 Ashley]} above and
+agree with him? Or is your Newton still discretized? Ashley (or Gibson) will help you, if
+you ask them.
+
+The doctor is in (later today).
 
 \end{description}
