@@ -9,8 +9,10 @@ Desymmetrization project, movies
 this directory contains non-svn committed movies
     (to save space: get them by request)
 
-							Sebastian    2012-05-07
+							Sebastian    2012-06-05
     read siminos/baroclinic/OrtegaBlog.tex
+BaroclinicSlice2.avi
+							Sebastian    2012-05-07
 BaroclinicSlice.avi
 
 --------------------------------------------------------------------------
