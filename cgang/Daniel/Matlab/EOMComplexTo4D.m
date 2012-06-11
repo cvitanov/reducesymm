@@ -13,10 +13,8 @@ syms r1dot theta1 theta1dot r2dot theta2 theta2dot real
 syms r1 r2 positive
 syms phi real
 
-% Express complex variables z in terms of real and imaginary parts
-% Notice that 1's form one complex number and 2's form another, whereas
-% in the Complex Lorenz example of Chaosbook, x's form one complex number
-% and y's form another.
+% Express complex variables z in terms of real and imaginary parts using
+% the convention for Complex Lorenz in Chaosbook.
 z1 = x1 + i*x2;
 z2 = y1 + i*y2;
 
