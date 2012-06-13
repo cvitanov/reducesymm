@@ -262,7 +262,7 @@ the code, but post-process by turning the full space trajectory into the
 
 \item[2012-04-29 Sebastian]
 I have been having a bit of trouble figuring out how to calculate the
-rotating frame for each point. However, I think I am close to make it.
+moving frame for each point. However, I think I am close to make it.
 Here is how I have been trying to do it: I have been using the
 postprocessing approach converting the vorticity output from the model
 back to spectral space with a fast sine transform for Y and a fast
@@ -482,7 +482,6 @@ This yields the \emph{slice condition} for unitary groups:
 \beq
     \Re(\sspRed^\dagger \Lg \slicep)=0
 \ee{120430_11}
-
 %\beq
 %\frac{\partial}{\partial \gSpace}
 %\left(\ssp^\dagger a - a^\dagger g\slicep -(g\slicep )^\dagger a+(g\slicep)^\dagger g\slicep \right)
@@ -511,7 +510,6 @@ This yields the \emph{slice condition} for unitary groups:
 %\beq
 %2 \Re[(\widehat{\ssp}-\slicep)^\dagger \Lg \slicep ]=0
 %\ee{120429_11}
-
 One use this condition for Newton-Raphson determination of \sspRed.
 
 \item[2012-04-30 Sebastian]
@@ -603,14 +601,16 @@ The sidestep approach should be a good test. I will also try that.
 
 \item[2012-05-05 Sebastian]
 I use \refeq{min4} for the slice condition in Newton Method. But I am not
-sure how to implement the transversality condition for complex vectors. I
+sure how to implement the {\chartBord} condition for complex vectors. I
 will work something out. In the moment I am calculating the real part of
 the condition.
 
 \item[2012-05-05 Predrag] There is only one shift $\gSpace$ to compute -
 it fixes both the real and imaginary parts of the $\Un{1}$
-transformation. If by `transversality condition' you mean the
-{\chartBord} condition \refeq{sliceSingl0}, the dot product is the usual
+transformation.
+% If by `transversality condition' you mean the
+% {\chartBord} condition \refeq{sliceSingl0},
+The dot product is the usual
 $L2$ one, in the streamwise direction
 \beq
   \Norm{\ssp-\ssp'}^2  = \braket{\ssp-\ssp'}{\ssp-\ssp'} =
@@ -625,8 +625,8 @@ work. I went over the code and derivation today, but couldn't find what
 is wrong with it.
 So I think it is not an implementation issue but something else.  Maybe
 in this case (after the FFT is used), it might not be correct to regard
-the rotating frame as continuous variable; as the rotation of the FFT
-only makes sense (and only works) when the rotating frame is an integer
+the moving frame as continuous variable; as the rotation of the FFT
+only makes sense (and only works) when the moving frame is an integer
 ($\gSpace$ in \refeq{min4}). This way, we might need a discrete version
 of the Newton-Raphson algorithm.
 
@@ -674,7 +674,7 @@ data set.
 \item[2012-05-07 Sebastian]
 I implemented a discrete Newton-Raphson method and it seems to work. I
 think I have sliced baroclinic instability. Of course, I have to think
-more about the transversality condition. I will upload the code at night
+more about the {\chartBord} condition. I will upload the code at night
 (I don't have my laptop in the office).
 
 \item[2012-05-07 Predrag to Ashley] Do you understand why one would have a
@@ -692,18 +692,19 @@ instability:
 \end{quote}
 
 As expected, the slice seems to be useful only for a limited time. But
-ignore the transversality condition in the moment. It might be correct,
+ignore the {\chartBord} condition in the moment. It might be correct,
 but I have to check.
 
 \item[2012-05-07 Predrag to Sebastian] Slicing does seem to stop the flow
 from drifting, but otherwise not much simplification - it will be
 hopefully more striking once you start plotting trajectories in the \statesp.
 
-Do not know what is the `transversality condition'. Do you mean the
-{\chartBord} condition \refeq{sliceSingl0},
+% Do not know what is the `transversality condition'. Do you mean
+The
+{\chartBord} condition \refeq{sliceSingl0} is
 \[ %beq
 \braket{\groupTan(\sspRSing)}{\sliceTan{}} \,=\, 0
-\,?
+\,.
 % \label{sliceSingl0}
 \] %\eeq
 I'm bothered by $10^{-5}$ magnitude of whatever you are plotting. How about
@@ -730,7 +731,8 @@ Ashley is measuring the same thing for the pipe flow, you two might want
 to compare experiences.
 
 \item[2012-05-07 Sebastian]
-By `transversality' condition I meant {\chartBord}  condition. I
+%By `transversality' condition I meant {\chartBord}  condition.
+I
 implemented something for this a few days ago, but I have to check. What
 is implemented is different from \refeq{min5}; and I didn't spend enough
 time in the derivation so most likely it is incorrect. I will plot the
@@ -809,9 +811,9 @@ climatology case.
 
 \item[2012-05-09 Sebastian]
 I think Newton-Raphson becomes discrete as there is no meaning for
-something as a non-integer rotating frame when you think about it in
+something as a non-integer moving frame when you think about it in
 terms of the FFT. If one tries to plot a shifted imaged using non-integer
-rotating frames in \refeq{gpara} the resulting image after the inverse
+moving frames in \refeq{gpara} the resulting image after the inverse
 transformation gets distorted, if one uses integer values the image is
 just shifted. So maybe when non-integer values are used to calculate
 \ref{min4} the values are affected by this resolution issues.
@@ -843,7 +845,7 @@ Please take a look at the first couple of paragraphs of \S2.3 in
 [\HREF{http://www.cns.gatech.edu/~predrag/papers/preprints.html\#ACHKW11}
 {click here}],
 only about 10 lines. Note that $\gSpace$ is a length or angle and is
-therefore continous, it can take any value. Applying a shift in the
+therefore continuous, it can take any value. Applying a shift in the
 Fourier space, the new coefficients are
 $b_m=\mathrm{e}^{-\mathrm{i}m\gSpace}a_m$, which can be calculated to
 numerical precision. There is no distortion. Perhaps you are thinking of
@@ -983,10 +985,22 @@ then the conjugate symmetric property is
 $a_{km}=a^*_{-k,-m}$.
 
 \item[2012-05-17 Sebastian to Predrag and Ashley]
-I have been trying to implement the slice condition taking advantage of the FFT symmetry (i.e. using only the FFT coefficients from 0 to N/2). I manage to do so but I had to use a bunch tricks (i.e. defining a plausible interval for the rotating frame, making it always positive and between 1 and 1024, and adding some random kick when the iteration gets stuck in an infinite loop; all of these can be seen in the uploaded code); they kind of make sense. I did this for a continuous version of the Newton-Raphson algorithm; here it did not seem to be an issue. The drifting gets removed, however the slice and chart border condition change dramatically, and are not as smooth any more.
+I have been trying to implement the slice condition taking advantage of
+the FFT symmetry (i.e. using only the FFT coefficients from 0 to N/2). I
+manage to do so but I had to use a bunch tricks (i.e. defining a
+plausible interval for the moving frame, making it always positive and
+between 1 and 1024, and adding some random kick when the iteration gets
+stuck in an infinite loop; all of these can be seen in the uploaded
+code); they kind of make sense. I did this for a continuous version of
+the Newton-Raphson algorithm; here it did not seem to be an issue. The
+drifting gets removed, however the slice and chart border condition
+change dramatically, and are not as smooth any more.
 
-The implementation was done taking only half of the values of the transform to calculate \refeq{min4}, \refeq{min5_2}, and \refeq{min6_2}. After all, these first $N/2+1$ coefficients are the only ones really independent, and the rest are just complex conjugates. So maybe I just need to consider these to build the state space vectors. So that the equations are:
-
+The implementation was done taking only half of the values of the
+transform to calculate \refeq{min4}, \refeq{min5_2}, and \refeq{min6_2}.
+After all, these first $N/2+1$ coefficients are the only ones really
+independent, and the rest are just complex conjugates. So maybe I just
+need to consider these to build the state space vectors:
 \beq
     \Re(\sspRed^\dagger \Lg \slicep)=
     \Re\left(\frac{-2 \pi i}{N} \sum_{k=0}^{N/2} \sum_{k=0}^{M-1}
@@ -1005,11 +1019,20 @@ and
     \frac{4 \pi^2}{N^2} \sum_{k=0}^{N/2} \sum_{l=0}^{M-1}
     k^2 \overline{a_{lk}} a'_{lk}
 \ee{min6_3}
+However, I ran into serious difficulties, so I think I am doing something
+wrong. In particular, the chart border condition makes no sense. It
+starts at $1$ (which is expected as I start the iteration at the same
+time step corresponding to the slice) and then just wonders around zero
+(see \reffig{ChartBorder}).
+In my previous implementation things where a lot more smoother (see
+\reffig{FullFourier}), although one had to regard everything as discrete
+(to see why see \reffig{SliceCondition2}). Additionally, the moving frame of both representation seems to change when looking only to a
+particular time step (see \reffig{FullFourier2}), but I should look at
+all the time steps to conclude about this.
 
-However, I ran into serious difficulties, so I think I am doing something wrong. In particular, the chart border condition makes no sense. It starts at $1$ (which is expected as I start the iteration at the same time step corresponding to the slice) and then just wonders around zero (see figure \ref{ChartBorder}).
-In my previous implementation things where a lot more smoother (see figure \ref{FullFourier}), although one had to regard everything as discrete (to see why see figure \ref{SliceCondition2}). Additionally, the rotating frame of both representation seems to change when looking only to a particular time step (see figure \ref{FullFourier2}), but I should look at all the time steps to conclude about this.
-
-I was wondering how complicated was to implement this for pipe flow, and if you ran into similar difficulties. I will keep thinking about what is wrong. Let me know if you have any advice.
+I was wondering how complicated was to implement this for pipe flow, and
+if you ran into similar difficulties. I will keep thinking about what is
+wrong. Let me know if you have any advice.
 
 \begin{figure}
   \includegraphics[width=1\textwidth]{SliceCondition}\\
@@ -1017,15 +1040,8 @@ I was wondering how complicated was to implement this for pipe flow, and if you 
 \end{figure}
 
 \begin{figure}
-  \includegraphics[width=1\textwidth]{ChartBorder}\\
-  \caption{Cosine of the angle between the tangent vectors using half of
-  the coefficients. This is calculated using \refeq{min5_3} and
-  \refeq{min6_3}}\label{ChartBorder}
-\end{figure}
-
-\begin{figure}
   \includegraphics[width=1\textwidth]{RotatingFrame}\\
-  \caption{Calculated rotating frame using half of the coefficients. The jump in the rotating frame is due to something I impose in the code (my rotating frame is limited to change between $0$ and $1024$). I think my implementation might remove jumps of $512$ in the rotating frame (equivalent to $\pi$ in the usual definition) when they occur,  as it limits the search area for the zeros of \refeq{min4_2}}\label{RotatingFrame}
+  \caption{Calculated moving frame using half of the coefficients. The jump in the moving frame is due to something I impose in the code (my moving frame is limited to change between $0$ and $1024$). I think my implementation might remove jumps of $512$ in the moving frame (equivalent to $\pi$ in the usual definition) when they occur,  as it limits the search area for the zeros of \refeq{min4_2}}\label{RotatingFrame}
 \end{figure}
 
 \begin{figure}
@@ -1040,21 +1056,22 @@ I was wondering how complicated was to implement this for pipe flow, and if you 
 
 \begin{figure}
   \includegraphics[width=1\textwidth]{SliceCondition2}\\
-  \caption{Slice function with the full fourier representation \refeq{min4} calculated using integer values for the rotating frame (Blue) and steps of 0.25 for the same variable (Red)}\label{SliceCondition2}
+  \caption{Slice function with the full fourier representation \refeq{min4} calculated using integer values for the moving frame (Blue) and steps of 0.25 for the same variable (Red)}\label{SliceCondition2}
 \end{figure}
-
 Note: The new code is Slice2.m and sliceFunction2.m. I left the previous one for reference.
 
-\item[2012-05-18 Sebastian to Predrag]
-I also uploaded the code for the document I sent you. It would be great
-to talk about this. Let me know when you can.
+% \item[2012-05-18 Sebastian to Predrag]
+% I also uploaded the code for the document I sent you. It would be great
+% to talk about this. Let me know when you can.
 
-\item[2012-06-04 Predrag] The doctor is in, and
-\HREF{http://hint.fm/wind/}{here} is our ultimate goal.
+\item[2012-06-04 Predrag]
+%The doctor is in, and
+\HREF{http://hint.fm/wind/}{Here} is our ultimate goal.
 
 \item[2012-06-04 Sebastian]
-Hi Pedrag! I am glad you are in again.
-Great webpage. I am not sure I understand which is the ultimate goal you are refereing; but I guess great visualizations is part of it.
+%Hi Predrag! I am glad you are in again.
+Great webpage. I am not sure I understand which is the ultimate goal you
+are referring to; but I guess great visualizations is part of it.
 
 \item[2012-06-04 Sebastian]
 I think the discrete implementation had some issues with aliasing; I was
@@ -1065,14 +1082,47 @@ not in the repository) one can see the drifting is not removed as
 smoothly as before. So maybe a smaller time step needs to be considered.
 But probably is because I am missing something.
 
-Additionally, I tried a projection into a pair of \statesp\ coordinates. I
-defined the vector basis as the template and a reflection of it about
-the $x$ axis (as in \reffig{Projectionvectors}). And projected
-trajectories with:
+
+\begin{figure}
+\begin{center}
+  \includegraphics[width=0.9\textwidth]{Projectionvectors}
+\end{center}
+  \caption{orthonormal basis set
+$\{\be_1, \be_2, \cdots, \be_n\}$: $\be_1$ is
+  the antisymmetric vector, and $\be_2$ the symmetric one, see
+  \refeq{antisymBasis}. Only the first layer is shown.
+  }\label{Projectionvectors}
+\end{figure}
+
+\item[2012-06-04 Predrag]
+We need to construct an orthonormal basis set
+$\{\be_1, \be_2, \cdots, \be_n\}$, with $\Norm{\be_j}=1$
+(using notation of \refsect{s:visualStatSp}).
+We chose as a `\template' \slicep\ a `prominent state of the flow,
+\[
+\slicep = \bu = \bu(x,y) = \bu(x,y,\zeit) \,,
+\]
+an instantaneous snapshot of a steady turbulent state at arbitrary fixed
+time $\zeit$.
+% There is no
+% streamwise reflection invariance of the flow, so I would not use $x$ reflection of
+% $\bu(x,y) \to \bu(-x,y)$ in constructing
+The spanwise reflection is a symmetry, so we can construct $\{\be_1,
+\be_2\}$ from the orthonormal pair of vectors
 \beq
-e^i \cdot u =\Re \left[\sum_{n=1}^2\sum_{l=0}^{M-1}\sum_{k=0}^{N/2} u_{l,k,n} e^i_{l,k,n} \right]
+\be_{1,2} = \frac{\bu(x,y) \pm \bu(x,-y)}{\Norm{\bu(x,y) \pm \bu(x,-y)}}
+\,.
+\ee{antisymBasis}
+An example is given in \reffig{Projectionvectors}.
+
+\item[2012-06-04 Sebastian]
+I projected
+trajectories onto $(\ssp_1, \ssp_2)$ using
+\beq
+\ssp_j = \be_{j} \cdot u =\Re \left[\sum_{n=1}^2\sum_{l=0}^{M-1}\sum_{k=0}^{N/2} u_{l,k,n} e^i_{l,k,n} \right]
+\,,
 \ee{dotProduct}
-where $i=1,2$ defines the basis vector, $n$ accounts for the layers and
+where $j=1,2$ defines the basis vector, $n$ accounts for the layers and
 $m$ for the longitudinal direction. I uploaded the results to Dropbox's
 Chaos folder. Of course, this might not mean much if the chart border
 condition in \reffig{ChartBorder} is correct.
@@ -1082,39 +1132,12 @@ slicing, and I am not sure if they really mean something, as I have to
 figure out what is wrong with the implementation.
 
 \item[2012-06-06 Predrag]
-Can you read \refsect{s:chart} and use the same names? I think your
-`slice vector' is a our `\template' \slicep, which you chose to be an
-instantaneous snapshot of a steady turbulent state at arbitrary fixed time
-$\zeit$, or a `prominent state of the flow
-\[
-\slicep = \bu = \bu(x,y) = \bu(x,y,\zeit) \,.
-\]
-You want to construct an orthonormal basis set
-$\{\be_1, \be_2, \cdots, \be_n\}$, with $\Norm{\be_j}=1$
-(using notation of \refsect{s:visualStatSp}).
-
-Do you ever define the model, draw a picture that says what is $x$ and what is $y$?
-If you do, refer to the place in the text it happens, and if you do not, define it in the
-text of your project (edit it freely, we can always update the ChaosBook.org posting by an
-improved version), and
-draw a clear picture what is what.
-
-I believe $x$ is streamwise, $y$ is spanwise. There is no
-streamwise reflection invariance of the flow, so I would not use $x$ reflection of
-$\bu(x,y) \to \bu(-x,y)$ in constructing the orthonormal basis set. The spanwise reflection
-is a symmetry (I believe), so you want to construct
-$\{\be_1, \be_2\}$ from the orthogonal pair of vectors $\bu(x,y) \pm \bu(x,-y)$.
-To be really explicit:
-\[
-\be_{1,2} = \left(\bu(x,y) \pm \bu(x,-y)\right) / Norm{\bu(x,y) \pm \bu(x,-y)}
-\,.
-\]
-
+Can you read \refsect{s:chart} and use the same names?
 The time steps do look too big in your current (non-orthogonalized)
 $\{\ssp_1, \ssp_2\}$ projection.
 
-What is the `transversality
-condition' and how is it illustrated by \reffig{ChartBorder}? \ChartBord?
+% What is the `transversality
+% condition' and how is it illustrated by \reffig{ChartBorder}? \ChartBord?
 
 Do you understand {\bf [2012-05-09 Ashley]}, {\bf [2012-05-14 Ashley]} above and
 agree with him? Or is your Newton still discretized? Ashley (or Gibson) will help you, if
@@ -1123,45 +1146,97 @@ you ask them.
 The doctor is in (later today).
 
 \item[2012-06-12 Sebastian to Predrag and Ashley]
-I fixed the names in the last post. I also made figure \ref{DomainDefinition}; is that the picture you had in mind?
-
-\begin{figure}
-  % Requires \usepackage{graphicx}
-\begin{center}
-  \includegraphics[width=0.7\textwidth]{DomainDefinition}\\
-  \end{center}
-  \caption{Model geometry. Two layer quasigeostrophic model with vertical shear characterized by $U_o$.}\label{DomainDefinition}
-\end{figure}
+I fixed the names in the last post. Model geometry is drawn in
+\reffig{DomainDefinition}.
 
 
-\begin{figure}
-\begin{center}
-  \includegraphics[width=0.9\textwidth]{Projectionvectors}
-\end{center}
-  \caption{Projection vectors (only the first layer is shown). e1: slice
-  vector. e2: reflection of e1 about the $x$
-  axis.}\label{Projectionvectors}
-\end{figure}
+Newton is now continuous. However, results looked better when it was not,
+and implementation was also ``cleaner'' (see {\bf [2012-05-17 Sebastian to
+Predrag and Ashley]}); but this was probably for the wrong reasons.
 
-Newton is now continuous. However, results looked better when it was not, and implementation was also "cleaner" (see 2012-05-17 Sebastian to Predrag and Ashley]); but this was probably for the wrong reasons.
+I do understand and agree with Ashley. Nonetheless, I do still think that
+taking the real part of the result in \refeq{min4} is necessary (as can
+be seen in the derivation {\bf [2012-04-30 Sebastian, Predrag]}), and is
+unrelated to the FFT property $a_m=a^*_{-m}$.
 
-I do understand and agree with Ashley. Nonetheless, I do still think that taking the real part of the result in \refeq{min4} is necessary (as can be seen in the derivation [2012-04-30 Sebastian, Predrag]), and is unrelated to the FFT property $a_m=a^*_{-m}$.
-
-Recently I tried to implement the rotating frame and the chart border condition just taking into account the first $N/2$ frequencies. I did it considering them as independent coordinates and not accounting for the aliased frequencies given by the FFT for any sum; the results are not to smooth. I also tried yesterday to do it taking account of this aliased frequencies; however results do not look nice so far. Maybe, because it is not clear to me how one should proceed. For instance given the equation:
-
+Recently I tried to implement the moving frame and the chart border
+condition just taking into account the first $N/2$ frequencies. I did it
+considering them as independent coordinates and not accounting for the
+aliased frequencies given by the FFT for any sum; the results are not too
+smooth. I also tried yesterday to do it taking account of this aliased
+frequencies; however results do not look nice so far. Maybe, because it
+is not clear to me how one should proceed. For instance given the
+equation
 \beq
  \braket{\groupTan(\sspRSing)}{\sliceTan{}}= \sspRed^\dagger \Lg^2 \slicep=
     \frac{4 \pi^2}{N^2} \sum_{k} \sum_{l=0}^{M-1}
     k^2 \overline{a_{lk}} a'_{lk}
 \ee{min6_3_2}
+one could evaluate it using $k$ form $0$ to $N-1$, or form $-N/2+1$ to
+$N/2$ (or just from $0$ to $N/2$, as I did before). I think the results
+will vary a lot, but maybe the second option makes more sense. I tried
+yesterday to implement this; and will try again today. Is this the
+correct way to do it?
 
-one could evaluate it using $k$ form $0$ to $N-1$, or form $-N/2+1$ to $N/2$ (or just from $0$ to $N/2$, as I did before). I think the results will vary a lot, but maybe the second option makes more sense. I tried yesterday to implement this; and will try again today. Is this the correct way to do it?
+% Finally, I defined an orthonormal basis as suggested above, the results
+% are now in \reffig{Projectionvectors}.
+I also uploaded in the DropBox uploaded movie
+\texttt{BaroclinicSlice3.avi} (now in Predrag's \texttt{siminos/movies/},
+not in the repository). I think reducing the
+time step might be necessary.
 
-Finally, I defined an orthonormal basis as suggested above, the results are now in figure \ref{Projectionvectors}. I also uploaded a movie to the DropBox. Again, I think reducing the time step might be convenient.
+I am not sure what is
+wrong with the slicing. I believe one should be able to slice it due to
+the symmetry. But maybe we need a much smaller time step, this way the
+slice would be valid for more steps (if \reffig{ChartBorder} is correct,
+then the slice is only valid for the first couple of time steps). Maybe
+linear slices are only good for really small times in this particular
+simulation.
 
-Let me know if you think I am missing something. I am not sure what is wrong with the slicing. I believe one should be able to slice it due to the symmetry. But maybe we need a much smaller time step, this way the slice would be valid for more steps (if \reffig{ChartBorder} is correct, then the slice is only valid for the first couple of time steps). Maybe linear slices are only good for really small times in this particular simulation.
+\begin{figure}
+  \includegraphics[width=1\textwidth]{ChartBorder}\\
+  \caption{Cosine of the angle between the tangent vectors using half of
+  the coefficients. This is calculated using \refeq{min5_3} and
+  \refeq{min6_3}.
+  }\label{ChartBorder}
+\end{figure}
 
-\item[2012-06-12 Sebastian to Predrag]
-I could go by your office to talk about this. Let me know when you are available.
+\item[2012-05-13  Predrag]
+It might be that the chart encompassing a given \template\ is very small,
+and that your \reffig{ChartBorder} is correct. Once you are gone beyond
+the \ChartBord\ the orientation of the tangent vector
+$\groupTan(\sspRSing(\zeit))$ in \refeq{chartBordAng} might be
+essentially random compared to the $\sliceTan{}$, and in high\dmn\ vector
+spaces two random vectors are nearly orthogonal. I would integrate from
+$\zeit=0$ to $\zeit=4$ in very small steps, consider in more detail what
+$\groupTan(\sspRSing(\zeit))$ is doing (make a movie of it).
+
+
+\item[2012-06-13 Sebastian and Predrag] Following up on {\bf [2012-05-09,
+2012-05-14 Ashley to Sebastian]}: Need to fix
+\refeq{anti-antihermiticity}, \refeq{min4_2}-\refeq{min6_3},
+\refeq{dotProduct}, \refeq{min6_3_2}, evaluate using $k$ from $-N$ to $N$
+(instead of $0$ to $N$), then use $a_m=a^*_{-m}$ and/or
+$a_{km}=a^*_{-k,-m}$ to prove that all dot product of vectors that you
+compute are real numbers (due to the reality of $u(x,y)$, with no need to
+impose \refeq{120430_11}). In particular, \refeq{anti-antihermiticity} is
+wrong, fix it.
+
+\item[2012-05-13  Predrag]
+From \texttt{BaroclinicSlice3.avi}, and the simultaneous projection on the
+$\{\ssp_1, \ssp_2\}$ (in basis of \reffig{Projectionvectors}), it is clear
+that the time steps are gigantic - need to integrate in fine steps for
+one large structure turnover time,
+$\Delta\zeit = 10-100$.
+
+The situation is much more difficult than in the (very smooth) pipe flows
+near onset of turbulence. The picture that is emerging is a large,
+lumbering wall to wall structure, with very fast small vortices on top of
+it. Hopefully they act as noise, and smear the the \statesp\ trajectory
+of the large structures. Perhaps it is these vortices that make a chart
+in \reffig{ChartBorder} so short-lived; so new thinking is needed.
+
+Our first goal would be to find a smooth (no fine vortices) \reqv\
+solution, use it to replace \reffig{Projectionvectors}.
 
 \end{description}
