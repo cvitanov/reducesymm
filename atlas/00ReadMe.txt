@@ -13,21 +13,44 @@ Daniel Borrero-Echeverry
 Keith M. Carroll
 Bryce Robbins
 Evangelos Siminos
-Lei Zhang
 
 Focus issue for Chaos: "50 Years of Chaos"
 
+Chaos J referee responses, edits
+--------------------------------
+The revised manuscript is due no later than Jul 23 2012
+
+    [ ] enter response to Reviewer #1 into
+        siminos/atlas/reviews/response1.1.txt
+    [ ] enter response to Reviewer #2 into
+        siminos/atlas/reviews/response1.2.txt
+    [ ] enter response to Editor into
+        siminos/atlas/reviews/response1.txt
+
+    [x] Reviews received                    Jun 25 2012
+        do not edit these files: siminos/atlas/reviews/
+        decision.1.txt, Referee1.txt, Referee2.txt
+
+            			                    Jun 25 2012
+    [x] generate colored edits for referees by
+        \edit{...}, etc in defAtlas.tex,
+        then go back to B&W for the final resubmission
+
+    [x] Predrag                             Jun 20 2012
+        no editing activity, so removed Lei Zhang as co-author
+
+Chaos J submission
+--------------
+    submitted                               Apr 16 2012
+    for details, please see/edit ../Chaos-v1/00ReadMe.txt
+    ../Chaos-v1/ directory FROZEN, NO FURTHER EDITS
+
 -------------------------------------------------------------
+Predrag ver. 0.7, submitted to Chaos J  Apr 16 2012
+Predrag ver. 0.2, 						Feb 22 2012
+Predrag ver. 0.1, 						Dec 10 2011
 
-- ../figs/
-	all figs
-- ../figsSrc/
-	all fig source programs
-- ../bibtex/siminos.bib
-
------ NOTES        ------------------------------------------
-
--------------------------------------------------------------
+===========================================================
 
 Chaos J resubmission  (here for future use)
 ----------------
@@ -39,31 +62,13 @@ arxiv article-id:       1101.????v2     2011-04-28
 
 Chaos J resubmission  (here for future use)
 ----------------
-                                        2011-04-28
-Chaos J referee responses, edits
-----------------------------
-Predrag:						      Apr 1 2009
-    generate colored comments for referees,
-        PCedit\{...\}, etc in defslice.tex,
-    then go back to B&W for the final resubmission
 
 arXiv submission
 ----------------
 arxiv article-id:       1101.????
      for details, please see/edit ../arxiv-v1/00ReadMe.txt
 
-Chaos J submission
---------------
-    submitted     April 16, 2012
-    for details, please see/edit ../Chaos-v1/00ReadMe.txt
-    ../Chaos-v1/ directory FROZEN, NO FURTHER EDITS
-
--------------------------------------------------------------
-Predrag ver. 0.7, submitted to Chaos J  Apr 16 2012
-Predrag ver. 0.2, 						Feb 22 2012
-Predrag ver. 0.1, 						Dec 10 2011
-
-===========================================================
+                                        2011-04-28
 Processing
 ----------
 
@@ -71,6 +76,15 @@ make sure that you are in repository siminos/atlas/ , then
 ./update
     or
 pdflatex main; bibtex main; pdflatex main; pdflatex main
+
+
+- ../figs/
+	all figs
+- ../figsSrc/
+	all fig source programs
+- ../bibtex/siminos.bib
+
+----- NOTES        ------------------------------------------
 
 Things to fix
 -------------
