@@ -38,6 +38,7 @@ The revised manuscript is due no later than Jul 23 2012
 
     [x] Predrag                             Jun 20 2012
         no editing activity, so removed Lei Zhang as co-author
+        [ ] send email to Lei about it
 
 Chaos J submission
 --------------
