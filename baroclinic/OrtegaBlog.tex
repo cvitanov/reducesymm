@@ -1240,39 +1240,61 @@ Our first goal would be to find a smooth (no fine vortices) \reqv\
 solution, use it to replace \reffig{Projectionvectors}.
 
 \item[2012-07-16 Sebastian]
-I went over the implementation, and I think I had a problem with the theory but end up doing the right thing in practice. I mean, the DFT is defined as:
+I went over the implementation, and I think I had a problem with the
+theory but end up doing the right thing in practice. DFT is
+defined as:
 \beq
 \widetilde{f}_k=\frac{1}{N}\sum_{j=0}^{N-1} f(x_j) e^{-2 \pi i j k/N}
 \ee{DFT1}
 for $k=-N/2,....,N/2-1$. And the synthesis equation as:
+    \PC{what is `synthesis equation'?}
 \beq
 f(x_j)=\sum_{k=-N/2}^{N/2-1} \widetilde{f}_k e^{2 \pi i j k/N}
 \ee{DFT2}
-for $j=0,1,2,3...N-1$. Then the vorticity is computed as:
-
+for $j=0,1,2,\cdots,N-1$. Then the vorticity is expanded as:
     \beq
     \xi(x_j,y)=\sum_{k=-N/2}^{N/2-1} a(y)_{k} e^{-2 \pi i k j/N}
-    \ee{fft1} 
-    
-    and we have to consider the coefficients $a(y)_k$ for frequencies from $k=-N/2,....,N/2-1$. This leads to the slice condition:
+    \ee{fft1}
+and we have to consider the coefficients $a(y)_k$ for frequencies from
+$k=-N/2,\cdots,N/2-1$. This leads to the slice condition:
+    \PC{$[-N/2,\cdots,N/2-1]$ is a strange range?}
 \beq
     \sspRed^\dagger \Lg \slicep=
-    \frac{-2 \pi i}{N} \sum_{k=-N/2}^{N/2-1} \sum_{l=0}^{M-1}
-    \overline{a_{lk}} a'_{lk} k e^{\frac{-2 \pi i k}{N} \gSpace}
+    -\,\frac{2 \pi i}{N} \sum_{k=-N/2}^{N/2-1} \sum_{l=0}^{M-1}
+    \overline{a}_{lk} a'_{lk} \, k \, e^{-\,\frac{2 \pi i k}{N} \gSpace}
      =0
+\,,
 \ee{rot_frame}
-
-but since we have the property $a_{l,m}=a^*_{l,-m}$ the imaginary numbers cancel by pairs, so that we might as well compute:
+but since we have the property $a_{l,m}=a^*_{l,-m}$ the imaginary numbers
+cancel by pairs, so that we might as well compute:
 \beq
     \sspRed^\dagger \Lg \slicep=
     2 \cdot \Re\left(\frac{-2 \pi i}{N} \sum_{k=0}^{N/2} \sum_{l=0}^{M-1}
-    \overline{a_{lk}} a'_{lk} k e^{\frac{-2 \pi i k}{N} \gSpace}\right)
+    \overline{a}_{lk} a'_{lk} \, k \, e^{-\,\frac{2 \pi i k}{N} \gSpace}\right)
      =0
+\,,
 \ee{rot_frame2}
+where taking the real part is just a trick to reduce computations. This
+is what it is implemented  in \verb"Slice2.m" and
+\verb"SliceCondition2.m". Only the factor of $2$ is missing, but that
+would not change the results at least qualitatively. This would imply
+that \refeq{min4_2}--\refeq{min6_3}, \refeq{dotProduct}, \refeq{min6_3_2}
+are correct (except for the factor of $2$). But I might be missing
+something.
 
-Where taking the real part is just a trick to reduce computations. This is what it is implemented  in \verb"Slice2.m" and \verb"SliceCondition2.m". Only the factor of $2$ is missing, but that would not change the results at least qualitatively. This would imply that \refeq{min4_2}-\refeq{min6_3}, \refeq{dotProduct}, \refeq{min6_3_2} are correct (except for the factor of $2$). But I might be missing something.
+\item[2012-07-17 Predrag]
+Seems OK (have not checked the algebra). Weird - I did not get email
+about your edit. Are you getting them? (we just changed the server, there
+could be configuration problems).
 
 \item[2012-07-16 Sebastian]
-I will talk to Annalisa to download the code from her computer and run it in mine, or in the server, with smaller time steps. Not sure how to look for the relative equilibrium, but I guess smaller time steps are needed first.
+I will talk to Annalisa to download the code from her computer and run it
+in mine, or in the server, with smaller time steps. Not sure how to look
+for the relative equilibrium, but I guess smaller time steps are needed
+first.
+
+\item[2012-07-17 Predrag]
+Talk to her ASAP, as she is leaving for Italy soon (for 2-3 weeks?).
+We have a linux server, if you need access (also to PACE cluster).
 
 \end{description}
