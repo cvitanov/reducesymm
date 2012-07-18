@@ -119,21 +119,33 @@ necessitates a reexamination of two of the basic tools of the theory of
 dynamical systems: \PoincSec s and symmetry reduction.
 
 In quantum-mechanical calculations, one always starts out by making sure
-that the Hamiltonian has been brought to its block-diagonal, irreducible
-representation; anything else would be sheer masochism.
-As the dynamical theory of turbulence is still in its infancy, such
+that the Hamiltonian has been brought to its
+\PCedit{symmetry-reduced block-diagonal, irreducible form;}
+anything else would be sheer masochism.
+As the dynamical theory of turbulence is still in its infancy,
 symmetry reduction is not yet a common practice in processing  turbulence
 data collected in experimental measurements and numerical simulations.
 
 We show here how to bring the numerical or experimental data to a
 symmetry-reduced format \emph{before} any further analysis of it takes
-place. Our tool of choice is the simplest, linear implementation of the
-\mslices.\rf{rowley_reconstruction_2000,BeTh04,SiCvi10,FrCv11}
-\edit{Here, we extend} this local method
-to a global reduction of a turbulent flow by defining
+place.
+\PCedit{
+Symmetry reduction of nonlinear flows is much trickier than the more
+familiar theory of irreducible representations for linear problems such
+as quantum mechanics, so most of our sketches illustrate the simplest
+case, the 1-parameter compact continuous group \SOn{2} symmetry (also
+known as the `circle group' $S^1$ and as \Un{1}). Our tool of choice is
+the linear implementation of the
+\mslices.\rf{rowley_reconstruction_2000,BeTh04,SiCvi10,FrCv11} Here, we
+extend}
+this local method to a global reduction of a turbulent flow by defining
 local `charts', their borders, and the ridges that glue these linear tiles
 into an atlas that spans the ergodic \statesp\ region of
-interest. We strive to explain the key geometrical ideas in simple but
+interest.
+\PCedit{While `charts' and 'atlases' are standard tools in geometry, the
+algorithm for explicit construction of a symmetry-reduced \statesp\
+presented here is, to our knowledge, new.}
+We strive to explain the key geometrical ideas in simple but
 illustrative settings, eschewing the fluid dynamical and group
 theoretical technicalities.
 
@@ -182,7 +194,7 @@ time flow $\ssp(\zeit)$, and the $N$ group tangents  $\groupTan_1(\ssp),
 symmetry shifts, tangent to the \edit{$N$-dimensional} group orbit
 $\pS_\ssp$.
     (b)
-\edit{Each point has a unique trajectory (blue) under time-evolution.}
+\edit{Each point has a unique trajectory (blue) under time evolution.}
     (c)
 \edit{Each point also belongs to a group orbit (green) of
 symmetry-related points. For \SOn{2}, this is topologically a circle.
@@ -228,7 +240,8 @@ nature often prefers solutions of no symmetry: while the flow equations
 may be invariant under $\Group$, turbulent solutions are not. The highly
 symmetric solutions often lie far from the regions of \statesp\ explored
 by turbulence\rf{ACHKW11} and thus are of limited usefulness in
-understanding its dynamics - that is captured by \rpo s studied here.}
+understanding its dynamics. In contrast, the \rpo s studied here are
+embedded in the turbulence, and capture its geometry and statistics.}
 
 We can make headway in unraveling the tangle
 of 1\dmn\ time trajectories with the notion of recurrence. To quantify how
@@ -242,7 +255,8 @@ the Euclidean norm
 (\ssp-\ssp')_i^2
 \,.
 \ee{innerproduct}
-For experimental data, a better norm might be a distance between digitized
+For experimental data, a better norm,
+\PCedit{for example,} might be a distance between digitized
 images. While in this paper we simply assume that a norm is given, its
 importance cannot be overstated: the construction of invariant, PDE
 discretization independent \statesp\ coordinates,\rf{GHCW07} the symmetry
@@ -495,17 +509,25 @@ $d$-dimensional \statesp.
  \end{center}
  \caption[$\On{2}_\theta \times \SOn{2}_z$ symmetry of flow in a stream-wise
           periodic pipe]{
-A fluid state in a pipe translated or rotated is
-also a solution. In particular, a \rpo\ $\pS_p$ is
-(a) a \emph{time dependent} state of the fluid that after a period
-    $\period{p}$ reemerges
-(b) translated by downstream shift $\shift_p$
-(such solutions are $\SOn{2}_z$ equivariant in a stream-wise periodic pipe),
-(c) translated by downstream shift $\shift_p$ and rotated azimuthally by
-$\gSpace_p$ (i.e., $\SOn{2}_{\phi} \times \SOn{2}_z$ equivariant) or,
-(d) reflected and rotated azimuthally by $\gSpace$ (i.e., $\On{2}_{\phi}$
-equivariant). Consider this in contrast to a \reqv, a constant shape that
-travels downstream with constant {\phaseVel} $\velRel$.
+\PCedit{
+Symmetry equivalent states: a pipe flow solution translated or rotated is
+also a solution.
+(a) An instantaneous state of the  fluid  is indicated by a `swirl' -
+here the reader has to imagine a particular disposition of instantaneous
+velocity fields across the entire pipe. The same state rigidly
+(b) translated by downstream shift $\shift$
+    (fluid states are $\SOn{2}_z$ equivariant in a stream-wise periodic pipe),
+(c) translated by $\shift$ and rotated azimuthally by $\gSpace$
+    (the state is $\SOn{2}_\gSpace \times \SOn{2}_z$ equivariant), and
+(d) reflected and rotated azimuthally by $\gSpace$
+    (the state is $\On{2}_\gSpace$ equivariant).
+Symmetry equivalent states and time evolution:
+A \emph{\reqv} is a solution of equations of motions that retains its
+    shape while rotating and traveling downstream with constant
+    {\phaseVel} $\velRel$.
+A \emph{\rpo} $\pS_p$ is a \emph{time dependent}, shape-changing
+    state of the fluid that after a period $\period{p}$ reemerges as (c),
+    the initial state translated by $\shift_p$ and rotated by $\gSpace_p$.}
 % (from \wwwcb{}).
  }\label{fig:A27-pipeSymms}
  \end{figure}
@@ -515,15 +537,15 @@ What is a symmetry? A visualization of the fluid dynamics of a pipe flow,
 \reffig{fig:A27-pipeSymms}, affords an intuitive illustration. Solutions
 of pipe flow remain physically the same under azimuthal rotations and
 stream-wise translations (which become \SOn{2} rotations in numerical
-stream-wise periodic pipes), but rotated and shifted solutions may correspond to
-distant points in \statesp .
+stream-wise periodic pipes), but rotated and shifted solutions may
+correspond to distant points in \statesp.
 
 Each \SOn{2} group orbit is topologically a circle, but it traces out a
 complicated \statesp\ curve composed of many Fourier modes that are
 nonlinearly coupled and thus of comparable magnitude. Together, the two
-\SOn{2} symmetries of numerical pipe flow sweep out contorted and hard to visualize $T^2$ tori
-(see \refref{ACHKW11}), so we shall illustrate the key ideas by a much
-simpler example, the $\SOn{2}$-equivariant Gibbon and
+\SOn{2} symmetries of numerical pipe flow sweep out contorted and hard to
+visualize $T^2$ tori (see \refref{ACHKW11}), so we shall illustrate the
+key ideas by a much simpler example, the $\SOn{2}$-equivariant Gibbon and
 McGuinness\rf{GibMcCLE82,FowlerCLE82} \cLe\ of geophysics and laser
 physics,
 \bea
@@ -998,7 +1020,7 @@ includes \emph{all} invariant subspaces.
 For the \cLe\ \refeq{eq:CLeR}, the invariant subspace is the 1\dmn\
 $z$-axis, with trivial dynamics, $z=-bz$, but in general invariant
 subspaces are high-dimensional and have their own dynamics.
-\edit{Physicists such as general relativists often work in invariant
+\edit{Physicists, such as general relativists, often work in invariant
 subspaces, as this is easier than solving the full problem.\rf{SCD07}
 Such approaches yield highly symmetric solutions,\rf{SKMacHH09,HGC08}
 whose dynamics may be quite different from those that guide turbulence in
