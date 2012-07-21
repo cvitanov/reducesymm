@@ -2,7 +2,7 @@ siminos/atlas/arxiv-v1/00ReadMe.txt
 $Author$
 $Date$
 ------------------------------------------------------------
-submitted     April 2?, 2012   FROZEN, NO FURTHER EDITS
+submitted     Jul 2?, 2012   FROZEN, NO FURTHER EDITS
 
 Slice & chart pedagogical introduction
 ====================
@@ -14,27 +14,23 @@ Daniel Borrero-Echeverry
 Keith M. Carroll
 Bryce Robbins
 Evangelos Siminos
-Lei Zhang
 
 Note: submitted to Chaos J., Focus issue "50 Years of Chaos"
 
 -------------------------------------------------------------
-Predrag ver. 1.1, Chaos J figs update   Apr 25 2012
-Predrag ver. 0.2, 						Feb 22 2012
+Predrag ver. 1.2, resub. to Chaos J     Jul 21 2012
 Predrag ver. 0.1, 						Dec 10 2011
-
 
 ----- NOTES        ------------------------------------------
 
-[ ] 2012-04-2? Daniel: uploaded arxiv-v1/FrCv11.tex
-[ ] 2012-04-2? Daniel: updated atlas12.tex in submission.zip
-[x] 2012-04-25 Predrag: Chaos J updated atlas12.tex in submission.zip
+[ ] 2011-07-2? Daniel: uploaded arxiv-v1/submission.zip
+[x] 2011-07-21 Predrag: Chaos J updated atlas12.tex in submission.zip
     atlas12.tex assembled into one file in the following order:
     [x] preamble.tex
     [x] title, author, affiliation, abstract, text,
         acknowledgments, appendices
     [x] atlas12.bbl
-[x] 2012-04-25 Predrag: figs in submission.zip
+[x] 2011-07-21 Predrag: figs in submission.zip
       Fig     *.pdf
       1a      A28tangent3
       1b      A27traj

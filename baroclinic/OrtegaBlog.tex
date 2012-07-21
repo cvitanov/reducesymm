@@ -1320,15 +1320,54 @@ might be easier on the server if the libraries are already installed on
 it.
 
 \item[2012-07-19 Sebastian]
-I ran the code saving the output $10$ times more frequent than before. As expected, the slicing is much more smooth now, and the chart border condition is valid for more time-steps. However the slices remain only valid for short times (see \reffig{ChartBorder2}).
+I ran the code saving the output $10$ times more frequent than before. As
+expected, the slicing is much more smooth now, and the chart border
+condition is valid for more time-steps. However the slices remain only
+valid for short times (see \reffig{ChartBorder2}).
+
+\item[2012-07-19 Predrag] Great simulation! Not having the movie but steps
+is quite helpful in looking at. Can you try this: instead of plotting
+the flow in the slice, plot the bit-by-bit differences between the two videos:
+it will start out white, but as you go away from the template state, it will
+show you only the regions where there is the fastest change; we need to understand why
+the small structures can drive you to the \chartBord.
+
+Please check out repository \texttt{pipes} (you are sortega = baroclinic
+there as well), and read pipes/blog/blog.pdf starting with {\bf
+[2012-05-30 Humbledt]}. You will see the same behavior for the pipe flow,
+but I do not believe there are small structures in that problem.
+
+
 \begin{figure}
   % Requires \usepackage{graphicx}
-  \includegraphics[width=0.9\textwidth]{ChartBorder2}\\
-  \caption{Chart Border condition. Notice that the slice is changed each time the condition is smaller than $0.05$.}\label{ChartBorder2}
+  \includegraphics[width=0.9\textwidth]{ChartBorder2}
+  \caption{{\ChartBord} condition. The current state is used as the new
+  \template\ each time the $\cos$ of the angle between the two
+  tangent vectors \refeq{chartBordAng} is smaller than
+  $0.05$.}\label{ChartBorder2}
 \end{figure}
 
 
-I also modified the code to redefine the slice when necessary, only to see how long are different slices valid (as have been done for pipe flow). I am uploading a pdf of this to dropbox (did not figure out how to make a movie here). I think what is seen is that drifting combined with the thin filaments and small vortices is the main reason for which the slices are not valid for long. I was wondering if there is possible to overcome this issue by defining something as a moving slice (along group orbits), but I am not sure how the charting would work in this case.
-I will keep thinking about this.
+\item[2012-07-19 Sebastian]
+I also modified the code to redefine the slice when necessary, only to
+see how long are different slices valid (as have been done for pipe
+flow). I am uploading \texttt{multipleSlices.pdf} to dropbox (did not
+figure out how to make a movie here). I think what is seen is that
+drifting combined with the thin filaments and small vortices is the main
+reason for which the slices are not valid for long. I was wondering if
+there is possible to overcome this issue by defining something as a
+moving slice (along group orbits), but I am not sure how the charting
+would work in this case. I will keep thinking about this.
+
+\item[2012-07-19 Predrag] As you will see in the pipes/blog/blog.pdf, I've
+been thinking the same way (looks like there is a rotating structure, so
+perhaps there is a rotating frame with charts valid for much longer times),
+but I think you have a better idea - we need to understand what is it that
+makes $\cos \theta$ go to zero so fast.
+
+\item[2012-07-19 Predrag]  Weird - when you commit, I do not get email
+about your edit. Do you? Forward it to me if you do. Yours is the only
+email that svn refuses to forward to me...
+
 
 \end{description}
