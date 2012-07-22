@@ -3,7 +3,7 @@ $Author: predrag $
 $Date: 2012-04-25 17:48:30 -0400 (Wed, 25 Apr 2012) $
 ------------------------------------------------------------
 resubmitted     July 21, 2012   FROZEN, NO FURTHER EDITS
-Manuscript #: 12259CAT
+Manuscript #: 12259CAT, 12259CATR
 
 Slice & chart pedagogical introduction
 ====================
@@ -17,7 +17,7 @@ Bryce Robbins
 Evangelos Siminos
 
 -------------------------------------------------------------
-Predrag ver. 1.2, resub. to Chaos J     Jul 21 2012
+Predrag ver. 1.2, resub. to Chaos J     Jul 22 2012
 Predrag ver. 1.1, Chaos J figs update   Apr 25 2012
 Predrag ver. 0.7, submitted to Chaos J  Apr 15 2012
 Predrag ver. 0.2, 						Feb 22 2012
@@ -34,9 +34,8 @@ arXiv submission
 Chaos resubmission
 ----------------
 [x] 2012-04-25 manuscript has been assigned the Manuscript #: 12259CAT.
-    Check Manuscript Status" linkL:
-<http://chaos.peerx-press.org/cgi-bin/main.plex?el=A7C2PGJ4A7eT4F2A9PIwORRuPQfQMOSuftmOVRgZ>
-[ ] Focus issue for Chaos: "50 Years of Chaos"
+    Status link:
+http://chaos.peerx-press.org/cgi-bin/main.plex?el=A7C2PGJ4A7eT4F2A9PIwORRuPQfQMOSuftmOVRgZ
 
 Predrag:						        2011-07-21
 [x] 2012-07-21 to Chaos J: Cover Letter file (using "add file"),
@@ -59,7 +58,6 @@ Predrag:						        2011-07-21
         acknowledgments, appendices
     [x] atlas12.bbl
 
-[x] electronically signed copyright.pdf
 [ ] saved ChaosHell.png, the screen capture of individual file list
 [x] www.aip.org/pubservs/compuscript.html#prepare
 
