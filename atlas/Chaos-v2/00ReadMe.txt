@@ -1,6 +1,6 @@
 siminos/atlas/Chaos-v2/00ReadMe.txt
-$Author: predrag $
-$Date: 2012-04-25 17:48:30 -0400 (Wed, 25 Apr 2012) $
+$Author$
+$Date$
 ------------------------------------------------------------
 resubmitted     July 21, 2012   FROZEN, NO FURTHER EDITS
 Manuscript #: 12259CAT, 12259CATR
