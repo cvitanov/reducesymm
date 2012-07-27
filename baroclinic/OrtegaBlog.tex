@@ -1420,9 +1420,9 @@ should reduce the number of charts along short recurrent orbits.
 \item[2012-07-26 Sebastian] I uploaded to the DropBox a movie showing the difference between the simulation on full state space and on the slices. It shows that the larger differences are in the two thin filaments that cross the domain.
 
 \item[2012-07-26 Sebastian] I think I understand the essence of what you want to say in \textbf{[2012-07-25 Predrag]} (and would like to know more about the theory; I will look in the cited reference). It appears to me that what you are proposing, in practical terms, is similar to filtering the series so that the gravest modes contribute more in the dot product.
-    
+
     I will work out the math for equations \refeq{min4} and \refeq{min5} and post it online. As a first guess I think I would get something as:
-    
+
     \beq
     \sspRed^\dagger \Lg \slicep=
     2 \cdot \Re\left(\frac{-2 \pi i}{N} \sum_{k=0}^{N/2} \sum_{l=0}^{M-1}
@@ -1437,15 +1437,66 @@ should reduce the number of charts along short recurrent orbits.
     = \frac{4 \pi^2}{N^2} \sum_{k=0}^{N/2} \sum_{l=0}^{M-1}
        \, \overline{a_{lk}} a_{lk}
     \ee{min5_3}
-    
+
     \beq
     \braket{\groupTan(\sspRSing)}{\sliceTan{}}= \sspRed^\dagger \Lg^2 \slicep=
     \frac{4 \pi^2}{N^2} \sum_{k=0}^{N/2} \sum_{l=0}^{M-1}
     \overline{a_{lk}} a'_{lk}
     \ee{min6_3}
-    
+
     for the other equations. It seems to be a very good solution, I will implement it. I was wondering about the drawbacks, if any, of this norm.
-    
+
    \textbf{ As a Side Note:} I was reading today about how the Madden Julian Oscillation (MJO) is forecasted, and its phases tracked; and I think they do something similar, to what you are proposing, using Empirical Orthogonal Functions (EOF). I believe the process is something as making composites of time-filtered series of data (20 to 60 day filter), obtaining the EOF's, and then comparing real time data to these functions to get the phase of the MJO (for this they project to a 2 dimensional space). I will learn more about this on the fall (I am taking data analysis then). I think it would be interested to see how all this relates to the dynamics.
-   
+
+
+\item[2012-07-27 Predrag] It seems to work for Ashley - here are two posts from
+\texttt{pipes/blog/}:
+
+\item[2012-05-22 Ashley]
+ %Started experimenting with $\slicep{}^{(1)} = a(0)$.
+% % , then   tried adding $\slicep{}^{(2)}=\sspRed(6)$;
+% % cf.\ \reffig{fig:A29-2tmplts}.
+% The problem is that $\cos\psi$ might
+% suggest that $\slicep{}^{(2)}$ is within the boarder of
+% $\slicep{}^{(1)}=\sspRed(0)$, but I don't know how to tell in
+% advance that $\slicep{}^{(1)}$ will be within the
+% boarder of $\slicep{}^{(2)}$.  It switched but then has
+% jumps before reaching $t=6$.
+% I also wan't sure that I was tracking the
+% appropriate root for the second template before the switch.
+% Searching though the possible roots of the slice
+% condition for the templates, other than the current template,
+% fixes that, but is a lot of work.
+ I've played with adding templates on the fly in
+ \reffig{fig:3610switching}.  At the end of the orbit
+ it didn't switch back to the first template --- I've only permitted
+ switching when shifts match for a closer template.  The shifts
+ often run side by side but don't cross.
+ \begin{figure}
+ \begin{center}
+  \includegraphics[width=0.75\textwidth]{3610switching}
+ \end{center}
+ \caption{ \label{fig:3610switching}
+    Tracking $\RPO{36.72}$ starting with $\slicep{}=\ssp(t=0)$ and
+    adding new templates on the fly, whenever $\cos\psi<0.1$.
+ }
+ \end{figure}
+
+\item[2012-07-27 Ashley]
+New norm avoids need for a bunch of templates
+to navigate around $\RPO{36.72}$.  See \reffig{fig:3611switching},
+in particular the red line.  Compare with \reffig{fig:3610switching}.
+ \begin{figure}
+ \begin{center}
+  \includegraphics[width=0.75\textwidth]{3611switching}
+ \end{center}
+ \caption{ \label{fig:3611switching}
+    Tracking $\RPO{36.72}$ starting with $\slicep{}=\ssp(t=0)$.
+    Just as \reffig{fig:3610switching} except here using the inverse
+    quadratic Casimir norm;
+    %\refeq{eq:dampednorm};
+    $\cos\psi$ does not drop below $0.1$.
+ }
+ \end{figure}
+
 \end{description}
