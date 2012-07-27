@@ -558,7 +558,7 @@ I have been trying to implement the slicing condition of the term
 project. Newton method converges and it is quite fast, even for the
 1024x256 runs. However, it always converges very near the initial guess,
 so that something is wrong. I was also thinking of how is one to
-implement the border condition given that we are dealing with complex
+implement the {\chartBord} condition given that we are dealing with complex
 numbers.
 
 \item[2012-05-04 Predrag] If you are going small steps in time, this
@@ -993,7 +993,7 @@ between 1 and 1024, and adding some random kick when the iteration gets
 stuck in an infinite loop; all of these can be seen in the uploaded
 code); they kind of make sense. I did this for a continuous version of
 the Newton-Raphson algorithm; here it did not seem to be an issue. The
-drifting gets removed, however the slice and chart border condition
+drifting gets removed, however the slice and {\chartBord} conditions
 change dramatically, and are not as smooth any more.
 
 The implementation was done taking only half of the values of the
@@ -1020,7 +1020,7 @@ and
     k^2 \overline{a_{lk}} a'_{lk}
 \ee{min6_3}
 However, I ran into serious difficulties, so I think I am doing something
-wrong. In particular, the chart border condition makes no sense. It
+wrong. In particular, the {\chartBord} condition makes no sense. It
 starts at $1$ (which is expected as I start the iteration at the same
 time step corresponding to the slice) and then just wonders around zero
 (see \reffig{ChartBorder}).
@@ -1124,7 +1124,7 @@ trajectories onto $(\ssp_1, \ssp_2)$ using
 \ee{dotProduct}
 where $j=1,2$ defines the basis vector, $n$ accounts for the layers and
 $m$ for the longitudinal direction. I uploaded the results to Dropbox's
-Chaos folder. Of course, this might not mean much if the chart border
+Chaos folder. Of course, this might not mean much if the {\chartBord}
 condition in \reffig{ChartBorder} is correct.
 
 I think the movie shows some recurrences. But I am not so happy with the
@@ -1159,7 +1159,7 @@ taking the real part of the result in \refeq{min4} is necessary (as can
 be seen in the derivation {\bf [2012-04-30 Sebastian, Predrag]}), and is
 unrelated to the FFT property $a_m=a^*_{-m}$.
 
-Recently I tried to implement the moving frame and the chart border
+Recently I tried to implement the moving frame and the {\chartBord}
 condition just taking into account the first $N/2$ frequencies. I did it
 considering them as independent coordinates and not accounting for the
 aliased frequencies given by the FFT for any sum; the results are not too
@@ -1321,7 +1321,7 @@ it.
 
 \item[2012-07-19 Sebastian]
 I ran the code saving the output $10$ times more frequent than before. As
-expected, the slicing is much more smooth now, and the chart border
+expected, the slicing is much more smooth now, and the {\chartBord}
 condition is valid for more time-steps. However the slices remain only
 valid for short times (see \reffig{ChartBorder2}).
 
@@ -1556,14 +1556,39 @@ I did the slicing with the proposed weights. The equations I end up using are:
     \braket{\groupTan(\sspRSing)}{\sliceTan{}}= \sspRed^\dagger \Lg^2 \slicep= \sum_{k=1}^{N/2} \sum_{l=0}^{M-1}
     \overline{a_{lk}} a'_{lk}
     \ee{min6_5}
+Note that I changed the sum related to $k$ so that it goes from $1$ to
+$N/2$. It worked (see \reffig{ChartBorder3}) and now the slice is valid
+for much longer times, but I am not sure if we can just ignore the
+singularity for $k=0$ in the slice condition. However, with the previous
+norm this mode was always canceled out; so it might be OK.
 
-Note that I changed the sum related to $k$ so that it goes from $1$ to $N/2$. It worked (see \reffig{ChartBorder3}) and now the slice is valid for much longer times, but I am not sure if we can just ignore the singularity for $k=0$ in the slice condition. However, with the previous norm this mode was always canceled out; so it might be ok.
+\item[2012-07-26 Predrag] Looks much better! In anything that has a
+factor of \Lg\ $m=0$ is removed. However, our derivation of slice starts
+with minimizing the distance $\norm{\ssp-\slicep}^2$, so please set the
+$m=0$ part of the norm to $1$ until we show that is right or think of an
+alternative.
 
 \begin{figure}
   % Requires \usepackage{graphicx}
   \includegraphics[width=0.9\textwidth]{ChartBorder3}\\
-  \caption{Chart Border Condition using the norm defined in \refeq{braket}}\label{ChartBorder3}
+  \caption{{\ChartBord} condition using the norm defined in
+  \refeq{braket}}\label{ChartBorder3}
 \end{figure}
+
+\item[2012-07-26 Predrag] I think we can probably make a good argument
+that the group manifold should be a
+\HREF{http://en.wikipedia.org/wiki/Sobolev_space\#Sobolev_spaces_with_integer_k}
+{Sobolev space} $W^{1,\infty}$ with respect to group parameter
+derivatives - the group orbit is a smooth manifold. I have argued some
+time ago for Ruslan Davidchack somewhat inchoately that for \KS\ Fourier
+expansion of $u(x)$ ({\bf [2012-03-25 Predrag to Evangelos]}) that the
+important, nonlinearly coupled ``Fourier modes contribute significantly
+for any magnitude not smaller than $1/m$ for the $m$th mode''. If they do
+this for $k \to \infty$, the partial derivative $u_x$ is not defined, and
+that would be a disaster. Which probably means for Navier-Stokes that we
+can demand that solutions belong to $W^{2,\infty}$ which would make it
+legit to use even stronger suppression of high Fourier modes, with norm
+diagonal $\propto (C_2^{(m)})^{-2}$.
 
 
 \end{description}
