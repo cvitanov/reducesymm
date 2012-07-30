@@ -14,7 +14,8 @@ EOMComplexTo4.m by Daniel Borrero 4/26/2012
 Calculates the equations of motion for the 2-mode (Dangelmayr)
 system as system of 4 real valued equation in Cartesian coordinates,
 a system of 2 polar coordinate pairs, and a 3D system with 2 radial
-and 1 angular coordinates.
+and 1 angular coordinates. Also calculates stability matrix and its
+trace in the {x1,x2,y1,y2} basis.
 
 TwoModeSymmetryCheck.m by Daniel Borrero 4/26/2012
 ------------------------------------------------
@@ -58,7 +59,8 @@ This code verifies the various transformations
 between the complex formulation of the Porter-Knobloch
 system and its formulation in terms of the invariant
 bases u, v, w, and q as described in section s:twoMode
-of the 2mode project/report.
+of the 2mode project/report. Also calculates the stability
+matrix and its trace in the {u,v,w,q} basis.
 
 W0EquilibriumCheck.m by Daniel Borrero 5/8/2012
 --------------------------------------------------

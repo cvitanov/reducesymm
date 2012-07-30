@@ -55,3 +55,9 @@ wdot = simple(subs(wdot,{cos(phi),sin(phi)},{w/(2*u*v^(1/2)),q/(2*u*v^(1/2))})) 
 qdot = simple((2*conj(z2)*z1*z1dot - 2*z2*conj(z1)*conj(z1dot) + z1^2*conj(z2dot) - conj(z1)^2*z2dot)/i);% Plug in z's into qdot
 qdot = subs(qdot,2*theta1-theta2,phi); %substitute phi = 2*theta1-theta2
 qdot = simple(subs(qdot,{cos(phi),sin(phi)},{w/(2*u*v^(1/2)),q/(2*u*v^(1/2))})) % Substitute u,v,w,q's for sin(phi)'s and cos(phi)'s
+
+X = [u v w q];
+V = [udot vdot wdot qdot];
+
+A = jacobian(V,X);
+tr = simple(trace(A));

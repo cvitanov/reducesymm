@@ -29,6 +29,12 @@ x2dot = simplify(imag(z1dot))
 y1dot = simplify(real(z2dot))
 y2dot = simplify(imag(z2dot))
 
+X = [x1 x2 y1 y2];
+V = [x1dot x2dot y1dot y2dot];
+A = jacobian(V,X);
+tr = simple(trace(A));
+tr
+
 % Solve for equations in polar coordinates 
 % {x1,x2,y1,y2} -> {r1*cos(theta1),r1*sin(theta1),r2*cos(theta2),r2*sin(theta2)}
 eq1 = subs(x1dot,{x1,x2,y1,y2},{r1*cos(theta1),r1*sin(theta1),r2*cos(theta2),r2*sin(theta2)})...
