@@ -1536,12 +1536,12 @@ can be eliminated by rewriting \refeq{PKinvEqs3} as:
 \continue
         &\to&\quad 2\,A_1+ A_2 = - \frac{ w}{2\,u\,v}\left(c_2\,u+2\,c_1\,v\right)
 \continue
-  q  &=& \frac{1}{e_2}
+  q  &=& \frac{1}{\ESedit{-2e_1+}e_2}
      \left(- {w^2}/{2\,u\,v} + \,2u\right)\left(c_2\,u+2\,c_1\,v\right)
 \label{PKinvEqs4}\\
-  w  &=& -\frac{1}{e_2} (2\,A_1+ A_2)\,q
+  w  &=& -\frac{1}{\ESedit{-2e_1+}e_2} (2\,A_1+ A_2)\,q
      \,,\quad\to\quad
-  q = \frac{2\,e_2\,u\,v}{c_2\,u+2\,c_1\,v}
+  q = \frac{2(\ESedit{-2e_1+}\,e_2)\,u\,v}{c_2\,u+2\,c_1\,v}
   \,,
 \nnu
 \eea
@@ -1561,7 +1561,7 @@ f(u,v) &=&
 \continue
 g(u,v) &=&
  \left(w^2 - 4\,u^2 v\right)\left(c_2\,u+2\,c_1\,v\right)^2 %Double checked DB 04-30-2012
- +\,4\,e_2^2\,u^2\,v^2 = 0
+ +\,4\,(\ESedit{-2e_1+}e_2)^2\,u^2\,v^2 = 0
 \,,\qquad  deg(g) = 6
 \,,
 \label{PKinvEqs5}
@@ -2069,8 +2069,8 @@ A  \, =
 \left( \begin{array}{llll}
 	2 \mu_1 + 4 a_1 u + 2 b_1 v & 2 b_1 u & c_1 & 0 \\
 	2 a_2 v & 2 \mu_2+2 a_2 u+4 b_2 v & c_2 & 0 \\
-	4 c_2 u+4 c_1 v+(2 a_1+a_2) w & 4 c_1 u+(2 b_1+b_2) w & 2 \mu_1+\mu_2+(2 a_1+a_2) u+(2 b_1+b_2) v & -e_2 \\
-	(2 a_1+a_2) q & (2 b_1+b_2) q & e_2 & 2 \mu_1+\mu_2+(2 a_1+a_2) u+(2 b_1+b_2) v \\
+	4 c_2 u+4 c_1 v+(2 a_1+a_2) w & 4 c_1 u+(2 b_1+b_2) w & 2 \mu_1+\mu_2+(2 a_1+a_2) u+(2 b_1+b_2) v & 2e_1-e_2 \\
+	(2 a_1+a_2) q & (2 b_1+b_2) q & -2e_1+e_2 & 2 \mu_1+\mu_2+(2 a_1+a_2) u+(2 b_1+b_2) v \\
       \end{array} \right)
 \,.
 \ee{2modeStabMatrixInv}
@@ -2102,6 +2102,50 @@ What's our metric for chaos? Do we want to be calculating Lyapunov exponents or 
 The problem with any obvious way to detect chaos (such as Lyapunov exponents) is that it does not provide a feeling on whether there are qualitatively different regions in phase space, which we could pick as our 
 templates. Maybe the right thing to do is to scan the parameter space plotting the largest Lyapunov exponent and at the end looking in details cases which seem promising. 
 The problem is the large number of parameters involved.
+
+\item[2012-07-31 Evangelos] Added $e_1$ in \refeq{eq:DangSO2}. However in invariant polynomials \refeq{PKinvEqs}
+only the difference $2e_1 - e_2$ appears, so it seems we don't get anything new by introducing it. 
+I keep it for the time being just to see how it affects dynamics in original space and the projection from
+original to reduced space.
+
+\item[2012-07-31 Evangelos] Using the syzygy $w^2+q^2-4u^2v=0$ we can eliminate q from \refeq{PKinvEqs} to
+get 
+\bea% Triple checked ES 04-30-2012
+  \dot{u} &=& 2\,\mu_1\,u+2\,a_1\,u^2+2\,b_1\,u\,v+c_1\,w %Double checked DB 04-29-2012
+\continue
+  \dot{v} &=& 2\,\mu_2\,v+2\,a_2\,u\,v+2\,b_2\,v^2+c_2\,w %Double checked DB 04-29-2012
+\continue
+  \dot{w} &=& (2\,\mu_1+\mu_2)\,w+(2a_1+a_2)\,u\,w+(2b_1+b_2)\,v\,w %Double checked DB 04-29-2012 corrected coefficients for uv and u^2 terms
+\ceq
+             +\, 4c_1\,u\,v + 2c_2\,u^2 +(2e_1 - e_2)(4u^2v-w^2)^{1/2}\,
+\label{PKinvEqs1syz}
+\eea
+Now compute the stability matrix from \refeq{PKinvEqs1syz}:
+\footnotesize
+\beq
+A  \, =
+\left( \begin{array}{lll}
+	2 \mu_1 + 4 a_1 u + 2 b_1 v & 2 b_1 u & c_1  \\
+	2 a_2 v & 2 \mu_2+2 a_2 u+4 b_2 v & c_2  \\
+	4 c_2 u+4 c_1 v+(2 a_1+a_2) w+\frac{4 (2 e_1-e_2) u v}{\sqrt{4 u^2 v-w^2}} & 4 c_1 u+(2 b_1+b_2) w+\frac{2 (2 e_1-e_2) u^2}{\sqrt{4 u^2 v-w^2}} & 2 \mu_1+\mu_2+(2 a_1+a_2) u+(2 b_1+b_2) v-\frac{(2 e_1-e_2) w}{\sqrt{4 u^2 v-w^2}}
+      \end{array} \right)
+\,.
+\ee{2modeStabMatrixInvSyz}
+% \end{widetext}
+\normalsize
+
+The trace reads
+\beq
+  \tr(A)=4 \mu_1+3 \mu_2+3 (2 a_1+a_2) u+(4 b_1+5 b_2) v+\frac{(-2 e_1+e_2) w}{\sqrt{4 u^2 v-w^2}}
+\eeq
+
+This is interesting: we now have a dependence on $w$ and on the symmetry breaking parameters $e_1$ and $e_2$.
+I'll have to compare \refeq{2modeStabMatrixInvSyz} 
+with \refeq{2modeStabMatrixInv} numerically, see which one correctly encapsulates dynamics
+[\refeq{2modeStabMatrixInvSyz} should be the correct one since it takes into account the functional
+dependence of all variables before taking derivatives].
+
+% For a relative equilibrium we have $w = -2 u A_1(u, v) /c_1 = -2u (m_1 + a_1 u + b_1 v)/c_1$
 
 \item[2012-05-07  Predrag to Chaos Gang] It's not over until it is over.
 
