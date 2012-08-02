@@ -2069,6 +2069,11 @@ However, Predrag might be right - I've spend the whole day Friday trying
 to find a system with two unstable relative equilibria and
 no attracting limit cycle and could not do it.
 
+\item[2012-07-30 Evangelos]
+2-modes system is driving nuts - I can't find interesting behavior.
+Color-coded sign of $\tr \Mvar$ in \texttt{dangelmayr\_so2\_int.nb} in hope it
+might help.
+
 \item[2012-07-30 Evangelos] Starting from  \refeq{PKinvEqs} I compute the
 following {\stabmat} for the \twoMode\ system in invariant variables:
 % \begin{widetext}
@@ -2143,11 +2148,16 @@ the Floquet multipliers for one traversal of the \reqv\ orbit are
 $\ExpaEig_j=\exp(\period{} \eigExp_j)$, where $\period{} = 2\pi
 /\velRel$, and $\velRel$ is the \phaseVel.
 
-\item[2012-08-01 Daniel] If what Predrag says is true and the traces should be
-the equivalent independent of whether we use equivariant coordinates or invariant
-coordinates, then I have either made a mistake in calculating one or the other. It is kind of worrisome that these do not agree for the stability of the origin. I've double checked my calculation, but I don't see anything wrong with it. Is it possible that they
-are not the same and that their difference (or something like that) lets us extract a
-multiplier or something. Or maybe equating the two gives some kind of information. I just don't see what I did wrong in my computation.
+\item[2012-08-01 Daniel] If what Predrag says is true and the traces
+should be the equivalent independent of whether we use equivariant
+coordinates or invariant coordinates, then I have either made a mistake
+in calculating one or the other. It is kind of worrisome that these do
+not agree for the stability of the origin. I've double checked my
+calculation, but I don't see anything wrong with it. Is it possible that
+they are not the same and that their difference (or something like that)
+lets us extract a multiplier or something. Or maybe equating the two
+gives some kind of information. I just don't see what I did wrong in my
+computation.
 
 \item[2012-07-31 Evangelos to Daniel]
 One should go to a reduced space where the \reqv\ is an
@@ -2319,8 +2329,40 @@ derivatives].
 
 % For a \reqv\ we have $w = -2 u A_1(u, v) /c_1 = -2u (m_1 + a_1 u + b_1 v)/c_1$
 
+\item[2012-08-02 Predrag]
+In a way of motivation for a need for multiple charts, I have added
+\reffig{f:antlong} from the
+small-cell \KS\ system studied in \refref{lanCvit07}.
 
+\item[2012-08-02 Predrag]
+A wild idea that requires no thinking, just running simulations.
+Ashley and Sebastian have now independently shown that replacing
+Fourier space Euclidean norm $\delta_{jk}$ by the Sobolev $H^{-1}$ norm
+$\delta_{jk}/k^2$ flattens out the group orbits and decreases the number of
+linear charts needed to cover the ergodic attractor.
 
+How about going the opposite way and using the Sobolev $H^{1}$ norm
+$\delta_{jk}\,k^2$ for the \twoMode\ flow, in order to make the
+attractor more curved rather than less? Then you start with a chaotic looking simulation,
+then pick a state $\slicep{}^{(1)} = \ssp(\zeit_1)$ of you liking to construct
+the first slice hyperplane. Monitor the
+$\cos$ of the angle between the two tangent vectors:
+\beq
+\cos \psi = \frac{
+            \braket{\groupTan(\sspRed(\zeit))}{\sliceTan{}}
+                    }{
+            \Norm{\groupTan(\sspRed(\zeit))}\,\,{\Norm{\sliceTan{}}}
+                    }
+\,.
+\label{chartBordAng}
+\eeq
+When that hits zero, you have hit the \chartBord. Pick that point as
+$\slicep{}^{(2)} = \sspRed(\zeit_2)$, backtrack to the ridge between the
+two \slice\ hyperplanes, restart there by moving in the second slice.
+If we are lucky, we shall need (a) at least two charts, (b) no more than
+two charts.
+
+Take it for a spin!
 
 \item[2012-05-07  Predrag to Chaos Gang] It's not over until it is over.
 \end{description}

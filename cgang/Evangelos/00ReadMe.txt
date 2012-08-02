@@ -8,10 +8,19 @@ Slice & chart term project
 
 Evangelos' code directory
 
-dangelmayr_so2_int.nb
+dangelmayr_so2_int.nb           2012-07-31
 	Mathematica notebook to interactively (with sliders
 	and other goodies) explore Dangelmayr system with
 	O(2)->SO(2) symmetry breaking term.
+
+dangelmayr_so2_2ip.nb           2012-07-31
+    Evangelos: "playing with syzygy"
+    does something undocumented (stability matrix?)
+
+dangelmayr_so2_slice.nb           2012-07-31
+    Evangelos: "Integrate and visualize phase space of complex Lorenz
+    equation."
+    does something undocumented
 
 
 ----- NOTES        ------------------------------------------
@@ -21,4 +30,3 @@ dangelmayr_so2_int.nb
 
 ==============================================================
 FORMERLY OUTSTANDING ITEMS, NOW DISPOSED OFF:
-
