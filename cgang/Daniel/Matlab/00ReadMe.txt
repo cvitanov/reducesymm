@@ -69,3 +69,16 @@ polynomial basis) reported by Bryce Robbins
 in the two mode blog on 4/28 is indeed a fixed point of the flow
 (after correcting some factors of two that were missing in the
 original equations of motion that Bryce used)
+
+Sobolev_product.m by Daniel Borrero 08/3/2012
+--------------------------------------------------
+Calculates the inner product of two vectors for the 2-mode
+system of Porter & Knobloch using the Sobolev H^1 norm whose 
+metric tensor is given by
+
+                   [[1 0 0 0];
+               g =  [0 1 0 0];
+                    [0 0 4 0];
+                    [0 0 0 4]]
+
+so that <x|x'> = x1*x1' + x2*x2' + 4(x3*x3' + x4*x4')
