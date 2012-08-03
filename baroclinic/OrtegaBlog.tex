@@ -1323,7 +1323,7 @@ it.
 I ran the code saving the output $10$ times more frequent than before. As
 expected, the slicing is much more smooth now, and the {\chartBord}
 condition is valid for more time-steps. However the slices remain only
-valid for short times (see \reffig{ChartBorder2}).
+valid for short times (see \reffig{ChartBorder2}\,(a)).
 
 \item[2012-07-19 Predrag] Great simulation! Not having the movie but steps
 is quite helpful in looking at. Can you try this: instead of plotting
@@ -1337,15 +1337,6 @@ there as well), and read pipes/blog/blog.pdf starting with {\bf
 [2012-05-30 Humbledt]}. You will see the same behavior for the pipe flow,
 but I do not believe there are small structures in that problem.
 
-
-\begin{figure}
-  % Requires \usepackage{graphicx}
-  \includegraphics[width=0.9\textwidth]{ChartBorder2}
-  \caption{{\ChartBord} condition. The current state is used as the new
-  \template\ each time the $\cos$ of the angle between the two
-  tangent vectors \refeq{chartBordAng} is smaller than
-  $0.05$.}\label{ChartBorder2}
-\end{figure}
 
 
 \item[2012-07-19 Sebastian]
@@ -1402,9 +1393,9 @@ products weighted by Casimirs \refeq{QuadCasimir}, as in \refeq{min5}
 \,.
 \ee{braket0}
 The slice condition thus preferentially weighs higher Fourier modes. If
-we think of the norm as Sobolev norm (probably best to ignore this
-remark) it would be natural to have it as unit norm on the product of
-tangents, which  means we should change \refeq{innerR} to
+we think of the norm as the Sobolev $H^{-1}$ norm, it would be natural to
+have it as unit norm on the product of tangents, which  means we should
+change \refeq{innerR} to
 \beq
 \braket{\ssp}{\slicep}
    = \sum_m {\ssp}_i\, \frac{\delta_{ij}^{(m)}}{C_2^{(m)} } \slicep_j
@@ -1426,9 +1417,10 @@ filaments that cross the domain.
 \HREF{../movies/BaroclinicSlice4.avi}{../movies/BaroclinicSlice4.avi}.
 \end{quote}
 
-\item[2012-07-27 Predrag] The movie is very helpful. It shows clearly that it
-is the fine structure that causes charts to be small. As the proposed norm
-carries all of the spectral information, I think it is legal.
+\item[2012-07-27 Predrag] The movie is very helpful. It shows clearly
+that it is the fine structure that causes charts to be small. As the
+Sobolev $H^{-1}$ norm carries all of the spectral information, I think it
+is legal.
 
 \item[2012-07-26 Sebastian] I think I understand the essence of what you
 want to say in \textbf{[2012-07-25 Predrag]} (and would like to know more
@@ -1458,7 +1450,8 @@ post it online. As a first guess I think I would get something as:
     \overline{a_{lk}} a'_{lk}
     \ee{min6_3}
 for the other equations. It seems to be a very good solution, I will
-implement it. I was wondering about the drawbacks, if any, of this norm.
+implement it. I was wondering about the drawbacks, if any, of the Sobolev
+$H^{-1}$ norm.
 
 \item[2012-07-27 Predrag] The powers of $k$ look correct.
 
@@ -1477,8 +1470,8 @@ see how all this relates to the dynamics.
 deleting parts of the Fourier spectrum. Here we keep all of it, but with
 a weight gives less importance to high-frequency components.
 
-\item[2012-07-27 Predrag]
-Hopefully the \chartBord\ for the modified norm lies further out from the
+\item[2012-07-27 Predrag]                       \toCB
+Hopefully the \chartBord\ for the the Sobolev $H^{-1}$ norm lies further out from the
 template than the one for the Euclidean norm: the idea is the amplitude
 of the higher mode in the 'baseball seam' of Fig.~7\,(a) in
 \HREF{http://www.cns.gatech.edu/~predrag/papers/atlas12.pdf}
@@ -1504,36 +1497,16 @@ It seems to work for Ashley - here are two posts from
 % condition for the templates, other than the current template,
 % fixes that, but is a lot of work.
  I've played with adding templates on the fly in
- \reffig{fig:3610switching}.  At the end of the orbit
+ \reffig{fig:3610switching}\,(a).  At the end of the orbit
  it didn't switch back to the first template --- I've only permitted
  switching when shifts match for a closer template.  The shifts
  often run side by side but don't cross.
- \begin{figure}
- \begin{center}
-  \includegraphics[width=0.75\textwidth]{3610switching}
- \end{center}
- \caption{ \label{fig:3610switching}
-    Tracking $\RPO{36.72}$ starting with $\slicep{}=\ssp(t=0)$ and
-    adding new templates on the fly, whenever $\cos\psi<0.1$.
- }
- \end{figure}
 
 \item[2012-07-27 Ashley]
-New norm avoids need for a bunch of templates
-to navigate around $\RPO{36.72}$.  See \reffig{fig:3611switching},
-in particular the red line.  Compare with \reffig{fig:3610switching}.
- \begin{figure}
- \begin{center}
-  \includegraphics[width=0.75\textwidth]{3611switching}
- \end{center}
- \caption{ \label{fig:3611switching}
-    Tracking $\RPO{36.72}$ starting with $\slicep{}=\ssp(t=0)$.
-    Just as \reffig{fig:3610switching} except here using the inverse
-    quadratic Casimir norm;
-    %\refeq{eq:dampednorm};
-    $\cos\psi$ does not drop below $0.1$.
- }
- \end{figure}
+The Sobolev $H^{-1}$ norm avoids need for a bunch of templates
+to navigate around $\RPO{36.72}$.  See \reffig{fig:3610switching}\,(b),
+in particular the red line.  Compare with \reffig{fig:3610switching}\,(a).
+
 
 \item[2012-07-27 Sebastian]
 I did the slicing with the proposed weights. The equations I end up using are:
@@ -1557,7 +1530,7 @@ I did the slicing with the proposed weights. The equations I end up using are:
     \overline{a_{lk}} a'_{lk}
     \ee{min6_5}
 Note that I changed the sum related to $k$ so that it goes from $1$ to
-$N/2$. It worked (see \reffig{ChartBorder3}) and now the slice is valid
+$N/2$. It worked (see \reffig{ChartBorder3}\,(b)) and now the slice is valid
 for much longer times, but I am not sure if we can just ignore the
 singularity for $k=0$ in the slice condition. However, with the previous
 norm this mode was always canceled out; so it might be OK.
@@ -1568,12 +1541,40 @@ with minimizing the distance $\norm{\ssp-\slicep}^2$, so please set the
 $m=0$ part of the norm to $1$ until we show that is right or think of an
 alternative.
 
+ \begin{figure}
+ \begin{center}
+(a) \includegraphics[width=0.90\textwidth]{3610switching}
+ \\
+(b) \includegraphics[width=0.90\textwidth]{3611switching}
+ \end{center}
+ \caption{ \label{fig:3610switching}
+ {\ChartBord} condition for the pipe flow \rpo\ $\RPO{36.72}$
+ discovered in \refref{ACHKW11}:
+    (a) [2012-05-22 Ashley]
+    Tracking $\RPO{36.72}$ starting with $\slicep{}=\ssp(\zeit=0)$ and
+    adding new templates on the fly, whenever $\cos\psi<0.1$.
+    (b) [2012-07-27 Ashley]
+        Tracking $\RPO{36.72}$ starting with $\slicep{}=\ssp(\zeit=0)$. Just as
+    in frame (a), except here using the Sobolev $H^{-1}$
+    norm;
+    %\refeq{eq:dampednorm};
+    $\cos\psi$ does not drop below $0.1$.
+ }
+ \end{figure}
+
 \begin{figure}
-  % Requires \usepackage{graphicx}
-  \includegraphics[width=0.9\textwidth]{ChartBorder3}\\
-  \caption{{\ChartBord} condition using the norm defined in
-  \refeq{braket}}\label{ChartBorder3}
+(a) \includegraphics[width=0.92\textwidth]{ChartBorder2}
+    \\
+(b) \includegraphics[width=0.9\textwidth]{ChartBorder3}
+  \caption{{\ChartBord} condition for the baroclinic
+  instability\rf{BrCv12}. The current state is used as the new \template\
+  each time the $\cos$ of the angle between the two tangent vectors
+  \refeq{chartBordAng} is smaller than $0.05$.
+(a) [2012-07-19 Sebastian] Using the Euclidean norm.
+(b) [2012-07-27 Sebastian] Using the Sobolev $H^{-1}$ norm  \refeq{braket}.
+}\label{ChartBorder2}
 \end{figure}
+
 
 \item[2012-07-26 Predrag] I think we can probably make a good argument
 that the group manifold should be a
@@ -1587,8 +1588,8 @@ for any magnitude not smaller than $1/m$ for the $m$th mode''. If they do
 this for $k \to \infty$, the partial derivative $u_x$ is not defined, and
 that would be a disaster. Which probably means for Navier-Stokes that we
 can demand that solutions belong to $W^{2,\infty}$ which would make it
-legit to use even stronger suppression of high Fourier modes, with norm
-diagonal $\propto (C_2^{(m)})^{-2}$.
+legit to use even stronger suppression of high Fourier modes, with the
+Sobolev $H^{-1}$ norm diagonal $\propto (C_2^{(m)})^{-2}$.
 
 
 \end{description}
