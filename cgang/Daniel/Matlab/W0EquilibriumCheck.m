@@ -28,3 +28,5 @@ Q = simple(2*U/e2*(2*c1*V+c2*U));
 
 % Check that the point (U,V,W,Q) is actually a fixed point
 XDOT = simple(subs([udot,vdot,wdot,qdot],{u,v,w,q},{U,V,W,Q}))
+
+
