@@ -21,7 +21,7 @@ X = [x1 x2 y1 y2]';
 V = [x1dot x2dot y1dot y2dot]';
 
 % Calculate the stability matrix
-A = jacobian(V,X);
+A = jacobian(V,X)
 
 % Load system parameters
 A1 = params{1}; A2 = params{2}; B1 = params{3}; B2 = params{4};
