@@ -1,4 +1,4 @@
-siminos/talks/GTmath12/00ReadMe.txt
+siminos/talks/WoodsHole12/00ReadMe.txt
 $Author$ $Date$
 ----------------------------------------------------------------------------
 http://www.math.gatech.edu/seminars-colloquia/series/cdsns-colloquium/predrag-cvitanovic-20120326
@@ -9,7 +9,8 @@ Predrag                                             2012-08-08
 Got symmetry? Here is how you slice it
     GFD Woods Hole talk
     Wed, 08/08/2012 - 14:30
-revised with material from
+WHole12.tex with material from
+    siminos/talks/GTmath12/sectSlice.tex
     siminos/atlas/atlas12.tex
 
 Predrag                                             2012-03-26
@@ -20,13 +21,11 @@ Got symmetry? Here is how you slice it
     Mon, 03/26/2012 - 11:00am, Skiles 006
 
 source
-    siminos/talks/GTmath12/	
+    siminos/talks/WoodsHole12/	
 the talk
-    sectSlice.tex
-the abstract
-    abstract.txt
+    WHole12.tex
 on the web
-    ChaosBook.org/overheads/continuous/120326video/sectSlice.evo
+    ChaosBook.org/overheads/continuous/WHole12.pdf
 runs from
     ChaosBook.org/overheads/continuous/index.html
 
