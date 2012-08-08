@@ -82,3 +82,10 @@ metric tensor is given by
                     [0 0 0 4]]
 
 so that <x|x'> = x1*x1' + x2*x2' + 4(x3*x3' + x4*x4')
+
+PKRoots.m by Daniel Borrero 08/08/2012
+-----------------------------------------------------------
+Finds the roots for the Porter & Knobloch system in the
+(u,v,w,q) invariant polynomial basis for a given
+set of parameters and displays them one by one, checking if they
+satisfy the syzygy w^2+q^2-4*u^2*v = 0

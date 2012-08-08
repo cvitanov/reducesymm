@@ -29,4 +29,7 @@ Q = simple(2*U/e2*(2*c1*V+c2*U));
 % Check that the point (U,V,W,Q) is actually a fixed point
 XDOT = simple(subs([udot,vdot,wdot,qdot],{u,v,w,q},{U,V,W,Q}))
 
+% Check that solution satisfies the syzygy w^2 + q^2 - 4u^2v = 0
+syzygy = simple(W^2+Q^2 - 4*U^2*V)
+
 
