@@ -217,7 +217,7 @@ Attractor for
 looks pretty chaotic. Can you check what \eqva\ it has, and their
 stabilities?
 
-\item[2012-08-07 Daniel] Here's a breakdown of the stability of the \eqva\ that we 
+\item[2012-08-07 Daniel] Here's a breakdown of the stability of the \eqva\ that we
 know analytically for the parameter values suggested by Predrag. I first converted these 4D Cartesian coordinates and then calculated their stability in that representation.
 
 The origin is hyperbolic with eigenvalues $\lambda_{1,2} = \mu_2 \pm i e_2 = 0.38 \pm i 1.61$ and $\lambda_{3,4} = \mu_1 = -0.38$.
@@ -228,12 +228,76 @@ The relative equilibrium discovered by Bryce on 2012-04-28 \refeq{invroot2} is h
 
 Not sure how to use Evangelos's Mathematica code to find the other \eqva .
 
-\item[2012-08-08 Daniel] Tried finding further equilibria by finding numerical solutions to $[\dot{u},\dot{v},\dot{w},\dot{q}] = 0$ for the parameters suggested by Predrag. Only find Bryce's equilibrium and the origin. There are a couple of roots ($[-0.3492,0.0351,-0.0909,0.0940]$ and $[0.0000,-1.7273,-0.0000,-0.0000]$) that do not satisfy the constraints that $u,v \geq 0$. There are four further roots where $[u,v,w,q]$ are complex. For more details see, \texttt{/cgang/Daniel/Matlab/PKRoots.m}
+\item[2012-08-08 Daniel] Tried finding further equilibria by finding
+numerical solutions to $[\dot{u},\dot{v},\dot{w},\dot{q}] = 0$ for the
+parameters suggested by Predrag. Only find Bryce's equilibrium and the
+origin. There are a couple of roots ($[-0.3492,0.0351,-0.0909,0.0940]$
+and $[0.0000,-1.7273,-0.0000,-0.0000]$) that do not satisfy the
+constraints that $u,v \geq 0$. There are four further roots where
+$[u,v,w,q]$ are complex. For more details see,
+\texttt{/cgang/Daniel/Matlab/PKRoots.m}
 
-Then I went through all the roots that I found and checked to see if they satisfy the syzygy. The origin and all the unphysical (both real and complex) solutions do, but Bryce's solution doesn't. Evaluating the syzygy gives me $-0.033$. What does that mean? My gut feeling is that this equilibrium is accesible to the system if you start it at some generic point in $(u,v,w,q)$-space but not if you start in $(x_1,x_2,y_1,y_2$-space.
+Then I went through all the roots that I found and checked to see if they
+satisfy the syzygy. The origin and all the unphysical (both real and
+complex) solutions do, but Bryce's solution doesn't. Evaluating the
+syzygy gives me $-0.033$. What does that mean? My gut feeling is that
+this equilibrium is accessible to the system if you start it at some
+generic point in $(u,v,w,q)$-space but not if you start in
+$(x_1,x_2,y_1,y_2$-space.
+
+\item[2012-08-08 Predrag]
+The syzygy \refeq{eq:syzPK} is sacred, so there is an error in
+Bryce's solution...
+
+\item[2012-08-08 Daniel] I know we don't like Lyapunov exponents, but
+since I already had the code written up from a long time ago and all I
+had to do was give it the equations of motion and the Jacobian, I
+calculated them out anyway for Predrag's parameters
+\refeq{pars2012-08-06}. The code uses the method proposed by Eckmann and
+Ruelle\rf{eckerg}. Anyway, the Lyapunov spectrum is $\approx
+(0.1,0,0,-0.2)$ with a Kaplan-Yorke dimension of $D_{KY} \approx 3.4$.
+
+\item[2012-08-08 Predrag]
+Not that prejudiced (read \texttt{siminos/Lyapunov} blog). That looks
+right, this has a chance of being a strange attractor - two dimensions
+are trivial (symmetry has not been reduced), the remaining $1.4$ feels
+too big.
+
+But why don't you do the easy thing that you already have code for - take
+a point on the strange attractor as a template, and run in the \slice\
+hyperplane until the angle \refeq{chartBordAng} gets small? It's easier
+than thinking, and we just need a 2-chart example.
+
+\item[2012-08-08 Daniel]
+Is $[0,v,0,0]$ really a root and not just an invariant subspace? I
+   don't think $\dot{v}$ vanishes for all $v$.
+
+\item[2012-08-08 Predrag]
+Set ${x}_1={x}_2=0$ in \refeq{eq:DangSO2}:
+\beq
+  \dot{z}_2 = (\mu_2-\ii\, e_2)\,{z_2}+b_2\,|z_2|^2z_2
+\,,
+\label{eq:DangSO2sub}
+\eeq
+or, equivalently, set ${x}_1={x}_2=0$ in \refeq{2mode4D}:
+\bea
+\dot{y}_1 &=& \mu_2 y_1 + e_2 y_2 + b_2 y_1^3 + b_2 y_1 y_2^2
+\continue
+\dot{y}_2 &=& \mu_2 y_2 - e_2 y_1 + b_2 y_1^2 y_2 + b_2 y_2^3
+\label{2mode4Dsub}
+\eea
+\refeq{eq:DangSO2sub} is clearly \Un{1} equivariant. \refeq{PKinvEqs1}
+reduces to
+\beq
+  \dot{v} = 2\,\mu_2\,v+2\,b_2\,v^2
+\,.
+\ee{PKinvEqs1sub}
+This has \eqv\ $v^* = - \mu_2/b_2$, provided this quantity is positive,
+otherwise not. It corresponds to a \reqv\ in equivariant coordinates,
+with radius $\sqrt{ - \mu_2/b_2}$. Parameters \refeq{pars2012-08-06} do
+not have this \reqv.
 
 
-\item[2012-08-08 Daniel] I know we don't like Lyapunov exponents, but since I already had the code written up from a long time ago and all I had to do was give it the equations of motion and the Jacobian, I calculated them out anyway for Predrag's parameters \refeq{pars2012-08-06}. The code uses the method proposed by Eckmann and Ruelle \rf{eckerg}. Anyway, the Lyapunov spectrum (in descending order)is something like $(0.1,0,0,-0.2)$ with a Kaplan-Yorke dimension of $3.4$.
 
 \item[2012-05-07  Predrag to Chaos Gang] It's not over until it is over.
 
