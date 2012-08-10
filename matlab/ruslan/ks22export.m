@@ -1195,8 +1195,9 @@ refpo=36; % Pick reference cycle
 % Integrate reference cycle i.c.
 a0=rpo(refpo).a1;
 [tt0, aa0] = ksfmetd2(a0, L, h, rpo(refpo).T1, np); 
+save('ks22rpo77p85s10p8.mat','aa0');
+% Pick shadowing cycle 
 
-% Pick shadowing cycle
 ipo=1;
 
 a0 = rpo(ipo).a1;
@@ -1231,6 +1232,8 @@ ipo1=17;
 a0=ksfmRefl(rpo(ipo1).a1);
 [tt, aa1] = ksfmetd2(a0, L, h, rpo(ipo1).T1, np); 
 
+save('ks22rpo55p6s5p25.mat','aa1');
+
 % [d1, aamf1, aa0mf, pos1]=minDistanceInvPos(aa1,aa0);
 
 %%%%
@@ -1260,7 +1263,7 @@ l3=['T_p=' num2str(rpo(ipo1).T1,4)];
 %%%%%
 
 % Compute Floquet exponents (from stored multipliers)
-fexp_refpo = [log(abs(ppo(refpo).e(1)))/ppo(refpo).T, log(abs(ppo(refpo).e(2)))/ppo(refpo).T];
+fexp_refpo = [log(abs(rpo(refpo).e(1)))/rpo(refpo).T, log(abs(rpo(refpo).e(2)))/rpo(refpo).T];
 fexp_ipo = [log(abs(rpo(ipo).e(1)))/rpo(ipo).T, log(abs(rpo(ipo).e(2)))/rpo(ipo).T];
 fexp_ipo1 = [log(abs(rpo(ipo1).e(1)))/rpo(ipo1).T, log(abs(rpo(ipo1).e(4)))/rpo(ipo1).T];
 
