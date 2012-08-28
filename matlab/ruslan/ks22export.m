@@ -1179,6 +1179,79 @@ print -depsc2 ks22_E2_manif_homo_rpo_mf1.eps
   end
 plot3(av(1:3:end-8,:)',av(2:3:end-7,:)',av(3:3:end-6,:)','m-');
 
+
+%% Shadowing of RPO(64.51) in physical space
+
+
+load ks22f90h25.mat;
+h=0.1; L=22;
+np=1;
+
+refpo=36; % Pick reference cycle
+
+% Integrate reference cycle i.c.
+a0=rpo(refpo).a1;
+[tt0, aa0] = ksfmetd2(a0, L, h, rpo(refpo).T1, np); 
+
+% Real space plot
+
+[x, uu] = ksfm2real(aa0, L, 64);
+figure(); set(gcf,'pos',[100 500 250 450]); clf;
+ax1 = axes('pos',[0.22 0.15 0.70 0.80]); pcolor(x,tt0,uu'); caxis([-3 3]);
+shading interp; colormap('jet');
+xlabel('x','fontsize',14);  ylabel('t','fontsize',14,'rotat',0);
+T=rpo(refpo).T1; s=rpo(refpo).s1;
+title(['T_p=' num2str(T) ', d_p=' num2str(s) ])
+% set(get(gca,'ylabel'),'pos',[-13.5 74 1]);
+set(gcf,'paperpos',[8 10 6 10]); 
+
+print -depsc2  'ks22rpoT64p51s2p5phys.eps';
+
+% Pick shadowing cycle 
+
+ipo=1;
+
+a0 = rpo(ipo).a1;
+[tt, aa] = ksfmetd2(a0, L, h, rpo(refpo).T1, np); 
+
+% Real space plot
+
+[x, uu] = ksfm2real(aa, L, 64);
+figure(); set(gcf,'pos',[100 500 250 450]); clf;
+ax1 = axes('pos',[0.22 0.15 0.70 0.80]); pcolor(x,tt,uu'); caxis([-3 3]);
+shading interp; colormap('jet'); hold on;
+xlabel('x','fontsize',14);  ylabel('t','fontsize',14,'rotat',0);
+T=rpo(ipo).T1; s=rpo(ipo).s1;
+title(['T_p=' num2str(T) ', d_p=' num2str(s) ])
+ne = ceil(rpo(refpo).T1/T);
+plot(x([1 end])*ones(1,ne),[T;T]*(1:ne),'w-');
+% set(get(gca,'ylabel'),'pos',[-13.5 74 1]);
+set(gcf,'paperpos',[8 10 6 10]); 
+
+print -depsc2  'ks22rpoT16p31s2p9phys.eps';
+
+%%%%
+
+%%% plot alternative shadowing ppo
+ipo1=17;
+a0=ksfmRefl(rpo(ipo1).a1);
+[tt1, aa1] = ksfmetd2(a0, L, h, rpo(refpo).T1, np); 
+
+% Real space plot
+
+[x, uu] = ksfm2real(aa1, L, 64);
+figure(); set(gcf,'pos',[100 500 250 450]); clf;
+ax1 = axes('pos',[0.22 0.15 0.70 0.80]); pcolor(x,tt1,uu'); caxis([-3 3]);
+shading interp; colormap('jet'); hold on;
+xlabel('x','fontsize',14);  ylabel('t','fontsize',14,'rotat',0);
+T=rpo(ipo1).T1; s=rpo(ipo1).s1;
+title(['T_p=' num2str(T) ', d_p=' num2str(s) ]);
+ne = ceil(rpo(refpo).T1/T);
+plot(x([1 end])*ones(1,ne),[T;T]*(1:ne),'w-');
+set(gcf,'paperpos',[8 10 6 10]); 
+
+print -depsc2  'ks22rpoT47p32s0p3phys.eps';
+
 %% Shadowing of RPO(64.51)
 
 clear; load kse22orbits;
@@ -1385,6 +1458,7 @@ refpo=105; % Pick reference cycle
 % Integrate reference cycle i.c.
 a0=rpo(refpo).a1;
 [tt0, aa0] = ksfmetd2(a0, L, h, rpo(refpo).T1, np); 
+
 
 % Pick shadowing cycle
 ipo=1;

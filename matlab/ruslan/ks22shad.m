@@ -1,10 +1,75 @@
 % Visualization of KS L=22 reduced state space.
 % ES 2011-11-11
 
+%% Shadowing of PO(70.35) in physical space
+
+clear; load ks22f90h25.mat;
+h=0.1; L=22;
+np=1;
+
+
+refpo=48; % Pick reference cycle
+
+% Integrate reference cycle i.c.
+a0=ppo(refpo).a1;
+[tt0, aa0] = ksfmetd(a0, L, h, ppo(refpo).T1, np); 
+
+% Real space plot
+
+[x, uu] = ksfm2real(aa0, L, 64);
+figure(); set(gcf,'pos',[100 500 250 450]); clf;
+ax1 = axes('pos',[0.22 0.15 0.70 0.80]); pcolor(x,tt0,uu'); caxis([-3 3]);
+shading interp; colormap('jet');
+xlabel('x','fontsize',14);  ylabel('t','fontsize',14,'rotat',0);
+T=ppo(refpo).T1; s=0;
+title(['T_p=' num2str(T) ', d_p=' num2str(s) ])
+% set(get(gca,'ylabel'),'pos',[-13.5 74 1]);
+set(gcf,'paperpos',[8 10 6 10]); 
+
+
+% Pick shadowing cycle
+ipo=6;
+
+a0 = rpo(ipo).a1;
+[tt, aa] = ksfmetd(a0, L, h, ppo(refpo).T1, np); 
+
+% Real space plot
+
+[x, uu] = ksfm2real(aa, L, 64);
+figure(); set(gcf,'pos',[100 500 250 450]); clf;
+ax1 = axes('pos',[0.22 0.15 0.70 0.80]); pcolor(x,tt,uu'); caxis([-3 3]);
+shading interp; colormap('jet'); hold on;
+xlabel('x','fontsize',14);  ylabel('t','fontsize',14,'rotat',0);
+T=rpo(ipo).T1; s=rpo(ipo).s1;
+title(['T_p=' num2str(T) ', d_p=' num2str(s) ])
+ne = ceil(rpo(refpo).T1/T);
+plot(x([1 end])*ones(1,ne),[T;T]*(1:ne),'w-');
+% set(get(gca,'ylabel'),'pos',[-13.5 74 1]);
+set(gcf,'paperpos',[8 10 6 10]); 
+
+%%% plot alternative shadowing rpo
+ipo1=9;
+a0=rpo(ipo1).a1;
+[tt1, aa1] = ksfmetd(a0, L, h, ppo(refpo).T1, np); 
+
+% Real space plot
+
+[x, uu] = ksfm2real(aa1, L, 64);
+figure(); set(gcf,'pos',[100 500 250 450]); clf;
+ax1 = axes('pos',[0.22 0.15 0.70 0.80]); pcolor(x,tt1,uu'); caxis([-3 3]);
+shading interp; colormap('jet'); hold on;
+xlabel('x','fontsize',14);  ylabel('t','fontsize',14,'rotat',0);
+T=rpo(ipo1).T1; s=rpo(ipo1).s1;
+title(['T_p=' num2str(T) ', d_p=' num2str(s) ]);
+ne = ceil(rpo(refpo).T1/T);
+plot(x([1 end])*ones(1,ne),[T;T]*(1:ne),'w-');
+set(gcf,'paperpos',[8 10 6 10]); 
+
+
 %% Shadowing of PO(70.35)
 
 clear; load ks22f90h25.mat;
-h=0.25; N=16; L=22;
+h=0.25; L=22;
 np=1;
 
 refpo=48; % Pick reference cycle
@@ -21,14 +86,16 @@ xlabel('i');
 ylabel('d_{min}');
 
 % Integrate reference cycle i.c.
-a0=ppo(refpo).a;
-[tt0, aa0] = ksfmetd(a0, L, h, ppo(refpo).T, np); 
+a0=ppo(refpo).a1;
+[tt0, aa0] = ksfmetd(a0, L, h, ppo(refpo).T1, np); 
+save('ks22ppo70p31.mat','aa0');
 
 % Pick shadowing cycle
 ipo=6;
 
-a0 = rpo(ipo).a;
-[tt, aa] = ksfmetd(a0, L, h, rpo(ipo).T, np); 
+a0 = rpo(ipo).a1;
+[tt, aa] = ksfmetd(a0, L, h, rpo(ipo).T1, np); 
+save('ks22rpo34p64s9p6.mat','aa');
 
 % Compute distance of points on cycles
 [d, aamf, aa0mf, pos]=minDistanceInvPos(aa,aa0);
@@ -63,8 +130,9 @@ plot3(aa0mf(proj(1),:),aa0mf(proj(2),:),aa0mf(proj(3),:),'r.-');
 
 %%% plot alternative shadowing ppo
 ipo1=9;
-a0=rpo(ipo1).a;
-[tt, aa1] = ksfmetd(a0, L, h, rpo(ipo1).T, np); 
+a0=rpo(ipo1).a1;
+[tt1, aa1] = ksfmetd(a0, L, h, rpo(ipo1).T1, np); 
+save('ks22rpo39p71s1p61.mat','aa1');
 
 [d1, aamf1, aa0mf, pos1]=minDistanceInvPos(aa1,aa0);
 
@@ -101,6 +169,36 @@ saveas(fig2, ['ks22ppoT', '7035', 'shad.png']);
 fexp_refpo = [log(abs(ppo(refpo).e(1)))/ppo(refpo).T, log(abs(ppo(refpo).e(2)))/ppo(refpo).T];
 fexp_ipo = [log(abs(rpo(ipo).e(1)))/rpo(ipo).T, log(abs(rpo(ipo).e(2)))/rpo(ipo).T];
 fexp_ipo1 = [log(abs(rpo(ipo1).e(1)))/rpo(ipo1).T, log(abs(rpo(ipo1).e(4)))/rpo(ipo1).T];
+
+% Real space plots
+
+[x, uu] = ksfm2real(aa0, L, 64);
+figure(); set(gcf,'pos',[100 500 250 400]); clf;
+ax1 = axes('pos',[0.22 0.15 0.70 0.80]); pcolor(x,tt0,uu'); caxis([-3 3]);
+shading interp; colormap('jet');
+xlabel('x','fontsize',15);  ylabel('t','fontsize',15,'rotat',0);
+set(get(gca,'ylabel'),'pos',[-13.5 74 1]);
+set(gcf,'paperpos',[8 10 6 10]); 
+
+% Real space plot
+
+[x, uu] = ksfm2real(aa, L, 64);
+figure(); set(gcf,'pos',[100 500 250 400]); clf;
+ax1 = axes('pos',[0.22 0.15 0.70 0.80]); pcolor(x,tt,uu'); caxis([-3 3]);
+shading interp; colormap('jet');
+xlabel('x','fontsize',15);  ylabel('t','fontsize',15,'rotat',0);
+set(get(gca,'ylabel'),'pos',[-13.5 74 1]);
+set(gcf,'paperpos',[8 10 6 10]); 
+
+% Real space plot
+
+[x, uu] = ksfm2real(aa1, L, 64);
+figure(); set(gcf,'pos',[100 500 250 400]); clf;
+ax1 = axes('pos',[0.22 0.15 0.70 0.80]); pcolor(x,tt1,uu'); caxis([-3 3]);
+shading interp; colormap('jet');
+xlabel('x','fontsize',15);  ylabel('t','fontsize',15,'rotat',0);
+set(get(gca,'ylabel'),'pos',[-13.5 74 1]);
+set(gcf,'paperpos',[8 10 6 10]); 
 
 
 %%%%%
