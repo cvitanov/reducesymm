@@ -1564,56 +1564,64 @@ print -depsc2  'ks22rpoT8072shad.eps';
 
 
 %% Add TW1 unstable manifold
-%   v = gsorth([real(re(k).evec(:,1)) imag(re(k).evec(:,1)) real(re(k).evec(:,3))]);
-%   vInv=mfinvTraj(repmat(re(k).a,1,3)+v);
+  v = gsorth([real(re(k).evec(:,1)) imag(re(k).evec(:,1)) real(re(k).evec(:,3))]);
+  vInv=mfinvTraj(repmat(re(k).a,1,3)+v);
 
 
 
-% % shadowing shortest rpo
-%   tend=111; av81=[]; 
-%   for delta = [0.50915:0.00001:0.50923]*ere*period,
-%     a0 = re(k).a + 1e-4.*exp(delta).*v(:,2);
-%     [tt, aa] = ksfmetd2(a0, L, h, tend, 2);
-% %    [aa, ss] = ksfm_so2(aa, L);
-%     aa = mfinvTraj(aa);
-%     av81 = [av81; vInv'*aa];
-%   end
-%   
-% % shadowing shortest rpo
-%   tend=98; av82=[];
-%   for delta = [0.509:0.0005:0.51]*ere*period,
-%     a0 = re(k).a + 1e-4.*exp(delta).*v(:,2);
-%     [tt, aa] = ksfmetd2(a0, L, h, tend, 2);
-% %    [aa, ss] = ksfm_so2(aa, L);
-%     aa = mfinvTraj(aa);
-%     av82 = [av82; vInv'*aa];
-%   end  
-%   tend=95; av8=[];
-%   for delta = [0.495:0.0005:0.5105]*ere*period,
-%     a0 = re(k).a + 1e-4.*exp(delta).*v(:,2);
-%     [tt, aa] = ksfmetd2(a0, L, h, tend, 2);
-% %    [aa, ss] = ksfm_so2(aa, L);
-%     aa = mfinvTraj(aa);
-%     av8 = [av8; vInv'*aa];
-%   end
-% % 
+% shadowing shortest rpo
+  tend=111; av81=[]; aa81=[];
+  for delta = [0.50915:0.00001:0.50923]*ere*period,
+    a0 = re(k).a + 1e-4.*exp(delta).*v(:,2);
+    [tt, aa] = ksfmetd2(a0, L, h, tend, 2);
+%    [aa, ss] = ksfm_so2(aa, L);
+    aa = mfinvTraj(aa);
+    aa81 = [aa81; aa];
+    av81 = [av81; vInv'*aa];
+  end
+  
+% shadowing shortest rpo
+  tend=98; av82=[]; aa82=[];
+  for delta = [0.509:0.0005:0.51]*ere*period,
+    a0 = re(k).a + 1e-4.*exp(delta).*v(:,2);
+    [tt, aa] = ksfmetd2(a0, L, h, tend, 2);
+%    [aa, ss] = ksfm_so2(aa, L);
+    aa = mfinvTraj(aa);
+    aa82 = [aa82; aa];
+    av82 = [av82; vInv'*aa];
+  end  
+  tend=95; av8=[]; aa8=[];
+  for delta = [0.495:0.0005:0.5105]*ere*period,
+    a0 = re(k).a + 1e-4.*exp(delta).*v(:,2);
+    [tt, aa] = ksfmetd2(a0, L, h, tend, 2);
+%    [aa, ss] = ksfm_so2(aa, L);
+    aa = mfinvTraj(aa);
+    aa8 = [aa8; aa];
+    av8 = [av8; vInv'*aa];
+  end
 % 
-% plot3(av82(1:3:end,:)',av82(2:3:end,:)',av82(3:3:end,:)','k-'); % shadow rpo 1
-%  plot3(av81(1:3:end,:)',av81(2:3:end,:)',av81(3:3:end,:)','k-'); %, 'color', [0.5 0.5 0.5]); % shadow rpo 1
-% xlabel('$v_1$','fontsize',14,'interp','latex');
-% ylabel('$v_2$','fontsize',14,'interp','latex');%,'pos',[1.3 0 -.8]); 
-% zlabel('$v_3$','rotat',0,'fontsize',14,'interp','latex');%,'pos',[-1.4 -.7 0]);
-% set(gca,'FontSize',14)
-% % load ks22f90h25.mat; np=1; h = 0.1; 
-% % refpo=1;
-% % a0=rpo(refpo).a1;
-% % [tt0, aa0] = ksfmetd(a0, L, h, rpo(refpo).T1, np); 
-% % aa0inv=mfinvTraj(aa0);
-% % av0=vInv'*aa0inv;
-% % plot3(av0(1,:)',av0(2,:)',av0(3,:)','.-', 'color', [218/255 112/255 214/255 ]);
-% print -depsc2 ks22_TW1_manif_rpos_inv.eps
-% % plot3(aamf(1,1),aamf(2,1),aamf(3,1),'k*');
-% % plot3(aamf(1,2),aamf(2,2),aamf(3,2),'kv');
+
+save('ks22tw1manifS1.mat','aa81');
+save('ks22tw1manifS2.mat','aa82');
+save('ks22tw1manifS3.mat','aa8');
+
+
+plot3(av82(1:3:end,:)',av82(2:3:end,:)',av82(3:3:end,:)','k-'); % shadow rpo 1
+ plot3(av81(1:3:end,:)',av81(2:3:end,:)',av81(3:3:end,:)','k-'); %, 'color', [0.5 0.5 0.5]); % shadow rpo 1
+xlabel('$v_1$','fontsize',14,'interp','latex');
+ylabel('$v_2$','fontsize',14,'interp','latex');%,'pos',[1.3 0 -.8]); 
+zlabel('$v_3$','rotat',0,'fontsize',14,'interp','latex');%,'pos',[-1.4 -.7 0]);
+set(gca,'FontSize',14)
+% load ks22f90h25.mat; np=1; h = 0.1; 
+% refpo=1;
+% a0=rpo(refpo).a1;
+% [tt0, aa0] = ksfmetd(a0, L, h, rpo(refpo).T1, np); 
+% aa0inv=mfinvTraj(aa0);
+% av0=vInv'*aa0inv;
+% plot3(av0(1,:)',av0(2,:)',av0(3,:)','.-', 'color', [218/255 112/255 214/255 ]);
+print -depsc2 ks22_TW1_manif_rpos_inv.eps
+% plot3(aamf(1,1),aamf(2,1),aamf(3,1),'k*');
+% plot3(aamf(1,2),aamf(2,2),aamf(3,2),'kv');
 
 % Add RPO(16.31) unstable manifold
 % load kse22orbits;
