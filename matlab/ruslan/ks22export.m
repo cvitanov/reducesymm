@@ -1307,7 +1307,21 @@ a0=ksfmRefl(rpo(ipo1).a1);
 
 save('ks22rpo55p6s5p25.mat','aa1');
 
-% [d1, aamf1, aa0mf, pos1]=minDistanceInvPos(aa1,aa0);
+[d1, aamf1, aa0mf, pos1]=minDistanceInvPos(aa1,aa0);
+
+% globmin=find(d1==min(d1));
+% 
+% % points of minimal distance (to plot if needed)
+%  if size(aa0mf,2)>=size(aamf1,2), 
+%      pnt0mf = aa0mf(:,pos1(globmin));
+%      pntmf = aamf(:,globmin);
+%  else
+%      pnt0mf = aa0mf(:,globmin);
+%      pntmf = aamf1(:,pos(globmin));
+%  end
+
+% % difference vector at minimal distance
+% difvmf=pntmf-pnt0mf;
 
 %%%%
 % %%% plot alternative ppo
