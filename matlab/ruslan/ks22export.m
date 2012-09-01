@@ -1197,15 +1197,18 @@ a0=rpo(refpo).a1;
 
 [x, uu] = ksfm2real(aa0, L, 64);
 figure(); set(gcf,'pos',[100 500 250 450]); clf;
-ax1 = axes('pos',[0.22 0.15 0.70 0.80]); pcolor(x,tt0,uu'); caxis([-3 3]);
+ax1 = axes('pos',[0.22 0.1 0.70 0.80]); pcolor(x,tt0,uu'); caxis([-3 3]);
 shading interp; colormap('jet');
 xlabel('x','fontsize',14);  ylabel('t','fontsize',14,'rotat',0);
 T=rpo(refpo).T1; s=rpo(refpo).s1;
-title(['T_p=' num2str(T) ', d_p=' num2str(s) ])
+title(['T_p=' num2str(T) ', d_p=' num2str(s) ], 'fontsize', 14)
 % set(get(gca,'ylabel'),'pos',[-13.5 74 1]);
-set(gcf,'paperpos',[8 10 6 10]); 
+% set(gcf,'paperpos',[8 10 6 10]); 
 
-print -depsc2  'ks22rpoT64p51s2p5phys.eps';
+
+exportfig(gcf, 'ks22rpoT64p51s2p5phys.eps', 'Color', 'rgb', 'resolution', 300);
+
+% print -depsc2  'ks22rpoT64p51s2p5phys.eps';
 
 % Pick shadowing cycle 
 
@@ -1218,17 +1221,17 @@ a0 = rpo(ipo).a1;
 
 [x, uu] = ksfm2real(aa, L, 64);
 figure(); set(gcf,'pos',[100 500 250 450]); clf;
-ax1 = axes('pos',[0.22 0.15 0.70 0.80]); pcolor(x,tt,uu'); caxis([-3 3]);
+ax1 = axes('pos',[0.22 0.1 0.70 0.80]); pcolor(x,tt,uu'); caxis([-3 3]);
 shading interp; colormap('jet'); hold on;
 xlabel('x','fontsize',14);  ylabel('t','fontsize',14,'rotat',0);
 T=rpo(ipo).T1; s=rpo(ipo).s1;
-title(['T_p=' num2str(T) ', d_p=' num2str(s) ])
+title(['T_p=' num2str(T) ', d_p=' num2str(s) ], 'fontsize', 14)
 ne = ceil(rpo(refpo).T1/T);
-plot(x([1 end])*ones(1,ne),[T;T]*(1:ne),'w-');
+plot(x([1 end])*ones(1,ne),[T;T]*(1:ne),'w-','LineWidth',1.2);
 % set(get(gca,'ylabel'),'pos',[-13.5 74 1]);
-set(gcf,'paperpos',[8 10 6 10]); 
+%set(gcf,'paperpos',[8 10 6 10]); 
 
-print -depsc2  'ks22rpoT16p31s2p9phys.eps';
+exportfig(gcf, 'ks22rpoT16p31s2p9phys.eps', 'Color', 'rgb', 'resolution', 300);
 
 %%%%
 
@@ -1241,16 +1244,16 @@ a0=ksfmRefl(rpo(ipo1).a1);
 
 [x, uu] = ksfm2real(aa1, L, 64);
 figure(); set(gcf,'pos',[100 500 250 450]); clf;
-ax1 = axes('pos',[0.22 0.15 0.70 0.80]); pcolor(x,tt1,uu'); caxis([-3 3]);
+ax1 = axes('pos',[0.22 0.1 0.70 0.80]); pcolor(x,tt1,uu'); caxis([-3 3]);
 shading interp; colormap('jet'); hold on;
 xlabel('x','fontsize',14);  ylabel('t','fontsize',14,'rotat',0);
 T=rpo(ipo1).T1; s=rpo(ipo1).s1;
-title(['T_p=' num2str(T) ', d_p=' num2str(s) ]);
+title(['T_p=' num2str(T) ', d_p=' num2str(s) ],'fontsize',14);
 ne = ceil(rpo(refpo).T1/T);
-plot(x([1 end])*ones(1,ne),[T;T]*(1:ne),'w-');
-set(gcf,'paperpos',[8 10 6 10]); 
+plot(x([1 end])*ones(1,ne),[T;T]*(1:ne),'w-','LineWidth',1.2);
+%set(gcf,'paperpos',[8 10 6 10]); 
 
-print -depsc2  'ks22rpoT47p32s0p3phys.eps';
+exportfig(gcf,'ks22rpoT47p32s0p3phys.eps', 'Color', 'rgb', 'resolution', 300);
 
 %% Shadowing of RPO(64.51)
 
