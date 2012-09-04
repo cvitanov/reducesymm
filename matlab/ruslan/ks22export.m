@@ -1196,8 +1196,8 @@ a0=rpo(refpo).a1;
 % Real space plot
 
 [x, uu] = ksfm2real(aa0, L, 64);
-figure(); set(gcf,'pos',[100 500 250 450]); clf;
-ax1 = axes('pos',[0.22 0.1 0.70 0.80]); pcolor(x,tt0,uu'); caxis([-3 3]);
+figure(); set(gcf,'pos',[100 500 250 350]); clf;
+ax1 = axes('pos',[0.22 0.12 0.70 0.78]); pcolor(x,tt0,uu'); caxis([-3 3]);
 shading interp; colormap('jet');
 xlabel('x','fontsize',14);  ylabel('t','fontsize',14,'rotat',0);
 T=rpo(refpo).T1; s=rpo(refpo).s1;
@@ -1220,8 +1220,8 @@ a0 = rpo(ipo).a1;
 % Real space plot
 
 [x, uu] = ksfm2real(aa, L, 64);
-figure(); set(gcf,'pos',[100 500 250 450]); clf;
-ax1 = axes('pos',[0.22 0.1 0.70 0.80]); pcolor(x,tt,uu'); caxis([-3 3]);
+figure(); set(gcf,'pos',[100 500 250 350]); clf;
+ax1 = axes('pos',[0.22 0.12 0.70 0.78]); pcolor(x,tt,uu'); caxis([-3 3]);
 shading interp; colormap('jet'); hold on;
 xlabel('x','fontsize',14);  ylabel('t','fontsize',14,'rotat',0);
 T=rpo(ipo).T1; s=rpo(ipo).s1;
@@ -1243,8 +1243,8 @@ a0=ksfmRefl(rpo(ipo1).a1);
 % Real space plot
 
 [x, uu] = ksfm2real(aa1, L, 64);
-figure(); set(gcf,'pos',[100 500 250 450]); clf;
-ax1 = axes('pos',[0.22 0.1 0.70 0.80]); pcolor(x,tt1,uu'); caxis([-3 3]);
+figure(); set(gcf,'pos',[100 500 250 350]); clf;
+ax1 = axes('pos',[0.22 0.12 0.70 0.78]); pcolor(x,tt1,uu'); caxis([-3 3]);
 shading interp; colormap('jet'); hold on;
 xlabel('x','fontsize',14);  ylabel('t','fontsize',14,'rotat',0);
 T=rpo(ipo1).T1; s=rpo(ipo1).s1;
