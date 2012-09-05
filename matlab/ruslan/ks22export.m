@@ -1255,9 +1255,11 @@ plot(x([1 end])*ones(1,ne),[T;T]*(1:ne),'w-','LineWidth',1.2);
 
 exportfig(gcf,'ks22rpoT47p32s0p3phys.eps', 'Color', 'rgb', 'resolution', 300);
 
-figure();set(gcf,'pos',[100 500 250 350]); clf;
-ax1 = axes('pos',[0.22 0.12 0.70 0.78]); 
-plot(,uu(1));
+figure();
+set(gcf,'pos',[100 150 250 150]); clf;
+% ax1 = axes('pos',[0.22 0.12 0.70 0.78]); 
+plot(x,uu(:,1)','LineWidth',2);  xlim([-11,11]); ylim([-2.2 2.2]);
+xlabel('x','fontsize',14);  ylabel('u(x,0)','fontsize',14);
 
 %% Shadowing of RPO(64.51)
 
