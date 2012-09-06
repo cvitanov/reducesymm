@@ -1259,7 +1259,10 @@ figure();
 set(gcf,'pos',[100 150 250 150]); clf;
 % ax1 = axes('pos',[0.22 0.12 0.70 0.78]); 
 plot(x,uu(:,1)','LineWidth',2);  xlim([-11,11]); ylim([-2.2 2.2]);
-xlabel('x','fontsize',14);  ylabel('u(x,0)','fontsize',14);
+xlabel('x','fontsize',12);  ylabel('u(x,0)','fontsize',12);
+
+exportfig(gcf,'ks22rpoT47p32s0p3templ.eps', 'Color', 'rgb', 'resolution', 300);
+
 
 %% Shadowing of RPO(64.51)
 

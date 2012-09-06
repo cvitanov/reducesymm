@@ -24,6 +24,7 @@
 \input ../../inputs/def % no edits, always from dasbuch/book/inputs
 \input ../../inputs/defsBeamer
 
+\renewcommand{\gSpace}{\ensuremath{\theta}} % For this talk
 
  \usepackage{grffile}
 
@@ -68,27 +69,45 @@ with the method of slices
 
 \begin{frame}{symmetry of a dynamical system}
 
-\begin{block}{\statesp}
-a manifold $\pS \in \reals^{d}$ :
-$d$ numbers determine the state of the system
+% \begin{block}{\statesp}
+% a manifold $\pS \in \reals^{d}$ :
+% $d$ numbers determine the state of the system
+% \end{block}
+
+% \bigskip
+
+% \begin{block}{representative point }
+% $\ssp(t) \in \pS$
+% \\
+% a state of physical system at instant in time
+% \end{block}
+
+
+% \begin{block}{deterministic dynamics}
+% map $\timeflow(\xInit)$ =
+% representative point time $t$ later
+% \end{block}
+
+\begin{block}{a system of ODEs}
+ \[
+  \dot{x}=v(x), \qquad x\in \Rls{d}
+ \]
 \end{block}
 
-\bigskip
-
-\begin{block}{representative point }
-$\ssp(t) \in \pS$
-\\
-a state of physical system at instant in time
+\begin{block}{has symmetry group $G$ when}
+ \[
+  v(g\,x)=g\,v(x)
+ \]
+ for every $g\in G$.
 \end{block}
 
 
-\begin{block}{deterministic dynamics}
-map $\timeflow(\xInit)$ =
-representative point time $t$ later
-\end{block}
-\begin{block}{a group $\Group$ is a {symmetry} of the dynamics if}
-for every solution $f^t(\ssp_0) \in \pS$ and  $\LieEl \in \Group$,
-$\LieEl f^t(\ssp_0)$ is also a solution
+\begin{block}{then}
+  \begin{itemize}
+  \item the system of ODEs retains its form
+  \item for every solution $f^{\tau}(\ssp_0)$ and every $\LieEl \in \Group$,\\
+      $\LieEl f^{\tau}(\ssp_0)$ is also a solution 
+  \end{itemize}
 \end{block}
 \end{frame}
 
@@ -106,6 +125,11 @@ $\LieEl f^t(\ssp_0)$ is also a solution
 	  \item $x,y\in\Clx{}$, $z\in\Rls{}$
 	  \item $\sigma,\,b \in \Rls{}$, $\rLor=\RerCLor+i\ImrCLor$, $a=1-i e$
 	  \end{itemize}
+  \end{block}
+  \begin{block}{invariant under}
+    \[
+      x\mapsto e^{i\theta}x\,, \qquad y\mapsto e^{i\theta}y
+    \]
   \end{block}
 \end{frame}
 
@@ -134,7 +158,7 @@ $x=x_1+i\,x_2$, $y=y_1+i\,y_2$.
 			\end{exampleblock}
 
 \begin{block}{}
-invariant under a \SOn{2} rotation by finite angle
+invariant under a \SOn{2} rotation by angle
 \gSpace:
 \scriptsize		
 \[
@@ -163,8 +187,8 @@ invariant under a \SOn{2} rotation by finite angle
   {CLEchaotic}
   \includegraphics[width=0.3\textwidth,clip=true]
   {CLEcompact}
-  \includegraphics[width=0.3\textwidth,clip=true]
-  {CLEWurst01}
+  \only<2>{\includegraphics[width=0.3\textwidth,clip=true]
+  {CLEWurst01} }
 \end{center}
 \end{block}
 \begin{itemize}
@@ -280,20 +304,25 @@ equivalent to any other
   Two approaches which go back to:
   \begin{itemize}
    \item Invartiant polynomials (Hilbert)
-      \only<2>{
+      \only<2->{
 	  \begin{itemize}
 	  \item Computing a basis impractical for high-dimensional state space
 	  \end{itemize}
        }
    \item Moving frames (Cartan)
-	\only<3>{
+	\only<3->{
 	  \begin{itemize}
 	  \item Applicable in high-dimensions
 	  \item Local
 	  \end{itemize}
 	}
   \end{itemize}
-
+  \bigskip \bigskip 
+  \only<3->{
+    \begin{block}{}
+      \footnotesize{for a review see Siminos and Cvitanovi\'c, Physica D {\bf 240}, 187 (2011)} 
+    \end{block}
+  }
 \end{frame}
 
 
@@ -301,17 +330,55 @@ equivalent to any other
  \begin{block}{}
   \begin{columns}
 	\column{0.5\textwidth}
-	  \includegraphics[width=\textwidth]{ReducTraj3.pdf}
+	  \includegraphics[width=\textwidth]{ReducTrajES.pdf}
 	\column{0.5\textwidth}
 	\begin{itemize}
 	  \item Pick a 'template' $\overline{x}'$.
 	  \item Define a slice hyperplane $\overline{M}$ transverse to the group tangent $t'$ at $\overline{x}'$.
 	  \item Find point $\overline{\ssp}(\tau)$ in group orbit of $\ssp(\tau)$ which intersects $\overline{M}$.
-	  \item Slice condition: $<g(\theta)\ssp(\tau)|t'>=0$
+	  \item Slice condition: $<g(\theta)\ssp(\tau)-\overline{x}'|t'>=0$
 	\end{itemize}
   \end{columns}
+  \begin{itemize}
+    \item Solve for $\theta$ ($\theta$ depends on $\tau$!)
+    \item Point on reduced space point is $\overline x(\tau) = g(\theta)\ssp(\tau)$
+  \end{itemize}
  \end{block}
-  \only<2>{ 
+%   \only<2>{ 
+%     \begin{block}{}
+%       \begin{itemize}
+% 	\item Local method.
+% 	\item In general several slice hyperplanes $\overline{M}_i$ will be needed in order to cover the reduced space.\\
+% 	      \flushright see http://cns.gatech.edu/{\raise.17ex\hbox{$\scriptstyle\sim$}}predrag/papers/atlas12.pdf
+%       \end{itemize}
+%     \end{block}
+%   }
+\end{frame}
+
+\begin{frame}{Application in CLe}
+ \centering
+  \includegraphics[width=0.25\textwidth]{CLEchaotic}~~~~
+  \includegraphics[width=0.25\textwidth]{CLEmfAdHoc245}~~~~
+  \includegraphics[width=0.25\textwidth]{CLEinvRM}
+\end{frame}
+
+\begin{frame}[t]{The method of slices}
+ \begin{block}{}
+	  \includegraphics[width=0.4\textwidth]{ReducTrajES.pdf}~~
+  \setlength{\unitlength}{0.30\textwidth}
+  %% \unitlength = units used in the Picture Environment
+  \begin{picture}(1,0.89907101)%
+    \small
+    \put(0,0){\includegraphics[width=\unitlength]{A29-1ridge}}%
+    \put(0.00894598,0.81885604){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\sspRed(0)$}}}%
+    \put(0.88743345,0.05105926){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\sspRed(\zeit)$}}}%
+    \put(0.78614059,0.43443027){\color[rgb]{0,0,0}\rotatebox{-25.76142111}{\makebox(0,0)[lb]{\smash{$\pSRed{}^{(2)}$}}}}%
+    \put(0.37048948,0.79485578){\color[rgb]{0,0,0}\rotatebox{-61.41291822}{\makebox(0,0)[lb]{\smash{$\pSRed{}^{(1)}$}}}}%
+    \put(0.2429401,0.27697318){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\sspRed_2$}}}%
+    \put(0.47832196,0.33514069){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\sspRed_1$}}}%
+    \normalsize
+  \end{picture}%    
+ \end{block}
     \begin{block}{}
       \begin{itemize}
 	\item Local method.
@@ -319,14 +386,8 @@ equivalent to any other
 	      \flushright see http://cns.gatech.edu/{\raise.17ex\hbox{$\scriptstyle\sim$}}predrag/papers/atlas12.pdf
       \end{itemize}
     \end{block}
-  }
 \end{frame}
 
-\begin{frame}{Application in CLe}
- \centering
-  \includegraphics[width=0.4\textwidth]{CLEmfAdHoc245}~~
-  \includegraphics[width=0.4\textwidth]{CLEinvRM}
-\end{frame}
 
 \section{PDEs}
 
@@ -358,24 +419,26 @@ equivalent to any other
 \]
 \begin{itemize}
   \item Truncate to finite order $d$ ($\simeq32$).
-  \item Translations: $a\mapsto \mathbf{g}(\ell)a$
-    \[
-      \mathbf{g}(\ell)= diag(e^{i\,k\,2\pi\,\ell/L})
-    \]
-  \item Reflections: $a\mapsto -a^*$
-  \item Symmetry $\simeq \On{2}$
+  \item With $a_k=b_k+i\,c_k$
+  \item Translations  
+  \[
+  \LieEl(\ell) \,=\,  \left(\barr{cccc}
+  \ddots & & &  \\
+  &  \cos (k\, 2\pi\ell/L)  & \sin (k\, 2\pi\ell/L) &  \\
+  & -\sin (k\, 2\pi\ell/L)  & \cos (k\, 2\pi\ell/L) &  \\
+  & & & \ddots  
+  %  0 & 0 &  \cos \gSpace & \sin \gSpace   & 0 \\
+  %  0 & 0 & -\sin \gSpace & \cos \gSpace   & 0 \\
+  %  0 & 0 & 0             & 0              & 1
+      \earr\right)
+  \] %{CLfRots}
+%   \item Translations: $a\mapsto \mathbf{g}(\ell)a$
+%     \[
+%       \mathbf{g}(\ell)= diag(e^{i\,k\,2\pi\,\ell/L})
+%     \]
+  \item Reflections: $b_k\mapsto -b_k$
+  \item Symmetry $\On{2}$
   \item Here we concentrate to translations
-%  \item With $a_k=b_k+i\,c_k$
-%   
-% \[
-% \LieEl(\ell) \,=\,  diag\left(\barr{cc}
-%   \cos (k\, 2\pi\ell/L)  & \sin (k\, 2\pi\ell/L)   \\
-%  -\sin (k\, 2\pi\ell/L)  & \cos (k\, 2\pi\ell/L)   
-% %  0 & 0 &  \cos \gSpace & \sin \gSpace   & 0 \\
-% %  0 & 0 & -\sin \gSpace & \cos \gSpace   & 0 \\
-% %  0 & 0 & 0             & 0              & 1
-%     \earr\right)
-% \] %{CLfRots}
 \end{itemize}
 \end{frame}
 
@@ -474,14 +537,13 @@ equivalent to any other
   \end{itemize}
 \end{block}
 
-\end{frame}
 
-
-\begin{frame}{Acknowledgements}
+\begin{block}{Acknowledgements}
  \begin{itemize}
   \item Ruslan Davidchuck (Leicester)
   \item Daniel Borrero (Georgia Tech)
  \end{itemize}
+\end{block}
 
 \end{frame}
 
