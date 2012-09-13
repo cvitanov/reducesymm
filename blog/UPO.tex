@@ -91,7 +91,7 @@ with the % sum of their positive Lyapunov exponents varying from 5.19 to
 % 60.35 and their
 unstable dimensions from 3 to 8.
 
-15 Sep 2004, Predrag Cvitanovic:
+\item[2004-09-15 Predrag]
 All of your {\Rpo s} have many unstable
 eigendirections. Do you know that there exist no other solutions with a
 lesser number of unstable directions (let's say only one)?
@@ -104,7 +104,7 @@ whether that is an indication that there are none or simply that
 the procedure I used only identified solutions with 3+ unstable
 directions.
 
-15 Sep 2004, Predrag Cvitanovic:
+\item[2004-09-15 Predrag]
 Periodic solutions are useful if they are embedded into a chaotic
 attractor. Do you have any measure of whether the typical solutions of
 CGL, your parameter values, come close to any of the solutions that you
@@ -121,22 +121,23 @@ found also happened to be the solution to which the solver I used
 converged to most frequently.)  But I do not have a
 quantitative measure of this ``resemblance".
 
-After talking to Lopez at SIAM DS05 meeting: I do not think
-her \rpo s are the dynamically important ones, so the problem remains wide open.
+\item[2004-09-15 Predrag] After talking to Lopez at SIAM
+DS05 meeting: I do not think her \rpo s are the dynamically important
+ones, so the problem remains wide open.
 
 I read through
 Vanessa L{\'o}pez's paper (clearly a summary of a PhD thesis), and while I
 a like {\rpo s}, I am very worried about the general drift of the paper.
 
-As I cannot tell how exhaustive is her set of numerical solutions, I
-do not know what to make of them - like ZG, she gets all of them with
-a large number unstable dimensions. Presumably none of them are close
-to the asymptotic inertial manifold. More worrisome still, she uses
-ZG to ``average" over periodic orbits. That is regrettable - I hoped
-I would never see that stuff again. Dettmann and I tried to get Zoldi
-to derive this for us, and Mainieri actually hired him at Los Alamos
-to learn how this works. We are all convinced that it makes no sense
-whatsoever. Regrettably Lopez used the nonsensical formulas of Zoldi,
+As I cannot tell how exhaustive is her set of numerical solutions, I do
+not know what to make of them - like ZG, she gets all of them with a
+large number unstable dimensions. Presumably none of them are close to
+the asymptotic inertial manifold. More worrisome still, she uses ZG to
+``average" over periodic orbits. That is regrettable - I hoped I would
+never see that stuff again. Dettmann and I tried to get Zoldi to derive
+this for us, and Mainieri actually hired him at Los Alamos to learn how
+this works. We are all convinced that it makes no sense whatsoever.
+Regrettably Lopez used the nonsensical formulas of Zoldi\rf{Zoldi98,ZG96}
 so that will just keep confusing future readers. She is in computer
 science, so cannot blame a graduate student for trying a formula
 published in Phys Rev Lett.
@@ -1078,6 +1079,7 @@ cite only Auerbach \etal\rf{pchaot} as the paper to cite on identifying
 Chaotic dynamics in multidimensional transition states} to
 \HREF{http://ChaosBook.org/library/AllBar12.pdf}{ChaosBook.org/library}.
 
+
 \item[2012-08-27 Predrag]
 Takeuchi, Kazumasa and Sano, Masaki\rf{TaSa07} write: ``
 The thermodynamic formalism for dynamical systems with many degrees of
@@ -1133,6 +1135,183 @@ And then there is Saiki\rf{Saiki07} on ``detection of unstable periodic
 orbits in continuous-time dynamical systems;''
 \HREF{http://ChaosBook.org/library/Saiki07.pdf}{check it out}.
 And then there is Mainieri\rf{Mainieri04}.
+
+\item[2012-08-28 Francesco] check
+{Eugene Kazantsev}\rf{Kazantsev98} (find it
+\HREF{http://www.nonlin-processes-geophys.net/5/193/1998/} {here}).
+
+A very nice paper, which applies all the available tools to compute
+periodic orbits for weather dynamics ..
+
+it uses the same variational approach I did with Denys ... I now realized
+that this approach is strictly related to data assimilation, tangent
+linear models, adjoints, etc...
+
+there is the availability of ROMS (Regional Ocean Modeling Something...)
+a big computer ocean model used worldwide ... DiLorenzo in Earth Sciences
+is the one that developed the adjoint and TLM modules ...
+\item[2012-08-28 Francesco]
+
+\item[2012-08-28 Predrag]   %\toCB
+Kazantsev\rf{Kazantsev98} brings a whole pile of mostly geophysical
+references on \eqva\ and \po s for us to check. His variational method
+for periodic orbits might be good (reading
+\HREF{http://www-ljk.imag.fr/membres/Kazantsev/sci/trpo.ps.gz} {his talk}
+might be easier than the papers), and we should compare it to
+Lan's\rf{CvitLanCrete02,lanVar1}. He says that while multi-shooting
+Newton takes $O(d^3 \times n)$ computations, variational (or
+`gradient-type') methods require only $O(d^{3/2} \times n)$.
+The method is natural for him, as he is an expert on
+`Variational Data Assimilation'.
+
+See Eugene Kazantsev \HREF{http://www-ljk.imag.fr/membres/Kazantsev/}
+{homepage} for nice examples of \po s in the `Barotropic Ocean
+Model'\rf{Kazantsev98}.
+
+
+\item[2012-08-28 Predrag]   %\toCB
+Days of intense pain: because of Rich's paper which promiscuously cites
+both good and nonsensical references on `Periodic Orbit Theory' I'll have
+to read Kazantsev. It's like having to read papers on alternative
+`Quantum Theories' by people who lacked patience or background to learn
+the Schr\"odinger equation, so have their home-cooked delirious heuristic
+`Theory' instead. So I have to explicitly refute them, without citing them,
+in a remark for ChaosBook.org. Here are some preparatory notes (see
+also {\bf [2004-09-15 Predrag]} above). Uuurgh.
+
+Kazantsev\rf{Kazantsev98} `weighted averages' over \po s
+\beq
+D = \frac{\sum_p \omega_p D_p}{\sum_p \omega_p}
+\,, \qquad \omega_p = \frac{\period{p}}{\sum \Lyap^+_{p}}
+\,,
+\ee{KazantsevAv}
+(where $D$ is enstrophy probability distribution, $D_p$ is evaluated on
+the prime \po\ of period $\period{p}$, $\sum_p \Lyap^+_{p}$ is the sum over
+Floquet exponents with positive real parts, and $\sum_p$ is the sum of
+{\em all} unstable \po s, regardless whether they belong to the ergodic
+component or are on the Moon) are a variant of Z \&\ G gibberish that
+unfortunately we have to address head on, because this nonsense keeps
+getting cited.
+
+I cannot even guess where these formulas come from. Perhaps they write
+them because initial work was on the stability of \eqva, where stability
+exponents $\Lyap^+$ make sense? Read Charney and DeVore\rf{ChaDeVore79}.
+
+The logic seems to be this: $\sum_p
+\Lyap^+_{p}$ has dimensions of $1/t$, so he interprets it as ``a priori
+estimate of the mean time spent by the system in vicinity of PO.'' He
+defines some arbitrary Euclidean \statesp\ distance $r=0.05$ as
+`vicinity' and finds 90\% (!) correlation with episodes in which
+`barotropic ocean model' ergodic trajectory approaches his \po, whose
+periods range from 40 to 250 days. That cannot possibly be right - the
+duration of a visit to a neighborhood surely also depends on the
+contacting eigenvalues - if they are weakly negative, you longer in the
+neighborhood. Would not see that for Lorenz, as contracting eigenvalues
+are strongly contractive. This is not even a Kaplan-Yorke type formula,
+and that is easy to understand... Go figure. Even more mysteriously he
+defines a `dimension' of a \po, and his `weighted formula' is in the same
+ballpark as what he gets from dimension $D=5.8$ computed over 500 years
+of model integration.
+
+\item[2012-08-28 Predrag]
+Kazantsev also obsesses about `sensitivity of attractors' to
+perturbations\rf{Kazantsev01,Kazantsev01a}; that might be worth including into
+ChaosBook.org and evaluating using correct cycle expansion formulas
+(read the paper
+\HREF{http://www.nonlin-processes-geophys.net/8/281/2001/} {here}).
+He writes: ``
+A description of a deterministic chaotic system in
+terms of unstable \po s is used to develop
+a method of an a priori estimate of the sensitivity of statistical
+averages of the solution to small external influences.
+This method allows us to determine the forcing perturbation
+which maximizes the norm of the perturbation of a statistical
+moment of the solution on the attractor. The method was
+applied to the barotropic ocean model in order to determine
+the perturbation of the wind field which provides the greatest
+perturbation of the model's climate. The estimates of perturbations
+of the model's time mean solution and its mean
+variance were compared with directly calculated values. The
+comparison shows that some 20 UPOs is sufficient to realize
+this approach and to obtain a good accuracy.
+
+[...] To be able to determine the ``most dangerous'' external
+influence to the climatic model, one has to solve an inverse
+problem and use an a priori technique in the prediction
+of climate changes. One way of developing an a priori
+technique is based on fluctuation-dissipation relation, obtained
+by Kraichan (1959) for Hamiltonian systems and used
+in Branstator and Haupt (1998), Gritsoun and Dymnikov
+(1999), Gritsoun (2001) for climate models with attractors.
+This approach is rather simple and can easily been realized,
+but its precision provides only a qualitative understanding of
+the problem.
+
+Another way to develop an a priori technique and to obtain
+a better precision is based on the periodic orbit theory.
+[...]
+In practice, we cannot take into account all periodic orbits.
+However, only a limited number of low-period orbits
+may be sufficient for some purposes. This point of view is
+argued in Hunt and Ott (1996b), Hunt and Ott (1996a). Numerous
+recent studies confirm this hypothesis.
+[...]
+The accuracy obtained
+in the approximation is rather good even when the number
+of UPOs used is not large. Thus, the attractor of the Lorenz
+model, its dimension, Lyapunov exponents
+and Lyapunov vectors were characterized by the UPO set in
+Franceschini et al. (1993), Eckhard and Ott (1994) and Trevisan
+and Pancotti (1998). Attractor dimension and statistical
+averages of the barotropic ocean model have been approximated
+by UPOs in Kazantsev\rf{Kazantsev98}.
+
+[...]
+Sparrow (1982) proposed to use the
+Newton method to locate unstable periodic orbits on the attractor
+of the Lorenz model.
+This method requires $O(d^3)$ operations
+per iteration due to the requirement to calculate the
+matrix of the Newton process and to solve the system of
+equations with this matrix. Therefore, the method is limited
+for use only with low-dimensional systems. To find UPOs
+of high-dimensional systems, one can use the method proposed
+in Kazantsev (1998). This method requires as many
+operations per iteration as the model does (usually  $O(d^{3/2})$
+or even $O(d \ln d)$).
+
+In this paper, we describe an algorithm of evaluation of the
+variations in statistical averages of the model solution caused
+by perturbations in the right-hand side of the model. These
+perturbations are suppose to be small and the linear response
+of the model is considered.
+''
+This might be the same as the open project
+
+Probably we have to read Chian \etal\rf{CSRBHK07} as well (fetch it
+\HREF{http://www.nonlin-processes-geophys.net/14/17/2007/} {here}).
+These guys have written a paper with Freddy\rf{CRMRF02}, so maybe
+they know what they are doing.
+
+\item[2012-08-28 Francesco] Check Boghosian \etal\rf{BFLTC11}, \emph{New
+variational principles for locating periodic orbits of differential
+equations} (\HREF{http://ChaosBook.org/library/BFLTC11.pdf}{click here}),
+for  another variational variant for periodic orbits. They write: ``
+We present new methods for the determination of periodic
+orbits of general dynamical systems. Iterative algorithms for finding
+solutions by these methods, for both the exact continuum case, and for
+approximate discrete representations suitable for numerical
+implementation, are discussed. Finally, we describe our approach to the
+computation of unstable periodic orbits of the driven Navier-Stokes
+equations, simulated using the lattice Boltzmann equation.
+''
+
+They relax the enforcing of the dynamics trying to find the orbit that is
+minimized the mismatch $F=||xdot-v(x))||^2$ .. a true orbit is the
+absolute minimum $F=0$ ... so near the minimum one gets orbits with a
+small random forcing ..... note that here the periodic orbit is imposed
+exactly, $x(0)=x(T)$.
+
 
 %\item[2012-XX-XX Predrag]
 %XXX \etal\rf{XXX},
