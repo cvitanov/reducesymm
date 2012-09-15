@@ -12,10 +12,12 @@ Predrag             due 2012-08-24
 
 to get all figures, download the source
 arXiv.org/abs/1207.5571
-
+    [renamed jpacollective-2.tex to refereeing file TaCh12.tex
+     renamed jpacollective-2.bbl to TaCh12bbl.bbl
+     added   TaCh12def.tex]
 place figures into siminos/lyapunov/TaCh12/fig/
     then
-latex jpacollective-2
+latex TaCh12
 
 [ ] sent to journal 2012-08-??
     1208??refReport.pdf
