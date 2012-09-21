@@ -23,7 +23,7 @@ Predrag ver. 0.1, 						Dec 10 2011
 
 ----- NOTES        ------------------------------------------
 
-[ ] 2011-07-2? Daniel: uploaded arxiv-v1/submission.zip
+[x] 2011-09-21 Daniel: Took two months but uploaded arxiv-v1/submission.zip (submission confirmation pasted below)
 [x] 2011-07-21 Predrag: Chaos J updated atlas12.tex in submission.zip
     atlas12.tex assembled into one file in the following order:
     [x] preamble.tex
@@ -64,3 +64,63 @@ Predrag ver. 0.1, 						Dec 10 2011
       11      A29-1ridge
       12a     A28tangents
       12b     BeThMconnect
+
+------------------------------------------------------------------------
+
+Submission Confirmation email:
+
+We have received your submission to arXiv. Your temporary submission
+identifier is: submit/0556535.
+
+You may update your submission at: http://arxiv.org/submit/556535
+
+Your article is scheduled to be announced at Tue, 25 Sep 2012 00:00:00 GMT.
+The abstract will appear in the subsequent mailing as displayed below,
+except that the submission identifier will be replaced by
+the official arXiv identifier. Updates before Mon, 24 Sep 2012 20:00:00 GMT will
+not delay announcement.
+
+A paper password will be emailed to you when the article is announced.
+You should share this with co-authors to allow them to claim ownership.
+
+If you have a problem that you are not able to resolve through the web
+interface, contact www-admin@arxiv.org with a description of the issue and
+reference the submission identifier.
+
+arXiv admin
+
+
+\\
+arXiv:submit/0556535
+From: Daniel Borrero <daniel.borrero@physics.gatech.edu>
+Date: Fri, 21 Sep 2012 16:38:38 EST   (268kb,D)
+
+Title: Cartography of high-dimensional flows: A visual guide to sections and
+  slices
+Authors: Predrag Cvitanovic, Daniel Borrero-Echeverry, Keith M. Carroll, Bryce
+  Robbins, and Evangelos Siminos
+Categories: nlin.CD math-ph math.DS math.GR math.MP physics.flu-dyn
+Comments: 12 Pages, 12 figures
+MSC-class: 76F20
+License: http://creativecommons.org/licenses/by/3.0/
+\\
+  Symmetry reduction by the method of slices quotients the continuous
+symmetries of chaotic flows by replacing the original state space by a set of
+charts, each covering a neighborhood of a dynamically important class of
+solutions, qualitatively captured by a `template'. Together these charts
+provide an atlas of the symmetry-reduced `slice' of state space, charting the
+regions of the manifold explored by the trajectories of interest. Within the
+slice, relative equilibria reduce to equilibria and relative periodic orbits
+reduce to periodic orbits. Visualizations of these solutions and their unstable
+manifolds reveal their interrelations and the role they play in organizing
+turbulence/chaos.
+\\hese charts
+provide an atlas of the symmetry-reduced `slice' of state space, charting the
+regions of the manifold explored by the trajectories of interest. Within the
+slice, relative equilibria reduce to equilibria and relative periodic orbits
+reduce to periodic orbits. Visualizations of these solutions and their unstable
+manifolds reveal their interrelations and the role they play in organizing
+turbulence/chaos.
+\\
+
+-------------------------------------------------------------------------------------
