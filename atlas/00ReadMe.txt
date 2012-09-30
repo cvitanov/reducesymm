@@ -4,7 +4,7 @@ $Date$
 ------------------------------------------------------------
 
 Slice & chart pedagogical introduction
-====================
+======================================
 	Cartography of high-dimensional flows:
     A visual guide to sections and slices
 
@@ -15,28 +15,21 @@ Bryce Robbins
 Evangelos Siminos
 
 Focus issue for Chaos: "50 Years of Chaos"
-
 -------------------------------------------------------------
+Predrag ver. 1.2, uploaded arXiv-v1     Sep 22 2012
 Predrag ver. 1.2, resub. to Chaos J     Jul 22 2012
 Predrag ver. 1.1, Chaos J figs update   Apr 25 2012
 Predrag ver. 0.7, submitted to Chaos J  Apr 16 2012
 Predrag ver. 0.2, 						Feb 22 2012
 Predrag ver. 0.1, 						Dec 10 2011
 
-
-    [x] Predrag                             Jun 20 2012
-        no editing activity, so removed Lei Zhang as co-author
-        [ ] send email to Lei about it
-
-arXiv submission
-----------------
-    [ ] arXiv article-id:       1101.????           Jul 2? 2012
-        [x] Predrag finalized submission files in arxiv-v1/
-            for details, please see/edit ../arxiv-v1/00ReadMe.txt
-
 Chaos J resubmission
 ----------------
-The revised manuscript is due no later than Jul 23 2012
+    [x] accepted for publication            Sep 26 2012
+    access information accepted manuscript:
+    http://www.aip.org/msinq/status.html
+
+The revised manuscript was due no later than Jul 23 2012
 
     [x] Reviews received                    Jun 25 2012
         do not edit these files: siminos/atlas/reviews/
@@ -62,15 +55,19 @@ Chaos J submission
     for details, please see/edit Chaos-v1/00ReadMe.txt
     Chaos-v1/ directory FROZEN, NO FURTHER EDITS
 
+    [x] Predrag                             Jun 20 2012
+        no editing activity, so removed Lei Zhang as co-author
+        [x] sent email to Leit, he OKed it  Jul 25 2012
+        [x] Chaos J lost it, restarted only Aug 29 2012
+
+arXiv submission
+----------------
+    [x] arXiv:1209.4915
+        [x] Daniel submitted it             Sep 21 2012
+        [x] Predrag finalized submission files in arxiv-v1/
+            for details, please see/edit ../arxiv-v1/00ReadMe.txt
 
 ===========================================================
-
-
-arXiv resubmission (here for future use)
-------------------
-arxiv article-id:       1101.????v2     2011-04-28
-     for details, please see/edit ../arXiv-v2/00ReadMe.txt
-
 
 Processing
 ----------
