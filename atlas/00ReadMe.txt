@@ -16,6 +16,7 @@ Evangelos Siminos
 
 Focus issue for Chaos: "50 Years of Chaos"
 -------------------------------------------------------------
+Predrag Chaos-v2/proofEdits.pdf resub   Oct 11 2012
 Predrag ver. 1.2, uploaded arXiv-v1     Sep 22 2012
 Predrag ver. 1.2, resub. to Chaos J     Jul 22 2012
 Predrag ver. 1.1, Chaos J figs update   Apr 25 2012
