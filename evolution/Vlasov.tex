@@ -1,0 +1,279 @@
+% siminos/blog/Vlasov.tex
+% $Author: predrag $ $Date: 2011-02-04 15:56:09 +0100 (Fri, 04 Feb 2011) $
+
+\chapter[Vlasov stability]{Stability of Vlasov equilibria}
+\label{c-Vlasov}
+
+
+\begin{bartlett}{
+Your are doing a stupid calculation.
+}
+\bauthor{
+P. Cvitanovi\'c
+    }
+\end{bartlett}
+
+
+\begin{description}
+\item[ES 2010-11-06]
+	..\PC{you put 'stupid' and 'Cvitanovic' in the Google search, and you sure will
+	    get lots of hits. But do you have the exact reference for the above quote?}
+	\ES{I am not as organized as
+	  \href{http://people.maths.ox.ac.uk/porterm/wisdom/predrag.txt}{Mason Porter},
+	    so the reference would be something like this: 'P.~Cvitanovi\'c, personal communication,
+	    2004-2009, at least annually, whenever I did something stupid.' Last time was
+	    when I mentioned this paper\rf{eckhardt94} on periodic orbit theory
+	    for Lorenz flow, so it had to do with others' calculations.}
+Most of my last year's work is summarized in the
+\href{http://www.cns.gatech.edu/~siminos/papers/siminos11.pdf}{preprint}\rf{siminos11}.
+The Vlasov-Poisson system describes collisionless electronic plasmas
+coupled with a self consistent electric field.
+      \begin{subequations}\label{eq:Vlasov-Poisson-1d}
+      \beq\label{eq:Vlasov-1d}
+	      \frac{\partial f}{\partial t}
+		+v\frac{\partial f}{\partial x}+E\frac{\partial f}{\partial v}=0\,,
+      \eeq
+      \beq\label{eq:Poisson-1d}
+	      \frac{\partial E}{\partial x}=
+		    \left(\int_{-\infty}^{+\infty}f\, dv\,-1\right)\,,
+      \eeq
+      \end{subequations}
+where $f(x,v,t)$ the probability distribution function for electrons and $E(x,t)$
+the electric field.
+You might recognize \refeq{eq:Vlasov-1d} as collisionless Bolzmann equation,
+but plasma physicists call everything their own way.
+\Reqva\ for this system are known to exist since a
+famous 1957 paper, however calculating their stability, analytically or
+numerically, remains an open problem. The Vlasov-Poisson system is
+Gallilean invariant, so it is always possible to reduce the problem to the
+study of \eqva.
+
+I found it strange that no reliable numerical method existed for the study of
+stability of \refeq{eq:Vlasov-1d} and thought it was a good opportunity to use
+an expansion in orthogonal basis functions to discretize the stability matrix
+(matrix of variations)
+as done for KSe and Navier-Stokes. It turns out\ES{Unfortunately or
+fortunately I found out after I did most of the work},
+that people have already tried such an approach with most recent example our
+very own R. Pa\v{s}kauskas\rf{paskauskas09}.  For periodic boundary
+conditions in $x$ a natural basis choice is Fourier-Hermite functions, for $x$ and
+$v$ discretization, respectively. Hermite functions are a natural choice for
+velocity discretization because they are defined on an infinite domain
+and decay as the Maxwellian
+for large $v$, which is the physically relevant asymptotic behavior for
+distribution functions.
+
+The bad news is that such a scheme does not really work, even though all papers
+on the subject claim success. Expansions of equilibrium distribution functions
+in terms of the Fourier-Hermite basis converge exponentially fast, but the
+eigenvalue calculation converges only as power-law as we add more Hermite
+terms, and quite often convergence is too slow for the method to be of use.
+It was like listening to Predrag
+saying to me once again ``You are doing a stupid calculation.''
+We keep more and more terms in the expansion of equilibrium $f_0$ which
+quickly hits round-off; then all we add is numerical noise and still the
+error in approximating eigenvalues falls off as a power-law.
+
+Most previous authors\rf{camporeale06,paskauskas09}
+focus on rescaling or shifting the Hermite basis to `optimize' convergence.
+There is no indication in these papers on whether convergence of eigenvalues is power-law or
+exponential, but the relative error reported is usually around $5-10\%$, which
+defies the purpose of using spectral methods in the first place. Trying to
+rescale the basis as suggested in \refref{paskauskas09} did not help
+in the cases I studied.
+
+
+\item[ES 2010-11-06 What's wrong?]
+
+The problem seems to be related to the linear operator we approximate, which
+I will call $\mathcal{A}$. The linear term in \refeq{eq:Vlasov-1d}
+(advection, free-streaming or ballistic term, depending on your background)
+drives what is called velocity space \emph{fillamentation},
+the transfer of energy in very fine velocity scales. When this term is in some
+sense significant in \refeq{eq:Vlasov-1d}, one should expect that eigenfunctions
+will involve fine velocity scales and our expansion in terms of Hermite functions
+will receive significant contributions from high-order terms.
+
+Mathematically, $\mathcal{A}$ is a non self-adjoint operator with
+continuous (mathematicians call it essential) spectrum.
+The Vlasov-Poisson system
+is Hamiltonian and the eigenvalues of equilibria look like
+in \reffig{f:VlasovStab}, they come in either quartets of complex eigenvalues,
+or pure imaginary eigenvalues. The continuous, neutral spectrum is associated to
+the advection term  in \refeq{eq:Vlasov-1d}.
+Although we are interested in unstable modes, the non-well
+behaved, continuous part of the spectrum is still ``present'' in $\mathcal{A}$
+and can interfere with the determination of unstable modes, especially
+weakly unstable ones. I feel that this might be related to non-normality
+of the eigenvectors (non self-adjointness of $\mathcal{A}$), but as the
+latest computational progress took place very quickly I did not have time to
+think about it seriously -- I had to write the paper.
+%
+\SFIG{VlasovEils}{}
+{
+  Spectrum of an unstable Vlasov equilibrium: $\pm\lambdaV_1$ and
+  $\pm\lambdaV_1^*$ are discrete eigenvalues, while $\sigma_{\mathrm{c}}$
+  is the continuous spectrum.}
+{f:VlasovStab}
+%
+\SFIG{VlasovEilsSD}{}
+{
+  Through spectral deformation,
+  $\sigma_{\mathrm{c}}$
+  is shifted to the left half-plane, while Landau damped modes correspond
+  to $\lambdaV_2,\lambdaV_3,\lambdaV_3^*$. As the Hamiltonian structure
+  is destroyed by
+  spectral deformation, $-\lambdaV_1,-\lambdaV_1^*$ disappear as
+  $\sigma_{\mathrm{c}}$ moves to their left. After \refref{crawford89}.}
+{f:VlasovSD}
+%
+
+\item[ES 2010-11-06 Spectral Deformation]
+
+Having identified the source of the difficulty, I was lucky enough to read a
+beautiful paper on the stability of Vlasov-Poisson equilibria
+by Crawford and Hislop\rf{crawford89}. The punch line: get the continuous
+spectrum out of the way. The technique used is \emph{spectral deformation},
+introduced for Schr\"odinger equation by very serious mathematicians that I
+don't dare to cite. Crawford and Hislop\rf{crawford89, hislop89} extended
+the method to non-selfadjoint problems and in particular the Vlasov-Poisson
+system. The trick is to introduce a family of operators
+\beq
+  \VlasovLrzSD=\SDop{\theta}\VlasovLrz\SDopI{\theta}
+\eeq
+where $\SDop{\theta}$ is a linear, unitary transformation for $\theta$ real.
+When $\theta$ is analytically continued in the
+complex plane, $\SDop{\theta}$ becomes non-unitary and the continuous spectrum
+is deformed, see \reffig{f:VlasovSD}. As long as discrete eigenvalues ``stay
+out of the way'' of the continuous spectrum, they remain unchanged.
+
+Crawford and Hislop choose a relatively simple but clever transformation that
+``damps'' the continuous spectrum. They are interested in problems
+that yield to analytical study and thus do not consider nonlinear
+waves. Their transformation however is exactly what we needed. For large enough
+$|\Im\theta|$ the continuous spectrum is well separated from eigenvalues with
+positive real part and the convergence of eigenvalues with the number of
+Hermite terms retained in the expansion of $\VlasovLrzSD$ converges
+exponentially fast. My feeling is that the asymptotic power law
+rate of convergence does not change, but the ``transient'' exponential
+convergence lasts long enough for the method to be usable (to benchmark
+the method I computed eigenvalues for a simple example to machine precision;
+in plasma physics such accuracy is considered useless).
+
+The Hermite coefficients of eigenvectors of $\VlasovLrz$,
+obtained from $\VlasovLrzSD$ by the inverse
+transformation, still fall off as a power law.
+This was to be expected. The eigenfunction we approximate involves fine
+velocity scales and there is nothing to do about it. However, in (plasma)
+physics we are interested in moments of the distribution function, and in
+particular low order moments, for instance for the electric field eigenmode.
+These are represented accurately.
+
+\item[ES 2010-11-06 The future.] I hope by now all this sounds familiar,
+because my plan for the future is to visit an old friend:
+\FPoper. Non self-adjoint operator, essential spectrum getting in the way,
+singular natural measure ($\simeq$ fillamentation),
+and at the end: we get the eigenvalues correctly
+by periodic orbit theory.
+
+I know that brainless discretization of state space is strongly discouraged, but could
+it be an option if we first applied spectral deformation and ``shrunk'' the essential
+spectrum? It worked for Vlasov: by changing the spectral properties of the operator
+we did not have to worry as much about the functional space over which we defined
+it and the basis used to discretized it.
+{\FPoper} is not that much different
+(actually given its Hamiltonian structure Vlasov is closer to Liouville).
+Could it help in cases where periodic orbit theory does not do well, for instance
+with non-hyperbolicity? As an example in Lorenz flow periodic orbit theory
+converges very slowly, presumably due to almost non-hyperbolic dynamics.
+Could spectral deformation help periodic theory converge faster?
+
+The shortest path to permanent position seems to be to stop thinking about this
+and work on applications of the method in plasma physics.
+There are many problems to apply it to and
+it can be generalized to higher dimensions, Vlasov-Maxwell \etc.
+
+However, {\FP} is more interesting.
+I want to try to apply spectral deformation to {\FP} or
+Koopman operator and discretize it in a mundane basis, perhaps in
+Hermite functions (since it worked for Lippolis thesis).
+If it works, I think it would be great news as we could then
+compute averages without thinking about state-space geometry.
+
+What do you think? Does it sound insane? Has it been done? It seems that
+people who know {\FP} or Koopman, also know spectral deformation,
+but usually these are people who do not compute.
+
+
+\item[ES 2010-12-02 \FPoper.]
+													\toCB
+In literature I've encountered the following names for \FPoper:
+ Transfer operator (sounds more descriptive),
+Ruelle operator or {Ruelle-\FP} operator (sounds appropriate,
+since satisfying {\FP} theorem is not enough to define an operator, right?)
+Also the three names in {Ruelle-\FP} can be permuted at will (but Ruelle can
+never be in the middle).
+
+\item[PC 2010-12-03 \FPoper.]
+													\toCB
+That's funny, I guess you have not read Das Buch - there it is called
+``evolution oper\-ator'' instead of Ruelle operator for a reason -
+it's a more general thing than what Sinai, Bowen, Ruelle, and other ergodicists
+had in mind generalizing transfer matrix probabilities
+to the non-negative operator evolution of
+probability densities  over function (Banach?) spaces.
+It is certainly not the Perron-Frobenius oper\-ator
+(I follow Pesin's ordering of the two names),
+which I interpret to refer to moving  around deterministically \statesp\ densities
+of trajectories; in Das Buch the
+evolution oper\-ators are in general weighted, and derivatives of their leading
+eigenvalues yield the cycle expansions for the desired averages.
+In all fairness, Perron and Frobenius have to do only with finite-dimensional
+fully filled matrices with strictly positive matrix elements, which is the
+setting for the Perron-Frobenius theorem: the first eigenvalue is one,
+the second is real and strictly less than one. Evolution oper\-ators act on
+function spaces, with entries that can be real or complex (semi-classical quantization)
+of any sign.
+
+I think I discuss this in some remark in ChaosBook. Ruelle is (when you
+talk to him personally) \emph{very annoyed} that people refer to \emph{his}
+operator as a ``\FPoper,'' and says so somewhere in his writings (should try to
+track that reference down): nothing
+of the sort can be found in the publications of Perron and Frobenius,
+he says.
+
+\item[PC 2010-12-06] Perhaps of interest to you:
+Darryl D. Holm and  Cesare Tronci say in
+\HREF{http://arxiv.org/abs/1012.0999}
+{Euler-Poincar\'e formulation of hybrid plasma models}:
+``
+ Several different hybrid Vlasov-fluid systems are formulated as
+Euler-Poincar\'e systems and compared in the same framework. In particular, the
+discussion focuses on three major hybrid MHD models. These are the
+current-coupling scheme and two different variants of the pressure-coupling
+scheme. The Kelvin-Noether theorem is presented explicitly for each scheme,
+together with the Poincar\'e invariants for its hot particle trajectories.
+Extensions of Ertel's relation for the potential vorticity and for its gradient
+are also found for each hybrid MHD scheme, as well as new expressions of cross
+helicity invariants.
+''
+
+\item[PC 2011-02-04] Perhaps of interest to you:
+Bachelard, Dauxois, De Ninno, Ruffo and F. Staniscia,
+\HREF{http://arxiv.org/abs/1102.0614}
+{Vlasov equation for long-range interactions on a lattice} say
+    ``
+ We show that, in the continuum limit, the dynamics of Hamiltonian systems
+defined on a lattice with long-range couplings is well described by the Vlasov
+equation. This equation can be linearized around the homogeneous state and a
+dispersion relation, that depends explicitly on the Fourier modes of the
+lattice, can be derived. This allows to compute the stability thresholds of the
+homogeneous state, which turn out to depend on the mode number. When this state
+is unstable, the growth rates are also function of the mode number. Explicit
+calculations are performed for the $\alpha$-HMF model with $0 \leq \alpha <1$,
+for which the zero mean-field mode is always found to dominate the exponential
+growth. The theoretical predictions are successfully compared with numerical
+simulations performed on a finite lattice.
+    ''
+    
+\end{description}
