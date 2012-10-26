@@ -16,6 +16,7 @@ Evangelos Siminos
 
 Focus issue for Chaos: "50 Years of Chaos"
 -------------------------------------------------------------
+Predrag proof2.pdf to Chaos J           Oct 26 2012
 Predrag Chaos-v2/proofEdits.pdf resub   Oct 11 2012
 Predrag ver. 1.2, uploaded arXiv-v1     Sep 22 2012
 Predrag ver. 1.2, resub. to Chaos J     Jul 22 2012
@@ -81,7 +82,7 @@ pdflatex main; bibtex main; pdflatex main; pdflatex main
 
 - ../figs/  all figs
   ../Fig/   shared with ChaosBook
-- ../figsSrc/ all fig source programs (if not already in dasbuch/book/)
+- ../figsSrc/ all fig source programs (if not already in ~dasbuch/book/)
 - ../bibtex/siminos.bib
 
 ----- NOTES        ------------------------------------------
@@ -89,8 +90,6 @@ pdflatex main; bibtex main; pdflatex main; pdflatex main
 Things to fix
 -------------
     [when fixed, move the line to the FIXED section at the end]
-
-= see 00edits.txt
 
 ==============================================================
 FORMERLY OUTSTANDING ITEMS, NOW DISPOSED OFF:

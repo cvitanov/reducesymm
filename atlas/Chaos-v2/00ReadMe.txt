@@ -17,6 +17,7 @@ Bryce Robbins
 Evangelos Siminos
 
 -------------------------------------------------------------
+Predrag proof2.pdf to Chaos J           Oct 26 2012
 Predrag proofEdits.pdf to Chaos J       Oct 11 2012
 Predrag ver. 1.2, resub. to Chaos J     Jul 22 2012
 Predrag ver. 1.1, Chaos J figs update   Apr 25 2012
@@ -34,6 +35,7 @@ arXiv submission
 
 Chaos resubmission
 ----------------
+[x] 2012-10-26 Chaos-v2/proof2.pdf resub. to Chaos, final proofs
 [x] 2012-10-11 Chaos-v2/proofEdits.pdf resub. to Chaos
 
 [x] 2012-04-25 manuscript has been assigned the Manuscript #: 12259CAT.
