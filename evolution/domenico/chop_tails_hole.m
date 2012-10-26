@@ -42,14 +42,14 @@ For[n=1,n<nmax,n++,
 	For[i=1,i<2*k+1,i++,
 		ist[i]= {Hue[0.7],Rectangle[{a[i],0.},{a[i+1],Abs[freq[i]]/dt[i]}]}];
 	density = Array[ist,2*k];
-	Show[Graphics[density],AspectRatio->1,Axes->Automatic];
+	Print[Show[Graphics[density],AspectRatio->1,Axes->Automatic]];
 	esc[n] =  Extract[ev,1];
 	logesc[n] = -Log[esc[n]]; 
 	Print[logesc[n]];
 	conv[n] = Extract[ev,2];
 	logconv[n] = -Log[Abs[conv[n]]];
 	R = Array[rett,{2*k,2*k}];
-	Show[Graphics[R,AspectRatio->1,Axes->True,AxesOrigin->{0.,0.}]];
+	Print[Show[Graphics[R,AspectRatio->1,Axes->True,AxesOrigin->{0.,0.}]]];
 	k=k*2]
 For[n=1,n<nmax-1,n++,
 	gamma[n]=Log[Abs[esc[nmax-1]-esc[n]]];

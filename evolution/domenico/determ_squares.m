@@ -61,7 +61,7 @@ For[n=1,n<nmax,n++,
 		liap = liap + Abs[freq[i]]*Log[Abs[lam*(1-2*b*xmed-2*xmed+3*b*xmed^2)]]];
 	liap = liap/area;
 	density = Array[ist,ctr-1];
-	Show[Graphics[density],AspectRatio->1,Axes->Automatic];
+	Print[Show[Graphics[density],AspectRatio->1,Axes->Automatic]];
 	esc[n] =  Extract[ev,1];
 	logesc[n] = -Log[esc[n]]; 
 	conv[n] = Extract[ev,2];
