@@ -27,6 +27,9 @@ Predrag ver. 0.1, 						Dec 10 2011
 
 Chaos J resubmission
 ----------------
+    [x] published online                    Dec 14 2012
+        URL: http://link.aip.org/link/?CHA/22/047506
+        DOI: 10.1063/1.4758309
     [x] accepted for publication            Sep 26 2012
     access information accepted manuscript:
     http://www.aip.org/msinq/status.html
