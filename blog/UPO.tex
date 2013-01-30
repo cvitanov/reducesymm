@@ -4,6 +4,10 @@
 \chapter{Periodic orbit theory}
 \label{chap:UPO}
 
+%\begin{center}
+%{\Huge INTERNAL, NOT FOR DISTRIBUTION}
+%\end{center}
+
 This part of the blog collects references to periodic orbit theory.
 Some of the articles are in the CNS Zotero collection.
 
@@ -407,11 +411,11 @@ Looks like one should have a look at \refrefs{SiRo87,SPScgl92,GoSi94}.
 
 \end{description}
 
-\newpage
+% \newpage
 \section{Alternative periodic orbit `theories'}
 \label{sec:alternCycl}
 % Predrag  collected notes on Zoldi here  2012-09-17
-\renewcommand{\ssp}{x}             % finte-dimensional state space point
+\renewcommand{\ssp}{x}             % finite-dimensional state space point
 
 {\bf [2012-09-13 Y.-Mee Predrag]}   %\toCB
 Kerswell\rf{ChaKer12} cites both the correct and the erroneous references on `Periodic
@@ -432,13 +436,7 @@ well as in \refrefs{CviGib10,KreEck12}), we still lack the understanding
 of how they are interrelated (\statesp\ partitions, \markGraph s,
 symbolic dynamics) required before periodic orbit
 theory\rf{DasBuch,Lan10} can be applied to evaluation of dynamical
-averages. We cite Zoldi and Greenside\rf{ZG96} for being the second paper
-to determine unstable \po s for \KS, on a domain larger than what was
-studied in \refref{Christiansen97}; L{\'o}pez\rf{lop05rel} for being first
-to determine \rpo s in a spatio-temporal PDE, and
-Kazantsev\rf{Kazantsev98} for being first to determine \po s in \po s in
-a weather model, and for his variational method for finding periodic
-orbits. We love them, but not because of their \po\ averaging formulas.
+averages.
 
 Here are some preparatory notes for a remark for ChaosBook.org (or in
 some publication?). I would be grateful for any corrections, comments,
@@ -446,256 +444,15 @@ clarifications, pointers to important missed references.
 
 \vfill
 
-\begin{center}
-{\Huge INTERNAL, NOT FOR DISTRIBUTION}
-\end{center}
 
-\newpage
-
-\remark{Alternative 'Periodic Orbit Theories'.}{\label{rem:Zoldi}
-There are no `alternative periodic orbit theories'. There is only one
-ergodic theory, and periodic orbits are one aspect of it, just like there
-is only one quantum mechanics, and WKB is one way to gain insight into
-it.
-% Ergodic theory is no less of a theory than quantum mechanics, but it is
-% perhaps even harder.
-While the eigenfunctions of quantum evolution operators are smooth
-Hilbert space states, the eigenfunctions of deterministic evolution
-operators are highly  singular, nowhere differentiable functions with
-support on fractal sets. The deterministic eigenstates of
-high-dimensional ergodic flows thus cannot be computed using the methods
-developed for quantum eigenstates, at least not without much further thought.
-The ergodic, singular `natural measure' is harder (and in high\dmn\
-\statesp\ impossible) to construct numerically than its smooth quantum
-cousin, the `ground state'. Were ergodic theory easy, ChaosBook.org and
-Gaspard monograph\rf{PG97} would have been a much breezier reads.
-
-In the vast and vastly uneven \po\ literature (should erroneous papers be
-cited?) one sometimes encounters the `escape-time weighting',
-% clips from dasbuch/book/notes/zoldi/zoldiLett.tex
-\beq
-\expct{\obser}  =  \frac{\sum_p \tau_p \obser_p}{\sum_p \tau_p}
-               \,, \qquad \tau_p = \frac{1}{\sum^{e}_j \Lyap_{p,j}}
-\,,
-\label{ZoldiAv}
-\eeq
-where the $p$ sum goes over all known unstable \po s, and sometimes also
-over judiciously chosen subsets of unstable \eqva. Here
-\beq
-\sum^{e}_j \Lyap_{p,j} =  \frac{1}{\period{p}}\ln \ExpaEig_p
-                \,, \quad
-\ExpaEig_p  = |\ExpaEig_{p,1} \ExpaEig_{p,2} \cdots \ExpaEig_{p,e}|
-%    \continue
-%          &=& \Lyap_{p,1}+\Lyap_{p,2}+...+\Lyap_{p,e}
-\,,
-\ee{FloqMult}
-$\period{p}$ is the period of of the prime \po\ $p$, $\ExpaEig_{p,j}$ is
-the $j$th Floquet multiplier, $\ExpaEig_p$ is the
-product of the expanding multipliers $|\ExpaEig_{p,j}|>1\,,\;
-j=1,\dots,e$,  and $\Lyap_{p,j}$'s are the strictly  positive Floquet
-exponents.
-
-        \PC{{\em cf.} chapter 8 (this is 1997 numbering) of ChaosBook.}
-$\sum^{e} \Lyap_{p,i}$ is the local escape rate from single repelling
-cycle $p$, of dimension $1/$[time], so one may interpret its inverse
-$\tau_p$ as ``an estimate of the mean time spent by the system in
-vicinity of \po'' $p$. $\tau_p$ is the Lyapunov time of cycle $p$, that
-is, the mean time it takes for the density of neighboring trajectories in
-an arbitrarily small ball centered around a point on the trajectory to
-decrease by factor $1/e$.
-
-The  `escape-time weighting' was introduced in a rapid communication
-thusly: `Less unstable orbits must be weighted more heavily, so the
-attractor dimension is approximated by `escape-time weighting'
-\refeq{ZoldiAv}. That's it: the `derivation' in its entirety. Formula
-\refeq{ZoldiAv} is then asserted to approximate the time average
-$\expct{\obser}$ of observable $\obser(\ssp)$ over the chaotic attractor
-in terms of the observable
-% rewrite of ChaosBook \refeq{Phi_cyc}
-\beq
-         \obser_p   =  \frac{1}{\period{p}}
-  \oint_0^{\period{p} }d\tau \, \obser[\flow{\tau}{\xInit}]
-\,,
-\qquad  \xInit \in p
-\,,
-\label{obsPhi_cyc}
-\eeq
-averaged over each and every prime \po\ $p$
-found in a computer exploration of a dynamical system's \statesp.
-
-The enchantment with the escape-time weighting approach lies its charming
-simplicity.
-% Let's say you are a graduate student, without an adviser
-% versed in nonlinear dynamics.
-If one has a dynamical problem, and if one has a computer one has
-programmed to search for \po s, and if the computer brings back a set of
-unstable \po s, all one has to do is to put $\Lyap_{p,j}$ and $\obser_p$
-into the formula \refeq{ZoldiAv}, and it returns a number - let's say $D
-= 9.0 \pm 0.1$, where the error one estimates somehow
-% you had sitting in your fridge
-- which one then publishes.
-
-The only drawback is that the `formula' is wrong. (1) It comes from
-nowhere. (2) $\tau_p$ has dimension of $1/$[time], but a `weight' should
-be a dimensionless number, the likelihood that an ergodic trajectory
-enters the neighborhood of the \po\ $p$. (3) $\sum_p$ is the sum over
-{\em all} unstable prime \po s, regardless whether they belong to the
-ergodic component under investigation or dwell isolated in the Moon
-orbit.
-(4) The guess for the weight $\tau_p$ is clearly wrong, as any periodic
-orbit, no matter how long and unstable, has the comparable weight
-$\sum^{e} \Lyap_{p,i}$, as long as its Lyapunovs (instability rate per
-unit time) are comparable; the Lyapunov time has nothing to do with the
-period of the particular cycle. For that there is a fix in the
-literature, with the Lyapunov time in
-\refeq{ZoldiAv} replaced by
-\beq
-\tau_p = {\period{p}}/{\sum^{e} \Lyap_{p,i}}
-\,.
-\ee{KazantsevAv}
-The fix is explained as follows:
-``it is reasonable also to suppose that orbits with longer periods must
-be weighted more heavily as they are longer and should provide a greater
-contribution to the total sum.'' That's it: the `derivation' in its
-entirety.
-
-
-The \emph{exact} weight of the unstable prime periodic orbit $p$ was
-essentially given by Kadanoff and Tang\rf{KT84} in 1984. For the
-{classical trace formula for flows} it is
-% \refeq{tr-L-cont}
-\beq
-\frac{\period{p}  \, e^{- \period{p}\eigenvL}}{\oneMinJ{} } \,
-e^{ \beta \Obser_p}
-    \,,\qquad \Obser_p = \period{p} \obser_p
-\,,
-\ee{weightPO-cont}
-where $\eigenvL$ is the {\evOper} eigenvalue, and  $\beta$  is an
-auxiliary variable. It is determined by the dimensionless Floquet
-\emph{multipliers} (eigenvalues of the \po's {\monodromyM}
-$\monodromy_p$) which grow/shrink exponentially with cycle period,
-\emph{not} the Oseledec Lyapunov exponents or \po\ Floquet exponents
-which measure average expansion/contraction \emph{rate per unit time}.
-
-The \emph{exact} \cycForm s %\rf{AACI}
-for the expectation value of the observable $\obser$ have form
-\beq
-\expct{\obser} =
-{ \expct{\Obser}_\eigCond \over \expct{\period{}}_\eigCond }
-    \label{GOY:16.16a}
-\,,
-\eeq
-where the form of the \po \ sum $\expct{\cdots}_\eigCond$ depends on
-whether it is computed from the trace formula, the {\dzeta}, or the
-{\Fd}. This sum is never of the form \refeq{ZoldiAv}.
-
-For pedagogical reasons one sometimes looks at the leading long-time
-behavior, and approximates the denominator of \refeq{weightPO-cont} by
-the product of the expanding multipliers $\ExpaEig_p$ of the
-{\monodromyM} $\monodromy_p$,
-\beq
-\frac{e^{-\period{p}\eigenvL}}{\oneMinJ{}}
-    \quad\to\quad
-t_p = \frac{e^{-\period{p}\eigenvL}}{\ExpaEig_p}
-\,.
-\ee{weightPO-approx}
-This weight might have been first used in Auerbach \etal\rf{pchaot},
-who computed (for discrete time  $\cl{}$ given by iterates of
-map $f$) an $\cl{}$th order estimate $\eigenvL_{(\cl{})}$ of the leading
-{\evOper} eigenvalue $\eigenvL$ from the sum of all periodic points $j$ of
-period $\cl{}$
-\beq
-1 = \sum_{j\inFix{\cl{}}} t_j \, e^{\beta \Obser^n(\ssp_j)}
-    \,,\qquad
-t_j = \frac{e^{-\cl{}\eigenvL_{(\cl{})}} }{\ExpaEig_j}
-% 1 = \sum_{i\inFix{n}} { g^n(x_i) e^{-\eigenvL_{(n)} n} \over | \ExpaEig_i |}
-\,.
-\ee{GOY:levl-sum}
-More frequently cited is the Grebogi, Ott and Yorke\rf{yorke2}. They proved
-that for mixing hyperbolic attractors the SRB or natural measure $\SRB$
-can be described by the unstable \po s, \ie, the natural probability measure
-of the attractor contained in some closed subset $\pS_{\cal S}$ of the $d$\dmn\
-\statesp\ $\pS$, is given by the sum over the periodic points $j$ of period
-$n$ in $\pS_{\cal S}$, weighted by the inverse of the product of their
-expanding Floquet multipliers $\ExpaEig_j$,
-\beq
-\SRB(\pS_S) = \lim_{\cl{}\to \infty}
-\sum_{j\inFix{\cl{}}}
-\frac{1}{\ExpaEig_j}
-\,,\qquad \ssp_j \in \pS_{\cal S}
-\,.
-\ee{GOY-POnatMes}
-This formula for natural measure is the special case of
-\refeq{GOY:levl-sum}, with leading \FP\ eigenvalue $\eigenvL =0$ (no
-escape), and trivial observable $\beta =0$; 1 in \refeq{GOY:levl-sum} is
-the statement of probability conservation. In semi-classical quantization
-of chaos this statement that total probability is conserved even
-has a name: it is called `Hannay-Ozorio de Almeida sum rule'. The 1987
-derivation of \refeq{GOY:levl-sum} was heuristic, so Grebogi, Ott and
-Yorke proved \refeq{GOY-POnatMes} by taking the ${\cl{} \to \infty}$
-limit. However, there is no need for an ${\cl{} \to \infty}$ limit,
-as the exact {\Fd} is not a long-time limit of anything, it
-is the exact sum over all \po s, just as its statistical mechanics
-cousin, the partition function, is the full sum of all states, not a limit
-of some approximate subsums.
-
-% Grebogi, Ott, and Yorke\rf{yorke2} write in
-% Partition function formulation of the
-% multifractal properties of chaotic attractors:
-%    \label{s:MarylandSums}
-% see Eqs. (4.5) and (4.10)
-
-In actual computations of dynamical averages it would be madness to take
-an ${\cl{} \to \infty}$ limit, as very quickly computations are undoable:
-longer and longer period orbits are exponentially more and more unstable,
-their number grows exponentially, the natural measure is everywhere
-singular, and its limit uncomputable. So why would one prefer limit of a
-heuristic sum, like \refeq{GOY-POnatMes}, when one has the exact {\Fd},
-convergent exact \po s sums, and exact \po s formulas for dynamical
-averages of observables? It is not even wrong.
-
-%\item[2007-11-28 Predrag: Japanese Heresy]
-% We do not want to refer to wrong papers, but here it is, for
-% the internal record, so we do not forget not to cite it
-% Mitsuhiro Kawasaki and Shin-ichi Sasa\rf{KaSa05},
-%    ``Statistics of unstable periodic orbits of a chaotic dynamical system
-%   with a large number of degrees of freedom.''
-%
-Then there is in literature an `Alternative Periodic Orbit Theory' so
-bold that one can only call it The Heresy: the conjecture is that if one
-looks carefully enough, there exists a \emph{single} \po\ that captures
-all dynamical averages of a turbulent flow. This is so wrong that one is
-at loss what to say: there is NO such single \po. Instead, there is the
-well established theory that says how \po s are to be used, and how many
-are needed to capture the hyperbolic parts of the {\nws} to a desired
-accuracy. It is as elegant and systematic as Stat. Mech. and Quantum
-Field Theory. Read \HREF{http://chaosbook.org/}{ChaosBook.org}. But who
-reads books nowadays?
-
-The strangest thing about `Alternative Periodic Orbit Theories' is that
-since introduction of zeta functions of Smale (1967), Ruelle (1976),
-Gutzwiller (1969) and their cycle expansions (1987) there is no need for
-them whatsoever. Why would on need to \emph{guess} an approximate \po\
-weight when the \emph{exact} weight is already known? It costs exactly
-the same to compute the exact {\Fd} as it costs to compute a wrong
-formula, both require the same \po s,
-Floquet multipliers, periods, and observables $\obser_p$ averaged over
-$p$.  Go figure...
-
-    } %end \remark{Alternative periodic orbit `theories'}
-
-\newpage
+\begin{description}
+\item[2013-01-30 Predrag]
+Remark {\em Alternative 'Periodic Orbit Theories'} moved to
+ChaosBook chapter recycle.tex
+\end{description}
 
 \subsection{`Escape-time weighting'}
 \label{s:ZoldiSums}
-
-\begin{bartlett}{
-Extraordinary how potent cheap music is.
-        }
-\bauthor{
-Noel Coward
-    }
-\end{bartlett}
 
 
 \begin{description}
@@ -978,6 +735,19 @@ appendHist.tex, remember to return this back.
 \bigskip
 
 \noindent
+If one is reluctant to refer to people with long, weird surnames, one can
+always refer to Ruelle (not Bowen, he did not do that) for deriving the
+dynamical (or Ruelle) zeta function, and Gutzwiller for formulating
+semiclassical quantization as a Zeta function over unstable \po s.
+Sinai-Bowen-Ruelle work was much smarter and more profound than vast
+majority of physicists' publications from 1980s on. However, continuous
+time flow traces weighted by cycle periods were introduced by Bowen who
+treated them as Poincaré section suspensions weighted by the `time
+ceiling' function. But I do not see cycle expansions that we use in
+Bowen's work (see, for example, the description in
+\HREF{Scholarpedia.org/article/Bowen-Margulis_measure}
+{Scholarpedia.org}).
+
 %Predrag 2009-12-01
 Aurell, Artuso, Gunaratne and Cvitanovi\'c derived `cycle expansions' in
 1986-87 (earliest reference to `cycle expansion' in my notes is from 29
@@ -1050,16 +820,50 @@ natural measure in terms of the unstable periodic orbits (UPOs), an
 approximate trace formula in which periodic points are  weighted by
 products of the unstable Floquet multipliers, their Eq.~(14).  That paper
 does cite Auerbach \etal\rf{pchaot}, in which the same formula seems to
-have been published for the first time. Ever since the Maryland school
-cites only Maryland papers and some of the mathematicians of the 1970's,
-never the Copenhagen papers. In mathematics that is the custom; after
-long discomfort of not understanding a physics paper, one relabels all
-symbols in all formulas, proves something that was expected to be true,
-and mentions once to 'physicist Blah has conjectured that', and then
-never refer to poor Blah in any subsequent papers. But a 2nd physics
-paper rarely is so much better than the original idea that we should
-practice this standard.
+have been published for the first time.
 
+More frequently cited is the Grebogi, Ott and Yorke\rf{yorke2}. They proved
+that for mixing hyperbolic attractors the SRB or natural measure $\SRB$
+can be described by the unstable \po s, \ie, the natural probability measure
+of the attractor contained in some closed subset $\pS_{\cal S}$ of the $d$\dmn\
+\statesp\ $\pS$, is given by the sum over the periodic points $j$ of period
+$n$ in $\pS_{\cal S}$, weighted by the inverse of the product of their
+expanding Floquet multipliers $\ExpaEig_j$,
+\beq
+\SRB(\pS_S) = \lim_{\cl{}\to \infty}
+\sum_{j\inFix{\cl{}}}
+\frac{1}{\ExpaEig_j}
+\,,\qquad \ssp_j \in \pS_{\cal S}
+\,.
+\ee{GOY-POnatMes}
+This formula for natural measure is the special case of
+\refeq{GOY:levl-sum}, with leading \FP\ eigenvalue $\eigenvL =0$ (no
+escape), and trivial observable $\beta =0$; 1 in \refeq{GOY:levl-sum} is
+the statement of probability conservation. In semi-classical quantization
+of chaos this statement that total probability is conserved even
+has a name: it is called `Hannay-Ozorio de Almeida sum rule'. The 1987
+derivation of \refeq{GOY:levl-sum} was heuristic, so Grebogi, Ott and
+Yorke proved \refeq{GOY-POnatMes} by taking the ${\cl{} \to \infty}$
+limit. However, there is no need for an ${\cl{} \to \infty}$ limit,
+as the exact {\Fd} is not a long-time limit of anything, it
+is the exact sum over all \po s, just as its statistical mechanics
+cousin, the partition function, is the full sum of all states, not a limit
+of some approximate subsums.
+
+% Grebogi, Ott, and Yorke\rf{yorke2} write in
+% Partition function formulation of the
+% multifractal properties of chaotic attractors:
+%    \label{s:MarylandSums}
+% see Eqs. (4.5) and (4.10)
+
+In actual computations of dynamical averages it would be madness to take
+an ${\cl{} \to \infty}$ limit, as very quickly computations are undoable:
+longer and longer period orbits are exponentially more and more unstable,
+their number grows exponentially, the natural measure is everywhere
+singular, and its limit uncomputable. So why would one prefer limit of a
+heuristic sum, like \refeq{GOY-POnatMes}, when one has the exact {\Fd},
+convergent exact \po s sums, and exact \po s formulas for dynamical
+averages of observables? It is not even wrong.
 Grebogi, Ott and Yorke paper about unstable periodic orbits focused on
 the fractal dimensions of chaotic attractors, as was the fashion in the
 end of the 1980's. They proved that for mixing hyperbolic attractors the
@@ -1082,6 +886,13 @@ would one insist on limits like \refeq{GOY-POnatMes} when one has the
 exact and convergent \po s sums, and exact \po s formulas for dynamical
 averages of observables? Go figure...
 
+We cite Zoldi and Greenside\rf{ZG96} for being the second paper
+to determine unstable \po s for \KS, on a domain larger than what was
+studied in \refref{Christiansen97}; L{\'o}pez\rf{lop05rel} for being first
+to determine \rpo s in a spatio-temporal PDE, and
+Kazantsev\rf{Kazantsev98} for being first to determine \po s in \po s in
+a weather model, and for his variational method for finding periodic
+orbits. We love them, but not because of their `escape-time weighting'.
 
 Maryland group is extraordinarily fond of
 baker's maps. Baker's maps are linear, they have no cycle expansion
@@ -1098,6 +909,20 @@ zeta functions and Fredholm determinants. Cycle expansions are not
 heuristic, they are exact expansions in the unstable periodic orbits for
 classical dynamics, and semi-classically exact for quantum
 mechanics\rf{inv,AACI,AACII}.
+
+Ever since the Maryland school
+cites only Maryland papers and some of the mathematicians of the 1970's,
+never the Copenhagen papers. In mathematics that is the custom; after
+long discomfort of not understanding a physics paper, one relabels all
+symbols in all formulas, proves something that was expected to be true,
+and mentions once to 'physicist Blah has conjectured that', and then
+never refer to poor Blah in any subsequent papers. But a 2nd physics
+paper rarely is so much better than the original idea that we should
+practice this standard.
+
+So much meaningless busyness, and so little effort to learn the
+original and better formulation instead, and use the time to apply it
+to new problems.
 
 
 % \item[2012-09-26 Predrag]
@@ -1141,22 +966,6 @@ convergence of the limit distribution and do not consider the
 distribution of the natural measure.
 ''
 
-If one is reluctant to refer to people with long, weird surnames, one can
-always refer to Ruelle (not Bowen, he did not do that) for deriving the
-dynamical (or Ruelle) zeta function, and Gutzwiller for formulating
-semiclassical quantization as a Zeta function over unstable \po s.
-Sinai-Bowen-Ruelle work was much smarter and more profound than vast
-majority of physicists' publications from 1980s on. However, continuous
-time flow traces weighted by cycle periods were introduced by Bowen who
-treated them as Poincaré section suspensions weighted by the `time
-ceiling' function. But I do not see cycle expansions that we use in
-Bowen's work (see, for example, the description in
-\HREF{Scholarpedia.org/article/Bowen-Margulis_measure}
-{Scholarpedia.org}).
-
-So much meaningless busyness, and so little effort to learn the
-original and better formulation instead, and use the time to apply it
-to new problems.
 
 \newpage
 
