@@ -6,10 +6,10 @@ Compute Lyapunov exponents & vectors
 #define OMPRSW 0	//for reproducibility in openMP (0:reproducible (required for loop division), 1:irreproducible);
 #define ARMASW 0	//use library Armadillo (required for calculating angle between subspaces)
 #define FFTWSW 0	//use FFTW (required for 2d-KS);
+
 #define VERSION -4
 #define NUMDOSV 8
 #define NUMSUPPLPTCP 4
-
 #define PICONST 3.141592653589793
 
 #include <iostream>
