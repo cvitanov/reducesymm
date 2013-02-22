@@ -3,8 +3,8 @@ $Author$ $Date$
 ----------------------------------------------------------------------------
 
 
-Evangelos, Predrag, Kaz covariant Lyapunovs blog
-================================================
+Evangelos, Predrag, Kaz, Qi covariant Lyapunovs blog
+====================================================
 	(with Hugues Chat\'e, and Francesco Ginelli)
 
 pdflatex blog.tex

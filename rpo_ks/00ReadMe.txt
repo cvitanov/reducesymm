@@ -11,6 +11,14 @@ Predrag Cvitanovi\'c, Ruslan L. Davidchack and Evangelos Siminos
 SIADS manuscript #070562RR
 arXiv.org/abs/0709.2944
 
+-----------------------------------------------------
+
+Predrag                                         Feb 22 2013
+warning: the current/ directory is NOT 'current';
+the final version is in SIADS-v3/ directory
+
+-----------------------------------------------------
+
 D.Barkley@warwick.ac.uk                         Oct 14 2009
 We are pleased to accept "On the state space geometry of the
 Kuramoto-Sivashinsky flow in a periodic domain" for
@@ -21,7 +29,6 @@ your TeX file. You will also receive additional information
 about SIAM's publication process.
 
 -----------------------------------------------------
-
 
 From:  <haines@siam.org>                        Oct  5 2009
 Received your revised manuscript, will be in touch as soon as
