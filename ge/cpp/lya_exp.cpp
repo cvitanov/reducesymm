@@ -2,16 +2,16 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define cutoffNum 128
+#define cutoffNum 64
 /* define cuttoff number for the Fourier modes */
 
-#define stepSize 0.001
+#define stepSize 0.0001
 /* define the step size of the simulation */
 
-#define maxTime 1000
+#define maxTime 20000
 /* define the max time step of the simulation */
 
-#define L 11/3.1415926
+#define L 3.5014 
 /* period of x in KS equation */
 
 class complx
@@ -29,20 +29,20 @@ class complx
 			real = 0;
 			img = 0;
 		}
-		complx(complx &c)
+		complx(const complx &c)
 		{
 			real = c.real;
 			img = c.img;
 		}
-		complx operator +( complx &c)
+		complx operator +( complx c)
 		{
 			return complx(real + c.real, img + c.img);
 		}
-		complx operator -( complx &c)
+		complx operator -( complx c)
 		{
 			return complx(real - c.real, img - c.img);
 		}
-		complx operator *( complx &c)
+		complx operator *( complx c)
 		{
 			return complx(real * c.real - img * c.img, real * c.img + img * c.real);
 		}
@@ -65,43 +65,45 @@ class cVector
 {
 	public:
 		complx terms[cutoffNum];
-		cVector operator +(cVector &v)
+		void plus(cVector &v)
 		{
 			for(int i = 0; i < cutoffNum; i++)
 				terms[i] = terms[i] + v.terms[i];
-			return *this;
 		}
-		cVector operator -(cVector &v)
+		void minus(cVector *v)
 		{
 			for(int i = 0; i < cutoffNum; i++)
-				terms[i] = terms[i] - v.terms[i];
-			return *this;
+				terms[i] = terms[i] - v->terms[i];
+			free(v);
 		}
 		complx operator *(cVector &v)
 		{
 			complx * result = new complx(0,0);
-			for(int i = 0; i < cutoffNum; i++)
-				*result = *result + terms[i] * (~(v.terms[i]));
+			for(int i = 1; i < cutoffNum; i++)
+				*result = *result + (terms[i] * (~(v.terms[i]))) + ((~terms[i]) * (v.terms[i]));
+			*result = *result + (terms[0] * (~(v.terms[0])));
 			return *result;
 		}
-		cVector operator *(complx c)
+		cVector * multiV(complx c)
 		{
+			cVector * result = new cVector();
 			for (int i = 0; i < cutoffNum; i++)
-				this->terms[i] = (this->terms[i]) * c;
-			return *this;
+				result->terms[i] = (this->terms[i]) * c;
+			return result;
 		}
 		double abs()
 		{
 			double absolute = 0;
-			for(int i = 0; i < cutoffNum; i++)
+			for(int i = 1; i < cutoffNum; i++)
 				absolute += (this->terms[i]*(~this->terms[i])).real;
+			absolute *= 2;
+			absolute += (this->terms[0]*(~this->terms[0])).real;
 			return sqrt(absolute);
 		}
-		cVector operator /(double l)
+		void divide(double l)
 		{
 			for(int i = 0; i < cutoffNum; i++)
 				terms[i] = terms[i] / l;
-			return *this;
 		}
 		void copy(const cVector &v)
 		{
@@ -110,6 +112,8 @@ class cVector
 		}
 };
 /* complex vector of GSVs and the vector under simulation */
+
+FILE * resultData;
 
 cVector crntGSVs[cutoffNum];  
 /* define the current GSVs */
@@ -145,10 +149,18 @@ void init()
 		{
 			crntGSVs[i].terms[j].img = 0;
 			if(i == j)
-				crntGSVs[i].terms[j].real = 1;
+				crntGSVs[i].terms[j].real = (double)1 / (2 * cutoffNum - 1);
 			else
-				crntGSVs[i].terms[j].real = 0;
+				crntGSVs[i].terms[j].real = (double)-1 / (2 * cutoffNum - 1);
 		}
+	}
+
+	/* initiate result file */
+	resultData = fopen("result.txt","w+");
+	if(resultData == NULL)
+	{
+		printf("error: cannot open the file\n");
+		exit(0);
 	}
 }
 
@@ -176,7 +188,17 @@ complx fODE(int h, int j, int i)
 			sigma = sigma + a * b;
 		}
 	}
-	return (temp.terms[i] * (pow(i / L, 2) - pow(i / L , 4))) - ((complx(0, 1) * (i / L * 0.5)) * sigma);
+	complx part2 = ((complx(0, 1) * (i / L * 0.5)) * sigma);
+	complx part1 = (temp.terms[i] * (pow((double)(i / L), 2) - pow((double)(i / L) , 4)));
+	return part1 - part2;
+}
+
+void lyaExpo()
+/* to get the lyapunov exponent of the system */
+{
+	fprintf(resultData, "Time is %d\n", fwdTime);
+	for(int i = 0; i < cutoffNum; i++)
+		fprintf(resultData, "The %dth LE: %f\n", i, sumLypExpo[i] / (fwdTime * stepSize));
 }
 
 void fwdSim()
@@ -200,25 +222,23 @@ void fwdSim()
 			cVector temp;
 			temp.copy(crntGSVs[n]);
 			for(int m = 0; m < n; m++)
-				crntGSVs[n] = crntGSVs[n] - crntGSVs[m] * (temp * crntGSVs[m]);
-			crntGSVs[n] = crntGSVs[n] / crntGSVs[n].abs();
-			sumLypExpo[n] = sumLypExpo[n] + log((temp * crntGSVs[n]).real);
+				crntGSVs[n].minus(crntGSVs[m].multiV(temp * crntGSVs[m]));
+			crntGSVs[n].divide(crntGSVs[n].abs());
+			double diagonal = pow((temp * crntGSVs[n]).real, 2) + pow((temp * crntGSVs[n]).img, 2);
+			sumLypExpo[n] = sumLypExpo[n] + 0.5 * log(diagonal);
 		}
-
-		printf("check the time: %d\n", fwdTime);
+		if((fwdTime > 15000) && (fwdTime % 100) == 0)
+		{
+			printf("check the time: %d\n", fwdTime);
+			lyaExpo();
+		}
 	}
 }
 
-void lyaExpo()
-/* to get the lyapunov exponent of the system */
-{
-	for(int i = 0; i < cutoffNum; i++)
-		printf("The ith LE: %f/n", sumLypExpo[i] / fwdTime);
-}
 
 int main()
 {
 	init();
 	fwdSim();
-	lyaExpo();
+	fclose(resultData);
 }

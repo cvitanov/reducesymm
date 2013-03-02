@@ -187,7 +187,32 @@ places in this svn repository, for example in
 \texttt{siminos/matlab/}, that you might want to compare performance
 of your code with. Evangelos can help you with that.
 
+\item[2013-03-02 Qi Ge] Currently, I have got a group of Lyapunov Exponents for L=22 and L=96. But I am curious about the consequence I get. I will list my algorisms below to see if it is right.
 
+    I directly calculate from from this equation:
+    \begin{equation}\dot{a_k}=(q_{k}^2-q_{k}^4)a_k-i\frac{q_k}{2}\sum_{m=-cutoffNum}^{m=cutoffNum}a_{m}a_{k-m}\end{equation}
+    Here I set a cutoffNum for the fourier modes. As $k$ becomes larger, $a_k$ converges to zero very fast. So I neglected $a_k$ terms when $k>cutoffNum$. Anyway, I did not use the method in the Appendix A.\refref{SCD07}(= =|||),
+    \HREF{http://www.cns.gatech.edu/~predrag/papers/SCD07.pdf}{Appendix. A}:
+    \PC{the source file is in \texttt{siminos/rpo\_ks/}}
+
+    Then I define a set of basis. For example: (choosing $cutoffNum = 64$) $(\varPsi_{-63},\varPsi_{-62},...\varPsi_{63})$, I can set the initial value for the basis like $\varPsi_i=(0,...0,i,0,...,0)$
+
+    Then simulate the basis value by 4-th order explicit Runge-Kutta Method. And using the method mentioned in Genelli's paper \HREF{http://prl.aps.org/pdf/PRL/v99/i13/e130601}{Description of the algorithm}:
+
+    \begin{equation}\tilde{\varPsi_{i}}(n+1)=J\varPsi_{i}(n)\end{equation}
+    QR decomposition
+    \begin{equation} (\tilde{\varPsi_{-63}}(n+1),\tilde{\varPsi_{-62}}(n+1)...\tilde{\varPsi_{63}}(n+1))
+    =(\varPsi_{-63}(n+1),\varPsi_{-62}(n+1)...\varPsi_{63}(n+1))R\end{equation}
+
+    By cumulate the logarithm of the diagonalize terms of R. At last deivide the term by total time and get the lyapunov exponent.
+
+    Here the simulation sets cutoffNum=64 and timestep = 0.0001 running 20000 times.(that is 2 by dimension of time, maybe the simulation is too short?)
+
+    Below is the graph of L=22 lyapunov spectrum and very different from the figure in Kazumasa's paper\HREF{http://pre.aps.org/pdf/PRE/v84/i4/e046214}{Hyperbolic decoupling of tangent space and effective dimension of dissipative systems}.What is wrong in the processs of mine?
+    \begin{figure}[t]
+        \includegraphics[width=8cm]{Lyapunovexpo_gq.png}
+        \caption{Lyapunov spectrum}
+    \end{figure}
 
 
 \end{description}
