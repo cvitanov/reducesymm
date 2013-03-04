@@ -187,32 +187,146 @@ places in this svn repository, for example in
 \texttt{siminos/matlab/}, that you might want to compare performance
 of your code with. Evangelos can help you with that.
 
-\item[2013-03-02 Qi Ge] Currently, I have got a group of Lyapunov Exponents for L=22 and L=96. But I am curious about the consequence I get. I will list my algorisms below to see if it is right.
+\item[2013-03-02 Qi Ge] So far I have attempted to compute sets of Lyapunov
+exponents for L=22 and L=96 \KS. But I am worried about the results I
+get. I will first explain my algorithms below to see if it they right.
 
-    I directly calculate from from this equation:
-    \begin{equation}\dot{a_k}=(q_{k}^2-q_{k}^4)a_k-i\frac{q_k}{2}\sum_{m=-cutoffNum}^{m=cutoffNum}a_{m}a_{k-m}\end{equation}
-    Here I set a cutoffNum for the fourier modes. As $k$ becomes larger, $a_k$ converges to zero very fast. So I neglected $a_k$ terms when $k>cutoffNum$. Anyway, I did not use the method in the Appendix A.\refref{SCD07}(= =|||),
-    \HREF{http://www.cns.gatech.edu/~predrag/papers/SCD07.pdf}{Appendix. A}:
-    \PC{the source file is in \texttt{siminos/rpo\_ks/}}
+I integrate the \KS\ equations in Fourier representation:
+    \PC{Please read any of the papers on \KS; I do not think anybody
+    has $m=-N, -N-1, \cdots, -2,-1$ terms in their calculations - they
+    can be eliminated by the reality of $u(x,t)$.}
+\beq
+\dot{a}_k=(q_{k}^2-q_{k}^4)a_k-i\frac{q_k}{2}\sum_{m=-N}^{m=N}a_{m}a_{k-m}
+\ee{QGe:KS}
+Here I set a the Fourier modes truncation cutoff $N$. As $k$
+becomes larger, $a_k$'s converge to zero very fast. So I drop
+$a_k$ terms when $k>N$. Anyway, I ignored the methods described in
+\HREF{http://www.cns.gatech.edu/~predrag/papers/SCD07.pdf}
+{Appendix A} of \refref{SCD07}.
+    \PC{Why? The authors have lots of experience and they went to the
+    trouble of explaining the best methods they know, so why not read
+    them and implement them?}
 
-    Then I define a set of basis. For example: (choosing $cutoffNum = 64$) $(\varPsi_{-63},\varPsi_{-62},...\varPsi_{63})$, I can set the initial value for the basis like $\varPsi_i=(0,...0,i,0,...,0)$
+Then I define a set of basis. For example: (choosing $N = 64$)
+$(\varPsi_{-63},\varPsi_{-62},...\varPsi_{63})$, I can set the
+initial value for the basis like $\varPsi_i=(0,...0,i,0,...,0)$.
+    \PC{what is the relation of $\varPsi_i$ to ${a}_k$ of
+    \refeq{QGe:KS}? Or is it the tangent space basis? Is it Fourier
+    modes, is it orthogonal, does it stay orthogonal, or what?
+    Describe {\color{red}in detail} the theory, definitions \etc\
+    that you use - it all goes into your project report,
+    \refsect{sect:introQG}, which at the moment (8 weeks into the
+    semester) has {\color{red} nothing} in it.}
+    %
+    \PC{Why start with $\varPsi_k=(0,\cdots,0,k,0,\cdots,0)$? Should
+    these be normalized, $\norm{\varPsi}=1$? Why set large, most
+    unphysical components to the largest values of $k$? Probably does
+    not matter for asymptotic times...}
 
-    Then simulate the basis value by 4-th order explicit Runge-Kutta Method. And using the method mentioned in Genelli's paper \HREF{http://prl.aps.org/pdf/PRL/v99/i13/e130601}{Description of the algorithm}:
+Then I integrate numerically the ``basis set'' using the 4-th order
+explicit Runge-Kutta integration routine, and the method described in
+depth in the Ginelli \etal\
+%\HREF{http://prl.aps.org/pdf/PRL/v99/i13/e130601}
+{description of the algorithm}\rf{GiChLiPo12}
+    \PC{Have you studied \refref{GiChLiPo12}? That should be
+    much more detailed than the PRL\rf{ginelli-2007-99}.}
+ (read it here: \arXiv{1212.3961}):
+\[
+    \tilde{\varPsi}_{i}(n+1)=J\varPsi_{i}(n)
+\,.
+\]
+    QR decomposition:
+\[
+(\tilde{\varPsi}_{-63}(n+1),\tilde{\varPsi}_{-62}(n+1)...\tilde{\varPsi}_{63}(n+1))
+    =(\varPsi_{-63}(n+1),\varPsi_{-62}(n+1)...\varPsi_{63}(n+1))R
+\,.
+\]
+I keep adding the logarithms of the diagonal terms of $R$.
+    \PC{and restarting the integration with reset $J=1$?}
+At the end of the simulation I divide these sums by the total time
+and get the 'Lyapunov' exponents.
 
-    \begin{equation}\tilde{\varPsi_{i}}(n+1)=J\varPsi_{i}(n)\end{equation}
-    QR decomposition
-    \begin{equation} (\tilde{\varPsi_{-63}}(n+1),\tilde{\varPsi_{-62}}(n+1)...\tilde{\varPsi_{63}}(n+1))
-    =(\varPsi_{-63}(n+1),\varPsi_{-62}(n+1)...\varPsi_{63}(n+1))R\end{equation}
+Here in the simulation I set $N=64$ and time step = 0.0001, running
+for 20,000 steps.  (That is 2 units of time total, maybe the
+simulation is too short?)
+    \PC{That is ridiculously short, check the periods of the
+    \emph{shortest} \po s. Please read this entire blog, and the
+    relevant \KS\ papers}
+    %
+    \PC{Your `Lyapunov' exponents are \emph{very} negative. They do
+    not get more negative for large $k$, which they should. The plot
+    makes no sense.}
 
-    By cumulate the logarithm of the diagonalize terms of R. At last deivide the term by total time and get the lyapunov exponent.
-
-    Here the simulation sets cutoffNum=64 and timestep = 0.0001 running 20000 times.(that is 2 by dimension of time, maybe the simulation is too short?)
-
-    Below is the graph of L=22 lyapunov spectrum and very different from the figure in Kazumasa's paper\HREF{http://pre.aps.org/pdf/PRE/v84/i4/e046214}{Hyperbolic decoupling of tangent space and effective dimension of dissipative systems}.What is wrong in the processs of mine?
+\refFig{fig:1stWrongSpectrum} is the plot of what I get for $L=22$
+Lyapunov spectrum. I bears not relation to the published results (see
+{\bf [2009-09-13 Ruslan]} on \refpage{sect:LyapKS},
+\reffig{fig:lyapSpecCLG}, \reffig{fig:lyapSpec1},
+\reffig{fig:lyapSpec}, and \reftab{tab:ks22shad}) and the
+figure\PC{which one? Always state the number} in Kazumasa \etal\
+paper\rf{TaGiCh11} (read it
+\HREF{http://chaosbook.org/library/KoSa11.pdf} {here}).
+%\HREF{http://pre.aps.org/pdf/PRE/v84/i4/e046214}
+%{Hyperbolic decoupling of tangent space and effective dimension of dissipative systems}.
+What is wrong in this approach of mine?
     \begin{figure}[t]
-        \includegraphics[width=8cm]{Lyapunovexpo_gq.png}
-        \caption{Lyapunov spectrum}
+        \includegraphics[width=8cm]{Lyapunovexpo_gq}
+        \caption{\label{fig:1stWrongSpectrum}
+        My first attempt at computing Lyapunov spectrum for $L=22$
+        \KS\ system. Instead of $t\to\infty$ this is for $t\to 2$,
+        much shorter than the shortest time scale of the system, so
+        this is -at best- computation of the relaxation of initial
+        tangent space vector mysteriously initialized as
+        $\varPsi_k=(0,\cdots,0,k,0,\cdots,0)$.}
     \end{figure}
+
+\item[2013-03-03 Predrag]
+To help a bit with starting writing, I have edited your text (you can
+see edits by using diff in Tortoise). Here is how you can
+\QGedit{highlight your edits}, and here is how you can add a dated
+footnote\QG{2013-03-03}{This is a footnote. Always enter the date, so
+we know how old it is.}.
+
+Always trim the figures: your Lyapunovexpo\_gq.png had lots of white
+space around the edges.
+
+\item[2013-03-03 Predrag]
+Almost everything seems to go wrong in this approach of yours, but
+now that you are writing (however tersely) we can start understanding
+what the difficulties are. My guess is that you have not read this
+entire blog, and have not studied the relevant \KS\
+papers\rf{SCD07,Christiansen97}, so you are reinventing the wheel.
+Everything that is written in these papers is there for a reason...
+
+Graduate students are brave people who immediately jump into the deep
+end of the pool, without any testing. Here are two 2\dmn\ maps, the
+Lozi map (for $a=1.85, b=0.3$)
+% \PC{need figure of Lozi strange attractor}
+\bea
+   x_{n+1} &=& 1-a |x_{n}|+ b y_n  \continue
+   y_{n+1} &=& x_{n}
+\,,
+\label{e_lozi_def}
+\eea
+and the H\'enon map (for $a=1.4, b=0.3$; described at length in
+\refchap{c-Henon})
+\bea
+    x_{n+1}&=&1-ax^2_n+b y_n
+        \continue
+    y_{n+1}&=& x_n
+\,,
+\label{eq2.1a}
+\eea
+for which fixed points are available analytically\rf{DasBuch} (for
+the Lozi map all periodic points are available analytically). So see
+what Floquet exponents (often incorrectly called `Lyapunov' exponents
+) your program returns for \po s of these humble maps, and then for
+ergodic trajectories, before running the programs on ergodic
+trajectories in zillion dimensions.
+
+If your programs only apply to continuous time flows (ODEs rather
+than maps), ChaosBook\rf{DasBuch} has \eqva\ and \po s for 2\dmn\
+Lorenz and R\"ossler flows, and Evangelos has lots of \rpo s for the
+\cLe; make sure your programs work on small systems first.
 
 
 \end{description}
