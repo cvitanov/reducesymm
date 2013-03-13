@@ -328,6 +328,21 @@ than maps), ChaosBook\rf{DasBuch} has \eqva\ and \po s for 2\dmn\
 Lorenz and R\"ossler flows, and Evangelos has lots of \rpo s for the
 \cLe; make sure your programs work on small systems first.
 
+\item[2013-03-14 Qi Ge]
+I have found the key problem of Runge-Kutta method in simulation.
+    \beq
+    \dot{a}_k=(q_{k}^2-q_{k}^4)a_k-i\frac{q_k}{2}\sum_{m=-N}^{m=N}a_{m}a_{k-m}
+    \ee{QGe:KS}
+
+As there are linear terms with the coefficient with 4th power of k. This will cause great stiffness of numerical simulation as a multi-step simulation method. In order to switch off this stiffness, I choose \(L = 96\) and take the cutoff number for Fourier modes to be 32. Moreover, with a time step \(h = 0.000001\). And I got a relatively reasonable lyapunov spectrum:
+     \begin{figure}[H]
+        \includegraphics[width=8cm]{Lyapunovexpo_gq1.png}
+        \caption{Lyapunov Spectrum with Runge-Kutta 4th order. $L = 96$, Fourier modes cutoff 32, Moreover, time step $h = 0.000001$.}   
+    \end{figure}
+
+However, I failed to get such a spectrum with \(L = 22\) and modes number extends to 64.(which looks apparently wrong) I am currently changing simulation into Adam-Boulton method, which is an one-step simulation method.
+
+
 
 \end{description}
 
