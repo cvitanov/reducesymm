@@ -337,7 +337,7 @@ I have found the key problem of Runge-Kutta method in simulation.
 As there are linear terms with the coefficient with 4th power of k. This will cause great stiffness of numerical simulation as a multi-step simulation method. In order to switch off this stiffness, I choose \(L = 96\) and take the cutoff number for Fourier modes to be 32. Moreover, with a time step \(h = 0.000001\). And I got a relatively reasonable lyapunov spectrum:
      \begin{figure}[H]
         \includegraphics[width=8cm]{Lyapunovexpo_gq1.png}
-        \caption{Lyapunov Spectrum with Runge-Kutta 4th order. $L = 96$, Fourier modes cutoff 32, Moreover, time step $h = 0.000001$.}   
+        \caption{Lyapunov Spectrum with Runge-Kutta 4th order. $L = 96$, Fourier modes cutoff 32, Moreover, time step $h = 0.000001$.}
     \end{figure}
 
 However, I failed to get such a spectrum with \(L = 22\) and modes number extends to 64.(which looks apparently wrong) I am currently changing simulation into Adam-Boulton method, which is an one-step simulation method.
@@ -351,6 +351,9 @@ To further improve, it's better to split the linear and non-linear terms
  and use the implicit method only to the linear terms where the stiffness is.
 I'm not saying that my algorithm is the best way to simulate the KS equation,
  but at least it's suited to practical use.
+
+\item[2013-03-14 Ruslan to Qi Ge]
+Or you can use the method developed by Cox and Matthews\rf{cox02jcomp} and improved by Kassam and Trefethen\rf{ks05com}, where the linear part is integrated exactly.  My Matlab code {\tt ksfmetd2.m} is based on this method and it is stable and reasonably accurate with time step as large as 0.25.  It also solves variational problem, so can be used to calculate Lyapunov exponents.  See {\tt ksfmlyap.m} in {\tt siminos/matlab/ruslan}.  If you want to compute Lyapunov exponents using the standard GS procedure, the relevant code is in {\tt ksdupo.m} in the same folder (look for the cell "\%\% Compute Lyapunov exponents of KS (using ksfmlyap and GS)").
 
 \end{description}
 
