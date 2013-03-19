@@ -1,5 +1,5 @@
 siminos/00ReadMe.txt
-$Author$ 
+$Author$
 $Date$
 --------------------------------------------------------
 
@@ -48,16 +48,17 @@ thesis/
 tex/
 	customized tex and bibtex style files
 
-www/
+WWW/
+    (renamed so in Predrag's setup)
     Siminos home pages (tres elegantes)
-	--> moved to repository siminoswww
+	repository siminoswww
 
 presentations/
     all symmetry reduction talks and posters
     Tufts10/    Predrag seminar, 2010-04-02
 
 scripts/
-    potentially useful scripts 
+    potentially useful scripts
 
 blog/
     all matters pertaining to symmetry reduction reading
@@ -66,7 +67,7 @@ lyapunov/
     all matters pertaining to 'covariant Lyapunov vectors'
 
 froehlich/
-    Stefan Froehlich blog, papers 
+    Stefan Froehlich blog, papers
 
 chao/
     Chao's blog

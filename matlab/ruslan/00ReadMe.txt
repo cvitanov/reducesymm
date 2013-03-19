@@ -1,4 +1,4 @@
-siminos/chao/matlab/ruslan/00ReadMe.txt
+siminos/matlab/ruslan/00ReadMe.txt
 $Author: ruslan $
 $Date: Wed Oct  5 13:33:43 GMTDT 2011 $
 ---------------------------------------------------------------
