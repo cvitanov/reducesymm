@@ -12,6 +12,34 @@ read also
     dasbuch/book/FigSrc/00ReadMe.txt
 
 ----------------------------------------------------------------
+Converting eps to pdf
+                                       Predrag 2013-03-22
+robjhyndman.com/hyndsight/converting-eps-to-pdf
+Now that there is a way to sync a pdf file and tex file in both
+directions, the only remaining reason to use dvi files is when the
+graphics are in eps format. However, that problem has also been
+solved for those using Mik­TeX 2.8 or TeXLive 2009. In Mik­TeX 2.8,
+simply include the package epstopdf along with graphicx. (As noted
+in the comments below, even this step is not necessary in TeXLive
+2009.) Then when you use pdflatex, the eps files will be
+automatically converted to pdf at compile time. (The
+conversion only happens the first time you process the file, and
+is skipped if there is already a pdf file with the same name.) For
+example:
+    \documentclass{article}
+    \usepackage{graphicx,epstopdf}
+    \begin{document}
+    \includegraphics[width=\textwidth]{fig1}
+    \end{document}
+Then even though the only graphics file available is
+fig1.eps, this will still be processed ok using pdflatex or
+pdftexify. On the first pass, a new file called
+fig1-eps-coverted-to.pdf is created and inserted at the
+appropriate place.
+
+to convert *.ps to *.eps:
+www.online-convert.com  (there are also many scripts)
+
                                         Predrag 2012-04-20
 To Daniel
 	siminos/figSrc/Rossler No Arrows/
@@ -19,7 +47,7 @@ To Daniel
 [x] trajectorynoarrows.png
 [ ] nearequilibriumnoarrows.png
    make the same size as other 3, to facilitate inkscaping
-[x] bothsectionnoarrows.png     
+[x] bothsectionnoarrows.png
 [x] farequilibriumnoarrows.png
 
 [ ] remebr to remove siminos/figSrc/Rossler Arrows/
@@ -197,7 +225,8 @@ has to be a different file. Not sure whether the fix is universal.
 Lorenz sources
 
 source for
-	siminos/figs/lorenzAttr.eps (lorenzAttrChaosbook.eps is Chaosbook version with EQ_i instead of E_i)
+	siminos/figs/lorenzAttr.eps
+    (lorenzAttrChaosbook.eps is Chaosbook version with EQ_i instead of E_i)
 is in
 	vaggelis/testing/flows/lorenzPoincFlow.nb
 
