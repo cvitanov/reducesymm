@@ -1,6 +1,6 @@
 siminos/matlab/ruslan/00ReadMe.txt
 $Author: ruslan $
-$Date: Wed Oct  5 13:33:43 GMTDT 2011 $
+$Date: 2013-03-24 22:29:19 -0400 (Sun, 24 Mar 2013) $
 ---------------------------------------------------------------
 
 Ruslan 2011-03-29
