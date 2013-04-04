@@ -75,7 +75,7 @@ chao/
 CV/
 	Siminos CV
 
-blog/2CB.tex
+2ChaosBook/2CB.tex
     staging ground for insertions to ChaosBook.org
 
 ---------------------------------------------------------------
