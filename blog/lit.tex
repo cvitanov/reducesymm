@@ -16,6 +16,251 @@ this chapter.
 
 \begin{description}
 
+\item[2012-02-18 Predrag]
+% Predrag 2013-04-20 moved to here from DOGS/saldana/blog.tex
+% \section{Freezing solutions of equivariant evolution equations}
+% \label{s:BeTh04}
+Worth a read: Beyn and Th\"ummler\rf{BeTh04}. Their papers are
+available under `Preprints' link on
+\HREF{http://www.math.uni-bielefeld.de/~beyn/AG_Numerik/html/en/preprints/index.html}
+{Beyn website}. Read also my notes in \refchap{c-excite}, and the
+Chaosook   refrem {rem:SSLieGr} ``A brief history of relativity.''
+
+\item[2010-06-05 Predrag]
+I have read Beyn and Th\"ummler\rf{BeTh04} and believe ``freezing'' =
+``slicing''. Siminos and I have Hermann and Gottwald\rf{HerGot10} on our
+reading list, but have not studied it yet. Beyn and Th\"ummler impose a
+slice by adding a new dimension (the phase parameter) and a condition (a
+Lagrange multiplier), while we go one dimension down by restricting the
+dynamics into the slice. Both approaches are standard in imposing
+Poincar\' sections; Rytis Paskauskas has written that up for Chapter 3 -
+Discrete time dynamics (not yet on the public version), and Chapter 13 -
+Fixed points, and how to get them, Section 13.4 Flows. My feeling is that
+Beyn and Th\"ummler is better, but we have not implemented it.
+
+\item[2009-12-23 Predrag]
+Went to Bielefeld, talked to
+\HREF{http://www.math.uni-bielefeld.de/~beyn/AG_Numerik/html/en/people/}
+{Wolf-J\"urgen Beyn}. Beyn
+and his former PhD student Vera Th\"ummler\rf{BeTh04,Thum05} `freeze'
+traveling waves. Their papers are mathematical, proving existence of spectra etc.,
+but also applied to numerical examples. Scalar Nagumo equation is a good
+testing ground, as one of the traveling wave solutions is known
+analytically.
+
+Beyn did his `freezing' at the same time as Rowley and
+Marsden\rf{rowley_reduction_2003}, but they published first (a
+year earlier?), so \refref{BeTh04} cites their `reconstruction
+equation.' Beyn does not understand the `method of
+connections,' either.
+
+To understand why they call it `freezing' the figures are useful,
+and especially the animations, like
+\HREF{http://www.mathematik.uni-bielefeld.de/fgweb/Preprints/movies/fg03022_02.mpg}
+{this one}. Of course, a turbulent state will not be 'frozen,'
+but much of the hysterical fast drifting will be gone.
+
+Beyn group\rf{BeTh04}  research focuses on the numerical
+computation and stability of traveling wave solutions (and more
+generally relative equilibria) of reaction-diffusion systems on
+unbounded domains, \ie, of parabolic partial differential
+equations (PDEs). On the real line they are of the form
+\beq
+u_t = A \, u_{xx} + f(u,u_x)
+	\,,\quad
+u: \reals \times [0,\infty) \to \reals
+	\,,
+A \in \reals^{d,d}
+\,.
+\ee{parabolicPDE}
+A traveling wave is a special type of
+a relative equilibrium of equivariant evolution equations,
+where the action is given by translation,
+   % \PC{copied this to ChaosBook}
+\beq
+\LieEl(\velRel) \, u(x)
+  = \hat{u}(x - \velRel t)\,,\quad  \velRel \in \reals^d
+\,,
+\ee{BeThTW}
+$\hat{u}(x)$ is the waveform and $\velRel$ the velocity. In the
+comoving frame equations \refeq{parabolicPDE} take form
+\beq
+\hat{u}_t
+ = A\, \hat{u}_{xx} + \velRel \, \hat{u}_x + f(\hat{u},\hat{u}_x)
+	\,,\quad
+\hat{u}_x \in \reals
+	\,,\;
+t \ge 0
+\,,
+\ee{comovingPDE}
+with $\hat{u}(x)$ a stationary solution (the `freezing of the wave')
+\beq
+0= A \, \hat{u}{''} + \velRel \, \hat{u}{'} + f(\hat{u},\hat{u}{'})
+\ee{BeThREQV}
+The pair $(\hat{u},\velRel$) is an equilibrium solution of the
+partial differential algebraic equation (PDAE)
+\refeq{BeThREQV} which is constructed by inserting the co-moving
+frame ansatz into PDE and adding an {\em additional phase
+condition}. They say: ``By transforming the PDE into a
+corresponding PDAE (partial differential algebraic equation)
+via a freezing ansatz\rf{BeTh04} the relative equilibrium can
+be analyzed as a stationary solution of the PDAE.''
+
+Beyn finds Sandstede \etal\
+articles\rf{FiSaScWu96,SaScWu97,SaScWu99a,FiTu98}
+`remarkable.'
+Sandstede \etal\rf{SaScWu97} use center manifold reduction
+theory to study stability of \reqva. The main idea is to
+transform the flow into a `skew product' form. One part is
+orthogonal to the group orbit of the initial field $u(0)$, and
+the other part acts within the group orbit and depends upon the
+position in the orthogonal direction.
+
+{\bf ES 2009-12-23} This decomposition is important in Krupa\rf{Krupa90} study
+of bifurcations of relative equilibria, using a local slice. I think
+he also introduces the tubular neighborhood. The book by Chossat
+and Lauterbach\rf{ChossLaut00} gives a readable presentation
+and I need it to compare their stability analysis for \reqva\ with
+our Appendix, but I can't find it here.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\SFIG{BeThEquiTraj}
+{}{
+Two trajectories
+$\ssp(t)$, $\sspRed(t)$ are equivalent up to a group rotation
+$\LieEl(t)$ as long as they belong to the same group orbit
+$\pS_{\ssp(t)}$.
+}
+{fig:BeThEquiTraj}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+Beyn~\etal\rf{BeTh04} find it more convenient to make
+use of the equivariance by extending the system rather than
+reducing it as in bifurcation analysis, by adding an additional
+parameter and a phase condition. They too write the solution as
+${u}(t) = \LieEl(t)\,\hat{u}(t)$, see
+\reffig{fig:BeThEquiTraj}, a composition of the action of a
+time dependent group element $\LieEl(t)$ with a `frozen
+solution' $\hat{u}(t)$ in a given Banach space, with
+$\LieEl(t)$, $\hat{u}(t)$ to be determined. They keep the
+`frozen solution' as constant as
+possible%
+\PC{`As constant as
+possible' makes sense only for \reqva, not \rpo s which they do
+not discuss.} by introducing a set of algebraic constraints
+(phase conditions), $\psi(\hat{u}, \gSpace) = 0$, which fix the
+extra degrees of freedom. Their number is given by the
+dimension of the Lie group.
+
+
+The freezing approach\rf{BeTh04} applies to traveling
+waves and, more generally, to \reqva\rf{ChossLaut00,SaScWu99},
+solutions which are
+equilibria in an appropriately co-moving frame. They occur
+in systems with underlying symmetry, such as
+rotating waves on the real line and spiral waves in two space
+dimensions. An example of a system with `rotating waves on the
+real line' is the complex Ginzburg Landau equation, while
+spirals are typical of the reaction-diffusion systems.
+
+Consider an evolution equation in a Banach space $\pS$  of the form
+\beq
+u_t = \vel(u)
+\ee{BeThEvEq}
+with an equivariant right hand side $\vel$, i.e.
+$\LieEl\,\vel(u) = \vel(\LieEl\,u)$ where $\LieEl : \Group \to
+GL(\pS), \gSpace \to \LieEl(\gSpace)$ denotes the action of a
+Lie group $\Group$ on  $\pS$. Here --in the parlance of applied
+mathematicians-- $\vel$ is defined on a dense subspace of some
+Banach space (generally infinite dimensional) and is
+equivariant with respect to the action of a finite dimensional
+(not necessarily compact) Lie group. In other words, the
+$\infty$-dimensional functional PDE \statesp\ is spanned by
+nicely shaped waveforms $u(x)$, nothing too kinky.
+
+The equation \refeq{BeThEvEq}
+can be transformed via the ansatz
+$u(t) = \LieEl(t)\hat{u}(t)$ into the equivalent system
+\beq
+\hat{u}_t = \vel(\hat{u})
+  - \LieEl(\gSpace)^{-1} \LieEl_\gSpace(\gSpace) \, \hat{u} \lambda
+	\,,\qquad
+\lambda = \gSpace_t
+\,,
+\ee{BeThReconstr}
+where subscripted quantities imply partial derivatives with
+respect to the subscript. Beyn~\etal\rf{BeTh04} then `freeze'
+the traveling wave by fixing a \slice, and using a dot product
+w.r.t. the group tangent at the slice point. The evolution of
+$\gSpace(t)$ describes the motion on the group manifold. They
+denote by $T_\gSpace \Group$ the tangent space of $\Group$ at
+$\gSpace$. Introducing Lagrange parameters $\lambda(t) =
+\LieEl_t(t) \in T_\gSpace \Group$ they impose `freezing ansatz'
+on the extended system of equations \refeq{BeThReconstr}
+\beq
+\hat{u}_t = \vel(\hat{u})
+  - \LieEl(\gSpace)^{-1} \LieEl_\gSpace(\gSpace) \, \hat{u} \lambda
+	\,,\qquad
+0 = \pi(\hat{u},\lambda)
+\,,
+\ee{BeThSlice}
+with a ``phase condition
+$\pi : \pSRed \times T_\gSpace \Group \to \reals^N$,
+$N= \mbox{dim }\Group$,
+which has to satisfy some regularity conditions.''
+They differentiate
+$
+h \circ \LieEl \, \hat{u}
+$
+with respect to $\LieEl$, define group tangent at unity
+$\groupTan \in \times T_1 \Group$, $\lambda = d\gSpace_l(1)
+\groupTan$ ($l$ for left multiplication), and with some algebra
+I'm too bored to type arrive at the extra equation(s)
+\[
+ 0= \psi(\hat{u},\groupTan) = \pi(\hat{u},d\gSpace_l(1) \groupTan)
+\,,
+\]
+which - if I've decoded it right - is the ChaosBook slice condition.
+
+Their `freezing ansatz'\rf{BeTh04} appears to be identical
+to the Rowley and Marsden\rf{rowley_reduction_2003} and our
+slicing, except that `freezing' is formulated as an
+additional constraint, just as when we compute periodic
+orbits of ODEs we add Poincar\'e section as an additional
+constraint, \ie, increase the dimensionality of the problem
+by 1 for every continuous symmetry. They prefer it this
+way, as they are taking derivatives. They know that the
+slice is local and things can diverge.
+                                    \toCB
+
+They illustrate `freezing' by numerical computations for the
+quintic complex Ginzburg Landau equation (QCGL), which is
+equivariant w.r.t. the action of the group $(\LieEl_r,\LieEl_t)
+\in \Group = S^1 \times \reals$ on $u(x) \in \reals^2$. The
+action is given by translation in the domain and rotation in
+the image, i.e.
+	\PC{copy to continuous.tex - an example?}
+\bea
+\LieEl \, u(x) &=& R_{\LieEl_r^{-1}} u(x - \LieEl_t)
+	\,,\qquad
+R_{\LieEl_r^{-1}} =
+   \left(\barr{cc}
+   \cos\theta  &  \sin\theta   \\
+  -\sin\theta  &  \cos\theta
+   \earr\right)
+ \,,
+ \label{QCGLrotation}
+\eea
+where subscripts are now just subscripts,
+$r$ implying rotation and $t$ implying translation.
+
+They refer to Chap.~8 of Govaerts\rf{Govaerts00} for a review
+of numerical methods that employ equivariance with respect to
+compact, and mostly discrete groups.
+	\PC{copy to discrete.tex}                          \toCB
+% Predrag 2013-04-20: end of text moved to here from DOGS/saldana/blog.tex
+
+
 \item[2012-02-19 Dan Goldman]
 Please read the two Shapere-Wilczek papers\rf{ShWi87,ShWi06} on the
 geometric approach to low Re swimming, and the engineering paper from my
@@ -384,7 +629,7 @@ condition satisfies Gauss' law; check its validity as well as Energy
 conservation carefully at every time step. Define distance (6), (7) that
 is gauge invariant under residual (time independent) gauge transformations.
 
-                                                    \toCB
+                                                    \inCB
 They call the stability matrix `Hessian', and its eigenvalues at time
 slice the `local Lyapunov exponents (LLEs)'\rf{KMOSTY10}: LLE plays the
 role of a ``temporally local'' Lyapunov exponent, which specifies the
