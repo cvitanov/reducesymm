@@ -8,7 +8,11 @@ Maintain only ONE bib file for all dynamical systems publications
 
 Evangelos Siminos
 	bibtex/siminos.bib
-
+		all references should go here
+	bibtex/eigene.bib
+		Siminos own publications. Maintain for research statements, etc.
+	bibtez/ziminos.bib
+		elliminate after checking it is not needed
 bibtex/05bibTools.txt
 	notes about BibTeX tools, web resources, etc
 
