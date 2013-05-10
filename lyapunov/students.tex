@@ -615,6 +615,19 @@ there as well and I am sure Ruslan can explain which function to call.
 
     Besides \(T = 10.25\), I checked \(T = 14.33 \quad and \quad T = 32.35\), and again the point will return to its initial point only if using the scheme of \(L = 44\pi\).By choosing large enough(1024) fast fourier transform number, the max error of the simulation is about \(1.1\times{10^{-4}}\) after one periods of simulation. The initial point I choose is contained in 'siminos/matlab/ruslan/ks22f90h25t100.mat'.
 
+\item[2013-05-10 Evangelos to Qi Ge] The cycles have been checked by several people and we all agree that the system size is $L=22$. 
+The easiest way to find your mistake would be to compare your code with Ruslan's matlab code and make sure you use the same conventions. 
+Most probable error that would lead to a factor of $2\pi$ is the normalization of FFT, so you should start from there. 
+Another source of confusion in KSe is that people use different combinations of signs in front of each term. 
+Also, as far as I remember, Treffethen uses different conventions than what we do, so be careful when exporting our data to his code. 
+Tip: Have a look in \texttt{siminos/matlab/ruslan/ksfm2real.m} in order to understand the conventions and/or to get the physical 
+space representation of an initial condition.
+
+\item[2013-05-10 Evangelos to Qi Ge] Choosing larger number of fourier modes should not affect precision of \rpo. 
+After solving the issue with $L$ you should make sure you understand that in the last time-step of the cycle
+there is interpolation used in Ruslan's matlab code.
+In practice, you would need to refine your orbits with Newtons method, in order to get accurate returns, or use
+the same time-step and also interpolate in the last time-step.
 
 \end{description}
 
