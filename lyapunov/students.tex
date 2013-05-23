@@ -652,6 +652,23 @@ twice that, see Fig. 6.1\,(i) \emph{Selected relative periodic and
 pre-periodic orbits} in \refref{SCD07}. Please study this reference in
 depth.
 
+\item[2013-05-23 Ge Qi]About the Jacobian matrix of the orbit.
+
+In order to calculate the Floquet multipliers and Floquet vectors of \(PO_{10.25}\), Jacobian is the essential matrix. I integrate Jacobian in the following manner:
+\begin{eqnarray*}
+    && Stability\ matrix: \\
+    && A_{ij} = ({q_k}^2 - {q_k}^4)\delta_{ij} + {q_k}a_{i-j}i \\
+    && Set\ Q_{ij} = ({q_k}^2 - {q_k}^4)\delta_{ij}\ and\ N_{ij} = {q_k}a_{i-j}i \\
+    && Then\ integrate\ Jacobian\ matrix, \\
+    && J_{n} = Exp(A_{ij}\Delta{t}) = Exp[Q_{ij}\Delta{t} + N_{ij}\Delta{t}] \\
+    && As\ Q_{ij}\ and\ N_{ij}\ commute\ with\ each\ other, \\
+    && J_{n} = Exp[Q_{ij}\Delta]Exp[N_{ij}\Delta{t}] \\
+\end{eqnarray*}
+    Here, as \(a_i\) is relative small \(max(a_i) < 1\), so if we choose \(\Delta{t} = 0.01, N_{ij}\Delta{t}\) will be a small term matrix. At first I wish to use the Pade approximation, the trouble is to get the inverse matrix, so I just use the Taylor expansion to ~10 terms, which I test with the matlab's method the error of the sum of whole column is \(10^{-9}\), which is acceptable I think.
+    While \(Q_{ij}\Delta{t}\) is a diagonal matrix and easy to gain the exponential.
+
+
+From this jacobian matrix, We can derive the Jacobian matrix for a period time \(J_{T_p}\), which is \(J_{T_p} = \prod_{n}{J_n}\). Of course, I get a infinite number of \(J_{T_p}\), But by QR decomposition method that making use of \(J_n\), I also calculate the unreasonable Floquet multipliers. I read Ruslan's code, but his method to get jacobian matrix is different from mine and I cannot understand the principle of his method.
 
 
 
