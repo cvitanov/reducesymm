@@ -673,6 +673,35 @@ From this jacobian matrix, We can derive the Jacobian matrix for a period time \
 \item[2013-05-24 Ruslan]
 The idea of the method is described in \refref{SCD07} Appendix A and B.  The Jacobian matrix is calculated from (B.1) which uses solutions of (A.4) and (A.6).  Matlab code {\tt ksfmetd2.m} solves (A.4) and (A.6) simultaneously.  The Jacobian matrix is output in {\tt da}.  You don't need anything else.  The method you propose above is very inaccurate, since matrices $Q$ and $N$ are also functions of $t$.
 
+\item[2013-5-31 Ge Qi]
+A possible method to check Jacobian matrix.
+As the floquet vectors spans the tangent space of a certain point in the phase space, we can simply make a small perturbation from the periodic orbit and calculate the resulting points after one period, and the ratio between the perturbation after one period and the initial period is the matrix element of the Jacobian.
+
+To simplify analysis, I split the each fourier mode into real and imagine ones. So if we set a cutoff of Fourier mode of N, we will have a 2N-dimension state space. Each points in the state space is represented by \(a_0, a_1, a_2 ...\). Here we once again use the classical \(PO_{10.25}\) orbit.
+
+As the largest amplitude of \(a_i\) is of \(10^{-1}\), the perturbation \(\Delta\) can be chosen the value like 0.001 ~ 0.01. I here firstly only make a perturbation to the first variable, i.e. \(a_0\). Now the problem has an initial value of \(a_0\pm\Delta, a_1, a_2 ...\). After a period of T, the resulting value becomes \(a_0+\delta_{1}, a_1+\delta_{2}, a_2+\delta_{3} ...\). The value \(\frac{\delta_{i}}{\Delta}\) is approximationly the first row of Jacobian matrix.
+
+\begin{figure}[h]
+\begin{minipage}[t]{0.45\linewidth}
+    \center
+    \includegraphics[width = \textwidth]{Floquet_Jacb1.eps}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\linewidth}
+    \center
+    \includegraphics[width = \textwidth]{Floquet_Jacb2.eps}
+\end{minipage}
+\caption{The orbit with \(\Delta = 0.000, \pm0.002, \pm0.004, \pm0.006, \pm0.008, \pm0.010\), the state space is \(a_0\) versus \(a_i\). }
+\end{figure}
+
+\begin{figure}
+    \center
+    \includegraphics[width = 2in]{StartandEnd_Jacb.eps}
+    \caption{ The start and end points of the orbit in phase space of \(a_0\) versus \(a_2\). The green and red lines is the end points while the blue line is the starting points. }
+\end{figure}
+
+So I wonder if this is a possible approximation for the Jacobian matrix of the periodic orbit. What's more, I have a question about the meanings of why we study floquet vectors, is it only to prove the hyperbolicity of the orbit or something else?
+
 \end{description}
 
 \renewcommand{\ssp}{a}
