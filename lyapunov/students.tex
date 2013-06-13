@@ -6,154 +6,31 @@
  \svnid{$Id$}
 \fi
 
-\chapter{Students log}
+\chapter{Log of student's projects}
 \label{c-students}
 
 \section{Kamal Sharma's project}
 \label{sect:introKamal}
-This section is an evolving draft of the introduction to Kamal Sharma's project.
 
-Predrag's vision of the project is sketched in \refchap{c-draft}. Studying
-\refchap{s:LyapunovVec} is also a good idea.
-Search for\\
-``2012-02-06 Evangelos Talked with Hugues at MPIPKS, created a to-do list:''
-\\
-to see Evangelos and Hugues concrete work plan.
-
-We hope that Kamal masters computation of covariant Lyapunov vectors for
-the \po s and \rpo s in our \KS\ database.
-
-\refChap{sect:LyapKS} deals specifically with the \KS\ calculations.
-
-\subsection{\KSe}
-
-\PC{2013-03-19 Predrag copied this from \refref{SCD07}, to set up
-the conventions for which version of \KSe\ is being used}
-%
-In the formulation
-adopted here, the time evolution of the `flame front velocity'
-$u=u(x,t)$ on a periodic domain $u(x,t) = u(x+L,t)$ is given by
-\beq
-  u_t = F(u) = -{\textstyle\frac{1}{2}}(u^2)_x-u_{xx}-u_{xxxx}
-    \,,\qquad   x \in [-L/2,L/2]
-    \,.
-\ee{ks}
-Here $t \geq 0$ is the time, and $x$ is the spatial coordinate.
-The subscripts $x$ and $t$ denote partial derivatives with respect to
-$x$ and $t$. In what follows
-we shall state results of all calculations either in units of the
-`dimensionless system size' $\tildeL$, or the system size $L = 2 \pi
-\tildeL$. All numerical results presented in this paper
-are for the system size $\tildeL=22/2\pi = 3.5014\ldots$.
-Spatial periodicity $u(x,t)=u(x+L,t)$
-makes it convenient to work in the Fourier space,
-\beq
-  u(x,t)=\sum_{k=-\infty}^{+\infty} a_k (t) e^{ i k x /\tildeL }
-\,,
-\ee{eq:ksexp}
-with the $1$-dimensional PDE \refeq{ks}
-replaced by an infinite set of
-ODEs for the complex Fourier coefficients $a_k(t)$:
-\beq
-\dot{a}_k= \pVeloc_k(a)
-     = ( q_k^2 - q_k^4 )\, a_k
-    - i \frac{q_k}{2} \sum_{m=-\infty}^{+\infty} a_m a_{k-m}
-\,,
-\ee{expan}
-where $q_k = k/\tildeL$.
-Since $u(x,t)$ is real, $a_k=a_{-k}^\ast$, and we can replace the
-sum by a $k > 0$ sum.
-
-
-
-\section{Daily log}
-
-This section is the daily (or at least, bi-weekly)  log of the students'
-work.
-
-\refChap{sect:LyapKS} deals specifically with the \KS\ calculations.
+The goal of the summer project is that Kamal adopts the Ginelli \etal\rf{GiChLiPo12} method for computation of covariant vectors to computation of \po\ Floquet vectors,  and implements it for the \po s and \rpo s in our \KS\ database.
 
 
 \begin{description}
 
-\item[2013-06-11 Predrag] Kamal Sharma  <ksharma41@gatech.edu> joined the
-collaboration as a summer research project student.
-He will enter notes on his day-to-day progress into this log.
-
-\item[2013-06-12 Kazumasa]
-Great! Please recommend Kamal to read, apart from ChaosBook.org,
-Francesco et al.'s
-\HREF{http://prl.aps.org/abstract/PRL/v99/i13/e130601}{PRL}\rf{ginelli-2007-99}, and their
-\HREF{http://arxiv.org/abs/1212.3961}{long follow-up paper}\rf{GiChLiPo12}.
-Otherwise he wouldn't understand anything on the codes (and the project).
-
-\item[2013-06-23 Predrag] Please ask me to help you get started with this
-subversion repository (come to me or skype me if there is something you
-cannot do):
-
-\texttt{svn://zero.physics.gatech.edu/siminos}
-
-user: sharma  password: Lyapunov
-
-\item[2013-06-12 Predrag to Kamal Sharma] If you look into directory
-siminos/chaos/ and pdflatex blog.tex, you can see an example of what
-a student work log looks like (after a semester of so of work). Chao
-Shi stopped with daily / weekly updates, and I ended up writing all
-of Chapter 1 {\em Kuramoto-Sivashinsky equation}, so we stopped the
-project.
-
-\item[2013-06-12 Predrag to Kamal] Please start writing down the
-ideas we talked about into \refsect{sect:introKamal}; this will
-be a continuously evolving draft of the introduction to the project
-report. I have entered pointers to Evangelos, Hugues and my ideas
-about what the project. If we know where are you in the project, we can
-help you.
-
-\item[2013-06-12 Kazumasa to Kamal Sharma]
-Please find my code in C++ and README at siminos/kazz/code/.
-You can compile and run it as usual C++ program.
-Note that, though I extracted a part of my long code relevant to our project,
- it contains many functions which are hardly used in the usual situation.
-
-In any case, we (Hugues and myself) (Predrag: I agree, totally)
-strongly recommend that you write your own code from zero, with
-reference to mine. This is the best way to learn what's going on in
-the code. Don't try to write a code with full functionality from the
-beginning, but start with a minimal code, which only computes, say,
-Lyapunov exponents.
-Confirming this works as you expect, you can add a code to compute
-the covariant vectors from a simple forward-backward process (and
-check if the exponents values computed from the covariant vectors
-agree with those from the Gram-Schmidt method). For practical use,
-you have to implement the "block-by-block" computation of the
-vectors, to overcome memory issues (see discussions in Sec. 4.2 in F.
-Ginelli \textit{et al.}, \arXiv{1212.3961}\rf{GiChLiPo12}). This is
-the first step you should reach in this project.
-
-\item[2013-06-12 Kazumasa to Kamal Sharma]
-For numerical integration of the KS equation, I used the
-operator-splitting algorithm (Adams-Moulton method + Heun's method),
-typically with time step 0.005.
-For more detail, look at Sec. II A in K. A. Takeuchi \textit{et al.},
- Phys. Rev. E \textbf{84}, 046214 (2011)\rf{TaGiCh11}.
-
 \item[2013-06-12 Predrag] Our first goal is to learn
 how to compute \emph{all} eigenvectors (CLVs) and Floquet multipliers
-(mistakenly often called `Lyapunov exponents' in this text) of
-\JacobianM s for \po s computed in \refref{SCD07}. For \KS\
+(in literature mistakenly often called `Lyapunov exponents') of
+\JacobianMs\ for \po s computed in \refref{SCD07}. 
+Please study this reference in depth. For \KS\
 calculations of \refchap{sect:LyapKS}, system size $L=22$, this is 62
-eigenvectors. We have at least 40,000 \rpo s. You will first check
-whether you agree with Kazumasa's results for his favorite orbit
-favorite cycle \PO{10.25}, then the new work starts.
+eigenvectors. We have at least 40,000 \rpo s.
 
-Write up full fledged
-derivations and explanations of what you are learning - clear enough
-that some of that text can be later used in your term report, or a
-publication, if we get that far. Clear exposition is 1/3 of research.
+You will first check whether you agree with Kazumasa's results for his favorite \po\ \PO{10.3} with $\period{p} = 10.253$, then the new work starts. \PO{10.3} is the prime orbit period of a pre-periodic orbit, the full period is twice that, see Fig. 6.1\,(i) \emph{Selected relative periodic and pre-periodic orbits} in \refref{SCD07}. 
 
 Save your code in a
 \texttt{siminos/sharma/} subfolder. You want to confirm the result in \refref{SCD07},
-\HREF{http://www.cns.gatech.edu/~predrag/papers/SCD07.pdf}{sect. 4}:
+see
+\HREF{http://www.cns.gatech.edu/~predrag/papers/SCD07.pdf}{sect. 4} in that paper:
     \PC{the source file is in \texttt{siminos/rpo\_ks/}}
 
 \begin{quote}
@@ -171,151 +48,127 @@ of KS for large systems sizes.
  [...]''
 \end{quote}
 
-\item[2013-06-12 Predrag] To help a bit with starting writing, I will
-edit your text (you can see edits by using diff in Tortoise).
+\item[2013-06-12 Predrag] 
+This section is an evolving draft of Kamal Sharma's project report;
+daily progress is reported in \refsect{sect:dailyBlKamal}.
 
-{\color{red} Write down here}, in your
+
+Please {\color{red} write down here}, in your project's
 log, the equations you are integrating (you can clip and paste
-equations from elsewhere in this repository to save time). When you
+equations from elsewhere in this repository to save time). 
+This will be a continuously evolving draft of the project report.
+When you
 write up the project report it will all be needed, so you might just
 as well do it now.
+
+If we know where are you in the project, we can help you.
+Write up full fledged
+derivations and explanations of what you are learning - clear enough
+that some of that text can be later used in your project report, or a
+publication, if we get that far. Clear exposition is 1/3 of research.
+
+
+
+My vision of the project is sketched in \refchap{c-draft}. Studying \refchap{s:LyapunovVec} is also a good idea.
+\refChap{sect:LyapKS} deals specifically with the \KS\ calculations.
+Search for\\
+``2012-02-06 Evangelos Talked with Hugues at MPIPKS, created a to-do list:''
+\\
+to see Evangelos and Hugues work plan.
+
+\item[2013-06-12 Predrag] 
+Setting up Kamal for the svn (subversion) repository access 
+
+\texttt{svn://zero.physics.gatech.edu/siminos}
+
+you will
+need this userID, password, so save it in your secret stash of magic
+words:
+\\
+user: sharma  password: Lyapunov
+
+to access repositories read about subversion/svn and VPN access
+on
+\HREF{http://cns.gatech.edu/CNS-only} {cns.gatech.edu/CNS-only} - to access any
+of the internal CNS pages you will need
+
+cnsuser           cnsweb
+
+\HREF{http://ChaosBook.org/library}{Click here} for internal reprints and
+books collection. You will need
+
+student           Lautrup
+
+I do not have the patience to enter every paper in the listing on this
+internal home page, so many papers are there but not listed. Their PDF file
+name is the same as their bibTeX name for the publication. For example, a
+book by Wassim M. Haddad\rf{HaCh08} has BibTeX name
+\texttt{HaCh08}, so I put a copy of their book into the
+ChaosBook.org/library as
+
+\HREF{http://ChaosBook.org/library/HaCh08.pdf}
+{ChaosBook.org/library/HaCh08.pdf}.
+
+If you download some publications that would be nice to save for other
+people, let me know, and I'll show you how to do it.
+
+To compile the blog, 
+\begin{verbatim}
+ cd siminos/lyapunov/
+ pdflatex blog; bibtex blog; pdflatex blog
+\end{verbatim}
+
+To help a bit with starting writing, I will
+edit your text (you can see edits by using diff in Tortoise).
 
 Here is how you can
 \Kamaledit{highlight your edits}, and here is how you can add a dated
 footnote\Kamal{2013-03-03}{This is a footnote. Always enter the date, so
 we know how old it is.}.
 
-Always trim the figures, avoid lots of white
-space around the edges.
-
-I agree with Kazumasa: you want to write your own code,
-but not necessarily reinvent the wheel. There is KS code various
-places in this svn repository, for example in
-\texttt{siminos/matlab/}, that you might want to compare performance
-of your code with. Evangelos can help you with that.
-
-
-Study the methods described in
-\HREF{http://www.cns.gatech.edu/~predrag/papers/SCD07.pdf}
-{Appendix A} of \refref{SCD07}.
-The authors have lots of experience and they went to the
-    trouble of explaining the best methods they know, so why not read
-    them and implement them?
-
-
-Then I integrate numerically the ``basis set'' using the 4-th order
-explicit Runge-Kutta integration routine, and the method described in
-depth in the
-Study Ginelli \etal\rf{GiChLiPo12}? That should be
-    much more detailed than the PRL\rf{ginelli-2007-99}
- (read it here: \arXiv{1212.3961}).
-
-The plot of what you get for $L=22$
-Lyapunov spectrum should confirm the published results (see
-{\bf [2009-09-13 Ruslan]} on \refpage{sect:LyapKS},
-\reffig{fig:lyapSpecCLG}, \reffig{fig:lyapSpec1},
-\reffig{fig:lyapSpec}, and \reftab{tab:ks22shad}) and the
-figure\PC{which one? Always state the number} in Kazumasa \etal\
-paper\rf{TaGiCh11} (read it
-\HREF{http://chaosbook.org/library/KoSa11.pdf} {here}).
-
-\item[2013-06-12 Predrag]
-
-Read this blog, study the relevant \KS\
-papers\rf{SCD07,Christiansen97}, so you do not reinventthe wheel.
-Everything that is written in these papers is there for a reason...
-
-Graduate students are brave people who immediately jump into the deep
-end of the pool, without any testing. Here are two 2\dmn\ maps, the
-Lozi map (for $a=1.85, b=0.3$)
-% \PC{need figure of Lozi strange attractor}
-\bea
-   x_{n+1} &=& 1-a |x_{n}|+ b y_n  \continue
-   y_{n+1} &=& x_{n}
-\,,
-\label{e_lozi_def}
-\eea
-and the H\'enon map (for $a=1.4, b=0.3$; described at length in
-\refchap{c-Henon})
-\bea
-    x_{n+1}&=&1-ax^2_n+b y_n
-        \continue
-    y_{n+1}&=& x_n
-\,,
-\label{eq2.1a}
-\eea
-for which fixed points are available analytically\rf{DasBuch} (for
-the Lozi map all periodic points are available analytically). So see
-what Floquet exponents (often incorrectly called `Lyapunov' exponents
-) your program returns for \po s of these humble maps, and then for
-ergodic trajectories, before running the programs on ergodic
-trajectories in zillion dimensions.
-
-If your programs only apply to continuous time flows (ODEs rather
-than maps), ChaosBook\rf{DasBuch} has \eqva\ and \po s for 2\dmn\
-Lorenz and R\"ossler flows, and Evangelos has lots of \rpo s for the
-\cLe; make sure your programs work on small systems first.
-
-\item[2013-06-12 Kazumasa]
-Stiffness matters, implicit methods are common ways to overcome this problem,
- and that's why I used the Adams-Moulton method.
-To further improve, it's better to split the linear and non-linear terms
- by the operator splitting method
- and use the implicit method only to the linear terms where the stiffness is.
-I'm not saying that my algorithm is the best way to simulate the KS equation,
- but at least it's suited to practical use.
-
-\item[2013-06-12 Ruslan]
-Or you can use the method developed by Cox and
-Matthews\rf{cox02jcomp} and improved by Kassam and
-Trefethen\rf{ks05com}, where the linear part is integrated exactly.
-My Matlab code {\tt ksfmetd2.m} is based on this method and it is
-stable and reasonably accurate with time step as large as 0.25.  It
-also solves variational problem, so can be used to calculate Lyapunov
-exponents.  See {\tt ksfmlyap.m} in {\tt siminos/matlab/ruslan/},
-read {\tt 00ReadMe.txt}.  If you want to compute Lyapunov exponents
-using the standard GS procedure, the relevant code is in {\tt
-ksdupo.m} in the same folder (look for the cell "\%\% Compute
-Lyapunov exponents of KS (using ksfmlyap and GS)").
-
-Ruslan uses the same \KSe\ convention as Kassam and
-Trefethen\refrefs{ks05com}. I have saved the Trefethen Matlab code
-\HREF{http://chaosbook.org/extras/Trefethen/kursiv.m} {here}. Perhaps
-you want to c++ it, see how it runs for you, or run it in Matlab and
-compare with your code. There might be something else useful on
-\HREF{http://chaosbook.org/extras/}{ChaosBook.org/extras} homepage,
-for example the simulations by the spring 2007 GaTech chaos class.
-
-Siminos has other codes, if needed, on a different repository. My own
-\KS\ code is probably too antiquated to be worth your time.
-
-\begin{verbatim}
- cd siminos/lyapunov/
- pdflatex blog; bibtex blog; pdflatex blog
-\end{verbatim}
-
-You can search the blog for 'Trefethen' for other discussions
-(Kazumasa has reservations about the Trefethen\rf{ks05com} algorithm,
-but Ruslan is OK with it).
-
-A discussion of stiffness in integrating PDEs can be found
-\HREF{http://www.pvv.ntnu.no/~berland/talks/berland05expintro.pdf}
-{here}. \HREF{http://www.math.ntnu.no/num/expint/} {Here} is Matlab
-package for testing 47 (!) schemes.
-
-\item[2013-06-12 Predrag]
-I have written a new chapter in ChaosBook.org, as a start of what needs to be written up
-about your computation of Lyapunov spectra. It would be great if you
-continued the exposition in your project report
-\refsect{sect:introKamal}. In the first draft, do not worry about
-English -we'll help you with that-- just focus on the formulas. Write
+In the first draft, do not worry about
+English, just focus on the formulas. Write
 down what a starting graduate student would need to know to be able
 to set up the calculation.
 
-\item[2013-06-12 Predrag]                               \inCB
+If you want source files for ChaosBook.org to clip and past from, you can
+\begin{verbatim}
+  svn checkout svn:\\zero.physics.gatech.edu\dasbuch
+\end{verbatim}
+
+Always trim the figures, avoid lots of white
+space around the edges.
+
+If you look into directory
+siminos/chaos/ and pdflatex blog.tex, you can see an example of what
+a student work log looks like (after a semester of so of work).
+For examples of
+what final reports look like, see \wwwcb{/projects}.
+
+
+Come to me or Skype me if there is something you
+cannot figure out.
+
+\end{description}
+
+
+\subsection{Covariant vectors}
+
+\begin{description}
+
+\item[2013-06-12 Predrag]
+I rewrote ChaosBook.org chapters
+\HREF{http://chaosbook.org/paper.shtml\#stability} {``Linear stability''},
+\HREF{http://chaosbook.org/paper.shtml\#invariants} {``Cycle
+stability''}, and 
+\HREF{http://chaosbook.org/paper.shtml\#Lyapunov} {``Lyapunov
+exponents''}, to help graduate students. Any suggestion for improving 
+these chapters is greatly appreciated.
+
+                              \inCB
 {Finite-time} {Lyapunov} or \emph{characteristic} exponents and
 associated \emph{principal axes} in the theory of dynamical systems
-are defined above in eq.~\refeq{e:finTimeLyapExp}, chapter
+are discussed in chapter
 \HREF{http://chaosbook.org/paper.shtml\#Lyapunov} {``Lyapunov
 exponents''}. Oseledec \emph{Lyapunov exponents}\rf{lyaos} are the
 $\zeit\to\infty$ limit of these. \emph{Floquet multipliers} and
@@ -345,7 +198,6 @@ At that time Goldhirsch \etal\ had no proof that the long-time Lyapunov
 exponents converge to the stability exponents (Kazumasa, do you have
 some more recent paper that you prefer to Goldhirsch \etal?).
 
-\item[Predrag 2009-10-15]
 Trevisan and Pancotti\rf{TrePan98} \emph{Periodic orbits, Lyapunov
 vectors, and singular vectors in the Lorenz system} (see above, read
 it \HREF{http://chaosbook.org/library/TrePan98.pdf}{here}))
@@ -364,25 +216,203 @@ subspace of the leading Lyapunov vectors.''
 They have very nice pictures for Lorenz unstable orbits illustrating that.
 
 \item[2013-06-12 Predrag]
-More existential quandary: I rewrote chapters
-\HREF{http://chaosbook.org/paper.shtml\#stability} {``Linear stability''}
-and chapter \HREF{http://chaosbook.org/paper.shtml\#invariants} {``Cycle
-stability''}, and started writing the new chapter
-\HREF{http://chaosbook.org/paper.shtml\#Lyapunov} {``Lyapunov
-exponents''}, to help graduate students. Any suggestion for what is wrong with
-these chapters?
+Graduate students are brave people who immediately jump into the deep
+end of the pool, without any testing. Here are two 2\dmn\ maps, the
+Lozi map (for $a=1.85, b=0.3$)
+% \PC{need figure of Lozi strange attractor}
+\bea
+   x_{n+1} &=& 1-a |x_{n}|+ b y_n  \continue
+   y_{n+1} &=& x_{n}
+\,,
+\label{e_lozi_def}
+\eea
+and the H\'enon map (for $a=1.4, b=0.3$; described at length in
+\refchap{c-Henon})
+\bea
+    x_{n+1}&=&1-ax^2_n+b y_n
+        \continue
+    y_{n+1}&=& x_n
+\,,
+\label{eq2.1a}
+\eea
+for which fixed points are available analytically\rf{DasBuch} (for
+the Lozi map all periodic points are available analytically). So see
+what Floquet exponents 
+your program returns for \po s of these humble maps, and then for
+ergodic trajectories, before running the programs on ergodic
+trajectories in zillion dimensions.
 
-\item[2013-06-12 Kamal Sharma to Siminos]
-Can you help me enter the database of the periodic orbit of KS equation and give me an instruction about how to use these datas?
+If your programs only apply to continuous time flows (ODEs rather
+than maps), ChaosBook\rf{DasBuch} has \eqva\ and \po s for 2\dmn\
+Lorenz and R\"ossler flows, and Evangelos has lots of \rpo s for the
+\cLe; make sure your programs work on small systems first.
+
+\end{description}
 
 
-\item[2013-03-27 Evangelos]
-I copy below two entries from siminos/blog which answer the same question.
-If you run into problems or have questions please email me so that we can arrange to talk through skype.
+\subsection{\KSe}
+
+\PC{2013-03-19 Predrag copied this from \refref{SCD07}, to set up
+the conventions for the \KSe\ calculations.}
+%
+In the formulation
+adopted here, the time evolution of the `flame front velocity'
+$u=u(x,t)$ on a periodic domain $u(x,t) = u(x+L,t)$ is given by
+\beq
+  u_t = F(u) = -{\textstyle\frac{1}{2}}(u^2)_x-u_{xx}-u_{xxxx}
+    \,,\qquad   x \in [-L/2,L/2]
+    \,.
+\ee{ks}
+Here $t \geq 0$ is the time, and $x$ is the spatial coordinate.
+The subscripts $x$ and $t$ denote partial derivatives with respect to
+$x$ and $t$. In what follows
+we shall state results of all calculations either in units of the
+`dimensionless system size' $\tildeL$, or the system size $L = 2 \pi
+\tildeL$. All numerical results presented in this report
+are for $\tildeL=22/2\pi \simeq 3.5014$.
+Spatial periodicity $u(x,t)=u(x+L,t)$
+makes it convenient to work in the Fourier space,
+\beq
+  u(x,t)=\sum_{k=-\infty}^{+\infty} a_k (t) e^{ i k x /\tildeL }
+\,,
+\ee{eq:ksexp}
+with the $1$-dimensional PDE \refeq{ks}
+replaced by an infinite set of
+ODEs for the complex Fourier coefficients $a_k(t)$:
+\beq
+\dot{a}_k= \pVeloc_k(a)
+     = ( q_k^2 - q_k^4 )\, a_k
+    - i \frac{q_k}{2} \sum_{m=-\infty}^{+\infty} a_m a_{k-m}
+\,,
+\ee{expan}
+where $q_k = k/\tildeL$.
+Since $u(x,t)$ is real, $a_k=a_{-k}^\ast$, and we can replace the
+sum by a $k > 0$ sum.
 
 
-\item[2013-01-21 Evangelos to Predrag] Most of the data you need are
-already in `siminos/matlab/ruslan/kse22orbits.mat', in a structure called eq.
+\begin{description}
+
+\item[2013-06-12 Predrag to Kamal] 
+Read this blog, study the relevant \KS\
+papers\rf{SCD07,Christiansen97}
+
+\end{description}
+
+
+\section{Daily log}
+\label{sect:dailyBlKamal}
+
+This section is the daily (or at least, bi-weekly)  log of the Kamal's
+work.
+
+\begin{description}
+
+\item[2013-06-11 Predrag] Kamal Sharma  <ksharma41@gatech.edu>, 
+1. year Georgia Tech physics graduate student, joined the
+collaboration as a summer research project.
+Kamal will enter notes on his day-to-day progress into this log.
+
+\item[2013-06-12 Kazumasa  to Kamal]
+Great! Please read (apart from ChaosBook.org)
+%Francesco 
+Ginelli \etal\rf{ginelli-2007-99}
+\HREF{http://prl.aps.org/abstract/PRL/v99/i13/e130601}{PRL}, and the
+\HREF{http://arxiv.org/abs/1212.3961}{long follow-up paper}\rf{GiChLiPo12},
+(much more detailed than the PRL).
+Otherwise you will not understand anything on the codes (and the project).
+
+My C++  code and README is in siminos/kazz/code/.
+You compile and run it as C++.
+Note that, though I extracted a part of my long code relevant to our project,
+ it contains many functions which you probably will not need.
+
+Hugues and I 
+strongly recommend that you write your own code from zero, without
+reference to mine. This is the best way to learn what's going on in
+the code. Don't try to write a code with full functionality from the
+beginning, but start with a minimal code, which only computes, say,
+Lyapunov exponents.
+Confirming that this works as you expect, you can add a code to compute
+the covariant vectors from a simple forward-backward process (and
+check if the exponents values computed from the covariant vectors
+agree with those from the Gram-Schmidt method). For practical use,
+you have to implement the "block-by-block" computation of the
+vectors, to overcome memory issues (see discussions in Sec. 4.2 in 
+Ginelli \etal\rf{GiChLiPo12}, \arXiv{1212.3961}). This is
+the first step you should reach in this project.
+
+For numerical integration of the KS equation, I used the
+operator-splitting algorithm (Adams-Moulton method + Heun's method),
+typically with time step 0.005.
+For more detail, read Sect.~II~A in Takeuchi \etal\rf{TaGiCh11}.
+Stiffness matters, implicit methods are common ways to overcome this problem,
+ and that's why I used the Adams-Moulton method.
+To further improve, it's better to split the linear and non-linear terms
+ by the operator splitting method
+ and use the implicit method only to the linear terms where the stiffness is.
+I'm not saying that my algorithm is the best way to simulate the KS equation,
+ but at least it's suited to practical use.
+
+\item[2013-06-12 Predrag  to Kamal]
+A discussion of stiffness in integrating PDEs can be found
+\HREF{http://www.pvv.ntnu.no/~berland/talks/berland05expintro.pdf}
+{here}. \HREF{http://www.math.ntnu.no/num/expint/} {Here} is Matlab
+package for testing 47 (!) schemes.
+
+I agree with Kazumasa: you want to write your own code,
+but not necessarily reinvent the wheel. There is KS code various
+places in this svn repository, for example in
+\texttt{siminos/matlab/}, that you might want to compare performance
+of your code with. Evangelos can help you with that.
+
+
+Study the methods described in
+\HREF{http://www.cns.gatech.edu/~predrag/papers/SCD07.pdf}
+{Appendix A} of \refref{SCD07}.
+The authors have lots of experience and they went to the
+    trouble of explaining the best methods they know, so why not read
+    them and implement them?
+
+The plot of what you get for $L=22$
+Lyapunov spectrum should confirm the published results (see
+{\bf [2009-09-13 Ruslan]} on \refpage{sect:LyapKS},
+\reffig{fig:lyapSpecCLG}, \reffig{fig:lyapSpec1},
+\reffig{fig:lyapSpec}, and \reftab{tab:ks22shad}) and the
+figure\PC{which one? Always state the number} in Kazumasa \etal\
+paper\rf{TaGiCh11} (read it
+\HREF{http://chaosbook.org/library/KoSa11.pdf} {here}).
+
+\item[2013-06-12 Ruslan]
+You can use the method developed by Cox and
+Matthews\rf{cox02jcomp} and improved by Kassam and
+Trefethen\rf{ks05com}, where the linear part is integrated exactly.
+My Matlab code {\tt ksfmetd2.m} is based on this method and it is
+stable and reasonably accurate with time step as large as 0.25.  It
+also solves variational problem, so can be used to calculate Lyapunov
+exponents.  See {\tt ksfmlyap.m} in {\tt siminos/matlab/ruslan/},
+read {\tt 00ReadMe.txt}.  If you want to compute Lyapunov exponents
+using the standard GS procedure, the relevant code is in {\tt
+ksdupo.m} in the same folder (look for the cell "\%\% Compute
+Lyapunov exponents of KS (using ksfmlyap and GS)").
+
+\item[2013-06-12 Predrag]
+Ruslan uses the same \KSe\ convention as Kassam and
+Trefethen\refrefs{ks05com}. I have saved the Trefethen Matlab code
+\HREF{http://chaosbook.org/extras/Trefethen/kursiv.m} {here}. Perhaps
+you want to c++ it, see how it runs for you, or run it in Matlab and
+compare with your code. There might be something else useful on
+\HREF{http://chaosbook.org/extras/}{ChaosBook.org/extras} homepage,
+for example the simulations by the spring 2007 GaTech chaos class.
+You can search the blog for 'Trefethen' for other discussions
+(Kazumasa has reservations about the Trefethen\rf{ks05com} algorithm,
+but Ruslan is OK with it).
+Siminos has other codes, if needed, on a different repository.
+
+
+\item[2013-01-21 Evangelos] The \KS\ data you need is in \\
+\texttt{siminos/matlab/ruslan/kse22orbits.mat},
+\\
+in a structure called eq.
 Eigenvalues are in the field eq.eig and right eigenvectors are in the field eq.evec.
 [e.g. eq(k).evec(:,1) is the eigenvector which corresponds to the first eigenvalue eq(k).eig(1)
 of the k'th equilibrium]. However, I have not used the data for a long time so, it would
@@ -393,26 +423,26 @@ in a column vector correspond to real and imaginary part of the Fourier modes
 \]
 and thus here there are $31+1$ complex Fourier modes (the zero'th mode is not included)).
 
-In order to get the left eigenvectors you will need to actually compute the
-stability matrix, which I have never done with Ruslan's code, but it should be
-there as well and I am sure Ruslan can explain which function to call.
+In order to get the left eigenvectors you will need to compute the
+stability matrix.
 
-\item[2013-06-12 Ruslan] To compute stability matrix in Matlab, use `siminos/matlab/ruslan/ksfm.m':\\ {\tt [f, df] = ksfm(0,eq(1).a,22.0)}, where {\tt df} will be the stability matrix of $EQ_1$.
+If you run into problems or have questions please email me so that we can arrange to talk through Skype.
 
-\item[2013-06-12 Predrag] $\period{p} = 10.253$ for \po\ \PO{10.3}
-is the prime orbit period of a pre-periodic orbit, the full period is
-twice that, see Fig. 6.1\,(i) \emph{Selected relative periodic and
-pre-periodic orbits} in \refref{SCD07}. Please study this reference in
-depth.
 
-\item[2013-06-12 Ruslan]
+\item[2013-06-12 Ruslan] To compute stability matrix in Matlab, use 
+\\
+\texttt{siminos/matlab/ruslan/ksfm.m}:
+\\ {\tt [f, df] = ksfm(0,eq(1).a,22.0)}, where {\tt df} will be the stability matrix of $EQ_1$.
+
 The idea of the method is described in \refref{SCD07} Appendix A and
 B.  The Jacobian matrix is calculated from (B.1) which uses solutions
 of (A.4) and (A.6).  Matlab code {\tt ksfmetd2.m} solves (A.4) and
 (A.6) simultaneously.  The Jacobian matrix is output in {\tt da}.
-You don't need anything else.  The method you propose above is very
-inaccurate, since matrices $Q$ and $N$ are also functions of $t$.
+You don't need anything else.  
 
+\item[2013-06-1? Kamal] Here is my first blog post:
+
+[.....]
 
 
 \end{description}
