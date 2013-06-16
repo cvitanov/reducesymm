@@ -16,23 +16,7 @@ so that I could at least demonstrate the abillity to secure my own funding.
 The plan:
 
 1) Apply for Marie Curie Intra-european fellowship to go to Bordeaux
-Proposal will be on something like"
-"Complex dynamics in laser-plasma interactions"
-	[ ] Deadline August 14 2013
-	[x] Confirmed Vladimir is interested
-	[x] Read through required material
-	[ ] Arranged for reccomendation letters	(up to three)
-		[] Predrag
-		[] Loukas Vlahos?
-		[] Stefan Skupin
-		[] Theo Schlegel?
-		[] Didier Benisti?
-	[x] Create account in Cordis
-	[] Write scientific part of proposal by 2013-06-30
-	[] Send to Vladimir
-	[] Ask Vladimir (or some administrator at Bordeaux) 
-	   to prepare/edit the part which relates to the host
-	[] Finish by 2013-07-30
+    see siminos/jobs/2014/mc-ief
 
 3) DFG grant to stay in Germany
 	[] No deadline, recycle MC proposal when ready
