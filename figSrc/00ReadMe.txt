@@ -12,6 +12,11 @@ read also
     dasbuch/book/FigSrc/00ReadMe.txt
 
 ----------------------------------------------------------------
+                                       Predrag 2013-06-18
+tool for creating stunning three-dimensional graphics
+        www.povray.org
+
+----------------------------------------------------------------
 Converting eps to pdf
                                        Predrag 2013-03-22
 robjhyndman.com/hyndsight/converting-eps-to-pdf
