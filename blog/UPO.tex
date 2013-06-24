@@ -16,6 +16,7 @@ current placement into coherent sections, suitable for
 inclusion into ChaosBook.org, or, God Forbid, actual {\em
 publications}.
 
+\renewcommand{\vel}{\ensuremath{v}}   % state space velocity
 
 \section{Symmetries imply possible existence of \rpo s}
 \label{sec:SymRPO}
@@ -2450,134 +2451,6 @@ dynamics values.''
 \item[2013-05-08 Carl Dettmann] Makes as much sense as Alan Sokal,
 though.
 
-\item[2013-06-15 Nick Trefethen to Divakar] % <trefethen@maths.ox.ac.uk>
-We had a visit from Qiqi Wang of MIT.  [...] His problem is (modulo
-details) to compute the average of a quantity driven by a chaotic
-system.  For example, what's the average $<z(t)>$ of the $z$
-component of a Lorenz equation solution, averaged over infinite time?
-[...] If anybody has a slick algorithm for this, it's probably you.
-Any pointers?
-
-
-\item[2013-06-17 Divakar to Nick Trefethen]
-Computing averages of chaotic sets is the focus of periodic orbit
-theory as developed by Predrag Cvitanovi\'c and others\rf{DasBuch}.
-The formulas of periodic orbit theory are a sophisticated form of
-extrapolation. For a few examples, they give an amazing level of
-accuracy.
-
-In one of my Lorenz papers\rf{DV04}, I applied periodic orbit theory
-to the Lorenz system. The average quantities I looked at were the
-Hausdorff dimension and the Lyapunov exponent. Periodic orbit theory
-showed good convergence but not the super-exponential convergence it
-gives for some other examples. The treatment of these formulas  in
-the attached paper is very brief, but Predrag's webbook
-\wwwcb{} has all the
-details. It is not difficult to adapt the formulas to compute the
-average of $z(t)$.
-
-The reason for the somewhat slower convergence for Lorenz is the
-fixed point at the origin which belongs to the closure of the Lorenz
-attractor. Predrag and others have worked on accelerating convergence
-in the presence of such intermittency.
-
-\item[2013-06-22 Predrag]
-Reading Qiqi Wang\rf{Wang13}:
-
-                                        \toCB
-P. Moin \etal\ seem to refer to chaotic trajectories as `unsteady'?
-Or are limit cycles also `unsteady'? Also, while this literature has
-a flavor of `Koopman modes', `Dynamic mode decomposition', Santa
-Barbara and Stockholm groups are never cited.
-
-``This paper outlines a computational method for efficiently
-estimating the sensitivity derivative of time averaged statistical
-quantities, relying on a single trajectory over a small time interval.''
-\\
-{\bf 2013-06-22 Predrag} Depend how small is ``small.'' If it is
-shorter than the shortest recurrent time of the flow, it \emph{cannot} probe
-enough of the \statesp\ to give a reliable expectation value for an
-observable.
-
-``In simulations of chaotic dynamical systems, such as turbulent flows and
-the climate system, many output quantities of interest are
-                                \toCB
-`statistical
-averages'.  Denote the state of the dynamical system as $x(t)$;
-for a function of the state $J(x)$,
-the corresponding statistical quantity $\langle J\rangle$ is defined
-as an average of $J(x(t))$ over an infinitely long time interval:''
-\begin{equation} \label{Wang13:stats}
-\langle J\rangle = \lim_{T\rightarrow\infty}
-\frac1T \int_0^T J(x(t))\,dt\;,
-\end{equation}
-\\
-{\bf 2013-06-22 Predrag} cool, the same as ChaosBook 'time average of
-the observable' eq.~(17.4). (All equation references are to
-\HREF{http://chaosbook.org/version14/pdf.shtml} {version 14} of Dec
-31 2012).
-
-``The differentiability of these statistical averages to parameters
-of interest as been established through the recent developments in
-the Linear Response Theory for dissipative
-chaos\rf{Ruelle96,Ruelle09}. A class of chaotic dynamical systems,
-known as `quasi-hyperbolic' systems, has been proven to have
-statistical quantities that are differentiable with respect to small
-perturbations.  These systems include the Lorenz attractor, and
-possibly many systems of engineering interest, such as turbulent
-flows.''
-\\
-{\bf 2013-06-22 Predrag} I am no fan of Ruelle\rf{Ruelle96,Ruelle09}
-Linear Response Theory; as chaotic sets are in generally structurally
-unstable, the averages computed on them are in general not
-differentiable with respect to system parameter variations.
-
-``The key idea of our method, inversion of the `shadow' operator, is
-already used as a tool for proving structural stability of strange
-attractors\rf{Ruelle96}. The key strategy of our method, divide and
-conquer of the shadow operator, is inspired by recent advances in
-numerical computation of the Lyapunov covariant
-vectors\rf{ginelli-2007-99,WoSa07}.''
-\\
-{\bf 2013-06-22 Predrag} That's cool, I am fan of `covariant vectors'.
-
-Might have to read Krakos\etal\
-\emph{Sensitivity analysis of limit cycle oscillations},
-and similar \refref{KrWaHaDa12,EyHaLe04}.
-
-                                    \toCB
-``For a trajectory $x(t)$ satisfying $\frac{dx}{dt} = f(x)$ and a
-scalar or vector field $a(x)$ in the state space, we often use
-$\frac{da}{dt}$ to denote $\frac{da(x(t))}{dt}$.  The chain rule
-$\frac{da}{dt} = \frac{da}{dx}\cdot \frac{dx}{dt} =
-\frac{da}{dx}\cdot f$ is often used without explanation.''
-
-
-\item[2013-06-17 Divakar to Nick Trefethen]
-Zai-Qiao Bai (Beijing Normal University) has adapted periodic orbit
-theory to random recurrences\rf{Bai07,Bai09,Bai11}. I believe he has
-computed the random Fibonacci constant with about 20 digits of
-accuracy.
-
-\item[2013-06-22 Predrag]
-Zai-Qiao Bai\rf{Bai07} is a continuation of Ronnie
-Mainieri's work\rf{Mainieri92a,Mainieri92b}. Our ambition at that
-time was that we could transfer the results on super-exponential
-convergence of our dynamical \Fd s back to stat mech - did not
-get much traction on that project.
-
-McLellan\rf{McLellan12} writes ``Viswanath\rf{DV00} has shown that almost all
-random Fibonacci sequences grow exponentially at the rate
-1.13198824.... He was only able to find 8 decimal places of this
-constant through the use of random matrix theory and a fractal
-measure, although Bai\rf{Bai07} has extended the Viswanath's constant by 5
-decimal places.'' I have also learned about the Vibonacci numbers :)
-
-Doing literature searches these days is scary - it's impossible to keep up,
-no matter how specialized the problem is... Should probably check these:
-Lan\rf{Lan11,ZhaLan13},
-Forrester\rf{Forrester13}.
-
 
 %\item[2012-XX-XX Predrag]
 %XXX \etal\rf{XXX},
@@ -2590,3 +2463,4 @@ Forrester\rf{Forrester13}.
 \end{description}
 
 \renewcommand{\ssp}{a}             % PDE state space point
+\renewcommand{\vel}{F}      % state space velocity vector
