@@ -3795,6 +3795,40 @@ the general case - anyway, my formula is probably wrong, try to do it
 your own way. Git pushing all figures for atlas12.tex paper now, might
 continue on this later.
 
+\item[2013-07-25  Burak]
+I finished chapter 10 yesterday. I'm summarizing my understanding: Reduced state space is useful for visualization because on the slice, realative periodic orbits become periodic orbits. It, I think, is more useful than co-moving frames method, because with co-moving frames you can only catch one relative orbit or maybe it's integer dividers, but in method of slices you get them all (There may be a stronger reason, this is what I understood for now). We can impelement the slice method in two different ways: Method of moving frames (post-processing) and dynamics within the slice. 
+
+In the moving frames method, we take a full solution (a numerical simulation or experimental data), and pick a slice (a hyperplane given by $\langle \hat{x} - \hat{x}' | t' \rangle = 0$ where $\hat{x}'$ is called a template point, and $t' = \textbf{T} x'$ is the group tangent for the template point) and find the transformations $\hat{x(\tau)} = g(\phi(\tau))^{-1} x(\tau)$ which satisfies the slice condition. For SO(n), infinitesimal generator \textbf{T} is antisymmetric hence the template tangent is perpendicular to template point so the slice condition symplifies to $\langle \hat{x} | t' \rangle = 0$. Getting the point $x$ to the slice hyperplane by group operations would be equivalent to the minimizing the Euclidian distance between the transformed point and the template point because by doing that, we eliminate the distance between points $\hat{x}$ and $\hat{x}'$ perpendicular to the slice hyperplane and only remaining seperation is the seperation on the slice (is this a correct way of understanding the extremum argument?). Here is the resulting plots my attempt of applying moving frames method on Complex Lorenz flow:
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.9\textwidth]{BBmovingframes.png}
+\end{center}
+\caption{ Method of moving frames applied on Complex Lorenz Flow. 
+    }
+\label{fig:BBmovingframesCL}
+\end{figure}
+
+We can, at least when the symmetry group is abelian, solve the dynamics on the reduced space and after that, map it back to the original space if we want to. For the dynamics within the slice, we get following equations:
+
+\beq
+  \hat{v}(\hat{x}) = v(\hat{x}) - \dot{\phi} (\hat{x}) t(\hat{x})
+\eeq
+
+\beq  
+  \dot{\phi}(\hat{x}) = \langle v(\hat{x})|t' \rangle / \langle t(\hat{x})|t' \rangle  
+\eeq
+
+Here the problem is possibility of getting tangent at the pont $t(\hat{x})$ and the template tangent perpendicular to each other. For this reason we need multiple, intersecting slices in such a way that this does not happen. Then we can solve the problem accurately on the reduced state space. My unsuccesful attempt of solving reduced dynamics on one slice:
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.9\textwidth]{BBslicedynamics.png}
+\end{center}
+\caption{ Dynamics of Complex Lorenz Flow computed on one slice. 
+    }
+\label{fig:BBslicedynamics}
+\end{figure}
 
 \end{description}
 \renewcommand{\ssp}{a}
