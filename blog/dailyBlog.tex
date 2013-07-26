@@ -1,5 +1,7 @@
-% siminos/blog/dailyBlog.tex
+% reducesymm/blog/dailyBlog.tex
 % $Author$ $Date$
+% Predrag  switched to github.com               jul  8 2013
+% former siminos/blog/dailyBlog.tex
 
 \chapter{Daily blog}
 \label{c-DailyBlog}
@@ -3735,10 +3737,10 @@ it for $\gSpace$ from 0 to $2 \pi$.
 We discussed it today - can you write down the answer here?
 
 \item[2013-07-21  Burak] In the equation, $\sspRed$ is $\ssp$,
-    transformed like $\sspRed = \LieEl^{-1}(\gSpace) x$ such that it is closest
-    to the template point $\sspRed'$. Now, it does geometrically make
+    transformed like $\sspRed = \LieEl^{-1}(\gSpace) \ssp$ such that it is closest
+    to the template point $\slicep$. Now, it does geometrically make
     sense to me that the extremum condition should require that vectors
-    $(\sspRed - \sspRed')$ and $ t' = \Lg \sspRed'$ to be
+    $(\sspRed - \slicep)$ and $ \sliceTan{} = \Lg \slicep$ to be
     perpendicular to each other, however, I still am not able to show
     this algebraically by just taking the derivative with respect to
     $\gSpace$.
@@ -3768,17 +3770,17 @@ We discussed it today - enter the plan here?
 
 \item[2013-07-23  Burak] Question on the derivation of eq. (10.51) of \HREF{http://chaosbook.org/paper.shtml\#continuous} {Chapter 10} - {\em Relativity for cyclists}: We have the slice condition:
 \beq
- \hat{x}^T t_a' = 0.
+ \sspRed^T \sliceTan{a} = 0.
 \eeq
 Substituting (10.49), I would have written down its time derivative as
 \beq
- \hat{v}^T t_a' = v(\hat{x})^T t_a' - \dot{\phi}(\hat{x}) \cdot t(\hat{x})^T t_a'=0.
+ \velRed^T \sliceTan{a} = v(\sspRed)^T \sliceTan{a} - \dot{\phi}(\sspRed) \cdot t(\sspRed)^T \sliceTan{a}=0.
 \eeq
 However, this, in ChaosBook, is written as
 \beq
- \hat{v}^T t_a' = v(\hat{x})^T t_a' - \dot{\phi_a}(\hat{x}) \cdot t(\hat{x})^T t_a'=0.
+ \velRed^T \sliceTan{a} = v(\sspRed)^T \sliceTan{a} - \dot{\phi_a}(\sspRed) \cdot t(\sspRed)^T \sliceTan{a}=0.
 \eeq
-I thought, $\phi \cdot t$ meant $\phi_1 t_1 + \phi_2 t_2 + \phi_3 t_3 + ... $ is this accurate? If so, dot product of a particular $\phi_a$ with $t(\hat{x})^T$ doesn't make sense to me. You also drop the indice a from the template tangent vector on the denominator of 10.51 and write it as dot product of tangent at x and the template tangent. I cannot see this
+I thought, $\phi \cdot \groupTan$ meant $\phi_1 t_1 + \phi_2 t_2 + \phi_3 t_3 + ... $ is this accurate? If so, dot product of a particular $\phi_a$ with $t(\sspRed)^T$ doesn't make sense to me. You also drop the indice a from the template tangent vector on the denominator of 10.51 and write it as dot product of tangent at x and the template tangent. I cannot see this
 as well.
 
 \item[2013-07-24  Predrag]
@@ -3796,39 +3798,108 @@ your own way. Git pushing all figures for atlas12.tex paper now, might
 continue on this later.
 
 \item[2013-07-25  Burak]
-I finished chapter 10 yesterday. I'm summarizing my understanding: Reduced state space is useful for visualization because on the slice, realative periodic orbits become periodic orbits. It, I think, is more useful than co-moving frames method, because with co-moving frames you can only catch one relative orbit or maybe it's integer dividers, but in method of slices you get them all (There may be a stronger reason, this is what I understood for now). We can impelement the slice method in two different ways: Method of moving frames (post-processing) and dynamics within the slice. 
+I finished \HREF{http://chaosbook.org/paper.shtml\#continuous} {Chapter
+10} - {\em Relativity for cyclists} yesterday. I'm summarizing my
+understanding: \Reducedsp\ is useful for visualization because on
+the slice, \rpo s become \po s. It
+is more useful than co-moving frames method, because with co-moving
+frames you can only catch one relative orbit or maybe it's integer
+dividers, but in method of slices you get them all (There may be a
+stronger reason, this is what I understood for now). We can implement
+the slice method in two different ways: Method of moving frames
+(post-processing) and dynamics within the slice.
 
-In the moving frames method, we take a full solution (a numerical simulation or experimental data), and pick a slice (a hyperplane given by $\langle \hat{x} - \hat{x}' | t' \rangle = 0$ where $\hat{x}'$ is called a template point, and $t' = \textbf{T} x'$ is the group tangent for the template point) and find the transformations $\hat{x(\tau)} = g(\phi(\tau))^{-1} x(\tau)$ which satisfies the slice condition. For SO(n), infinitesimal generator \textbf{T} is antisymmetric hence the template tangent is perpendicular to template point so the slice condition symplifies to $\langle \hat{x} | t' \rangle = 0$. Getting the point $x$ to the slice hyperplane by group operations would be equivalent to the minimizing the Euclidian distance between the transformed point and the template point because by doing that, we eliminate the distance between points $\hat{x}$ and $\hat{x}'$ perpendicular to the slice hyperplane and only remaining seperation is the seperation on the slice (is this a correct way of understanding the extremum argument?). Here is the resulting plots my attempt of applying moving frames method on Complex Lorenz flow:
+In the moving frames method, we take a full solution (a numerical
+simulation or experimental data), and pick a slice hyperplane (a hyperplane
+given by $\langle \sspRed - \slicep | \sliceTan{} \rangle = 0$ where
+point $\slicep$ is called a template, and $\sliceTan{} = \Lg  \slicep$ is
+the group tangent at the template point) and find the transformations
+$\sspRed(\tau) = g(\phi(\tau))^{-1} \ssp(\tau)$ which satisfies the slice
+condition. For \SOn{n}, infinitesimal generator \Lg\  is antisymmetric
+hence the template tangent is perpendicular to template point, and the
+slice condition simplifies to $\langle \sspRed | \sliceTan{} \rangle =
+0$. Getting the point $x$ to the slice hyperplane by group operations
+would be equivalent to the minimizing the Euclidian distance between the
+transformed point and the template point because by doing that, we
+eliminate the distance between points $\sspRed$ and $\slicep$
+perpendicular to the slice hyperplane and only remaining separation is
+the separation on the slice.
+    \BB{2012-07-25}
+    {Is this a correct way of understanding the extremum argument? {\bf
+    Predrag} There are at least two solutions (the closest, the most
+    distant) to the slice condition, and in general, many more. So you
+    need to write up a discussion along the lines of \refref{atlas12}, a
+    local copy, with all internal comments is \HREF{../atlas/atlas12.pdf}
+    {here}. One has to be precise about the language - definitions are given
+    in Sect.~\emph{V. Charting the slice}.
+    }
+Here are
+the resulting plots my attempt of applying moving frames method on
+\cLf:
 
 \begin{figure}[ht]
 \begin{center}
-\includegraphics[width=0.9\textwidth]{BBmovingframes.png}
+\includegraphics[width=0.9\textwidth]{BBmovingframes}
 \end{center}
-\caption{ Method of moving frames applied on Complex Lorenz Flow. 
+\caption{ Method of moving frames applied on \cLf.
     }
 \label{fig:BBmovingframesCL}
 \end{figure}
 
-We can, at least when the symmetry group is abelian, solve the dynamics on the reduced space and after that, map it back to the original space if we want to. For the dynamics within the slice, we get following equations:
-
-\beq
-  \hat{v}(\hat{x}) = v(\hat{x}) - \dot{\phi} (\hat{x}) t(\hat{x})
-\eeq
-
-\beq  
-  \dot{\phi}(\hat{x}) = \langle v(\hat{x})|t' \rangle / \langle t(\hat{x})|t' \rangle  
-\eeq
-
-Here the problem is possibility of getting tangent at the pont $t(\hat{x})$ and the template tangent perpendicular to each other. For this reason we need multiple, intersecting slices in such a way that this does not happen. Then we can solve the problem accurately on the reduced state space. My unsuccesful attempt of solving reduced dynamics on one slice:
+We can, at least when the symmetry group is abelian, solve the dynamics
+on the \reducedsp\ and after that, map it back to the full \statesp\ if
+we want to. For the dynamics within the slice, \SOn{2} symmetry we get following
+equations:
+\bea
+  \velRed(\sspRed) &=& \vel(\sspRed) - \dot{\phi} (\sspRed) \groupTan(\sspRed)
+\continue
+  \dot{\phi}(\sspRed)
+    &=& \braket{\vel(\sspRed)}{\sliceTan{}}
+    / \braket{\groupTan(\sspRed)}{\sliceTan{}}
+\,.
+\eea
+Here the problem is possibility of getting tangent at the point
+$t(\sspRed)$ and the template tangent perpendicular to each other. For
+this reason we need multiple, intersecting charts in such a way that this
+does not happen. Then we can solve the problem on the
+\reducedsp. My unsuccessful attempt of solving reduced dynamics on one
+slice:
 
 \begin{figure}[ht]
 \begin{center}
-\includegraphics[width=0.9\textwidth]{BBslicedynamics.png}
+\includegraphics[width=0.9\textwidth]{BBslicedynamics}
 \end{center}
-\caption{ Dynamics of Complex Lorenz Flow computed on one slice. 
+\caption{ Dynamics of \cLf\ computed on one slice.
     }
 \label{fig:BBslicedynamics}
 \end{figure}
+
+\item[2013-07-25  Predrag]
+I have edited your formulas using our macros - it does not matter right
+now, but it will be handy later, as one uses different notation for ODE
+and PDE \statesp s, for example. One has to be precise about the
+language, otherwise one ends up with several things being called 'slice',
+for example. Definitions are given in Sect.~\emph{V. Charting the slice}
+of \refref{atlas12}. A local copy, with all internal comments, is
+\HREF{../atlas/atlas12.pdf} {here}.
+
+
+\refFig{fig:BBmovingframesCL} and \reffig{fig:BBslicedynamics} look
+a bit buggy, but basically right - instead of computing \cLf\ one more
+time, how about giving a try to \twoMode\ $\SOn{2}$-equivariant flow,
+defined in the reducesymm/cgang/2modes.tex (you can get it by a click
+\HREF{../cgang/2modes.pdf}{here}, provided you had already pdflatex-ed
+2modes.tex). Have a look at it, and then meet with Daniel Borrero, 3. floor
+Schatz lab, who can walk you through what we had already done and learned
+(all in the 2modes.pdf blog). You can play with it for -let's say- two
+weeks, see whether you can find an interesting strange attractor worth
+slicing. If that dow not work out, we'll give up and go to \KS\ instead,
+which is much more important for our overall project...
+
+
+
+
+
 
 \end{description}
 \renewcommand{\ssp}{a}
