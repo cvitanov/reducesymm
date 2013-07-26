@@ -3759,7 +3759,6 @@ What is annoying is, we can only enter two e-mail addresses in this area, which 
     do not mind paying from a grant, if the thing works...
 
 \item[2013-07-15  Burak]
-
 I talked to the github support and learned that they do not send notifications for pushes. I then checked Bitbucket (github clone), setting up e-mail notifications is pretty similar:
 \begin{verbatim}
 Settings -> Services -> E-mail->Add service
@@ -3850,6 +3849,102 @@ Someplace (in Froehlich?) we say that we would have to invert a matrix in
 the general case - anyway, my formula is probably wrong, try to do it
 your own way. Git pushing all figures for atlas12.tex paper now, might
 continue on this later.
+
+\item[2013-07-25  Predrag] (continued). Here is what we write in
+\refref{FrCv11}, Sect.~{\em Dynamics within a slice}:
+%\label{sec:mslices}
+
+Any \statesp\ trajectory can be written in a factorized
+form $\ssp(\tau)=\LieEl(\tau)\,\sspRed(\tau)$
+(here $\LieEl(\tau)$ is a shorthand for $\LieEl(\gSpace(\tau))$,
+or perhaps even $\LieEl(\gSpace(\ssp(\tau)))$).
+Differentiating both sides with respect to time and
+setting $\velRed={d\sspRed}/{d\tau}$ we find
+\(
+\vel(\ssp)=\dot{\LieEl} \, \sspRed+\LieEl \, \velRed(\sspRed)
+\,.
+\)
+By the equivariance %\refeq{eq:FiniteRot}
+\[
+\vel(\sspRed)=\velRed(\sspRed) + \LieEl^{-1} \, \dot{\LieEl} \, \sspRed
+\,.
+\]
+Noting that $\LieEl^{-1}\dot{\LieEl}=e^{-\gSpace \cdot \Lg} \,
+\frac{d ~~}{d \, \tau} e^{\gSpace \cdot \Lg}=\dot{\gSpace}\cdot \Lg$,
+we obtain the equation for the velocity of the reduced flow:
+\beq
+\velRed(\sspRed)=\vel(\sspRed)-\dot{\gSpace}(\sspRed)\cdot \groupTan(\sspRed)
+\,.
+\ee{eq:redVel}
+The velocity $\vel$ in the full \statesp\ is thus the sum of the
+`phase' velocity %\refeq{PC:groupTan1}
+along the group orbit, $\dot{\gSpace} \cdot \groupTan(\sspRed)$,
+and the remainder $\velRed$.
+
+Eq. \refeq{eq:redVel} is true for any factorization
+$\ssp=\LieEl \sspRed$, and by itself provides no
+information on how to calculate $\dot{\gSpace}$. That is attained by
+demanding that the reduced trajectory stays within a slice, by imposing
+the slice conditions: % \refeq{PCsectQ}:
+% PC 2013-07-25 added 2. equation
+\bea
+       \braket{\dot{\gSpace}\cdot \groupTan(\sspRed)}{\sliceTan{a}}
+ &=& \braket{\vel(\sspRed)}{\sliceTan{a}}
+    \continue
+\sum_b \dot{\gSpace}_b \braket{ \groupTan{}_b(\sspRed)}{\sliceTan{a}}
+ &=&
+\braket{\vel(\sspRed)}{\sliceTan{a}}
+\,.
+\label{eq:slicecondition}
+\eea
+This is a matrix equation for the $N$\dmn\ vector $\dot{\gSpace}_b$ solved
+by inverting the \statesp\ position dependent matrix
+$\braket{\groupTan_b(\sspRed)}{\sliceTan{a}}$.
+We consider here only the
+$\SOn{2}$ case, which has a single group tangent:
+\bea
+\velRed(\sspRed) &=& \vel(\sspRed)
+   -\dot{\gSpace}(\sspRed) \, \groupTan(\sspRed)
+\continue
+\dot{\gSpace}(\sspRed) &=& {\braket{\vel(\sspRed)}{\sliceTan{}}}/
+               {\braket{\groupTan(\sspRed)}{\sliceTan{}}}
+\,.
+\label{eq:so2reduced}
+\eea
+One way to think about this reduction of a flow to a slice is in terms of
+Lagrange multipliers (see {Stone and Goldbart}\rf{StGo09}, Sect 1.5 for
+intuitive, geometrical interpretation of Lagrange multipliers). The first
+equation defines the flow confined to the slice,
+the `shape', `template' or `slice' dynamics\rf{rowley_reduction_2003},
+% (see \reffig{fig:Fullspace}\,(b), \reffig{fig:slice}\,(a)),
+and integration of the second,
+`reconstruction' equation\rf{Marsd92,MarsdRat94} enables us to track the
+corresponding trajectory in the full \statesp. For invariant subspaces
+$\dot{\gSpace}=0$, so they are always included within the slice. No
+information is lost about the physical flow: if we know one point on a
+trajectory, we can hop at will back and forth between the reduced
+and the full \statesp\ trajectories, just as we can reconstruct a
+continuous trajectory from its \PoincSec s.
+
+\item[2013-07-25  Predrag]
+The authors of \refrefs{ahuja_template-based_2007,FiSaScWu96} claim one
+can in principle solve equation \refeq{eq:so2reduced} for any Lie group.
+\refRef{FiSaScWu96} does not do it. Ahuja does not either.... If go to a
+nonabelian symmetry such as \SOn{3} or \SUn{2} I think we will have to
+solve this numerically.
+
+\item[2013-07-25  Predrag] as the matrix
+$\braket{\groupTan_b(\sspRed)}{\sliceTan{a}}$ depends on a product of
+two Lie group representations,
+\beq
+\braket{\groupTan_b(\sspRed)}{\sliceTan{a}}
+ =
+ - \sspRed_i \slicep_j \Lg^b_{k\ell}\Lg^a_{\ell j}
+\,,
+\label{eq:so2reduced}
+\eeq
+for a particular group this can be expressed as a Kronecker sum of
+irreducible representations. Have not tried that.
 
 \item[2013-07-25  Burak]
 I finished \HREF{http://chaosbook.org/paper.shtml\#continuous} {Chapter
