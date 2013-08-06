@@ -4044,10 +4044,77 @@ weeks, see whether you can find an interesting strange attractor worth
 slicing. If that does not work out, we'll give up, and go to \KS\ instead,
 which is much more important for our overall goals...
 
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.9\textwidth]{PKperorb}
+\end{center}
+\caption{A typical periodic orbit of Porter-Knobloch flow.}
+\label{fig:PKperorb}
+\end{figure}
 
+\item[2013-08-05  Burak]
 
+I read the Porter-Knobloch blog, confirmed most of the findings, naively experimented on the parameters of the system in $x_i, y_i$ basis tried to find equilibria, got nothing, then talked to Daniel, and re-read the blog and come up with a Monte-Carlo (kind of) algorithm hoping that it could get me a strange attractor. So far, I only got periodic orbits. \refFig{fig:PKperorb} is a typical one. Here is what I did:
 
-
-
+\begin{itemize}
+\item 
+Generate pseudo-random set of parameters ensuring $\mu_1 > -\mu_2 > 0$, $c_1 = 1$ and $c_2 = -1$ as suggested in [2012-04-29 Predrag] and [2012-08-06 Edgar Knobloch]
+\item
+Numerically compute roots of \refeq{PKinvEqs5a} in $u>0, v>0$ region starting from pseudo-random pair of points $(u,v)$, to find an equilibrium in invariant polynomial basis.
+\bea
+\tilde{f}(\tilde{u},\tilde{v}) &=&
+  \tilde{u}\,A_1 - \tilde{v}\,A_2 = 0 %Double checked DB 04-30-2012
+\,,\qquad\qquad\qquad\qquad  deg(f) = 2
+\continue
+\tilde{g}(\tilde{u},\tilde{v}) &=&  %Double checked DB 04-30-2012
+ \left(A_1^2
+ - c_1\,\tilde{v}\right)
+ \left(\tilde{u}+2\,\tilde{v}\right)^2
+ +e_2^2\,\tilde{v}^2 = 0
+\,,\qquad  deg(g) = 4
+\continue
+&& \mbox{where }
+A_1 = \mu_1+\tilde{a_1}\,\tilde{u}+\tilde{b_1}\,\tilde{v},
+\continue
+&& \,\,\,\,\qquad A_2 = \mu_2+\tilde{a_2}\,\tilde{u}+\tilde{b_2}\,\tilde{v}
+\,.
+\label{PKinvEqs5a}
+\eea
+\item
+Calculate corresponding w and q and check if the syzygy holds (it does).
+\item
+Calculate eigenvalues of the stability matrix at this point.
+\item
+If the stability matrix has at least one eigenvalue with positive real part (repulsive), at least one eigenvalue with negative real part (attractive) and a complex pair of eigenvalues with non-zero imaginary part (spiral); keep the parameters and the equilibrium point.
+\item
+Numerically calculate the points $x_i, y_i$ corresponding to the equilibrium in invariant polynomial basis, using following relations:
+\bea
+  u &=& x_1^2 + x_2^2\,,
+\continue
+  v &=& y_1^2 + y_2^2\,,
+\continue
+  w &=& 2x_1^2y_1+4x_1x_2y_2 - 2x_2^2y_1\,,
+\continue
+  q &=& 2x_1^2y_2+4x_1x_2y_1 + 2x_2^2y_2\,.
+\label{eq:PKinvxirels}
+\eea
+\item
+Integrate the Porter - Knobloch velocity function to see time evolution in real coordinates.
+\end{itemize}
+So far, I got divergent solutions and periodic orbits using parameters that I found this way. My questions:
+\begin{itemize}
+\item
+If I check the eigenvalues of the stability matrix for real coordinates, I get 3 of the eigenvalues almost same with 
+the ones I get for the invariant polynomial basis, and one eigenvalue 0 (usually something less then $10^{-4}$). This gives me the 
+feeling of I am doing things correct, however, I want to make more sense out of this. Is there a clear discussion about how these 
+eigenvalues remain unchanged under coordinate transformations (I saw the discussion about traces in the blog, I confirmed the result that
+traces of stability matrices in $u,v,w,q$ basis and $x_1,x_2,y_1,y_2$ basis are not the same at the origin.).
+\item
+Is what I did reasonable at all? Is there any obvious wrong logic?
+\item
+Would you suggest any other restrictive criteria to pick a ``good'' set of parameters, in addition to the ones I force on eigenvalues of the stability matrix? I thought, maybe I should take parameters for which the positive and negative real-part eigenvalues are of the same order.
+\item
+Is an equilibrium in invariant polynomial basis ($u,v,w,q$) a relative equilirium in real ($x_i,y_i$) basis? If not, what sense I should make out of the fact that the relations \refeq{eq:PKinvxirels} do not provide a unique set of ($x_i,y_i$) for given ($u,v,w,q$).
+\end{itemize}
 \end{description}
 \renewcommand{\ssp}{a}
