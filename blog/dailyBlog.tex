@@ -4027,7 +4027,7 @@ slice:
 I have edited your formulas using our macros - it does not matter right
 now, but it will be handy later, as one uses different notation for ODE
 and PDE \statesp s, for example. One has to be precise about the
-language, otherwise one ends up with several things being called 'slice',
+language, otherwise one ends up with several things being called `slice',
 for example. Definitions are given in Sect.~\emph{V. Charting the slice}
 of \refref{atlas12}. A local copy, with all internal comments, is
 \HREF{../atlas/atlas12.pdf} {here}.
@@ -4044,24 +4044,74 @@ weeks, see whether you can find an interesting strange attractor worth
 slicing. If that does not work out, we'll give up, and go to \KS\ instead,
 which is much more important for our overall goals...
 
+\item[2013-08-06 Predrag]
+A more precise statement of what we are trying to achieve with this model is
+in \emph{siminos/cgang/2modes.tex:}
+
+``For the 4\dmn\ model at hand are using the invariant polynomials
+$\{u,v,w,q\}$ dynamics only to develop intuition, but to illustrate the
+general \mslices, everything has to do be done in $\pS =
+\{x_1,x_2,y_1,y_2\}$ and \slice\ $\pSRed$ as well. You can see that even
+for the simplest conceivable $\SOn{2}$ 4-dimensional flow one has to
+think about how to construct the invariant polynomial basis, and it is
+hard to imagine how anyone could do that for very high\dmn\ flows.''
+
+If we can find a nice strange attractor with comparable amplitudes in the
+two modes, and show how to slice it, that would be the simplest example of
+power of slicing, as the symmetry-reduced dynamics is 3\dmn\ and something
+a human can look at, turn around as 3\dmn\ Mathematica or Matlab figure.
+
+If in addition it turns out that my favorite Sobolev norm (read
+\refchap{c-norms}) reduces the number of local slice hyperplanes needed
+to cover the attractor, I'll be doubly happy.
+
 \begin{figure}[ht]
 \begin{center}
 \includegraphics[width=0.9\textwidth]{PKperorb}
 \end{center}
-\caption{A typical periodic orbit of Porter-Knobloch flow.}
+\caption{A typical
+%Predrag 2013-08-05 removed ``periodic orbit''
+\reqv\  of Porter-Knobloch flow.}
 \label{fig:PKperorb}
 \end{figure}
 
+\item[2013-08-05  Burak] I read the Porter-Knobloch blog and
+    \HREF{http://chaosbook.org/paper.shtml\#stability} {Chapter 4} -
+    {\em Local stability}, confirmed most of the findings in blog,
+    naively experimented on the parameters of the system in $x_i, y_i$
+    basis tried to find equilibria, got nothing, then talked to Daniel,
+    and re-read the blog and come up with a Monte-Carlo (kind of)
+    algorithm hoping that it could get me a strange attractor. So far,
+    I only got periodic orbits. \refFig{fig:PKperorb} is a typical one.
+
+\item[2013-08-06 Predrag]
+Got worried that there were no updates for 11 days - how about if agree
+on a schedule, let's say git pushes
+\textcolor[rgb]{1.00,0.00,0.00}{every Monday and Friday}?
+
+                                            \toCB
+The \po s (actually, \reqva) that you find are presumably \emph{limit
+cycles}. In ChaosBook I define `limit cycles' as \po s which are strictly
+exponentially attracting forward in time. Parenthetically, in her thesis
+De Witte\rf{DWRGK13,DeWitte13} defines a `limit cycle' as an ``isolated
+periodic orbit'' thusly:
+
+``A cycle of a continuous-time dynamical system, in a neighbourhood of
+which there are no other cycles, is called a limit cycle.''
+
+That presumably has advantage of being true for both directions of time,
+but I do not think we need to get that finicky...
+
+
 \item[2013-08-05  Burak]
-
-I read the Porter-Knobloch blog and \HREF{http://chaosbook.org/paper.shtml\#stability} {Chapter 4} -
-{\em Local stability}, confirmed most of the findings in blog, naively experimented on the parameters of the system in $x_i, y_i$ basis tried to find equilibria, got nothing, then talked to Daniel, and re-read the blog and come up with a Monte-Carlo (kind of) algorithm hoping that it could get me a strange attractor. So far, I only got periodic orbits. \refFig{fig:PKperorb} is a typical one. Here is what I did:
-
+    Here is what I did:
 \begin{itemize}
-\item 
+\item
 Generate pseudo-random set of parameters ensuring $\mu_1 > -\mu_2 > 0$, $c_1 = 1$ and $c_2 = -1$ as suggested in [2012-04-29 Predrag] and [2012-08-06 Edgar Knobloch]
 \item
-Numerically compute roots of \refeq{PKinvEqs5a} in $u>0, v>0$ region starting from pseudo-random pair of points $(u,v)$, to find an equilibrium in invariant polynomial basis.
+Numerically compute roots of \refeq{PKinvEqs5a} in $u>0, v>0$ region
+starting from pseudo-random pair of points $(u,v)$, to find an
+equilibrium in invariant polynomial basis.
 \bea
 \tilde{f}(\tilde{u},\tilde{v}) &=&
   \tilde{u}\,A_1 - \tilde{v}\,A_2 = 0 %Double checked DB 04-30-2012
@@ -4105,11 +4155,15 @@ Integrate the Porter - Knobloch velocity function to see time evolution in real 
 So far, I got divergent solutions and periodic orbits using parameters that I found this way. My questions:
 \begin{itemize}
 \item
-If I check the eigenvalues of the stability matrix for real coordinates, I get 3 of the eigenvalues almost same with 
-the ones I get for the invariant polynomial basis, and one eigenvalue 0 (usually something less then $10^{-4}$). This gives me the 
-feeling of I am doing things correct, however, I want to make more sense out of this. Is there a clear discussion about how these 
-eigenvalues remain unchanged under coordinate transformations (I saw the discussion about traces in the blog, I confirmed the result that
-traces of stability matrices in $u,v,w,q$ basis and $x_1,x_2,y_1,y_2$ basis are not the same at the origin.).
+If I check the eigenvalues of the stability matrix for real coordinates,
+I get 3 of the eigenvalues almost same with the ones I get for the
+invariant polynomial basis, and one eigenvalue 0 (usually something less
+then $10^{-4}$). This gives me the feeling of I am doing things correct,
+however, I want to make more sense out of this. Is there a clear
+discussion about how these eigenvalues remain unchanged under coordinate
+transformations (I saw the discussion about traces in the blog, I
+confirmed the result that traces of stability matrices in $u,v,w,q$ basis
+and $x_1,x_2,y_1,y_2$ basis are not the same at the origin.).
 \item
 Is what I did reasonable at all? Is there any obvious wrong logic?
 \item
@@ -4118,5 +4172,27 @@ Would you suggest any other restrictive criteria to pick a ``good'' set of param
 Is an equilibrium in invariant polynomial basis ($u,v,w,q$) a relative equilirium in real ($x_i,y_i$) basis? If not, what sense I should make out of the fact that the relations \refeq{eq:PKinvxirels} do not provide a unique set of ($x_i,y_i$) for given ($u,v,w,q$).
 \end{itemize}
 After writing these questions and some more reading, I realized that I did not include anything to eliminate stable limit cycles. I am now starting to read \HREF{http://chaosbook.org/paper.shtml\#invariants} {Chapter 5} - {\em Cycle stability} and then I will try to implement a way of picking equilibria other than attracting limit cycles.
+
+\item[2013-08-06 Predrag]
+As we were not successful in finding an interesting strange attractor, probably best
+not to be influenced by my (mostly misguided) intuition; keep experimenting, and keep
+checking it with Daniel, who remembers what we had tried last time around.
+As to our goals, see the ``more precise statement'' above.
+
+My only remark for now is that \reffig{fig:PKperorb} is a \reqv\  of
+Porter-Knobloch flow, meaning that the group orbit and time orbit
+coincide, it is not a ``periodic orbit''. If you are \emph{on the \reqv}
+you should get one of the full \statesp\ Floquet multipliers equal to 1
+to machine precision. The reason is why the Floquet exponent is only
+$\approx 10^{-4}$ is that you are converging to the \reqv\ forward in
+time, and that is only exponential; once you have Newton codes for
+\HREF{http://chaosbook.org/paper.shtml\#cycles} {finding \po s} running,
+the convergence will be super-exponential.
+
+
+
+
+
+
 \end{description}
 \renewcommand{\ssp}{a}
