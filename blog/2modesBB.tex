@@ -15,11 +15,64 @@ stays untouched, the mother version is still the svn one).
 
 \begin{description}
 
+\item[2013-07-25  Predrag] This is \BBedit{an example of Burak's edit},
+and here is an internal footnote\BB{An internal footnote by Burak.}. They
+are useful when you change something n the middle of a text, rather then
+just append the newest blog post. Please remove the color from my
+\PCedit{edits} as you read them and approve them, and I'll do the same
+for yours.
+
 \item[2013-07-25  Predrag to Burak] Please define \eqv, \reqv, \po,
 and \rpo\ here, in form suitable for pasting into the putative
 \twoMode\ slicing paper.
 
 \end{description}
+
+
+The {\twoMode} system is the simplest, coarsest example of a truncation
+of a Fourier representation of a PDEe. Consider, for example, the $1D$
+\KSe.
+%
+\PC{2013-08-13 Predrag copied this from \refref{SCD07}, to set up
+the conventions for the \KSe\ calculations.}
+%
+The time evolution of the `flame front velocity'
+$u=u(x,t)$ on a periodic domain $u(x,t) = u(x+L,t)$ is given by
+\beq
+  u_t = F(u) = -{\textstyle\frac{1}{2}}(u^2)_x-u_{xx}-u_{xxxx}
+    \,,\qquad   x \in [-L/2,L/2]
+    \,.
+\ee{BBks}
+Here $t \geq 0$ is the time, and $x$ is the spatial coordinate.
+The subscripts $x$ and $t$ denote partial derivatives with respect to
+$x$ and $t$. In what follows
+we shall state results of all calculations either in units of the
+`dimensionless system size' $\tildeL$, or the system size $L = 2 \pi
+\tildeL$. All numerical results presented in this report
+are for $\tildeL=22/2\pi \simeq 3.5014$.
+Spatial periodicity $u(x,t)=u(x+L,t)$
+makes it convenient to work in the Fourier space,
+\beq
+  u(x,t)=\sum_{k=-\infty}^{+\infty} a_k (t) e^{ i k x /\tildeL }
+\,,
+\ee{BBeq:ksexp}
+with the $1$-dimensional PDE \refeq{ks}
+replaced by an infinite set of
+ODEs for the complex Fourier coefficients $a_k(t)$:
+\beq
+\dot{a}_k= \pVeloc_k(a)
+     = ( q_k^2 - q_k^4 )\, a_k
+    - i \frac{q_k}{2} \sum_{m=-\infty}^{+\infty} a_m a_{k-m}
+\,,
+\ee{BBexpan}
+where $q_k = k/\tildeL$.
+Since $u(x,t)$ is real, $a_k=a_{-k}^\ast$, and we can replace the
+sum by a $k > 0$ sum. In the {\twoMode} system we keep only the
+$k \in \{\pm 1,pm 2\}$ terms. This is very wrong as an approximation to
+the \KSe, but --in the spirit of the Lorentz equations-- OK for hoping
+to learn something about the qualitative dynamics of this class of
+PDEs.
+
 
 
 \subsection{Burak's {\twoMode} blog}
@@ -45,7 +98,7 @@ which is much more important for our overall goals...
 
 \item[2013-08-06 Predrag]
 A more precise statement of what we are trying to achieve with this model is
-in \emph{siminos/cgang/2modes.tex:}
+in \emph{reducesymm/cgang/2modes.tex:}
 
 ``For the 4\dmn\ model at hand are using the invariant polynomials
 $\{u,v,w,q\}$ dynamics only to develop intuition, but to illustrate the
@@ -61,8 +114,11 @@ power of slicing, as the symmetry-reduced dynamics is 3\dmn\ and something
 a human can look at, turn around as 3\dmn\ Mathematica or Matlab figure.
 
 If in addition it turns out that my favorite Sobolev norm (read
-\refchap{c-norms}) reduces the number of local slice hyperplanes needed
-to cover the attractor, I'll be doubly happy.
+\texttt{reducesymm/blog/norms.tex}) reduces the number of local slice
+hyperplanes needed to cover the attractor, I'll be doubly happy.
+
+    \PCedit{
+    }
 
 \begin{figure}[ht]
 \begin{center}
@@ -306,7 +362,6 @@ only good in small dimensions, so we have not used it for our high\dmn\
 hydrodynamics calculations. Yuuki will report to me today how it is
 working; I'll report whether it might be useful to you.
 
-
 \item[2013-08-13 Predrag]
 I keep getting confused about whether you are plotting a \reqv\ or a \po,
 and as we will need this anyhow, please define \eqv, \reqv, \po, and
@@ -314,6 +369,29 @@ and as we will need this anyhow, please define \eqv, \reqv, \po, and
 page. (I keep using macros for their names, because depending on the
 publication and audience, a `\reqv' might be called a `rotating wave',
 etc.)
+
+\item[2013-08-13 Predrag]
+A problem with {\twoMode} system is too many parameters (seven! - see
+\refeq{PKinvEqs5a}). How about reducing the number of parameters by
+demanding that our {\twoMode} system is the $k \in \{\pm 1,pm 2\}$
+truncation of \KS? There is only one parameter left (the system size
+$L$), so that is probably too radical -- no interesting dynamics at all,
+but let something physical like this guide you in reducing the number of
+parameters.
+
+The physical setting is that a dissipative turbulent system has a finite
+number of Fourier modes nonlinearly coupled and of comparable amplitudes,
+while high modes are very strongly suppressed by dissipative terms like
+$q_k^4$ in \refeq{BBexpan}. (Xiong Ding can explain the `physical
+dimension' to you). So you will be interested in chaotic solutions for
+which the two modes $u = {z}_1 \overline{z}_1,\, v = {z}_2
+\overline{z}_2$ in \refeq{PKinvEqs1} are of comparable magnitude.
+
+One good exercise is to go through Ruslan's {\em 15.7.1 2009-08-26
+Epicycles: 2-Fourier modes} in the \HREF{../blog/blog.pdf} {main blog}.
+In this model he looks at a trivial dynamics of two uncoupled modes. I do
+not agree with Ruslan pessimistic conclusion - search for `epicycles'
+within the blog for more optimistic angles.
 
 
 
