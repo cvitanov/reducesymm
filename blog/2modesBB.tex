@@ -297,7 +297,6 @@ must slice to get any \po s at all?
 got \reffig{fig:BBpars3symmred} and if I run it longer I get a very
 similar looking picture. That's what I was guessing that to be a \po.
 
-    \PCedit{
 \item[2013-08-14 Predrag]
 There is no `\po' in these figures, in sense of your definitions of
 \refsect{chap:2modesBBproj}. I think you found an attractive \rpo\
@@ -310,7 +309,6 @@ One way to proceed would be to
 change parameters in such a way that this Hopf cycle goes unstable. If it
 does it through 2nd Hopf bifurcation, that is a start of a generic
 transition to chaos via mode locking and then period doublings.
-}
 
 \item[2013-08-14 Burak]
 If you look closely to the upper-left plot in \reffig{fig:BBpars3PKflow},
@@ -360,35 +358,73 @@ polynomial basis corresponds to a stable \reqv\ in the full \statesp.
 Eliminating these parameter values
 gives more interesting dynamics.
 
-    \PCedit{
 \item[2013-08-13 Predrag] \refFig{fig:BBpars3PKflow} does not look like a
 strange attractor. You really want to plot these things in $\{u,v,w,q\}$
 representation first, and if something looks chaotic, look at it in a
 Poincar\'e section; there it is much easier to see whether there is a
 stretch \&\ fold unstable manifold with fractal structure.
-    }
 
-\item[2013-08-14 Burak] I am going to try to compute Poincar\'e sections and return maps tomorrow. I have to go back a little bit since my existing Poincare\'e section codes for ChaosBook exercises are extremely sloppy.
+\item[2013-08-14 Burak] I am going to try to compute Poincar\'e
+sections and return maps tomorrow. I have to go back a little bit
+since my existing Poincare\'e section codes for ChaosBook exercises
+are extremely sloppy.
 
-\BBedit{
-\item[2013-08-19 Burak] Took longer than I thought. I have the \twoMode flow in invariant polynomial basis (\reffig{fig:BBpars4invspacePKflow}), Poincar\'e section and radial return map (\reffig{fig:BBpars4psectnretmap}). Convergence to a periodic orbit is clearly seen on these plots, points with $r=6.8$ mapped on themselves. 
-}
+        \PCedit{
+\item[2013-08-20 Predrag] You probably want to implement the
+\HREF{http://www.streamsound.dk/book1/chaos/chaos.html\#82} {H\'enon trick},
+ChaosBook section {\em 3.2 Computing a Poincar\'e section}.
+        }
 
-\begin{figure}%[ht]
-  \begin{center}
-  \includegraphics[width=0.6\textwidth]{BBpars4invspacePKflow}
-  \end{center}
-  \caption{Projections of \twoMode\ dynamics in full \statesp\ and symmetry reduced space. Parameters: $\mu_1 = 1.23436,\,a_1=-0.32304,\,b_1=-1.07444,\,c_1=1.00000,\,\mu_2=-0.23149,\,a_2=0.44110,\,b_2=-0.42287,\,c_2=-1.00000,\,e_2=0.67556$}.
-  \label{fig:BBpars4invspacePKflow}
-\end{figure}
+\item[2013-08-19 Burak] Took longer than I thought. I have the
+\twoMode flow in invariant polynomial basis
+(\reffig{fig:BBpars4invspacePKflow}), Poincar\'e section and radial
+return map (\reffig{fig:BBpars4psectnretmap}). Convergence to a
+periodic orbit is clearly seen on these plots, points with $r=6.8$
+mapped on themselves.
+
+
+\SFIG{BBpars4invspacePKflow}{}{
+  A projection of \twoMode\ dynamics in the invariant polynomial
+  basis $\{u,v,w,q\}$. Parameters: $\mu_1 =
+  1.23436,\,a_1=-0.32304,\,b_1=-1.07444,\,c_1=1.00000,\,
+  \mu_2=-0.23149,\,a_2=0.44110,\,b_2=-0.42287,\,
+  c_2=-1.00000,\,e_2=0.67556\,.$
+  }{fig:BBpars4invspacePKflow}
 
 \begin{figure}%[ht]
   \begin{center}
   \includegraphics[width=0.9\textwidth]{BBpars4psectnretmap}
   \end{center}
-  \caption{Left: Poincar\'e section for the \twoMode\ flow shown in \reffig{fig:BBpars4invspacePKflow}. Poincar\'e hyperplane passes through $\hat{x} = (u=10, v=6, w=0, q=0)$ and the plane normal is $\hat{n} = (-6,10,0,0)$ ($\hat{x}$ rotated 90 degrees about w axis). Right: Poincar\'e return map of radial distance from $w$ axis.}.
+  \caption{Left: Poincar\'e section for the \twoMode\ flow shown in
+  \reffig{fig:BBpars4invspacePKflow}. Section hyperplane passes
+  through $\hat{x} = (u=10, v=6, w=0, q=0)$ and the plane normal is
+  $\hat{n} = (-6,10,0,0)$ ($\hat{x}$ rotated 90 degrees about $w$
+  axis). Right: Poincar\'e return map of radial distance from $w$
+  axis.}
   \label{fig:BBpars4psectnretmap}
 \end{figure}
+
+        \PCedit{
+\item[2013-08-20 Predrag]
+Looks right - you are converging to a limit cycle with a negative
+least contracting Floquet multiplier. For limit cycles Poincar\'e
+sections are boring, they will be useful only one you are looking at
+strange attractors.
+(I have, experimentally, commented your commit on gitHub, but that
+looks useless. Did gitHub alert you to the comment?)
+Have you computed Floquet multipliers of this limit cycle? They should
+give you the convergence rate exactly.
+
+Now see whether you can pick a convenient parameter that moves one or
+a pair of Floquet multipliers through 1 and on to chaos.
+
+As explained in
+\HREF{http://www.streamsound.dk/book1/chaos/chaos.html\#78}
+{ChaosBook}, 1\dmn\ Poincar\'e return maps, such as of
+the radial distance from $w$ axis in \reffig{fig:BBpars4psectnretmap}
+are misleading.
+        }
+
 
 \begin{figure}%[ht]
   \begin{center}
