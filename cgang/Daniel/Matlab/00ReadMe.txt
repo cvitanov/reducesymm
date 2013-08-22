@@ -89,3 +89,9 @@ Finds the roots for the Porter & Knobloch system in the
 (u,v,w,q) invariant polynomial basis for a given
 set of parameters and displays them one by one, checking if they
 satisfy the syzygy w^2+q^2-4*u^2*v = 0
+
+ChaoticExponentsCalculation by Daniel Borrero 08/22/2013
+-------------------------------------------------------------
+This folder contains files used to determine good parameters 
+for chaotic dynamics in the PK system by looking at the 
+Lyapunov exponents for a given set of parameters.
