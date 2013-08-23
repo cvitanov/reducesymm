@@ -575,8 +575,7 @@ map from them, as discussed in
 \HREF{http://www.streamsound.dk/book1/chaos/chaos.html\#260/z}
 {Chapter 12} {\em Stretch, fold, prune}.
 
-\item[2013-08-21 Daniel] Ok... so while you guys are off doing all the thinking, I brute forced a set of parameters that appear to give chaotic dynamics. Basically, I used the same Monte Carlo-ish technique that I used to find ``good'' templates for slicing \CLf where I let the computer vary parameters by a little bit and see if they give better results. If so they are used a new starting point and the calculation is repeated; if not they are discarded. To measure ``success'' I calculated finite time Lyapunov exponents for the \twoMode\ system in the invariant polynomial basis and required that the leading one be positive (the more positive the better), the second one be zero (guaranteed by autonomous dynamics), and the third one be negative (the more negative the better). The algorithm prints them out in order, so the fourth one is automatically more negative than the third. The code I used is in \texttt{/cgang/Daniel/Matlab/ChaoticExponentsCalculation} and should have enough comments for intelligibility. I 
-let the computer run this for a day or so and got the following set of parameters: 
+\item[2013-08-21 Daniel] Ok... so while you guys are off doing all the thinking, I brute forced a set of parameters that appear to give chaotic dynamics. Basically, I used the same Monte Carlo-ish technique that I used to find ``good'' templates for slicing \CLf where I let the computer vary parameters by a little bit and see if they give better results. If so they are used a new starting point and the calculation is repeated; if not they are discarded. To measure ``success'' I calculated finite time Lyapunov exponents for the \twoMode\ system in the invariant polynomial basis and required that the leading one be positive (the more positive the better), the second one be zero (guaranteed by autonomous dynamics), and the third one be negative (the more negative the better). The algorithm prints them out in order, so the fourth one is automatically more negative than the third. The code I used is in \texttt{/cgang/Daniel/Matlab/ChaoticExponentsCalculation} and should have enough comments for intelligibility. The algorithm used is based on Wolf et al. \cite{WolfSwift85}. I let the computer run this for a day or so and got the following set of parameters: 
 
 \begin{eqnarray*}
 \mu_1&=-2.8023, \mu_2=0.6128, a_1=-0.9146, a_2=-2.6636,... \\
@@ -634,6 +633,9 @@ I also sliced this solution with the same template that I used for my parameters
   basis $\{u,v,w,q\}$. Parameters are listed in \refeq{eq:PKChaoticParams}.(b)Relative equilibrium in the real space corresponding to the fixed point in (a).}
 \label{fig:BBsymmredPKDanielPars14t20}
 \end{figure}
+
+\item[2013-08-23 Daniel] Just ran a couple of hundred simulations using the parameters from \refeq{eq:PKChaoticParams} with random initial conditions taken from a Gaussian ball centered at $(u,v,w,q)\, =\,(0,0,0,0)$ with radius of about 8. Each simulation was run for 1000 time units. I found that the trajectories ended up at Burak's fixed point about 70\% of the time, so it's basin of attraction is definitely significant. Then again, 30\% of trajectories fall into the chaotic attractor and stay there for long times, so it's basin of attraction is not tiny either. It also doesn't seem like the chaotic dynamics are transient. I can integrate out to 20000 time units and still be in the attractor if I start in its basin of attraction (e.g., $(u,v,w,q)\, =\,(1,1,1,1)$ . Maybe we can tweek the parameters to make Burak's equilibrium unstable or hyperbolic? Looking at the symbolic expressions for the eigenvalues, I don't see a particularly obvious way to do this. The expressions are a mess! 
+
 
 \item[2013-08-10  Predrag to Chaos Gang] It's not over until it is over.
 \end{description}

@@ -36,7 +36,7 @@ V = [udot vdot wdot qdot]';
 disp('Then, we calculate stability matrix, A = jacobian(V,X)')
 A = jacobian(V,X)
 
-%A = subs(A,{x1,x2,y1,y2},{x(1),x(2),x(3),x(4)})
+A = subs(A,{u,w,q},{0,0,0})
 
 disp('The eigenvalues and eigenvectors of the stability matrix are')
 
