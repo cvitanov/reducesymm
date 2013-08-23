@@ -575,7 +575,8 @@ map from them, as discussed in
 \HREF{http://www.streamsound.dk/book1/chaos/chaos.html\#260/z}
 {Chapter 12} {\em Stretch, fold, prune}.
 
-\item[2013-08-21 Daniel] Ok... so while you guys are off doing all the thinking, I brute forced a set of parameters that appear to give chaotic dynamics. Basically, I used the same Monte Carlo-ish technique that I used to find ``good'' templates for slicing \CLf where I let the computer vary parameters by a little bit and see if they give better results. If so they are used a new starting point and the calculation is repeated; if not they are discarded. To measure ``success'' I calculated finite time Lyapunov exponents for the \twoMode\ system in the invariant polynomial basis and required that the leading one be positive (the more positive the better), the second one be zero (guaranteed by autonomous dynamics), and the third one be negative (the more negative the better). The algorithm prints them out in order, so the fourth one is automatically more negative than the third. The code I used is in \texttt{/cgang/Daniel/Matlab/ChaoticExponentsCalculation} and should have enough comments for intelligibility. I let the computer run this for a day or so and got the following set of parameters: 
+\item[2013-08-21 Daniel] Ok... so while you guys are off doing all the thinking, I brute forced a set of parameters that appear to give chaotic dynamics. Basically, I used the same Monte Carlo-ish technique that I used to find ``good'' templates for slicing \CLf where I let the computer vary parameters by a little bit and see if they give better results. If so they are used a new starting point and the calculation is repeated; if not they are discarded. To measure ``success'' I calculated finite time Lyapunov exponents for the \twoMode\ system in the invariant polynomial basis and required that the leading one be positive (the more positive the better), the second one be zero (guaranteed by autonomous dynamics), and the third one be negative (the more negative the better). The algorithm prints them out in order, so the fourth one is automatically more negative than the third. The code I used is in \texttt{/cgang/Daniel/Matlab/ChaoticExponentsCalculation} and should have enough comments for intelligibility. I 
+let the computer run this for a day or so and got the following set of parameters: 
 
 \begin{eqnarray*}
 \mu_1&=-2.8023, \mu_2=0.6128, a_1=-0.9146, a_2=-2.6636,... \\
@@ -592,6 +593,10 @@ Calculating the Lyapunov exponents for the \twoMode\ system gives,
 
 Coincidentally, the first three are almost exactly the Lyapunov exponents for the R\"ossler system ($\lambda_1=0.09, \lambda_2=0.00,\, \mathrm{and}\, \lambda_3=-9.77$). Figure \ref{fig:PKChaoticInv} shows what it ends up looking like in the invariant polynomial basis. If you run it longer it just fills out the attractor. Figure \ref{fig:PKChaoticInv} shows it in Cartesian coordinate. If you run it longer it just fills out the attractor. 
 
+\item[2013-08-23 Burak] I integrated the system with Daniel's parameters and my simulation converged to a fixed point $(0,425.56,0,0)$ in the invariant space (see \reffig{fig:BBPKflowDanielPars} (a)). I found all eigenvalues of the stability matrix at this point to be negative with zero imaginary parts. As expected, this resulted as a relative equilibrium in the full state space (see \reffig{fig:BBPKflowDanielPars} (b)).
+
+I also sliced this solution with the same template that I used for my parameters and got \reffig{fig:BBsymmredPKDanielPars0t12} for the time that the solution looked chaotic (t from 0 to 12), it then makes a jump (see \reffig{fig:BBsymmredPKDanielPars14t20} (a) for evolution from t=14 to t=17) as the solution in invariant polynomial basis does, and then converges to the fixed point (see \reffig{fig:BBsymmredPKDanielPars14t20} (b) for evolution from t=15.5 to t=20) by going through a spiral. I'm blogging this because I found it interesting to see a ``spiral in'' type of convergence on the symmetry reduced manifold while all eigenvalues of the stability matrix of the fixed point in the invariant space has zero imaginary parts.
+
 \begin{figure}[h]
 	\centering
 		\includegraphics{PKChaotic.pdf}
@@ -606,6 +611,29 @@ Coincidentally, the first three are almost exactly the Lyapunov exponents for th
 	\label{fig:PKChaotic}
 \end{figure}
 
+\begin{figure}[H]
+\centering
+ (a) \includegraphics[width=0.35\textwidth]{BBinvspacePKflowDanielPars}
+ (b) \includegraphics[width=0.35\textwidth]{BBreleqDanielPars}
+
+\caption{(a)A projection of \twoMode\ dynamics in the invariant polynomial
+  basis $\{u,v,w,q\}$. Parameters are listed in \refeq{eq:PKChaoticParams}.(b)Relative equilibrium in the real space corresponding to the fixed point in (a).}
+\label{fig:BBPKflowDanielPars}
+\end{figure}
+
+\SFIG{BBsymmredPKDanielPars0t12}{}{
+  A projection of \twoMode\ dynamics of \reffig{fig:BBPKflowDanielPars} after symmetry reduction using the method of moving frames (post processing). Slice template: $\slicep = (1,1,0,0)$.
+}{fig:BBsymmredPKDanielPars0t12}
+
+\begin{figure}[H]
+\centering
+ (a) \includegraphics[width=0.35\textwidth]{BBsymmredPKDanielPars14t17}
+ (b) \includegraphics[width=0.35\textwidth]{BBsymmredPKDanielPars15p5t20}
+
+\caption{(a)A projection of \twoMode\ dynamics in the invariant polynomial
+  basis $\{u,v,w,q\}$. Parameters are listed in \refeq{eq:PKChaoticParams}.(b)Relative equilibrium in the real space corresponding to the fixed point in (a).}
+\label{fig:BBsymmredPKDanielPars14t20}
+\end{figure}
 
 \item[2013-08-10  Predrag to Chaos Gang] It's not over until it is over.
 \end{description}
