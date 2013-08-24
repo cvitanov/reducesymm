@@ -624,6 +624,11 @@ I also sliced this solution with the same template that I used for my parameters
 \item[2013-08-23 Predrag] Having \eqv\ at $(0,425.56,0,0)$ in the invariant polynomials basis must mean that it sits in an invariant subspace (there is much discussion of a such subspace earlier in the blog, check whether it is in this subspace). Then it will have eigenvectors within the subspace, and others that point out - all of that should be significant. `Spiral in' I find unexpected, maybe there is an unstable \eqv\ you are missing?
     }
 
+\BBedit{
+\item[2013-08-23 Burak]
+The inconsistent look of the equilibria was due to a numerical error. I used different time steps for simulations in invariant basis ($\Delta t = 0.001$) and full state space ($\Delta t = 0.01$). When I checked in the invariant polynomial basis, I found that when I use the smaller time step, simulation converges to a fixed point with zero velocity but if I use the bigger time step, it ends up in a cylcle. I calculated the final point of the full state space simulation and found a point corresponding to the cycle in the invariant polynomial space. My point is, there is no direct correspondence between the invariant space plot that I posted (\reffig{fig:BBPKflowDanielPars} (a)) and real space plot (\reffig{fig:BBPKflowDanielPars} (b)). Since symmetry reduction plots are generated from the real space data, they are also not so accurate. I am now simulating the real space with higher resolution, I already found that the real space system converges on a circle on $(y_1,y_2)$ plane and $x_1 = x_2 = 0$ all the time. This is expected from the transformation relations \refeq{eq:PKinvxirels} and all points on this circle are mapped to the \eqv\ $(0,425.56,0,0)$. Sliced results will be ready tomorrow morning.
+}
+
 \begin{figure}%[h]
 	\centering
 		\includegraphics{PKChaotic}
@@ -655,16 +660,15 @@ I also sliced this solution with the same template that I used for my parameters
  A single template: $\slicep = (1,1,0,0)$.
 }{fig:BBsymmredPKDanielPars0t12}
 
-\begin{figure}%[H]
-\centering
- (a) \includegraphics[width=0.35\textwidth]{BBsymmredPKDanielPars14t17}
- (b) \includegraphics[width=0.35\textwidth]{BBsymmredPKDanielPars15p5t20}
+%\begin{figure}%[H]
+%\centering
+ %(a) \includegraphics[width=0.35\textwidth]{BBsymmredPKDanielPars14t17}
+ %(b) \includegraphics[width=0.35\textwidth]{BBsymmredPKDanielPars15p5t20}
 
-\caption{(a) A projection of \twoMode\ dynamics in the invariant polynomials
-  basis $\{u,v,w,q\}$, parameters \refeq{eq:PKChaoticParams}. 
-(b) Spiral-in to \reqv\ in the full \statesp\ corresponding to the \eqv\ in (a).}
-\label{fig:BBsymmredPKDanielPars14t20}
-\end{figure}
+%\caption{(a) Symmetry reduced \twoMode\ dynamics corresponding with parameters .
+%(b) Spiral-in to \reqv\ in the full \statesp\ corresponding to the \eqv\ in (a).}
+%\label{fig:BBsymmredPKDanielPars14t20}
+%\end{figure}
 
     \PCedit{
 \item[2013-08-23 Predrag] I cannot make sense of either \reffig{fig:BBsymmredPKDanielPars14t20}
@@ -673,14 +677,46 @@ or its captions, but \reffig{fig:BBsymmredPKDanielPars0t12} is cute.
 crossed the border of your single slice hyperplane. If so, two-hyperplane (with a ridge
 in-between) cover of the slice is needed.
     }
+\BBedit{
+\item[2013-08-23 Burak]
+Sorry! I forgot to edit captions after copy/paste. I just wanted to show how the system converges to the relative equilibria on the reduced space by plotting different time intervals seperately. However, as I realized that I should have integrated the system with a smaller time step, these plots are irrelevant for now, hence, I commented them out. I will update them with meaningful captions hopefully tomorrow morning.
+}
 
 \item[2013-08-23 Daniel] Just ran a couple of hundred simulations using the parameters from \refeq{eq:PKChaoticParams} with random initial conditions taken from a Gaussian ball centered at $(u,v,w,q)\, =\,(0,0,0,0)$ with radius of about 8. Each simulation was run for 1000 time units. I found that the trajectories ended up at Burak's fixed point about 70\% of the time, so it's basin of attraction is definitely significant. Then again, 30\% of trajectories fall into the chaotic attractor and stay there for long times, so it's basin of attraction is not tiny either. It also doesn't seem like the chaotic dynamics are transient. I can integrate out to 20000 time units and still be in the attractor if I start in its basin of attraction (e.g., $(u,v,w,q)\, =\,(1,1,1,1)$ . Maybe we can tweek the parameters to make Burak's equilibrium unstable or hyperbolic? Looking at the symbolic expressions for the eigenvalues, I don't see a particularly obvious way to do this. The expressions are a mess!
 
 \item[2013-08-23 Predrag] I do not mind coexisting attractors - that's what we have
 for the pipe and the \pCf s anyway.
 
+\item[2013-08-23 Burak] I tried to calculate the dynamics within the slice and then reconstruct today. It worked perfectly on 1 slice for Daniel's parameters. I am commiting the Matlab (Octave) functions and scripts that I used at
+\texttt{/blog/burak/PorterKnobloch}
+If you want to test them, first run \texttt{generator.m}, this will generate generator.mat with the group generator matrix in it. You can then integrate the system by running \texttt{PKintegrate.m} and then you can reduce the symmetry by running \texttt{PKComputeMovingFrames.m} and you can do everything starting from the reduced space by running \texttt{PKComputeDynamicsWithinSlice.m}. Now to compare the results from both approaches you can run \texttt{PKPlotDynamicsWithinSlice.m}. You should see exactly the same dynamics on the slice and in the full state space calculated with different techniques. I am not posting these results but basically I get the exact same plot with \reffig{fig:BBsymmredPKDanielPars0t12} by calculating the dynamics entirely on the slice.
 
+I was not this lucky with my parameters. When I tried to simulate the dynamics on the slice with the same initial point, I got something that started similar to the slice from the moving frames, and then settled on a limit cycle, results of two methods are side by side on \reffig{fig:BBreduceddynamicstwomethods} for comparison. I also plotted the variation of the group parameters, $\phi(t)$ (computed within the slice) and $\phi(\tau)$ computed using moving frames, and the square of the Euclidian norm of the difference between state vectors, $|x_r(t)-x(t)|^2$, calculated both by reconstruction from the slice and the direct integration in the full \statesp\ (\reffig{fig:BBreductionmethodsdiff}). Any ideas why is this the case?
 
+\begin{figure}%[ht]
+  \begin{center}
+  \includegraphics[width=0.9\textwidth]{BBreduceddynamicstwomethods}
+  \end{center}
+  \caption{Left: Dynamics of \twoMode\ system with the parameter set used in \reffig{fig:BBfullspaceflow130821} computed within the slice with the template $\slicep = (1,1,0,0)$. Right: Symmetry reduced dynamics of \twoMode\ system with the parameter set used in \reffig{fig:BBfullspaceflow130821} computed using Moving Frames Method}
+  \label{fig:BBreduceddynamicstwomethods}
+\end{figure}
+
+\begin{figure}%[ht]
+  \begin{center}
+  \includegraphics[width=0.9\textwidth]{BBreductionmethodsdiff}
+  \end{center}
+  \caption{Top: Group parameter versus time obtained from the computation of dynamics within the slice.
+  Middle: Group parameter versus time obtained from the moving frames calculations.
+  Bottom: Square of the Euclidian norm of the difference between state vectors calculated both ways. Same parameters with the ones used in \reffig{fig:BBfullspaceflow130821} are used.}
+  \label{fig:BBreductionmethodsdiff}
+\end{figure}
+
+\item[2013-08-24 Burak]For amusement, I rotated the symmetry reduced dynamics such that one of the coordinates was always 0 hence got the entire dynamics confined in 3 dimensions so that we can see it without any projections. I used Daniel's parameters to produce \reffig{fig:BBPKreducedto3d}. You can use \texttt{PKPlotMovingFrames.m} after computing the moving frames by following the steps in [2013-08-23 Burak] to produce this plot.
+
+\SFIG{BBPKreducedto3d}{}{
+ Symmetry reduced \twoMode\ dynamics of \reffig{fig:BBPKflowDanielPars} in 
+ a rotated frame such that all points have $\sspRed_2 = 0$.
+}{fig:BBPKreducedto3d}
 
 \item[2013-08-10  Predrag to Chaos Gang] It's not over until it is over.
 \end{description}
