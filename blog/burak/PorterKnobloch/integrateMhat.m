@@ -18,7 +18,7 @@ tp = T*xhatp;
 vphi = @(xhat) dot(velocity(xhat), tp)/dot(T*xhat, tp);
 vhat = @(xhat) velocity(xhat) - vphi(xhat)*(T*xhat);
 
-tol=1e10;
+tol=1e5;
 
 for i = 1:n
 	

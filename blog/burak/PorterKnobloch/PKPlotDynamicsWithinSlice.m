@@ -31,28 +31,28 @@ zlabel('\hat{y}_2')
 title('Reduced dynamics via moving frames')
 view(120,15)
 
+print -dpng ReducedDynamics.png
+
 tarray = 1:size(phi,2);
 tarray = tarray*deltat;
-
-print -dpng ReducedDynamics.png
 
 figure(2)
 
 subplot(3,1,1)
-plot(tarray,phi)
+plot(tarray(:),phi(:))
 ylabel('\phi (t)')
 
 tauarray = 1:size(phitau,2);
 tauarray = tauarray*deltat;
 
 subplot(3,1,2)
-plot(tauarray, phitau)
+plot(tauarray(:), phitau(:))
 ylabel('\phi ( \tau )')
 
 subplot(3,1,3)
 
-xdiff = xreconstructed - x;
-plot(tarray, xdiff(1,:).^2+xdiff(2,:).^2+xdiff(3,:).^2+xdiff(4,:).^2)
+xdiff = xreconstructed(:,:) - x(:,:);
+plot(tarray(:), xdiff(1,:).^2+xdiff(2,:).^2+xdiff(3,:).^2+xdiff(4,:).^2)
 xlabel('Time')
 ylabel('|x_r (t) - x(t)|^2')
 

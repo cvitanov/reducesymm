@@ -180,7 +180,9 @@ The author map \texttt{users.txt} is a text file
  sed -ne 's/^r[^|]*|
  \([^ ]*\) |.*$/\1 = \1 <\1@zero.physics.gatech.edu>/p' |
  sort -u > users.txt
+
 \end{verbatim}
+
 that maps SVN usernames
 to real names and email addresses for the git
 history, with lines of the form:
@@ -273,5 +275,72 @@ edit the conflicted files by hand, by searching for `<<<<<<<', then
 $Author$ $Date$
 \end{verbatim}
 Can git git something like that?
+
+\item[2013-08-25 Burak] Here is a quick start guide for Debian-based Linux (Ubuntu, Ubuntu variations and some others such as ChrunchBang) users that I originally wrote for Kamal:
+
+Open up a terminal on Ubuntu (or any debian based linux distro. If you have Fedora, replace all "apt-get"s below with "yum"s) and type this to get whole packages for compiling \texttt{.tex} files on the project:
+
+\begin{verbatim}
+sudo apt-get install texlive-full
+\end{verbatim}
+
+This should download around 1-2 gb of data. If you don't have a preferred latex editor, you might want to get Kile, it's simple:
+
+\begin{verbatim}
+sudo apt-get install kile
+\end{verbatim}
+
+Default Kile installation comes with some standard latex packages but they do not include REVTeX 4.1 which is needed to compile some of the .tex files in project. That is why I recommend installing texlive-full in the very beginning.
+
+You also need git:
+
+\begin{verbatim}
+sudo apt-get install git-core
+\end{verbatim}
+
+This one should go fast. After you get git, you need to make a clone of the project (https://github.com/cvitanov/reducesymm) on your own side. Open a terminal in a folder that you would like to store your research and type:
+
+\begin{verbatim}
+git clone https://github.com/cvitanov/reducesymm.git
+\end{verbatim}
+
+This will create a folder named reducesymm and project files, blogs, etc. will be in it.
+
+Basic stuff that you can do with git is explained well in this post. http://alistapart.com/article/get-started-with-git you might wanna read this.
+
+To participate in this project, Predrag should add you as a collaborator on git. To get updates on your side, this is what you should do:
+
+On the reducesymm/ folder, type
+
+git remote add upstream https://github.com/cvitanov/reducesymm.git
+
+This will tell git that the original of your project is here: https://github.com/cvitanov/reducesymm.git
+
+So when someone pushes an update to the project (you will get updates once you join the google group), you can download that update by typing:
+
+\begin{verbatim}
+git fetch upstream
+\end{verbatim}
+
+When you do this, on your own computer, there will  be two branches of the project, master and upstream. You will probably want to get your own copy to be most up-to-date version, for that you should type in:
+
+\begin{verbatim}
+git merge upstream/master
+\end{verbatim}
+
+When Predrag makes you a collaborator, you will be able to push your commits to the project. This is how it goes:
+
+Let's say that you modified one of the project files, it will be listed when you type
+
+\begin{verbatim}
+git status
+\end{verbatim}
+
+In the reducesymm/ folder. To commit that change, you type:
+
+\begin{verbatim}
+git commit -am 'your message'
+\end{verbatim}
+ 
 
 \end{description}
