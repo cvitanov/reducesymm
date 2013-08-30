@@ -85,7 +85,7 @@ function [Texp,Lexp]=lyapunov(n,rhs_ext_fcn,fcn_integrator,tstart,stept,tend,yst
 %
 
 % Integrator options
-options = odeset('AbsTol',1e-6,'RelTol',1e-6);
+options = odeset('AbsTol',1e-8,'RelTol',1e-8);
 %options = [];
 
 %

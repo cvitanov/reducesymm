@@ -41,6 +41,8 @@ load lyapunov_exp.mat
 
 warning off
 
+params(10) = 1; 
+
 for i = 1:5000
     testparams = params + 0.5*(2*rand(1,9)-1);
     i
