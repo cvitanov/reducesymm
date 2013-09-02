@@ -3,14 +3,15 @@ $Author$ $Date$
 ----------------------------------------------------------------------------
 
 
-Evangelos Siminos dynamical systems blog
+Burak Budanur dynamical systems blog
 ========================================
+    (derived from Evangelos Siminos blog 2013-07-07)
 	(with Ruslan L. Davidchack, and Predrag Cvitanovi\'c)
 
 pdflatex blog.tex
 	the blog
 
-../bibtex/siminos.bib 
+../bibtex/siminos.bib
 	one bibliography for all projects
 
 ../figs
@@ -19,7 +20,7 @@ pdflatex blog.tex
 ../figsSrc
 	one directory for source programs for all figures
 	(or .txt files explain how to regenerate them if needed)
-../Fig 
+../Fig
 	figures from dasbuch/book/Fig/ (do not edit these)
 
 --------------------------------------------------------------------------
@@ -35,5 +36,3 @@ need to clean this up
 
 --------------------------------------------------------------------------
 TO FIX:
-
-

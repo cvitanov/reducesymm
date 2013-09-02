@@ -1,6 +1,4 @@
-siminos/cgang/00ReadMe.txt
-$Author$
-$Date$
+reducesymm/cgang/00ReadMe.txt
 ------------------------------------------------------------
 
 Slice & chart term project
@@ -8,11 +6,10 @@ Slice & chart term project
 	Cartography of high-dimensional flows:
     A visual guide to sections and slices
 
+Burak Budanur
 Daniel Borrero-Echeverry
-Keith M. Carroll
 Bryce Robbins
 Evangelos Siminos
-Lei Zhang
 
 Adviser: Predrag Cvitanovic
 
@@ -28,11 +25,19 @@ Adviser: Predrag Cvitanovic
 
 Predrag                                 May 11 2012
 remember to remove
-    siminos/cgang/2modes-Bryce-Lei/
+    reducesymm/cgang/2modes-Bryce-Lei/
 so this embarrassment does not trip up anybody's career
 
 ==============================================================
 FORMERLY OUTSTANDING ITEMS, NOW DISPOSED OFF:
+
+= Predrag closed the previous draft     2013-09-02
+  svn siminos/cgang/
+
+= Daniel no response from               2013-08-31
+  Keith M. Carroll, Lei Zhang, dropped
+
+= Predrag created gitHub reducesymm     2013-07-07
 
 = Predrag created the directory         Apr 16 2012
 

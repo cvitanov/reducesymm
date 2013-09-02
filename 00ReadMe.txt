@@ -1,25 +1,26 @@
-siminos/00ReadMe.txt
-$Author$
-$Date$
+
 --------------------------------------------------------
 
-Evangelos Siminos thesis, publications and working notes
+Burak Badanur thesis, publications and working notes
 ========================================================
+includes much of svn repo siminos (Evangelos Siminos)
+but only up to creation of gitHub reducesymm 2013-07-07
+for info only
 
-thesis/
+thesis/             2013-07-07 DO NOT EDIT
 	pdflatex thesis
 	
-rpo_ks/
+rpo_ks/             2013-07-07 DO NOT EDIT
     Cvitanovi\'c, Davidchack and Siminos
     "State space geometry of a spatio-temporally chaotic
      Kuramoto-Sivashinsky flow"
 
-CLE/00ReadMe.txt
+CLE/                2013-07-07 DO NOT EDIT
     Siminos and Cvitanovi\'c
     "Continuous symmetry reduction
         and return maps for higher-dimensional flows"
 
-bibtex/siminos.bib
+bibtex/siminos.bib  2013-07-07 ENTER EDITS ONLY ON TOP
 	one bibliography for all projects
 
 figs/
@@ -48,35 +49,11 @@ thesis/
 tex/
 	customized tex and bibtex style files
 
-WWW/
-    (renamed so in Predrag's setup)
-    Siminos home pages (tres elegantes)
-	repository siminoswww
-
-presentations/
-    all symmetry reduction talks and posters
-    Tufts10/    Predrag seminar, 2010-04-02
-
-scripts/
+scripts/                     2013-07-07 DO NOT EDIT
     potentially useful scripts
 
 blog/
     all matters pertaining to symmetry reduction reading
-
-lyapunov/
-    all matters pertaining to 'covariant Lyapunov vectors'
-
-froehlich/
-    Stefan Froehlich blog, papers
-
-chao/
-    Chao's blog
-
-CV/
-	Siminos CV
-
-2ChaosBook/2CB.tex
-    staging ground for insertions to ChaosBook.org
 
 ---------------------------------------------------------------
 TO FIX:
@@ -87,23 +64,17 @@ NOTES:
 -- maths classification for a paper about Lorenz system:
    MSC: Primary: 37C45, 37D40; Secondary: 37D45
 
-
 Time stamp:
 ----------
 
-To have svn time-stamp file "someFile.type", include the contents of
-	thesis/chapter/svnHeader.txt
-into the file, and then
-	svn propset svn:keywords "Date Author" someFile.type
+How do you add time-stamp to git modified files?
 
 ----------------------------------------------------------------
 HISTORY:
+                        Predrag 2013-07-07
+    created gitHub reducesymm repo
 						Predrag Jul 26 2008
     created this file
 
 ----------------------------------------------------------------
 FIXED:
-						Evangelos Dec 4 2010	
-	emaildict for correct reply-to address
-
--- made ...
