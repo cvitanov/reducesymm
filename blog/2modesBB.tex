@@ -947,7 +947,7 @@ to use svn either :)
 \item[2013-08-25 Burak] I am sending Kimb the invitation to the Google updates group and the quick start guide (for Debian-based Linux Distros. I am also blogging it in \texttt{strategy.tex}) you can give her collaborator access once she gets herself a gitHub account.
 
 \item[2013-08-25 Burak] Using the parameters in
-\refeq{eq:PKDanielParsVaried} I scanned the invariant coordinates $u$
+\refeq{eq:PKDanielParsVaried} \BBedit{([2013-09-02 Burak] Not Exactly! In this numerical search, I mistakenly used $b_2 = -0.00144$). See [2013-09-02 Burak] for the discussion} I scanned the invariant coordinates $u$
 and $v$ from 0 to 1000 (increasing each by steps of 10) and looked
 for a \eqv\ starting a Newton - Raphson search from each $(u,v)$
 combination. Code is here:
@@ -1075,5 +1075,30 @@ The logic of the paper would then be:
 
 \item[2013-08-31 Daniel to Burak] For some reason, I haven't been able to get your rootfinding code to work. It must be some Matlab/Octave translation thing and I'm not really sure how it works anyway. As Predrag discussed above, it would be nice to have an excuse for setting some of the parameters to zero, for example, that doing so sends some of the roots off to infinity. I have a theory that the magnitude of the solutions that you found for your modified set of parameters is large because they go like 1/a small parameter. The only small parameters in your parameter set are $b_1$ and $b_2$. Setting $b_2$ to zero sends $(0,-\mu_2/b_2,0,0)$ to infinity, so might be possible that $b_1$ controls the other ones. Could you start from \refeq{eq:PKDanielParsVaried}, set $b_2$ to zero, check if this affects the roots. If not, make $b_1$ a little bit smaller and see if they move further away from the origin. If they do, make it even smaller and see if they go further out. This might be a way to justify zeroing out $b_1$.
 
+\item[2013-09-02 Burak] To have a better understanding of the behavior of the fixed points, I started from \refeq{PKinvEqs5b}, scaled variables and parameters back to the ones without tilda, and solved $f(u,v) = 0$ for $u$. Since this polynomial is of degree 2, I got two possible solutions for u:
+\bea
+u_{root,^1_2}(v) &=& -\frac{B}{2A} \mp \frac{\sqrt{\Delta}}{2A} 
+\continue
+&& \mbox{where } \Delta = B^2 - 4AC ,\, A = a_1 c_2 ,\, B = -v a_2 c_1 + v b_1 c_2 + c_2 \mu_1 ,\, 
+\continue
+&& \qquad \quad C = -v^2 b_2 c_1 - v c_1 \mu_2 .
+\label{eq:uroot}
+\eea
+Since $v$ and $u$ are always greater than 0, only positive root in \refeq{eq:uroot} has a meaning for the \twoMode\ system, however, which one is positive depends on the parameters and the value of $v$. I substituted these roots into the unscaled $g(u,v)$ from \refeq{PKinvEqs5b} and got the following equations for $v$
+\begin{subequations}\label{eq:F1F2}
+\begin{align}
+ F_1(v) &= g(u_{root,1}(v), v) = 0
+\\
+ F_2(v) &= g(u_{root,2}(v), v) = 0
+\,
+\end{align}
+\end{subequations}
+Now, we have two polynomials of one variable roots of which are the roots of \refeq{PKinvEqs5b}.
+By looking at the behavior of these polynomials, I realized a few things. First: There was a typo in my numerical calculation of the fixed points for the parameters given by \refeq{eq:PKDanielParsVaried}. In the numerical calculation, I entered $b_2 = -0.00144$ instead of $-0.0144$ and this resulted in finding a fixed point around $v = 375.368$ with a positive corresponding $u = 0.0261764$. If I had done that calculation correctly with parameters \refeq{eq:PKDanielParsVaried}, I wouldn't find any of the roots with $v = 375.368$, because with the correct value of $b_2 = -0.0144$, this root of $F_1(v)=0$ is shifted to the $v=392.35$ where the corresponding $u$ is $u=-1.82583$ and since a negative $u$ value is not allowed, the fixed point disappears.
+This method of looking for the fixed points confirmed my previous numerical foundings. For the parameters given by \refeq{eq:PKDanielParamsReduced} variation of $F_1(v)$ with $v$ is shown in \reffig{fig:BBF1vpars88}.
+\SFIG{BBF1vpars88}{}{
+	Variation of $F_1(v)$ given by \refeq{eq:F1F2} evaluated with the parameters \refeq{eq:PKDanielParamsReduced}. Note that the curve intersects the $v$ axis at $v = 0.548221$ which is the only fixed point of this system other than the origin. Numerical evaluation shows that this curve monotonically decreases, hence there is no other fixed point.
+}{fig:BBF1vpars88}
+I am commiting the Mathematica file that I used to compute these polynomials at \texttt{/blog/burak/PorterKnobloch/Mathematica/PKfggeneral.nb}. 
 \item[2013-08-10  Predrag to Chaos Gang] It's not over until it is over.
 \end{description}
