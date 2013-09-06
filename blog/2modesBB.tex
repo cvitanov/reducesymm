@@ -1108,5 +1108,48 @@ This method of looking for the fixed points confirmed my previous numerical foun
 	Variation of $F_1(v)$ given by \refeq{eq:F1F2} evaluated with the parameters \refeq{eq:PKDanielParamsReduced}. Note that the curve intersects the $v$ axis at $v = 0.548221$ which is the only fixed point of this system other than the origin. Numerical evaluation shows that this curve monotonically decreases, hence there is no other fixed point.
 }{fig:BBF1vpars88}
 I am commiting the Mathematica file that I used to compute these polynomials at \texttt{/blog/burak/PorterKnobloch/Mathematica/PKfggeneral.nb}. 
-\item[2013-08-10  Predrag to Chaos Gang] It's not over until it is over.
+
+\item[2013-09-05 Burak]
+I tried to develop a way of finding two templates that can capture the dynamics completely and failed. Here is the explanation of what I did:
+For a choosen template point $\slicep$, \chartBord\ $\sspRSing$ is defined by the following equations:
+\bea
+	\braket{\sspRSing}{\sliceTan{}} &=& 0 ,
+	\continue
+	\braket{\groupTan(\sspRSing)}{\sliceTan{}} &=& 0 .
+	\label{eq:chartBord}
+\eea
+By solving these equations symbolically, we can write the \chartBord\, $\sspRSing$, as a vector of two independent components and two components that are uniquely determined by the independent ones consistent with the fact that the \chartBord\ defines a $(d-2)$ dimensional manifold. The result is (see \texttt{/blog/burak/PorterKnobloch/Mathematica/PKchartborder.nb} for the computation):
+\beq
+	\sspRSing = \{\sspRSing_1, \sspRSing_2, \frac{-\sspRSing_1 (\slicep_1 \slicep_3 + 2 \slicep_2 \slicep_4) -\sspRSing_2 (\slicep_2 \slicep_3 - 2 \slicep_1 \slicep_4)}{ 4(\slicep{}_3^{2} + \slicep{}_4^{2} )}, \frac{-\sspRSing_1 (-2\slicep_2 \slicep_3 + \slicep_1 \slicep_4) - \sspRSing_2 (2 \slicep_1 \slicep_3 + \slicep_2 \slicep_4)}{4(\slicep{}_3^{2} + \slicep{}_4^{2} )}\} .
+	\label{eq:chartBordSol}
+\eeq
+After having an expression for the \chartBord\ , I tried to come up with a condition of a good choice of two templates $\slicep_1$ and $\slicep_2$. According to my argument (I'm not 100\% sure that this is correct, please check. I suspect that it is too retrictive.), if the following inequalities are satisfied, $\slicep_1$ and $\slicep_2$ provide a two chart atlas that can capture dynamics avoiding the chart borders:
+\begin{subequations}\label{eq:F1F2}
+\begin{align}
+	\braket{\slicep{}^{(1)}-\slicep{}^{(2)}}{ \sliceTan{}{}^{(2)}} \braket{\sspRSing{}^{(1)} - \slicep{}^{(2)}}{ \sliceTan{}{}^{(2)}}  &< 0
+	\label{eq:goodtempineqsa}
+\\
+	\braket{\slicep{}^{(2)}-\slicep{}^{(1)}}{ \sliceTan{}{}^{(1)}} \braket{\sspRSing{}^{(2)} - \slicep{}^{(1)}}{ \sliceTan{}{}^{(1)}}  &< 0
+	\label{eq:goodtempineqsb}
+\,
+\end{align}
+\end{subequations}
+I tried to sketch how I got these inequalities on \reffig{fig:BB2charts}. Difference vectors shown in red color are the ones which are dotted with the template tangent in \refeq{eq:goodtempineqsa}. My claim here is that the dot products of these vectors ($\slicep{}^{(1)}-\slicep{}^{(2)}$ and $\sspRSing{}^{(1)} - \slicep{}^{(2)}$) with the template tangent $\sliceTan{}{}^{(2)}$ should have opposite signs if they are on the different sides of the ridge. \refeq{eq:goodtempineqsb} is the same condition for the first chart.
+\begin{figure}
+\begin{center}
+  \includegraphics[width=0.8\textwidth,clip=true]{BB2charts}
+\end{center}
+  \caption{Sketch of a ``good'' two chart atlas where the respective borders of both charts are on the side of the ridge that the templates are not.}
+\label{fig:BB2charts}
+\end{figure}
+After getting equations \refeq{eq:chartBordSol}, \refeq{eq:goodtempineqsa} and \refeq{eq:goodtempineqsb}, I numerically picked a first template point $\slicep{}^{(1)}$ on the \reqv\ of the \twoMode\ system with parameters \refeq{eq:PKDanielParamsReduced}, then applied group transformation on this point and picked the result as a second template candidate (I thought this would be a good start since this way it is possible to transform the normal vector in a systematic manner, as a function of $\phi$, rather than pulling a random candidate):
+\beq
+	\slicep{}^{(2)} = \LieEl (\phi) \slicep{}^{(1)}.
+	\label{eq:slicepcandidate}
+\eeq
+With the candidate template \refeq{eq:slicepcandidate}, I evaluated \refeq{eq:goodtempineqsa} and \refeq{eq:goodtempineqsb} and checked their signs. I assigned a range of parameters to the free parameters in \refeq{eq:chartBordSol} and evaluated \refeq{eq:goodtempineqsa} and \refeq{eq:goodtempineqsb} at each combination. If algorithm finds that at least one the inequalities are not satisfied, it varies group operation parameter and repeats the process. My intention was to keep the second template point for which the inequalities were simultaneously satisfied, however, this never happened. Then, instead of picking second template by transforming first one, I started generating random candidates and checked if the inequalities satisfied, again did not get anything worked.
+
+Questions to everybody: Does the reasoning behind equations \refeq{eq:goodtempineqsa} and \refeq{eq:goodtempineqsb} make sense to you? Do you see anything too restrictive in the procedure I described? 
+
+\item[2013-08-10  Predrag to Chaos Gang] It's not over until it is over. 
 \end{description}
