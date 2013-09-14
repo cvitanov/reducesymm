@@ -835,7 +835,7 @@ I was not this lucky with my parameters. When I tried to simulate the dynamics o
     computed using Moving Frames Method. \textbf{ES:} Is the trajectory
     in both panels the same? Is the integration time longer in the second case?
     I don't understand why there is difference between the two figures if the
-    template is the same.}
+    template is the same. \BBedit{\textbf{BB:} I believe this is due to a numerical error resulting from the trajectory passing close to the chart border. I did not check this one specifically, but I observed a similar situation today and found out that this was the case. Please see my discussion in [2013-09-14 Burak].} }
   \label{fig:BBreduceddynamicstwomethods}
 \end{figure}
 
@@ -1161,9 +1161,34 @@ With the candidate template \refeq{eq:slicepcandidate}, I evaluated \refeq{eq:go
 
 Questions to everybody: Does the reasoning behind equations \refeq{eq:goodtempineqsa} and \refeq{eq:goodtempineqsb} make sense to you? Do you see anything too restrictive in the procedure I described?
 
+\item[2013-09-14 Burak] I computed \twoMode\ dynamics with Daniel's simplified parameters \refeq{eq:PKDanielParamsReduced} for a long time interval ($t = (0,1000)$) starting on the relative equilibrium. I reduced it onto one slice defined by the template $\slicep = (1,1,0,0)$ using moving frames. I also computed the dynamics directly starting on the slice hyperplane; plots of both are on \reffig{fig:BBSingleSliceReducedDynamics}. As you can see, they are not exactly the same, \reffig{fig:BBSingleSliceDifference} shows when they start to be different and how different they are.
 
+\begin{figure}%[ht]
+  \begin{center}
+  \includegraphics[width=0.9\textwidth]{BBSingleSliceReducedDynamics}
+  \end{center}
+  \caption{Left: Dynamics of \twoMode\ system with the parameter set \refeq{eq:PKDanielParamsReduced} computed within the slice with
+    the template $\slicep = (1,1,0,0)$. Right: Symmetry reduced dynamics of \twoMode\ system with the parameter set \refeq{eq:PKDanielParamsReduced} computed using Moving Frames Method.} 
+  \label{fig:BBSingleSliceReducedDynamics}
+\end{figure}
 
+As you can see from \reffig{fig:BBSingleSliceDifference}, full \ssp\ trajectory computed by two methods are same (to the machine precision) for the first 200 time steps and then they start to differ around t=250. If we look at the point on the trajectory for this time, we see that the trajectory passes through the region given by $x_{1,2} \approx 10^-5$ which is quite close to the chart border $x_{1,2} = 0$ as a result, reduced state space evolution equations comes close to the divergence (but don't diverge) and starts to generate numerical errors. I used the same fixed timestep for both calculations and this result shows that this is not a good idea. One needs to use an adaptive time-stepping algorithm, that would ensure a certain precision, especially for the flow within the slice. I'm 99\% sure that single slice will work for \twoMode\ system after integrating a little bit more care.
 
+The reason that I'm sure that single slice would work for \twoMode\ system has to do with its invariant subspace. In the invariant polynomial basis, the invariant subspace is $(u,v,w,q) = (0,v,0,0)$ which corresponds to $(x_1,x_2,y_1,y_2) = (0,0,y_1,y_2)$ in the full state space which is the \chartBord . Hence the dynamics that would start outside the \chartBord\ will never get into the \chartBord\ in the \twoMode\ system. In other words, in \twoMode\ system, the invariant subspace is the subspace where the dynamics is confined into the pure $m=2$ Fourier mode. Since the \twoMode\ system is the most general system with 2 Fourier modes, this urges me to check whether a similar statement can be made in systems with higher Fourier modes. Namely, if we can show that all invariant subspaces of an m-mode SO(2) symmetric system will exclude $m = 1$ region, we can say that an m-mode SO(2) symmetric system can always be symmetry reduced using a single slice given by $(1,1,0,0,0,...)$ without any trouble. I'll be working on this for a while before fixing integration routines which is a rather more trivial task.
+
+\begin{figure}%[ht]
+  \begin{center}
+  \includegraphics[width=0.9\textwidth]{BBSingleSliceDifference}
+  \end{center}
+  \caption{
+  [Top] Group parameter versus time obtained from the computation of
+  dynamics within the slice. [Middle] Group parameter versus time
+  obtained from the moving frames calculations. [Bottom] Square of
+  the Euclidian norm of the difference between state vectors
+  calculated both ways. Parameters are listed in \refeq{eq:PKDanielParamsReduced}.
+  }
+  \label{fig:BBSingleSliceDifference}
+\end{figure}
 
 \item[2013-08-10  Predrag to Chaos Gang] It's not over until it is over.
 \end{description}
