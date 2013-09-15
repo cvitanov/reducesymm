@@ -865,6 +865,7 @@ See \texttt{/cgang/Daniel/Matlab/EOMComplexTo4.m} for details.
  %Symmetry reduced \twoMode\ dynamics of \reffig{fig:BBPKflowDanielPars} in
  %a rotated frame such that all points have $\sspRed_2 = 0$.
  Symmetry reduced \twoMode\ dynamics of \reffig{fig:BBPKflowDanielPars} on the 3D slice manifold $\pSRed$.
+ See \reffig{fig:BBSingleSliceReducedDynamics}.
 }{fig:BBPKreducedto3d}
 
 
@@ -1168,20 +1169,47 @@ With the candidate template \refeq{eq:slicepcandidate}, I evaluated \refeq{eq:go
 
 Questions to everybody: Does the reasoning behind equations \refeq{eq:goodtempineqsa} and \refeq{eq:goodtempineqsb} make sense to you? Do you see anything too restrictive in the procedure I described?
 
-\item[2013-09-14 Burak] I computed \twoMode\ dynamics with Daniel's simplified parameters \refeq{eq:PKDanielParamsReduced} for a long time interval ($t = (0,1000)$) starting on the relative equilibrium. I reduced it onto one slice defined by the template $\slicep = (1,1,0,0)$ using moving frames. I also computed the dynamics directly starting on the slice hyperplane; plots of both are on \reffig{fig:BBSingleSliceReducedDynamics}. As you can see, they are not exactly the same, \reffig{fig:BBSingleSliceDifference} shows when they start to be different and how different they are.
+\item[2013-09-14 Burak] I computed \twoMode\ dynamics with Daniel's simplified parameters \refeq{eq:PKDanielParamsReduced} for a long time interval,
+$t = (0,1000)$, starting close to the \reqv.
+\PCedit{{\bf [2013-09-14 Predrag]} Which one?} I reduced it onto one slice defined by the template $\slicep = (1,1,0,0)$ using moving frames. I also computed the dynamics directly starting on the slice hyperplane; plots of both are on \reffig{fig:BBSingleSliceReducedDynamics}. As you can see, they are not exactly the same, \reffig{fig:BBSingleSliceDifference} shows when they start to be different and how different they are.
 
 \begin{figure}%[ht]
   \begin{center}
   \includegraphics[width=0.9\textwidth]{BBSingleSliceReducedDynamics}
   \end{center}
-  \caption{Left: Dynamics of \twoMode\ system with the parameter set \refeq{eq:PKDanielParamsReduced} computed within the slice with
-    the template $\slicep = (1,1,0,0)$. Right: Symmetry reduced dynamics of \twoMode\ system with the parameter set \refeq{eq:PKDanielParamsReduced} computed using Moving Frames Method.}
+  \caption{Left: Dynamics of \twoMode\ system with the parameter set
+  \refeq{eq:PKDanielParamsReduced}
+  integrated
+  \PCedit{
+  within the $3D$ \slicePlane\ normal to the group tangent $\sliceTan{} =
+  (1,-1,0,0)$. The 2D \sliceBord\ plane is in these coordinates the
+  $\{0,y_1,y_2\}$ plane normal to the 4-vector $(1,1,0,0)$. As the
+  \sliceBord\ coincides with the $m=2$ flow-invariant subspace, the
+  symmetry-reduced flow cannot cross the \sliceBord.
+  }
+  Right: Symmetry reduced dynamics of \twoMode\ system with the parameter
+  set \refeq{eq:PKDanielParamsReduced} computed using Moving Frames
+  Method.}
   \label{fig:BBSingleSliceReducedDynamics}
 \end{figure}
 
-As you can see from \reffig{fig:BBSingleSliceDifference}, full \ssp\ trajectory computed by two methods are same (to the machine precision) for the first 200 time steps and then they start to differ around t=250. If we look at the point on the trajectory for this time, we see that the trajectory passes through the region given by $x_{1,2} \approx 10^-5$ which is quite close to the chart border $x_{1,2} = 0$ as a result, reduced state space evolution equations comes close to the divergence (but don't diverge) and starts to generate numerical errors. I used the same fixed timestep for both calculations and this result shows that this is not a good idea. One needs to use an adaptive time-stepping algorithm, that would ensure a certain precision, especially for the flow within the slice. I'm 99\% sure that single slice will work for \twoMode\ system after integrating a little bit more care.
+\item[2013-09-14 Predrag] Are the coordinates of
+\reffig{fig:BBSingleSliceReducedDynamics} the coordinates of the
+\slicePlane, \ie, are they Gram-Schmidt orthogonal to the \template\
+group tangent $\sliceTan{} = \Lg\slicep = \Lg(1,1,0,0)= (1,-1,0,0)$ ?
+Plot all \reqva; their unstable manifolds might be giving the shape
+to your strange attractor. Can
+you also draw the 2D \sliceBord\ plane in these coordinates, so one can
+see that this \slice\ is a half of a 3D hyperplane? You probably want to
+rotate your 3D Matlab projection, so the \sliceBord\ is the back wall,
+not the front one. As it contains the
+pure $m = 2$ Fourier mode flow-invariant subspace, the \reqv\ in this
+subspace might be important in shaping the dynamics.
 
-The reason that I'm sure that single slice would work for \twoMode\ system has to do with its invariant subspace. In the invariant polynomial basis, the invariant subspace is $(u,v,w,q) = (0,v,0,0)$ which corresponds to $(x_1,x_2,y_1,y_2) = (0,0,y_1,y_2)$ in the full state space which is the \chartBord . Hence the dynamics that would start outside the \chartBord\ will never get into the \chartBord\ in the \twoMode\ system. In other words, in \twoMode\ system, the invariant subspace is the subspace where the dynamics is confined into the pure $m=2$ Fourier mode. Since the \twoMode\ system is the most general system with 2 Fourier modes, this urges me to check whether a similar statement can be made in systems with higher Fourier modes. Namely, if we can show that all invariant subspaces of an m-mode SO(2) symmetric system will exclude $m = 1$ region, we can say that an m-mode SO(2) symmetric system can always be symmetry reduced using a single slice given by $(1,1,0,0,0,...)$ without any trouble. I'll be working on this for a while before fixing integration routines which is a rather more trivial task.
+\item[2013-09-14 Burak]
+As you can see from \reffig{fig:BBSingleSliceDifference}, full \ssp\ trajectory computed by two methods are same (to the machine precision) for the first 200 time steps and then they start to differ around t=250. If we look at the point on the trajectory for this time, we see that the trajectory passes through the region given by $x_{1,2} \approx 10^{-5}$ which is quite close to the chart border $x_{1,2} = 0$ as a result, reduced state space evolution equations comes close to the divergence (but does not diverge) and starts to generate numerical errors. I used the same fixed timestep for both calculations and this result shows that this is not a good idea. One needs to use an adaptive time-stepping algorithm, that would ensure a certain precision, especially for the flow within the slice. I'm 99\% sure that single slice will work for \twoMode\ system after integrating a little bit more care.
+
+The reason that I'm sure that single slice would work for \twoMode\ system has to do with its invariant subspace. In the invariant polynomial basis, the invariant subspace is $(u,v,w,q) = (0,v,0,0)$ which corresponds to $(x_1,x_2,y_1,y_2) = (0,0,y_1,y_2)$ in the full state space which is the \chartBord. Hence the dynamics that would start outside the \chartBord\ will never get into the \chartBord\ in the \twoMode\ system. In other words, in \twoMode\ system, the invariant subspace is the subspace where the dynamics is confined into the pure $m=2$ Fourier mode. Since the \twoMode\ system is the most general system with 2 Fourier modes, this urges me to check whether a similar statement can be made in systems with higher Fourier modes. Namely, if we can show that all invariant subspaces of an m-mode SO(2) symmetric system will exclude $m = 1$ region, we can say that an m-mode SO(2) symmetric system can always be symmetry reduced using a single slice given by $(1,1,0,0,0,...)$ without any trouble. I'll be working on this for a while before fixing integration routines which is a rather more trivial task.
 
 \begin{figure}%[ht]
   \begin{center}
@@ -1196,6 +1224,33 @@ The reason that I'm sure that single slice would work for \twoMode\ system has t
   }
   \label{fig:BBSingleSliceDifference}
 \end{figure}
+
+\item[2013-09-14 Predrag] It's OK, \reffig{fig:BBSingleSliceDifference}
+is as it should be. You have probably frequently passed close to $x_{1,2} \approx 10^{-5}$
+before $t=250$, doubt that that is the cause of the loss of accuracy;
+the trajectory has positive stability exponents.
+Flow within the slice is an integration independent
+of the moving frame post-processing, with independent computational
+errors, so for unstable flow they should agree only up to the Lyapunov
+time. \Rpo s are great, because once you start computing them, they should
+agree to whatever accuracy you want to compute them, an so will their
+Floquet multipliers.
+
+
+\item[2013-09-14 Predrag] A very minor gripe: your edits are all line per
+paragraph. It's OK in wrapping mode in editors, but it is impossible to
+read on GitHub.com site, because they are shown as single lines,
+extending forever off the screen. If your editor can format paragraphs,
+maybe use that? If it is inconvenient, ignore this, it does not matter.
+
+
+
+
+
+
+
+
+
 
 \item[2013-08-10  Predrag to Chaos Gang] It's not over until it is over.
 \end{description}
