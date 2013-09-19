@@ -59,6 +59,7 @@ if (T*Xi)'*(T*template1) < 0 % Check directional condition on slice, if failed l
     [THETA,fval,Xi] = PPShiftToSlice(pi,xinit,template1);
 end
 
+Xi =   [0.31101  0.311014 -0.13228879 -0.7285102]';
 format long
 
 % Set up integration    
@@ -66,7 +67,7 @@ X0 = [Xi; 0]' % Setup intial conditions including extra dimension for Phi
 options = odeset('RelTol',1e-8,'AbsTol',1e-8,'Events',@PKevents); % Setup integrator options
 
 tstart = 0;
-tfinal = 250;
+tfinal = 230;
 tout = tstart;
 xout = X0;
 ieout = [];
