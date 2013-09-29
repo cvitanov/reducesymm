@@ -19,7 +19,7 @@ hold on
 plotgramschmidt(0.01,250,1,2,3,'g');
 
 %Plot the flow on the Gram-Schmidt coordinates:
-plotgramschmidt(250,1000,1,2,3,'b');
+plotgramschmidt(250,500,1,2,3,'b');
 
 %Place a black dot on the unstable equilibrium at the origin
 plot3(0,0,0,'k.', 'markersize', 8)
@@ -54,7 +54,7 @@ vu0GS=vu0GS/norm(vu0GS);
 hvu0=drawVector3d([0 0 0], vu0GS');
 set(hvu0, 'linewidth', 2)
 set(hvu0,'color','k')
-view(285,30);
+view(280,30);
 
 ah = gca();%Generate a handler for the current Axis object
 set(ah,'box','off', 		%Remove the box.
