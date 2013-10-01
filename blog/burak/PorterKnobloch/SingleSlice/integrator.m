@@ -20,4 +20,4 @@ for i = 1:n
 
 end
 
-save('timeev.mat', 'x', 'tfinal', 'deltat'); % Save the time evolution and parameters
+%save('timeev.mat', 'x', 'tfinal', 'deltat'); % Save the time evolution and parameters

@@ -15,6 +15,8 @@ tfinal = 1000;
 
 x = integrator(xi, tfinal, deltat);
 
+save('timeev.mat', 'x', 'tfinal', 'deltat'); % Save the time evolution and parameters
+
 if plot
 	plotflow(0, tfinal, 1,2,3);
 	xlabel('x_1')
