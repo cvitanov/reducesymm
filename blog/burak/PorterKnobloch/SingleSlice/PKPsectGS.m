@@ -24,14 +24,23 @@ vu1 = [0.1755064524073753;
 	   -0.9800140886924088;
 	   0.0936475900798591];
 %A vector perpendicular to xhatp1 & xhatp1+vu1:
-nhat1=cross(xhatp1+vu1, xhatp1);
+%nhat1=cross(xhatp1+vu1, xhatp1);
+
+nhat1 = [8;-1;1];
+nhat1 = nhat1 - (vu1'*nhat1)-vu1;
+nhat1 = nhat1 - (xhatp1'*nhat1)-xhatp1;
+
 nhat1=nhat1/norm(nhat1); %Normalize	   
 	   
-ps1 = psectgs(xhatp1, nhat1, 'psect1.mat');
+%ps1 = psectgs(xhatp1, nhat1, 'psect1.mat', -1);
 V1 = [vu1 cross(vu1,nhat1) nhat1]; %Similarity matrix.
 
 figure(1);
 plotPsectGS('psect1.mat', V1)
+xlabel('$\hat{v}_{u,TW,GS}$')
+ylabel('$\hat{v}_{u,TW,GS} \times \hat{n}_{TW,GS}$')
+
+print -depslatexstandalone PSECT1.tex
 
 xhatp0 = [0;0;0];
 
@@ -41,8 +50,12 @@ vu0 = [0.000000000000000;
 
 nhat0 = Rx(pi/2, vu0);
 
-ps0 = psectgs(xhatp0, nhat0, 'psect0.mat');
+%ps0 = psectgs(xhatp0, nhat0, 'psect0.mat', 1);
 V0 = [cross(vu0,nhat0) vu0 nhat0];
 
 figure(2);
-plotPsectGS('psect1.mat', V0)
+plotPsectGS('psect0.mat', V0)
+xlabel('$\hat{v}_{u,0,GS} \times \hat{n}_{0,GS}$')
+ylabel('$\hat{v}_{u,0,GS}$')
+
+print -depslatexstandalone PSECT2.tex

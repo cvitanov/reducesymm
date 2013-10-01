@@ -19,7 +19,7 @@ hold on
 plotgramschmidt(0.01,250,1,2,3,'g');
 
 %Plot the flow on the Gram-Schmidt coordinates:
-plotgramschmidt(250,500,1,2,3,'b');
+plotgramschmidt(250,1000,1,2,3,'b');
 
 %Place a black dot on the unstable equilibrium at the origin
 plot3(0,0,0,'k.', 'markersize', 8)
