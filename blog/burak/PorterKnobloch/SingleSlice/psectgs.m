@@ -10,7 +10,7 @@ load timeev.mat;
 U = @(x) dot((x-xhatp),nhat)*direction;
 
 n = size(xhatGS,2);
-tol=1e-6; %Tolerance for 'zero'
+tol= 1e-6; %Tolerance for 'zero'
 
 ps = [xhatp;0]; %Assign a dummy value to ps vector to be able to fill afterwards
 
