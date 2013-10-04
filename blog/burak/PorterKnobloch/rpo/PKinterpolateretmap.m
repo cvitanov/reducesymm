@@ -11,12 +11,12 @@ imax = find(snplus1sorted == max(snplus1sorted));
 
 %interpolate in two pieces:
 
-step = 1e-6;
+step = 1e-7;
 
-x1 = snsorted(1:imax);
-y1 = snplus1sorted(1:imax);
-xinterp1 = snsorted(1):step:snsorted(imax);
-yinterp1 = interp1(x1, y1, xinterp1, 'spline');
+%x1 = snsorted(1:imax);
+%y1 = snplus1sorted(1:imax);
+%xinterp1 = snsorted(1):step:snsorted(imax);
+%yinterp1 = interp1(x1, y1, xinterp1, 'spline');
 
 x2 = snsorted(imax:length(snsorted));
 y2 = snplus1sorted(imax:length(snsorted));
@@ -33,7 +33,7 @@ yinterp2 = interp1(x2, y2, xinterp2, 'spline');
 interp2 = [xinterp2;
 		   yinterp2];
 
-tol = 1e-6;
+tol = 1e-7;
 
 irpo=find(abs(interp2(1,:)-interp2(2,:))<tol);
 srpo=yinterp2(irpo);

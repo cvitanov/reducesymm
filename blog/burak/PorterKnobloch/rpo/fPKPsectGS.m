@@ -1,5 +1,4 @@
-clear all
-clc
+function void = fPKPsectGS()
 
 Rx = @(theta, x) [1 0 0;
 				  0 cos(theta) -sin(theta);
@@ -47,27 +46,3 @@ hold off;
 returnmap('psect1.mat', V1)
 
 print -depslatexstandalone RETMAP1.tex
-
-%xhatp0 = [0;0;0];
-
-%vu0 = [0.000000000000000;
-	   %0.841470984807897;
-	   %0.540302305868140];
-
-%nhat0 = Rx(pi/2, vu0);
-
-%ps0 = psectgs(xhatp0, nhat0, 'psect0.mat', 1);
-%V0 = [-cross(vu0,nhat0) vu0 nhat0];
-
-%figure(2);
-%plotPsectGS('psect0.mat', V0)
-%xlabel('$ \hat{n}_{0,GS} \times \hat{v}_{u,0,GS}$')
-%ylabel('$\hat{v}_{u,0,GS}$')
-
-%print -depslatexstandalone PSECT0.tex
-
-%figure(4);
-%hold off;
-%returnmap('psect0.mat', V1)
-
-%print -depslatexstandalone RETMAP0.tex

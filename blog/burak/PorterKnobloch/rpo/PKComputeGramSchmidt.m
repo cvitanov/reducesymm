@@ -4,9 +4,18 @@ clc
 %This m-file projects the flow on the Moving - Frames onto the 3D Gram-
 %Schmidt basis
 
-%Read the moving frames data:
+dynamicswithintheslice = 0;
 
-load movingframes.mat
+if dynamicswithintheslice
+	
+	load dynamicswithintheslice.mat
+	
+	else
+
+	%Read the moving frames data:
+	load movingframes.mat
+
+end
 
 %Cartesian basis for full state space:
 

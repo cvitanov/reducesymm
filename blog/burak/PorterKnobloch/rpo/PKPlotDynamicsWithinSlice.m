@@ -7,89 +7,93 @@ clc
 %.eps outputs are converted to .pdf by epspdf
 
 load dynamicswithintheslice.mat;
-xhatslicedyn = xhat;
-clear xhat;
-load movingframes.mat;
-xhatsymmred = xhat;
-clear xhat;
-load timeev.mat
 
-figure(1)
-subplot(1,2,1)
-plot3(xhatslicedyn(1,:),xhatslicedyn(3,:),xhatslicedyn(4,:))
+plot3(xhat(1,:),xhat(3,:),xhat(4,:))
 view(120,15)
 
-xlabel('x_1')
-ylabel('y_1')
-zlabel('y_2')
-title('within the slice')
-view(120,15)
+%xhatslicedyn = xhat;
+%clear xhat;
+%load movingframes.mat;
+%xhatsymmred = xhat;
+%clear xhat;
+%load timeev.mat
 
-subplot(1,2,2)
-plot3(xhatsymmred(1,:),xhatsymmred(3,:),xhatsymmred(4,:))
-view(120,15)
+%figure(1)
+%subplot(1,2,1)
+%plot3(xhatslicedyn(1,:),xhatslicedyn(3,:),xhatslicedyn(4,:))
+%view(120,15)
 
-xlabel('x_1')
-ylabel('y_1')
-zlabel('y_2')
-title('on the moving frame')
-view(120,15)
+%xlabel('x_1')
+%ylabel('y_1')
+%zlabel('y_2')
+%title('within the slice')
+%view(120,15)
 
-tarray = 1:size(phi,2);
-tarray = tarray*deltat;
+%subplot(1,2,2)
+%plot3(xhatsymmred(1,:),xhatsymmred(3,:),xhatsymmred(4,:))
+%view(120,15)
 
-print('reddyn.eps','-S900,450',
-'-depsc2',
-'-F:Helvetica:9',
-'-tight'
-)
+%xlabel('x_1')
+%ylabel('y_1')
+%zlabel('y_2')
+%title('on the moving frame')
+%view(120,15)
 
-figure(2)
+%tarray = 1:size(phi,2);
+%tarray = tarray*deltat;
 
-subplot(3,1,1)
-plot(tarray,phi)
-ylabel('\phi (t)')
+%print('reddyn.eps','-S900,450',
+%'-depsc2',
+%'-F:Helvetica:9',
+%'-tight'
+%)
 
-tauarray = 1:size(phitau,2);
-tauarray = tauarray*deltat;
+%figure(2)
 
-subplot(3,1,2)
-plot(tauarray, phitau)
-ylabel('\phi ( \tau )')
+%subplot(3,1,1)
+%plot(tarray,phi)
+%ylabel('\phi (t)')
 
-subplot(3,1,3)
+%tauarray = 1:size(phitau,2);
+%tauarray = tauarray*deltat;
 
-xdiff = xreconstructed - x;
-plot(tarray, xdiff(1,:).^2+xdiff(2,:).^2+xdiff(3,:).^2+xdiff(4,:).^2)
-xlabel('Time')
-ylabel('|x_r (t) - x(t)|^2')
+%subplot(3,1,2)
+%plot(tauarray, phitau)
+%ylabel('\phi ( \tau )')
 
-print('difference.eps','-S900,900',
-'-depsc2',
-'-F:Helvetica:9',
-'-tight'
-)
+%subplot(3,1,3)
 
-figure(3)
+%xdiff = xreconstructed - x;
+%plot(tarray, xdiff(1,:).^2+xdiff(2,:).^2+xdiff(3,:).^2+xdiff(4,:).^2)
+%xlabel('Time')
+%ylabel('|x_r (t) - x(t)|^2')
 
-subplot(1,2,1)
-plot3(xreconstructed(1,:), xreconstructed(3,:), xreconstructed(4,:));
-xlabel('x_1')
-ylabel('y_1')
-zlabel('y_2')
-view(120,30)
-title('Reconstructed from the slice')
+%print('difference.eps','-S900,900',
+%'-depsc2',
+%'-F:Helvetica:9',
+%'-tight'
+%)
 
-subplot(1,2,2)
-plot3(x(1,:), x(3,:), x(4,:));
-xlabel('x_1')
-ylabel('y_1')
-zlabel('y_2')
-view(120,30)
-title('Integrated in the full state space')
+%figure(3)
 
-print('fullssp.eps','-S900,450',
-'-depsc2',
-'-F:Helvetica:9',
-'-tight'
-)
+%subplot(1,2,1)
+%plot3(xreconstructed(1,:), xreconstructed(3,:), xreconstructed(4,:));
+%xlabel('x_1')
+%ylabel('y_1')
+%zlabel('y_2')
+%view(120,30)
+%title('Reconstructed from the slice')
+
+%subplot(1,2,2)
+%plot3(x(1,:), x(3,:), x(4,:));
+%xlabel('x_1')
+%ylabel('y_1')
+%zlabel('y_2')
+%view(120,30)
+%title('Integrated in the full state space')
+
+%print('fullssp.eps','-S900,450',
+%'-depsc2',
+%'-F:Helvetica:9',
+%'-tight'
+%)

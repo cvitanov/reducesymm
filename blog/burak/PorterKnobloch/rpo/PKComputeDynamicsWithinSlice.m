@@ -3,7 +3,7 @@ hold off
 clc
 
 xhatp=[1;1;0;0]; %Slice template
-movingframes=1;
+movingframes=0;
 
 if movingframes
 
@@ -15,13 +15,17 @@ if movingframes
 	
 else
 	
-	xhati=xhatp; %Initial point
+	xhati = [-0.583132295203164;
+			 -0.583132295203164;
+			 -0.121331636628869;
+			 -2.761084984756857];
+	  
 	phii=0; %Initial angle	
 	
 end
 
 tinitial = 0;
-tfinal = 1000;
+tfinal = 150;
 deltat = 0.01;
 
 integrateMhat(xhati, phii, tinitial, tfinal, deltat, xhatp);
