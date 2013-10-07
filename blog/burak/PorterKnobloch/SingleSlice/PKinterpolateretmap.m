@@ -11,7 +11,7 @@ imax = find(snplus1sorted == max(snplus1sorted));
 
 %interpolate in two pieces:
 
-step = 1e-6;
+step = 1e-5;
 
 x1 = snsorted(1:imax);
 y1 = snplus1sorted(1:imax);
@@ -23,17 +23,25 @@ y2 = snplus1sorted(imax:length(snsorted));
 xinterp2 = snsorted(imax):step:snsorted(length(snsorted));
 yinterp2 = interp1(x2, y2, xinterp2, 'spline');
 
-%clf();
-%hold on
-%plot(snsorted,snplus1sorted, '.')
-%plot(xinterp1, yinterp1, 'k')
-%plot(xinterp2, yinterp2, 'k')
-%plot(min(snplus1):step:max(snplus1),min(snplus1):step:max(snplus1),'r')
+clf();
+hold on
+plot(snsorted,snplus1sorted, '.')
+plot(xinterp1, yinterp1, 'k')
+plot(xinterp2, yinterp2, 'k')
+plot(min(snplus1):step:max(snplus1),min(snplus1):step:max(snplus1),'r')
+xlabel('$s_n$')
+ylabel('$s_{n+1}$')
+
+print('retmapinterp.tex','-S450,450',
+'-depslatexstandalone',
+'-F:Helvetica:12',
+'-tight'
+)
 
 interp2 = [xinterp2;
 		   yinterp2];
 
-tol = 1e-6;
+tol = 1e-5;
 
 irpo=find(abs(interp2(1,:)-interp2(2,:))<tol);
 srpo=yinterp2(irpo);
