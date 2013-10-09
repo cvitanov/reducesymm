@@ -8,7 +8,7 @@
 
 clc
 clear all
-syms a1 a2 b1 b2 c1 c2 mu1 mu2 e2 real
+syms a1 a2 b1 b2 c1 c2 mu1 mu2 e1 e2 real
 syms z1 z2
 syms u v positive
 syms w q real
@@ -33,7 +33,7 @@ Q = subs(Q,2*theta1-theta2,phi)%Check Dang86(1.2)polar is correct.
 C = simple((W/2)^2+(Q/2)^2-u^2*v) % Check syzygy
 
 %Define zdot's
-z1dot = mu1*z1 + a1*z1*z1*conj(z1) + b1*z1*z2*conj(z2) + c1*conj(z1)*z2;
+z1dot = (mu1-i*e1)*z1 + a1*z1*z1*conj(z1) + b1*z1*z2*conj(z2) + c1*conj(z1)*z2;
 z2dot = (mu2 -i*e2)*z2 + a2*z2*z1*conj(z1) + b2*z2*z2*conj(z2) + c2*z1*z1; 
 
 % Check expression for udot in terms of (u,v,w,q)
