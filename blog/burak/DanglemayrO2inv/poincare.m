@@ -1,4 +1,4 @@
-function ps = poincare(xhatp, nhat)
+function ps = poincare(xhatp, nhat,filename, direction)
 %Poincare section calculator using method described in ChaosBook sect 3.2 
 %xname=string to tell the name of file keeping the time evolved x values
 %xhatp = a point on the poincare section
@@ -12,66 +12,53 @@ U = @(x) dot((x-xhatp),nhat);
 
 n=size(x,2);
 N=10; % Number of divisions to look for intersection
-tol=1e-5; %Tolerance for 'zero'
+tol=1e-10; %Tolerance for 'zero'
 ps = [xhatp;0]; %Assign a dummy value to ps vector to be able to fill afterwards
 
 for i = 1:n-1
 	%If plane equation change sign from negative to positive, look for the intersection:
-	if U(x(:,i)) > 0 && U(x(:,i+1)) < 0 
+	if direction*U(x(:,i)) > 0 && direction*U(x(:,i+1)) < 0 
 	
-		%Choose the coordinate with the maximum speed at the instance
-		%as the new time coordinate for the integration to avoid 
-		%singular velocities
-		
-		vx = velocity(x(:,i)); % velocity at this point
-		absvx = abs(vx); % absolut value of the velocity
-		j = find(absvx == max(absvx)); 
-			
+		xdummy=x(:,i);
+	
 		%Integration until the plane condition is satisfied:
-			
-		xdummy = x(:,i);
-		deltaxj = (x(j,i+1) - x(j,i))/N;
-		xj = xdummy(j);
-			
-		%Transformed state space vector:
-		xnew = xdummy;
-		xnew(j) = (i-1)*deltat; %jth variable is time!
-		k = 0;
-		l=0;		
-		pstime = xnew(j);
 		
 		DotProduct = U(xdummy); 
+		deltatadaptive = deltat/2;
+		pstime = (i-1)*deltat;
 		
-		while DotProduct > tol
+		j=1	;
+		while abs(DotProduct) > tol
 		
-			%Adaptive Euler integration: 
-			xnew = xnew + deltaxj * velocityPS(xdummy,j);
-			xj = xj + deltaxj; % update xj
+			j=j+1;
+			xint = integrator(xdummy, deltatadaptive, deltatadaptive);
+			pstime = pstime + deltatadaptive;
 			
-			xdummy2 = xdummy; % Second dummy variable for backwards integration
-			xdummy = xnew;
-			xdummy(j) = xj;
-			pstime = xnew(j);
-			
+			xdummy = xint(:,2);
+		
 			DotProduct = U(xdummy);
 			
 			% If the Poincare section is passed get back in integration
 			
-			if DotProduct < 0 % If the Poincare section is passed
+			if direction*DotProduct < 0 % If the Poincare section is passed
 			
-				xnew = xnew - deltaxj * velocityPS(xdummy2,j);
-				xj = xj - deltaxj; % update xj
-				deltaxj = deltaxj / 2; 
-			
+				xdummy = xint(:,1);
+				pstime = pstime - deltatadaptive;
+				deltatadaptive = deltatadaptive/2;
+				
 			end
 		
 		end
 		
 		ps(:,size(ps,2)+1) = [xdummy;
 							  pstime];
-		
+		if j>100
+			fprintf('not converging, exiting...\n')
+			break;
+		end
 	end
 	
 end
 
 ps = ps(:, 2:size(ps,2));
+save(filename, 'ps','xhatp')

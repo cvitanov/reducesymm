@@ -19,5 +19,3 @@ for i = 1:n
 	x(:,i+1) = x(:,i) + k1/6 + k2/3 + k3/3 + k4/6;
 
 end
-
-save('timeev.mat', 'x', 'tfinal', 'deltat'); % Save the time evolution and parameters

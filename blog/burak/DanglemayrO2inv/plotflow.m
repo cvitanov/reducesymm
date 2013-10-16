@@ -14,5 +14,5 @@ else
 	plot3(x(1, ni:nf), x(2, ni:nf), x(3, ni:nf));
 end
 view(120,30);
-
+box off;
 void = 1;

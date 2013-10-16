@@ -21,7 +21,7 @@ else
 end
 
 tinitial = 0;
-tfinal = 100;
+tfinal = 500;
 deltat = 0.01;
 
 integrateMhat(xhati, phii, tinitial, tfinal, deltat, xhatp);
