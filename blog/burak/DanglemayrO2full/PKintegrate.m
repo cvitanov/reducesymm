@@ -14,7 +14,7 @@ xi = [0.181612;
 	 -0.010343] ; % Starting point close to the relative equilibrium.
 
 deltat = 0.01;
-tfinal = 500;
+tfinal = 100;
 
 x = integrator(xi, tfinal, deltat);
 
