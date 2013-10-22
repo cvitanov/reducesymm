@@ -8,10 +8,14 @@ clc
 %xi = xi;
 
 plot = 1;
-xi = [0.181612;
-	 -0.512500;
-	  1.939339;
-	 -0.010343] ; % Starting point close to the relative equilibrium.
+%xi = [0.181612;
+	 %-0.512500;
+	  %1.939339;
+	 %-0.010343] ; % Starting point close to the relative equilibrium.
+xi = [-3.77393;
+	 -1.55696;
+	  -2.35925;
+	 1.66352] ; % Starting point close to the relative equilibrium.
 
 deltat = 0.01;
 tfinal = 100;
