@@ -22,19 +22,19 @@ t, x1GS, y1GS, y2GS = loadtxt('data/gramschmidt.dat', unpack=True)
 
 fig = plt.figure()
 ax = fig.gca(projection='3d')
-x = [0,-4,-4,0]
+x = [np.ceil(np.max(x1GS)),np.floor(np.min(x1GS)),np.floor(np.min(x1GS)),np.ceil(np.max(x1GS))]
 y = [0,0,0,0]
-z = [0,0,-2.5,-2.5]
+z = [np.ceil(np.max(y2GS)),np.ceil(np.max(y2GS)),np.ceil(np.min(y2GS)),np.ceil(np.min(y2GS))]
 verts = [zip(x, y,z)]
 poly = Poly3DCollection(verts, facecolor = 'r', alpha=0.5)
-ax.plot(x1GS[0:30000], y1GS[0:30000], y2GS[0:30000], linewidth=0.3)
+ax.plot(x1GS[50000:100000], y1GS[50000:100000], y2GS[50000:100000], linewidth=0.3)
 ax.add_collection3d(poly)
 
 ax.set_xlabel('$\hat{x}_{1,GS}$', fontsize=16)
 ax.set_ylabel('$\hat{y}_{1,GS}$', fontsize=16)
 ax.set_zlabel('$\hat{y}_{2,GS}$', fontsize=16)
-ax.view_init(60,50)
-savefig('image/gramschmidtandpsect.png', bbox_inches='tight', dpi=200)
+ax.view_init(35,75)
+savefig('image/gramschmidtandpsect.png', bbox_inches='tight', dpi=100)
 
 plt.tight_layout()
 plt.show()

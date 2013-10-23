@@ -22,6 +22,6 @@ ax.set_xlabel('u')
 ax.set_ylabel('v')
 ax.set_zlabel('w')
 ax.view_init(15,30)
+savefig('image/uvw.png', bbox_inches='tight', dpi=100)
 
 plt.show()
-#savefig('image/uvw.png', bbox_inches='tight', dpi=150)

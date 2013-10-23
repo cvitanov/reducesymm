@@ -27,7 +27,7 @@ ax.set_xlabel('$\hat{x}_{1,GS}$', fontsize=16)
 ax.set_ylabel('$\hat{y}_{1,GS}$', fontsize=16)
 ax.set_zlabel('$\hat{y}_{2,GS}$', fontsize=16)
 #ax.view_init(15,30)
-savefig('image/gramschmidt.png', bbox_inches='tight', dpi=150)
+savefig('image/gramschmidt.png', bbox_inches='tight', dpi=100)
 
 plt.tight_layout()
 plt.show()

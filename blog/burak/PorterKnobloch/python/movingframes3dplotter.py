@@ -26,7 +26,7 @@ ax.set_xlabel('$\hat{x}_1$', fontsize=16)
 ax.set_ylabel('$\hat{y}_1$', fontsize=16)
 ax.set_zlabel('$\hat{y}_2$', fontsize=16)
 #ax.view_init(15,30)
-savefig('image/movingframes.png', bbox_inches='tight', dpi=150)
+savefig('image/movingframes.png', bbox_inches='tight', dpi=100)
 
 fig2 = plt.figure()
 plt.plot(t,phi)
