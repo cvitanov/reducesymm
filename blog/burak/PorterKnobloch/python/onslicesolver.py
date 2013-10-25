@@ -10,9 +10,6 @@ import numpy as np
 from scipy.integrate import odeint
 import twomode
 
-#Load parameters:
-p = np.loadtxt('data/parameters.dat')
-
 T = twomode.generator()
 xhatp = np.array([1,1,0,0],float)
 tp = np.dot(T, xhatp)
@@ -52,30 +49,23 @@ def integrate(xphi0, p, t, abserror=1.0e-8, relerror=1.0e-6):
 #Integrate only if the module is called as a script:
 
 if __name__ == "__main__":
+	
+	#Load parameters:
+	p = np.loadtxt('data/parameters.dat')
+
 	#Initial conditions:
-	#x10 = -0.0101015007898    
-	#x20 = -0.0101015007898
-	#y10 = 0.00989852391435
-	#y20 = 0.00990045343336
-	#phi0 = 3.14169214968
 	
-	#x10 = -0.419227943472
-	#x20 = -0.419227943472
-	#y10 = 0.535554573642
-	#y20 = -0.126812849644
-	#phi0 = 819.437667713
-	
-	x10=-0.713404949283 
-	x20=-0.713404949282 
-	y10=0.084155488181 
-	y20=-1.5962565603 
+	x10=-0.291878751383   
+	x20=-0.291878751383 
+	y10=0.940375834449 
+	y20=0.227972746079 
 	phi0= 0
 	
 	# ODE solver parameters
 	abserr = 1.0e-8
 	relerr = 1.0e-6
-	stoptime = 1000
-	numpoints = 100000
+	stoptime = 300
+	numpoints = 30000
 	
 	# Create the time samples for the output of the ODE solver:
 	t = [stoptime * float(i) / (numpoints - 1) for i in range(numpoints)]

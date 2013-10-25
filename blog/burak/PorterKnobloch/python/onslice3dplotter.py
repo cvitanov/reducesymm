@@ -29,10 +29,30 @@ ax.set_zlabel('$\hat{y}_2$', fontsize=16)
 #ax.view_init(15,30)
 savefig('image/solvedonslice.png', bbox_inches='tight', dpi=150)
 
-fig2 = plt.figure()
-plt.plot(t,np.mod(phi, 2*np.pi))
-xlabel('Time', fontsize=16)
-ylabel('$\phi (t)$', fontsize=16)
+#fig2 = plt.figure()
+#plt.plot(t,np.mod(phi, 2*np.pi))
+#xlabel('Time', fontsize=16)
+#ylabel('$\phi (t)$', fontsize=16)
 
+redref = 1
+
+if redref:
+	
+	indexref = np.where(y2hat<0)
+	
+	y2hatrefred = np.copy(y2hat)
+	y2hatrefred[indexref] = -y2hat[indexref]
+	x2hatrefred = np.copy(x2hat)
+	x2hatrefred[indexref] = -x2hat[indexref]
+
+	fig = plt.figure()
+	ax=fig.gca(projection='3d')
+	ax.plot(x1hat, y1hat, y2hatrefred, linewidth=0.3)
+	ax.set_xlabel('$\hat{x}_{1}$', fontsize=16)
+	ax.set_ylabel('$\hat{y}_1$', fontsize=16)
+	ax.set_zlabel('$\hat{y}_{2,refred}$', fontsize=16)
+	savefig('image/onslicerefred.png', bbox_inches='tight', dpi=150)
+
+	
 plt.tight_layout()
 plt.show()

@@ -5,7 +5,7 @@ import numpy as np
 
 #Parameter values:
 mu1 = 1 
-a1 = 0.475 
+a1 = 0.4775 
 b1 = -1 
 c1 = 1 
 mu2 = -1 
