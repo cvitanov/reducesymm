@@ -23,14 +23,14 @@ figure(1, figsize=(5, 5))
 
 plt.subplot(2,1,1)
 
-plt.plot(x[:,0], x[:,1], '.', ms=0.1)
+plt.plot(x[:,0], x[:,1], '.', ms=1)
 plt.ylabel('$\hat{x}_1,GS$')
 xlim([np.min(x[:,0])-np.min(x[:,0])/100, np.max(x[:,0])+np.max(x[:,0])/100])
 plt.grid()
 
 plt.subplot(2,1,2)
 
-plt.plot(x[:,0], x[:,3], '.', ms=0.1)
+plt.plot(x[:,0], x[:,3], '.', ms=1)
 xlim([np.min(x[:,0])-np.min(x[:,0])/100, np.max(x[:,0])+np.max(x[:,0])/100])
 plt.grid()
 

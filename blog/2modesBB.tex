@@ -2266,11 +2266,72 @@ a 13-cycle, but it does not seem to do so in the other, longer time
 sections? It seems that the dynamics is converging to a torus of neutral
 stability, leading to excruciatingly slow convergence to it?
 
+\item[2013-10-28 Burak] Sorry for late blogging, I was in the TA duty hell.
+The region of the bifurcation diagram \reffig{fig:BBO2bifurcation} which I
+thought was chaotic, unfortunately (or maybe not) was not chaotic, in fact, if
+I counted correctly, it is a 68-cycle. I am arriving the 'not chaotic' conclusion
+by observing that long runs of the system is confined on the surface of a torus 
+in the symmetry reduced space, hence the dynamics is 2 dimensional so it 
+cannot exhibit chaos. I also checked variation of x with time and saw reccurence
+with period approximately 472 time units. Nevertheless, I think, this is still 
+interesting dynamics and it demonstrates the importance of the symmetry reduction.
+For $a_1 = 0.4775$, Poincar\'e section is shown in \reffig{fig:BBO2psectgsa1eq0475}
+\SFIG{BBO2psectgsa1eq0475}{}{
+ A \rpo\ with a very long period ($T \approx 472$) on the
+ Poincar\'e section in the reduced \statesp .
+  }{fig:BBO2psectgsa1eq0475}
 
+\item[2013-10-28 Burak] I reduced the reflection symmetry as follows: 
+I first computed the reduced dynamics within the slice, then found the points
+on the trajectory with $y_2(t*) < 0$, and then mapped these points as
+\bea
+ x_2(t^*) & \rightarrow & -x_2(t^*) ,
+ \continue
+ y_2(t^*) & \rightarrow & -y_2(t^*) .
+ \label{eq:refred}
+\eea
+This operation corresponds to complex conjugation of the initial mode amplitudes.
+Result of this operation is in \reffig{fig:BBO2onslicerefred}. I didn't find
+this plot particularly informative but if you would like to rotate and zoom
+in to this plot, please run
 
+\texttt{bash O2integrateonslice.sh}
 
+in the folder:
 
+\texttt{blog/burak/PorterKnobloch/python/}
 
+\SFIG{BBO2onslicerefred}{}{
+	Dynamics in the reduced \statesp with reflection symmetry reduced to mapping
+	solutions to the half-space with $y_2 > 0$ as described in \refeq{eq:refred}
+  }{fig:BBO2onslicerefred}
+
+\item[2013-10-28 Burak] In the original Porter-Knobloch paper (\refref{PoKno05})
+Figure 5 shows a chaotic flow with an attractor topology very similar to what
+we got in \reffig{fig:BBunstablevectors}. There, they are using some kind of a 
+symmetry invariant basis, which, I suspect may be equivalent to the ``magic slice".
+I thought it would be a good start to simulate the system with their parameters,
+however, there is no direct mapping of their parameters to ours since we don't 
+have the most general 2-mode system here. I'll work on this correspondance in
+more detail.
+
+\item[2013-10-28 Burak] As discussed in [2012-04-29 Daniel to Gang], our current
+mapping from two complex modes to the real valued 4D \statesp\ is as follows:
+\bea
+	z_1 &=& x_1 + i x_2 ,
+	\continue
+	z_2 &=& y_1 + i y_2 .
+	\label{eq:C2toR4}
+\eea
+While this is similar to the mapping that you used for the Complex Lorenz system,
+I think $z_j = x_j + i y_j$ is more informative since it is straightforwardly
+generalizable to the more than 2 mode cases with $x_j$ and $y_j$  respectively 
+corresponding to the real an imaginary parts of the $j^{th}$ mode. I also
+checked the previous two mode literature \refref{Dang86} and \refref{PoKno05} 
+do not have a mapping to real variables like \refeq{eq:C2toR4}. If it makes
+sense to you, I am suggesting using $z_j = x_j + i y_j$ for  $\mathbb{C}^2$ 
+to $\mathbb{R}^4$ mapping, I can do all the changes in Das Artikel and the codes
+in approximately an hour.
 
 \item[2013-08-10  Predrag to Chaos Gang] It's not over until it is over.
 \end{description}

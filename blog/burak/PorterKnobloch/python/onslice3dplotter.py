@@ -51,6 +51,7 @@ if redref:
 	ax.set_xlabel('$\hat{x}_{1}$', fontsize=16)
 	ax.set_ylabel('$\hat{y}_1$', fontsize=16)
 	ax.set_zlabel('$\hat{y}_{2,refred}$', fontsize=16)
+	ax.view_init(30,100)
 	savefig('image/onslicerefred.png', bbox_inches='tight', dpi=150)
 
 	
