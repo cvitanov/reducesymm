@@ -225,8 +225,74 @@ by the group action over and over again, as we shall see in the examples of
 \ref{s:twoModeSymRed}, it can be extremely complicated if the continuous 
 symmetry of the system is not reduced.
 
-\subsection{Symmetry reduction by the method of slices}
+\subsection{Symmetry reduction by the \mslices}
 \label{s:slice}
+
+Basic idea of the \mslices\ is picking a particular \statesp\ point as a \template\ 
+($\slicep$) and expressing solutions as reduced trajectories ($\sspRed (t)$) on the hyperplane 
+(\pSRed) that involves the \template\ ($\slicep$) and is perpendicular to the group 
+tangent evaluated at the \template\ ($\sliceTan{} = \groupTan(\slicep) = \Lg \slicep$), 
+while keeping record of the group parameter $\theta (t)$, that maps the solution
+back to the symmetry equivariant \statesp . This idea is illustrated in \reffig{fig:ReducTraj1}.
+
+%% ReducTraj*.* - read dasbuch/book/FigSrc/inkscape/00ReadMe.txt
+\begin{figure}
+\begin{center}
+ \setlength{\unitlength}{0.40\textwidth}
+ %% \unitlength = units used in the Picture Environment
+ \begin{picture}(1,0.8361641)%
+   \put(0,0){\includegraphics[width=\unitlength]{ReducTraj5.pdf}}%
+   \put(0.09054399,0.38282057){\color[rgb]{0,0,0}\rotatebox{-30.34758661}{\makebox(0,0)[lb]{\smash{$\pSRed$}}}}%
+   \put(0.57768586,0.29773425){\color[rgb]{0,0,0}\rotatebox{0.0313674}{\makebox(0,0)[lb]{\smash{$\sspRed(0)$}}}}%
+   \put(0.59310014,0.69932675){\color[rgb]{0,0,0}\rotatebox{0.03136739}{\makebox(0,0)[lb]{\smash{$\ssp(\tau)$}}}}%
+   \put(0.8268425,0.39772328){\color[rgb]{0,0,0}\rotatebox{0.03136739}{\makebox(0,0)[lb]{\smash{$\sspRed(\tau)$}}}}%
+   \put(0.81220962,0.66529577){\color[rgb]{0,0,0}\rotatebox{0.03136739}{\makebox(0,0)[lb]{\smash{$\LieEl(\tau)$}}}}%
+   \put(0.23150193,0.63610779){\color[rgb]{0,0,0}\rotatebox{0.0313674}{\makebox(0,0)[lb]{\smash{$\LieEl\,\slicep$}}}}%
+   \put(0.37740434,0.49597258){\color[rgb]{0,0,0}\rotatebox{0.0313674}{\makebox(0,0)[lb]{\smash{$\slicep$}}}}%
+   \put(0.3627714,0.69665188){\color[rgb]{0,0,0}\rotatebox{0.0313674}{\makebox(0,0)[lb]{\smash{$\sliceTan{}$}}}}%
+ \end{picture}%
+\end{center}
+\caption{\label{fig:ReducTraj1}
+% (b)
+\SlicePlane\ \pSRed\ is a hyperplane % \refeq{PCsect0}
+passing through the {\template} point $\slicep$,
+and normal to the group tangent $\sliceTan{}$ at $\slicep$.
+It intersects all
+group orbits (indicated by dotted lines here) in an open
+neighborhood of $\slicep$.  The full
+\statesp\ trajectory $\ssp(\tau)$ and the \reducedsp\
+trajectory $\sspRed(\tau)$ belong to the same group orbit
+$\pS_{\ssp(\tau)}$ and are equivalent up to a group rotation
+$\LieEl(\gSpace)$ %, defined in   refeq{sspOrbit}
+(from \wwwcb{}).
+}%
+\end{figure}
+
+Reduced trajectories $\sspRed (t)$, can be obtained in two ways. In the first 
+method, one takes the symmetry equivariant data and looks for the time dependent
+group parameter ($\theta (t)$) for which the group operation transforms the 
+$\ssp (t)$ to $\sspRed (t) = \LieEl(- \theta (t)) \ssp (t)$ that satisfies
+the \slice\ condition:
+\beq
+(\sspRed(t) - \slicep)\cdot \sliceTan{} = 0
+\,.
+\ee{SliceCond}
+This is a post-processing method and is applicable to both numerical and
+experimental data, however, as one has to perform a Newton search for
+every point in the data set, is computationally heavier than  the second method.
+The second method is computing the reduced trajectory $\sspRed (t)$ and the
+time dependent group parameter $\theta (t)$ directly by integrating
+\bea
+\velRed(\sspRed) &=& \vel(\sspRed)
+   -\dot{\theta}(\sspRed) \, \groupTan(\sspRed)
+\continue
+\dot{\theta}(\sspRed) &=& {\braket{\vel(\sspRed)}{\sliceTan{}}}/
+               {\braket{\groupTan(\sspRed)}{\sliceTan{}}}
+\,.
+\label{eq:so2reduced}
+\eea
+Here, $\velRed$ is the projection of the velocity function on the \slicePlane .
+For a detailed derivation of \refeq{eq:so2reduced}, see \refref{DasBuch}. 
 
 If a $d$\dmn\ dynamical flow is $\Group$-equivariant under actions of
 an $N$ continuous parameters symmetry group $\Group$, its $d$\dmn\ \statesp\ is foliated
