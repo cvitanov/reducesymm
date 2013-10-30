@@ -43,14 +43,23 @@ def vfullssp(x, t, p):
     	p = [mu1, a1, b1, c1, mu2, a2, b2, c2, e2]
     """
 	
-    x1, x2, y1, y2 = x
-    mu1, a1, b1, c1, mu2, a2, b2, c2, e2 = p
-
+    #x1, x2, y1, y2 = x
+    x1, y1, x2, y2 = x
+    r1sq = x1**2 + y1**2
+    r2sq = x2**2 + y2**2
+	
+    #mu1, a1, b1, c1, mu2, a2, b2, c2, e2 = p
+    mu1, a1, b1, c1, e1, mu2, a2, b2, c2, e2 = p
+    
     #The velocity function v = d(x1,x2,y1,y2)/dt:
-    vel = [mu1*x1 + a1*x1**3 + b1*x1*y1**2  + c1*x1*y1 + a1*x1*x2**2 + b1*x1*y2**2 + c1*x2*y2,
-    	   mu1*x2 + a1*x1**2*x2 + c1*x1*y2 + b1*y1**2*x2 - c1*y1*x2 + a1*x2**3 + b1*x2*y2**2,
-    	   mu2*y1 + a2*x1**2*y1 + c2*x1**2 + b2*y1**3 + a2*y1*x2**2 + b2*y1*y2**2 - c2*x2**2 + e2*y2,
-    	   mu2*y2 + a2*x1**2*y2 + 2*c2*x1*x2 + b2*y1**2*y2 - e2*y1 + a2*x2**2*y2 + b2*y2**3]
+    #vel = [mu1*x1 + a1*x1**3 + b1*x1*y1**2  + c1*x1*y1 + a1*x1*x2**2 + b1*x1*y2**2 + c1*x2*y2,
+    #	   mu1*x2 + a1*x1**2*x2 + c1*x1*y2 + b1*y1**2*x2 - c1*y1*x2 + a1*x2**3 + b1*x2*y2**2,
+    #	   mu2*y1 + a2*x1**2*y1 + c2*x1**2 + b2*y1**3 + a2*y1*x2**2 + b2*y1*y2**2 - c2*x2**2 + e2*y2,
+    #	   mu2*y2 + a2*x1**2*y2 + 2*c2*x1*x2 + b2*y1**2*y2 - e2*y1 + a2*x2**2*y2 + b2*y2**3]
+    vel = [(mu1 + c1*x2 + a1*r1sq + b1*r2sq)*x1 + c1*y1*y2 + e1*y1,
+    	   (mu1 - c1*x2 + a1*r1sq + b1*r2sq)*y1 + c1*y2*x1 - e1*x1,
+    	   (mu2 + a2*r1sq + b2*r2sq)*x2 + c2*(x1**2 - y1**2) + e2*y2,
+    	   (mu2 + a2*r1sq + b2*r2sq)*y2 + 2*c2*x1*y1 - e2*x2]
 
     return vel
 

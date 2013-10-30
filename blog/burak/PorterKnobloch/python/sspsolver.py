@@ -25,9 +25,13 @@ if __name__ == "__main__":
 	p = np.loadtxt('data/parameters.dat')
 
 	#Initial conditions:
+	#x10=-0.713404949283 
+	#x20=-0.713404949282 
+	#y10=0.084155488181 
+	#y20=-1.5962565603 
 	x10=-0.713404949283 
-	x20=-0.713404949282 
-	y10=0.084155488181 
+	y10=-0.713404949282 
+	x20=0.084155488181 
 	y20=-1.5962565603 
 
 	# ODE solver parameters
@@ -40,7 +44,8 @@ if __name__ == "__main__":
 	t = [stoptime * float(i) / (numpoints - 1) for i in range(numpoints)]
 	
 	# Pack up the initial conditions:
-	x0 = [x10,x20,y10,y20]
+	#x0 = [x10,x20,y10,y20]
+	x0 = [x10,y10,x20,y20]
 
 	# Call the ODE solver
 	xsol = odeint(twomode.vfullssp, x0, t, args=(p,), atol = abserr, rtol = relerr)

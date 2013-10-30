@@ -75,11 +75,10 @@ the \statesp\ and maps nearby solutions onto the hyperplane that is perpendicula
 to the group tangent computed at the template point, by acting on them with
 the group action. We demonstrate the method of slices by applying it to
 radically simple SO(2)-equivariant models where only two Fourier modes are present.
-We a general two-mode system of order 3, and discuss its representations
+We describe a general two-mode system of order 3, and discuss its representations
 in the SO(2)-equivariant state space, in the polar coordinates, and
-in an invariant polynomial
-basis, which enables us to determine all \reqva\ of the system.
-We then focus on two examples with topologically
+in an invariant polynomial basis, which enables us to determine all \reqva\ 
+of the system. We then focus on two examples with topologically
 different chaotic dynamics corresponding to two the different choices of
 parameters and apply the method of slices on these systems. We show
 that one can determine the symbolic dynamics of
@@ -148,13 +147,6 @@ neighborhoods called `$S_C$' and `$S_R$',
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-\section{Introduction}
-\label{s:intro}
-
-
-As an example consider the  [blah blah],
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}
 %\includegraphics[width=0.28\textwidth]{RoessTrjs2}%{Rossler_Equilibria2}{RoessTrjs}%
@@ -185,6 +177,33 @@ As an example consider the  [blah blah],
 
 \section{Dynamics and symmetry}
 \label{s:symm}
+
+A dynamical system, $\dot{\ssp}=\vel(\ssp)$, is equivariant under a continuous symmetry transformation
+$\ssp'= \exp\left( \theta \Lg\right)\ssp$, if it satisfies the equivariance condition \rf{DasBuch}:
+\beq
+  \groupTan(\vel)  - \Mvar(\ssp) \, \groupTan(\ssp) =0
+  \,.
+\ee{inftmInv}
+Here, $\Mvar(\ssp)_{ij} = {\pde \vel_i}/{\pde\ssp_j} |_x$ is
+the \stabmat and $ \groupTan(\ssp) = \Lg \ssp $ is the group tangent evaluated at
+the point $\ssp$, whereas $ \groupTan(\vel) = \Lg \vel(\ssp) $ is the group tangent
+for the velocity vector evaluated at \ssp . 
+
+For a point $\ssp_\stagn$ in a \reqv\ orbit, the flow and 
+group tangent vectors coincide,
+\(
+\vel = \velRel \, \groupTan(\ssp)
+\,.
+\)
+By symmetry, the \phaseVel\ $\velRel$ is constant. Multiplying the
+equivariance condition \refeq{inftmInv} by $\velRel$ we get
+\beq
+(\velRel \Lg - \Mvar ) \vel =0
+\,.
+\ee{ReqvMargEig}
+In other words, in the co-rotating frame the stability eigenvalue
+corresponding to group tangent is marginal, and the velocity
+$\vel(\ssp_\stagn)$ is the corresponding right eigenvector.
 
 If a $d$\dmn\ dynamical flow is $\Group$-equivariant under actions of
 an $N$ continuous parameters symmetry group $\Group$, its $d$\dmn\ \statesp\ is foliated
@@ -252,19 +271,17 @@ that we shall refer to as the {\twoMode} system:
 with $z_1,\,z_2$  complex, and all parameters real valued. The complex
 \twoMode\ system \refeq{eq:DangSO2} may be rewritten as a 4-dimensional
 first order ODE system,
-by substitution $z_1 = x_1 + i\,x_2$, $z_2 = y_1 + i\,y_2$,
+by substitution $z_1 = x_1 + i\,y_1$, $z_2 = x_2 + i\,y_2$,
 \bea
-\dot{x}_1 &=& \mu_1 x_1 + a_1 x_1^3 + b_1 x_1 y_1^2 + c_1 x_1 y_1 + a_1 x_1 x_2^2 + b_1 x_1 y_2^2
-                              + c_1 x_2 y_2
+\dot{x}_1 &=& (\mu_1 + a_1 r_1^2 + b_1 r_2^2 + c_1 x_2)x_1 + c_1 y_1 y_2 + e_1 y_1 
 \continue
-\dot{x}_2 &=& \mu_1 x_2 + a_1 x_1^2 x_2 + c_1 x_1 y_2 + b_1 y_1^2 x_2 - c_1 y_1 x_2 + a_1 x_2^3
-                         + b_1 x_2 y_2^2
+\dot{y}_1 &=& (\mu_1 + a_1 r_1^2 + b_1 r_2^2 - c_1 x_2)y_1 + c_1 x_1 y_2 - e_1 x_1
 \continue
-\dot{y}_1 &=& \mu_2 y_1 + a_2 x_1^2 y_1 + c_2 x_1^2 + b_2 y_1^3 + a_2 y_1 x_2^2 + b_2 y_1 y_2^2
-                        - c_2 x_2^2 + e_2 y_2
+\dot{x}_2 &=& (\mu_2 + a_2 r_1^2 + b_2 r_2^2)x_2 + c_2 (x_1^2 - y_1^2) + e_2 y_2
 \continue
-\dot{y}_2 &=& \mu_2 y_2 + a_2 x_1^2 y_2 + 2 c_2 x_1 x_2 + b_2 y_1^2 y_2 - e_2 y_1 + a_2 x_2^2 y_2
-                        + b_2 y_2^3
+\dot{y}_2 &=& (\mu_2 + a_2 r_1^2 + b_2 r_2^2)y_2 + 2 c_2 x_1 y_1 - e_2 x_2 
+\continue
+		  && \mbox{where } r_1^2 = x_1^2 + y_1^2\, , \quad r_2^2 = x_2^2 + y_2^2
 \,.
 \label{2mode4D}
 \eea
@@ -283,16 +300,11 @@ equivariant under the \Un{1}\ transformation
 (z_1,z_2) \rightarrow   (e^{i {\gSpace}}z_1,e^{i 2{\gSpace}} z_2)
 \,.
 \ee{Dang86(1.1)aa}
-The parameters $\{e_1,e_2\}$ break the $\On{2}$ symmetry of the
-Dangelmayr normal form system\rf{Dang86} to an $\SOn{2}$-equivariant
-system. As we show in \refeq{PKinvEqs1} below, only the combination
-$(2e_1-e_2)$ matters, so for simplicity we set $e_1=0$. In the real
-representation \refeq{2mode4D}, the $\SOn{2}$ group action
-\refeq{Dang86(1.1)aa} is given by
-$\ssp'= \exp\left( \theta \Lg\right)\ssp$,
-where $\transp{\ssp} = \{ x_1, x_2,y_1, y_2\}$, and $\Lg$ is the
-Lie algebra generator
-    \beq
+In the real representation \refeq{2mode4D}, the $\SOn{2}$ group action
+\refeq{Dang86(1.1)aa} is given by $\ssp'= \exp\left( \theta \Lg\right)\ssp$,
+where $\transp{\ssp} = \{ x_1, y_1,x_2, y_2\}$, and $\Lg$ is the Lie algebra 
+generator
+\beq
 \Lg  \, =
 \left( \begin{array}{cccc}
          0 & 1 & 0 & 0 \\
@@ -302,33 +314,13 @@ Lie algebra generator
       \end{array} \right)
 \,.
 \ee{LGTwoMode}
-That the real \twoMode\ system \refeq{2mode4D} is equivariant under
-infinitesimal $\SOn{2}$ rotations is checked by inserting the Lie algebra
-generator \refeq{LGTwoMode} and the {\stabmat} $\Mvar = {\pde \vel}/{\pde
-\ssp}$ into the equivariance condition\rf{DasBuch}
-    \PC{define $\groupTan(\ssp)$}
-    \PC{No point of having the explicit formula
-        \refeq{2modeStabMatrix} here, right?}
-\beq
-  \groupTan(\vel)  - \Mvar(\ssp) \, \groupTan(\ssp) =0
-  \,.
-\ee{inftmInv}
-    \PC{some of this text copied from ChaosBook.org continuous.tex}
-For a point $\ssp_\stagn$ in a \reqv\ orbit, the flow and group tangent
-vectors coincide,
-\(
-\vel = \velRel \, \groupTan(\ssp)
-\,.
-\)
-By symmetry, the \phaseVel\ $\velRel$ is constant. Multiplying the
-equivariance condition \refeq{inftmInv} by $\velRel$ we get
-\beq
-(\velRel \Lg - \Mvar ) \vel =0
-\,.
-\ee{ReqvMargEig}
-In other words, in the co-rotating frame the stability eigenvalue
-corresponding to group tangent is marginal, and the velocity
-$\vel(\ssp_\stagn)$ is the corresponding right eigenvector.
+One can easily check that the real \twoMode\ system \refeq{2mode4D} 
+satisfies the equivariance condition \refeq{inftmInv}. 
+
+The parameters $\{e_1,e_2\}$ break the $\On{2}$ symmetry of the
+Dangelmayr normal form system\rf{Dang86} to an $\SOn{2}$-equivariant
+system. As we show in \refeq{PKinvEqs1} below, only the combination
+$(2e_1-e_2)$ matters, so for simplicity we set $e_1=0$. 
 
 From \refeq{eq:DangSO2} we note that the \eqv\ point \((z_1,z_2)=(0,0)\)
 is an invariant subspace, and that $z_1=0$, $z_2 \neq 0$ is a 2\dmn\
