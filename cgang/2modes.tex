@@ -175,35 +175,58 @@ neighborhoods called `$S_C$' and `$S_R$',
 
  [blah blah]
 
-\section{Dynamics and symmetry}
+\section{Continuous Symmetries}
 \label{s:symm}
 
-A dynamical system, $\dot{\ssp}=\vel(\ssp)$, is equivariant under a continuous symmetry transformation
-$\ssp'= \exp\left( \theta \Lg\right)\ssp$, if it satisfies the equivariance condition \rf{DasBuch}:
+A dynamical system, $\dot{\ssp}=\vel(\ssp)$, is equivariant under a continuous
+symmetry transformation
+\beq
+	\ssp'= \LieEl (\theta) \ssp = \exp\left( \theta \Lg\right)\ssp, 
+\ee{contSymTrans}
+if the equivariance condition \rf{DasBuch}
 \beq
   \groupTan(\vel)  - \Mvar(\ssp) \, \groupTan(\ssp) =0
-  \,.
+  \,,
 \ee{inftmInv}
-Here, $\Mvar(\ssp)_{ij} = {\pde \vel_i}/{\pde\ssp_j} |_x$ is
-the \stabmat and $ \groupTan(\ssp) = \Lg \ssp $ is the group tangent evaluated at
-the point $\ssp$, whereas $ \groupTan(\vel) = \Lg \vel(\ssp) $ is the group tangent
-for the velocity vector evaluated at \ssp . 
+is satisfied for every point of the \statesp . In equations \refeq{contSymTrans} and \refeq{inftmInv},  
+$\LieEl (\theta)$ is the Lie group element, $\Lg$ is the Lie algebra generator, 
+$\Mvar(\ssp)_{ij} = {\pde \vel_i}/{\pde\ssp_j} |_x$  is the \stabmat ,  
+$ \groupTan(\ssp) = \Lg \ssp $ is the group tangent evaluated at the point $\ssp$ ,
+and $ \groupTan(\vel) = \Lg \vel(\ssp) $ is the group tangent for the velocity
+vector evaluated at \ssp .
 
-For a point $\ssp_\stagn$ in a \reqv\ orbit, the flow and 
-group tangent vectors coincide,
-\(
-\vel = \velRel \, \groupTan(\ssp)
-\,.
-\)
-By symmetry, the \phaseVel\ $\velRel$ is constant. Multiplying the
-equivariance condition \refeq{inftmInv} by $\velRel$ we get
+\subsection{\Reqva\ and \rpo s}
+\label{s:relatives} 
+
+If the orbit of a point $\ssp_\stagn$ coincides with its group orbit, 
+namely if one can find a group parameter $\theta (t)$, for every point $\ssp (t)$ 
+on the orbit of $\ssp_\stagn$ such that
 \beq
-(\velRel \Lg - \Mvar ) \vel =0
+  \ssp (t) = \ssp_\stagn + \int_0^t d\tau \vel(\ssp (\tau)) = \LieEl (\theta (t)) \ssp_\stagn
+  \,
+\ee{releq}
+is satisfied, the $\ssp_\stagn$ is called a \reqv . By expanding both sides of \refeq{releq} 
+for infinitesimal time, \reqv\ condition can be compactly written as  
+\beq
+(\velRel \Lg - \Mvar ) \vel (\ssp_\stagn) =0
 \,.
 \ee{ReqvMargEig}
-In other words, in the co-rotating frame the stability eigenvalue
-corresponding to group tangent is marginal, and the velocity
-$\vel(\ssp_\stagn)$ is the corresponding right eigenvector.
+Here, \velRel\ is the \phaseVel\ defined by the relation $\vel = \velRel \, \groupTan(\ssp)$,
+and it is constant as a consequence of equivariance.
+
+Similar to the \reqv\ condition \refeq{releq}, \rpo\ condition for a \statesp\ point can be written as
+\beq
+  \ssp (T) = \ssp_\rpprime  + \int_0^T d\tau \vel(\ssp (\tau)) = \LieEl (\theta_\rpprime ) \ssp_\rpprime 
+  \,,
+\ee{relpo}
+meaning that the trajectory of $\ssp_\rpprime$ intersects its group orbit at
+time $T$. While the trajectory of a \rpo\ traces out the same path shifted 
+by the group action over and over again, as we shall see in the examples of 
+\ref{s:twoModeSymRed}, it can be extremely complicated if the continuous 
+symmetry of the system is not reduced.
+
+\subsection{Symmetry reduction by the method of slices}
+\label{s:slice}
 
 If a $d$\dmn\ dynamical flow is $\Group$-equivariant under actions of
 an $N$ continuous parameters symmetry group $\Group$, its $d$\dmn\ \statesp\ is foliated
@@ -212,45 +235,9 @@ $\pS/\Group$ is $(d\!-\!N)$\dmn.
 The simplest continuous symmetry groups are the 1-parameter compact rotation
 group $\SOn{2}$ and the 1-parameter noncompact translation group
 $T(1)$; here we shall focus on the $\SOn{2}$ case.
-    \PC{notation for the translation group?}
-As at least 3 dimensions are required for a continuous time flow to
-exhibit chaos, in this case the \statesp\ of a $\Group$-equivariant flow
-has to be at least 4\dmn. Under linear actions of $\SOn{2}$ the \statesp\
-decomposes into 2\dmn\ irreducible subspaces (Fourier components) labeled
-by integers $m = 0,1,2,\cdots$, which thus form the natural basis in which
-to study $\SOn{2}$-equivariant flows. Nonlinear flows, such as the
-1 spatial dimension \KS\ PDE for a `flame front velocity' field
-$u=u(x,t)$ on a periodic domain $u(x,t) = u(x+L,t)$, given by
-\beq
-  u_t = F(u) = -{\textstyle\frac{1}{2}}(u^2)_x-u_{xx}-u_{xxxx}
-    \,,\qquad   x \in [-L/2,L/2]
-    \,,
-\ee{BBks1}
-can be
-expressed in terms of complex Fourier coefficients $a_k(t)$,
-\beq
-  u(x,t)=\sum_{k=-\infty}^{+\infty} a_k (t) e^{ i q_k x}
-\,,\qquad
-  q_k = 2\pi k/L
-\,,
-\ee{BBeq:ksexp1}
-as
-\beq
-\dot{a}_k= \pVeloc_k(a)
-     = ( q_k^2 - q_k^4 )\, a_k
-    - i \frac{q_k}{2} \sum_{m=-\infty}^{+\infty} a_m a_{k-m}
-\,.
-\ee{2m:expan}
-($t \geq 0$ is the time, $x$ is the spatial coordinate, subscripts $x$
-and $t$ denote partial derivatives with respect to $x$ and $t$).
-Nonlinear terms mix an infinity of
-Fourier components. In practice, they are represented by truncations to
-a finite number of Fourier modes; the most radical truncation that
-still might capture some qualitative features of a chaotic flow is to keep
-only a pair of Fourier modes.
 
 
-\subsection{\twoMode\ $\SOn{2}$-equivariant flow}
+\section{\twoMode\ $\SOn{2}$-equivariant flow}
 \label{s:twoMode}
 
 Dangelmayr,\rf{Dang86} Armbruster, Guckenheimer and Holmes,\rf{AGHO288}
@@ -611,6 +598,9 @@ rescaling simplification.
 As we already know $[0,0,0,0]$ and $[0,v,0,0]$ roots, one should divide
 them out, and that is what we have done. Finding
 roots of bivariate polynomials is not easy.
+
+\subsection{Symmetry reduction of \twoMode\ flow}
+\label{s:twoModeSymRed}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
