@@ -11,7 +11,7 @@ from scipy.integrate import odeint
 import twomode
 
 T = twomode.generator()
-xhatp = np.array([1,1,0,0],float)
+xhatp = np.array([1,0,0,0],float)
 tp = np.dot(T, xhatp)
 
 def vphi(x,t,p):
