@@ -17,7 +17,7 @@ import numpy as np
 mpl.rcParams['text.usetex']=True
 mpl.rcParams['text.latex.unicode']=True
 
-t, x1hat, y1hat, x2hat, y2hat, phi = loadtxt('data/solutiononslice.dat', unpack=True)
+t, x1hat, y1hat, x2hat, y2hat = loadtxt('data/solutioncomov.dat', unpack=True)
 
 fig = plt.figure()
 ax = fig.gca(projection='3d')
@@ -27,7 +27,7 @@ ax.set_xlabel('$\hat{x}_1$', fontsize=16)
 ax.set_ylabel('$\hat{x}_2$', fontsize=16)
 ax.set_zlabel('$\hat{y}_2$', fontsize=16)
 #ax.view_init(15,30)
-savefig('image/solvedonslice.png', bbox_inches='tight', dpi=150)
+savefig('image/solvedcomov.png', bbox_inches='tight', dpi=150)
 
 #fig2 = plt.figure()
 #plt.plot(t,np.mod(phi, 2*np.pi))

@@ -11,7 +11,7 @@ from scipy.integrate import odeint
 import twomode
 
 T = twomode.generator()
-xhatp = np.array([1,0,0,0],float)
+xhatp = np.array([1,1,0,0],float)
 tp = np.dot(T, xhatp)
 
 def vphi(x,t,p):
@@ -55,10 +55,15 @@ if __name__ == "__main__":
 
 	#Initial conditions:
 	
-	x10=-0.126921745409   
-	x20=-0.126921745409
-	y10=1.10224355896
-	y20=0.520652833935  
+	#x10=-0.126921745409   
+	#x20=-0.126921745409
+	#y10=1.10224355896
+	#y20=0.520652833935  
+	#phi0= 0
+	x10=-1.32138709067
+	y10=-1.32138709067
+	x20= 0.26866738527 
+	y20=-1.61705230412
 	phi0= 0
 	
 	# ODE solver parameters
@@ -71,7 +76,7 @@ if __name__ == "__main__":
 	t = [stoptime * float(i) / (numpoints - 1) for i in range(numpoints)]
 	
 	# Pack up the initial conditions:
-	xphi0 = [x10,x20,y10,y20, phi0]
+	xphi0 = [x10,y10,x20,y20, phi0]
 	
 	# Call the ODE solver
 	xsol = odeint(vhatvphi, xphi0, t, args=(p,), atol = abserr, rtol = relerr)
