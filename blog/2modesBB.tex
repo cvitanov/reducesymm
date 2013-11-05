@@ -1867,7 +1867,10 @@ section curves, starting from the \eqv /\reqv. Hopefully, I will blog \rpo s tom
   \includegraphics[width=0.8\textwidth]{BBPKretmap1}
   \end{center}
   \caption{
-	Poincar\'e return map corresponding to the section in \reffig{fig:BBPKpsect1}.
+	Poincar\'e return map corresponding to the section in
+\reffig{fig:BBPKpsect1}. The \eqv\ \cycle{0} is at $(0,0)$, the
+\reqv\ \cycle{1} is the other fixed point on the diagonal, and the
+shortest cycle \cycle{01} hops between the two branches (unmarked).
     }
   \label{fig:BBPKretmap1}
 \end{figure}
@@ -2079,19 +2082,19 @@ be unstabilized by tweaking the parameters \refeq{eq:parsO2}.
  Flow with parameters \refeq{eq:parsO2} on the invariant polynomial basis.
   }{fig:BBO2invpol}
 
-I also computed the flow in the full \statesp (\reffig{fig:BBO2fullssp}) and symmetry reduced using
+I also computed the flow in the full \statesp\ (\reffig{fig:BBO2fullssp}) and symmetry reduced using
 the magic slice (\reffig{fig:BBO2gramschmidt}) without quotienting the reflection symmetry (don't know how to
 do it yet). Both post processing and integration on the slice methods give
-the same results upto small numerical errors.
+the same results up to small numerical errors.
 \SFIG{BBO2fullssp}{}{
- Projection of the flow with parameters \refeq{eq:parsO2} in the full \statesp .
+ Projection of the flow with parameters \refeq{eq:parsO2} in the full \statesp.
   }{fig:BBO2fullssp}
 \SFIG{BBO2gramschmidt}{}{
  Symmetry reduced flow with parameters \refeq{eq:parsO2} on the Gram-Schmidt basis.
   }{fig:BBO2gramschmidt}
 
 \item[2013-10-15 Burak]
-New set of parameters:
+A new set of parameters for \refeq{2mode4D}, \On{2}-equivariant case:
 \bea
 	 a_1 &=& 0.47
 	\continue
@@ -2169,7 +2172,7 @@ discrete time ratio $m/13$, $m$ relative prime to 13, \ie,
 $m=1,2,\cdots,12$. Not sure about this at all, but your system is
 sure a rare beast :)
 
-\begin{figure}[H]
+\begin{figure}%[H]
 \centering
  (a) \includegraphics[width=0.35\textwidth]{BBO2gsandpsect}
  (b) \includegraphics[width=0.35\textwidth]{BBO2psectgs}
@@ -2220,7 +2223,7 @@ apparent \reffig{fig:BBO213cycle}, however, as you can see there are more legs
 in this picture, which makes me think that this might be converging to a single
 limit cycle, but very slowly.
 
-\begin{figure}[H]
+\begin{figure}%[H]
 \centering
  (a) \includegraphics[width=0.35\textwidth]{BBO2gsandpsect2}
  (b) \includegraphics[width=0.35\textwidth]{BBO2psectgs2}
@@ -2367,6 +2370,36 @@ have the strength, (re)introduce the sensible notation, please.
 main \texttt{2modes.tex} file only.
 
 
+
+\item[2013-10-03 Evangelos to Burak]
+I hate it to sound like Kassandra, but I do not see where 'magic' in
+your slice comes from. Using the non-magic template
+$\slicep=\{0,\sqrt{2},0,0,0\}$ for the {\twoMode} system gives a figure
+equivalent (see \reffig{fig:2modesSlice1f}) to what you get if you
+use $\slicep=\{1,1,0,0\}$. To me this is no surprise: since your flow
+is rotationally symmetric, any two templates that can be rotated into
+each other will give you equivalent results. Note that the equation
+for the slice could be written as $\Re z_1=0$, and that we might as
+well have used template $\slicep=\{0,1,0,0\}$ since this also leads
+to the same condition. Singularities occur here only if $z_1=0$,
+which corresponds to the invariant subspace of the 2modes flow, and
+thus we are safe.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\SFIG{2modesSlice1f}{}{
+Symmetry reduced {\twoMode} system for $\mu_1=-2.8023, \mu_2=1,
+a_1=-1, a_2=-2.6636, b_1  = 0, b_2=0, c_1=-4.1122, c_2=1.8854, e_1=0,
+e_2=1$. Using moving frames method with $\slicep=\{0,\sqrt{2},0,0\}$.
+Compare with \reffig{fig:BBunstablevectors} (E. Siminos 2013-10-03).
+}{fig:2modesSlice1f}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item[2013-11-04 Burak to Evangelos]
+I agree that \template s $\slicep = \{1,1,0,0\}$ and $\slicep = \{0,1,0,0\}$
+are geometrically equivalent to each other and they would yield similar results
+using \mframes, however, I would expect you to be in trouble if you integrate
+within the \slice\ of $\slicep = \{0,1,0,0\}$ .
+
 \item[2013-11-03 Predrag]
 In \refref{KreEck13} the claim is made that the `{\mconn}'
 \beq
@@ -2389,9 +2422,9 @@ symmetry shifts, tangent to the {$N$\dmn} group orbit $\pS_\ssp$.
 A group tangent and the \statesp\ flow velocity at an instant $\ssp=
 \ssp(\zeit)$ of a typical turbulent state are not likely to be close
 to parallel. For fluid flows the \statesp\ is high dimensional, and
-if the angles between them
+if the angles $\theta_j (\zeit)= \theta_j (\ssp(\zeit))$ between them
 \beq
-\cos \theta_j (\zeit) =
+\cos \theta_j (\ssp) =
     \frac{\vel(\ssp)\cdot\groupTan_j(\ssp)}
          {\norm{\vel(\ssp)}\norm{\groupTan_j(\ssp)}}
 \ee{typTangAngle}
@@ -2402,23 +2435,40 @@ no `calming' effect in the {\comovframe}.
 Maybe a time series plot of \refeq{typTangAngle} would also be
 informative...
 
-\item[2013-11-05 Burak] I implemented in {\mconn} by integrating \refeq{transvFlow}
-for O(2)-equivariant case and plotted trajectories for a \rpo\ in \reffig{fig:BBO2RpoSspComovSlice}.
+\item[2013-11-05 Burak] I implemented in {\mconn} \refeq{transvFlow} by integrating \refeq{transvFlow}
+for \On{2}-equivariant case and plotted trajectories for a \rpo\ in \reffig{fig:BBO2RpoSspComovSlice}.
+\\
+{\bf [2013-11-05 Predrag]} \PCedit{($\RPO{01}$ repeated how many periods?)}
 
-\begin{figure}[H]
+\begin{figure}%[H]
 \centering
- (a) \includegraphics[width=0.3\textwidth]{BBO2a1045rpossp}
- (b) \includegraphics[width=0.3\textwidth]{BBO2a1045rpocomov}
- (c) \includegraphics[width=0.3\textwidth]{BBO2a1045rposlice}
-\caption{(a) A \rpo\ in the symmetry equivariant \statesp . 
-(b) Same trajectory computed in the co-moving frame (c)  Same trajectory on
-the slice hyperplane.
+ (a) [PLOT] $~~~~~~~~~~~~~~~~~~$
+ (b) \includegraphics[width=0.3\textwidth]{BBO2a1045rpossp}
+ \\
+ (c) \includegraphics[width=0.3\textwidth]{BBO2a1045rpocomov}
+ (d) \includegraphics[width=0.3\textwidth]{BBO2a1045rposlice}
+\caption{
+(a) A single traversal of \rpo\ \cycle{01}, period $\period{01}=???$,
+shift $\shift_{01}=???$ (the 2-cycle of the Poincar\'e return map
+such as \reffig{fig:BBretmapinterp}). This is a $3D$ projection of the
+full $4D$ \statesp\ \On{2}-equivariant {\twoMode} flow
+\refeq{2mode4D}.
+(b) \Rpo\ \cycle{01} integrated for  ?? periods $\period{01}$. It
+explores ergodically the group orbit of the \rpo, a $2D$ invariant
+torus embedded in $4D$. Other projections on any three coordinates
+$\{x_1,y_1,x_2,y_2\}$ are qualitatively similar.
+(b) The same trajectory computed integrating the {\comovframe}
+transformed equations \refeq{transvFlow}. As the {\mconn} is not a
+symmetry-reduction method, the trajectory explores ergodically the
+same invariant torus, but with a different shift $\shift_{10}^{cm}=???$
+per period.
+(c)  In the \slice\ this trajectory retraces the corresponding \po.
 Parameters: \refeq{eq:parsO2a1only} with $a_1 = 0.45$.
 }
 \label{fig:BBO2RpoSspComovSlice}
 \end{figure}
 
-
+\item[2013-11-05 Predrag]
 
 
 \item[2013-08-10  Predrag to Chaos Gang] It's not over until it is over.
