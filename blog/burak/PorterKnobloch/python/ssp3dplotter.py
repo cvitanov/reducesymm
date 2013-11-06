@@ -17,19 +17,19 @@ import numpy as np
 mpl.rcParams['text.usetex']=True
 mpl.rcParams['text.latex.unicode']=True
 
-t, x1, x2, y1, y2 = loadtxt('data/sspsolution.dat', unpack=True)
+t, x1, y1, x2, y2 = loadtxt('data/sspsolution.dat', unpack=True)
 
 fig = plt.figure()
 ax = fig.gca(projection='3d')
 
-ax.plot(x1, x2, y1, linewidth=0.3)
+ax.plot(x1, x2, y2, linewidth=0.3)
 ax.set_xlabel('$x_1$', fontsize=16)
 ax.set_ylabel('$x_2$', fontsize=16)
-ax.set_zlabel('$y_1$', fontsize=16)
+ax.set_zlabel('$y_2$', fontsize=16)
 #ax.view_init(15,30)
 savefig('image/ssp.png', bbox_inches='tight', dpi=150)
 
-redref = 1
+redref = 0
 
 if redref:
 	

@@ -383,8 +383,8 @@ Where subscripts denots vector components. For the particular choice of $\slicep
 \end{align}
 \end{subequations}
 Which is only solved if $\sspRed_{1}^{*} = \sspRed_{2}^{*} = 0$.
-Thus, it is possible to reduce the symmetry of an $m$-mode $\SOn{2}$-equivariant 
-system using the single template point $\slicep=\{1,1,0,0,\cdots,0\}$ if 
+Thus, it is possible to reduce the symmetry of an $m$-mode $\SOn{2}$-equivariant
+system using the single template point $\slicep=\{1,1,0,0,\cdots,0\}$ if
 the amplitudes of the first Fourier mode of the system never simultaneously vanish.
 
 \item[2013-09-11 Predrag] This, I think, is the first thing we tried,
@@ -482,12 +482,12 @@ Repository \texttt{svn://zero.physics.gatech.edu/basu} might be of interest.
 
 \item[2013-10-07 Burak] \KS\ equation has an equilibrium at the origin the
 corresponding stability matrix is diagonal. Eigenvalues of the first Fourier
-mode are positive for the usual choices of system size, which motivates me 
+mode are positive for the usual choices of system size, which motivates me
 for trying my single slice on it. However, I could not manage to produce an
-interesting chaotic trajectory by just integrating equations for different 
+interesting chaotic trajectory by just integrating equations for different
 truncations. What I need is a system size parameter ($L$ or $\nu$) and an
-initial condition using which I can generate a chaotic orbit with least 
-number of modes. I looked through the \KS\ literature but could not find 
+initial condition using which I can generate a chaotic orbit with least
+number of modes. I looked through the \KS\ literature but could not find
 anything helpful. Any suggestions?
 
 \item[2013-10-07 Evangelos] That's funny. I know at least one student in your
@@ -495,30 +495,30 @@ group that did his thesis on this problem. I guess it would be hard to spot
 his/her publications, so have a look in \refrefs{SCD07,SiminosThesis}.
 I would be very interested to see how this first Fourier mode slice works.
 
-\item[2013-10-07 Burak] Already looked at them. Your results are mostly 
+\item[2013-10-07 Burak] Already looked at them. Your results are mostly
 given in x-space so I need to first digitize, and then Fourier transform
-them to be able to use them as initial conditions. You also use at least 
-16 modes which is something I'm trying to avoid here. I was just asking 
+them to be able to use them as initial conditions. You also use at least
+16 modes which is something I'm trying to avoid here. I was just asking
 if anyone knows an easier way of just getting a chaotic trajectory.
 
 \item[2013-10-07 Evangelos] We played a bit before settling to $L=22$ and,
 as we explain in \refrefs{SCD07,SiminosThesis}, this seems to be the smallest
-system size for which there is interesting dynamics (or at least you cannot 
+system size for which there is interesting dynamics (or at least you cannot
 have a much smaller system that is still chaotic). If you need initial
 conditions for \rpo s, there are a lot of them (in Fourier space) in repository
 \texttt{siminos}. If you want to simply run a trajectory, then you can start
-from any random initial point in Fourier space, just make sure you set 
+from any random initial point in Fourier space, just make sure you set
 the last few Fourier modes to zero. Computationally, 16 modes are not that many.
 Conceptually, it would be better to have something that is 4-d and that's
-why we started the PK exercise. However, it turns out that it makes 
-a great deal of difference in terms of invariant subspaces 
+why we started the PK exercise. However, it turns out that it makes
+a great deal of difference in terms of invariant subspaces
 when you add a third mode. $L=22$ is interesting because both the second
 and the third modes participate in the dynamics. You could try using a smaller
 box, but as you have probably seen as you did, there is not much in smaller
 systems.
 
 \item[2013-11-02 Burak] I used Ruslan's solver for \KS\ and got a fairly chaotic
-looking trajectory for random initial conditions then sliced it with moving 
+looking trajectory for random initial conditions then sliced it with moving
 frames method using $\slicep=\{1,1,0,0,\cdots,0\}$.
 Result is in \reffig{fig:BBKSmovframes}. If you look carefully you can see
 some discontinuity around $Re[\hat{a}_1] = 0$, that is due to $\dot{\phi}$
@@ -526,14 +526,14 @@ being larger around that region and it goes away as you make your timesteps
 smaller. In this figure, time step is fixed to $\Delta t = 0.1$, I belive
 a solution within the slice that uses adaptive time-stepping can produce much
 better results, however, until now, I wasn't successful in numerically solving
-\KS\ equation myself. 
+\KS\ equation myself.
 
 If you want to produce the \reffig{fig:BBKSmovframes} and rotate it, first
-make sure that you have the required packages by running 
+make sure that you have the required packages by running
 
-\texttt{bash DEBIAN.sh} (for Ubuntu and Debian based distros) or 
+\texttt{bash DEBIAN.sh} (for Ubuntu and Debian based distros) or
 
-\texttt{bash FEDORA.sh} (for Fedora) in 
+\texttt{bash FEDORA.sh} (for Fedora) in
 
 \texttt{blog/burak/KuramotoShivashinsky/python/}
 
@@ -543,13 +543,104 @@ then run
 
 in the same folder. This should generate a Matlab-like rotatable figure.
 
-\begin{figure}[ht]
-\begin{center}
-\includegraphics[width=0.9\textwidth]{BBKSmovframes}
-\end{center}
-\caption{ Symmetry reduced \KS\ flow . }
+\begin{figure}%[H]
+\centering
+ (a) \includegraphics[width=0.45\textwidth]{BBKSmovframes}
+ (b) \includegraphics[width=0.45\textwidth]{BBKSmovframesb}
+\caption{(a) Symmetry reduced \KS\ flow with integration time step $\Delta t = 0.1$.
+(b) Symmetry reduced \KS\ flow with integration time step $\Delta t = 0.01$.
+}
 \label{fig:BBKSmovframes}
 \end{figure}
+
+
+\item[2013-10-03 Evangelos to Burak]
+%For the same reason,
+What you show in \reffig{fig:BBKSmovframes}, is essentially
+equivalent to what we did in our first attempts to reduce symmetry in KS, \ie\
+define a slice using the first Fourier mode. See \eg\ Fig. 21.5 in
+(svn repository)
+\\
+\texttt{siminos/blog/blog.pdf}. As you can see we run into
+many troubles with this approach, and this led to the atlas (\ie\ multiple chart)
+proposal. For instance, in contrast to the {\twoMode} system, KS has no invariant
+subspace $a_1=0$, so nothing prevents the flow from crossing the 'chart border'.
+I think this is what you see in your figure, and refined numerical integration
+will not help.
+
+\item[2013-11-04 Burak to Evangelos] To show that higher time resolution
+smoothens the discontinuities I sampled the solution with a higher rate and
+applied the same symmetry reduction.  You can see that \reffig{fig:BBKSmovframes}(b)
+does not have the annoying jumps of \reffig{fig:BBKSmovframes}(a), only difference
+in the production of the two is the spacing between time samples.
+
+I'll try to explain the magic by writing the slice and chart border conditions
+and rotations explicitly for different cases. If we define $Re[a_1] = x_1$ and
+$Im[a_1] = y_1$, $\SOn{2}$ opreation on these coordinates yields
+\bea
+	\hat{x}_1 &=& \cos{\phi} \, x_1 + \sin{\phi} \, y_1
+	\continue
+	\hat{y}_1 &=& - \sin{\phi} \, x_1 + \cos{\phi} \, y_1 \, .
+	\label{eq:SO2on1stmode}
+\eea
+Let's take the \template\ as $\slicep = \{0,1\}$. For this template, \slice\
+condition is
+\beq
+	\hat{x}_1 = 0 \, ;
+	\label{eq:SliceCondIma1}
+\eeq
+and the \chartBord\ is defined by
+\beq
+	\hat{y}^*_1 = 0 \, .
+	\label{eq:ChartBordIma1}
+\eeq
+Substituting \refeq{eq:SliceCondIma1} in \refeq{eq:SO2on1stmode}, we get
+\bea
+	0 &=& \cos{\phi} \, x_1 + \sin{\phi} \, y_1 \rightarrow\ x_1 = - \frac{\sin{\phi}}{\cos{\phi}} y_1 ,
+	\continue
+	\hat{y}_1 &=&  \sin{\phi} \, \frac{\sin{\phi}}{\cos{\phi}} y_1 + \cos{\phi} \, y_1 \, \rightarrow\ \hat{y}_1 = \frac{y_1}{\cos{\phi}} \, .
+	\label{eq:SO2on1stmodeIma1}
+\eea
+We see that, whenever the flow crosses $Im[a_1] = 0$ we cross the \chartBord ,
+which is something frequently happens in both \KS\ and \twoMode\ systems. You
+would get a similar condition if you had choosen the \template\ as $\slicep = \{0,1\}$.
+
+Now let's take the \template\ $\slicep = \{1,1\}$. For this one, \slice\
+condition is
+\beq
+	\hat{x}_1 = \hat{y}_1 \, ;
+	\label{eq:SliceConda1}
+\eeq
+and the \chartBord\ is defined by
+\beq
+	\hat{x}^*_1 = \hat{y}^*_1 = 0 \, .
+	\label{eq:ChartBorda1}
+\eeq
+You can easily see by following the same steps that only the solutions with
+$x_1 = y_1 = 0$ are mapped to the \chartBord\ defined by \refeq{eq:ChartBorda1}.
+This condition is much more restrictive than the previous one. It is not allowed
+in \twoMode\ case by the fact that it is in an invariant subspace and I, myself,
+haven't encountered that in \KS\ solutions; other than the \rpo s with fundamental
+frequencies of second or third mode.
+
+In addition to my strong belief that it is extremely unlikely to have a zero
+magnitude 1st mode, I am almost sure that you cannot cross the \chartBord\
+\refeq{eq:ChartBorda1} since in the \mframes\ you make a direction choice
+which restricts the \reducedsp\ to a half space in which $\Re[a_1]$
+is either greater or lesser than $0$ for the choice $\slicep = \{1,1,0,0,\cdots\}$,
+hence, the worst you can do is to touch the \chartBord\ and come back to safety.
+You can see this on \reffig{fig:BBKSmovframes}. In \reffig{fig:BBKSmovframes},
+the direction choice resulted $Re[\hat{a}_1]$ being lesser than 0 and the
+projection of the \chartBord\ is the plane $Re[\hat{a}_1] = 0$. The flow
+gets close to that but never crosses it.
+
+Regarding your former discussions, I'm totally on Ruslan's side. I think the
+smallest non-vanishing Fourier mode is the most natural basis for the symmetry
+reduction of an equation defined on a periodic domain.
+
+I would be convinced that what I am suggesting here is no better than what
+you tried before if you show me an example of a \KS\ solution that crosses
+$|a_1| = 0$.
 
 \end{description}
 \renewcommand{\ssp}{a}
