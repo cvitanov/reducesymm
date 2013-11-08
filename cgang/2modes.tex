@@ -609,8 +609,8 @@ polynomials roots of which are the \eqva\ of the system \refeq{PKinvEqs1}:
  \left(4\,A_1^2 u^2 - 4\,c_1^2\,u^2 v\right)\left(c_2\,u+2\,c_1\,v\right)^2 %Double checked DB 04-30-2012
 	\ceq
 	+\,4\,c_1^2\,(-2e_1+e_2)^2\,u^2\,v^2 = 0
-\,,\qquad  deg(g) = 6
-\,,
+\,,\ceq  deg(g) = 6
+\,.
 \label{PKinvEqs5}
 \eea
 %\DBedit{DB: Not sure where this factor of 2 comes from in $w =
@@ -624,18 +624,17 @@ polynomials roots of which are the \eqva\ of the system \refeq{PKinvEqs1}:
 %2012-04-29 Predrag: thanks!
 %2012-04-29 Predrag: should have I used the syzygy \refeq{eq:syzPK},
 %$w^2 - 4\,u^2v = -q^2$ DB: If you plug the syzygy in you trivially get zero....
-where $w$ is defined by the first equation in
-\refeq{PKinvEqs4}.
-Lots of coefficients, but we can
-absorb some into rescaled quantities
+
+We divide the common multiplier $u^2$ from the second equation and by doing
+so, eliminate one of the roots at the origin and $[0,-\mu_2/b_2,0,0]$ root from
+the solutions. Furthermore, scale the parameters and variables as
 $\tilde{u} = c_2\,u$,
 $\tilde{v} = c_1\,v$,
 $\tilde{a_1} = a_1/c_2$,
 $\tilde{b_1} = b_1/c_1$,
 $\tilde{a_2} = a_2/c_2$,
 $\tilde{b_2} = b_2/c_1$,
-and by using $A_1$ expression for $w$ factored out the pair of $u=0$
-roots:
+to finally get
 \bea
 \tilde{f}(\tilde{u},\tilde{v}) &=&
   \tilde{u}\,A_1 - \tilde{v}\,A_2 = 0 %Double checked DB 04-30-2012
@@ -650,23 +649,80 @@ roots:
 \continue
  && \mbox{where }
 A_1 = \mu_1+\tilde{a_1}\,\tilde{u}+\tilde{b_1}\,\tilde{v}
-\,,\quad
-A_2 = \mu_2+\tilde{a_2}\,\tilde{u}+\tilde{b_2}\,\tilde{v}
+\,,\ceq
+\qquad\quad A_2 = \mu_2+\tilde{a_2}\,\tilde{u}+\tilde{b_2}\,\tilde{v}
 \,,
 \label{PKinvEqs5a}
 \eea
-so we are down to 8 coefficients. Note that $e_2 \in \reals_{+}$, and if
-we agree that  $\mu_1 > -\mu_2 > 0$ we can rescale the first equation so
-that in new time units $\tilde{\mu}_1 =1$, $\tilde{\mu}_2 = \mu_2/\mu_1
-\in \reals_{-}$, so there are 7 coefficients in all. I see no further
-rescaling simplification.
 
-As we already know $[0,0,0,0]$ and $[0,v,0,0]$ roots, one should divide
-them out, and that is what we have done. Finding
-roots of bivariate polynomials is not easy.
+In order to find \reqva\ of the \twoMode\ system, one has to solve two bivariate 
+polynomials \refeq{PKinvEqs5a} which, in general, is not a trivial task. However, 
+as we shall see in the examples of the next section, for particular choices 
+of parameters, equations\refeq{PKinvEqs5a} symplify significantly allowing
+us to determine all \reqva\ of the \twoMode\ system.  
 
-\subsection{Symmetry reduction of \twoMode\ flow}
+\subsection{Reduction of $\SOn{2}$ symmetry of the \twoMode\ system using
+\mslices}
 \label{s:twoModeSymRed}
+
+To illustrate the \mslices\ on the \twoMode\ system we choose two relatively 
+simple sets of parameters for which we observe interesting dynamics. These 
+parameters are listed in table \ref{tab:pars}. Note for both sets, we choose
+$b_2 = 0$ and by doing so, we send the \reqv\ at $[0,-\mu_2/b_2,0,0]$ to infinity
+and simplify the bivariate polynomials \refeq{PKinvEqs5a} such that from the 
+first equation we can get the condition $\tilde{v} = (\mu_1 + \tilde{a}_1 \tilde{u})/
+(\mu_2 + \tilde{a}_2 \tilde{u} - \tilde{u} \tilde{b}_1)$ and substitute into 
+the second one to solve for single variable.
+
+\begin{table}
+	\begin{tabular}{|c|c|c|}
+	\hline
+	Paramter & Set 1 & Set 2 \\
+	\hline
+	% after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
+	$\mu_1$ & -2.8 	& 1     \\
+	$\mu_2$ & 1       & -1    \\
+	$e_1$   & 0       & 0     \\
+	$e_2$   & 1       & 0     \\
+	$a_1$   & -1      & 0.47  \\
+	$a_2$   & -2.66 	& 0     \\
+	$b_1$   & 0       & -1    \\
+	$b_2$   & 0       & 0     \\
+	$c_1$   & -7.75   & 1     \\
+	$c_2$   & 1	    & -1    \\
+	\hline
+	\end{tabular} 
+	\caption{Parameter sets that we used to study the \twoMode\ system.}
+	\label{tab:pars}
+\end{table}
+
+We start with the first set of parameters in table \ref{tab:pars}. For this set,
+after substituting the parameters with values 1 and 0, \twoMode\ system equations
+can be written as: 
+\begin{subequations}\label{eq:DangSO2set1}
+\begin{align}
+  \dot{z}_1 &= \mu_1 \,z_1 - z_1|z_1|^2 +c_1\,\overline{z}_1\,z_2
+\\
+  \dot{z}_2 &= (1-\ii)\,{z_2}+a_2\,z_2|z_1|^2+\,z_1^2
+\,,
+\end{align}
+\end{subequations}
+
+
+%SO2-equivariant equations:
+%\bea
+%\dot{x}_1 &=& (\mu_1 - r_1^2 + c_1 x_2)x_1 + c_1 y_1 y_2 
+%\continue
+%\dot{y}_1 &=& (\mu_1 - r_1^2 - c_1 x_2)y_1 + c_1 x_1 y_2 
+%\continue
+%\dot{x}_2 &=& (1 + a_2 r_1^2)x_2 + (x_1^2 - y_1^2) + y_2
+%\continue
+%\dot{y}_2 &=& (1 + a_2 r_1^2)y_2 + 2 x_1 y_1 - x_2
+%\continue
+		  %&& \mbox{where } r_1^2 = x_1^2 + y_1^2\, , \quad r_2^2 = x_2^2 + y_2^2
+%\,.
+%\label{2mode4Dset1}
+%\eea
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
