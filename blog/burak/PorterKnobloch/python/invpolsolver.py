@@ -13,10 +13,10 @@ import numpy as np
 p = np.loadtxt('data/parameters.dat')
 
 #Initial conditions:
-u0 = 1.5652
-v0 = 2.5564
-w0 = -4.3934
-q0 = 1.7731
+u0 = 0.19357
+v0 = 0.154131
+w0 = -0.149539
+q0 = -0.016076
 
 # ODE solver parameters
 abserr = 1.0e-8

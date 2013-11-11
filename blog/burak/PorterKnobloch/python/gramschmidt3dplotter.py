@@ -26,8 +26,19 @@ ax.plot(x1GS, y1GS, y2GS, linewidth=0.3)
 ax.set_xlabel('$\hat{x}_{1,GS}$', fontsize=16)
 ax.set_ylabel('$\hat{y}_{1,GS}$', fontsize=16)
 ax.set_zlabel('$\hat{y}_{2,GS}$', fontsize=16)
-#ax.view_init(15,30)
+ax.w_xaxis.set_pane_color((1, 1, 1, 1.0))
+ax.w_yaxis.set_pane_color((1, 1, 1, 1.0))
+ax.w_zaxis.set_pane_color((1, 1, 1, 1.0))
+ax.view_init(20,-150)
 savefig('image/gramschmidt.png', bbox_inches='tight', dpi=100)
+
+reqv = 1
+
+if reqv:
+	
+	ax.hold(True)
+	ax.plot(x1GS[0:10000], y1GS[0:10000], y2GS[0:10000], linewidth=0.3, c='r')
+	savefig('image/gramschmidtreqv.png', bbox_inches='tight', dpi=150)
 
 plt.tight_layout()
 plt.show()

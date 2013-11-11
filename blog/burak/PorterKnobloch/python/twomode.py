@@ -21,7 +21,7 @@ def vinvpol(x, t, p):
     """
 	
     u, v, w, q = x
-    mu1, a1, b1, c1, mu2, a2, b2, c2, e2 = p
+    mu1, a1, b1, c1, e1, mu2, a2, b2, c2, e2 = p
 
     #The velocity function v = d(u,v,w,q)/dt:
     vel = [2*mu1*u + 2*a1*u**2 + 2*b1*u*v + c1*w,
