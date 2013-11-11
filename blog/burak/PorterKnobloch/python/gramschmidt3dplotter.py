@@ -37,7 +37,7 @@ reqv = 1
 if reqv:
 	
 	ax.hold(True)
-	ax.plot(x1GS[0:10000], y1GS[0:10000], y2GS[0:10000], linewidth=0.3, c='r')
+	ax.plot(x1GS[0:10000], x2GS[0:10000], y2GS[0:10000], linewidth=0.3, c='r')
 	savefig('image/gramschmidtreqv.png', bbox_inches='tight', dpi=150)
 
 plt.tight_layout()

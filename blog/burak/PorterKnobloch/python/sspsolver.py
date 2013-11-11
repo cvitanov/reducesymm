@@ -29,21 +29,16 @@ if __name__ == "__main__":
 	#y10=-1.32138709067
 	#x20=0.26866738527  
 	#y20=-1.61705230412
-	x10=-0.11538892531103558 
-	y10=0.42377435568236843
-	x20=0.35724630044323585
-	y20=0.16150951071631262
-	
-	#x10=-0.310563473904   
-	#y10=-0.310563473904
-	#x20=-0.0419063666849
-	#y20=-0.38981313744
+	x10=-0.311102644920502
+	y10=-0.311102644920502
+	x20=-0.07020440068369531
+	y20=-0.3862670595294275
 	
 	# ODE solver parameters
 	abserr = 1.0e-8
 	relerr = 1.0e-6
-	stoptime = 50
-	numpoints = 1500
+	stoptime = 1000
+	numpoints = 100000
 
 	# Create the time samples for the output of the ODE solver:
 	t = [stoptime * float(i) / (numpoints - 1) for i in range(numpoints)]

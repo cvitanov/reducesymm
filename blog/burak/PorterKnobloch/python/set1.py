@@ -22,7 +22,7 @@ t, u, v, w, q = loadtxt('data/invpolsolution.dat', unpack=True)
 t, x1GS, x2GS, y2GS = loadtxt('data/gramschmidt.dat', unpack=True)
 
 #Define linewidth:
-lw = 0.8
+lw = 0.6
 axfsize = 36
 
 fig = plt.figure()
@@ -73,7 +73,7 @@ ax3.w_zaxis.set_pane_color((1, 1, 1, 1.0))
 ax3.view_init(15,30)
 
 ax3.hold(True)
-ax3.plot(u[0:10000], v[0:10000], w[0:10000], linewidth=lw, c='r')
+ax3.plot(u[0:10000], v[0:10000], w[0:10000], linewidth=5*lw, c='r')
 savefig('image/Set1invpol.png', bbox_inches='tight', dpi=100)
 
 fig4 = plt.figure()
@@ -89,7 +89,7 @@ ax4.w_zaxis.set_pane_color((1, 1, 1, 1.0))
 ax4.view_init(20,-150)
 
 ax4.hold(True)
-ax4.plot(x1GS[0:10000], x2GS[0:10000], y2GS[0:10000], linewidth=0.3, c='r')
+ax4.plot(x1GS[0:10000], x2GS[0:10000], y2GS[0:10000], linewidth=5*lw, c='r')
 savefig('image/Set1sspred.png', bbox_inches='tight', dpi=100)
 	
 #plt.tight_layout()
