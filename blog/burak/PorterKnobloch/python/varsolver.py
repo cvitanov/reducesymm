@@ -2,7 +2,7 @@
 # invpolsolver.py
 #
 """
-Use odeint to solve differential equations defined by vinvpol in twomode.py
+Use odeint to solve differential equations defined by velocityvar in twomode.py
 """
 
 from scipy.integrate import odeint
@@ -15,7 +15,7 @@ def integrate(x0, p, t, abserror=1.0e-8, relerror=1.0e-6):
 	Takes the initial condition, parameters and the time interval
 	returns the result as a series in time.
 	"""
-	xsol = odeint(twomode.vfullssp, x0, t, args=(p,), atol = abserror, rtol = relerror)
+	xsol = odeint(twomode.velocityvar, x0, t, args=(p,), atol = abserror, rtol = relerror)
 	
 	return xsol
 
@@ -25,36 +25,28 @@ if __name__ == "__main__":
 	p = np.loadtxt('data/parameters.dat')
 
 	#Initial conditions:
-	#x10=-1.32138709067
-	#y10=-1.32138709067
-	#x20=0.26866738527  
-	#y20=-1.61705230412
-	x10=-0.11538892531103558 
-	y10=0.42377435568236843
-	x20=0.35724630044323585
-	y20=0.16150951071631262
-	
-	#x10=-0.310563473904   
-	#y10=-0.310563473904
-	#x20=-0.0419063666849
-	#y20=-0.38981313744
+	x10=-0.310563473904   
+	y10=-0.310563473904
+	x20=-0.0419063666849
+	y20=-0.38981313744
 	
 	# ODE solver parameters
 	abserr = 1.0e-8
 	relerr = 1.0e-6
-	stoptime = 50
-	numpoints = 1500
+	stoptime = 11.57
+	numpoints = 1157
 
 	# Create the time samples for the output of the ODE solver:
 	t = [stoptime * float(i) / (numpoints - 1) for i in range(numpoints)]
 	
 	# Pack up the initial conditions:
-	#x0 = [x10,x20,y10,y20]
-	x0 = [x10,y10,x20,y20]
+	x0=np.zeros(4+4*4)
+	x0[0:4] = [x10,y10,x20,y20]
+	x0[4:4+4*4] = np.identity(4).reshape(16) # Initial condition for the Jacobian is identity
 
 	# Call the ODE solver
-	xsol = odeint(twomode.vfullssp, x0, t, args=(p,), atol = abserr, rtol = relerr)
+	xsol = odeint(twomode.velocityvar, x0, t, args=(p,), atol = abserr, rtol = relerr)
 
 	#Print the solution
-	for t1, x1 in zip(t,xsol):
-		print t1, x1[0], x1[1], x1[2], x1[3]
+	np.savetxt('data/varsolution.dat', xsol)
+	np.savetxt('data/vartime.dat', t)

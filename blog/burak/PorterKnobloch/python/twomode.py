@@ -123,12 +123,35 @@ def gramschmidt2ssp(xgs):
 	
 def StabilityMatrix(x, p):
 	
-	x1, x2, y1, y2 = x
-	mu1, a1, b1, c1, mu2, a2, b2, c2, e2 = p
+	#x1, x2, y1, y2 = x
+	x1, y1, x2, y2 = x
+	mu1, a1, b1, c1, e1, mu2, a2, b2, c2, e2 = p
 	
-	A = np.array([[3*x1**2*a1 + x2**2*a1 + y1**2*b1 + y2**2*b1 + y1*c1 + mu1, 2*x1*x2*a1 + y2*c1, 2*x1*y1*b1 + x1*c1, 2*x1*y2*b1 + x2*c1],
-				  [2*x1*x2*a1 + y2*c1, x1**2*a1 + 3*x2**2*a1 + y1**2*b1 + y2**2*b1 - y1*c1 + mu1, 2*x2*y1*b1 - x2*c1, 2*x2*y2*b1 + x1*c1],
-				  [2*x1*y1*a2 + 2*x1*c2, 2*x2*y1*a2 - 2*x2*c2, x1**2*a2 + x2**2*a2 + 3*y1**2*b2 + y2**2*b2 + mu2, 2*y1*y2*b2+e2],
-				  [2*x1*y2*a2 + 2*x2*c2, 2*x2*y2*a2 + 2*x1*c2, 2*y1*y2*b2 - e2, x1**2*a2 + x2**2*a2 + y1**2*b2 + 3*y2**2*b2  + mu2]])
+	#A = np.array([[3*x1**2*a1 + x2**2*a1 + y1**2*b1 + y2**2*b1 + y1*c1 + mu1, 2*x1*x2*a1 + y2*c1, 2*x1*y1*b1 + x1*c1, 2*x1*y2*b1 + x2*c1],
+				  #[2*x1*x2*a1 + y2*c1, x1**2*a1 + 3*x2**2*a1 + y1**2*b1 + y2**2*b1 - y1*c1 + mu1, 2*x2*y1*b1 - x2*c1, 2*x2*y2*b1 + x1*c1],
+				  #[2*x1*y1*a2 + 2*x1*c2, 2*x2*y1*a2 - 2*x2*c2, x1**2*a2 + x2**2*a2 + 3*y1**2*b2 + y2**2*b2 + mu2, 2*y1*y2*b2+e2],
+				  #[2*x1*y2*a2 + 2*x2*c2, 2*x2*y2*a2 + 2*x1*c2, 2*y1*y2*b2 - e2, x1**2*a2 + x2**2*a2 + y1**2*b2 + 3*y2**2*b2  + mu2]])
+				  
+	A = np.array([[3*x1**2*a1 + y1**2*a1 + x2**2*b1 + y2**2*b1 + x2*c1 + mu1, 2*x1*y1*a1 + y2*c1, 2*x1*x2*b1 + x1*c1, 2*x1*y2*b1 + y1*c1],
+				  [2*x1*y1*a1 + y2*c1, x1**2*a1 + 3*y1**2*a1 + x2**2*b1 + y2**2*b1 - x2*c1 + mu1, 2*y1*x2*b1 - y1*c1, 2*y1*y2*b1 + x1*c1],
+				  [2*x1*y1*a2 + 2*x1*c2, 2*y1*x2*a2 - 2*y1*c2, x1**2*a2 + y1**2*a2 + 3*x2**2*b2 + y2**2*b2 + mu2, 2*x2*y2*b2+e2],
+				  [2*x1*y2*a2 + 2*y1*c2, 2*y1*y2*a2 + 2*x1*c2, 2*x2*y2*b2 - e2, x1**2*a2 + y1**2*a2 + x2**2*b2 + 3*y2**2*b2  + mu2]])
 	
 	return A
+
+def velocityvar(x, t, p):
+	"""
+	Velocity function for the variational equation.
+	Takes 4+4x4-D input x and parameter vector p as the input and gives
+	4+4x4-D velocity output
+	Relevant notes: %http://www.cs.colorado.edu/~lizb/chaos/variational-notes.pdf
+	"""
+	
+	vel = np.zeros(4+4*4) #Generate the dummy vector
+	vel[0:4] = vfullssp(x[0:4],t,p) #First 4 elements are the regular velocity
+	mvars = x[4:4+4*4].reshape(4,4) #Read the variations matrix
+	mvelvar = np.dot(StabilityMatrix(x[0:4],p), mvars) #Velocity of variations in matrix form
+	
+	vel[4:4+4*4] = mvelvar.reshape(16) 
+	
+	return vel
