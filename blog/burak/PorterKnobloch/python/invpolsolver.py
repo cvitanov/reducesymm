@@ -21,8 +21,8 @@ q0 = -0.016076
 # ODE solver parameters
 abserr = 1.0e-8
 relerr = 1.0e-6
-stoptime = 1000
-numpoints = 100000
+stoptime = 500
+numpoints = 50000
 
 # Create the time samples for the output of the ODE solver:
 t = [stoptime * float(i) / (numpoints - 1) for i in range(numpoints)]
