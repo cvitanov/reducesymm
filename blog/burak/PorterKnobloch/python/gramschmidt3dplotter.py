@@ -22,7 +22,7 @@ t, x1GS, x2GS, y2GS = loadtxt('data/gramschmidt.dat', unpack=True)
 fig = plt.figure()
 ax = fig.gca(projection='3d')
 
-ax.plot(x1GS, x2GS, y2GS, linewidth=0.3)
+ax.plot(x1GS[0:60000], x2GS[0:60000], y2GS[0:60000], linewidth=0.3)
 ax.set_xlabel('$\hat{x}_{1,GS}$', fontsize=16)
 ax.set_ylabel('$\hat{y}_{1,GS}$', fontsize=16)
 ax.set_zlabel('$\hat{y}_{2,GS}$', fontsize=16)
@@ -32,7 +32,7 @@ ax.w_zaxis.set_pane_color((1, 1, 1, 1.0))
 ax.view_init(20,-150)
 savefig('image/gramschmidt.png', bbox_inches='tight', dpi=100)
 
-reqv = 1
+reqv = 0
 
 if reqv:
 	

@@ -70,7 +70,7 @@ if __name__ == "__main__":
 	abserr = 1.0e-8
 	relerr = 1.0e-6
 	stoptime = 1000
-	numpoints = 100000
+	numpoints = 100000+1
 	
 	# Create the time samples for the output of the ODE solver:
 	t = [stoptime * float(i) / (numpoints - 1) for i in range(numpoints)]

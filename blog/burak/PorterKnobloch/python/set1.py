@@ -39,7 +39,7 @@ ax.w_zaxis.set_pane_color((1, 1, 1, 1.0))
 ax.view_init(30,30)
 
 ax.hold(True)
-ax.plot(x1[0:10000], y1[0:10000], y2[0:10000], linewidth=lw, c='r')
+ax.plot(x1[0:25000], y1[0:25000], y2[0:25000], linewidth=lw, c='r')
 savefig('image/Set1ssp1.png', bbox_inches='tight', dpi=100)
 
 fig2 = plt.figure()
@@ -56,7 +56,7 @@ ax2.w_zaxis.set_pane_color((1, 1, 1, 1.0))
 ax2.view_init(30,30)
 
 ax2.hold(True)
-ax2.plot(x1[0:10000], x2[0:10000], y2[0:10000], linewidth=lw, c='r')
+ax2.plot(x1[0:25000], x2[0:25000], y2[0:25000], linewidth=lw, c='r')
 savefig('image/Set1ssp2.png', bbox_inches='tight', dpi=100)
 
 fig3 = plt.figure()
@@ -73,13 +73,13 @@ ax3.w_zaxis.set_pane_color((1, 1, 1, 1.0))
 ax3.view_init(15,30)
 
 ax3.hold(True)
-ax3.plot(u[0:10000], v[0:10000], w[0:10000], linewidth=5*lw, c='r')
+ax3.plot(u[0:25000], v[0:25000], w[0:25000], linewidth=lw, c='r')
 savefig('image/Set1invpol.png', bbox_inches='tight', dpi=100)
 
 fig4 = plt.figure()
 ax4 = fig4.gca(projection='3d')
 
-ax4.plot(x1GS, x2GS, y2GS, linewidth=0.5*lw)
+ax4.plot(x1GS[50000:100000], x2GS[50000:100000], y2GS[50000:100000], linewidth=0.5*lw)
 ax4.set_xlabel('$\hat{x}_{1,GS}$', fontsize=axfsize)
 ax4.set_ylabel('$\hat{x}_{2,GS}$', fontsize=axfsize)
 ax4.set_zlabel('$\hat{y}_{2,GS}$', fontsize=axfsize)
@@ -89,7 +89,7 @@ ax4.w_zaxis.set_pane_color((1, 1, 1, 1.0))
 ax4.view_init(20,-150)
 
 ax4.hold(True)
-ax4.plot(x1GS[0:10000], x2GS[0:10000], y2GS[0:10000], linewidth=5*lw, c='r')
+ax4.plot(x1GS[0:50000], x2GS[0:50000], y2GS[0:50000], linewidth=2*lw, c='r')
 savefig('image/Set1sspred.png', bbox_inches='tight', dpi=100)
 	
 #plt.tight_layout()
