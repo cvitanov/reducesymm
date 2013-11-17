@@ -59,7 +59,7 @@ x1 = [0,1,1,0]
 x2 = [0,1,1,0]
 y1 = [-2,-2,2,2]
 verts = [zip(x1, x2, y1)]
-poly = Poly3DCollection(verts, facecolor = '0.75', alpha=0.99)
+poly = Poly3DCollection(verts, facecolor = '0.75', alpha=1)
 
 ax.add_collection3d(poly)
 
