@@ -19,7 +19,7 @@ mpl.rcParams['text.latex.unicode']=True
 
 t, x1, y1, x2, y2 = loadtxt('data/sspsolution.dat', unpack=True)
 t, u, v, w, q = loadtxt('data/invpolsolution.dat', unpack=True)
-t, x1GS, x2GS, y2GS = loadtxt('data/gramschmidt.dat', unpack=True)
+t, x1hat, y1hat, x2hat, y2hat, phi = loadtxt('data/solutiononslice.dat', unpack=True)
 
 #Define linewidth:
 lw = 0.6
@@ -79,17 +79,17 @@ savefig('image/Set1invpol.png', bbox_inches='tight', dpi=100)
 fig4 = plt.figure()
 ax4 = fig4.gca(projection='3d')
 
-ax4.plot(x1GS[50000:100000], x2GS[50000:100000], y2GS[50000:100000], linewidth=0.5*lw)
+ax4.plot(x1hat[50000:100000], x2hat[50000:100000], y2hat[50000:100000], linewidth=0.5*lw)
 ax4.set_xlabel('$\hat{x}_{1,GS}$', fontsize=axfsize)
 ax4.set_ylabel('$\hat{x}_{2,GS}$', fontsize=axfsize)
 ax4.set_zlabel('$\hat{y}_{2,GS}$', fontsize=axfsize)
 ax4.w_xaxis.set_pane_color((1, 1, 1, 1.0))
 ax4.w_yaxis.set_pane_color((1, 1, 1, 1.0))
 ax4.w_zaxis.set_pane_color((1, 1, 1, 1.0))
-ax4.view_init(20,-150)
+ax4.view_init(20, 30)
 
 ax4.hold(True)
-ax4.plot(x1GS[0:50000], x2GS[0:50000], y2GS[0:50000], linewidth=2*lw, c='r')
+ax4.plot(x1hat[0:50000], x2hat[0:50000], y2hat[0:50000], linewidth=2*lw, c='r')
 savefig('image/Set1sspred.png', bbox_inches='tight', dpi=100)
 	
 #plt.tight_layout()
