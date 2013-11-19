@@ -9,7 +9,7 @@ import numpy as np
 from scipy.optimize import fsolve
 import twomode
 
-xhatp = np.array([1,1,0,0],float)
+xhatp = np.array([1,0,0,0],float)
 T = twomode.generator()
 tp = np.dot(T, xhatp)
 
@@ -27,7 +27,7 @@ deltaphi = 2*np.pi/(nofphi-1)
 xhatphi = np.zeros((len(x),5), float)
 for i in range(len(x)):
 	for phi in np.linspace(0, 2*np.pi, num=nofphi):
-		if SliceCondition(phi, x[i,:]) < 0 and SliceCondition(phi+deltaphi, x[i,:])>0:
+		if SliceCondition(phi, x[i,:]) > 0 and SliceCondition(phi+deltaphi, x[i,:])<0:
 			xhatphi[i,4] = fsolve(SliceCondition, phi, args=(x[i,:],))
 			xhatphi[i,0:4] = np.dot(twomode.LieElement(-xhatphi[i,4]),x[i,:]);
 			break

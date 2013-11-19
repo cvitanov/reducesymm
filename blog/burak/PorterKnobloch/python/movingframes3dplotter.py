@@ -16,14 +16,14 @@ import matplotlib.pyplot as plt
 mpl.rcParams['text.usetex']=True
 mpl.rcParams['text.latex.unicode']=True
 
-t, x1hat, x2hat, y1hat, y2hat, phi = loadtxt('data/movingframes.dat', unpack=True)
+t, x1hat, y1hat, x2hat, y2hat, phi = loadtxt('data/movingframes.dat', unpack=True)
 
 fig = plt.figure()
 ax = fig.gca(projection='3d')
 
-ax.plot(x1hat, y1hat, y2hat, linewidth=0.3)
+ax.plot(x1hat, x2hat, y2hat, linewidth=0.3)
 ax.set_xlabel('$\hat{x}_1$', fontsize=16)
-ax.set_ylabel('$\hat{y}_1$', fontsize=16)
+ax.set_ylabel('$\hat{x}_2$', fontsize=16)
 ax.set_zlabel('$\hat{y}_2$', fontsize=16)
 #ax.view_init(15,30)
 savefig('image/movingframes.png', bbox_inches='tight', dpi=100)
