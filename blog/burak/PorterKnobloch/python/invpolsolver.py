@@ -33,7 +33,7 @@ if __name__ == "__main__":
 	v0 = 0.15413
 	w0 = -0.14954
 	q0 = -0.02718
-
+	
 	# ODE solver parameters
 	abserr = 1.0e-8
 	relerr = 1.0e-6
@@ -45,6 +45,7 @@ if __name__ == "__main__":
 	
 	# Pack up the parameters and initial conditions:
 	x0 = [u0,v0,w0,q0]
+	x0 = [0.120672133362, 0.458049117493, 0.0385561896813, 0.0557519080151]
 	
 	# Call the ODE solver
 	xsol = odeint(twomode.vinvpol, x0, t, args=(p,), atol = abserr, rtol = relerr)

@@ -28,7 +28,13 @@ ax.w_zaxis.set_pane_color((1, 1, 1, 1.0))
 ax.view_init(15,30)
 savefig('image/uvw.png', bbox_inches='tight', dpi=100)
 
-reqv = 1
+reqv = 0
+
+fig2 = plt.figure()
+plt.plot(t[95000:100000],q[95000:100000])
+plt.xlabel('Time')
+plt.ylabel('u')
+savefig('image/qt.png', bbox_inches='tight', dpi=100)
 
 if reqv:
 	
