@@ -68,6 +68,7 @@ if __name__ == "__main__":
 	# Pack up the initial conditions:
 	x0=np.zeros(4+4*4)
 	x0[0:4] = [x10,y10,x20,y20]
+	x0[0:4] = [0.4399655797367152, 0, -0.38626706847930564, 0.0702043939917171]
 	x0[4:4+4*4] = np.identity(4).reshape(16) # Initial condition for the Jacobian is identity
 
 	# Call the ODE solver
