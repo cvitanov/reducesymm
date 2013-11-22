@@ -90,7 +90,7 @@ xlabel('$v_u$', fontsize=36)
 ylabel('$e_{y_2}$', fontsize=36)
 
 plot(psectprojected[:,0],psectprojected[:,1], '.', ms=5)
-plt.grid()
+#plt.grid()
 
 savefig('image/psectonslice.png', bbox_inches='tight', dpi=100)
 
@@ -101,7 +101,7 @@ xlabel('$s_n$', fontsize=36)
 ylabel('$s_{n+1}$', fontsize=36)
 
 plot(snsorted,snplus1sorted, '.', ms=6)
-plt.grid()
+#plt.grid()
 plt.hold(True)
 
 lw = 1.5

@@ -321,6 +321,98 @@ The simplest continuous symmetry groups are the 1-parameter compact rotation
 group $\SOn{2}$ and the 1-parameter noncompact translation group
 $T(1)$; here we shall focus on the $\SOn{2}$ case.
 
+In order to construct a representation for $\SOn{2}$ let us take a Fourier 
+series expansion of a real valued smooth periodic function:
+\beq
+	u(\phi) = a_0 + \sum\limits_{k=- \infty}^\infty a_k e^{i k \phi} .
+\ee{FourierSeries}
+We can write the real and imaginary parts of the Fourier coefficients with
+$k \geq 1$ in a state vector $(x_1, y_1, x_2, y_2,..., x_m, y_m)$ where
+$a_i = x_i + i y_i$ and represent the $\SOn{2}$ group action on this vector
+as a block diagonal matrix:
+%More explicit form, does not fit in a column:
+%\beq
+	 %\LieEl (\theta)= \\ 
+					  %\begin{pmatrix}
+					  %\cos \theta & \sin \theta & 0               & 0              & \cdots & 0              & 0               \\
+					 %-\sin \theta & \cos \theta & 0               & 0              & \cdots & 0              & 0               \\
+					  %0             & 0 		   & \cos 2 \theta & \sin 2 \theta & \cdots & 0              & 0               \\
+					  %0             & 0            &-\sin 2 \theta & \cos 2 \theta & \cdots & 0              & 0               \\
+					  %\vdots       & \vdots      & \vdots         & \vdots        & \ddots & \vdots         & \vdots         \\
+					  %0             & 0 		   & 0               & 0              & \cdots & \cos m \theta & \sin m \theta  \\
+					  %0             & 0            & 0	             & 0              & \cdots &-\sin m \theta & \cos m \theta  
+					  %\end{pmatrix}
+%\eeq
+\beq
+	\LieEl(\theta) = \begin{pmatrix}
+						R(\theta) & 0 			  & \cdots & 0 \\
+						0		   & R(2 \theta) & \cdots & 0 \\
+						\vdots	   & \vdots 	  & \ddots & \vdots \\
+						0		   & 0	          & \cdots & R (m \theta) 
+					   \end{pmatrix} , 
+\ee{mmodeLieEl}
+where,
+\beq
+	R(n \theta) =	\begin{pmatrix}
+					\cos n \theta & \sin n \theta \\
+					-\sin n \theta & \cos n \theta
+					\end{pmatrix} ,
+\ee{rotationmatrix}
+are modulated rotation matrices. In this representation, the Lie algebra generator is
+\beq
+	 \Lg =  \begin{pmatrix}
+			 0 & 1 & 0 & 0 & \cdots & 0 & 0 \\
+			-1 & 0 & 0 & 0 & \cdots & 0 & 0 \\
+			 0 & 0 & 0 & 2 & \cdots & 0 & 0 \\
+			 0 & 0 &-2 & 0 & \cdots & 0 & 0 \\
+			 \vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+			 0 & 0 & 0 & 0 & \cdots & 0 & m \\
+			 0 & 0 & 0 & 0 & \cdots &-m & 0  
+			 \end{pmatrix} .
+\ee{mmodeLg}
+Now let us consider the following specific choice of a \slice\ \template\:
+\beq
+	\slicep = (1, 0, ..., 0) .
+\ee{firstmodetemp}
+Points on the hyperplane defined by this template \refeq{slicetemp} and its
+group tangent ($ \sliceTan{} = \Lg \slicep $) through the equation \refeq{SliceCond}
+are of the following form:
+\beq
+	\sspRed = (\hat{x}_1, 0, \hat{x}_2, \hat{y}_2, ..., \hat{x}_m, \hat{y}_m) .
+\ee{slicetemp}
+And they satisfy the \chartBord\ condition \refeq{ChartBordCond} only if 
+$\hat{x}_1 = 0$, in other words, as long as the first mode magnitude is non zero,
+there is a corresponding point to every group orbit on the \slicePlane\ 
+defined by \refeq{firstmodetemp}. We pick the \slice\ \template\ \refeq{firstmodetemp} 
+for computational convenience, in general, any first mode template $\slicep = (x_1, y_1, 0,...,0)$
+would do as good since the first mode has the symmetry of a circle. We also 
+restrict the \slicePlane\ to the half-space where $x_1 > 0$ to have a unique 
+representative point for each group orbit since otherwise each group orbit
+pierces the \slicePlane\ twice. These concepts are illustrated in \reffig{fig:BBgorbitsandslice}
+
+\refFig{fig:BBgorbitsandslice} shows a 3D projection of the 4D \statesp\ corresponding
+to an $m=2$ truncation of \refeq{FourierSeries}, for which \refeq{mmodeLieEl} and \refeq{mmodeLg}
+are $4 \times 4$ matrices. The \slicePlane\ defined by \refeq{firstmodetemp}, three 
+different group orbits and the group tangents evaluated at their intersections with the \slicePlane\ 
+are visualized in \reffig{fig:BBgorbitsandslice}. One can see as the magnitude of the second mode (the vertical axis) 
+relative to the first mode increases, the group tangent gets closer to being 
+parallel to the \slicePlane , however, it still has a non zero perpendicular component. The vertical
+axis ($x_2$ in \reffig{fig:BBgorbitsandslice} lies on the \chartBord\ of the
+\slicePlane . 
+
+In the next section, we will introduce a dynamical system with the \statesp\ 
+geometry of \reffig{fig:BBgorbitsandslice} and analyze its symmetry reduced
+dynamics within the \slicePlane\ defined by a \template\ \refeq{slicetemp}
+
+\begin{figure}%[H]
+\centering
+ \includegraphics[width=0.45\textwidth]{BBgorbitsandslice}
+\caption{ $\SOn{2}$ Group orbits of $(0.75, 0, 0.1, 0.1)$ (orange), $(0.5, 0, 0.5, 0.5)$ (green)
+$(0.1, 0, 0.75, 0.75)$ (pink) of two Fourier modes and the first mode \slicePlane\ 
+projected on three dimensions. 3D projections of the group tangents at the 
+intersections with the \slicePlane\ are shown as red arrows.}
+\label{fig:BBgorbitsandslice}
+\end{figure}
 
 \section{\twoMode\ $\SOn{2}$-equivariant flow}
 \label{s:twoMode}
