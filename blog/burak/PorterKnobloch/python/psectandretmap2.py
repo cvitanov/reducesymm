@@ -62,58 +62,15 @@ psectprojected = np.dot(psectbasis,psrel.transpose()).transpose()
 sortedindices = np.argsort(psectprojected[:,0])
 psectsorted = np.array(psectprojected[sortedindices, :],float)
 
-#Interpolate to psect:
-tckpsect = interpolate.splrep(psectsorted[:,0],psectsorted[:,1])
-dxintpsect = (psectsorted[np.size(psectsorted,0)-1,0] - psectsorted[0,0])/100
-xintpsect = np.arange(psectsorted[0,0], 
-					  psectsorted[np.size(psectsorted,0)-1,0]+dxintpsect, 
-					  dxintpsect)
-yintpsect = interpolate.splev(xintpsect, tckpsect)
-
-#Functions to compute arclengths:
-#A ref: http://www.mathwords.com/a/arc_length_of_a_curve.htm
-def dypsect(x):
-	
-	return derivative(interpolate.splev, x, dx=1e-6, args=(tckpsect,), order=5)
-
-def ds(x):
-	
-	return np.sqrt(1 + dypsect(x)**2)
-
-def farclength(x):
-	
-	simpson = 0
-	
-	if simpson:
-	
-		dx = (psectsorted[1,0]-psectsorted[0,0])/10
-		xrang = np.arange(psectsorted[0,0]-2*dx, x+2*dx, dx)
-		yint = interpolate.splev(xrang, tckpsect)
-		
-		#http://en.wikipedia.org/wiki/Five-point_stencil#First_derivative
-		ny = np.size(yint,0)
-		dydx = (-yint[2+2:ny] + 8*yint[2+1:ny-1] - 8*yint[2-1:ny-3] + yint[0:ny-4])/(12*dx)
-		dsdx = np.sqrt(1+dydx**2)
-		
-		simps = integrate.simps(dsdx, xrang[2:ny-2])
-	
-		return simps
-	
-	else:
-	
-		quad, err = integrate.quad(ds, psectsorted[0,0], x)	
-	
-		return quad 		
-
 arclength = np.zeros(np.size(psectsorted,0))
 
 for i in range(1,np.size(psectsorted,0)):
 	
-	#arclength[i] = arclength[i-1] + np.linalg.norm(psectsorted[i,:]-psectsorted[i-1,:])
-	#s, err = farclength(psectsorted[i,0])
+	arclength[i] = arclength[i-1] + np.linalg.norm(psectsorted[i,:]-psectsorted[i-1,:])
+	
 	#arclength[i] = s
 
-	arclength[i] = farclength(psectsorted[i,0])
+	#arclength[i] = farclength(psectsorted[i,0])
 
 sn = np.zeros(np.size(psectsorted,0))
 sn[sortedindices] = arclength
@@ -177,35 +134,51 @@ def srpo1(sn):
 #Find the arclength corresponding to the rpo
 srpo = newton(srpo1, 0.1)
 
+#Guessing the initial point:
+i0 = np.argmin(np.absolute(arclength - srpo))
+
+if arclength[i0] < srpo:
+	
+	i1 = i0
+	
+else:
+	
+	i1 = i0-1
+
+dspsect = arclength[i1+1] - arclength[i1]
+dsrpo = srpo - arclength[i1]
+dpsect = psectsorted[i1+1, 0:3] - psectsorted[i1, 0:3]
+
+psrporel3D = psectsorted[i1, 0:3] + dpsect*(dsrpo/dspsect)
+
+
 #One must solve the inverse arclength function to find the position of rpo
 #on the psect:
 
-def arclength2psectrel(px, s):
-	'''
-		Function to be solved to get relative x coordinate of the rpo on
-		the Poincare section
-	'''
-	#sfun, err = farclength(px)
-	sfun = farclength(px)
+#def arclength2psectrel(px, s):
+	#'''
+		#Function to be solved to get relative x coordinate of the rpo on
+		#the Poincare section
+	#'''
+	##sfun, err = farclength(px)
+	#sfun = farclength(px)
 	
-	return sfun-s
+	#return sfun-s
 
-#Guessing the initial point:
-i0 = np.argmin(np.absolute(arclength - srpo))
-p0x = psectsorted[i0,0]
+##Guessing the initial point:
+#i0 = np.argmin(np.absolute(arclength - srpo))
+#p0x = psectsorted[i0,0]
 
-pxrpo = newton(arclength2psectrel, p0x, args=(srpo,))
+#pxrpo = newton(arclength2psectrel, p0x, args=(srpo,))
 
-pyrpo = interpolate.splev(pxrpo, tckpsect)
+#pyrpo = interpolate.splev(pxrpo, tckpsect)
 
-def psrelproj2xhat(pxrel, pyrel):
+def psrelproj2xhat(psrelproj3D):
 	'''
 		Takes the relative position projected on Poincare section basis 
 		on the Poincare section and returns the position on the reduced 
 		state space
-	'''
-	psrelproj3D = np.array([pxrel, pyrel, 0], float)
-	
+	'''	
 	psrel3D = np.dot(psectbasis.transpose(), psrelproj3D)
 		
 	ps3D = psrel3D + sectp3D
@@ -214,18 +187,15 @@ def psrelproj2xhat(pxrel, pyrel):
 	
 	return ps	
 
-rpoxhat = psrelproj2xhat(pxrpo, pyrpo)
+rpoxhat = psrelproj2xhat(psrporel3D)
 
 print "srpo="
 print srpo
-print "Relative coordinates: pxrpo, pyrpo="
-print pxrpo, pyrpo
 print "Relative periodic orbit passes through:"
 print "x1: %5.16f" % rpoxhat[0]
 print "y1: %5.16f" % rpoxhat[1]
 print "x2: %5.16f" % rpoxhat[2]
 print "y2: %5.16f" % rpoxhat[3]
-#print rpoxhat
 
 #Plotting:
 
@@ -241,7 +211,7 @@ plot(psectprojected[:,0],psectprojected[:,1], '.', ms=5)
 #plt.grid()
 plt.hold(True)
 
-plot(xintpsect, yintpsect, c='k', linewidth=lw)
+#plot(xintpsect, yintpsect, c='k', linewidth=lw)
 
 savefig('image/psectonslice.png', bbox_inches='tight', dpi=100)
 
@@ -280,29 +250,29 @@ mpl.rcParams['grid.linewidth'] = 2
 
 savefig('image/retmaponslice.png', bbox_inches='tight', dpi=100)
 
-figure(3, figsize=(8, 8))
+#figure(3, figsize=(8, 8))
 
-plot(srange, sp2)
-plt.hold(True)
-plot(srange, srange, c='k')
+#plot(srange, sp2)
+#plt.hold(True)
+#plot(srange, srange, c='k')
 
-figure(4, figsize=(8, 8))
+#figure(4, figsize=(8, 8))
 
-plot(srange, sp3)
-plt.hold(True)
-plot(srange, srange, c='k')
+#plot(srange, sp3)
+#plt.hold(True)
+#plot(srange, srange, c='k')
 
-figure(5, figsize=(8, 8))
+#figure(5, figsize=(8, 8))
 
-plot(srange, sp4)
-plt.hold(True)
-plot(srange, srange, c='k')
+#plot(srange, sp4)
+#plt.hold(True)
+#plot(srange, srange, c='k')
 
-figure(6, figsize=(8, 8))
+#figure(6, figsize=(8, 8))
 
-plot(srange, sp5)
-plt.hold(True)
-plot(srange, srange, c='k')
+#plot(srange, sp5)
+#plt.hold(True)
+#plot(srange, srange, c='k')
 
 
 #f, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, sharex='col', sharey='row')

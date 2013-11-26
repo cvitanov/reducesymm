@@ -10,10 +10,10 @@ import onslicesolver
 pars = np.loadtxt('data/parameters.dat')
 
 # ODE solver parameters:
-abserr = 1.0e-12
-relerr = 1.0e-9
+abserr = 1.0e-14
+relerr = 1.0e-12
 #Zero olerance:
-tolerance = 1e-9
+tolerance = 1e-12
 
 def computeps(xsol, sectp, nhat, direction,  p=pars):
 	

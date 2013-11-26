@@ -60,24 +60,36 @@ if __name__ == "__main__":
 	#x20=-0.07020440068369531
 	#y20=-0.3862670595294275
 	#phi0= 0
+	#Releq:
 	x10=0.43997
 	y10=0
 	x20=-0.38627
 	y20=0.07020
 	phi0= 0
 	
-	#x10=0.475877268529
-	#y10=0
-	#x20=0.223062590539
-	#y20=0.411634778132
-	#phi0= 0
-	
-	
+	#RPO:
+	x10=0.4525858904342642
+	y10=0.0000000000000000
+	x20=0.0510590531307565
+	y20=0.0318533099488150
+
+	#RPO:
+	x10=0.4525858903486303
+	y10=0.0000000000000000
+	x20=0.0510590501237432
+	y20=0.0318532963624812
+
+	#Xi
+	#x10=0.0146905620125 
+	#y10=0.0 
+	#x20=0.177825920714 
+	#y20=-0.102642711966
+		
 	# ODE solver parameters
-	abserr = 1.0e-8
-	relerr = 1.0e-6
-	stoptime = 1000
-	numpoints = 100000+1
+	abserr = 1.0e-14
+	relerr = 1.0e-12
+	stoptime = 3.65
+	numpoints = 365+1
 	
 	# Create the time samples for the output of the ODE solver:
 	t = [stoptime * float(i) / (numpoints - 1) for i in range(numpoints)]
