@@ -21,19 +21,19 @@ x = loadtxt('data/psectslice.dat')
 
 figure(1, figsize=(6, 4.5))
 xlabel('$\hat{x}_1$')
-ylabel('$\hat{y}_2$')
+ylabel('$\hat{x}_2$')
 
 plot(x[:,1], x[:,3], '.', ms=2)
 plt.grid()
 
-savefig('image/psectgs.png', bbox_inches='tight', dpi=100)
+savefig('image/psectslice.png', bbox_inches='tight', dpi=100)
 
-figure(2, figsize=(6, 4.5))
-xlabel('$Time$')
-ylabel('$\hat{x}_1,GS$')
+#figure(2, figsize=(6, 4.5))
+#xlabel('$Time$')
+#ylabel('$\hat{x}_1,GS$')
 
-plot(x[:,0], x[:,1])
-plt.grid()
+#plot(x[:,0], x[:,1])
+#plt.grid()
 
 plt.tight_layout()
 plt.show()
