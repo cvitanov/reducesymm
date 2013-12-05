@@ -228,7 +228,6 @@ scandidates = scandidates[1:len(scandidates), :]
 #Find psect intersections corresponding to the arclengths of RPO candidates:
 
 rpocandidatesxt = np.zeros([nrpo, 5])
-savetxt('data/rpocandidates.dat', rpocandidatesxt)
 
 for i in range(nrpo):
 	#Guessing the initial point:
@@ -246,12 +245,20 @@ for i in range(nrpo):
 	
 	rpocandidatesxt[i,:] = rpoxhatt 
 
-rposxt = np.zeros([nrpo, 5]) 
+#rposxt = np.zeros([nrpo, 5]) 
+rposxt = np.zeros([nrpo, 4]) 
+
+np.savetxt('data/rpocandidates.dat', rpocandidatesxt)
 
 for i in range(nrpo):
-	rposxt[i,:] = rpo.findrpo(rpocandidatesxt[i,:])
+	rpocandidate3D = np.array([rpocandidatesxt[i,0],
+							   rpocandidatesxt[i,2],
+							   rpocandidatesxt[i,3],
+							   rpocandidatesxt[i,4]])
+	#rposxt[i,:] = rpo.findrpo(rpocandidatesxt[i,:])
+	rposxt[i,:] = rpo.findrpo(rpocandidate3D)
 
-np.savetxt('data/rpo.dat', rposxt)
+	np.savetxt('data/rpo.dat', rposxt)
 
 #Plotting:
 
