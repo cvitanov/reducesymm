@@ -28,6 +28,7 @@ mpl.rcParams['text.latex.unicode']=True
 import twomode
 import onslicesolver
 import psectslice
+import rpo
 
 pars = np.loadtxt('data/parameters.dat')
 
@@ -112,7 +113,7 @@ for i in range(1,np.size(psectsorted,0)):
 	#arclength[i] = arclength[i-1] + np.linalg.norm(psectsorted[i,:]-psectsorted[i-1,:])
 	#s, err = farclength(psectsorted[i,0])
 	#arclength[i] = s
-
+	
 	arclength[i] = farclength(psectsorted[i,0])
 
 sn = np.zeros(np.size(psectsorted,0))
@@ -126,11 +127,11 @@ snplus1sorted = snplus1[snsortedindices]
 
 #Interpolation in two parts:
 imax = np.argmax(snplus1sorted)
-tck1 = interpolate.splrep(snsorted[0:imax], snplus1sorted[0:imax])
+tck1 = interpolate.splrep(snsorted[0:imax+1], snplus1sorted[0:imax+1])
 xint1 = np.arange(snsorted[0], snsorted[imax], snsorted[imax]/100)
 yint1 = interpolate.splev(xint1, tck1)
 
-tck2 = interpolate.splrep(snsorted[imax:len(snsorted)-1], snplus1sorted[imax:len(snsorted)-1])
+tck2 = interpolate.splrep(snsorted[imax:len(snsorted)], snplus1sorted[imax:len(snsorted)])
 xint2 = np.arange(snsorted[imax], 
 				  snsorted[len(snsorted)-1]+snsorted[imax]/100, 
 				  snsorted[imax]/100)
@@ -138,44 +139,25 @@ yint2 = interpolate.splev(xint2, tck2)
 
 #Return map function
 def retmap(sn):
-	
 	if sn < snsorted[imax]:
-		
 		snp1 = interpolate.splev(sn, tck1)
-		
 	else:
-		
 		snp1 = interpolate.splev(sn, tck2)
-
 	return snp1
 
-#Higher order return map functions:
-def retmap2(sn):
+def retmapn(n, sn):
+	snpn = retmap(sn)
+	for i in range(n - 1):
+		snpn = retmap(snpn)
+	return	snpn
 	
-	return retmap(retmap(sn))
-
-def retmap3(sn):
-	
-	return retmap(retmap(retmap(sn)))
-
-def retmap4(sn):
-	
-	return retmap(retmap(retmap(retmap(sn))))
-	
-def retmap5(sn):
-	
-	return retmap(retmap(retmap(retmap(retmap(sn)))))
-
-
 #Find RPOs:
 
 #Function to solve:
 def srpo1(sn):
-	
 	return retmap(sn) - sn
-
-#Find the arclength corresponding to the rpo
-srpo = newton(srpo1, 0.1)
+def srpon(n,sn):
+	return retmapn(n,sn) - sn
 
 #One must solve the inverse arclength function to find the position of rpo
 #on the psect:
@@ -190,13 +172,6 @@ def arclength2psectrel(px, s):
 	
 	return sfun-s
 
-#Guessing the initial point:
-i0 = np.argmin(np.absolute(arclength - srpo))
-p0x = psectsorted[i0,0]
-
-pxrpo = newton(arclength2psectrel, p0x, args=(srpo,))
-
-pyrpo = interpolate.splev(pxrpo, tckpsect)
 
 def psrelproj2xhat(pxrel, pyrel):
 	'''
@@ -214,18 +189,69 @@ def psrelproj2xhat(pxrel, pyrel):
 	
 	return ps	
 
-rpoxhat = psrelproj2xhat(pxrpo, pyrpo)
 
-print "srpo="
-print srpo
-print "Relative coordinates: pxrpo, pyrpo="
-print pxrpo, pyrpo
-print "Relative periodic orbit passes through:"
-print "x1: %5.16f" % rpoxhat[0]
-print "y1: %5.16f" % rpoxhat[1]
-print "x2: %5.16f" % rpoxhat[2]
-print "y2: %5.16f" % rpoxhat[3]
-#print rpoxhat
+#Number of RPOs to look for:
+nrpo = 10;
+nretmap = 1;
+
+#Found PROs:
+frpo = 0;
+
+#Dummy assignment:
+scandidates = [[0, 0]]
+
+srange = np.arange(np.min(sn), np.max(sn), (np.max(sn)-np.min(sn))/1000)
+
+#Find arclengths of RPO candidates:
+
+while frpo < nrpo:
+	sp = np.array([retmapn(nretmap, sn) for sn in srange])
+	#Look for rpo candidates in the retmap:
+	retmapminid = sp-srange
+	for i in range(len(retmapminid) - 1):
+		if retmapminid[i]*retmapminid[i+1] < 0:
+			#If there is a zero crossing, take the arclength as a candidate for
+			#being a fixed point of the returnmap:
+			scc = srange[i]
+			#Is this a new candidate?
+			new = 1
+			for j in range(len(scandidates)):
+				if scc == scandidates[j][0]:
+					new = 0
+			if new:
+				scandidates = np.append(scandidates, [[scc, nretmap]], axis=0)
+				frpo = frpo + 1
+	nretmap = nretmap + 1
+
+scandidates = scandidates[1:len(scandidates), :]
+
+#Find psect intersections corresponding to the arclengths of RPO candidates:
+
+rpocandidatesxt = np.zeros([nrpo, 5])
+savetxt('data/rpocandidates.dat', rpocandidatesxt)
+
+for i in range(nrpo):
+	#Guessing the initial point:
+	i0 = np.argmin(np.absolute(arclength - scandidates[i, 0]))
+	p0x = psectsorted[i0,0]
+	
+	pxrpo = newton(arclength2psectrel, p0x, args=(scandidates[i, 0],))
+	pyrpo = interpolate.splev(pxrpo, tckpsect)
+	rpoxhat = psrelproj2xhat(pxrpo, pyrpo)
+	
+	inotsorted = sortedindices[i0]
+	trpo = ps[inotsorted + scandidates[i,1] ,0] - ps[inotsorted ,0]
+	
+	rpoxhatt = np.append(rpoxhat, trpo)
+	
+	rpocandidatesxt[i,:] = rpoxhatt 
+
+rposxt = np.zeros([nrpo, 5]) 
+
+for i in range(nrpo):
+	rposxt[i,:] = rpo.findrpo(rpocandidatesxt[i,:])
+
+np.savetxt('data/rpo.dat', rposxt)
 
 #Plotting:
 
@@ -245,22 +271,6 @@ plot(xintpsect, yintpsect, c='k', linewidth=lw)
 
 savefig('image/psectonslice.png', bbox_inches='tight', dpi=100)
 
-srange = np.arange(np.min(sn), np.max(sn), (np.max(sn)-np.min(sn))/100)
-
-sp1 = np.zeros(np.size(srange, 0))
-sp2 = np.zeros(np.size(srange, 0))
-sp3 = np.zeros(np.size(srange, 0))
-sp4 = np.zeros(np.size(srange, 0))
-sp5 = np.zeros(np.size(srange, 0))
-
-for i in range(np.size(srange,0)):
-	
-	sp1[i] = retmap(srange[i])
-	sp2[i] = retmap2(srange[i])
-	sp3[i] = retmap3(srange[i])
-	sp4[i] = retmap4(srange[i])
-	sp5[i] = retmap5(srange[i])
-
 #Plot return maps:
 figure(2, figsize=(8, 8))
 
@@ -269,50 +279,28 @@ ylabel('$s_{n+1}$', fontsize=36)
 
 plot(snsorted,snplus1sorted, '.', ms=6)
 #plt.grid()
+
 plt.hold(True)
 
-plot(np.arange(np.min(sn), np.max(sn), np.max(sn)/100), np.arange(np.min(sn), np.max(sn), np.max(sn)/100))
+sp1 = np.array([retmapn(1, sn) for sn in srange])
+
+plot(srange, srange)
 plot(srange, sp1, c='k')
 #plot(xint1, yint1, c='k', linewidth=lw)
 #plot(xint2, yint2, c='k', linewidth=lw)
 
-mpl.rcParams['grid.linewidth'] = 2
+#figure(3, figsize=(8, 8))
+#xlabel('$s_n$', fontsize=36)
+#ylabel('$s_{n+2}$', fontsize=36)
+
+#plt.hold(True)
+
+#plot(np.arange(np.min(sn), np.max(sn), np.max(sn)/100), np.arange(np.min(sn), np.max(sn), np.max(sn)/100))
+#plot(srange, sp1, c='k')
+
+#mpl.rcParams['grid.linewidth'] = 2
 
 savefig('image/retmaponslice.png', bbox_inches='tight', dpi=100)
-
-figure(3, figsize=(8, 8))
-
-plot(srange, sp2)
-plt.hold(True)
-plot(srange, srange, c='k')
-
-figure(4, figsize=(8, 8))
-
-plot(srange, sp3)
-plt.hold(True)
-plot(srange, srange, c='k')
-
-figure(5, figsize=(8, 8))
-
-plot(srange, sp4)
-plt.hold(True)
-plot(srange, srange, c='k')
-
-figure(6, figsize=(8, 8))
-
-plot(srange, sp5)
-plt.hold(True)
-plot(srange, srange, c='k')
-
-
-#f, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, sharex='col', sharey='row')
-#ax1.plot(np.arange(np.min(sn), np.max(sn), np.max(sn)/100), retmap2(np.arange(np.min(sn), np.max(sn), np.max(sn)/100)))
-#ax1.hold(True)
-#ax1.plot(np.arange(np.min(sn), np.max(sn), np.max(sn)/100), 
-		 #np.arange(np.min(sn), np.max(sn), np.max(sn)/100))
-#ax2.
-#ax3.
-#ax4.plot(x, 2 * y ** 2 - 1, color='r')
 
 plt.tight_layout()
 plt.show()
