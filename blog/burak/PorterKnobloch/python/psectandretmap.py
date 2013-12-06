@@ -191,7 +191,7 @@ def psrelproj2xhat(pxrel, pyrel):
 
 
 #Number of RPOs to look for:
-nrpo = 10;
+nrpo = 50;
 nretmap = 1;
 
 #Found PROs:
@@ -246,7 +246,7 @@ for i in range(nrpo):
 	rpocandidatesxt[i,:] = rpoxhatt 
 
 #rposxt = np.zeros([nrpo, 5]) 
-rposxt = np.zeros([nrpo, 4]) 
+rpos3D = np.zeros([nrpo, 3]) 
 
 np.savetxt('data/rpocandidates.dat', rpocandidatesxt)
 
@@ -255,15 +255,17 @@ for i in range(nrpo):
 							   rpocandidatesxt[i,2],
 							   rpocandidatesxt[i,3],
 							   rpocandidatesxt[i,4]])
-	#rposxt[i,:] = rpo.findrpo(rpocandidatesxt[i,:])
-	rposxt[i,:] = rpo.findrpo(rpocandidate3D)
+	#rposxt[i,:] = rpo.findrpo(rpocandidatesxt[i,0:4], rpocandidatesxt[i,4])
+	rpos3D[i,:] = rpo.findrpo(rpocandidate3D[0:3], rpocandidate3D[3])
+	print rpos3D
+	
+	#np.savetxt('data/rpo.dat', rposxt)
 
-	np.savetxt('data/rpo.dat', rposxt)
-
+np.savetxt('data/rpo3D.dat', rpos3D)
 #Plotting:
 
 lw = 1.5
-
+'''
 #Plot Poincare section:
 figure(1, figsize=(8, 8))
 
@@ -311,3 +313,4 @@ savefig('image/retmaponslice.png', bbox_inches='tight', dpi=100)
 
 plt.tight_layout()
 plt.show()
+'''
