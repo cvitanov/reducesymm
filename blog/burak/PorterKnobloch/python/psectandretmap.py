@@ -13,7 +13,7 @@
 import numpy as np
 from scipy import interpolate, integrate
 from scipy.misc import derivative
-from scipy.optimize import newton
+from scipy.optimize import newton, fsolve
 
 from pylab import figure, plot, xlabel, ylabel, grid, hold, legend, title, savefig
 from matplotlib.font_manager import FontProperties
@@ -51,14 +51,25 @@ if compute:
 else:
 	ps = np.loadtxt('data/psectslice.dat')
 
-#Write non-zero values on a (:,3) array:
-ps3D = np.array([ps[:,1], ps[:,3], ps[:,4]],float).transpose()
-#Calculate positions relative to the section point:
-psrel = ps3D -  sectp3D
 #Generate the matrix with the basis of Poincare section hyperplane:
-psectbasis = np.array([unstabledir,vaux,nhat3D],float)
-#Project Poincare section onto section basis:
-psectprojected = np.dot(psectbasis,psrel.transpose()).transpose()
+psbasis = np.array([unstabledir,vaux,nhat3D],float)	
+
+def psxhat2ps2D(ps, psectbasis):
+		
+	#Write non-zero values on a (:,3) array:
+	if np.size(ps, 0)==5:
+		ps3D = np.array([ps[1], ps[3], ps[4]],float)
+	else:
+		ps3D = np.array([ps[:,1], ps[:,3], ps[:,4]],float).transpose()
+		
+	#Calculate positions relative to the section point:
+	psrel = ps3D -  sectp3D
+	#Project Poincare section onto section basis:
+	psectprojected = np.dot(psectbasis,psrel.transpose()).transpose()
+	
+	return psectprojected
+
+psectprojected = psxhat2ps2D(ps, psbasis)
 
 sortedindices = np.argsort(psectprojected[:,0])
 psectsorted = np.array(psectprojected[sortedindices, :],float)
@@ -181,7 +192,7 @@ def psrelproj2xhat(pxrel, pyrel):
 	'''
 	psrelproj3D = np.array([pxrel, pyrel, 0], float)
 	
-	psrel3D = np.dot(psectbasis.transpose(), psrelproj3D)
+	psrel3D = np.dot(psbasis.transpose(), psrelproj3D)
 		
 	ps3D = psrel3D + sectp3D
 	
@@ -189,7 +200,42 @@ def psrelproj2xhat(pxrel, pyrel):
 	
 	return ps	
 
+def rpops(ps2D, ncycle, Tapproximate):
 
+	x = psrelproj2xhat(ps2D[0], ps2D[1])
+	abserr = 1.0e-14
+	relerr = 1.0e-12
+	stoptime = Tapproximate*1.1
+	
+	numpoints = int(stoptime/0.01 + 1.0)
+	xphi0=[x[0], x[1], x[2], x[3], 0]
+
+	t = np.linspace(0,stoptime,numpoints)
+	
+	xsol = onslicesolver.integrate(xphi0, pars, t, abserror=abserr, relerror=relerr)
+	xhat = np.append(np.array([t]).transpose(), xsol, axis=1)
+	#print xhat
+	
+	ps=psectslice.computeps(xhat, sectp, nhat, direction,  p=pars)
+	#print "ncycle = ", ncycle
+	#print ps 
+	
+	if np.size(ps, 0) > ncycle:
+		psf = ps[ncycle,0:5]
+	else:
+		tdiff = ps[:, 0]-Tapproximate
+		itdiffmin = np.argmin(tdiff)
+		psf = ps[itdiffmin, 0:5]
+	
+	#print psf
+	#print "size(psf,0) = ", np.size(psf, 0)
+	
+	ps2Df = psxhat2ps2D(psf,psbasis)[0:2]
+	
+	#print "ps2Df = ", ps2Df
+	
+	return ps2Df - ps2D
+	
 #Number of RPOs to look for:
 nrpo = 50;
 nretmap = 1;
@@ -228,6 +274,7 @@ scandidates = scandidates[1:len(scandidates), :]
 #Find psect intersections corresponding to the arclengths of RPO candidates:
 
 rpocandidatesxt = np.zeros([nrpo, 5])
+rpocandidatespsnt = np.zeros([nrpo, 4])
 
 for i in range(nrpo):
 	#Guessing the initial point:
@@ -236,36 +283,55 @@ for i in range(nrpo):
 	
 	pxrpo = newton(arclength2psectrel, p0x, args=(scandidates[i, 0],))
 	pyrpo = interpolate.splev(pxrpo, tckpsect)
+	
 	rpoxhat = psrelproj2xhat(pxrpo, pyrpo)
 	
 	inotsorted = sortedindices[i0]
-	trpo = ps[inotsorted + scandidates[i,1] ,0] - ps[inotsorted ,0]
+	nretmap = scandidates[i,1]
+	trpo = ps[inotsorted + nretmap,0] - ps[inotsorted ,0]
 	
 	rpoxhatt = np.append(rpoxhat, trpo)
+	
+	rpocandidatespsnt[i,:] = [pxrpo, pyrpo, nretmap, trpo] 
 	
 	rpocandidatesxt[i,:] = rpoxhatt 
 
 #rposxt = np.zeros([nrpo, 5]) 
-rpos3D = np.zeros([nrpo, 3]) 
+#rpos3D = np.zeros([nrpo, 3]) 
 
 np.savetxt('data/rpocandidates.dat', rpocandidatesxt)
 
-for i in range(nrpo):
-	rpocandidate3D = np.array([rpocandidatesxt[i,0],
-							   rpocandidatesxt[i,2],
-							   rpocandidatesxt[i,3],
-							   rpocandidatesxt[i,4]])
-	#rposxt[i,:] = rpo.findrpo(rpocandidatesxt[i,0:4], rpocandidatesxt[i,4])
-	rpos3D[i,:] = rpo.findrpo(rpocandidate3D[0:3], rpocandidate3D[3])
-	print rpos3D
+#for i in range(nrpo):
+	#rpocandidate3D = np.array([rpocandidatesxt[i,0],
+							   #rpocandidatesxt[i,2],
+							   #rpocandidatesxt[i,3],
+							   #rpocandidatesxt[i,4]])
+	##rposxt[i,:] = rpo.findrpo(rpocandidatesxt[i,0:4], rpocandidatesxt[i,4])
+	#rpos3D[i,:] = rpo.findrpo(rpocandidate3D[0:3], rpocandidate3D[3])
+	#print rpos3D
 	
-	#np.savetxt('data/rpo.dat', rposxt)
+	##np.savetxt('data/rpo.dat', rposxt)
 
-np.savetxt('data/rpo3D.dat', rpos3D)
+#np.savetxt('data/rpo3D.dat', rpos3D)
+
+rpos2D = np.zeros([nrpo, 2]) 
+rposxhat = np.zeros([nrpo, 4]) 
+
+for i in range(nrpo):
+	
+	rpos2D[i, :] = fsolve(rpops, rpocandidatespsnt[i, 0:2], args=(rpocandidatespsnt[i, 2], rpocandidatespsnt[i, 3]))
+	print rpos2D[i, :]
+	print rpops(rpos2D[i, :], rpocandidatespsnt[i, 2], rpocandidatespsnt[i, 3])
+	
+	rposxhat[i,:] = psrelproj2xhat(rpos2D[i,0], rpos2D[i,1])
+
+np.savetxt('data/rposxhat.dat', rposxhat)
+	
+'''
 #Plotting:
 
 lw = 1.5
-'''
+
 #Plot Poincare section:
 figure(1, figsize=(8, 8))
 
@@ -313,4 +379,5 @@ savefig('image/retmaponslice.png', bbox_inches='tight', dpi=100)
 
 plt.tight_layout()
 plt.show()
+
 '''
