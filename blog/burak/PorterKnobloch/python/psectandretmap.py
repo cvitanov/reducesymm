@@ -8,6 +8,10 @@
 	Computes and plots the return map.
 	This will produce correct results only if the xhatp=[1,0,0,0] slice 
 	is used.
+	
+	This program also compute relative periodic orbits and symbolic dynamics.
+	It got rather messy, but you can choose what to do or not to do by assigning
+	binaries below.
 """
 
 import numpy as np
@@ -33,7 +37,6 @@ import rpo
 pars = np.loadtxt('data/parameters.dat')
 
 sectp = np.array([0.4399655797367152, 0, -0.38626706847930564, 0.0702043939917171], float)
-#sectp = np.array([0, 0, 0, 0], float)
 sectp3D = np.array([sectp[0], sectp[2], sectp[3]],float)
 vaux = np.array([0,0,1], float) #Auxiliary vector to decide the Poincare section direction
 unstabledir = np.array([0.02884567,  0.99957642, -0.00386173], float) #Unstable direction
@@ -42,9 +45,13 @@ nhat3D = np.cross(vaux, unstabledir)
 nhat = np.array([nhat3D[0],0,nhat3D[1],nhat3D[2]], float)
 direction = 1 # set 1 or -1 to choose between directions of piercing the Poincare section
 
-compute = 0
+#What to do what not to do:
+computeps = 0
+computerpo = 0
+computesymbdyn = 0
+plotpsandretmap = 1
 
-if compute:	
+if computeps:	
 	xhat = np.loadtxt('data/solutiononslice.dat') #Solution on slice
 	#compute Poincare section:
 	ps=psectslice.computeps(xhat, sectp, nhat, direction,  p=pars)
@@ -117,15 +124,9 @@ def farclength(x):
 	
 		return quad 		
 
-arclength = np.zeros(np.size(psectsorted,0))
+#Compute arclength values:
 
-for i in range(1,np.size(psectsorted,0)):
-	
-	#arclength[i] = arclength[i-1] + np.linalg.norm(psectsorted[i,:]-psectsorted[i-1,:])
-	#s, err = farclength(psectsorted[i,0])
-	#arclength[i] = s
-	
-	arclength[i] = farclength(psectsorted[i,0])
+arclength = np.array([farclength(psectsorted[i,0]) for i in range(np.size(psectsorted,0))], float)
 
 sn = np.zeros(np.size(psectsorted,0))
 sn[sortedindices] = arclength
@@ -137,15 +138,14 @@ snsorted = sn[snsortedindices]
 snplus1sorted = snplus1[snsortedindices]
 
 #Interpolation in two parts:
+
 imax = np.argmax(snplus1sorted)
 tck1 = interpolate.splrep(snsorted[0:imax+1], snplus1sorted[0:imax+1])
-xint1 = np.arange(snsorted[0], snsorted[imax], snsorted[imax]/100)
+xint1 = np.linspace(snsorted[0], snsorted[imax], 100)
 yint1 = interpolate.splev(xint1, tck1)
 
 tck2 = interpolate.splrep(snsorted[imax:len(snsorted)], snplus1sorted[imax:len(snsorted)])
-xint2 = np.arange(snsorted[imax], 
-				  snsorted[len(snsorted)-1]+snsorted[imax]/100, 
-				  snsorted[imax]/100)
+xint2 = np.linspace(snsorted[imax], snsorted[len(snsorted)-1], 100)
 yint2 = interpolate.splev(xint2, tck2)
 
 #Return map function
@@ -200,6 +200,8 @@ def psrelproj2xhat(pxrel, pyrel):
 	
 	return ps	
 
+#Roots of this function are relative periodic orbits on the Poincare section:
+
 def rpops(ps2D, ncycle, Tapproximate):
 
 	x = psrelproj2xhat(ps2D[0], ps2D[1])
@@ -214,11 +216,8 @@ def rpops(ps2D, ncycle, Tapproximate):
 	
 	xsol = onslicesolver.integrate(xphi0, pars, t, abserror=abserr, relerror=relerr)
 	xhat = np.append(np.array([t]).transpose(), xsol, axis=1)
-	#print xhat
 	
 	ps=psectslice.computeps(xhat, sectp, nhat, direction,  p=pars)
-	#print "ncycle = ", ncycle
-	#print ps 
 	
 	if np.size(ps, 0) > ncycle:
 		psf = ps[ncycle,0:5]
@@ -227,17 +226,12 @@ def rpops(ps2D, ncycle, Tapproximate):
 		itdiffmin = np.argmin(tdiff)
 		psf = ps[itdiffmin, 0:5]
 	
-	#print psf
-	#print "size(psf,0) = ", np.size(psf, 0)
-	
 	ps2Df = psxhat2ps2D(psf,psbasis)[0:2]
-	
-	#print "ps2Df = ", ps2Df
 	
 	return ps2Df - ps2D
 	
 #Number of RPOs to look for:
-nrpo = 50;
+nrpo = 15;
 nretmap = 1;
 
 #Found PROs:
@@ -296,88 +290,121 @@ for i in range(nrpo):
 	
 	rpocandidatesxt[i,:] = rpoxhatt 
 
-#rposxt = np.zeros([nrpo, 5]) 
-#rpos3D = np.zeros([nrpo, 3]) 
-
 np.savetxt('data/rpocandidates.dat', rpocandidatesxt)
-
-#for i in range(nrpo):
-	#rpocandidate3D = np.array([rpocandidatesxt[i,0],
-							   #rpocandidatesxt[i,2],
-							   #rpocandidatesxt[i,3],
-							   #rpocandidatesxt[i,4]])
-	##rposxt[i,:] = rpo.findrpo(rpocandidatesxt[i,0:4], rpocandidatesxt[i,4])
-	#rpos3D[i,:] = rpo.findrpo(rpocandidate3D[0:3], rpocandidate3D[3])
-	#print rpos3D
-	
-	##np.savetxt('data/rpo.dat', rposxt)
-
-#np.savetxt('data/rpo3D.dat', rpos3D)
 
 rpos2D = np.zeros([nrpo, 2]) 
 rposxhat = np.zeros([nrpo, 4]) 
 
-for i in range(nrpo):
+if computerpo:
+	print "Computing relative periodic orbits... Usually takes a long time"
+	for i in range(nrpo):
+		
+		rpos2D[i, :] = fsolve(rpops, rpocandidatespsnt[i, 0:2], args=(rpocandidatespsnt[i, 2], rpocandidatespsnt[i, 3]))
+		print rpos2D[i, :]
+		print rpops(rpos2D[i, :], rpocandidatespsnt[i, 2], rpocandidatespsnt[i, 3])
+		
+		rposxhat[i,:] = psrelproj2xhat(rpos2D[i,0], rpos2D[i,1])
 	
-	rpos2D[i, :] = fsolve(rpops, rpocandidatespsnt[i, 0:2], args=(rpocandidatespsnt[i, 2], rpocandidatespsnt[i, 3]))
-	print rpos2D[i, :]
-	print rpops(rpos2D[i, :], rpocandidatespsnt[i, 2], rpocandidatespsnt[i, 3])
+	np.savetxt('data/rposxhat.dat', rposxhat)
+else:
+	print "Loading previously computed relative periodic orbits"
+	rposxhat = np.loadtxt('data/rposxhat.dat')
+	print rposxhat
+
+if computesymbdyn:
 	
-	rposxhat[i,:] = psrelproj2xhat(rpos2D[i,0], rpos2D[i,1])
-
-np.savetxt('data/rposxhat.dat', rposxhat)
+	itinerary = [] #Generate a list variable to add the itineraries
 	
-'''
-#Plotting:
+	for i in range(nrpo):
+		
+		Tapproximate = rpocandidatespsnt[i, 3]
+		ncycle = rpocandidatespsnt[i, 2]
+		
+		abserr = 1.0e-14
+		relerr = 1.0e-12
+		
+		stoptime = Tapproximate*1.1
+		
+		numpoints = int(stoptime/0.01 + 1.0)
+	
+		xphi0=[rposxhat[i, 0], rposxhat[i, 1], rposxhat[i, 2], rposxhat[i, 3], 0]
 
-lw = 1.5
+		t = np.linspace(0,stoptime,numpoints)
+	
+		xsol = onslicesolver.integrate(xphi0, pars, t, abserror=abserr, relerror=relerr)
+		
+		xhat = np.append(np.array([t]).transpose(), xsol, axis=1)
+	
+		ps=psectslice.computeps(xhat, sectp, nhat, direction,  p=pars)
+		
+		#if ncycle 
+		
+		print 'ncycle = ', ncycle
+		print 'psect = ', ps
 
-#Plot Poincare section:
-figure(1, figsize=(8, 8))
+if plotpsandretmap:
+	#Plotting:
+	
+	lw = 1.5
+	
+	#Plot Poincare section:
+	figure(1, figsize=(8, 8))
+	
+	xlabel('$v_u$', fontsize=36)
+	ylabel('$e_{y_2}$', fontsize=36)
+	
+	plot(psectprojected[:,0],psectprojected[:,1], '.', ms=5)
+	#plt.grid()
+	plt.hold(True)
+	
+	plot(xintpsect, yintpsect, c='k', linewidth=lw)
+	
+	savefig('image/psectonslice.png', bbox_inches='tight', dpi=100)
+	
+	#Plot return maps:
+	figure(2, figsize=(8, 8))
+	
+	xlabel('$s_n$', fontsize=36)
+	ylabel('$s_{n+1}$', fontsize=36)
+	
+	plot(snsorted,snplus1sorted, '.', ms=6)
+	#plt.grid()
+	
+	plt.hold(True)
+	
+	sp1 = np.array([retmapn(1, sn) for sn in srange])
+	
+	plot(srange, srange)
+	plot(srange, sp1, c='k')
+	
+	savefig('image/retmaponslice.png', bbox_inches='tight', dpi=100)
+	
+	figure(3, figsize=(8,8))
+	
+	xlabel('$s_n$', fontsize=36)
+	ylabel('$s_{n+3}$', fontsize=36)
+	
+	plt.hold(True)
+	
+	plot(srange, srange)
+	
+	sp3 = np.array([retmapn(3, sn) for sn in srange])
+	
+	plot(srange, sp3, c='k')
 
-xlabel('$v_u$', fontsize=36)
-ylabel('$e_{y_2}$', fontsize=36)
-
-plot(psectprojected[:,0],psectprojected[:,1], '.', ms=5)
-#plt.grid()
-plt.hold(True)
-
-plot(xintpsect, yintpsect, c='k', linewidth=lw)
-
-savefig('image/psectonslice.png', bbox_inches='tight', dpi=100)
-
-#Plot return maps:
-figure(2, figsize=(8, 8))
-
-xlabel('$s_n$', fontsize=36)
-ylabel('$s_{n+1}$', fontsize=36)
-
-plot(snsorted,snplus1sorted, '.', ms=6)
-#plt.grid()
-
-plt.hold(True)
-
-sp1 = np.array([retmapn(1, sn) for sn in srange])
-
-plot(srange, srange)
-plot(srange, sp1, c='k')
-#plot(xint1, yint1, c='k', linewidth=lw)
-#plot(xint2, yint2, c='k', linewidth=lw)
-
-#figure(3, figsize=(8, 8))
-#xlabel('$s_n$', fontsize=36)
-#ylabel('$s_{n+2}$', fontsize=36)
-
-#plt.hold(True)
-
-#plot(np.arange(np.min(sn), np.max(sn), np.max(sn)/100), np.arange(np.min(sn), np.max(sn), np.max(sn)/100))
-#plot(srange, sp1, c='k')
-
-#mpl.rcParams['grid.linewidth'] = 2
-
-savefig('image/retmaponslice.png', bbox_inches='tight', dpi=100)
-
-plt.tight_layout()
-plt.show()
-
-'''
+	figure(4, figsize=(8,8))
+	
+	xlabel('$s_n$', fontsize=36)
+	ylabel('$s_{n+4}$', fontsize=36)
+	
+	plt.hold(True)
+	
+	plot(srange, srange)
+	
+	sp3 = np.array([retmapn(4, sn) for sn in srange])
+	
+	plot(srange, sp4, c='k')
+	
+	
+	plt.tight_layout()
+	plt.show()

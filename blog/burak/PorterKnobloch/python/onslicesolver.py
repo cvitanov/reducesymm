@@ -86,10 +86,10 @@ if __name__ == "__main__":
 	#y20=3.09876107e-02
 	
 	#RPO2:
-	x10= 4.908996826252001178e-01
-	y10=0
-	x20= 7.958815997234316986e-02
-	y20=2.660604135769798623e-02
+	#x10= 4.908996826252001178e-01
+	#y10=0
+	#x20= 7.958815997234316986e-02
+	#y20=2.660604135769798623e-02
    
 
 	#Xi
@@ -101,10 +101,10 @@ if __name__ == "__main__":
 	# ODE solver parameters
 	abserr = 1.0e-14
 	relerr = 1.0e-12
-	#stoptime = 1000
-	stoptime = 25.742775085
-	#numpoints = 100000+1
-	numpoints = 2575
+	stoptime = 1000
+	#stoptime = 25.742775085
+	numpoints = 100000+1
+	#numpoints = 2575
 	
 	# Create the time samples for the output of the ODE solver:
 	t = [stoptime * float(i) / (numpoints - 1) for i in range(numpoints)]
