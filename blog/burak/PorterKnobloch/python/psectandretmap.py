@@ -47,15 +47,17 @@ direction = 1 # set 1 or -1 to choose between directions of piercing the Poincar
 
 #What to do what not to do:
 computeps = 0
-computerpo = 0
-computesymbdyn = 0
-plotpsandretmap = 1
+computerpo = 1
+computesymbdyn = 1
+plotpsandretmap = 0
 
-if computeps:	
+if computeps:
+	print 'Computing Poincare section'	
 	xhat = np.loadtxt('data/solutiononslice.dat') #Solution on slice
 	#compute Poincare section:
 	ps=psectslice.computeps(xhat, sectp, nhat, direction,  p=pars)
 else:
+	print 'Loading Poincare section data'
 	ps = np.loadtxt('data/psectslice.dat')
 
 #Generate the matrix with the basis of Poincare section hyperplane:
@@ -64,7 +66,7 @@ psbasis = np.array([unstabledir,vaux,nhat3D],float)
 def psxhat2ps2D(ps, psectbasis):
 		
 	#Write non-zero values on a (:,3) array:
-	if np.size(ps, 0)==5:
+	if np.shape(ps)==(5,):
 		ps3D = np.array([ps[1], ps[3], ps[4]],float)
 	else:
 		ps3D = np.array([ps[:,1], ps[:,3], ps[:,4]],float).transpose()
@@ -82,6 +84,7 @@ sortedindices = np.argsort(psectprojected[:,0])
 psectsorted = np.array(psectprojected[sortedindices, :],float)
 
 #Interpolate to psect:
+print 'Interpolating the Poincare section'
 tckpsect = interpolate.splrep(psectsorted[:,0],psectsorted[:,1])
 dxintpsect = (psectsorted[np.size(psectsorted,0)-1,0] - psectsorted[0,0])/100
 xintpsect = np.arange(psectsorted[0,0], 
@@ -125,7 +128,7 @@ def farclength(x):
 		return quad 		
 
 #Compute arclength values:
-
+print 'Computing arclengths corresponding to data'
 arclength = np.array([farclength(psectsorted[i,0]) for i in range(np.size(psectsorted,0))], float)
 
 sn = np.zeros(np.size(psectsorted,0))
@@ -138,14 +141,14 @@ snsorted = sn[snsortedindices]
 snplus1sorted = snplus1[snsortedindices]
 
 #Interpolation in two parts:
-
+print 'Interpolating to the return map'
 imax = np.argmax(snplus1sorted)
 tck1 = interpolate.splrep(snsorted[0:imax+1], snplus1sorted[0:imax+1])
-xint1 = np.linspace(snsorted[0], snsorted[imax], 100)
+xint1 = np.linspace(snsorted[0], snsorted[imax], 1000)
 yint1 = interpolate.splev(xint1, tck1)
 
 tck2 = interpolate.splrep(snsorted[imax:len(snsorted)], snplus1sorted[imax:len(snsorted)])
-xint2 = np.linspace(snsorted[imax], snsorted[len(snsorted)-1], 100)
+xint2 = np.linspace(snsorted[imax], snsorted[len(snsorted)-1], 1000)
 yint2 = interpolate.splev(xint2, tck2)
 
 #Return map function
@@ -206,7 +209,7 @@ def rpops(ps2D, ncycle, Tapproximate):
 
 	x = psrelproj2xhat(ps2D[0], ps2D[1])
 	abserr = 1.0e-14
-	relerr = 1.0e-12
+	relerr = 1.0e-13
 	stoptime = Tapproximate*1.1
 	
 	numpoints = int(stoptime/0.01 + 1.0)
@@ -231,7 +234,7 @@ def rpops(ps2D, ncycle, Tapproximate):
 	return ps2Df - ps2D
 	
 #Number of RPOs to look for:
-nrpo = 15;
+nrpo = 5;
 nretmap = 1;
 
 #Found PROs:
@@ -240,9 +243,11 @@ frpo = 0;
 #Dummy assignment:
 scandidates = [[0, 0]]
 
-srange = np.arange(np.min(sn), np.max(sn), (np.max(sn)-np.min(sn))/1000)
+srange = np.linspace(np.min(sn), np.max(sn), 4000)
 
 #Find arclengths of RPO candidates:
+
+print 'Looking for RPO candidates from the return map:'
 
 while frpo < nrpo:
 	sp = np.array([retmapn(nretmap, sn) for sn in srange])
@@ -253,14 +258,20 @@ while frpo < nrpo:
 			#If there is a zero crossing, take the arclength as a candidate for
 			#being a fixed point of the returnmap:
 			scc = srange[i]
+			#print 'scc = ', scc
 			#Is this a new candidate?
 			new = 1
 			for j in range(len(scandidates)):
-				if scc == scandidates[j][0]:
+				if (np.absolute(scc - scandidates[j][0]) < np.absolute(scc)/1e5) or\
+					(frpo>=1 and np.absolute(scc - scandidates[1][0]) < np.absolute(scc)/100):
 					new = 0
 			if new:
 				scandidates = np.append(scandidates, [[scc, nretmap]], axis=0)
 				frpo = frpo + 1
+				print 'Found ', frpo
+			
+	
+	print 'Found candidates: ', scandidates
 	nretmap = nretmap + 1
 
 scandidates = scandidates[1:len(scandidates), :]
@@ -298,10 +309,12 @@ rposxhat = np.zeros([nrpo, 4])
 if computerpo:
 	print "Computing relative periodic orbits... Usually takes a long time"
 	for i in range(nrpo):
-		
-		rpos2D[i, :] = fsolve(rpops, rpocandidatespsnt[i, 0:2], args=(rpocandidatespsnt[i, 2], rpocandidatespsnt[i, 3]))
-		print rpos2D[i, :]
-		print rpops(rpos2D[i, :], rpocandidatespsnt[i, 2], rpocandidatespsnt[i, 3])
+		print 'Looking for RPO number ', i
+		rpos2D[i, :] = fsolve(rpops, rpocandidatespsnt[i, 0:2], 
+					          args=(rpocandidatespsnt[i, 2], rpocandidatespsnt[i, 3]),
+					          xtol=1e-15)
+		print 'Stopped at:', rpos2D[i, :]
+		print 'Function value:', rpops(rpos2D[i, :], rpocandidatespsnt[i, 2], rpocandidatespsnt[i, 3])
 		
 		rposxhat[i,:] = psrelproj2xhat(rpos2D[i,0], rpos2D[i,1])
 	
@@ -311,9 +324,13 @@ else:
 	rposxhat = np.loadtxt('data/rposxhat.dat')
 	print rposxhat
 
+Taccurate=np.array([],float)
+
 if computesymbdyn:
 	
 	itinerary = [] #Generate a list variable to add the itineraries
+	
+	f = open('data/symbdyn.dat', 'w')
 	
 	for i in range(nrpo):
 		
@@ -321,7 +338,7 @@ if computesymbdyn:
 		ncycle = rpocandidatespsnt[i, 2]
 		
 		abserr = 1.0e-14
-		relerr = 1.0e-12
+		relerr = 1.0e-13
 		
 		stoptime = Tapproximate*1.1
 		
@@ -337,11 +354,50 @@ if computesymbdyn:
 	
 		ps=psectslice.computeps(xhat, sectp, nhat, direction,  p=pars)
 		
-		#if ncycle 
-		
+		if ncycle == np.size(ps, 0) - 1:
+			psp = ps[0:ncycle,:]
+			Taccurate = np.append(Taccurate, ps[ncycle,0])
+		elif ncycle == np.size(ps,0):
+			psp = np.array([[0, rposxhat[i,0], rposxhat[i,1], rposxhat[i,2], rposxhat[i,3]]], float)
+			psp = np.append(psp, ps[0:ncycle-1,:], axis=0)
+			Taccurate = np.append(Taccurate, ps[ncycle-1,0])
+			
 		print 'ncycle = ', ncycle
-		print 'psect = ', ps
-
+		print 'psp = ', psp
+		#print 'shape = ', np.shape(psp)
+		
+		pspprojected = psxhat2ps2D(psp, psbasis)
+		
+		arclengthpsp = np.array([farclength(pspprojected[i,0]) for i in range(np.size(pspprojected,0))], float)
+				
+		print 'arclengths = ', arclengthpsp
+		
+		it = ''
+		
+		for i in range(len(arclengthpsp)):
+			if arclengthpsp[i] < snsorted[imax]:
+				it = it + '0'
+			else:
+				it = it + '1'
+		
+		print "itinerary =", it
+		
+		f.write("%s \t" % it)
+		f.write("%f \t" % xphi0[0])
+		f.write("%f \t" % xphi0[1])
+		f.write("%f \t" % xphi0[2])
+		f.write("%f \t \n" % xphi0[3])
+				
+		itinerary.append(it)
+	
+	print "full itinerary =", itinerary	
+	itineraryarr = np.array([int(itinerary[i]) for i in range(len(itinerary))], int)
+	np.savetxt('data/rpoitineraries.dat', itineraryarr)
+	
+	f.close()
+	
+	np.savetxt('data/RPOT.dat', Taccurate)
+	
 if plotpsandretmap:
 	#Plotting:
 	
@@ -401,7 +457,7 @@ if plotpsandretmap:
 	
 	plot(srange, srange)
 	
-	sp3 = np.array([retmapn(4, sn) for sn in srange])
+	sp4 = np.array([retmapn(4, sn) for sn in srange])
 	
 	plot(srange, sp4, c='k')
 	

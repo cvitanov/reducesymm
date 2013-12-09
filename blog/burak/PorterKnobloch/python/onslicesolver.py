@@ -100,11 +100,11 @@ if __name__ == "__main__":
 		
 	# ODE solver parameters
 	abserr = 1.0e-14
-	relerr = 1.0e-12
+	relerr = 1.0e-13
 	stoptime = 1000
-	#stoptime = 25.742775085
+	#stoptime = 3.65
 	numpoints = 100000+1
-	#numpoints = 2575
+	#numpoints = 365
 	
 	# Create the time samples for the output of the ODE solver:
 	t = [stoptime * float(i) / (numpoints - 1) for i in range(numpoints)]
