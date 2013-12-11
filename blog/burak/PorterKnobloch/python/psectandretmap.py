@@ -47,9 +47,9 @@ direction = 1 # set 1 or -1 to choose between directions of piercing the Poincar
 
 #What to do what not to do:
 computeps = 0
-computerpo = 1
-computesymbdyn = 1
-plotpsandretmap = 0
+computerpo = 0
+computesymbdyn = 0
+plotpsandretmap = 1
 
 if computeps:
 	print 'Computing Poincare section'	
@@ -401,65 +401,68 @@ if computesymbdyn:
 if plotpsandretmap:
 	#Plotting:
 	
-	lw = 1.5
+	mpl.rcParams.update({'font.size': 22})
+
+	
+	lw = 3
 	
 	#Plot Poincare section:
-	figure(1, figsize=(8, 8))
+	figure(1, figsize=(6, 6))
 	
-	xlabel('$v_u$', fontsize=36)
-	ylabel('$e_{y_2}$', fontsize=36)
+	xlabel('$e_1$', fontsize=36)
+	ylabel('$e_2$', fontsize=36)
 	
-	plot(psectprojected[:,0],psectprojected[:,1], '.', ms=5)
+	plot(psectprojected[:,0],psectprojected[:,1], '.', ms=10)
 	#plt.grid()
 	plt.hold(True)
 	
 	plot(xintpsect, yintpsect, c='k', linewidth=lw)
 	
-	savefig('image/psectonslice.png', bbox_inches='tight', dpi=100)
+	savefig('image/psectonslice.png', bbox_inches='tight', dpi=200)
 	
 	#Plot return maps:
-	figure(2, figsize=(8, 8))
+	figure(2, figsize=(6, 6))
 	
 	xlabel('$s_n$', fontsize=36)
 	ylabel('$s_{n+1}$', fontsize=36)
 	
-	plot(snsorted,snplus1sorted, '.', ms=6)
+	plot(snsorted,snplus1sorted, '.', ms=10)
 	#plt.grid()
 	
 	plt.hold(True)
 	
 	sp1 = np.array([retmapn(1, sn) for sn in srange])
 	
-	plot(srange, srange)
-	plot(srange, sp1, c='k')
+	plot(srange, srange, linewidth=lw)
+	plot(srange, sp1, c='k', linewidth=lw)
 	
-	savefig('image/retmaponslice.png', bbox_inches='tight', dpi=100)
+	savefig('image/retmaponslice.png', bbox_inches='tight', dpi=200)
 	
-	figure(3, figsize=(8,8))
+	#figure(3, figsize=(8,8))
 	
-	xlabel('$s_n$', fontsize=36)
-	ylabel('$s_{n+3}$', fontsize=36)
+	#xlabel('$s_n$', fontsize=36)
+	#ylabel('$s_{n+3}$', fontsize=36)
 	
-	plt.hold(True)
+	#plt.hold(True)
 	
-	plot(srange, srange)
+	#plot(srange, srange)
 	
-	sp3 = np.array([retmapn(3, sn) for sn in srange])
+	#sp3 = np.array([retmapn(3, sn) for sn in srange])
 	
-	plot(srange, sp3, c='k')
+	#plot(srange, sp3, c='k')
 
-	figure(4, figsize=(8,8))
+	#figure(4, figsize=(8,8))
 	
-	xlabel('$s_n$', fontsize=36)
-	ylabel('$s_{n+4}$', fontsize=36)
+	#xlabel('$s_n$', fontsize=36)
+	#ylabel('$s_{n+4}$', fontsize=36)
 	
-	plt.hold(True)
+	#plt.hold(True)
 	
-	plot(srange, srange)
+	#plot(srange, srange)
 	
-	sp4 = np.array([retmapn(4, sn) for sn in srange])
+	#sp4 = np.array([retmapn(4, sn) for sn in srange])
 	
-	plot(srange, sp4, c='k')
+	#plot(srange, sp4, c='k')
 	
 	
 	plt.tight_layout()

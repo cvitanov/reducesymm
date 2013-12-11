@@ -21,6 +21,7 @@ pars = np.loadtxt('data/parameters.dat')
 
 mpl.rcParams['text.usetex']=True
 mpl.rcParams['text.latex.unicode']=True
+mpl.rcParams.update({'font.size': 18})
 
 #Read integration times:
 Trpo = np.loadtxt('data/RPOT.dat')
@@ -39,11 +40,11 @@ relerr = 1.0e-13
 fig = plt.figure()
 ax = fig.gca(projection='3d')
 
-lw = 1
+lw = 3
 axfsize = 36
 
 ax.set_xlabel('$x_1$', fontsize=axfsize)
-ax.set_ylabel('$y_1$', fontsize=axfsize)
+ax.set_ylabel('$x_2$', fontsize=axfsize)
 ax.set_zlabel('$y_2$', fontsize=axfsize)	
 
 ax.w_xaxis.set_pane_color((1, 1, 1, 1.0))
@@ -78,7 +79,7 @@ for i in range(nplot):
 	
 	print xsol[0,:] - xsol[numpoints-1,:]
 
-savefig('image/rpos.png', bbox_inches='tight', dpi=150)
+savefig('image/rpos.png', bbox_inches='tight', dpi=300)
 	
 plt.tight_layout()
 plt.show()
