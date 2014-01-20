@@ -24,7 +24,6 @@ from matplotlib.font_manager import FontProperties
 import matplotlib as mpl
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
-import numpy as np
 
 mpl.rcParams['text.usetex']=True
 mpl.rcParams['text.latex.unicode']=True
