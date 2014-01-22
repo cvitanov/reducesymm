@@ -25,19 +25,7 @@ if __name__ == "__main__":
 	p = np.loadtxt('data/parameters.dat')
 
 	#Initial conditions:
-	#x10=-1.32138709067
-	#y10=-1.32138709067
-	#x20=0.26866738527  
-	#y20=-1.61705230412
-	#x10=-0.311102644920502
-	#y10=-0.311102644920502
-	#x20=-0.07020440068369531
-	#y20=-0.3862670595294275
-	x10=0.4399655797367152
-	y10=0
-	x20=-0.38626706847930564
-	y20=0.0702043939917171
-	
+
 	x10= 4.908996826252001178e-01
 	y10=0
 	x20= 7.958815997234316986e-02
@@ -47,8 +35,8 @@ if __name__ == "__main__":
 	# ODE solver parameters
 	abserr = 1.0e-8
 	relerr = 1.0e-6
-	stoptime = 25.742775085
-	numpoints = 2574+1
+	stoptime = 1000
+	numpoints = 100000+1
 
 	# Create the time samples for the output of the ODE solver:
 	t = [stoptime * float(i) / (numpoints - 1) for i in range(numpoints)]

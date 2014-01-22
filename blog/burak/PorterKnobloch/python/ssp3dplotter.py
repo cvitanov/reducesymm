@@ -51,7 +51,7 @@ if redref:
 	ax.set_zlabel('$y_1$', fontsize=16)
 	savefig('image/ssprefred.png', bbox_inches='tight', dpi=150)
 
-reqv = 1
+reqv = 0
 
 if reqv:
 	
