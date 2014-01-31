@@ -68,9 +68,9 @@ def generator():
     Generator of infinitesimal SO(2) transformations for the two mode system
     """
     T = np.array([[0,1,0,0],
-    			 [-1,0,0,0],
-    			 [0,0,0,2],
-    			 [0,0,-2,0]], 
+    		  [-1,0,0,0],
+    		  [0,0,0,2],
+    		  [0,0,-2,0]], 
     			 float)
 
     return T

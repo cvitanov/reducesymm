@@ -37,6 +37,11 @@ unstabledir = np.array([0.02884567,  0.99957642, -0.00386173], float) #Unstable 
 nhat3D = np.cross(vaux, unstabledir)
 nhat = np.array([nhat3D[0],0,nhat3D[1],nhat3D[2]], float)
 
+#The slice:
+T = twomode.generator()
+xhatp = np.array([1,0,0,0],float)
+tp = np.dot(T, xhatp)
+
 #Initial guess:
 x0 = xrpo0[0,:]
 T0 = tof0[0]
@@ -56,10 +61,29 @@ def ftau(xhat, tau):
 	
 	t = [stoptime * float(i) / (numpoints - 1) for i in range(numpoints)]
 	
-	xsol = onslicesolver.integrate(xhatphi, pars, t, abserror=1.0e-12, relerror=1.0e-11)
+	xsol = onslicesolver.integrate(xhatphi, pars, t, abserror=1.0e-14, relerror=1.0e-12)
 	xhattau = xsol[1,0:4]
 	
 	return xhattau
+
+def Jacobian(x, Ti):
+	"""
+	Jacobian of ftau at x
+	"""
+	n = np.size(x,0)
+	J = np.zeros((n,n))
+	for i in range(n):
+		for j in range(n):
+			def fxji(xj):
+				
+				xx = x
+				xx[j] = xj
+				fxji = ftau(xx, Ti)[i]
+				return fxji
+			
+			J[i,j] = derivative(fxji, x[j], dx=1e-9)
+	return J		
+			
 
 converged = False
 tol = 1e-9
@@ -67,83 +91,88 @@ xi = x0
 Ti = T0
 
 #Define maximum number of steps:
-imax = 10
+imax = 5
 #Apply ChaosBook p294 (13.11) 
 #with constraint nhat . Dx = 0
 i=0
 tol = 1e-9
+earray = np.array([], float)
 
-#while not converged:
-	
-fx = lambda x: ftau(x, Ti)
 
-xTi = ftau(xi, Ti)
-error = xi - xTi
-print "error: "
-print error
-
-error0 = np.append(error, np.array([0]))
-
-if max(np.abs(error)) < tol:
-	
-	xrpo = xi
-	Trpo = Ti
-	converged = True
-	#break
-
-Jfx = nd.Jacobian(fx)
-J = Jfx(xi)
-
-print "Jacobian:"
-print J
-
-vx = onslicesolver.vhatvphi(np.append(xTi, np.array([0], float)),0,pars)[0:4]
-vx = vx.reshape(-1,1)
-
-print "vx:"
-print vx
-
-A = np.concatenate((np.identity(4)-J, vx), axis=1)
-
-A = np.concatenate((A, np.append(nhat.reshape(-1,1), np.array([[0]], float), axis=0).transpose()), axis=0)
-
-np.savetxt('Amatrix', A)
-
-Ainv = np.linalg.inv(A)
-print "Ainv:"
-print Ainv
-
-print "A.Ainv:"
-print np.dot(A, Ainv)
-
-DxT = np.dot(Ainv, -error0)
-
-print "DxT"
-print DxT
-
-xi = xi + DxT[0:4]
-Ti = Ti + DxT[4]
-
-xTi = ftau(xi, Ti)
-error = xi - xTi
-print "error: "
-print error
-
-i = i + 1
-
-	#if i > imax:
+while not converged:
 		
-		#print "did not converged in given maximum number of steps"
-		#print "exitting..."
-		#xrpo = xi
-		#Trpo = Ti
+	fx = lambda x: ftau(x, Ti)
+	
+	xTi = ftau(xi, Ti)
+	error = xi - xTi
+	earray = np.append(earray,error)
+	print "error: "
+	print error
+	
+	error0 = np.append(error, np.array([0]))
+	
+	if max(np.abs(error)) < tol:
+		
+		xrpo = xi
+		Trpo = Ti
+		converged = True
 		#break
 	
-	#print error
+	#Jfx = nd.Jacobian(fx)
+	#J = Jfx(xi)
+	J = Jacobian(xi, Ti)
+	
+	print "Jacobian:"
+	print J
+	
+	vx = onslicesolver.vhatvphi(np.append(xTi, np.array([0], float)),0,pars)[0:4]
+	vx = vx.reshape(-1,1)
+	
+	print "vx:"
+	print vx
+	
+	A = np.concatenate((np.identity(4)-J, -vx), axis=1)
+	
+	A = np.concatenate((A, np.append(nhat.reshape(-1,1), np.array([[0]], float), axis=0).transpose()), axis=0)
+	
+	np.savetxt('Amatrix', A)
+	
+	Ainv = np.linalg.inv(A)
+	print "Ainv:"
+	print Ainv
+	
+	print "A.Ainv:"
+	print np.dot(A, Ainv)
+	
+	DxT = np.dot(Ainv, -error0)
+	
+	print "DxT"
+	print DxT
+	
+	xi = xi + DxT[0:4]
+	Ti = Ti + DxT[4]
+	
+	xTi = ftau(xi, Ti)
+	error = xi - xTi
+	print "error: "
+	print error
+	
+	i = i + 1
+	
+	if i > imax:
+		
+		print "did not converged in given maximum number of steps"
+		print "exitting..."
+		xrpo = xi
+		Trpo = Ti
+		break
+	
+	print error
 	
 print "x_rpo:"
 print xrpo
 print "T_rpo:"
 print Trpo
 print "Error"
-print error
+print earray
+

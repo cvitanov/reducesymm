@@ -6,7 +6,7 @@ import numpy as np
 import onslicesolver
 pars = np.loadtxt('data/parameters.dat')
 
-xpo = np.loadtxt('data/xpo.dat')
+xpo = np.loadtxt('data/xrpo.dat')
 itineraries = np.loadtxt('data/itineraries.dat', dtype="str")
 periods = np.loadtxt('data/periods.dat')
 position = np.loadtxt('data/position.dat')

@@ -30,17 +30,19 @@ mpl.rcParams['text.latex.unicode']=True
 
 import twomode
 import onslicesolver
+import sspsolver
+import movingframes
 import psectslice
 import rpo
 
 #What to do what not to do:
 computeps = False
-computerpo = False
-computesymbdyn = False
-plotpsandretmap = True
+computerpo = True
+computesymbdyn = True
+plotpsandretmap = False
 solveFPO = False
 
-m = 2
+m = 4
 
 pars = np.loadtxt('data/parameters.dat')
 
@@ -382,15 +384,28 @@ def phireturn(xhat0, tof):
 	the section for a second time 
 	"""
 
+	#stoptime = tof
+	#numpoints = 2
+	##Integration time array:
+	#t = [stoptime * float(i) / (numpoints - 1) for i in range(numpoints)]
+	#xhatphi0 = np.append(xhat0, np.array([0], float))
+	#xhatsol = onslicesolver.integrate(xhatphi0, pars, t, abserror=1.0e-14, relerror=1.0e-12)
+	#print "xhatsol"
+	#print xhatsol
+	#phi = xhatsol[1,4]
+	
+
 	stoptime = tof
 	numpoints = 2
 	#Integration time array:
 	t = [stoptime * float(i) / (numpoints - 1) for i in range(numpoints)]
-	xhatphi0 = np.append(xhat0, np.array([0], float))
-	xhatsol = onslicesolver.integrate(xhatphi0, pars, t, abserror=1.0e-14, relerror=1.0e-12)
-	print "xhatsol"
-	print xhatsol
-	phi = xhatsol[1,4]
+	
+	xsol = sspsolver.integrate(xhat0, pars, t, abserror=1.0e-14, relerror=1.0e-12)
+	phi = movingframes.x2xhatphi(xsol[1,:])[0,4]
+	
+	#print "xhatsol"
+	#print xhatsol
+	#phi = xhatsol[1,4]
 	
 	return phi
 

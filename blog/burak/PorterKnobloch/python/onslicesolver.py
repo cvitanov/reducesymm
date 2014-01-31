@@ -93,18 +93,18 @@ if __name__ == "__main__":
    
 
 	#Xi
-	x10=0.45258589   
-	y10=0.0 
-	x20=0.05105905
-	y20=0.03185331
+	x10=4.52572014e-01        
+	y10=-1.52583001e-19 
+	x20=5.09256378e-02
+	y20=3.35428014e-02
 		
 	# ODE solver parameters
 	abserr = 1.0e-14
 	relerr = 1.0e-13
 	stoptime = 1000
-	stoptime =  3.63
+	stoptime =  3.64151197603
 	numpoints = 100000+1
-	numpoints = 363
+	numpoints = 364
 	
 	# Create the time samples for the output of the ODE solver:
 	t = [stoptime * float(i) / (numpoints - 1) for i in range(numpoints)]
