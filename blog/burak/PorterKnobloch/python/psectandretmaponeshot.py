@@ -39,10 +39,10 @@ import rpo
 computeps = False
 computerpo = True
 computesymbdyn = True
-plotpsandretmap = True
+plotpsandretmap = False
 solveFPO = False
 
-m = 2
+m = 4
 
 pars = np.loadtxt('data/parameters.dat')
 
@@ -299,7 +299,7 @@ together = np.append(together, np.array([scandidates[:,1]], str).transpose(), ax
 print "Itinerary | Group | Position in the group"
 print together
 
-raw_input("Press Enter to continue...")
+#raw_input("Press Enter to continue...")
 
 def fs2ps2D(px, s):
 	'''
@@ -349,18 +349,18 @@ pscandidates = np.array([ps2D2psxhat(ps2D) for ps2D in ps2Dcandidates] )
 print "pscandidates"
 print pscandidates
 
-def timeofflight(xhat0):
+def approximateperiod(xhat0, n):
 	"""
 	Computes time of flight for xhat0 on the Poincare section to come back onto
-	the section for a second time 
+	the section for nth time 
 	"""
 	#Find the point on the computed poincare section, closest to the x0
 	imin = np.argmin(np.linalg.norm(ps[:,1:5]-xhat0, axis=1))
 	#Take its time of flight as
-	if imin < np.size(ps,0)-1: 
-		Tapproximate = ps[imin+1,0]-ps[imin,0]
+	if imin < np.size(ps,0)-n: 
+		Tapproximate = ps[imin+n,0]-ps[imin,0]
 	else:
-		Tapproximate = ps[imin,0]-ps[imin-1,0]
+		Tapproximate = ps[imin,0]-ps[imin-n,0]
 	print "Tapproximate:"
 	print Tapproximate
 	#Integrate for a little bit longer than the approximated integration time:
@@ -369,7 +369,7 @@ def timeofflight(xhat0):
 	#Integration time array:
 	t = [stoptime * float(i) / (numpoints - 1) for i in range(numpoints)]
 	xhatphi0 = np.append(xhat0, np.array([0], float))
-	xhatsol = onslicesolver.integrate(xhatphi0, pars, t, abserror=1.0e-14, relerror=1.0e-12)
+	xhatsol = onslicesolver.integrate(xhatphi0, pars, t, abserror=1.0e-12, relerror=1.0e-10)
 	tx = np.append(np.array([t], float).transpose(), xhatsol, axis=1)
 	#Compute Poincare section:
 	psreturn=psectslice.computeps(tx, sectp, nhat, direction,  p=pars)
@@ -405,7 +405,7 @@ def phireturn(xhat0, tof):
 	#Integration time array:
 	t = [stoptime * float(i) / (numpoints - 1) for i in range(numpoints)]
 	
-	xsol = sspsolver.integrate(xhat0, pars, t, abserror=1.0e-14, relerror=1.0e-12)
+	xsol = sspsolver.integrate(xhat0, pars, t, abserror=1.0e-12, relerror=1.0e-10)
 	phi = movingframes.x2xhatphi(xsol[1,:])[0,4]
 	
 	#print "xhatsol"
@@ -414,10 +414,10 @@ def phireturn(xhat0, tof):
 	
 	return phi
 
-TOF = np.array([timeofflight(x0) for x0 in pscandidates], float)
-print "time of flights:"
-print TOF
-phiret = np.array([phireturn(pscandidates[i,:], TOF[i]) for i in range(np.size(TOF,0))], float)
+Tapproximate = np.array([approximateperiod(pscandidates[i,:], scandidates[i,0]) for i in range(np.size(pscandidates,0))], float)
+print "Approximate periods:"
+print Tapproximate
+phiret = np.array([phireturn(pscandidates[i,:], Tapproximate[i]) for i in range(np.size(pscandidates,0))], float)
 print "phiret:"
 print phiret
 
@@ -425,162 +425,9 @@ print phiret
 np.savetxt('data/group.dat', group)
 np.savetxt('data/itineraries.dat', scitineraries, fmt="%s")
 np.savetxt('data/position.dat', position)
-np.savetxt('data/tof0.dat',TOF)
+np.savetxt('data/Tapproximate.dat',Tapproximate)
 np.savetxt('data/phi0.dat', phiret)
 np.savetxt('data/xrpo0.dat', pscandidates)
-
-
-def FPO(xn, tof):
-	"""
-	Vector input - Vector output function to solve for to get fixed points 
-	or n-cycles of the Poincare return map. 
-	xn = (n*(d-1))-dimensional array with n-cycle candidates at each row.
-	xn = [x1_1
-		  x1_2
-		  x2_1
-		  x2_2
-		  x3_1
-		  x3_2
-		  ...
-			]
-	Where in xi_j first index denotes ith element of cycle and the second 
-	index denotes jth coordinate of ith element.
-	tof = n - dimensional vector to hold return time for each candidate
-	"""
-	#Reshape xn into a form such that at each row there are coordinates of
-	#one element of the cycle in collumns. Namely,
-	#xn = [[x1_1, x1_2], 
-	#	   [x2_1, x2_2], 
-	#	   [x3_1, x3_2], ...]
-	xn = xn.reshape(np.size(tof), 2)
-	#First compute P(x_i) and write as a matrix (n x d-1):
-	Px = np.zeros(np.shape(xn)) #dummy assignment
-	#print "Px"
-	#print Px
-	for i in range(np.size(xn,0)):
-		#3D initial point to integrate
-		xhat0=ps2D2psxhat(xn[i])
-		
-		pret = np.array([], float)
-		factor = 1.2
-		
-		while np.size(pret)==0:
-			#Integrate for a little bit longer than the time of flight:
-			stoptime = factor*tof[i]
-			#print "stoptime="
-			#print stoptime
-			numpoints = int(stoptime/0.01)
-			#Integration time array:
-			t = [stoptime * float(j) / (numpoints - 1) for j in range(numpoints)]
-			xhatphi0 = np.append(xhat0, np.array([0], float))
-			xhatsol = onslicesolver.integrate(xhatphi0, pars, t, abserror=1.0e-14, relerror=1.0e-12)
-			tx = np.append(np.array([t], float).transpose(), xhatsol, axis=1)
-			#Compute Poincare section:
-			psreturn=psectslice.computeps(tx, sectp, nhat, direction,  p=pars)
-			#Take the time nearest to the approximated time. This is due to the
-			#fact that the array ps sometimes includes the initial point and sometimes
-			#does not, hence we are not always sure the position of the first return.
-			#print "xsol:"
-			#print xsol
-			#print "psreturn:"
-			#print psreturn
-			if np.size(psreturn,0) != 0:
-				itof = np.argmin(np.abs(psreturn[:,0])-tof[i])
-				pret = psreturn[itof, 0:]			
-			else:
-				factor = factor**2
-				if factor > 50:
-					print "something went wrong for:"
-					print "xhat0 = "
-					print xhat0
-					print "Time of flight:"
-					print tof[i]
-					break 
-					
-		ps2D = psxhat2ps2D(pret)[0:2]
-		
-		#print "ps2D"
-		#print ps2D
-		
-		Px[i,:] = ps2D
-		
-	Pxshifted = np.append(np.array([Px[np.size(Px,0)-1,:]]), Px[0:np.size(Px,0)-1,:], axis=0)	
-	
-	fun = xn - Pxshifted
-	#Convert back to a vector function
-	fun = fun.reshape(np.size(fun))
-	
-	return fun
-
-if solveFPO:
-
-	#Find periodic orbits from the cycles on the Poincare return map:
-	x2Dpo = np.zeros(np.shape(ps2Dcandidates))
-	convergence = np.array([''])
-	for i in range(1,int(np.max(group)) +1):
-		print "Group no:"
-		print i
-		#Get corresponding indices for the group i:
-		indices = np.argwhere(group == i)
-		#Reshape them in a 1D array:
-		indices = indices.reshape(np.size(indices))
-		#Get coordinates of group i
-		xn = ps2Dcandidates[indices,:]
-		#Get the positions in group i
-		posn = position[indices]
-		#Get time of flights for group i:
-		tof = TOF[indices]
-		#Sort tof and xn with respect to posn:
-		xn = xn[posn-1,:]
-		tof = tof[posn-1]
-		#Turn xn to a 1xn(d-1) vector:	
-		xn = xn.reshape(np.size(xn))
-		#using fsolve:
-		fsolveoutput = fsolve(FPO, xn, args=(tof), full_output=1, xtol=1e-10)
-		print fsolveoutput
-		xpo = fsolveoutput[0]
-		convergence = np.append(convergence, np.array([fsolveoutput[3]]))
-		print fsolveoutput[3] 
-	
-		#using root:
-		#rootout = root(FPO, xn, args=(tof), method='broyden1', tol=1.49012e-08)
-		#xpo = rootout.x
-		#convergence = np.append(convergence, np.array([rootout.success], str))
-		
-		xpo = xpo.reshape(np.size(tof), 2)
-		x2Dpo[indices[posn-1]] = xpo
-
-	print "x2Dpo:"
-	print x2Dpo
-	
-	convergence = convergence[1:]
-	print "convergence:"
-	print convergence
-	
-	xpo = np.array([ps2D2psxhat(x2D) for x2D in x2Dpo])
-	print "xpo:"
-	print xpo
-
-
-	tofpo = np.array([timeofflight(x0) for x0 in xpo], float)
-	T = np.zeros(np.max(group))
-	
-	for i in range(1,int(np.max(group))+1):
-		#Get corresponding indices for the group i:
-		indices = np.argwhere(group == i)
-		#Reshape them in a 1D array:
-		indices = indices.reshape(np.size(indices))
-		T[i-1] = np.sum(tofpo[indices])
-	
-	print "Periods:"
-	print T
-
-	np.savetxt('data/group.dat', group)
-	np.savetxt('data/itineraries.dat', scitineraries, fmt="%s")
-	np.savetxt('data/position.dat', position)
-	np.savetxt('data/tofpo.dat',tofpo)
-	np.savetxt('data/xpo.dat', xpo)
-	np.savetxt('data/periods.dat', T)
 
 srange = np.linspace(np.min(sn), np.max(sn), 4000)
 	

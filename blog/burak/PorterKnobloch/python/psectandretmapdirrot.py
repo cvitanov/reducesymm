@@ -34,9 +34,9 @@ import psectslice
 import rpo
 
 #What to do what not to do:
-computeps = False
-computerpo = False
-computesymbdyn = False
+computeps = True
+computerpo = True
+computesymbdyn = True
 plotpsandretmap = True
 plotpsect = False
 plotretmap = False
@@ -55,7 +55,7 @@ unstabledir = np.cross(vaux, unstabledir)
 nhat3D = np.cross(vaux, unstabledir)
 	
 nhat = np.array([nhat3D[0],0,nhat3D[1],nhat3D[2]], float)
-direction = -1 # set 1 or -1 to choose between directions of piercing the Poincare section
+direction = 1 # set 1 or -1 to choose between directions of piercing the Poincare section
 
 if computeps:
 	print 'Computing Poincare section'	

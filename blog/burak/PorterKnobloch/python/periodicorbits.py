@@ -11,7 +11,7 @@ itineraries = np.loadtxt('data/itineraries.dat', dtype="str")
 periods = np.loadtxt('data/periods.dat')
 position = np.loadtxt('data/position.dat')
 group = np.loadtxt('data/group.dat')
-tofpo = np.loadtxt('data/tofpo.dat')
+tofpo = np.loadtxt('data/tofrpo.dat')
 print "group:"
 print group
 #Plotting modules:
@@ -23,11 +23,14 @@ import matplotlib.pyplot as plt
 mpl.rcParams['text.usetex']=True
 mpl.rcParams['text.latex.unicode']=True
 
-fig = plt.figure() #Create a figure instance
-ax = fig.gca(projection = "3d") #Create an axis instance
-hold(False)
+#fig = plt.figure() #Create a figure instance
+#ax = fig.gca(projection = "3d") #Create an axis instance
+#hold(False)
 
 for i in range(1,int(np.max(group))+1):
+	
+	fig = plt.figure() #Create a figure instance
+	ax = fig.gca(projection = "3d") #Create an axis instance
 		
 	#indices corresponding to the members of ith periodic orbit:
 	gindices = np.argwhere(group == i)
@@ -71,5 +74,9 @@ for i in range(1,int(np.max(group))+1):
 	#ax.view_init(30,-110)
 	ax.grid(b='off')
 	
+	
 	fname = 'image/' + itinerary[0] + '.png'
 	savefig(fname, bbox_inches='tight', dpi=100)	
+
+	plt.show()	
+	raw_input("Press Enter to continue...")

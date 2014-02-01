@@ -25,13 +25,10 @@ pars = np.loadtxt('data/parameters.dat')
 #Load the RPO candidates:
 
 group = np.loadtxt('data/group.dat')
-itineraries = np.loadtxt('data/itineraries.dat', dtype="str")
-position = np.loadtxt('data/position.dat')
-tof0 = np.loadtxt('data/tof0.dat')
+Tapproximate = np.loadtxt('data/Tapproximate.dat')
 phirpo0 = np.loadtxt('data/phi0.dat')
 xrpo0 = np.loadtxt('data/xrpo0.dat')
 
-#Let's handle the first one:
 #Compute normal vector to the Poincare section:
 sectp = np.array([0.4399655797367152, 0, -0.38626706847930564, 0.0702043939917171], float)
 sectp3D = np.array([sectp[0], sectp[2], sectp[3]],float)
@@ -44,14 +41,6 @@ nhat = np.array([nhat3D[0],0,nhat3D[1],nhat3D[2]], float)
 T = twomode.generator()
 xhatp = np.array([1,0,0,0],float)
 tp = np.dot(T, xhatp)
-
-#Initial guess:
-x0 = xrpo0[0,:]
-T0 = tof0[0]
-phi0 = -phirpo0[0]
-
-xt0 = np.append(x0, tof0[0])
-xtphi0 = np.append(xt0, -phirpo0[0])
 
 def ftau(x, tau):
 	"""
@@ -101,16 +90,18 @@ def Jacobian(x, Ti):
 tol = 1e-7
 earray = np.array([], float)
 xrpo = np.zeros(np.shape(xrpo0))
-tofrpo = np.zeros(np.shape(tof0))
+tofrpo = np.zeros(np.shape(Tapproximate))
 phirpo = np.zeros(np.shape(phirpo0))
 
 Adaptive = True
-iAdaptiveMax = 30			
-			
-for i in range(1, int(np.max(group)+1)):
+iAdaptiveMax = 50			
+
+group = np.arange(0,np.size(xrpo0, 0))
+position = np.ones(np.shape(group))			
+for i in group:
 
 	AdaptiveFail = False
-	print "Group no: ", i
+	print "Orbit no: ", i
 	
 	#Get corresponding indices for the group i:
 	gindices = np.argwhere(group == i)
@@ -119,7 +110,7 @@ for i in range(1, int(np.max(group)+1)):
 	#Get coordinates of group i
 	xi = xrpo0[gindices,:]
 	#Get time of flights for group i:
-	Ti = tof0[gindices]
+	Ti = Tapproximate[gindices]
 	#Get group parameter for group i:
 	phii = -phirpo0[gindices]
 	#Get the positions in group i
@@ -136,7 +127,7 @@ for i in range(1, int(np.max(group)+1)):
 	phii = phii.reshape(np.size(phii))%(2*np.pi)
 	print "phii = ", phii 
 	
-	raw_input("Press Enter to continue...")
+	#raw_input("Press Enter to continue...")
 	
 	#How many points:
 	npts = np.size(gindices)
@@ -157,7 +148,7 @@ for i in range(1, int(np.max(group)+1)):
 	errorr = np.zeros(np.shape(error))
 	
 	#Define maximum number of iterations:
-	itermax = 300
+	itermax = 500
 	#Apply ChaosBook p294 (13.11) 
 	#with constraint nhat . Dx = 0
 	iteration=0
@@ -323,9 +314,6 @@ for i in range(1, int(np.max(group)+1)):
 	print phirpo
 	
 	plot(np.arange(iteration), earray)
-	xlabel('Iteration')
-	ylabel('Error')
-	savefig('image/errorrposearch.png', bbox_inches='tight', dpi=150)
 	show()
 	
 	raw_input("Press Enter to continue...")

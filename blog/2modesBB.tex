@@ -2764,5 +2764,137 @@ precision.
 \label{fig:BBrosslerPO}
 \end{figure}
 
+\item[2014-01-31 Burak] Multiple shooting method for search for the \rpo s:
+Let us assume that we have \statesp\ points $x_i$, corresponding group parameter
+values $\phi_i$ and time of flights $T_i$ that are close to satisfy:
+\beq
+	\ssp_{i+1} \approx \LieEl (\phi_i) \flow{T_i}{\ssp_i} \quad  \mbox{cyclic in $i = 1, ..., n$}\ .
+\eeq
+Then assume that the equality is satisfied for:
+\beq
+	\ssp_{i+1} + \Delta \ssp_{i+1} = \LieEl (\phi_i + \Delta \phi_i) 
+							 \flow{T_i + \Delta T_i}{\ssp_i + \Delta \ssp_i}
+							 \quad  \mbox{cyclic in $i = 1, ..., n$}\ .
+\eeq
+We Taylor expand RHS to get an approximate expression for $\Delta \ssp_i ,\ 
+\Delta \phi_i \ \mbox{and} \ \Delta T_i$:
+\beq
+	\ssp_{i+1} + \Delta \ssp_{i+1} \approx \LieEl (\phi_i) \flow{T_i}{\ssp_i}
+									+ \Lg \flow{T_i}{\ssp_i} \Delta \phi_i
+									+ \LieEl (\phi_i) \jMps^{T_i} \Delta \ssp_i
+									+ \LieEl (\phi_i) \vel (\flow{T_i}{\ssp_i}) \Delta T_i
+\eeq
+Regrouping terms we get a form that we can turn to a matrix equation:
+\beq
+	 \LieEl (\phi_i) \jMps^{T_i}(\ssp_i) \Delta \ssp_i 
+	+ \LieEl (\phi_i) \vel (\flow{T_i}{\ssp_i}) \Delta T_i 
+	+\Lg \flow{T_i}{\ssp_i} \Delta \phi_i
+	- \Delta \ssp_{i+1}
+	= \ssp_{i+1} - \LieEl (\phi_i) \flow{T_i}{\ssp_i}
+\eeq
+In order to get rid off the degeneracies along the time and group orbit directions,
+we apply two constraints:
+\bea
+   \vel (x_i) \cdot \Delta x_i &=& 0 
+\continue
+   \sliceTan{} \cdot \Delta x_i &=& 0
+\label{RPOmultishootConstraints}
+\eea
+Finally write everything as:
+\beq \label{eq:multishootmatrix}
+	{\bf A} \Delta = E,
+\eeq
+where,
+\beq \label{eq:AforNewton}
+	{\bf A} = \\ 
+	\begin{pmatrix}
+	  \LieEl (\phi_1) \jMps^{T_1}(\ssp_1) & 
+	  \LieEl (\phi_1) \vel (\flow{T_1}{\ssp_1}) & 
+	  \Lg \flow{T_1}{\ssp_1}  & 
+	  - \matId & 0 & 0 & 0 & \cdots & 0 \\
+	  \vel (x_1) & 0 & 0 & 0 & 0 & 0 & 0 & \cdots & 0 \\
+	  \sliceTan{} & 0 & 0 & 0 & 0 & 0 & 0 & \cdots & 0 \\
+	  0 & 0 & 0 & 
+	  \LieEl (\phi_2) \jMps^{T_2}(\ssp_2) & 
+	  \LieEl (\phi_2) \vel (\flow{T_2}{\ssp_2}) & 
+	  \Lg \flow{T_2}{\ssp_2}   & 
+	  - \matId & \cdots & 0 \\
+	  0 & 0 & 0 & \vel (x_2) & 0 & 0 & 0 & \cdots & 0 \\
+	  0 & 0 & 0 & \sliceTan{} & 0 & 0 & 0 & \cdots & 0 \\
+	  \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+	  - \matId & 0 & \cdots & 0 & 0 & 0 & 
+	  \LieEl (\phi_n) \jMps^{T_n}(\ssp_n) & 
+	  \LieEl (\phi_n) \vel (\flow{T_n}{\ssp_n}) & 
+	   \Lg \flow{T_1}{\ssp_1}   \\
+	  0 & 0 & \cdots & 0 & 0 & 0 & \vel (x_n) & 0 & 0 \\
+	  0 & 0 & \cdots & 0 & 0 & 0 & \sliceTan{} & 0 & 0
+	 \end{pmatrix}	
+\eeq
+\beq \label{eq:DeltaandE}
+	\Delta = 
+	 \begin{pmatrix}
+	  \Delta \ssp_1 \\
+	  \Delta T_1 	\\
+	  \Delta \phi_1 \\
+	  \Delta \ssp_2 \\
+	  \Delta T_2 	\\
+	  \Delta \phi_2 \\
+	  \vdots \\
+	  \Delta \ssp_n \\
+	  \Delta T_n 	\\
+	  \Delta \phi_n \\
+	 \end{pmatrix}  	
+	 \ \mbox{and} \ 
+	 E = 
+	 \begin{pmatrix}
+	  \ssp_{2} - \LieEl (\phi_1) \flow{T_1}{\ssp_1} \\
+	   0 	\\
+	   0 	\\
+	  \ssp_{3} - \LieEl (\phi_2) \flow{T_2}{\ssp_2} \\
+	  0 	\\
+	  0 \\
+	  \vdots \\
+	  \ssp_{1} - \LieEl (\phi_n) \flow{T_n}{\ssp_n} \\
+	  0 	\\
+	  0 	\\
+	 \end{pmatrix}
+\eeq
+We than solve \refeq{eq:multishootmatrix} for $\Delta$ and update our initial
+guess by adding their corresponding $\Delta$ matrix elements and iterate.
+
+I applied this algorithm to the \rpo\ candidates that I found from the return
+map to get the \rpo s precisely, however, orbits, other than \cycle{1} did not
+converge.
+
+I also added an adaptive stepping algorithm which basically reduces the step 
+length if a Newton step increases the error, after adding this, it search
+started to converge a non-zero minimum value. I plotted the element of $E$
+with largest absolute value which, for \cycle{01} looks like \reffig{fig:errorrposearch}.
+
+One thing, that I clearly see by looking at the numbers is that, while the 
+constraint $\sliceTan{} \cdot \Delta x_i$  keeps $(\Delta x_i)_2 = 0$, since,
+$\sliceTan{} = (0,1,0,0)$, maximum error in $E$ appears to be in the second
+element of each $\ssp_{i+1} - \LieEl (\phi_i) \flow{T_i}{\ssp_i}$. This can
+either due to $T_i$ or $\phi_i$ variations, since $(\Delta x_i)$ obeys the 
+constraint and keeps $y_1$ component of the $\ssp_i = 0$.
+
+\begin{figure}%[ht]
+  \begin{center}
+  \includegraphics[width=0.8\textwidth]{errorrposearch}
+  \end{center}
+  \caption{Error vs Newton search steps for \rpo\ \cycle{01} of \twoMode\ system.}
+  \label{fig:errorrposearch}
+\end{figure} 
+
+There must be something I am missing, however, I could not find it yet. Any
+suggestions? Maybe a restriction on $T_i$'s or $\phi_i$'s?
+
+Note: This derivation is based on Equation (13.11) of \HREF{http://chaosbook.org/paper.shtml\#cycles} 
+{Fixed points and how to get them} and while working on it, I realized a
+sign error in (13.11), there should be a $-$ sign before $\vel (x)$ in the
+first row, you can see this by comparing (13.9) and (13.11), in (13.9), after
+Taylor expansion, Jacobian and velocity terms have the same sign, as they 
+should, but the velocity term in the matrix of (13.11) misses its minus sign.
+
 \item[2013-08-10  Predrag to Chaos Gang] It's not over until it is over.
 \end{description}
