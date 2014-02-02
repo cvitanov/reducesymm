@@ -2734,26 +2734,26 @@ the return map.
 
 \item[2014-01-19 Burak to Predrag] I came to the point of applying the multiple
 shooting method to the Rossler system and before coding, I finished reading
-\HREF{http://chaosbook.org/version14/paper.shtml\#cycles}{Chapter 13 - Fixed points, and how to get them} 
+\HREF{http://chaosbook.org/version14/paper.shtml\#cycles}{Chapter 13 - Fixed points, and how to get them}
 and got confused. Last time when we talked at your office, you told me that
 when I set up a Newton search for a relative periodic orbit, I should add the
 symmetry parameters and time to the list of variables that I am looking for
 and run the search in the full \statesp . However, in 13.4, in summary, you
-say that when one looks for a particular orbit with a continuous symmetry, such 
-as a periodic orbit symmetric under time translations, one has a marginal 
+say that when one looks for a particular orbit with a continuous symmetry, such
+as a periodic orbit symmetric under time translations, one has a marginal
 Floquet multiplier, hence  $(1 - J)$ which appears in the Newton set up becomes
 non-invertible. For this reason, one should always applies a constraint, such
 as a Poincar\'e section to the Newton solver to make it convergent. This was
 my initial idea and I looked for the periodic orbits within the slice and the
 Poincare section in the \twoMode\ system, then we decided that I should apply
-multiple shooting method. Did you have any particular reason for looking for the 
-\rpo s in the full \statesp ? 
+multiple shooting method. Did you have any particular reason for looking for the
+\rpo s in the full \statesp ?
 
-\item[2014-01-20 Burak] Here (\reffig{fig:BBrosslerPO}) are two long periodic 
-orbits of Rossler system that I found by multiple shooting method on the Poincare 
-section. I'm not committing the code yet since parts of it is assigned as a 
-homework problem for the ChaosBook course. Tomorrow, I will start adapting 
-the algorithm to \twoMode\ system to find the \rpo s with an acceptable 
+\item[2014-01-20 Burak] Here (\reffig{fig:BBrosslerPO}) are two long periodic
+orbits of Rossler system that I found by multiple shooting method on the Poincare
+section. I'm not committing the code yet since parts of it is assigned as a
+homework problem for the ChaosBook course. Tomorrow, I will start adapting
+the algorithm to \twoMode\ system to find the \rpo s with an acceptable
 precision.
 
 \begin{figure}%[H]
@@ -2772,11 +2772,11 @@ values $\phi_i$ and time of flights $T_i$ that are close to satisfy:
 \eeq
 Then assume that the equality is satisfied for:
 \beq
-	\ssp_{i+1} + \Delta \ssp_{i+1} = \LieEl (\phi_i + \Delta \phi_i) 
+	\ssp_{i+1} + \Delta \ssp_{i+1} = \LieEl (\phi_i + \Delta \phi_i)
 							 \flow{T_i + \Delta T_i}{\ssp_i + \Delta \ssp_i}
 							 \quad  \mbox{cyclic in $i = 1, ..., n$}\ .
 \eeq
-We Taylor expand RHS to get an approximate expression for $\Delta \ssp_i ,\ 
+We Taylor expand RHS to get an approximate expression for $\Delta \ssp_i ,\
 \Delta \phi_i \ \mbox{and} \ \Delta T_i$:
 \beq
 	\ssp_{i+1} + \Delta \ssp_{i+1} \approx \LieEl (\phi_i) \flow{T_i}{\ssp_i}
@@ -2786,8 +2786,8 @@ We Taylor expand RHS to get an approximate expression for $\Delta \ssp_i ,\
 \eeq
 Regrouping terms we get a form that we can turn to a matrix equation:
 \beq
-	 \LieEl (\phi_i) \jMps^{T_i}(\ssp_i) \Delta \ssp_i 
-	+ \LieEl (\phi_i) \vel (\flow{T_i}{\ssp_i}) \Delta T_i 
+	 \LieEl (\phi_i) \jMps^{T_i}(\ssp_i) \Delta \ssp_i
+	+ \LieEl (\phi_i) \vel (\flow{T_i}{\ssp_i}) \Delta T_i
 	+\Lg \flow{T_i}{\ssp_i} \Delta \phi_i
 	- \Delta \ssp_{i+1}
 	= \ssp_{i+1} - \LieEl (\phi_i) \flow{T_i}{\ssp_i}
@@ -2795,7 +2795,7 @@ Regrouping terms we get a form that we can turn to a matrix equation:
 In order to get rid off the degeneracies along the time and group orbit directions,
 we apply two constraints:
 \bea
-   \vel (x_i) \cdot \Delta x_i &=& 0 
+   \vel (x_i) \cdot \Delta x_i &=& 0
 \continue
    \sliceTan{} \cdot \Delta x_i &=& 0
 \label{RPOmultishootConstraints}
@@ -2806,32 +2806,32 @@ Finally write everything as:
 \eeq
 where,
 \beq \label{eq:AforNewton}
-	{\bf A} = \\ 
+	{\bf A} = \\
 	\begin{pmatrix}
-	  \LieEl (\phi_1) \jMps^{T_1}(\ssp_1) & 
-	  \LieEl (\phi_1) \vel (\flow{T_1}{\ssp_1}) & 
-	  \Lg \flow{T_1}{\ssp_1}  & 
+	  \LieEl (\phi_1) \jMps^{T_1}(\ssp_1) &
+	  \LieEl (\phi_1) \vel (\flow{T_1}{\ssp_1}) &
+	  \Lg \flow{T_1}{\ssp_1}  &
 	  - \matId & 0 & 0 & 0 & \cdots & 0 \\
 	  \vel (x_1) & 0 & 0 & 0 & 0 & 0 & 0 & \cdots & 0 \\
 	  \sliceTan{} & 0 & 0 & 0 & 0 & 0 & 0 & \cdots & 0 \\
-	  0 & 0 & 0 & 
-	  \LieEl (\phi_2) \jMps^{T_2}(\ssp_2) & 
-	  \LieEl (\phi_2) \vel (\flow{T_2}{\ssp_2}) & 
-	  \Lg \flow{T_2}{\ssp_2}   & 
+	  0 & 0 & 0 &
+	  \LieEl (\phi_2) \jMps^{T_2}(\ssp_2) &
+	  \LieEl (\phi_2) \vel (\flow{T_2}{\ssp_2}) &
+	  \Lg \flow{T_2}{\ssp_2}   &
 	  - \matId & \cdots & 0 \\
 	  0 & 0 & 0 & \vel (x_2) & 0 & 0 & 0 & \cdots & 0 \\
 	  0 & 0 & 0 & \sliceTan{} & 0 & 0 & 0 & \cdots & 0 \\
 	  \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
-	  - \matId & 0 & \cdots & 0 & 0 & 0 & 
-	  \LieEl (\phi_n) \jMps^{T_n}(\ssp_n) & 
-	  \LieEl (\phi_n) \vel (\flow{T_n}{\ssp_n}) & 
+	  - \matId & 0 & \cdots & 0 & 0 & 0 &
+	  \LieEl (\phi_n) \jMps^{T_n}(\ssp_n) &
+	  \LieEl (\phi_n) \vel (\flow{T_n}{\ssp_n}) &
 	   \Lg \flow{T_1}{\ssp_1}   \\
 	  0 & 0 & \cdots & 0 & 0 & 0 & \vel (x_n) & 0 & 0 \\
 	  0 & 0 & \cdots & 0 & 0 & 0 & \sliceTan{} & 0 & 0
 	 \end{pmatrix}	
 \eeq
 \beq \label{eq:DeltaandE}
-	\Delta = 
+	\Delta =
 	 \begin{pmatrix}
 	  \Delta \ssp_1 \\
 	  \Delta T_1 	\\
@@ -2844,8 +2844,8 @@ where,
 	  \Delta T_n 	\\
 	  \Delta \phi_n \\
 	 \end{pmatrix}  	
-	 \ \mbox{and} \ 
-	 E = 
+	 \ \mbox{and} \
+	 E =
 	 \begin{pmatrix}
 	  \ssp_{2} - \LieEl (\phi_1) \flow{T_1}{\ssp_1} \\
 	   0 	\\
@@ -2866,35 +2866,102 @@ I applied this algorithm to the \rpo\ candidates that I found from the return
 map to get the \rpo s precisely, however, orbits, other than \cycle{1} did not
 converge.
 
-I also added an adaptive stepping algorithm which basically reduces the step 
+I also added an adaptive stepping algorithm which basically reduces the step
 length if a Newton step increases the error, after adding this, it search
 started to converge a non-zero minimum value. I plotted the element of $E$
 with largest absolute value which, for \cycle{01} looks like \reffig{fig:errorrposearch}.
 
-One thing, that I clearly see by looking at the numbers is that, while the 
+One thing, that I clearly see by looking at the numbers is that, while the
 constraint $\sliceTan{} \cdot \Delta x_i$  keeps $(\Delta x_i)_2 = 0$, since,
 $\sliceTan{} = (0,1,0,0)$, maximum error in $E$ appears to be in the second
 element of each $\ssp_{i+1} - \LieEl (\phi_i) \flow{T_i}{\ssp_i}$. This can
-either due to $T_i$ or $\phi_i$ variations, since $(\Delta x_i)$ obeys the 
+either due to $T_i$ or $\phi_i$ variations, since $(\Delta x_i)$ obeys the
 constraint and keeps $y_1$ component of the $\ssp_i = 0$.
 
 \begin{figure}%[ht]
   \begin{center}
-  \includegraphics[width=0.8\textwidth]{errorrposearch}
+  % \includegraphics[width=0.8\textwidth]{errorrposearch}
   \end{center}
   \caption{Error vs Newton search steps for \rpo\ \cycle{01} of \twoMode\ system.}
   \label{fig:errorrposearch}
-\end{figure} 
+\end{figure}
 
 There must be something I am missing, however, I could not find it yet. Any
 suggestions? Maybe a restriction on $T_i$'s or $\phi_i$'s?
 
-Note: This derivation is based on Equation (13.11) of \HREF{http://chaosbook.org/paper.shtml\#cycles} 
+Note: This derivation is based on Equation (13.11) of \HREF{http://chaosbook.org/paper.shtml\#cycles}
 {Fixed points and how to get them} and while working on it, I realized a
 sign error in (13.11), there should be a $-$ sign before $\vel (x)$ in the
 first row, you can see this by comparing (13.9) and (13.11), in (13.9), after
-Taylor expansion, Jacobian and velocity terms have the same sign, as they 
+Taylor expansion, Jacobian and velocity terms have the same sign, as they
 should, but the velocity term in the matrix of (13.11) misses its minus sign.
+
+\item[2014-02-02 Predrag] An idea of how to represent the \twoMode\
+\statesp. The splaying of the strange attractor close to the {\sliceBord}
+in \reffig{fig:Set1}\,(d) is an artifact of the Fourier modes
+representation. Think of a straight line, constant velocity trajectory in
+Cartesian $(x_1(\zeit),x_2(\zeit))$ coordinates passing close to the
+origin (our {\sliceBord}). In polar coordinates $ {z}_1 = |u|^{1/2}
+e^{\ii\theta_1}$, $ {z}_2 = |v|^{1/2} e^{\ii\theta_2}$, $|u|(\zeit) \to
+0_+$, and $\dot{\theta}(\zeit)$ whips through,
+$\dot{\theta}(\zeit)$ making a fast jump by
+$\pm\pi$, see \cLf\ \reffig{fig:singpass}. So we should really chose more
+sensible coordinates which rescale $\dot{\gSpace}$ in such a way that
+when the trajectory passes by the singularity as a straight line, the new
+velocity is nearly constant vector as the trajectory passes the
+singularity.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\SFIG{singpass1}
+{}{The blue trajectory passes through the {\sliceBord} of \cLf. Notice
+how there is the gap in the trajectory, this corresponds to the jump
+cause by passing through the singularity. The red trajectory has initial
+point differing from the blue's by $(0,0,0.1,0,0)$, so it does not pass
+through a singularity. The green trajectory is the group orbit of
+$x_{sing}$ between the two $\gSpace$ that rotate $v(x_{sing})$ in the
+slice. As expected, the red trajectory begins near the blue trajectory,
+closely follows the green trajectory after the singularity point, reaches
+the other side of the blue trajectory and begins to follow it again. Read
+Sect.~2.6~{\em Slice singularities} in \texttt{siminos/froehlich/blog.pdf}.
+}{fig:singpass}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item[2014-02-02 Predrag] Another idea of how to visualize the \twoMode\
+states. We are toying with the \twoMode\ system as a model for truncations
+of $1D$ PDEs such as \KS. For those the natural visualization is in the configuration
+space, \ie, as a periodic function
+$u(x,t)=u(x+2\pi,t)$ on the  domain $x \in [0,2\pi]$.
+You can think of $({z}_1,{z}_2)$ as the coefficients in the $k=\{1,2\}$ truncation
+of the Fourier expansion
+\beq
+  u(x,t)=\sum_{k=-\infty}^{+\infty} z_k (t) e^{ i k x /2\pi }
+\,.
+\ee{eq:BBtwoModeExp}
+How about doing the inverse Fourier transform, and plotting color coded
+amplitude $u(x,\zeit)$ in the $[x,\zeit]$ plane, as we do (for example)
+in \refref{SCD07}
+(\HREF{http://www.cns.gatech.edu/~predrag/papers/preprints.html\#SCD07}{click
+here}). Chaotic dynamics is competition between 1-wiggle and 2-wiggle
+solutions, that might be more obvious in the configuration space. \Reqva\
+and \rpo s will drift with different {\phaseVels}. One can perhaps study
+energy, dissipation rate, \etc? In other words, motivate the model by
+the physical problems we are really interested in.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \item[2013-08-10  Predrag to Chaos Gang] It's not over until it is over.
 \end{description}
