@@ -71,12 +71,12 @@ for i in range(1,int(np.max(group))+1):
 	ax.set_xlabel('$x$', fontsize=18)
 	ax.set_ylabel('$y$', fontsize=18)
 	ax.set_zlabel('$z$', fontsize=18)
-	#ax.view_init(30,-110)
+	ax.view_init(25,35)
 	ax.grid(b='off')
 	
 	
 	fname = 'image/' + itinerary[0] + '.png'
 	savefig(fname, bbox_inches='tight', dpi=100)	
 
-	plt.show()	
-	raw_input("Press Enter to continue...")
+	#plt.show()	
+	#raw_input("Press Enter to continue...")

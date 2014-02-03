@@ -2809,7 +2809,7 @@ is obtained by solving
     $\Lg \flow{\zeit_i}{\ssp_i}
         \to
     \Lg \LieEl (\gSpace_i)\flow{\zeit_i}{\ssp_i}$.
-    If I am right, the rest of Burak's draft is wrong.}
+    If I am right, the rest of Burak's draft is wrong. \BBedit{2014-02-03 I agree. THANK YOU.}}
     \PC{2014-02-02 to Burak: please write up the detailed
     derivation, with what $O(\Delta^2)$'s are dropped
     as a problem / solution set for \texttt{cycles.tex}.}
@@ -2860,9 +2860,12 @@ point along the orbit,
 \,,\qquad
    \groupTan_{i} \cdot \Delta x_i = 0
 \ee{RPOmultishootConstraints}
-Imposing these local conditions is natural; in the limit of
-infinitely many infinitesimal time steps, the \rpo\ that they yield
-is the so-called `comoving \rpo'. A globally imposed fixed
+Imposing these local conditions is natural \BBedit{(2014-02-03 I think choosing
+the global slice for every point is a better idea for our approach, since 
+our guesses are from that particular slice and if we force them to move 
+in their local slice, our initial guesses may be not as good as they were before.)}; 
+in the limit of infinitely many infinitesimal time steps, the \rpo\ that 
+they yield is the so-called `comoving \rpo'. A globally imposed fixed
 Poincar\'e section and \slice\ should be equally good, and once
 the \rpo is computed,
 its shift $\gSpace_p$ in the `lab frame' can be computed by imposing
@@ -2877,25 +2880,25 @@ where,
 \beq \label{eq:AforNewton}
 	{\bf A} = \\
 	\begin{pmatrix}
-	  \LieEl (\gSpace_1) \jMps^{\zeit_1}(\ssp_1) &
-	  \LieEl (\gSpace_1) \vel (\flow{\zeit_1}{\ssp_1}) &
-	  \Lg \flow{\zeit_1}{\ssp_1}  &
+	  \LieEl_{2} \jMps_{2} &
+	  \LieEl_{2} \vel_2 &
+	  \Lg \LieEl_{2} \flow{\zeit_1}{\ssp_1}  &
 	  - \matId & 0 & 0 & 0 & \cdots & 0 \\
-	  \vel (x_1) & 0 & 0 & 0 & 0 & 0 & 0 & \cdots & 0 \\
+	  \vel_1 & 0 & 0 & 0 & 0 & 0 & 0 & \cdots & 0 \\
 	  \sliceTan{} & 0 & 0 & 0 & 0 & 0 & 0 & \cdots & 0 \\
 	  0 & 0 & 0 &
-	  \LieEl (\gSpace_2) \jMps^{\zeit_2}(\ssp_2) &
-	  \LieEl (\gSpace_2) \vel (\flow{\zeit_2}{\ssp_2}) &
-	  \Lg \flow{\zeit_2}{\ssp_2}   &
+	  \LieEl_{3} \jMps_{3} &
+	  \LieEl_{3} \vel_3 &
+	  \Lg \LieEl_{3} \flow{\zeit_2}{\ssp_2}   &
 	  - \matId & \cdots & 0 \\
-	  0 & 0 & 0 & \vel (x_2) & 0 & 0 & 0 & \cdots & 0 \\
+	  0 & 0 & 0 & \vel_2 & 0 & 0 & 0 & \cdots & 0 \\
 	  0 & 0 & 0 & \sliceTan{} & 0 & 0 & 0 & \cdots & 0 \\
 	  \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
 	  - \matId & 0 & \cdots & 0 & 0 & 0 &
-	  \LieEl (\gSpace_n) \jMps^{\zeit_n}(\ssp_n) &
-	  \LieEl (\gSpace_n) \vel (\flow{\zeit_n}{\ssp_n}) &
-	   \Lg \flow{\zeit_1}{\ssp_1}   \\
-	  0 & 0 & \cdots & 0 & 0 & 0 & \vel (x_n) & 0 & 0 \\
+	  \LieEl_{1} \jMps_{1} &
+	  \LieEl_{1} \vel_1 &
+	   \Lg \LieEl_{1} \flow{\zeit_1}{\ssp_1}   \\
+	  0 & 0 & \cdots & 0 & 0 & 0 & \vel_n & 0 & 0 \\
 	  0 & 0 & \cdots & 0 & 0 & 0 & \sliceTan{} & 0 & 0
 	 \end{pmatrix}	
 \eeq
@@ -2916,14 +2919,14 @@ where,
 	 \ \mbox{and} \
 	 E =
 	 \begin{pmatrix}
-	  \ssp_{2} - \LieEl (\gSpace_1) \flow{\zeit_1}{\ssp_1} \\
+	  \ssp_{2} - \LieEl_2 \flow{\zeit_1}{\ssp_1} \\
 	   0 	\\
 	   0 	\\
-	  \ssp_{3} - \LieEl (\gSpace_2) \flow{\zeit_2}{\ssp_2} \\
+	  \ssp_{3} - \LieEl_3 \flow{\zeit_2}{\ssp_2} \\
 	  0 	\\
 	  0 \\
 	  \vdots \\
-	  \ssp_{1} - \LieEl (\gSpace_n) \flow{\zeit_n}{\ssp_n} \\
+	  \ssp_{1} - \LieEl_1 \flow{\zeit_n}{\ssp_n} \\
 	  0 	\\
 	  0 	\\
 	 \end{pmatrix}
@@ -3043,9 +3046,25 @@ of ChaosBook. So in applying this to \KS\ you should try different
 Sobolev norms. Would be grand if there were a norm-free iteration
 method...
 
+\item[2014-02-03 Burak] After adding the missing term, mutlishoot \rpo\ 
+searches started to become successful. Here are 
+four \rpo s in the \slice\ hyperplane: \refFig{fig:2modeRPOs}.
 
-
-
+\begin{figure}%[H]
+\centering
+ (a) \includegraphics[width=0.3\textwidth]{BBPK01}
+ (b) \includegraphics[width=0.3\textwidth]{BBPK01101}
+ \\
+ (c) \includegraphics[width=0.3\textwidth]{BBPK011101}
+ (d) \includegraphics[width=0.3\textwidth]{BBPK011111}
+\caption{
+(a) \Rpo\ \cycle{01} plotted in the \slice\ hyperplane.
+(b) \Rpo\ \cycle{01101} plotted in the \slice\ hyperplane.
+(c) \Rpo\ \cycle{011101} plotted in the \slice\ hyperplane.
+(d) \Rpo\ \cycle{011111} plotted in the \slice\ hyperplane.
+}
+\label{fig:2modeRPOs}
+\end{figure}
 
 
 

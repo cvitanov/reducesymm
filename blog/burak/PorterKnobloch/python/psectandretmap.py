@@ -42,7 +42,7 @@ computesymbdyn = True
 plotpsandretmap = True
 solveFPO = False
 
-m = 2
+m = 6
 
 pars = np.loadtxt('data/parameters.dat')
 
@@ -156,11 +156,11 @@ snplus1sorted = snplus1[snsortedindices]
 print 'Interpolating to the return map'
 imax = np.argmax(snplus1sorted)
 tck1 = interpolate.splrep(snsorted[0:imax+1], snplus1sorted[0:imax+1])
-xint1 = np.linspace(snsorted[0], snsorted[imax], 1000)
+xint1 = np.linspace(snsorted[0], snsorted[imax], 50000)
 yint1 = interpolate.splev(xint1, tck1)
 
 tck2 = interpolate.splrep(snsorted[imax:len(snsorted)], snplus1sorted[imax:len(snsorted)])
-xint2 = np.linspace(snsorted[imax], snsorted[len(snsorted)-1], 1000)
+xint2 = np.linspace(snsorted[imax], snsorted[len(snsorted)-1], 50000)
 yint2 = interpolate.splev(xint2, tck2)
 
 snint = np.append(xint1, xint2)
@@ -198,7 +198,7 @@ for i in range(m):
 	#print "retmap %i" %(i+1)
 	
 	fpoevo=0
-	for s0 in np.arange(smin, smax, (smax-smin)/1000):
+	for s0 in np.arange(smin, smax, (smax-smin)/50000):
 		fpoev = fpo(s0)
 		
 		if fpoev * fpoevo < 0: #If there is a zero-crossing, look for the root:	
@@ -208,7 +208,7 @@ for i in range(m):
 			newcandidate = 1
 			for j in range(np.size(scandidates,0)):
 				#Discard if found candidate is previously found:
-				if np.abs(scandidates[j,1] - sc)<1e-12: 
+				if np.abs(scandidates[j,1] - sc)<1e-9: 
 					newcandidate=0
 				
 			if newcandidate:

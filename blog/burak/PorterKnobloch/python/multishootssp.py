@@ -98,7 +98,7 @@ def Jacobian(x, Ti):
 
 	return J		
 
-tol = 1e-7
+tol = 1e-9
 earray = np.array([], float)
 xrpo = np.zeros(np.shape(xrpo0))
 tofrpo = np.zeros(np.shape(tof0))
@@ -106,7 +106,7 @@ phirpo = np.zeros(np.shape(phirpo0))
 
 Adaptive = True
 iAdaptiveMax = 10			
-factor = 10
+factor = 2
 			
 for i in range(1, int(np.max(group)+1)):
 
@@ -158,7 +158,7 @@ for i in range(1, int(np.max(group)+1)):
 	errorr = np.zeros(np.shape(error))
 	
 	#Define maximum number of iterations:
-	itermax = 300
+	itermax = 200
 	#Apply ChaosBook p294 (13.11) 
 	#with constraint nhat . Dx = 0
 	iteration=0
@@ -189,13 +189,14 @@ for i in range(1, int(np.max(group)+1)):
 			minusgvx = -np.dot(twomode.LieElement(phii[j]), vx)
 			minusgvx = minusgvx.reshape(-1,1)
 			
-			#minusTfTx term:
-			minusTfTx = -np.dot(T, xTj)
-			minusTfTx = minusTfTx.reshape(-1,1)
+			#minusTgfTx term:
+			minusTgfTx = np.dot(twomode.LieElement(phii[j]), xTj)
+			minusTgfTx = -np.dot(T, minusTgfTx)
+			minusTgfTx = minusTgfTx.reshape(-1,1)
 			
 			
 			Aj = np.concatenate((-np.dot(twomode.LieElement(phii[j]), J), minusgvx), axis=1)
-			Aj = np.concatenate((Aj, minusTfTx), axis=1)
+			Aj = np.concatenate((Aj, minusTgfTx), axis=1)
 			
 			#nhat0 = np.append(nhat.reshape(-1,1), np.array([[0], [0]], float))
 			
@@ -275,7 +276,7 @@ for i in range(1, int(np.max(group)+1)):
 				
 				else:					
 					
-					alpha = float(alpha) / factor
+					alpha = float(alpha) / float(factor)
 					
 				#raw_input("Press Enter to continue...")	
 
@@ -326,10 +327,10 @@ for i in range(1, int(np.max(group)+1)):
 	plot(np.arange(iteration), earray)
 	xlabel('Iteration')
 	ylabel('Error')
-	savefig('image/errorrposearch.png', bbox_inches='tight', dpi=150)
-	show()
+	savefig('image/errorrposearch'+str(i)+'.png', bbox_inches='tight', dpi=150)
+	#show()
 	
-	raw_input("Press Enter to continue...")
+	#raw_input("Press Enter to continue...")
 
 np.savetxt('data/tofrpo.dat',tofrpo)
 np.savetxt('data/xrpo.dat', xrpo)
