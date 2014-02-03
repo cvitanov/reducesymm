@@ -105,7 +105,8 @@ tofrpo = np.zeros(np.shape(tof0))
 phirpo = np.zeros(np.shape(phirpo0))
 
 Adaptive = True
-iAdaptiveMax = 30			
+iAdaptiveMax = 10			
+factor = 10
 			
 for i in range(1, int(np.max(group)+1)):
 
@@ -136,7 +137,7 @@ for i in range(1, int(np.max(group)+1)):
 	phii = phii.reshape(np.size(phii))%(2*np.pi)
 	print "phii = ", phii 
 	
-	raw_input("Press Enter to continue...")
+	#raw_input("Press Enter to continue...")
 	
 	#How many points:
 	npts = np.size(gindices)
@@ -274,7 +275,7 @@ for i in range(1, int(np.max(group)+1)):
 				
 				else:					
 					
-					alpha = float(alpha) / float(2)
+					alpha = float(alpha) / factor
 					
 				#raw_input("Press Enter to continue...")	
 
