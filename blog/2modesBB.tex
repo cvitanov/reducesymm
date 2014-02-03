@@ -2700,7 +2700,8 @@ short on time. I am switching to the Dynamics Days poster right now.
   \includegraphics[width=0.8\textwidth]{BBrpo}
   \end{center}
   \caption{
-	\Rpo s \cycle{1} and \cycle{01} of the \twoMode\ system.
+	\Rpo s \cycle{1} and \cycle{01} for  the \twoMode\ system.
+    See also \reffig{fig:2modeRPOs}.
     }
   \label{fig:BBrpo}
 \end{figure}
@@ -2723,7 +2724,7 @@ cycle points. Current accuracy is sub par.
 We also need a short list of periods, phases, Floquet multipliers
 and Floquet exponents for these cycles. I'll try to recycle some
 old table, but - curiously enough - neither Siminos nor Davidchack nor
-Froelich seem to have creatd such a table...
+Froelich seem to have created such a table...
 
 
 There will be pruning, as in
@@ -2765,8 +2766,8 @@ precision.
 \end{figure}
 
 \renewcommand{\zeit}{\ensuremath{\tau}}  %time variable
-\item[2014-01-31 Burak]                                     \toCB
-\paragraph{Multiple shooting method for search for the \rpo s:}
+\item[2014-01-31 Burak, 2014-02-03 Predrag]            \toCB
+\\{\bf Multiple shooting method for search for the \rpo s:}
 Let us assume that we have a set of good guesses
 for a set of \statesp\ points,
 flight times and
@@ -2804,12 +2805,13 @@ the improved Newton guess
 $
 (\ssp_i^{(m+1)}\,,\,\zeit_i^{(m+1)}\,,\,\gSpace_i^{(m+1)} )
 $
-is obtained by solving
-    \PC{2014-02-02 note that I have changed your \refeq{PCnetwonStep} by
+is obtained by minimizing the effect of perturbations along
+the spatial, time and phase directions,
+    \PC{2014-02-02 I have changed Burak's \refeq{PCnetwonStep} by
     $\Lg \flow{\zeit_i}{\ssp_i}
         \to
     \Lg \LieEl (\gSpace_i)\flow{\zeit_i}{\ssp_i}$.
-    If I am right, the rest of Burak's draft is wrong. \BBedit{2014-02-03 I agree. THANK YOU.}}
+    The rest of the formulas need to be changed accordingly.}
     \PC{2014-02-02 to Burak: please write up the detailed
     derivation, with what $O(\Delta^2)$'s are dropped
     as a problem / solution set for \texttt{cycles.tex}.}
@@ -2831,7 +2833,8 @@ $\vel (\ssp_{i}) = \vel_i$,
 $\jMps^{\zeit_i}(\ssp_i) = \jMps_{i+1}$,
 $\groupTan(\ssp_{i}) = \Lg \ssp_{i} = \groupTan_i$,
 \etc.
-Under Newton iteration, the improved values should converge to
+For sufficiently good initial guesses,
+the improved values converge under Newton iterations to
 the exact values
 $(\Delta\ssp_i\,,\,\Delta\zeit_i\,,\,\Delta\gSpace_i)$
 =$(\Delta\ssp_i^{(\infty)}\,,\,\Delta\zeit_i^{(\infty)}\,,\,\Delta\gSpace_i^{(\infty)})$
@@ -2850,29 +2853,53 @@ at a super-exponential rate.
 %	- \Delta \ssp_{i+1}
 %	= \ssp_{i+1} - \LieEl (\gSpace_i) \flow{\zeit_i}{\ssp_i}
 %\eeq
-In order to deal with the marginal multipliers
-along the time and group orbit directions,
-we apply two constraints, a local Poincar\'e section orthogonal to
-the flow, and a local slice orthogonal to the group orbit at each
-point along the orbit,
+In order to deal with the marginal multipliers along the time and group
+orbit directions, one needs to apply a pair of constraints, which
+eliminate variations along the marginal directions on the \rpo s\ $2D$
+torus (see \reffig{fig:BBO2RpoSspComovSlice}). As our guesses
+$\{\ssp_i^{(m)}\}$ are
+computed in the global slice \reffig{fig:BBpsecthd} and Poincar\'e
+section \reffig{fig:psectandretmap}\,(a),
+%Parameters: \refeq{eq:parsO2a1only} with $a_1 = 0.45$.
+and read off the (nearly)
+unimodal return map \reffig{fig:psectandretmap}\,(b), one can
+impose the corresponding global slice and section constraints
+\refeq{eq:firstmodetemplate} and \refeq{eq:nhat0GS-1},
+\beq
+[write the global constraints here]
+\,,
+\ee{RPOConstrsGlobal}
+for each return map cycle point $\ssp_i$ in \reffig{fig:psectandretmap}\,(b),
+compute the first return time and phase shift
+$(\ssp_i^{(m)}\,,\,\zeit_i^{(m)}\,,\,\gSpace_i^{(m)} )$,
+and then restart with $\ssp_{i+1}$ in \reffig{fig:psectandretmap}\,(b).
+
+However, imposition of the global slice condition induces high
+velocities along the phase reconstruction coordinate $\dot{\gSpace}(\zeit)$
+close to the {\chartBord}. These high $\dot{\gSpace}(\zeit)$
+are artifacts of the symmetry reduction methods, they are not present in
+the full \statesp\ flow.
+For that reason local transversality constraints -
+a local Poincar\'e section orthogonal to the flow, and a local slice
+orthogonal to the group orbit at each point along the orbit,
 \beq
    \vel_i \cdot \Delta x_i = 0
 \,,\qquad
    \groupTan_{i} \cdot \Delta x_i = 0
-\ee{RPOmultishootConstraints}
-Imposing these local conditions is natural \BBedit{(2014-02-03 I think choosing
-the global slice for every point is a better idea for our approach, since 
-our guesses are from that particular slice and if we force them to move 
-in their local slice, our initial guesses may be not as good as they were before.)}; 
-in the limit of infinitely many infinitesimal time steps, the \rpo\ that 
-they yield is the so-called `comoving \rpo'. A globally imposed fixed
-Poincar\'e section and \slice\ should be equally good, and once
-the \rpo is computed,
-its shift $\gSpace_p$ in the `lab frame' can be computed by imposing
-a fixed (not moving in time) slice.
+\,,
+\ee{RPOConstrsLocal}
+are natural and numerically preferable; in the limit of infinitely many
+infinitesimal time steps, the solutions that they yield are the \rpo s in
+the {\comovframe} transformed equations \refeq{transvFlow}, see
+\reffig{fig:BBO2RpoSspComovSlice}\,(b), with the {\comovframe}
+$\gSpace_{p}^{cm}$. This $\gSpace_{p}^{cm}$ might be the so much bandied
+around `geometrical phase.'. As the {\mconn} is not a symmetry-reduction
+method, the trajectory explores ergodically the same invariant torus, but
+with a different shift per period. Once the \rpo\ is computed, its shift
+$\gSpace_p$ in the `lab frame' can be computed by imposing the fixed
+slice condition \refeq{RPOConstrsGlobal} on any cycle point.
 
-.
-Finally write everything as:
+We can rewrite everything as one matrix equation:
 \beq \label{eq:multishootmatrix}
 	{\bf A} \Delta = E,
 \eeq
@@ -3030,8 +3057,7 @@ in any case have to include the calculation for a \reqv,
 possibly in the Lagrange multiplier formulation, if that is easier to
 understand...
 
-I stopped, however, until Burak and I agree on my correction to his
-initial formula.
+I stopped, however, until Burak edits the formulas.
 
 \item[2014-02-03 Predrag] You
 \HREF{http://www.streamsound.dk/book1/chaos/chaos.html\#290/z} {always
@@ -3040,33 +3066,47 @@ verify the you are getting the quadratic super-exponential convergence
 expected of Newton. What happened to odd iterations?
 
 \item[2014-02-03 Predrag] What bugs me about Newton is that one must pick
-a particular norm in \refeq{RPOmultishootConstraints}; that is very
+a particular norm in \refeq{RPOConstrsLocal}; that is very
 explicit in the Lagrangian {\costFct} formulation of the boyscout version
 of ChaosBook. So in applying this to \KS\ you should try different
 Sobolev norms. Would be grand if there were a norm-free iteration
 method...
 
-\item[2014-02-03 Burak] After adding the missing term, mutlishoot \rpo\ 
-searches started to become successful. Here are 
+\item[2014-02-03 Burak] I think choosing
+the global slice for every point is a better idea for our approach, since
+our guesses are from that particular slice and if we force them to move
+in their local slice, our initial guesses may be not as good as they were before.
+\\
+{\bf [2014-02-03 Predrag]} Do not worry, the
+errors will drop like a ton of rocks,
+with no need to use short time steps close to close to the {\chartBord}.
+
+\item[2014-02-03 Burak]
+% After adding the missing term, mutlishoot \rpo\
+% searches started to become successful.
+Here are
 four \rpo s in the \slice\ hyperplane: \refFig{fig:2modeRPOs}.
 
 \begin{figure}%[H]
 \centering
- (a) \includegraphics[width=0.3\textwidth]{BBPK01}
- (b) \includegraphics[width=0.3\textwidth]{BBPK01101}
+ ~~~~~~\cycle{01} \includegraphics[width=0.3\textwidth]{BBPK01}
+ ~~\cycle{01101} \includegraphics[width=0.3\textwidth]{BBPK01101}
  \\
- (c) \includegraphics[width=0.3\textwidth]{BBPK011101}
- (d) \includegraphics[width=0.3\textwidth]{BBPK011111}
+ \cycle{011101} \includegraphics[width=0.3\textwidth]{BBPK011101}
+ \cycle{011111} \includegraphics[width=0.3\textwidth]{BBPK011111}
 \caption{
-(a) \Rpo\ \cycle{01} plotted in the \slice\ hyperplane.
-(b) \Rpo\ \cycle{01101} plotted in the \slice\ hyperplane.
-(c) \Rpo\ \cycle{011101} plotted in the \slice\ hyperplane.
-(d) \Rpo\ \cycle{011111} plotted in the \slice\ hyperplane.
+Several \rpo s of \twoMode\ system  plotted in the \slice\ hyperplane.
+Cycle \cycle{011111} exhibits accumulation toward \cycle{1} for
+long sequences of consecutive 1's.
+See also \reffig{fig:BBrpo1-01}.
 }
 \label{fig:2modeRPOs}
 \end{figure}
 
-
+\item[2014-02-03 Predrag]
+You have to explain and plot the critical point (top of the knifedge)
+in \reffig{fig:psectandretmap}\,(b). It is worked out for the Lorenz in
+ChaosBook.
 
 
 
