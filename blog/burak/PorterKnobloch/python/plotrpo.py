@@ -150,7 +150,7 @@ for i in range(1,int(np.max(group))+1):
 	#ax.set_yticklabels(["%.2f" % ytick for ytick in ttickt])
 	
 	fname = 'image/' + itinerary[0] + 'conf.png'
-	savefig(fname, bbox_inches='tight', dpi=200)
+	savefig(fname, bbox_inches='tight', dpi=150)
 
 	#plt.show()	
 	#raw_input("Press Enter to continue...")
