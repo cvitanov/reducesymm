@@ -48,7 +48,7 @@ def vfullssp(x, t):
 	    
 	    nonlinearterm += am*akMinm
 	 
-	adot[k] = (qk**2-qk**4)-a[k] - 1j*(qk/2)*nonlinearterm    
+	adot[k] = (qk**2-qk**4)*a[k] - 1j*(qk/2)*nonlinearterm    
     
     vel = np.zeros((N-1)*2, float)
     vel[range(0,(N-1)*2-1, 2)] = np.array(np.real(adot[1:N]) ,float)
@@ -85,6 +85,18 @@ def vscaledtime(x, tau):
 	vhat = x[0]*np.array(vfullssp(x, tau)) + vfullssp(x, tau)[1]*np.dot(T,x)
 	#print vhat 
 	return vhat
+
+def vphasescaledtime(x, tau):
+    
+    vphase=-vfullssp(x, tau)[1]
+    
+    return vphase
+
+def dtdtau(x, tau):
+    
+    dtdtauscaledtime = x[0]
+    
+    return dtdtauscaledtime
 
 def LieElement(N,phi):
     """

@@ -9,6 +9,9 @@ from __future__ import unicode_literals
 from scipy.integrate import odeint, ode
 import KS
 import numpy as np
+import os
+import oct2py
+
 
 #Callable function version:
 def integrate(x0, t, abserror=1.0e-8, relerror=1.0e-6):
@@ -18,7 +21,19 @@ def integrate(x0, t, abserror=1.0e-8, relerror=1.0e-6):
 	ChaosBook Parameters [a=0.2, b=0.2, c=5.7] are assigned if parameters 
 	are not specified otherwise
 	"""
-	xsol = odeint(KS.vfullssp, x0, t, atol = abserror, rtol = relerror)
+	
+	mfilesdir = os.getcwd()
+	oct2py.octave.addpath(mfilesdir)
+	
+	t, xsol = oct2py.octave.intwr5(t, x0)	
+	
+	#xsol = odeint(KS.vfullssp, x0, t, atol = abserror, rtol = relerror)
+	
+	#xsol = diffeq.pc4(KS.vfullssp, x0,t)
+	
+	#solver = odespy.ThetaRule(KS.vfullssp)
+	#solver.set_initial_condition(x0)
+	#xsol, t = solver.solve(t)
 	
 	#r = ode(KS.vfullssp).set_integrator('dopri5')#, method='bdf', with_jacobian=False)
 	#r.set_initial_value(x0, t[0])
@@ -45,34 +60,37 @@ def integrate(x0, t, abserror=1.0e-8, relerror=1.0e-6):
 if __name__ == "__main__":
 			
 	stoptime = 50
-	numsteps = 5000
+	numsteps = 500
 	
 	# Create the time samples for the output of the ODE solver:
 	t = np.linspace(0, stoptime, numsteps+1)
-	print "t"
-	print t
+	#print "t"
+	#print t
 	
 	# Initial conditions
+
+	x0 = [1.081769255879405645e-01, 0.000000000000000000e+00, -1.130645021532460798e-01, 
+	2.735234400271993951e-02, -2.300369007695817619e-02, 2.743365567776075153e-02,
+	4.242109469805525057e-01, -3.221375201839944691e-02, 3.517350195620121411e-01,
+	4.196323928512094570e-01, 7.405822221667555938e-02, -4.911698645198029345e-01,
+	-2.619084037151255262e-01, 8.869647954573157966e-03, 2.667068425090810685e-02,
+	-1.245857190912121742e-01, 1.848625450932936676e-01, -1.886910780372257068e-01,
+	-4.364329592632312099e-02, -8.603322827952401136e-03, -4.893648586116418342e-02,
+	-4.227361593906937137e-02, -5.743046880645331920e-02, 6.141174799787345318e-02, 
+	3.556320072237982056e-03, -2.647610106987533310e-02, -3.295731184608969265e-03, 
+	-1.760410218329051119e-02, -1.449156681256755577e-02, 1.551927466950007474e-02]
 	
-	x0 = [-0.0828769447817613, -0.08756936770734143, -0.5470748035590064, 
-	0.1288931748248967, -0.07498656318075768, -0.04653195651665294, 0.129841924646638,
-	0.3722174233509085, 0.01381517488153687, 0.04217832413769849, 0.05607306259312764,
-	-0.0338005926473539, 0.009389167918579444, -0.001882241079403492, -0.007183362405766229,
-	-0.009032458603270463, -0.0009662950988101977, -0.001712009441519379, 
-	-0.001024726152019991, 0.001137241501704473, -0.0002493338657143959, 
-	0.0001841065340444997, 0.0001605910827478338, 0.0001097200466209565, 
-	3.412070953428844e-05, 3.161997837662267e-05, 1.042066241507e-05, 
-	-1.993950459172108e-05, 4.555770323734273e-06, -5.736367915065645e-06]
-	x0 = np.random.randn(30)
+	#x0 = np.random.randn(30)
 	
 	# Call the ODE solver
-	xsol = integrate(x0,t)
+	#xsol = integrate(x0,t)
+	xsol = integrate(x0,[0, stoptime])
 
 	# Write the solution into the file data/solution.dat
 	# Use numpy.savetxt (practical, faster):
-	tx = np.array([t], float).transpose() #Add time to the first collumn of tx
-	tx = np.append(tx, xsol, axis=1) #Add solution to the following collumns of tx
-	np.savetxt("data/sspsol.dat", tx) #Write tx in data/solution.dat
+	#tx = np.array([t], float).transpose() #Add time to the first collumn of tx
+	#tx = np.append(tx, xsol, axis=1) #Add solution to the following collumns of tx
+	#np.savetxt("data/sspsol.dat", tx) #Write tx in data/solution.dat
 
 	# Plot the solution:
 	#Import plotting modules:

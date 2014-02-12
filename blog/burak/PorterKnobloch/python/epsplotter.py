@@ -54,6 +54,8 @@ ax.set_zticklabels(["$%.1f$" % ztik for ztik in zticks], fontsize=8); # use LaTe
 
 savefig('image/ssp.eps', bbox_inches='tight')
 
+call(["eps2eps", "image/ssp.eps", "image/ssp2.eps"])
+
 fig.clf()
 
 points = range(int(len(x1))-90000, int(len(x1)-60000))
@@ -83,6 +85,8 @@ ax.set_zticks(zticks)
 ax.set_zticklabels(["$%.1f$" % ztik for ztik in zticks], fontsize=8); # use LaTeX formatted labels
 
 savefig('image/sspred.eps', bbox_inches='tight')
+
+call(["eps2eps", "image/sspred.eps", "image/sspred2.eps"])
 
 	
 #plt.tight_layout()

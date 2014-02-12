@@ -14,6 +14,8 @@ ylabel('\hat{y}_1')
 zlabel('\hat{y}_2')
 title('symmetry reduced')
 
+print -dpng movframes.png
+
 xhatrotated = LieElement(pi/4,xhat);
 
 figure(2)
