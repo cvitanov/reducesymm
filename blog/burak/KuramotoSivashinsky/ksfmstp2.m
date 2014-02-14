@@ -23,7 +23,7 @@ function [tt, aa, da] = ksfmstp2(a0, d, h, nstp, np)
     v(2*N:2*N-1:end) = 1;  v(3*N:2*N-1:end) = -1i; end
   
   k = (2.*pi./d).*[0:Nh-1 0 -Nh+1:-1]';   % wave numbers
-  L = k.^2 - k.^4;                        % Fourier multipliers
+  L = k.^2 - k.^4                        % Fourier multipliers
   E = exp(h*L);  E2 = exp(h*L/2);
   M = 16;                                 % no. of points for complex means
   r = exp(1i*pi*((1:M)-.5)/M);            % roots of unity
@@ -41,8 +41,9 @@ function [tt, aa, da] = ksfmstp2(a0, d, h, nstp, np)
       c = E2.*a + Q.*(2*Nb-Nv);  Nc = g.*fft(real(ifft(c)).^2);
       v = E.*v + Nv.*f1 + 2*(Na+Nb).*f2 + Nc.*f3;
       if np > 0 & mod(n,np)==0 & n < nstp, 
-        y1 = [real(v(2:Nh)) imag(v(2:Nh))]'; 
-        aa = [aa, y1(:)];  tt = [tt, t]; end, end
+        y1 = [real(v(2:Nh)) imag(v(2:Nh))]';
+        aa = [aa, y1(:)]  ;
+        tt = [tt, t]; end, end
     if np > 0, y1 = [real(v(2:Nh)) imag(v(2:Nh))]'; end
   else
     E =  repmat(E,1,N-1);   E2 = repmat(E2,1,N-1);  Q = repmat(Q,1,N-1);

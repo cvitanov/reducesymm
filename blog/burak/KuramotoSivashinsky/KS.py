@@ -70,19 +70,24 @@ def generator(Nm1):
 		
 	return T
 
-def vscaledtime(x, tau):
+def vscaledtime(xhatphit, tau):
 	"""
 	Velocity function for the symmetry reduced two mode system where  time 
 	is scaled as 
 	dt = x1 dtau
 	everything is within the 1st mode slice of:
-	xhat = (1,0,0,0)
+	slicep = (1,0,0,0,0,...)
 	"""
 	
-	Nm1 = int(np.size(x)/2+1) - 1 
+	xhat = xhatphit[0:len(xhatphit)-2]
+	Nm1 = int((np.size(xhat))/2+1) - 1 
 	
 	T = generator(Nm1)
-	vhat = x[0]*np.array(vfullssp(x, tau)) + vfullssp(x, tau)[1]*np.dot(T,x)
+	vhat = np.zeros(np.size(xhatphit))
+	vhat[0:len(vhat)-2] = xhat[0]*np.array(vfullssp(xhat, tau)) + vfullssp(xhat, tau)[1]*np.dot(T,xhat)
+	vhat[len(vhat)-2] = -vfullssp(xhat, tau)[1] # Phase velocity
+	vhat[len(vhat)-1] = xhat[0] # dt/dtau
+	
 	#print vhat 
 	return vhat
 
