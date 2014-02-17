@@ -68,9 +68,9 @@ def generator():
     Generator of infinitesimal SO(2) transformations for the two mode system
     """
     T = np.array([[0,1,0,0],
-    			 [-1,0,0,0],
-    			 [0,0,0,2],
-    			 [0,0,-2,0]], 
+    		  [-1,0,0,0],
+    		  [0,0,0,2],
+    		  [0,0,-2,0]], 
     			 float)
 
     return T
@@ -86,6 +86,21 @@ def LieElement(phi):
     			 float)
 
     return g
+
+def vscaledtime(x, tau, p):
+	"""
+	Velocity function for the symmetry reduced two mode system where  time 
+	is scaled as 
+	dt = x1 dtau
+	everything is within the 1st mode slice of:
+	xhat = (1,0,0,0)
+	"""
+	
+	T = generator()
+	vhat = x[0]*np.array(vfullssp(x, tau, p)) + vfullssp(x, tau, p)[1]*np.dot(T,x)
+	#print vhat 
+	return vhat
+	
 
 def ssp2gramschmidt(x):
 	"""

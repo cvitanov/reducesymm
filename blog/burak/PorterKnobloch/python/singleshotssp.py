@@ -1,0 +1,261 @@
+#
+#multishoot.py
+#
+"""
+Multiple shooting solver to find relative periodic orbits
+"""
+
+import numpy as np
+from scipy import interpolate, integrate
+from scipy.misc import derivative
+from scipy.optimize import newton, fsolve, root
+import numdifftools as nd
+
+import twomode
+import sspsolver
+import varsolver
+
+#Read Porter - Knobloch system parameters:
+
+pars = np.loadtxt('data/parameters.dat')
+
+#Load the RPO candidates:
+
+group = np.loadtxt('data/group.dat')
+itineraries = np.loadtxt('data/itineraries.dat', dtype="str")
+position = np.loadtxt('data/position.dat')
+tof0 = np.loadtxt('data/tof0.dat')
+phirpo0 = np.loadtxt('data/phi0.dat')
+xrpo0 = np.loadtxt('data/xrpo0.dat')
+
+#Let's handle the first one:
+#Compute normal vector to the Poincare section:
+sectp = np.array([0.4399655797367152, 0, -0.38626706847930564, 0.0702043939917171], float)
+sectp3D = np.array([sectp[0], sectp[2], sectp[3]],float)
+vaux = np.array([0,0,1], float) #Auxiliary vector to decide the Poincare section direction
+unstabledir = np.array([0.02884567,  0.99957642, -0.00386173], float) #Unstable direction
+nhat3D = np.cross(vaux, unstabledir)
+nhat = np.array([nhat3D[0],0,nhat3D[1],nhat3D[2]], float)
+
+#The slice:
+T = twomode.generator()
+xhatp = np.array([1,0,0,0],float)
+tp = np.dot(T, xhatp)
+
+#Initial guess:
+x0 = xrpo0[0,:]
+T0 = tof0[0]
+phi0 = -phirpo0[0]
+
+xt0 = np.append(x0, tof0[0])
+xtphi0 = np.append(xt0, -phirpo0[0])
+
+def ftau(x, tau):
+	"""
+	Lagrangian description of the reduced flow.
+	"""
+
+	stoptime = tau
+	numpoints = 2
+	
+	t = [stoptime * float(i) / (numpoints - 1) for i in range(numpoints)]
+	
+	xsol = sspsolver.integrate(x, pars, t, abserror=1.0e-12, relerror=1.0e-10)
+	fxtau = xsol[1,:]
+	
+	return fxtau
+
+def Jacobian(x, Ti):
+	"""
+	Jacobian J^Ti(x)
+	"""
+	#n = np.size(x,0)
+	#J = np.zeros((n,n))
+	#for i in range(n):
+		#for j in range(n):
+			#def fxji(xj):
+				
+				#xx = x
+				#xx[j] = xj
+				#fxji = ftau(xx, Ti)[i]
+				#return fxji
+			
+			#J[i,j] = derivative(fxji, x[j])
+	
+	xvar = np.append(x, np.identity(4).reshape(16))
+
+	stoptime = Ti
+	numpoints = 2
+	
+	t = [stoptime * float(i) / (numpoints - 1) for i in range(numpoints)]
+	
+	xvarsol = varsolver.integrate(xvar, pars, t, abserror=1.0e-12, relerror=1.0e-10)
+
+	J = xvarsol[1, 4:20].reshape(4,4)
+
+	return J		
+			
+
+converged = False
+tol = 1e-6
+xi = x0
+Ti = T0
+phii = phi0
+print "phii"
+
+
+#Define maximum number of steps:
+imax = 20
+#Apply ChaosBook p294 (13.11) 
+#with constraint nhat . Dx = 0
+i=0
+tol = 1e-9
+earray = np.array([], float)
+
+for i in range(1, int(np.max(group)+1)):
+	
+	print "Group no: ", i
+	
+	#Get corresponding indices for the group i:
+	gindices = np.argwhere(group == i)
+	#Reshape them in a 1D array:
+	gindices = gindices.reshape(np.size(gindices))
+	#Get coordinates of group i
+	xiall = xrpo0[gindices,:]
+	#Get the positions in group i
+	posi = position[gindices]
+	iposmin = np.argmin(posi)
+	iposmax = np.argmax(posi)
+	
+	xi = xiall[iposmin, :]
+	
+	#Get period:
+	Ti = np.sum(tof0[gindices])
+	
+	#Get group parameter for group i:
+	phii = -np.sum(phirpo0[gindices])
+
+	#How many points:
+	#npts = np.size(gindices)
+	#Num of dim:
+	n = 4
+	#Initiate A matrix:
+	#A = np.zeros(((n+2)*npts, (n+2)*npts))
+	#xT = np.zeros((npts, n))
+	#error = np.zeros((npts, n))
+	#error00 = np.zeros(npts*(n+2))
+	
+	#Define maximum number of iterations:
+	itermax = 50
+	#Apply ChaosBook p294 (13.11) 
+	#with constraint nhat . Dx = 0
+	iteration=0
+	converged = False
+	earray = np.array([], float)
+
+	while not(converged):
+			
+		fx = lambda x: ftau(x, Ti)
+		
+		xTi = ftau(xi, Ti)
+		error = xi - np.dot(twomode.LieElement(phii), xTi)
+		earray = np.append(earray, np.max(np.abs(error)))
+		print "error: "
+		print error
+		
+		error0 = np.append(error, np.array([0, 0]))
+		
+		if max(np.abs(error)) < tol:
+			
+			xrpo = xi
+			Trpo = Ti
+			phirpo = phii
+			print "Converged!"
+			converged = True
+		
+		#Jfx = nd.Jacobian(fx)
+		#J = Jfx(xi)
+		J = Jacobian(xi, Ti)
+		
+	#	print "Jacobian:"
+	#	print J
+		
+		vx = np.array(twomode.vfullssp(xTi,0,pars), float)
+		minusgvx = -np.dot(twomode.LieElement(phii), vx)
+		minusgvx = minusgvx.reshape(-1,1)
+		
+	#	print "minusgvx:"
+	#	print minusgvx
+		
+		minusTfTx = -np.dot(T, xTi)
+		minusTfTx = minusTfTx.reshape(-1,1)
+		
+	#	print "minusTfTx:"
+	#	print minusTfTx
+		
+		A = np.concatenate((np.identity(4)-np.dot(twomode.LieElement(phii), J), minusgvx), axis=1)
+		A = np.concatenate((A, minusTfTx), axis=1)
+		
+		#nhat0 = np.append(nhat.reshape(-1,1), np.array([[0], [0]], float))
+		
+		#print nhat0
+		
+		A = np.concatenate((A, np.append(vx.reshape(-1,1), np.array([[0], [0]], float), axis=0).transpose()), axis=0)
+		A = np.concatenate((A, np.append(tp.reshape(-1,1), np.array([[0], [0]], float), axis=0).transpose()), axis=0)
+		
+		np.savetxt('Amatrix', A)
+		
+		Ainv = np.linalg.inv(A)
+	#	print "Ainv:"
+	#	print Ainv
+		
+	#	print "A.Ainv:"
+	#	print np.dot(A, Ainv)
+		
+		DxTphi = np.dot(Ainv, -error0)
+		
+		#Damped Newton:
+		DxTphi = DxTphi*np.exp(-1+iteration/itermax)
+		print DxTphi
+		
+		print "DxTphi"
+		print DxTphi
+		
+		xi = xi + DxTphi[0:4]
+		Ti = Ti + DxTphi[4]
+		phii = phii + DxTphi[5]
+			
+		iteration += 1
+		
+		if iteration == itermax:
+			
+			print "did not converged in given maximum number of steps"
+			print "exitting..."
+			xrpo = xi
+			Trpo = Ti
+			phirpo = phii
+			break
+			
+		
+	print "x_rpo:"
+	print xrpo
+	print "T_rpo:"
+	print Trpo
+	print "phi_rpo:"
+	print phirpo
+	#earray = earray.reshape(i,4)
+	print "Error"
+	print earray
+	
+	ploterror = True
+	
+	if ploterror:
+		
+		#Plotting modules:
+		from pylab import figure, grid, hold, legend, savefig, plot, xlabel, ylabel, show
+	
+		plot(np.arange(np.size(earray)), earray)
+		show()
+		
+	raw_input("Press Enter to continue...")
+

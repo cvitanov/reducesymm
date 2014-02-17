@@ -23,40 +23,19 @@ if __name__ == "__main__":
 	
 	#Load parameters:
 	p = np.loadtxt('data/parameters.dat')
-
-	#Initial conditions:
-	#x10=-1.32138709067
-	#y10=-1.32138709067
-	#x20=0.26866738527  
-	#y20=-1.61705230412
-	#x10=-0.311102644920502
-	#y10=-0.311102644920502
-	#x20=-0.07020440068369531
-	#y20=-0.3862670595294275
-	x10=0.4399655797367152
-	y10=0
-	x20=-0.38626706847930564
-	y20=0.0702043939917171
 	
-	x10= 4.908996826252001178e-01
-	y10=0
-	x20= 7.958815997234316986e-02
-	y20=2.660604135769798623e-02
-	
+	# Initial conditions:
+	x0 = [0.43997, 0, -0.38627, 0.07020]
 	
 	# ODE solver parameters
 	abserr = 1.0e-8
 	relerr = 1.0e-6
-	stoptime = 25.742775085
-	numpoints = 2574+1
+	stoptime = 1000
+	numpoints = 100000+1
 
 	# Create the time samples for the output of the ODE solver:
 	t = [stoptime * float(i) / (numpoints - 1) for i in range(numpoints)]
 	
-	# Pack up the initial conditions:
-	#x0 = [x10,x20,y10,y20]
-	x0 = [x10,y10,x20,y20]
-
 	# Call the ODE solver
 	xsol = odeint(twomode.vfullssp, x0, t, args=(p,), atol = abserr, rtol = relerr)
 
