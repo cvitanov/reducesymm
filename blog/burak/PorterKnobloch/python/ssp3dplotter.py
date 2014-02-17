@@ -22,18 +22,20 @@ mpl.rcParams['text.latex.unicode']=True
 
 t, x1, y1, x2, y2 = loadtxt('data/sspsolution.dat', unpack=True)
 
-fig = plt.figure(figsize=(4,3), dpi=10)
+fig = plt.figure()
 ax = fig.gca(projection='3d')
 
-points = range(int(len(x1))-30000, int(len(x1)))
+#points = range(int(len(x1))-30000, int(len(x1)))
+points = range(0, 25000)
 
-ax.plot(x1[points], x2[points], y2[points], linewidth=0.3)
+ax.plot(x1[points], x2[points], y2[points], linewidth=0.4, color='#a81800')
 ax.set_xlabel('$x_1$', fontsize=10)
 ax.set_ylabel('$x_2$', fontsize=10)
 ax.set_zlabel('$y_2$', fontsize=10)
 ax.w_xaxis.set_pane_color((1, 1, 1, 1.0))
 ax.w_yaxis.set_pane_color((1, 1, 1, 1.0))
 ax.w_zaxis.set_pane_color((1, 1, 1, 1.0))
+ax.grid(False)
 ax.view_init(30,30)
 
 Nticks = 5

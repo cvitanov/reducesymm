@@ -134,4 +134,4 @@ zlabel('y_2')
 #save('data/sspsolution.dat', 'ta')
 box off
 
-print -dpng ksslice_tscaled.png
+print -dpng ksslice_hscaled.png
