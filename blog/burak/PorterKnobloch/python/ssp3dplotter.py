@@ -52,8 +52,7 @@ zticks = np.linspace(np.min(y2), np.max(y2), Nticks)
 ax.set_zticks(zticks)
 ax.set_zticklabels(["$%.1f$" % ztik for ztik in zticks], fontsize=8); # use LaTeX formatted labels
 
-savefig('image/ssp.eps', bbox_inches='tight')
-#savefig('image/ssp.pdf', bbox_inches='tight', dpi=100)
+savefig('image/ssp.png', bbox_inches='tight')
 
 #call(["pdftops", "-level3", "-eps", "image/ssp.pdf", "image/ssp.eps"])
 

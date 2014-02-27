@@ -15,6 +15,9 @@ from pylab import figure, plot, xlabel, ylabel, grid, hold, legend, title, savef
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 
+mpl.rcParams['text.usetex']=True
+mpl.rcParams['text.latex.unicode']=True
+
 from subprocess import call
 
 #Load parameters:
@@ -54,19 +57,19 @@ ax.set_xlabel('$x_1$', fontsize=14)
 ax.set_ylabel('$y_2$', fontsize=14)
 ax.set_zlabel('$x_2$', fontsize=14)
 
-Nticks = 3
+#Nticks = 3
 
-xticks = np.linspace(-1.5, 1.5, Nticks)
-ax.set_xticks(xticks)
-ax.set_xticklabels(["$%.1f$" % xtik for xtik in xticks], fontsize=8); # use LaTeX formatted labels
+#xticks = np.linspace(-1.5, 1.5, Nticks)
+#ax.set_xticks(xticks)
+#ax.set_xticklabels(["$%.1f$" % xtik for xtik in xticks], fontsize=8); # use LaTeX formatted labels
 
-yticks = np.linspace(-1.5, 1.5, Nticks)
-ax.set_yticks(yticks)
-ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=8); # use LaTeX formatted labels
+#yticks = np.linspace(-1.5, 1.5, Nticks)
+#ax.set_yticks(yticks)
+#ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=8); # use LaTeX formatted labels
 
-zticks = np.linspace(-1.5, 1.5, Nticks)
-ax.set_zticks(zticks)
-ax.set_zticklabels(["$%.1f$" % ztik for ztik in zticks], fontsize=8); # use LaTeX formatted labels
+#zticks = np.linspace(-1.5, 1.5, Nticks)
+#ax.set_zticks(zticks)
+#ax.set_zticklabels(["$%.1f$" % ztik for ztik in zticks], fontsize=8); # use LaTeX formatted labels
 
 savefig('dasbuchfigs/py2moderpo.png', bbox_inches='tight', dpi=75)
 call(['convert', '-trim', "dasbuchfigs/py2moderpo.png", "dasbuchfigs/py2moderpo.png"])

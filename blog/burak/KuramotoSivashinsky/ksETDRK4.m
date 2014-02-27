@@ -6,6 +6,11 @@ x = 32*pi*(1:N)'/N;
 %Initial condition:
 u = cos(x/16).*(1+sin(x/16));
 v = fft(u);
+v = randn(128,1) + 1i*randn(128,1);
+v(1) = 0;
+v(2) = 0;
+v(64) = 0;
+v(end) = 0;
 
 %ETDRK4 scalars:
 h = 1/4;                        % time step
@@ -21,8 +26,8 @@ f2 = h*real(mean(       (2+LR+exp(LR).*(-2+LR))./LR.^3       ,2));
 f3 = h*real(mean(   (-4-3*LR-LR.^2+exp(LR).*(4-LR))./LR.^3   ,2));
 
 %Time-stepping loop:
-uu = u; tt = 0;
-tmax = 150; nmax = round(tmax/h); nplt = floor((tmax/100)/h);
+uu = u; tt = 0; vv = v;
+tmax = 150; nmax = round(tmax/h); nplt = 1; %floor((tmax/100)/h);
 g = -0.5i*k;
 
 %Nonlinear term:
@@ -40,8 +45,14 @@ for n = 1:nmax
     v = E.*v + Nv.*f1 + 2*(Na+Nb).*f2 + Nc.*f3;
     if mod(n,nplt)==0
         u=real(ifft(v));
-        uu = [uu, u]; tt = [tt, t];
+        uu = [uu, u]; tt = [tt, t];; vv = [vv, v];
     end
 end
 
+figure(1)
+plot(real(vv(2,:)))
 
+figure(2)
+surf(tt,x,uu)
+view([-90,90])
+shading('interp')
