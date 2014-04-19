@@ -6,10 +6,10 @@
 % http://publish.aps.org/esubs/revtextips.html
 
 % this style for submission, web version:
-\documentclass[pre,twocolumn,groupedaddress,showpacs,showkeys]{revtex4}
+%\documentclass[pre,twocolumn,groupedaddress,showpacs,showkeys]{revtex4}
 
 % this style while editing:
-%\documentclass[pre,preprint,groupedaddress,showpacs,showkeys]{revtex4}
+\documentclass[pre,preprint,groupedaddress,showpacs,showkeys]{revtex4}
 
 \input ../inputs/setupSveZha
 \input ../inputs/editsDasbuch   %% editing comments, DasBuch style
@@ -52,6 +52,11 @@ foundations of statistical mechanics
 {\bf course project, spring semester 2014}
 
 %\addtolength{\baselineskip}{12pt}
+
+\ifboyscout
+\PMSedit{Edited by PMS\PMS{2014-04-18}{a footnote}.}
+\TZedit{Edited by TZ\TZ{2014-04-18}{a footnote}.}
+\fi
 
 \section{Introduction}
     \PC{the initial text from Cvitanovi\'c, Gaspard and Schreiber\rf{CGS92}}
@@ -175,7 +180,8 @@ be written as
       e^{\beta \cdot (\hat{y} -x) } {\rm Prob}_t (x \rightarrow \hat{y} \\
    &=&{1 \over {|M|}} \int_{x \in M \atop \hat{y} \in \hM} dx d\hat{y}
       e^{\beta \cdot (\hat{y} -x) } \delta(\hat{y} - \hflow (x))
-\;.\eea
+\;.
+\eea
 Here, ${|M|=\int_M dx}$ is the volume of the elementary cell $M$.
 Note that there is a unique lattice translation $\hn$ such that
 $\hat{y}=y - \hn$, with $y \in M$. Now the translational invariance can be
@@ -616,8 +622,287 @@ length & \# cycles & $\zeta$(0,0) & $\lambda$ \\ \hline\hline
 %\end{table}
 %\eject
 
+
 \renewcommand{\thesection}{}
-\section*{Figure captions}
+\section{Flotsam, removed from \refref{LorentzDiff}}
+
+
+\subsection{Reduction from $\hM$ to $\tM$}
+
+
+To deal with the continuous time problem in the fundamental domain, it is
+convenient to view the flows $\tphi$, $\phi$, and $\hphi$
+as suspensions [Bo] by successive disk collision times $\tau$
+% i.e., they are the lengths of the polygonal segments
+% from one disc-collision to the next.
+of maps $\tf$, $f$, and $\hf$,
+mapping respectively $\tO$, $\Omega$, and $\hO$ onto themselves. Here
+the fundamental domain phase space is now
+$$
+\tO  \,=\,   [0,\pi/6] \times [-\pi/2,\pi/2]~,
+$$
+with the first coordinate the impact position, and the second
+coordinate the impact angle on the disc.
+The elementary cell phase space is then
+$
+\Omega \,=\,  \t \Omega \times G~,
+$
+and the full domain phase space is
+$
+\hO \,=\,   \Omega \times T~,
+$
+where $G$ is the discrete symmetry group, and $T$ is the translation group of
+the lattice.
+%The lift from $\tO$ to $\Omega$ is done by adjoining the group action:
+We can write $\xi\in \Omega$ uniquely as
+$$
+\xi \,=\,  g\circ \t\xi \equiv (\t\xi,g)~,
+$$
+with $\t\xi\in\tO$ and $g\in G$.
+% and this representation is unique and leads to an
+%identification $\xi=(\t\xi,g)$.
+The action of $f$ in this representation is
+$$
+f(\t\xi,g) \,=\,  \bigl (\tf(\t\xi), \gamma(\t\xi,g)\bigr )~,
+$$
+with the composition law
+$$
+\gamma(f^2(\t\xi,g)) \,=\,  \gamma\bigl (\tf(\t\xi),\gamma(\t\xi,g)\bigr ) \,=\,
+\gamma(\tf(\t\xi),1)\cdot \gamma(\t\xi,1)\cdot g~.
+$$
+
+The (vectorial) distance which a particle travels up to the next
+disc-collision in $\hM$ when starting
+at $\t\xi\in\tO$ is denoted by $n(\t\xi)$, and it is a vector in $\reals^2$.
+The length of $n(\t\xi)$ is proportional to $\tau(\t\xi)$.
+When the starting point is at $(\t\xi,g)$, then
+$$
+n(\t\xi,g) \,=\,   g\circ n(\t\xi,1) \,=\,  g\circ n(\t\xi)~.
+$$
+
+Assume now that $\t\xi$ is a periodic point for $\tf$,
+of period $r|\t p|$:
+$\tf^r(\t\xi)=\t\xi$.
+The time to run around this periodic orbit is
+(DEFINE periodic points):
+$$
+\ttime= \sum_{j=0}^{|\t p|-1} \tau (\t\xi_{\t p,j})~.
+$$
+If we fix $g\in G$ then
+the distance covered (in $\hM$) when starting at $(\t\xi,g)$ is
+$$
+n(\t\xi,g,r) \,=\, \sum_{j=0}^{r-1} n(\t f^j(\t\xi),\gamma(
+f^j(\t\xi,g))) \,=\,
+                   \sum_{j=0}^{r-1} \gamma( f^j(\t\xi,g))\circ n(\t
+f^j(\t\xi))~.
+$$
+This can be transformed further by using the composition law for $\gamma$:$$
+n(\t\xi,g,r) \,=\,  g \circ n(\t\xi,1,r) \,=\,
+\sum_{j=0}^{r-1}
+\gamma (f^j(\t\xi,1))\cdot
+\gamma (f^{j-1}(\t\xi,1))\cdot\dots\cdot
+\gamma (\t\xi,1)\circ n\bigl (\t f^j(\t\xi),1)~.
+$$
+
+The $\zeta$ function is now defined [Ru] by
+$$
+\zeta(\beta,s) \,=\,
+\exp
+\sum_{r=1}^\infty {1\over r}
+\sum_{\t\xi\in {\rm Fix}\t f^r}
+\sum _{g\in G}
+\exp
+\left ({ \beta \cdot n(\t\xi,g,r) -s r \ttime }\right )~.
+$$
+%\sum_{j=0}^{r-1}\tau(\tf^j(\t\xi))}\right )~. $$
+Define now
+$$N(\t\xi,g) \,=\,  \lim_{m\to\infty } m^{-1}n(\t\xi,g,m\cdot \rho)~,$$
+{\sl where $\rho=\rho(\t\xi)$ is the minimal period of $\t\xi$.}
+
+
+This function exists, and satisfies
+$$N(\t\xi,g)  \,=\,  g\circ N(\t\xi,1) ~.$$
+Note that we also have
+\bea
+N(f^j(\t\xi,g)) &=& N(\t f^j(\t\xi),\gamma (f^j(\t\xi,g))\cr
+ &=&                N(\t f^j(\t\xi),\gamma (f^j(\t\xi,1)g)\cr
+ &=&              g\circ N(\t f^j(\t\xi),\gamma (f^j(\t\xi,1)))\cr
+ &=&          g\circ N_j(\t \xi)~,\cr
+\eea
+where we define
+$$
+N_j(\t \xi) \,=\,N(f^j(\t\xi,1))~.
+$$
+
+Similarly, the time for multiple runs on the same cycle is additive
+and we define
+$$
+\tau_j(\t\xi) \,=\,  \tau (\t f(\t\xi))~.
+$$
+
+We define now a new zeta function by
+$$
+\zeta_0(\beta,s) \,=\, \exp
+\sum_{r=1}^\infty {1\over r}
+\sum_{\t\xi\in {\rm Fix}\t f^r}
+\sum _{g\in G}
+\exp\sum_{j=0}^{r-1}
+\left ({ g^{-1}\circ\beta \cdot {r\over \rho(\t\xi)} N_j(\t\xi)
+-s\tau_j(\t\xi)}\right )~, $$
+and in terms of prime cycles we get
+$$
+{1\over \zeta_0(\beta ,s)} \,=\,
+\prod _{\t p\in \t {\cal P}}\prod_{g\in G}
+\left (1-{\exp\sum_{j=0}^{r_{\t p}-1} \left \{{
+g^{-1}\circ\beta\cdot
+N_j(\t\xi) -s \tau_j(\t\xi)}\right \}\over
+|\Lambda_{\t p}|}\right )~, $$ where $r_{\t p}$ is the period of $\t p$, $\t\xi$ is any point
+on $\t p$,
+and $\Lambda_{\t p}$ is the product of the expanding eigenvalues.
+Let us denote
+$$
+L(\t p) \,=\, \sum_{j=0}^{r_{\t p}-1} N_j(\t\xi)~,
+$$
+and
+$$
+T(\t p) \,=\, \sum_{j=0}^{r_{\t p}-1} \tau_j(\t\xi)~.
+$$
+The second derivative of $\zeta_0$ w.r.t.~$\beta$ still contains the operation of
+the group...?
+Rearranging the series, one gets now
+$$
+D \,=\,  {1\over 2}
+{
+\sumprime (-1)^k
+\left (\sum_{\ell=1}^{k}\sum_{g\in G}
+g\circ L(\t p_\ell) \right )^2 /
+|\Lambda_{\t p_1}\cdots \Lambda_{\t p_k}|
+\over
+\sumprime (-1)^k |G| \left (\sum_{\ell=1}^{k}
+ T(\t p_\ell) \right ) /
+|\Lambda_{\t p_1}\cdots \Lambda_{\t p_k}|
+~.
+}
+$$
+Probably pulling a character out of the CEsym paper eliminates all terms except
+those in which both $g$'s are equal in the square...?
+
+REMARK on boundary orbits
+
+
+\subsection{DESYMMETRIZATION}
+% orignially: \SECTION Reduction from $M$ to $\tM$
+
+-----------------------------------\\
+from predrag/articles/diffus/dif12.tex, stuff thrown out by Gaspard 18 oct 93
+\\--------------------------
+
+%We next provide a second set of identities, for dynamics restricted to the
+%fundamental domain $\tM$.
+Reduction of periodic orbit formulas from
+$M$ to the fundamental domain $\tM$ is convenient for practical calculations,
+because desymmetrization improves considerably the convergence
+of cycle expansions.
+%We first illustrate this
+%desymmetrization by discrete time mappings, and derive the
+%the continuous flow formulas in Sect.~4.
+%
+% The main motivation for going to the
+% fundamental domain is that the
+Reduction of $G$ to its irreducible representations
+leads to the factorization of \refeq{13} into a product of
+irreducible subspace determinants.
+To make this factorization more transparent, we illustrate it first
+by the simple example of the case of inversion symmetry
+$\sigma x\,=\,-x$, with $M$ tiled by $\tM \cup -\tM$,
+and $ {\cal L}$ of the form
+$$
+{\cal L}(y,x)\,=\,e^{\beta \cdot \hf(x) } \delta(y-f(x))~,
+$$
+where both $\hf$ and $f$ commute with inversion,
+$f(-x)=-f(x)$.  We rewrite $ {\cal L}$ as
+\bea
+{\cal L}(y,x) &=
+~{1 \over 2} e^{\beta \cdot \hf(x) }
+\left( \delta(y-f(x))+\delta(-y-f(x)) \right)
+\cr
+&~+{1 \over 2} e^{\beta \cdot \hf(x) }
+\left( \delta(y-f(x))-\delta(-y-f(x)) \right)
+\cr
+&={\cal L}_{+} + {\cal L}_{-}~,
+\cr
+\eea
+with ${\cal L}_{+} $ and $ {\cal L}_{-}$ denoting the symmetric
+and the antisymmetric parts, respectively. Now
+$\tr{\cal L}\,=\,\tr {\cal L}_{+} + \tr{\cal L}_{-}$, and
+$$
+\tr{\cal L}_{\pm} \,=\,
+\int_{\tM} d{\tx}
+\,\, \sum_{g=1,\sigma}
+         e^{(g\beta) \cdot \hf(\tx) }
+\,\, {1 \over 2} \sum_{h=1,\sigma}
+        \chi_{\pm}(h) \delta(h\tx-f(\tx))~,
+$$
+where $\chi$ is the representation character,
+$\chi_{\pm}(1)=1$, $\chi_{\pm}(\sigma)=\pm 1$.
+
+The generalization of \refeq{11}
+to an arbitrary finite group [CE2, Ro] is now
+\bea
+\tr{\cal L}^t &=&
+\sum_{\alpha \in\II_G} \tr{\cal L}_{\alpha}^t
+\cr
+\tr{\cal L}_{\alpha}^t &=&
+\sum_{\t p: \ttime r=t,\atop r \in {\bf N}}
+{\chi_\alpha(\hp^r)
+% e^{r (g\beta) \cdot \hn(\tp) }
+ \over
+ { | \det \left( {\bf 1}-\t{\bf J}_{\tp}^{r} \right) | }
+ }
+\sum_{\tx \in \tp}
+{1 \over {|G|}} \sum_{g \in G}
+ e^{ (g \beta) \cdot (\hf^t(\tx{\tpk}) - \tx{\tpk}) }
+~,
+\label{240}
+\eea
+where $\alpha$ runs over the irreducible representations of $G$,
+$\chi_\alpha$ is the character of the representation $\alpha $,
+and $\tp$ is a prime cycle in $\tM$.
+% and $\hn_t(\tx{\tpk})$ is the global endpoint reached when
+% starting in the $k^{\rm th}$ segment of $\t p$.
+$\hp$ is defined as in \reffig{schreiberFig2}:
+Let $p$ be a lift of the cycle $\tp$ to $M$,
+choosing any initial point on $\tp$.
+If the orbit ends in $\tM'$, then $\hp $ is defined by
+$\hp \tM=\tM'$. The (orthogonal) matrix
+${\bf H}_{\tp}$, the derivative of the action of $\hp $
+on $M$, $\hp \circ x\,=\,{\bf H}_{\tp} x$, is absorbed into
+the definition of the fundamental domain Jacobian, $\t{\bf J}_{\tp}
+\equiv {\bf H}_{\tp}^{-1} {\bf J}_{\tp}$.
+If $\tp$ is on the boundary of $\tM$, the above formula needs a
+further modification~--~for details see refs.~[La, CE2].
+
+% \figurewithtex figs/schreiberFig2.pdf figs/schreiberFig2.tex  3 8
+% TeX macro too complicated ....
+%%%%%%%%%%%%%%\item[Figure 3]%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.45\textwidth]{schreiberFig2}
+\end{center}
+\caption{
+$\hp $ is the discrete transformation that relates the endpoint
+of the cycle $\tp \in \tM$ to the endpoint of the corresponding
+trajectory segment in $M$.
+Eckmann\rf{LorentzDiff} Fig.~2. Remember to include
+schreiberFig2.tex
+    }
+\label{schreiberFig2}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\section{Figure captions}
 
 %%%%%%%%%%%%%%\item[Figure 1]%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}
@@ -645,7 +930,7 @@ elementary cell indicated in the figure.
 %The arrangement can also be tiled with images of the fundamental domain
 %under the symmetry group of the hexagon.
     }
-\label{fig:2modes_hit}
+\label{schreiberFig0}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -693,20 +978,7 @@ D also changes the sense of rotation at each bounce.
 Eckmann\rf{LorentzDiff} Fig.~1, from dif15.pdf. Remember to include
 (misnamed) schreiberFig1.tex
     }
-\label{fig:2modes_hit}
-\end{figure}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%\item[Figure 3]%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}
-\begin{center}
-\includegraphics[width=0.45\textwidth]{schreiberFig2}
-\end{center}
-\caption{
-Eckmann\rf{LorentzDiff} Fig.~2. Remember to include
-schreiberFig2.tex
-    }
-\label{fig:2modes_hit}
+\label{schreiberFig1}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -719,7 +991,7 @@ schreiberFig2.tex
 Eckmann\rf{LorentzDiff} Fig.~3. Remember to include
 schreiberFig3.tex
     }
-\label{fig:2modes_hit}
+\label{schreiberFig3}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
