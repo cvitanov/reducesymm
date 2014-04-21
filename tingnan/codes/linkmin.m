@@ -17,23 +17,30 @@ for jj = 1:2:11
 end
 
 
-%% this is the part the generates the permutation of symbols
-allsymbols = 0:11;
-np = 4;
-tmpsblseq = zeros(1, 2);
-NSYMS = 12;
-for ii = 1:NSYMS^np
-    n1 = ii;
-    for jj = 1:np %% determine the digits of the sequence
-        n2 = rem(n1,NSYMS);
-        n1 = fix(n1/NSYMS);
-        tmpsblseq(ii,jj) = n2;
-    end
-end
+% %% this is the part the generates the permutation of symbols
+% allsymbols = 0:11;
+% np = 6;
+% tmpsblseq = zeros(1, 2);
+% NSYMS = 12;
+% for ii = 1:NSYMS^np
+%     n1 = ii;
+%     for jj = 1:np %% determine the digits of the sequence
+%         n2 = rem(n1,NSYMS);
+%         n1 = fix(n1/NSYMS);
+%         tmpsblseq(ii,jj) = n2;
+%     end
+% end
+
+
 %%
-% now let us do the symbol reduction:
+clear;
+np = 6;
+tmpsblseq = genNecklaces(np, 12);
+
+% now let us do the symbol reduction for the hard disk 
 sblseq = [];
-for ii = 1:NSYMS^np
+[nx, ~] = size(tmpsblseq);
+for ii = 1:nx
     tp = tmpsblseq(ii, :);
     tp = [tp, tp(1)]; % make this periodic to check the last symbol
     test = 1;
@@ -71,12 +78,13 @@ end
 
 sblseq = unique(sblseq, 'rows');
 
-%%
-[sbmat, thmat] = linkminsearch(sblseq)
+
+
+[sbmat, thmat] = linkminsearch(sblseq);
 
 
 %%
-num = 13
+num = 29
 tmpseq = sbmat(num, :);
 newth = thmat(num, :);
 
@@ -109,14 +117,18 @@ axis image;
 %%
 % check for intersection to determine the validity of the path
 % given a symbol and two theta
-
-symbol = sbmat(num, 1);
+jj = 3
+symbol = sbmat(num, jj);
 R(:,1) = [0;0]; % due to translational symmetry
 R(:,2) = Rh(:,symbol+1);
 
 % assume those angles are are provided
-th1 = thmat(num,1);
-th2 = thmat(num,2);
+th1 = thmat(num, jj);
+sndidx = jj+1;
+if jj+1 > np
+    sndidx = 1;
+end
+th2 = thmat(num, sndidx);
 %
 pt1 = R(:,1) + r*[cos(th1);sin(th1)];
 pt2 = R(:,2) + r*[cos(th2);sin(th2)];
@@ -137,7 +149,6 @@ end
 cr(:, 3) = R(:,3) - pt1;
 cr(:, 4) = R(:,4) - pt1;
 test = 0;
-seglen
 projm = zeros(2,4);
 for ii = 1:4
     proj = dot(cr(:, ii),seghat);
@@ -148,45 +159,44 @@ for ii = 1:4
        distv = pt1 + projv - R(:,ii);
        projm(:,ii) = projv+pt1;
        distl = sqrt(dot(distv, distv));
-       ii 
-       distl
        if distl < r
            test  = 1;
            break;
        end
     end
 end
-test
+
 % close gcf
 viscircles(R', r*ones(length(R),1));
 line([pt1(1),pt2(1)], [pt1(2),pt2(2)]); hold on;
 plot(projm(1,:),projm(2,:),'o')
 axis image
 
-%%
+%% for period 4 sequences, doing reduction and eliminate all period 1 and period 2 orbits
+
 sbmatnew = [];
 thmatnew = [];
 for ii = 1:length(sbmat)
     if sbmat(ii, 1) == sbmat(ii, 3) && sbmat(ii, 2) == sbmat(ii, 4)
-    else
-        sbmatnew = [sbmatnew;sbmat(ii,:)];
-        thmatnew = [thmatnew;thmat(ii,:)];
+        continue;
     end
+    sbmatnew = [sbmatnew;sbmat(ii,:)];
+    thmatnew = [thmatnew;thmat(ii,:)];
 end
 sbmat = sbmatnew;
 thmat = thmatnew;
 
 %%
 
+sbmatnew = [];
+thmatnew = [];
 for ii = 1:length(sbmat)
-    if sbmat(ii, 1) == sbmat(ii, 3)
-        if sbmat(ii, 2) > sbmat(ii, 4)
-            tmp = sbmat(ii, 2);
-            sbmat(ii, 2) = sbmat(ii, 4);
-            sbmat(ii, 4) = tmp;
-        end
+    if sbmat(ii, 1) == sbmat(ii, 3) && sbmat(ii, 2) == sbmat(ii, 4)
+        continue;
     end
+    sbmatnew = [sbmatnew;sbmat(ii,:)];
+    thmatnew = [thmatnew;thmat(ii,:)];
 end
+sbmat = sbmatnew;
+thmat = thmatnew;
 
-[sbmatnew, ia, ~] = unique(sbmat, 'rows');
-thmatnew = thmat(ia,:);
