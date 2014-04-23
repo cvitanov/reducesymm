@@ -261,7 +261,7 @@ for num = 1:nx
             for jj = 1:4
                 jac = jacobian(tmpfunc, [th;ph], cvecs(:, jj));
                 jac = [1,0;0,cos(tphp(2))] * jac * [1,0;0,1/cos(ph)];
-                errest = abs(abs(det(jac)) - 1);
+                errest = abs(det(jac) - 1);
                 if errest < 1e-3
                     test = 0;
                     break;
@@ -276,7 +276,7 @@ for num = 1:nx
             R2 = Rv(:,ii+1);
             testth = th;
             testph = ph;
-            testfunc = @(tph) circmapping(r, R1, R2, tph);
+            testfunc = @()
             disp('check for converging issue');
             viscircles(Rv', r*ones(length(Rv),1));
             hold on;

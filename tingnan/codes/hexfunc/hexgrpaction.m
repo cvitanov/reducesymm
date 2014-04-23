@@ -25,7 +25,6 @@ if th_p > pi/6
     grot = grot + 1;
 end
 
-% (th - th_p)*180/pi
-% (ph - ph_p)*180/pi
+
 end
 
