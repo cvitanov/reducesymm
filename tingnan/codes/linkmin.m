@@ -16,7 +16,9 @@ for jj = 1:2:11
     Rh(:, jj+1) = sqrt(3)*(2*r+w)*[cos(ang);sin(ang)];
 end
 
-
+box on;
+viscircles([Rh,[0;0]]', r*ones(13,1));
+axis image;
 % %% this is the part the generates the permutation of symbols
 % allsymbols = 0:11;
 % np = 6;
@@ -84,7 +86,8 @@ sblseq = unique(sblseq, 'rows');
 
 
 %%
-num = 29
+[nx, ny] = size(sbmat);
+for num = 1:nx
 tmpseq = sbmat(num, :);
 newth = thmat(num, :);
 
@@ -112,7 +115,7 @@ plot(Rv(1, :), Rv(2, :), 'o')
 plot(rv(1, :), rv(2, :), '-o')
 axis image;
 % 
-
+end
 
 %%
 % check for intersection to determine the validity of the path
@@ -212,7 +215,7 @@ sbmat = sbmatnew;
 thmat = thmatnew;
 
 %%
-
+Lambdavalsold = Lambdavals;
 [nx,ny] = size(sbmat);
 Rv = zeros(2, ny+1);
 rv = zeros(2, ny+1);
@@ -237,61 +240,73 @@ for num = 1:nx
     Rv(:,ii+1) = Rh(:, linknum) + Rv(:,ii);
     rv(:,ii+1) = Rv(:,ii+1) + r*[cos(newth(1));sin(newth(1))];
     lambdae = 1;
+    newth = [newth,newth(1)];
     for ii = 1:ny
-        th = newth(ii);
-        tmpvec1 = r*[cos(newth(ii));sin(newth(ii))];
+        th = newth(ii+1);
+        tmpvec1 = r*[cos(th);sin(th)];
         tmpvec2 = rv(:,ii+1)-rv(:,ii);
-        lenvec2 = sqrt(dot(tmpvec2, tmpvec2));
-        % ph is the angle from tmpvec1 to tmpvec2
-        tmp = cross([tmpvec1;0], [tmpvec2;0])/lenvec2;
-        ph = asin(tmp(3));
-        % perform rotation based on symbolic dynamics
-        tmpfunc = @(tph) circmapping(1,Rv(:,ii),Rv(:,ii+1),tph);
-        tphp = tmpfunc([th;ph]);
-        test = 0;
-        [jac, err] = jacobianest(tmpfunc, [th;ph]);
-        jac = [1,0;0,cos(tphp(2))] * jac * [1,0;0,1/cos(ph)];
-        errest = (abs(det(jac)) - 1);
-        if errest > 1e-3
-            err
-            errest
-            th
-            ph
-            tphp
-            for jj = 1:4
-                jac = jacobian(tmpfunc, [th;ph], cvecs(:, jj));
-                jac = [1,0;0,cos(tphp(2))] * jac * [1,0;0,1/cos(ph)];
-                errest = abs(abs(det(jac)) - 1);
-                if errest < 1e-3
-                    test = 0;
-                    break;
-                else
-                    test = 1;
-                    continue;
-                end
-            end
-        end
-        if test == 1
-            R1 = Rv(:,ii);
-            R2 = Rv(:,ii+1);
-            testth = th;
-            testph = ph;
-            testfunc = @(tph) circmapping(r, R1, R2, tph);
-            disp('check for converging issue');
-            viscircles(Rv', r*ones(length(Rv),1));
-            hold on;
-            plot(Rv(1, :), Rv(2, :), 'o')
-            plot(rv(1, :), rv(2, :), '-o')
-            axis image;
-        else
-            lambda = eig(jac);
-            lambdae = lambdae*max(abs(lambda));
-        end
-        
+        lenvec2 = sqrt(dot(tmpvec2, tmpvec2)); %% flight time
+        cosph = -dot(tmpvec2,tmpvec1)/(r*lenvec2);
+        jac = [1,lenvec2;0,1]*[1,0;2/(r*cosph),1];
+        lambda = eig(jac);
+        lambdae = lambdae*max(abs(lambda));
+       
     end
     Lambdavals(num) = lambdae;
     
 end
+
+Lambdavals = [Lambdavalsold, Lambdavals];
+%%
+
+
+%         ph = asin(tmp(3));
+%         % perform rotation based on symbolic dynamics
+%         tmpfunc = @(tph) circmapping(1,Rv(:,ii),Rv(:,ii+1),tph);
+%         tphp = tmpfunc([th;ph]);
+%         test = 0;
+%         [jac, err] = jacobianest(tmpfunc, [th;ph]);
+%         if trace(err) > 1e-5
+%             err
+%             test = 1
+%         end
+%         jac = [1,0;0,cos(tphp(2))] * jac * [1,0;0,1/cos(ph)];
+%         errest = (abs(det(jac)) - 1);
+%         if errest > 1e-3
+%             err
+%             errest
+%             th
+%             ph
+%             tphp
+%             for jj = 1:4
+%                 jac = jacobian(tmpfunc, [th;ph], cvecs(:, jj));
+%                 jac = [1,0;0,cos(tphp(2))] * jac * [1,0;0,1/cos(ph)];
+%                 errest = abs(abs(det(jac)) - 1);
+%                 if errest < 1e-3
+%                     test = 0;
+%                     break;
+%                 else
+%                     test = 1;
+%                     continue;
+%                 end
+%             end
+%         end
+%         if test == 1
+%             R1 = Rv(:,ii);
+%             R2 = Rv(:,ii+1);
+%             testth = th;
+%             testph = ph;
+%             testfunc = @(tph) circmapping(r, R1, R2, tph);
+%             disp('check for converging issue');
+%             viscircles(Rv', r*ones(length(Rv),1));
+%             hold on;
+%             plot(Rv(1, :), Rv(2, :), 'o')
+%             plot(rv(1, :), rv(2, :), '-o')
+%             axis image;
+%         else
+%             lambda = eig(jac);
+%             lambdae = lambdae*max(abs(lambda));
+%         end
 
 %%
 
