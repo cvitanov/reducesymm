@@ -2,22 +2,24 @@
 --------------------------------------------------------
 
     Tingnan Zhang 		tingnan.zhang@gmail.com
-    Pavel M Svetlichnyy 	psvetlichny3@gatech.edu 
+    Pavel M Svetlichnyy 	psvetlichny3@gatech.edu
     Spring 2014 chaos course term paper.
 
 ========================================================
 
 tingnan/
-    schreiber.tex 
+    schreiber.tex
     the original 1991 Cvitanovic, Gaspard and Schreiber article.
-    Symbolic dynamics tables might be useful.
+    Symbolic dynamics tables might be useful. Much of it included in
+tingnan/diffusionBlog.tex
+    blog here as we go along
 
 tingnan/figs/
     schreiber* Schreiber 1991 figure macros
 
 bibtex/siminos.bib
     one bibliography for all projects - DO NOT EDIT here
-    edit only svn repo siminos/bibtex/... then copy to here  
+    edit only svn repo siminos/bibtex/... then copy to here
 
 figs/
     one directory for all figures.
@@ -30,7 +32,7 @@ Fig/
 
 figsSrc/
 	one directory for source programs for all figures
-	(or .txt files explain how to regenerate them if 
+	(or .txt files explain how to regenerate them if
       needed, with code)
 
 inputs/
