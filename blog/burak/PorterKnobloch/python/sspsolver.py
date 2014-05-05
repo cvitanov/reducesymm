@@ -1,5 +1,5 @@
 #
-# invpolsolver.py
+# sspsolver.py
 #
 """
 Use odeint to solve differential equations defined by vinvpol in twomode.py

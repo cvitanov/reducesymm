@@ -67,10 +67,10 @@ def generator():
     """
     Generator of infinitesimal SO(2) transformations for the two mode system
     """
-    T = np.array([[0,1,0,0],
-    		  [-1,0,0,0],
-    		  [0,0,0,2],
-    		  [0,0,-2,0]], 
+    T = np.array([[0,-1,0,0],
+    		  [1,0,0,0],
+    		  [0,0,0,-2],
+    		  [0,0,2,0]], 
     			 float)
 
     return T
@@ -79,10 +79,10 @@ def LieElement(phi):
     """
     Lie Element of SO(2) transformations for the two mode system
     """
-    g = np.array([[np.cos(phi),np.sin(phi),0,0],
-    			 [-np.sin(phi),np.cos(phi),0,0],
-    			 [0,0,np.cos(2*phi),np.sin(2*phi)],
-    			 [0,0,-np.sin(2*phi),np.cos(2*phi)]],
+    g = np.array([[np.cos(phi),-np.sin(phi),0,0],
+    			 [np.sin(phi),np.cos(phi),0,0],
+    			 [0,0,np.cos(2*phi),-np.sin(2*phi)],
+    			 [0,0,np.sin(2*phi),np.cos(2*phi)]],
     			 float)
 
     return g
