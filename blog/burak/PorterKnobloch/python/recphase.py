@@ -57,8 +57,14 @@ axhat.w_xaxis.set_pane_color((1, 1, 1, 1.0))
 axhat.w_yaxis.set_pane_color((1, 1, 1, 1.0))
 axhat.w_zaxis.set_pane_color((1, 1, 1, 1.0))
 
+
 axhat.plot(np.real(asolhat[:,0]), np.real(asolhat[:,1]), np.imag(asolhat[:,0]), linewidth=0.5, color='#3c5f96')
 axhat.view_init(50,55)
+
+axhat.set_xlabel('$\hat{x}_1$', fontsize=16)
+axhat.set_ylabel('$\hat{x}_2$', fontsize=16)
+axhat.set_zlabel('$\hat{y}_1$', fontsize=16)
+
 savefig('image/2ndmodeslice.png', bbox_inches='tight', dpi=100)
 
 
@@ -75,6 +81,11 @@ axtilde.w_zaxis.set_pane_color((1, 1, 1, 1.0))
 
 axtilde.plot(np.real(asoltilde[:,0]), np.real(asoltilde[:,1]), np.imag(asoltilde[:,0]), linewidth=0.5, color='#3c5f96')
 axtilde.view_init(-150,-110)
+
+axtilde.set_xlabel('$\\tilde{x}_1$', fontsize=16)
+axtilde.set_ylabel('$\\tilde{x}_2$', fontsize=16)
+axtilde.set_zlabel('$\\tilde{y}_1$', fontsize=16)
+
 savefig('image/2ndmodeslicephasedoubled.png', bbox_inches='tight', dpi=100)
 
 plt.show()
