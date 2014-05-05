@@ -36,7 +36,7 @@ axis image;
 
 %%
 clear;
-np = 6;
+np = 4;
 tmpsblseq = genNecklaces(np, 12);
 
 % now let us do the symbol reduction for the hard disk 
@@ -82,12 +82,12 @@ sblseq = unique(sblseq, 'rows');
 
 
 
-[sbmat, thmat] = linkminsearch(sblseq);
+[sbmat, thmat, ckmat] = linkminsearch(sblseq);
 
 
 %%
 [nx, ny] = size(sbmat);
-for num = 1:nx
+for num = 8:8
 tmpseq = sbmat(num, :);
 newth = thmat(num, :);
 
@@ -120,7 +120,8 @@ end
 %%
 % check for intersection to determine the validity of the path
 % given a symbol and two theta
-jj = 3
+
+jj = 2
 symbol = sbmat(num, jj);
 R(:,1) = [0;0]; % due to translational symmetry
 R(:,2) = Rh(:,symbol+1);
@@ -215,48 +216,71 @@ sbmat = sbmatnew;
 thmat = thmatnew;
 
 %%
-Lambdavalsold = Lambdavals;
-[nx,ny] = size(sbmat);
-Rv = zeros(2, ny+1);
-rv = zeros(2, ny+1);
-testth = zeros(nx, ny);
-cvecs = [1  1 -1 -1;
-         1 -1  1 -1];
-for num = 1:nx
+clear
+w = 0.3;
+r = 1;
 
-    tmpseq = sbmat(num, :);
-    newth  = thmat(num, :);
+Rh = zeros(2,11);
 
-    linknum = tmpseq(1)+1;
-    Rv(:,1) = [0;0];
-    rv(:,1) = r*[cos(newth(1));sin(newth(1))];
-
-
-    for ii = 2: ny
-        Rv(:,ii) = Rh(:, linknum) + Rv(:,ii - 1);
-        rv(:,ii) = Rv(:,ii) + r*[cos(newth(ii));sin(newth(ii))];
-        linknum = tmpseq(ii)+1;
-    end
-    Rv(:,ii+1) = Rh(:, linknum) + Rv(:,ii);
-    rv(:,ii+1) = Rv(:,ii+1) + r*[cos(newth(1));sin(newth(1))];
-    lambdae = 1;
-    newth = [newth,newth(1)];
-    for ii = 1:ny
-        th = newth(ii+1);
-        tmpvec1 = r*[cos(th);sin(th)];
-        tmpvec2 = rv(:,ii+1)-rv(:,ii);
-        lenvec2 = sqrt(dot(tmpvec2, tmpvec2)); %% flight time
-        cosph = -dot(tmpvec2,tmpvec1)/(r*lenvec2);
-        jac = [1,lenvec2;0,1]*[1,0;2/(r*cosph),1];
-        lambda = eig(jac);
-        lambdae = lambdae*max(abs(lambda));
-       
-    end
-    Lambdavals(num) = lambdae;
-    
+% nearest neighbor
+for jj = 0:2:10
+    ang = jj*pi/6;
+    Rh(:, jj+1) = (2*r+w)*[cos(ang);sin(ang)];
 end
 
-Lambdavals = [Lambdavalsold, Lambdavals];
+% next nearest neight
+for jj = 1:2:11
+    ang = (jj-1)*pi/6 + pi/6;
+    Rh(:, jj+1) = sqrt(3)*(2*r+w)*[cos(ang);sin(ang)];
+end
+
+for np = 2:7
+    load(strcat('period_',num2str(np)));
+    lambdas = [];
+    [nx,ny] = size(sbmat);
+    Rv = zeros(2, ny+1);
+    rv = zeros(2, ny+1);
+    Nv = zeros(2, 1);
+    Tv = 0;
+    for num = 1:nx
+
+        tmpseq = sbmat(num, :);
+        newth  = thmat(num, :);
+
+        linknum = tmpseq(1)+1;
+        Rv(:,1) = [0;0];
+        rv(:,1) = r*[cos(newth(1));sin(newth(1))];
+
+
+        for ii = 2: ny
+            Rv(:,ii) = Rh(:, linknum) + Rv(:,ii - 1);
+            rv(:,ii) = Rv(:,ii) + r*[cos(newth(ii));sin(newth(ii))];
+            linknum = tmpseq(ii)+1;
+        end
+        Rv(:,ii+1) = Rh(:, linknum) + Rv(:,ii);
+        rv(:,ii+1) = Rv(:,ii+1) + r*[cos(newth(1));sin(newth(1))];
+        lambdae = 1;
+        newth = [newth,newth(1)];
+        for ii = 1:ny
+            th = newth(ii+1);
+            tmpvec1 = r*[cos(th);sin(th)];
+            tmpvec2 = rv(:,ii+1)-rv(:,ii);
+            lenvec2 = sqrt(dot(tmpvec2, tmpvec2)); %% flight time
+            cosph = -dot(tmpvec2,tmpvec1)/(r*lenvec2);
+            jac = [1,lenvec2;0,1]*[1,0;2/(r*cosph),1];
+            lambda = eig(jac);
+            lambdae = lambdae*max(abs(lambda));
+        end
+        lambdas(num) = lambdae; %% stability
+        Nv(:, num) = rv(:, end) - rv(:, 1); %% displacement
+        Tv(num) = sum(sqrt(sum(diff(rv, 1, 2).^2, 1))); %%flight time
+    end
+    Nvmat{np} = Nv;
+    Tvmat{np} = Tv;
+    lambdamat{np} = lambdas;
+
+end
+
 %%
 
 
@@ -309,9 +333,47 @@ Lambdavals = [Lambdavalsold, Lambdavals];
 %         end
 
 %%
+tp = [];
+np = [];
+nv = [];
+tv = [];
+for ii = 2:length(lambdamat)
+    tp = [tp,lambdamat{ii}];
+    np = [np,ii*ones(1,length(lambdamat{ii}))];
+    nv = [nv, Nvmat{ii}];
+    tv = [tv, Tvmat{ii}];
+end
+mv = log(tp);
+tp = 1./tp;
 
-tph = [2*pi*rand(1),rand(1)*pi/2];
-tphp = hexmappingelem(tph);
-jac = [1,0;0, cos(tphp(2))]*jacobian(@hexmappingelem, tph, [1;1]) * [1,0;0,1/cos(tph(2))];
 
-det(jac)
+%%
+wx = @(beta) exp(beta*nv(1, :)).*tp;
+zetax = @(be) zetafunc(wx(be), np, 7);
+wy = @(beta) exp(beta*nv(2, :)).*tp;
+zetay = @(be) zetafunc(wx(be), np, 7);
+wt = @(beta) exp(-beta*tv).*tp;
+zetat = @(be) zetafunc(wt(be), np, 7);
+
+%%
+derivx = [];
+for xx = -1:1e-2:1
+    dets = 1e-4;
+    derivx = [derivx, sum(zetax(dets + xx) - zetax(xx)) / dets];
+end
+
+%%
+
+j = 1;
+for i = 2:7
+   
+    Tv(j) = zetaderivest(i, np, tp, tv);
+    Mv(j) = zetaderivest(i, np, tp, mv);
+    Nxx(j) = zetaderivest(i, np, tp, nv(1, :), nv(1, :));
+    Nyy(j) = zetaderivest(i, np, tp, nv(2, :), nv(2, :));
+    j = j+1;
+end
+%%
+
+lambda = Mv./Tv;
+diffcoef = (Nxx + Nyy)./(2*Tv);
