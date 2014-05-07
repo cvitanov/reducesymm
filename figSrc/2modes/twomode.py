@@ -67,10 +67,10 @@ def generator():
     """
     Generator of infinitesimal SO(2) transformations for the two mode system
     """
-    T = np.array([[0,1,0,0],
-    		  [-1,0,0,0],
-    		  [0,0,0,2],
-    		  [0,0,-2,0]], 
+    T = np.array([[0,-1,0,0],
+    		  [1,0,0,0],
+    		  [0,0,0,-2],
+    		  [0,0,2,0]], 
     			 float)
 
     return T
@@ -79,10 +79,10 @@ def LieElement(phi):
     """
     Lie Element of SO(2) transformations for the two mode system
     """
-    g = np.array([[np.cos(phi),np.sin(phi),0,0],
-    			 [-np.sin(phi),np.cos(phi),0,0],
-    			 [0,0,np.cos(2*phi),np.sin(2*phi)],
-    			 [0,0,-np.sin(2*phi),np.cos(2*phi)]],
+    g = np.array([[np.cos(phi),-np.sin(phi),0,0],
+    			 [np.sin(phi),np.cos(phi),0,0],
+    			 [0,0,np.cos(2*phi),-np.sin(2*phi)],
+    			 [0,0,np.sin(2*phi),np.cos(2*phi)]],
     			 float)
 
     return g
@@ -97,44 +97,9 @@ def vscaledtime(x, tau, p):
 	"""
 	
 	T = generator()
-	vhat = x[0]*np.array(vfullssp(x, tau, p)) + vfullssp(x, tau, p)[1]*np.dot(T,x)
+	vhat = x[0]*np.array(vfullssp(x, tau, p)) - vfullssp(x, tau, p)[1]*np.dot(T,x)
 	#print vhat 
 	return vhat
-	
-
-def ssp2gramschmidt(x):
-	"""
-	Takes the 4D input and gives the 3D output on the Gram-Schmidt basis
-	Input is either a single vector (array) or an array of vectors (matrix)
-	In the latter case, this is should be the form of x:
-	x = [x0 x1 x2 x3]
-	Hence the transformed vector will be
-	x' = [x0' x1' x2' x3']
-	"""
-	U = LieElement(np.pi/4) # Gram-Schmidt basis similarity matrix
-	V = np.array([[1, 0, 0, 0],
-				  [0, 0, 1, 0],
-			      [0, 0, 0, 1]],float ) # 4->3 dim reduction matrix
-	xgs = np.dot(V,np.dot(U,x))
-	return xgs
-
-def gramschmidt2ssp(xgs):
-	"""
-	Takes the 4D input and gives the 3D output on the Gram-Schmidt basis
-	Input is either a single vector (array) or an array of vectors (matrix)
-	In the latter case, this is should be the form of x:
-	x = [x0 x1 x2 x3]
-	Hence the transformed vector will be
-	x' = [x0' x1' x2' x3']
-	"""
-	U = LieElement(np.pi/4) # Gram-Schmidt basis similarity matrix
-	V = np.array([[1, 0, 0, 0],
-				  [0, 0, 1, 0],
-			      [0, 0, 0, 1]],float ) # 4->3 dim reduction matrix
-	
-	
-	x = np.dot(U.transpose(),np.dot(V.transpose(),xgs))
-	return x
 	
 def StabilityMatrix(x, p):
 	
@@ -191,6 +156,10 @@ def ssp2invpol(x):
 	return uu
 
 def ssp2sspRed2(xsol):
+	"""
+	Takes the solution in the full statespace and outputs a symmetry reduced
+	representation where the 2nd mode phase is fixed.
+	"""
 	#Construct complex solution vector
 	asol = np.array([xsol[:,0] + 1j*xsol[:,1], xsol[:,2] + 1j*xsol[:,3]], 
 	complex).transpose() 
@@ -209,5 +178,3 @@ def ssp2sspRed2(xsol):
 	xsoltilde = np.array([np.real(asoltilde[:,0]), np.imag(asoltilde[:,0]), 
 	np.real(asoltilde[:,1]), np.imag(asoltilde[:,1])], float).transpose()
 	return xsoltilde
-
-	
