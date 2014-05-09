@@ -383,7 +383,6 @@ def timeofflight(xhat0):
 	#does not, hence we are not always sure the position of the first return.
 	itof = np.argmin(np.abs(psreturn[:,0]-Tapproximate))
 	tof = psreturn[itof,0]
-	
 	return tof
 
 def phireturn(xhat0, tof):

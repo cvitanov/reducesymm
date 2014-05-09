@@ -9,7 +9,7 @@ import sys
 import numpy as np
 from scipy import interpolate, integrate
 from scipy.misc import derivative
-from scipy.optimize import newton, fsolve, root
+from scipy.optimize import newton, fsolve
 import numdifftools as nd
 
 import twomode

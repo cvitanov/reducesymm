@@ -17,7 +17,7 @@
 import numpy as np
 from scipy import interpolate, integrate
 from scipy.misc import derivative
-from scipy.optimize import newton, fsolve, root
+from scipy.optimize import newton, fsolve
 
 from pylab import figure, plot, xlabel, ylabel, grid, hold, legend, title, savefig
 from matplotlib.font_manager import FontProperties
@@ -36,7 +36,7 @@ import psectslice
 import rpo
 
 #What to do what not to do:
-computeps = False
+computeps = True
 computerpo = True
 computesymbdyn = True
 plotpsandretmap = True

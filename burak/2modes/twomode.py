@@ -236,7 +236,7 @@ def intslice(xphi0, t, p=params, abserror=1.0e-12, relerror=1.0e-12):
 	
 	return xsol
 
-def intfull(x0, t, p=params, abserror=1.0e-13, relerror=1.0e-13):
+def intfull(x0, t, p=params, abserror=1.0e-12, relerror=1.0e-12):
 	"""
 	Takes the initial condition, parameters and the time interval
 	returns the result as a series in time.
@@ -257,3 +257,39 @@ def three2four(v3D):
 	"""
 	v = np.array([v3D[0], 0, v3D[1], v3D[2]], float)
 	return v
+
+def intvar(x0, t, p=params, abserror=1.0e-12, relerror=1.0e-12):
+	"""
+	Integrate variational equation.
+	Takes the initial condition, parameters and the time interval
+	returns the result as a series in time.
+	"""
+	xvarsol = odeint(velocityvar, x0, t, args=(p,), atol = abserror, rtol = relerror)
+	return xvarsol
+
+def Jacobian(x, Ti):
+	"""
+	Jacobian J^Ti(x)
+	"""	
+	xvar = np.append(x, np.identity(4).reshape(16))
+	stoptime = Ti
+	numpoints = 2
+	t = np.linspace(0, stoptime, numpoints)
+	xvarsol = intvar(xvar, t)
+
+	J = xvarsol[1, 4:20].reshape(4,4)
+
+	return J
+
+def ftau(x, tau):
+	"""
+	Lagrangian description of the flow.
+	"""
+	stoptime = tau
+	numpoints = 2
+	t = np.linspace(0, stoptime, numpoints)
+	
+	xsol = intfull(x, t, abserror=1.0e-13, relerror=1.0e-13)
+	fxtau = xsol[1,:]
+	
+	return fxtau

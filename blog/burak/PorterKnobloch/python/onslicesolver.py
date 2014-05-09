@@ -36,7 +36,7 @@ abserr = 1.0e-8
 relerr = 1.0e-6
 
 #Callable function version:
-def integrate(xphi0, p, t, abserror=1.0e-8, relerror=1.0e-6):
+def integrate(xphi0, p, t, abserror=1.0e-12, relerror=1.0e-12):
 	"""
 	Takes the initial condition, parameters and the time interval
 	returns the result as a series in time.

@@ -7,6 +7,7 @@
 import numpy as np
 from scipy import interpolate, integrate
 from scipy.misc import derivative
+from scipy.optimize import newton, fsolve
 #Initiate plotting environment:
 import matplotlib as mpl
 from pylab import plot, xlabel, ylabel, show
@@ -19,14 +20,19 @@ import twomode
 computeSolution = False
 computePsect = False
 computeArcLengths = False
-plotPsect = False
+computeRPO = False
+plotPsect = True
 plotRetmap = True
+
+#Search parameters:
+m = 1 #Will search for [1,m]-cycles
 
 #Only relative equilibrium:
 reqv = np.array([0.43996557973671596,
 				 0,
 				 -0.38626705952942764,
 				 0.07020440068369532], float) 
+reqv3D = twomode.four2three(reqv)
 #Compute reduced stability matrix for the relative equilibrium:
 Ared = twomode.StabilityMatrixRed(reqv)
 #Compute eigenvalues and eigenvectors:
@@ -43,6 +49,10 @@ nhat = twomode.three2four(nhat3D)
 vaux = twomode.three2four(vaux3D)
 #Poincare Basis:
 psbasis = np.array([unstabledir, vaux, nhat]).transpose()
+#Lie algebra generator:
+T = twomode.generator()
+xp = np.array([1,0,0,0], float)
+tp = np.dot(T,xp)
 			
 if computeSolution:
 	
@@ -126,33 +136,13 @@ if not('sn' in locals()):
 print 'Interpolating to the return map'
 isortRetMap = np.argsort(sn)
 tckRetMap = interpolate.splrep(sn[isortRetMap],snplus1[isortRetMap], k=3)
-dxintRetMap = (np.max(sn)-np.min(sn))/50000
+dxintRetMap = (np.max(sn)-np.min(sn))/100000
 xintRetMap = np.arange(np.min(sn), np.max(sn), dxintRetMap)
 yintRetMap = interpolate.splev(xintRetMap, tckRetMap)
 
-#Interpolation in two parts (Since the typica return map is discontinuous 
-#in the first derivative):
-print 'Interpolating to the return map in 2 parts'
-snsorted = sn[isortRetMap]
-snplus1sorted = snplus1[isortRetMap]
-imax = np.argmax(snplus1sorted)
-tck1 = interpolate.splrep(snsorted[0:imax+1], snplus1sorted[0:imax+1])
-xint1 = np.linspace(snsorted[0], snsorted[imax], 50000)
-yint1 = interpolate.splev(xint1, tck1)
-
-tck2 = interpolate.splrep(snsorted[imax:len(snsorted)], snplus1sorted[imax:len(snsorted)])
-xint2 = np.linspace(snsorted[imax], snsorted[len(snsorted)-1], 50000)
-yint2 = interpolate.splev(xint2, tck2)
-
-snint = np.append(xint1, xint2)
-snplus1int = np.append(yint1, yint2)
-
 #Return map function:
 def retmap(sn):
-	if sn < snsorted[imax]:
-		snp1 = interpolate.splev(sn, tck1)
-	else:
-		snp1 = interpolate.splev(sn, tck2)
+	snp1 = interpolate.splev(sn, tckRetMap)
 	return snp1
 #nth return map function:
 def retmapm(n, sn):
@@ -161,6 +151,423 @@ def retmapm(n, sn):
 		snpn = retmap(snpn)
 	return	snpn
 
+if computeRPO:
+
+	#Look upto the mth return map to find the periodic orbit candidates:
+	scandidates = np.zeros([1,2]) #dummy matrix to hold po candidate arclengths
+	smin = np.min(sn)
+	smax = np.max(sn)
+	
+	for i in range(m):
+		#Define the function zeros of which would correspond to the periodic 
+		#orbit arclengths:
+		def fpo(s):
+			po = retmapm(i+1, s) - s
+			return po
+		#print "retmap %i" %(i+1)
+		fpoevo=0
+		for s0 in np.arange(smin, smax, (smax-smin)/50000):
+			fpoev = fpo(s0)
+			if fpoev * fpoevo < 0: #If there is a zero-crossing, look for the root:	
+				sc = newton(fpo, s0)
+				#print "sc = %f" %sc
+				newcandidate = 1
+				for j in range(np.size(scandidates,0)):
+					#Discard if found candidate is previously found:
+					if np.abs(scandidates[j,1] - sc)<1e-9: 
+						newcandidate=0
+				if newcandidate:
+					scandidates = np.append(scandidates, np.array([[i+1, sc]], float), axis=0)
+			fpoevo = fpoev
+	
+	scandidates = scandidates[1:np.size(scandidates,0), :]
+	print "Periodic orbit candidate arclengths:"
+	print scandidates
+	
+	#Read the maximum value of the return map to determine the point of the 
+	#binary partition:
+	imaxint = np.argmax(yintRetMap)
+	sboundary = xintRetMap[imaxint]
+	
+	#Dummy itinerary array:
+	scitineraries = np.array([''])
+	#Determine itineraries:
+	for i in range(np.size(scandidates,0)):
+		scandidate = scandidates[i,1]
+		if scandidate < sboundary:
+			itinerary = "0"
+		else:
+			itinerary = "1"
+		m = int(scandidates[i,0])	
+		for i in range(1,m):
+			scandidate = retmap(scandidate) 
+			if scandidate < sboundary:
+				itinerary = itinerary+"0"
+			else:
+				itinerary = itinerary+"1"
+		scitineraries = np.append(scitineraries, np.array([itinerary]))
+	scitineraries = scitineraries[1:]
+	print "itineraries:"
+	print scitineraries
+	
+	#Dummy assignments:
+	group = np.zeros(len(scitineraries), int)
+	position = np.zeros(len(scitineraries), int)
+	#Group candidates into multiple shooting candidates according to their itineraries:
+	for i in range(np.size(scandidates,0)):
+		"ith itinerary:"
+		iti = scitineraries[i]
+		#print "range(length of iti - 1)"
+		#print range(len(iti)-1)
+		#Indices of mth order periodic orbit candidates:
+		imth = np.argwhere(scandidates[:,0]==scandidates[i,0])
+		if len(imth)==1:
+			group[i] = int(1)
+			position[i] = int(1)
+		if group[i] == 0:
+			group[i] = int(np.max(group))+1 #ith candidate starts a new group
+			position[i] = int(1)
+			for shift in range(-len(iti)+1,0):
+				for j in imth:
+				#print j
+					if scitineraries[j]  == (iti[shift:] + iti[0:len(iti)+shift]):
+						group[j] = group[i] #jth candidate belong to the same group
+						position[j] = shift + len(iti)+1					
+	print "group:"		
+	print group		
+	print "position:"
+	print position
+	together = np.append(np.array([scitineraries]).transpose(), np.array([group]).transpose(), axis=1)
+	together = np.append(together, np.array([position]).transpose(), axis=1)
+	together = np.append(together, np.array([scandidates[:,1]], str).transpose(), axis=1)
+	print "Itinerary | Group | Position in the group"
+	print together
+	def fs2ps2D(px, s):
+		"""
+			Function to be solved to get relative x coordinate of the rpo on
+			the Poincare section
+		"""
+		sfun = psarclength(px)	
+		return sfun-s
+	
+	#From arclength to projected Poincare section coordinates:
+	def s2ps2D(s):
+		#Guessing the initial point:
+		i0 = np.argmin(np.absolute(sn - s))
+		p0x = ps2D[i0,0]
+		
+		px = newton(fs2ps2D, p0x, args=(s,))
+		py = interpolate.splev(px, tckps)
+		
+		return np.array([px, py])
+	
+	ps2Dcandidates = np.array([s2ps2D(s) for s in scandidates[:,1]] )
+	print "ps2Dcandidates:"
+	print ps2Dcandidates
+	
+	def ps2D2psxhat(ps2Di):
+			"""
+				Takes the relative position projected on Poincare section basis 
+				on the Poincare section and returns the position on the reduced 
+				state space
+			"""
+			psrelproj3D = np.array([ps2Di[0], ps2Di[1], 0], float)
+			psrel = np.dot(psbasis, psrelproj3D)
+			ps = psrel + reqv
+			#ps = np.array([ps3D[0], 0, ps3D[1], ps3D[2]], float)
+			return ps
+	
+	pscandidates = np.array([ps2D2psxhat(ps2D) for ps2D in ps2Dcandidates] )
+	print "pscandidates"
+	print pscandidates
+	
+	def timeofflight(xhat0):
+		"""
+		Computes time of flight for xhat0 on the Poincare section to come back onto
+		the section for a second time 
+		"""
+		import poincare
+		#Find the point on the computed poincare section, closest to the x0
+		imin = np.argmin(np.linalg.norm(ps[:,1:5]-xhat0, axis=1))
+		#Take its time of flight as
+		if imin < np.size(ps,0)-1: 
+			Tapproximate = ps[imin+1,0]-ps[imin,0]
+		else:
+			Tapproximate = ps[imin,0]-ps[imin-1,0]
+		print "Tapproximate:"
+		print Tapproximate
+		#Integrate for a little bit longer than the approximated integration time:
+		stoptime = 1.2*Tapproximate
+		numpoints = int(stoptime/0.01)
+		#Integration time array:
+		t = np.linspace(0, stoptime, numpoints)
+		xhatphi0 = np.append(xhat0, np.array([0], float))
+		xhatsol = twomode.intslice(xhatphi0, t, abserror=1.0e-14, relerror=1.0e-12)
+		tx = np.append(np.array([t], float).transpose(), xhatsol, axis=1)
+		#Compute Poincare section:
+		psreturn=poincare.computeps(tx, reqv, nhat, 1)
+		print "psreturn:"
+		print psreturn
+		#Take the time nearest to the approximated time. This is due to the
+		#fact that the array ps sometimes includes the initial point and sometimes
+		#does not, hence we are not always sure the position of the first return.
+		itof = np.argmin(np.abs(psreturn[:,0]-Tapproximate))
+		tof = psreturn[itof,0]
+		return tof
+	
+	def phireturn(xhat0, tof):
+		"""
+		Computes phi for xhat0 on the Poincare section to come back onto
+		the section for a second time 
+		"""
+	
+		stoptime = tof
+		numpoints = 2
+		#Integration time array:
+		t = [stoptime * float(i) / (numpoints - 1) for i in range(numpoints)]
+		
+		xsol = twomode.intfull(xhat0, t, abserror=1.0e-14, relerror=1.0e-12)
+		#Phase of the first mode is the slice phase
+		phi = np.angle(xsol[1,0] + 1j*xsol[1,1]) 	
+		
+		return -phi
+	
+	TOF = np.array([timeofflight(x0) for x0 in pscandidates], float)
+	print "time of flights:"
+	print TOF
+	phiret = np.array([phireturn(pscandidates[i,:], TOF[i]) for i in range(np.size(TOF,0))], float)
+	print "phiret:"
+	print phiret
+	
+	Adaptive = True
+	iAdaptiveMax = 20			
+	factor = 2
+	
+	tol = 1e-9
+	earray = np.array([], float)
+	xrpo = np.zeros(np.shape(pscandidates))
+	tofrpo = np.zeros(np.shape(TOF))
+	phirpo = np.zeros(np.shape(phiret))
+	
+	for i in range(1, int(np.max(group)+1)):
+	
+		AdaptiveFail = False
+		print "Group no: ", i
+		
+		#Get corresponding indices for the group i:
+		gindices = np.argwhere(group == i)
+		#Reshape them in a 1D array:
+		gindices = gindices.reshape(np.size(gindices))
+		#Get coordinates of group i
+		xi = pscandidates[gindices,:]
+		#Get time of flights for group i:
+		Ti = TOF[gindices]
+		#Get group parameter for group i:
+		phii = phiret[gindices]
+		#Get the positions in group i
+		posi = np.array([position[gindices]-1], int)
+		posi = posi.reshape(np.size(posi))
+		print "posi = ", posi 
+		#Sort with respect to positions:
+		xi = xi[posi, :]
+		print "xi = ", xi 
+		Ti = np.array([Ti[posi]])
+		Ti = Ti.reshape(np.size(Ti))
+		print "Ti = ", Ti 
+		phii = np.array([phii[posi]])
+		phii = phii.reshape(np.size(phii))%(2*np.pi)
+		print "phii = ", phii 
+		raw_input("Press Enter to continue...")	
+		#How many points:
+		npts = np.size(gindices)
+		#Num of dim:
+		n = 4
+		#Initiate A, xT, xTT, error, error00 matrices:
+		A = np.zeros(((n+2)*npts, (n+2)*npts))
+		xT = np.zeros((npts, n))
+	
+		error = np.zeros((npts, n))
+		error00 = np.zeros(npts*(n+2))
+		
+		#Dummy variables used in the adaptive block:
+		xTT = np.zeros(np.shape(xT))
+		xii = np.zeros(np.shape(xi))
+		Tii = np.zeros(np.shape(Ti))
+		phiii = np.zeros(np.shape(Ti))
+		errorr = np.zeros(np.shape(error))
+		
+		#Define maximum number of iterations:
+		itermax = 200
+		#Apply ChaosBook p294 (13.11) 
+		#with constraint nhat . Dx = 0
+		iteration=0
+		converged = False
+		earray = np.array([], float)
+		
+		while not(converged):
+			
+			print "xi"
+			print xi
+			
+			A = np.zeros(((n+2)*npts, (n+2)*npts))
+			for j in range(npts):
+				
+				xTj = twomode.ftau(xi[j], Ti[j])
+				xT[j, :] = xTj
+				
+				#Construct Aj matrix for each cycle element:
+				#Jacobian:
+				J = twomode.Jacobian(xi[j], Ti[j])
+				
+				#minusgvx term:
+				vx = np.array(twomode.vfullssp(xTj,0), float)
+				minusgvx = -np.dot(twomode.LieElement(phii[j]), vx)
+				minusgvx = minusgvx.reshape(-1,1)
+				
+				#minusTgfTx term:
+				minusTgfTx = np.dot(twomode.LieElement(phii[j]), xTj)
+				minusTgfTx = -np.dot(T, minusTgfTx)
+				minusTgfTx = minusTgfTx.reshape(-1,1)
+				
+				Aj = np.concatenate((-np.dot(twomode.LieElement(phii[j]), J), minusgvx), axis=1)
+				Aj = np.concatenate((Aj, minusTgfTx), axis=1)
+				
+				#nhat0 = np.append(nhat.reshape(-1,1), np.array([[0], [0]], float))
+				
+				#print nhat0
+				
+				Aj = np.concatenate((Aj, np.append(vx.reshape(-1,1), np.array([[0], [0]], float), axis=0).transpose()), axis=0)
+				#Aj = np.concatenate((Aj, np.append(nhat.reshape(-1,1), np.array([[0], [0]], float), axis=0).transpose()), axis=0)
+				#Aj = np.concatenate((Aj, np.append(tp.reshape(-1,1), np.array([[0], [0]], float), axis=0).transpose()), axis=0)		
+				tx = np.dot(T, xTj)
+				Aj = np.concatenate((Aj, np.append(tx.reshape(-1,1), np.array([[0], [0]], float), axis=0).transpose()), axis=0)		
+				
+				#print Aj
+	
+				A[j*(n+2):(j+1)*(n+2), j*(n+2):(j+1)*(n+2)] = Aj
+			
+				A[j*(n+2):j*(n+2)+n, ((j+1)%npts)*(n+2) : ((j+1)%npts)*(n+2) + n] = A[j*(n+2):j*(n+2)+n, ((j+1)%npts)*(n+2) : ((j+1)%npts)*(n+2) + n] + np.identity(n)
+			
+			for k in range(npts):
+				for l in range(npts):
+					print "A("+str(k)+", "+str(l)+")"
+					print A[k*(n+2):(k+1)*(n+2), l*(n+2):(l+1)*(n+2)]
+						
+			for j in range(npts):
+				
+				error[j, :] = xi[j] - np.dot(twomode.LieElement(phii[(j-1)%npts]), xT[(j-1)%npts,:])
+				error00[((j-1)%npts)*(n+2):((j-1)%npts + 1)*(n+2)] = np.append(error[j,:], np.array([0, 0]))
+			
+			print "error:"
+			print error
+			
+			earray = np.append(earray, np.max(np.abs(error)))
+						
+			Ainv = np.linalg.inv(A)
+			
+			print "Ainv.A"
+			print np.dot(Ainv, A)
+			#idntty = np.dot(Ainv, A)
+		
+			DxTphi = np.dot(Ainv, -error00)
+			
+			alpha = 1
+			iadaptive = 0
+			
+			if Adaptive:
+				
+				Converging = False
+				
+				while not(Converging):
+					
+					DxTphi = DxTphi*alpha
+					iadaptive += 1
+					print "iadaptive= ", iadaptive
+					print "alpha= ", alpha
+					
+					for j in range(npts):
+				
+						xii[j,:] = xi[j,:] + DxTphi[j*(n+2):j*(n+2)+n]
+						Tii[j] = Ti[j] + DxTphi[j*(n+2)+n]
+						phiii[j] = phii[j] + DxTphi[j*(n+2)+n+1]			
+					
+						xTT[j, :] = twomode.ftau(xii[j], Tii[j])
+		
+					for j in range(npts):
+						
+						errorr[j, :] = xii[j] - np.dot(twomode.LieElement(phiii[(j-1)%npts]), xTT[(j-1)%npts,:])
+					
+					emax = np.max(np.abs(errorr))
+					emaxprevious = earray[len(earray)-1]
+						
+					if  emax < emaxprevious:
+						
+						Converging = True
+					
+					elif iadaptive > iAdaptiveMax:
+						
+						print "Adaptive step failed, looks kinda hopeless."
+						AdaptiveFail = True
+						raw_input("Press Enter to continue...")	
+						break
+					
+					else:					
+						
+						alpha = float(alpha) / float(factor)
+						
+					
+	
+			for j in range(npts):
+				#print "j ="	
+				#print j	
+				#print "((j-1)%npts)*(n+2) ="
+				#print ((j-1)%npts)*(n+2)
+				xi[j,:] = xi[j,:] + DxTphi[j*(n+2):j*(n+2)+n]
+				#print "((j-1)%npts)*(n+2)+n ="
+				#print ((j-1)%npts)*(n+2)+n
+				Ti[j] = Ti[j] + DxTphi[j*(n+2)+n]
+				#print "((j-1)%npts)*(n+2)+n+1 ="
+				#print ((j-1)%npts)*(n+2)+n+1
+				phii[j] = phii[j] + DxTphi[j*(n+2)+n+1]
+	
+	
+			iteration += 1
+			
+			if np.max(np.abs(error)) < tol:
+			
+				xrpo[gindices, :] = xi
+				tofrpo[gindices] = Ti
+				phirpo[gindices] = phii
+				converged = True
+			
+			if iteration == itermax or AdaptiveFail:
+	
+				if AdaptiveFail:
+					
+					print "Adaptive step failed, looks kinda hopeless."
+				
+				print "did not converged in given maximum number of steps"
+				print "exitting..."
+				xrpo[gindices, :] = xi
+				tofrpo[gindices] = Ti
+				phirpo[gindices] = phii
+				break
+			
+		
+		print "x_rpo:"
+		print xrpo
+		print "T_rpo:"
+		print tofrpo
+		print "phi_rpo:"
+		print phirpo
+		
+		plot(np.arange(iteration), earray)
+		xlabel('Iteration')
+		ylabel('Error')
+		#savefig('image/errorrposearch'+str(i)+'.png', bbox_inches='tight', dpi=150)
+		#show()
+		
+		#raw_input("Press Enter to continue...")
 
 if plotPsect:
 	plot(ps2D[:,0], ps2D[:,1], '.')
@@ -169,8 +576,17 @@ if plotPsect:
 	show()
 
 if plotRetmap:
-	plot(sn, snplus1, '.')
+	plt.figure(1, figsize=(8,8))
+	srange = np.arange(np.min(sn), np.max(sn), np.max(sn)/50000)
+	plot(sn, snplus1, '.b')
 	plt.hold(True)
-	plot(xintRetMap, yintRetMap)
-	#plot(snint, snplus1int)
+	plot(xintRetMap, yintRetMap, 'k')
+	plot(srange, srange, 'g')
+	
+	#plt.figure(2, figsize=(8,8))
+	#sp3 = np.array([retmapm(5, sn) for sn in srange])
+	#plot(srange, sp3, 'b')
+	#plt.hold(True)
+	#plot(srange,srange,'g')
+	
 	show()
