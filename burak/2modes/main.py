@@ -21,11 +21,11 @@ computeSolution = False
 computePsect = False
 computeArcLengths = False
 computeRPO = False
-plotPsect = True
+plotPsect = False
 plotRetmap = True
 
 #Search parameters:
-m = 1 #Will search for [1,m]-cycles
+m = 3 #Will search for [1,m]-cycles
 
 #Only relative equilibrium:
 reqv = np.array([0.43996557973671596,
@@ -56,7 +56,7 @@ tp = np.dot(T,xp)
 			
 if computeSolution:
 	
-	tf = 4000;
+	tf = 8000;
 	dt = 0.001;
 	epsilon = 1e-3;
 	x0 = reqv+epsilon*unstabledir
@@ -169,7 +169,7 @@ if computeRPO:
 		for s0 in np.arange(smin, smax, (smax-smin)/50000):
 			fpoev = fpo(s0)
 			if fpoev * fpoevo < 0: #If there is a zero-crossing, look for the root:	
-				sc = newton(fpo, s0)
+				sc = newton(fpo, s0, tol=1.48e-12)
 				#print "sc = %f" %sc
 				newcandidate = 1
 				for j in range(np.size(scandidates,0)):
@@ -256,7 +256,7 @@ if computeRPO:
 		i0 = np.argmin(np.absolute(sn - s))
 		p0x = ps2D[i0,0]
 		
-		px = newton(fs2ps2D, p0x, args=(s,))
+		px = newton(fs2ps2D, p0x, args=(s,), tol=1e-12)
 		py = interpolate.splev(px, tckps)
 		
 		return np.array([px, py])
@@ -338,8 +338,8 @@ if computeRPO:
 	phiret = np.array([phireturn(pscandidates[i,:], TOF[i]) for i in range(np.size(TOF,0))], float)
 	print "phiret:"
 	print phiret
-	
-	Adaptive = True
+	raw_input("Press Enter to continue...")	
+	Adaptive = False
 	iAdaptiveMax = 20			
 	factor = 2
 	
@@ -583,10 +583,10 @@ if plotRetmap:
 	plot(xintRetMap, yintRetMap, 'k')
 	plot(srange, srange, 'g')
 	
-	#plt.figure(2, figsize=(8,8))
-	#sp3 = np.array([retmapm(5, sn) for sn in srange])
-	#plot(srange, sp3, 'b')
-	#plt.hold(True)
-	#plot(srange,srange,'g')
+	plt.figure(2, figsize=(8,8))
+	sp3 = np.array([retmapm(3, sn) for sn in srange])
+	plot(srange, sp3, 'b')
+	plt.hold(True)
+	plot(srange,srange,'g')
 	
 	show()
