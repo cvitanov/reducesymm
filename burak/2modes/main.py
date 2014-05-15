@@ -18,10 +18,10 @@ import twomode
 
 #Booleans:
 computeSolution = False
-computePsect = False
-computeArcLengths = False
+computePsect = True
+computeArcLengths = True
 computeRPO = False
-plotPsect = False
+plotPsect = True
 plotRetmap = True
 
 #Search parameters:
@@ -56,7 +56,7 @@ tp = np.dot(T,xp)
 			
 if computeSolution:
 	
-	tf = 8000;
+	tf = 1000;
 	dt = 0.001;
 	epsilon = 1e-3;
 	x0 = reqv+epsilon*unstabledir
