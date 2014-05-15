@@ -2,12 +2,14 @@
 	Main file to produce results that are going to be included in the 2modes paper
 	Not every calculation needs to be done at each run, data can be produced
 	and stored locally, see the booleans in line 18
+	
+	Requires numpy ver > 1.8
 """
 
 import numpy as np
 from scipy import interpolate, integrate
 from scipy.misc import derivative
-from scipy.optimize import newton, fsolve
+from scipy.optimize import newton, fsolve, fmin
 #Initiate plotting environment:
 import matplotlib as mpl
 from pylab import plot, xlabel, ylabel, show
@@ -18,14 +20,15 @@ import twomode
 
 #Booleans:
 computeSolution = False
-computePsect = True
-computeArcLengths = True
+computePsect = False
+computeArcLengths = False
+computeKneadingSequence = True
 computeRPO = False
-plotPsect = True
+plotPsect = False
 plotRetmap = True
 
 #Search parameters:
-m = 3 #Will search for [1,m]-cycles
+m = 1 #Will search for [1,m]-cycles
 
 #Only relative equilibrium:
 reqv = np.array([0.43996557973671596,
@@ -122,20 +125,29 @@ def psarclength(x):
 
 if computeArcLengths:
 	print 'Computing arclengths corresponding to data'
-	sn = np.array([psarclength(ps2D[i,0]) for i in range(np.size(ps2D,0))], float)
+	#Find the first data point for the Arclengths to discard the transients
+	iArcLength0 = np.argwhere(ps[:,0]>300)[0]
+	sn = np.array([psarclength(ps2D[i,0]) for i in 
+	range(iArcLength0, np.size(ps2D,0))], float)
+	snmin = np.min(sn)
+	snmax = np.max(sn) - snmin
+	sn = np.array([(sn[i] - snmin)/snmax for i in range(np.size(sn, 0))])
 	snplus1 = sn[1:]
 	sn = sn[0:-1]
 	RetMapData = np.array([sn, snplus1], float).transpose()
 	np.savetxt('data/RetMapData.dat', RetMapData)
+	snMinMax = [snmin, snmax]
+	np.savetxt('data/RetMapMinMax.dat', snMinMax)
 	
 if not('sn' in locals()):
 	RetMapData = np.loadtxt('data/RetMapData.dat')
+	snmin, snmax = np.loadtxt('data/RetMapMinMax.dat')
 	sn = RetMapData[:,0]
 	snplus1 = RetMapData[:,1]
 
 print 'Interpolating to the return map'
 isortRetMap = np.argsort(sn)
-tckRetMap = interpolate.splrep(sn[isortRetMap],snplus1[isortRetMap], k=3)
+tckRetMap = interpolate.splrep(sn[isortRetMap],snplus1[isortRetMap], k=1)
 dxintRetMap = (np.max(sn)-np.min(sn))/100000
 xintRetMap = np.arange(np.min(sn), np.max(sn), dxintRetMap)
 yintRetMap = interpolate.splev(xintRetMap, tckRetMap)
@@ -150,6 +162,20 @@ def retmapm(n, sn):
 	for i in range(n - 1):
 		snpn = retmap(snpn)
 	return	snpn
+
+if computeKneadingSequence:
+	print "Computing the kneading sequence"
+	nMax = 8;
+	sCritical = fmin(lambda x: -interpolate.splev(x, tckRetMap), 0.2)*0.98
+	print "Scritical:"
+	print sCritical
+	
+	KneadingSeq = np.copy(sCritical)
+	for i in range(nMax):
+		KneadingSeq=np.append(KneadingSeq, interpolate.splev(KneadingSeq[-1], tckRetMap))
+	
+	print "Kneading Sequence:"
+	print KneadingSeq
 
 if computeRPO:
 
@@ -256,7 +282,7 @@ if computeRPO:
 		i0 = np.argmin(np.absolute(sn - s))
 		p0x = ps2D[i0,0]
 		
-		px = newton(fs2ps2D, p0x, args=(s,), tol=1e-12)
+		px = newton(fs2ps2D, p0x, args=((s*snmax)+snmin,), tol=1e-12)
 		py = interpolate.splev(px, tckps)
 		
 		return np.array([px, py])
@@ -561,9 +587,9 @@ if computeRPO:
 		print "phi_rpo:"
 		print phirpo
 		
-		plot(np.arange(iteration), earray)
-		xlabel('Iteration')
-		ylabel('Error')
+		#plot(np.arange(iteration), earray)
+		#xlabel('Iteration')
+		#ylabel('Error')
 		#savefig('image/errorrposearch'+str(i)+'.png', bbox_inches='tight', dpi=150)
 		#show()
 		
@@ -576,17 +602,44 @@ if plotPsect:
 	show()
 
 if plotRetmap:
-	plt.figure(1, figsize=(8,8))
+	fig=plt.figure(1, figsize=(8,8))
 	srange = np.arange(np.min(sn), np.max(sn), np.max(sn)/50000)
-	plot(sn, snplus1, '.b')
+	plot(sn, snplus1, '.b', ms=10)
 	plt.hold(True)
-	plot(xintRetMap, yintRetMap, 'k')
-	plot(srange, srange, 'g')
+	plot(xintRetMap, yintRetMap, 'k', lw=2)
+	plot(srange, srange, 'g', lw=2)
 	
-	plt.figure(2, figsize=(8,8))
-	sp3 = np.array([retmapm(3, sn) for sn in srange])
-	plot(srange, sp3, 'b')
-	plt.hold(True)
-	plot(srange,srange,'g')
+	for i in range(np.size(KneadingSeq,0)-2):
+		pair1 = [KneadingSeq[i], KneadingSeq[i+1]]
+		pair2 = [KneadingSeq[i+1], KneadingSeq[i+2]]
+		plot(np.linspace(min(pair1), max(pair1), 10), 
+			[pair1[1] for k in range(10)], '--r', lw=1.5)
+		plot([pair2[0] for k in range(10)],
+			np.linspace(min(pair2), max(pair2), 10), '--r', lw=1.5)
+		
+			
+	
+	#plot(srange, [0.825 for  i in range(np.size(srange,0))], 'r')
+	ax = fig.gca()
+	ax.set_aspect('equal')
+	ax.set_xlim(0,1)
+	ax.set_ylim(0,1)
+	ax.set_xlabel('$s_n$', fontsize=24)
+	ax.set_ylabel('$s_{n+1}$', fontsize=24)
+	Nticks = 5
+
+	xticks = np.linspace(0, 1, Nticks)
+	ax.set_xticks(xticks)
+	ax.set_xticklabels(["$%.1f$" % xtik for xtik in xticks], fontsize=16); # use LaTeX formatted labels
+
+	yticks = np.linspace(0, 1, Nticks)
+	ax.set_yticks(yticks)
+	ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=16); # use LaTeX formatted labels
+	
+	#plt.figure(2, figsize=(8,8))
+	#sp3 = np.array([retmapm(3, sn) for sn in srange])
+	#plot(srange, sp3, 'b')
+	#plt.hold(True)
+	#plot(srange,srange,'g')
 	
 	show()
