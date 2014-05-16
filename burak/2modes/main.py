@@ -12,9 +12,10 @@ from scipy.misc import derivative
 from scipy.optimize import newton, fsolve, fmin
 #Initiate plotting environment:
 import matplotlib as mpl
-from pylab import plot, xlabel, ylabel, show
+from pylab import plot, xlabel, ylabel, show, savefig
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
+from subprocess import call
 #Import twomode system module
 import twomode 
 
@@ -22,10 +23,10 @@ import twomode
 computeSolution = False
 computePsect = False
 computeArcLengths = False
-computeKneadingSequence = True
+computeKneadingSequence = False
 computeRPO = False
-plotPsect = False
-plotRetmap = True
+plotPsect = True
+plotRetmap = False
 
 #Search parameters:
 m = 1 #Will search for [1,m]-cycles
@@ -165,7 +166,7 @@ def retmapm(n, sn):
 
 if computeKneadingSequence:
 	print "Computing the kneading sequence"
-	nMax = 8;
+	nMax = 9;
 	sCritical = fmin(lambda x: -interpolate.splev(x, tckRetMap), 0.2)*0.98
 	print "Scritical:"
 	print sCritical
@@ -596,9 +597,27 @@ if computeRPO:
 		#raw_input("Press Enter to continue...")
 
 if plotPsect:
-	plot(ps2D[:,0], ps2D[:,1], '.')
+	fig=plt.figure(1, figsize=(8,8))
+	plot(ps2D[:,0], ps2D[:,1], '.b', ms=10)
 	plt.hold(True)
-	plot(xintps, yintps)
+	plot(xintps, yintps, 'k', lw=2)
+	ax=fig.gca()
+	#ax.set_aspect('equal')
+	ax.set_xlabel('$v_1$', fontsize=24)
+	ax.set_ylabel('$v_{2 \quad (\\times 100)}$', fontsize=24)
+	Nticks=5
+	xticks = np.linspace(min(ps2D[:,0]), max(ps2D[:,0]), Nticks)
+	ax.set_xticks(xticks)
+	ax.set_xticklabels(["$%.1f$" % xtik for xtik in xticks], fontsize=16); 
+	yticks = np.linspace(min(ps2D[:,1]), max(ps2D[:,1]), Nticks)
+	ax.set_yticks(yticks)
+	#plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
+	yticks=yticks*100
+	ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=16); 	
+	
+	savefig('Psect.pdf', bbox_inches='tight', dpi=100)	
+	call(["pdfcrop", "Psect.pdf", "Psect.pdf"])
+	
 	show()
 
 if plotRetmap:
@@ -630,16 +649,19 @@ if plotRetmap:
 
 	xticks = np.linspace(0, 1, Nticks)
 	ax.set_xticks(xticks)
-	ax.set_xticklabels(["$%.1f$" % xtik for xtik in xticks], fontsize=16); # use LaTeX formatted labels
+	ax.set_xticklabels(["$%.1f$" % xtik for xtik in xticks], fontsize=16); 
 
 	yticks = np.linspace(0, 1, Nticks)
 	ax.set_yticks(yticks)
-	ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=16); # use LaTeX formatted labels
+	ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=16); 
 	
 	#plt.figure(2, figsize=(8,8))
 	#sp3 = np.array([retmapm(3, sn) for sn in srange])
 	#plot(srange, sp3, 'b')
 	#plt.hold(True)
 	#plot(srange,srange,'g')
+	
+	savefig('RetMap.pdf', bbox_inches='tight', dpi=100)	
+	call(["pdfcrop", "RetMap.pdf", "RetMap.pdf"])
 	
 	show()
