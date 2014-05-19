@@ -23,9 +23,8 @@ import twomode
 computeSolution = False
 computePsect = False
 computeArcLengths = False
-computeKneadingSequence = False
 computeRPO = False
-plotPsect = True
+plotPsect = False
 plotRetmap = False
 
 #Search parameters:
@@ -164,20 +163,78 @@ def retmapm(n, sn):
 		snpn = retmap(snpn)
 	return	snpn
 
-if computeKneadingSequence:
-	print "Computing the kneading sequence"
-	nMax = 9;
-	sCritical = fmin(lambda x: -interpolate.splev(x, tckRetMap), 0.2)*0.98
-	print "Scritical:"
-	print sCritical
-	
-	KneadingSeq = np.copy(sCritical)
-	for i in range(nMax):
-		KneadingSeq=np.append(KneadingSeq, interpolate.splev(KneadingSeq[-1], tckRetMap))
-	
-	print "Kneading Sequence:"
-	print KneadingSeq
+print "Computing the kneading sequence"
+nMax = 20;
+sCritical = fmin(lambda x: -interpolate.splev(x, tckRetMap), 0.2)
+print "Scritical:"
+print sCritical
 
+Kneading = np.copy(sCritical)
+KneadingSequence = ''
+KneadingValueBin = '0.'
+KneadingValue = 0
+for i in range(nMax):
+	xnext = retmap(Kneading[-1])
+	Kneading=np.append(Kneading, xnext)
+	if xnext > sCritical:
+		KneadingSequence = KneadingSequence+'1'
+		if i == 0:
+			KneadingValueBin = KneadingValueBin+'1'
+		else:
+			KneadingValueBin = KneadingValueBin+str(int(not(int(KneadingValueBin[-1]))))
+	else:
+		KneadingSequence = KneadingSequence+'0'
+		if i == 0:
+			KneadingValueBin = KneadingValueBin+'0'
+		else:
+			KneadingValueBin = KneadingValueBin+KneadingValueBin[-1]
+			
+	KneadingValue = KneadingValue + (int(KneadingValueBin[-1])*0.5)**(i+1)
+print "Kneading:"
+print Kneading
+print "Kneading Sequence:"
+print KneadingSequence
+print "Kneading Value (binary):"
+print KneadingValueBin
+print "Kneading Value (real):"
+print KneadingValue
+
+def Itinerary(s, n):
+	"""
+	Compute future itinerary of a point s on the return map
+	"""
+	itinerary = ''
+	for i in range(n):
+		s = retmap(s)
+		if s>sCritical:
+			itinerary = itinerary + '1'
+		elif s<sCritical:
+			itinerary = itinerary + '0'
+	return itinerary
+
+def Splus2gamma(itinerary):
+	gamma = 0
+	for i in range(len(itinerary)):
+		if i == 0:
+			gammaBin = '0.'+itinerary[i]
+		elif itinerary[i]=='0':
+			gammaBin = gammaBin + gammaBin[-1]
+		elif itinerary[i]=='1':
+			gammaBin = gammaBin + str(int(not(int(gammaBin[-1]))))		
+		gamma = gamma + (int(gammaBin[-1])*0.5)**(i+1)
+	return gamma, gammaBin
+	
+def TopologicalCoordinate(x, n):
+	"""
+	Compute topological coordinate of a point in the return map
+	"""
+	itinerary = Itinerary(x,n)
+	gamma, gammaBin = Splus2gamma(itinerary)
+	return gamma
+
+print "Kneading value fun:"
+print TopologicalCoordinate(sCritical, 8)
+	
 if computeRPO:
 
 	#Look upto the mth return map to find the periodic orbit candidates:
@@ -616,7 +673,7 @@ if plotPsect:
 	ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=16); 	
 	
 	savefig('Psect.pdf', bbox_inches='tight', dpi=100)	
-	call(["pdfcrop", "Psect.pdf", "Psect.pdf"])
+	call(["pdfcrop", "Psect.pdf", "Psect.pdf"], shell=True)
 	
 	show()
 
@@ -628,9 +685,9 @@ if plotRetmap:
 	plot(xintRetMap, yintRetMap, 'k', lw=2)
 	plot(srange, srange, 'g', lw=2)
 	
-	for i in range(np.size(KneadingSeq,0)-2):
-		pair1 = [KneadingSeq[i], KneadingSeq[i+1]]
-		pair2 = [KneadingSeq[i+1], KneadingSeq[i+2]]
+	for i in range(np.size(Kneading,0)-2):
+		pair1 = [Kneading[i], Kneading[i+1]]
+		pair2 = [Kneading[i+1], Kneading[i+2]]
 		plot(np.linspace(min(pair1), max(pair1), 10), 
 			[pair1[1] for k in range(10)], '--r', lw=1.5)
 		plot([pair2[0] for k in range(10)],
@@ -662,6 +719,6 @@ if plotRetmap:
 	#plot(srange,srange,'g')
 	
 	savefig('RetMap.pdf', bbox_inches='tight', dpi=100)	
-	call(["pdfcrop", "RetMap.pdf", "RetMap.pdf"])
+	call(["pdfcrop", "RetMap.pdf", "RetMap.pdf"], shell=True)
 	
 	show()
