@@ -66,9 +66,9 @@ map $\sspRed (t)$ to the full \statesp\ by the group action $\LieEl(\theta(t))$.
 While this definition puts no restriction on the shape of the
 \slice, it also provides no guidance on how to construct it.
 In practice, a local approximation of the slice in the neighborhood of a point called a \emph{\slicePlane}
-can be constructed by using the point as \emph{\template\ }$\slicep$. The \slicePlane\ is then defined as the hyperplane
+can be constructed by using the point $\slicep$ as \emph{\template\ }. The \slicePlane\ is then defined as the hyperplane
 that contains $\slicep$ and is perpendicular to its group tangent $\sliceTan{} = \Lg \slicep$.
-The relationship between \slicePlane s, \template s and reduced trajectories are illustrated schematically in \reffig{f-ReducTraj1}.\DB{05.16.2014}{This is a comment for \reffig{f-ReducTraj1}. Formally, the two trajectories belong to the same \emph{wurst}, not the same group orbit. What terminology are we going to use going forward? Are we still happy with wurst or have we moved on?}
+The relationships between \slicePlane s, \template s and reduced trajectories are illustrated schematically in \reffig{f-ReducTraj1}.\DB{05.16.2014}{This is a comment for \reffig{f-ReducTraj1}. Formally, the two trajectories belong to the same \emph{wurst}, not the same group orbit. What terminology are we going to use going forward? Are we still happy with wurst or have we moved on?}
 
 %% ReducTraj*.* - read dasbuch/book/FigSrc/inkscape/00ReadMe.txt
 \begin{figure}
@@ -146,13 +146,13 @@ as the \emph{\sliceBord}.
 %$T(1)$; here we shall focus on the $\SOn{2}$ case.
 
 So far, we have not put any constraints on the symmetry group that we are quotienting, 
-other than the requirement that it be Abelian.
+beyond the requirement that it be Abelian.
 From here on, we restrict our discussion to 1-parameter compact $\SOn{2}$
 rotations that arise in spatially extended systems. \DBedit{In order to construct
 a representation for $\SOn{2}$} \DB{}{What are we trying to say exactly here?} let us take a Fourier series expansion of
 a real valued smooth periodic function:
 \beq
-	a(x,\zeit) = \sum\limits_{k=- \infty}^\infty a_k\left(\zeit\right) e^{i k x}, \,\,\,a_k = x_k + i y_k.
+	u(x,\zeit) = \sum\limits_{k=- \infty}^\infty u_k\left(\zeit\right) e^{i k x}, \,\,\,u_k = x_k + i y_k.
 \ee{FourierSeries}
 Truncating the expansion to $m$ modes, we
 write the real and imaginary parts of the Fourier coefficients with
@@ -208,36 +208,30 @@ The \slice\ condition \refeq{SliceCond} then constraints points on the reduced t
 \beq
 	\sspRed = (\hat{x}_1, 0, \hat{x}_2, \hat{y}_2, ..., \hat{x}_m, \hat{y}_m) .
 \ee{slicetemp}
-In order to satisfy the requirement that group orbits cross the \slice\ once and only once, we also restrict the \slicePlane\ to the half-space where $\hat{x}_1 > 0$. Without this requirement group orbits would pierce the \slicePlane\ twice. A \slicePlane\ can be constructed in this manner for any choice of template, allowing the symmetry reduction of the dynamics in a neighborhood bounded by the \sliceBord\ \refeq{ChartBordCond}. The power of choosing template \refeq{firstmodetemp} becomes apparent by analyzing the border of its \slicePlane. The points on the \refeq{slicetemp} only lie on the \sliceBord\ if $\hat{x}_1 = 0$. This means that as long the dynamics are such that the magnitude of the first mode never vanishes, \emph{every} group orbit is guaranteed to have a unique representative point on the \slicePlane.
+In order to satisfy the requirement that group orbits cross the \slice\ once and only once, we also restrict the \slicePlane\ to the half-space where $\hat{x}_1 > 0$. Without this requirement group orbits would pierce the \slicePlane\ twice. In general, a \slicePlane\ can be constructed by following a similar procedure for any choice of \template, allowing the symmetry reduction of the dynamics in a neighborhood of the \template\ bounded by the \sliceBord\ \refeq{ChartBordCond}. However, the power of choosing template \refeq{firstmodetemp} becomes apparent by analyzing the border of its \slicePlane. The points on \refeq{slicetemp} only lie on the \sliceBord\ if $\hat{x}_1 = 0$. This means that as long the dynamics are such that the magnitude of the first mode never vanishes, \emph{every} group orbit is guaranteed to have a unique representative point on the \slicePlane.
 
 \footnote{Note that, in general, any template of the form $\slicep = (\hat{x}'_1, \hat{y}'_1, 0,...,0)$ would work just as well since the first mode has the symmetry of a circle. We picked the \slice\ \template\
 \refeq{firstmodetemp} for computational convenience.} 
 %
 
-The \template\ \refeq{firstmodetemp} for $\SOn{2}$ was introduced in \refref{BudCvi14}
-and is different than the ones that were used in the previous implementations
-\rf{rowley_reconstruction_2000,BeTh04,SiCvi10,FrCv11,atlas12,ACHKW11}
-of the \mslices, in the sense that it is solely geometrical and it does
-not necessarily carry any information about the dynamics. More insight is
-gained by writing the reduced evolution equations \refeq{eq:so2reduced}
+The \template\ \refeq{firstmodetemp} for $\SOn{2}$ was introduced by Budanur \etal~\rf{BudCvi14}
+and is different from those used in the previous implementations
+of the \mslices,\rf{rowley_reconstruction_2000,BeTh04,SiCvi10,FrCv11,atlas12,ACHKW11} in the sense that it is solely geometrical and it does
+not necessarily carry any information about the dynamics. More insight can be
+gained by writing the symmetry-reduced evolution equations \refeq{eq:so2reduced}
 explicitly for the template \refeq{firstmodetemp}:
 \bea
 \velRed ( \sspRed )          &=& \vel(\sspRed)
-   - \frac{\vel(\sspRed)_2}{\sspRed_1} \, \groupTan(\sspRed)
+   - \frac{\dot{y}_1\left(\sspRed\right)}{\hat{x}_1} \, \groupTan(\sspRed)
 \label{e-so2red1stmode}
 \,.
 \eea
-\ES{2014-05-15}{$\vel(\sspRed)_2$ has not been introduced and is very confusing. I would suggest
-using the notation of BudCvi14.tex: state space point is $a$, real variables are
-$x_i$ and $y_i$ and right velocity components explicitly.
-}
-In order to regulate the near-divergent behavior of the velocity function
-in \refeq{e-so2red1stmode} close to $\sspRed_1 = \sspRed_2 = 0$, rescaled time variable
-$d \tau = dt / \sspRed_1$ was defined in \refref{BudCvi14}. While rescaling
-time is essential for resolving the orbits during close passages to
-$\sspRed_1 = 0$, in the study of the \twoMode\ system, we will omit this
-step since the vanishing 1st mode corresponds to the invariant subspace of
-the flow and hence is never visited by the dynamics.
+
+
+In general, one must be careful when the dynamics approach the \slice\ border $\hat{x}_1 = 0$. When this happens 
+the near-divergence of $\velRed$ can be regularized by introducing a rescaled time coordinate such that
+$d\hat{\zeit} = d\zeit / \hat{x}_1$.\rf{BudCvi14} However, in our study of the \twoMode\ system, we omit this
+step since points with a vanishing first mode correspond to an invariant subspace of the flow and hence are never visited by the dynamics.
 
 \subsection{Postproccessing approach}
 \label{s-slice2modes}
