@@ -11,8 +11,9 @@
 #include <vector>
 #include <list>
 #include <cmath>
-#include "gsl/gsl_multimin.h"
-#include "gsl/gsl_math.h"
+#include <nag.h>
+#include <nage04.h>
+#include <nag_stdlib.h>
 
 using std::cout;
 using std::endl;
@@ -60,22 +61,11 @@ class LorentzGasElCells
 {
 private:
     static const int mNdim = 2;
-    
-    // gsl params and variables
-    static const int mMaxIters = 200;
-    static constexpr double mAbsTol = 1e-8;
-    const gsl_multimin_fminimizer_type * mType;
-    gsl_multimin_fminimizer * mSystem;
-    gsl_vector * mStep;
-    gsl_vector * mXvec;
-    gsl_multimin_function mGslFunc;
-
-    int nSyms;
+    int mNsyms;
     iveclist mSymbols; // initial list of symbols
     vector<int>* mPtrCurSymbols; // to be used internally with pathLength
     iveclist mLabels; // final list of symbols
     dveclist mThetas; // final list of thetas
-
 
     // geometric params
     const double mRadius = 1;
@@ -85,21 +75,23 @@ private:
     // internal functions 
     bool pruneRule(const vector<int>& curSymbols);
     bool testLink();
-    double pathLength(const gsl_vector * x);
+    double pathLength(const double* x);
 public:
     void init(int n);
     void mainLoop();
     LorentzGasElCells();
     ~LorentzGasElCells() {};
     // for calling the gsl routine
-    static double minSrchFunc(const gsl_vector * x, void * params)
+    static void minSrchFunc(Integer n, const double *xc, double *fc, Nag_Comm* comm)
     {
-       return static_cast<LorentzGasElCells*>(params)->pathLength(x);
+        // n is not used here because we internnaly recorded
+        *fc = static_cast<LorentzGasElCells*>(comm->p)->pathLength(xc);
     };
 };
 
-LorentzGasElCells::LorentzGasElCells(): mType(gsl_multimin_fminimizer_nmsimplex2), mStep(nullptr), mXvec(nullptr), nSyms(0)
+LorentzGasElCells::LorentzGasElCells(): mNsyms(0)
 {
+    const double M_SQRT3 = 1.73205080756887729352744634151;
     mCenterListX.resize(12);
     mCenterListY.resize(12);
     const double distEven = 2 * mRadius + mWidth;
@@ -122,7 +114,7 @@ bool LorentzGasElCells::pruneRule(const vector<int>& curSymbols)
 
 void LorentzGasElCells::init(int n)
 {
-    nSyms = n;
+    mNsyms = n;
     // generate length n topolotical cycle out of 12 symbols
     genNecklace(n, 12, mSymbols);
     mSymbols.remove_if([this](const vector<int>& curSymbols){return pruneRule(curSymbols);});
@@ -133,24 +125,17 @@ void LorentzGasElCells::init(int n)
     }
     */
     // the path depend on Ndim * n variables
-    mXvec = gsl_vector_alloc(n);
-    mStep = gsl_vector_alloc(n);
-    gsl_vector_set_all (mStep, 0.1);
-    mGslFunc.n = n;
-    mGslFunc.f = minSrchFunc;
-    mGslFunc.params = static_cast<void*>(this);
-    mSystem = gsl_multimin_fminimizer_alloc(mType, n);
 }
 
 // this is going to be our path function
 // depends on internal symbol list
-double LorentzGasElCells::pathLength(const gsl_vector * thetas)
+double LorentzGasElCells::pathLength(const double * thetas)
 {
     double sLength = 0;
     int idx = 0;
-    vector<double> thvec(nSyms + 1, gsl_vector_get(thetas, 0));
-    thvec.assign(thetas->data, thetas->data + nSyms);
-    for (; idx < nSyms; ++idx)
+    vector<double> thvec(mNsyms + 1, thetas[0]);
+    thvec.assign(thetas, thetas + mNsyms);
+    for (; idx < mNsyms; ++idx)
     {
         // do sth, according to symbols
         int tmpidx = (*mPtrCurSymbols)[idx]; 
@@ -163,38 +148,49 @@ double LorentzGasElCells::pathLength(const gsl_vector * thetas)
         sLength = sLength + tmpLength;
 
     }
+    sLength = (thetas[0] - 2) * (thetas[0] - 2) + (thetas[1] - 1) * (thetas[1] - 1);
     return sLength;
+}
+
+void monit(const Nag_Search_State *st, Nag_Comm *comm)
+{
+    cout << st->iter << endl;
 }
 
 void LorentzGasElCells::mainLoop()
 {
+    NagError fail;
+    Nag_Comm comm;
+    Nag_E04_Opt options;
+    double objf, *x;
+    vector<double> xvec(mNsyms, 0.0);
+    x = &xvec[0];
+
+    INIT_FAIL(fail);
+    // automatically initialized;
+    nag_opt_init(&options);
+    options.print_fun = monit;
+    nag_opt_read("e04ccc", "config.txt", &options, Nag_TRUE, "stdout", &fail);
+    if (fail.code != NE_NOERROR)
+    {
+        cout << fail.message << endl;
+        return;
+    }
+    comm.p = static_cast<void*>(this);
     for (auto& pSymbol : mSymbols)
     {
         cout << "current symbols: " << pSymbol << endl;
         // set the current symbol to evaluate
-        mPtrCurSymbols = &pSymbol;
-        gsl_multimin_fminimizer_set(mSystem, &mGslFunc, mXvec, mStep);
-        // search a solution for each of the symbol sequences in the list
-        int iters = 0;
-        int status;
-        do
-        {
-            ++iters;
-            status = gsl_multimin_fminimizer_iterate(mSystem);
-            if (status)
-                break;
-            double size = gsl_multimin_fminimizer_size (mSystem);
-            status = gsl_multimin_test_size (size, mAbsTol);
-        } while (status == GSL_CONTINUE && iters < mMaxIters);
-        if (status == GSL_SUCCESS || status == GSL_CONTINUE)
+        nag_opt_simplex(mNsyms, minSrchFunc, x, &objf, &options, NAGCOMM_NULL, &fail);
+        cout << "done" << endl;
+        if (fail.code == NE_NOERROR)
         {
 
-            const int nVars =  mGslFunc.n;
-            vector<double> tmpvec(nVars);
+            vector<double> tmpvec(mNsyms);
             int i = 0;
-            for ( ; i < nVars; ++i)
+            for ( ; i < mNsyms; ++i)
             {
-                tmpvec[i] = gsl_vector_get(mSystem->x, i);
+                tmpvec[i] = x[i];
             }
             mLabels.push_back(pSymbol);
             mThetas.push_back(tmpvec);

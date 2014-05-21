@@ -1,24 +1,25 @@
-IDIR = /usr/local/include
+IDIR = /opt/NAG/clmi623dgl/include
 CXX = clang++
 CFLAGS = -I$(IDIR)
+LFLAGS = -L$(LDIR)
 
 ODIR = obj
-LDIR = /usr/local/lib
+LDIR = /opt/NAG/clmi623dgl/lib
 
-LIBS = -lgsl -lgslcblas
+LIBS = -lnagc_nag
 
 _DEPS = 
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = main.o 
+_OBJ = main_nag.o 
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 
 $(ODIR)/%.o: %.cpp $(DEPS)
-	$(CXX) -std=c++11 -c -o $@ $< $(CFLAGS)
+	$(CXX) -std=c++11 -c -g -o $@ $< $(CFLAGS)
 
 maintarget: $(OBJ)
-	$(CXX) -o $@ $^ $(CFLAGS) $(LIBS)
+	$(CXX) -o $@ $^ $(CFLAGS) $(LFLAGS) $(LIBS)
 
 .PHONY: clean
 
