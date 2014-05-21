@@ -7,6 +7,8 @@
 //
 
 #include <iostream>
+#include <iomanip>
+#include <fstream>
 #include <string>
 #include <vector>
 #include <list>
@@ -59,7 +61,30 @@ void genNecklace(int n, int k, iveclist& out)
 
 class LorentzGasElCells
 {
+    template<typename T>
+    class Vector2D
+    {
+    public:
+        T x;
+        T y;
+        Vector2D() : x(T(0)), y(T(0)) {};
+        Vector2D(T xx) : x(xx), y(xx) {};
+        Vector2D(T xx, T yy) : x(xx), y(yy) {};
+        T magnitude() const { return sqrt(x * x + y * y); };
+        void normalize() { T mag = magnitude(); if (mag) *this *= 1 / mag; };
+        T dot(const Vector2D<T> &v) const { return x * v.x + y * v.y; };
+        Vector2D operator + (const Vector2D<T> &v) const { return Vector2D<T>(x + v.x, y + v.y); };
+        Vector2D operator * (const T &val) const { return Vector2D<T>(x * val, y * val); };
+        Vector2D operator / (const T &val) const { T invVal = T(1) / val; return Vector2D<T>(x * invVal, y * invVal); };
+        Vector2D operator / (const Vector2D<T> &v) const { return Vector2D<T>(x / v.x, y / v.y); };
+        Vector2D operator * (const Vector2D<T> &v) const { return Vector2D<T>(x * v.x, y * v.y); };
+        Vector2D operator - (const Vector2D<T> &v) const { return Vector2D<T>(x - v.x, y - v.y); };
+        Vector2D operator - () const { return Vector2D<T>(-x, -y); }
+        Vector2D& operator *= (const T &val) { x *= val; y *= val; return *this; };
+    };
+    typedef Vector2D<double> vec2;
 private:
+    std::ofstream myFile;
     static const int mNdim = 2;
     int mNsyms;
     iveclist mSymbols; // initial list of symbols
@@ -70,11 +95,12 @@ private:
     // geometric params
     const double mRadius = 1;
     const double mWidth = 0.3;
+    vector<vec2> mCenterList;
     vector<double> mCenterListX;
     vector<double> mCenterListY;
     // internal functions 
     bool pruneRule(const vector<int>& curSymbols);
-    bool testLink();
+    bool testLink(const vector<int>& curSymbols, const vector<double>& thetas);
     double pathLength(const double* x);
 public:
     void init(int n);
@@ -85,12 +111,13 @@ public:
     static void minSrchFunc(Integer n, const double *xc, double *fc, Nag_Comm* comm)
     {
         // n is not used here because we internnaly recorded
-        *fc = static_cast<LorentzGasElCells*>(comm->p)->pathLength(xc);
+        *fc = reinterpret_cast<LorentzGasElCells*>(comm->p)->pathLength(xc);
     };
 };
 
 LorentzGasElCells::LorentzGasElCells(): mNsyms(0)
 {
+    myFile.open("output.txt");
     const double M_SQRT3 = 1.73205080756887729352744634151;
     mCenterListX.resize(12);
     mCenterListY.resize(12);
@@ -109,6 +136,18 @@ LorentzGasElCells::LorentzGasElCells(): mNsyms(0)
 bool LorentzGasElCells::pruneRule(const vector<int>& curSymbols)
 {
     // do sth to the mSymbols;
+    vector<int> sbvec(mNsyms + 1, curSymbols[0]);
+    sbvec.assign(curSymbols.begin(), curSymbols.end());
+    int i = 0;
+    for( ; i < mNsyms; ++i)
+    {
+        if (sbvec[i] == sbvec[i + 1])
+            return true;
+        if (sbvec[i] % 2 == 0 && abs(sbvec[i + 1] - sbvec[i]) < 2)
+            return true;
+        if (sbvec[i] % 2 == 1 && abs(sbvec[i + 1] - sbvec[i]) < 3)
+            return true;
+    }
     return false;
 }
 
@@ -132,9 +171,9 @@ void LorentzGasElCells::init(int n)
 double LorentzGasElCells::pathLength(const double * thetas)
 {
     double sLength = 0;
-    int idx = 0;
     vector<double> thvec(mNsyms + 1, thetas[0]);
     thvec.assign(thetas, thetas + mNsyms);
+    int idx = 0;
     for (; idx < mNsyms; ++idx)
     {
         // do sth, according to symbols
@@ -148,13 +187,84 @@ double LorentzGasElCells::pathLength(const double * thetas)
         sLength = sLength + tmpLength;
 
     }
-    sLength = (thetas[0] - 2) * (thetas[0] - 2) + (thetas[1] - 1) * (thetas[1] - 1);
     return sLength;
 }
 
-void monit(const Nag_Search_State *st, Nag_Comm *comm)
+/*
+static void minSrchFuncTest(Integer n, const double *xc, double *fc, Nag_Comm* comm)
 {
-    cout << st->iter << endl;
+    // n is not used here because we internnaly recorded
+    *fc = exp(xc[0]) * (xc[0] * 4.0 * (xc[0] + xc[1]) +
+                        xc[1] * 2.0 * (xc[1] + 1.0) + 1.0);
+};
+*/
+
+bool LorentzGasElCells::testLink(const vector<int>& curSymbols, const vector<double>& thetas)
+{
+    // loop assignment
+    vector<double> thvec(mNsyms + 1, thetas[0]);
+    thvec.assign(thetas.begin(), thetas.end());
+    vector<int> sbvec(mNsyms + 1, curSymbols[0]);
+    sbvec.assign(curSymbols.begin(), curSymbols.end());
+    int idx = 0;
+    for(; idx < mNsyms; ++idx)
+    {
+        int sbl = sbvec[idx]; 
+        vector<vec2> dkList(4);
+        dkList[0] = vec2();
+        dkList[1] = vec2(mCenterListX[sbl], mCenterListY[sbl]);
+        // with tmpidx we can find the seperation of the two disks for the next bounce
+        vec2 pt1(mRadius * cos(thvec[idx]), mRadius * sin(thvec[idx]));
+        vec2 pt2(mRadius * cos(thvec[idx + 1]), mRadius * sin(thvec[idx + 1]));
+        vec2 segHat = dkList[1] + pt2 - pt1;
+        double segLength = segHat.magnitude();
+        segHat.normalize();
+        vector<vec2> crList(4);
+        crList[0] = -pt1;
+        crList[1] = dkList[1] - pt1;
+        auto mod = [](int a, int b) { int m = a % b; return m < 0 ? m + b : m;};
+        int i2, i3;
+        if(sbl % 2 == 1)
+        {
+            i2 = mod(sbl - 1, 12);
+            i3 = mod(sbl + 1, 12);
+        }
+        else
+        {
+            i2 = mod(sbl - 2, 12);
+            i3 = mod(sbl + 2, 12);
+        }
+        dkList[2] = vec2(mCenterListX[i2], mCenterListY[i2]);
+        dkList[3] = vec2(mCenterListX[i3], mCenterListY[i3]);
+        crList[2] = dkList[2] - pt1;
+        crList[3] = dkList[3] - pt1;
+        int lidx = 0;
+        for(; lidx < 4; ++lidx)
+        {
+            double projLength = segHat.dot(crList[lidx]);
+            if (projLength <= 0 || projLength >= segLength);
+            else
+            {
+                vec2 projVec = segHat * projLength;
+                vec2 distVec = pt1 + projVec - dkList[lidx];
+                double distVert = distVec.magnitude();
+                if (distVert < mRadius)
+                {
+                    /*
+                    cout << "debug: neigh disk symbosl: ";
+                    cout << idx << " " << i2 << " " << i3 << endl;
+                    cout << "debug: problem disk: ";
+                    cout << lidx << " " << distVert << " " << projLength << " " << segLength << endl;
+                    cout << "debug: other: ";
+                    cout << curSymbols << " " << thetas << endl;
+                    */
+                    return false;
+                }
+            }
+        }
+    }
+
+    return true;
 }
 
 void LorentzGasElCells::mainLoop()
@@ -165,25 +275,25 @@ void LorentzGasElCells::mainLoop()
     double objf, *x;
     vector<double> xvec(mNsyms, 0.0);
     x = &xvec[0];
-
     INIT_FAIL(fail);
     // automatically initialized;
     nag_opt_init(&options);
-    options.print_fun = monit;
-    nag_opt_read("e04ccc", "config.txt", &options, Nag_TRUE, "stdout", &fail);
+    // options.print_fun = monit;
+    options.print_level = Nag_NoPrint;
+    nag_opt_read("e04ccc", "config.txt", &options, Nag_FALSE, "stdout", &fail);
     if (fail.code != NE_NOERROR)
     {
         cout << fail.message << endl;
         return;
     }
-    comm.p = static_cast<void*>(this);
+    comm.p = reinterpret_cast<void*>(this);
     for (auto& pSymbol : mSymbols)
     {
-        cout << "current symbols: " << pSymbol << endl;
+        mPtrCurSymbols = &pSymbol;
+        xvec.assign(mNsyms, 0.0);
         // set the current symbol to evaluate
-        nag_opt_simplex(mNsyms, minSrchFunc, x, &objf, &options, NAGCOMM_NULL, &fail);
-        cout << "done" << endl;
-        if (fail.code == NE_NOERROR)
+        nag_opt_simplex(mNsyms, minSrchFunc, x, &objf, &options, &comm, &fail);
+        if (fail.code == NE_NOERROR && testLink(pSymbol, xvec))
         {
 
             vector<double> tmpvec(mNsyms);
@@ -194,7 +304,10 @@ void LorentzGasElCells::mainLoop()
             }
             mLabels.push_back(pSymbol);
             mThetas.push_back(tmpvec);
+            cout << "current symbols: " << pSymbol << " ";
             cout << tmpvec << endl;
+            myFile << pSymbol << " ";
+            myFile << std::fixed << std::setprecision(14) << tmpvec << endl;
         }
         // check if it is a physically valid solution by testing intersection
         // store the solution and symbol sequence as well
@@ -205,9 +318,11 @@ void LorentzGasElCells::mainLoop()
 int main(int argc, const char * argv[])
 {
     LorentzGasElCells billiardSystem;
-    billiardSystem.init(2);
+    billiardSystem.init(7);
     billiardSystem.mainLoop();
     cout << "done\n";
+    auto mod = [](int a, int b) { int m = a % b; return m < 0 ? m + b : m;};
+    cout << mod(-2, 12) << endl;
     return 0;
 }
 
