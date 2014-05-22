@@ -85,6 +85,7 @@ class LorentzGasElCells
     typedef Vector2D<double> vec2;
 private:
     std::ofstream myFile;
+    std::ofstream myTest;
     static const int mNdim = 2;
     int mNsyms;
     iveclist mSymbols; // initial list of symbols
@@ -118,6 +119,7 @@ public:
 LorentzGasElCells::LorentzGasElCells(): mNsyms(0)
 {
     myFile.open("output.txt");
+    myTest.open("converge.txt");
     const double M_SQRT3 = 1.73205080756887729352744634151;
     mCenterListX.resize(12);
     mCenterListY.resize(12);
@@ -280,7 +282,7 @@ void LorentzGasElCells::mainLoop()
     nag_opt_init(&options);
     // options.print_fun = monit;
     options.print_level = Nag_NoPrint;
-    nag_opt_read("e04ccc", "config.txt", &options, Nag_FALSE, "stdout", &fail);
+    // nag_opt_read("e04ccc", "config.txt", &options, Nag_FALSE, "stdout", &fail);
     if (fail.code != NE_NOERROR)
     {
         cout << fail.message << endl;
@@ -293,7 +295,20 @@ void LorentzGasElCells::mainLoop()
         xvec.assign(mNsyms, 0.0);
         // set the current symbol to evaluate
         nag_opt_simplex(mNsyms, minSrchFunc, x, &objf, &options, &comm, &fail);
-        if (fail.code == NE_NOERROR && testLink(pSymbol, xvec))
+        bool noIntersect = testLink(pSymbol, xvec);
+        if (fail.code == NE_TOO_MANY_ITER && noIntersect)
+        {
+
+            vector<double> tmpvec(mNsyms);
+            int i = 0;
+            for ( ; i < mNsyms; ++i)
+            {
+                tmpvec[i] = x[i];
+            }
+            myTest << pSymbol << " ";
+            myTest << std::fixed << std::setprecision(14) << tmpvec << endl;
+        }
+        if (fail.code == NE_NOERROR && noIntersect)
         {
 
             vector<double> tmpvec(mNsyms);
@@ -318,11 +333,8 @@ void LorentzGasElCells::mainLoop()
 int main(int argc, const char * argv[])
 {
     LorentzGasElCells billiardSystem;
-    billiardSystem.init(7);
+    billiardSystem.init(6);
     billiardSystem.mainLoop();
-    cout << "done\n";
-    auto mod = [](int a, int b) { int m = a % b; return m < 0 ? m + b : m;};
-    cout << mod(-2, 12) << endl;
     return 0;
 }
 
