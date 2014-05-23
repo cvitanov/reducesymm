@@ -36,7 +36,7 @@ axis image;
 
 %%
 clear;
-np = 4;
+np = 3;
 tmpsblseq = genNecklaces(np, 12);
 
 % now let us do the symbol reduction for the hard disk 
@@ -82,12 +82,12 @@ sblseq = unique(sblseq, 'rows');
 
 
 
-[sbmat, thmat, ckmat] = linkminsearch(sblseq);
+[sbmat, thmat] = linkminsearch(sblseq);
 
 
 %%
 [nx, ny] = size(sbmat);
-for num = 8:8
+for num = 1
 tmpseq = sbmat(num, :);
 newth = thmat(num, :);
 
@@ -176,45 +176,6 @@ line([pt1(1),pt2(1)], [pt1(2),pt2(2)]); hold on;
 plot(projm(1,:),projm(2,:),'o')
 axis image
 
-
-
-%% for period 4 sequences, doing reduction and eliminate all period 1 and period 2 orbits
-
-sbmatnew = [];
-thmatnew = [];
-for ii = 1:length(sbmat)
-    if sbmat(ii, 1) == sbmat(ii, 3) && sbmat(ii, 2) == sbmat(ii, 4)
-        continue;
-    end
-    sbmatnew = [sbmatnew;sbmat(ii,:)];
-    thmatnew = [thmatnew;thmat(ii,:)];
-end
-sbmat = sbmatnew;
-thmat = thmatnew;
-
-
-
-%% period 6
-
-sbmatnew = [];
-thmatnew = [];
-for ii = 1:length(sbmat)
-    if sbmat(ii, 1) == sbmat(ii, 3) == sbmat(ii, 5) && sbmat(ii, 2) == sbmat(ii, 4) == sbmat(ii, 6)
-        sbmat(ii, :)
-        continue;
-    end
-    if sbmat(ii, 1) == sbmat(ii, 4) && sbmat(ii, 2) == sbmat(ii, 5) && sbmat(ii, 3) == sbmat(ii, 6)
-        sbmat(ii, :)
-        continue;
-    end
-    sbmatnew = [sbmatnew;sbmat(ii,:)];
-    thmatnew = [thmatnew;thmat(ii,:)];
-end
-
-
-sbmat = sbmatnew;
-thmat = thmatnew;
-
 %%
 clear
 w = 0.3;
@@ -234,7 +195,7 @@ for jj = 1:2:11
     Rh(:, jj+1) = sqrt(3)*(2*r+w)*[cos(ang);sin(ang)];
 end
 
-for np = 2:7
+for np = 2:8
     load(strcat('period_',num2str(np)));
     lambdas = [];
     [nx,ny] = size(sbmat);
@@ -280,58 +241,6 @@ for np = 2:7
     lambdamat{np} = lambdas;
 
 end
-
-%%
-
-
-%         ph = asin(tmp(3));
-%         % perform rotation based on symbolic dynamics
-%         tmpfunc = @(tph) circmapping(1,Rv(:,ii),Rv(:,ii+1),tph);
-%         tphp = tmpfunc([th;ph]);
-%         test = 0;
-%         [jac, err] = jacobianest(tmpfunc, [th;ph]);
-%         if trace(err) > 1e-5
-%             err
-%             test = 1
-%         end
-%         jac = [1,0;0,cos(tphp(2))] * jac * [1,0;0,1/cos(ph)];
-%         errest = (abs(det(jac)) - 1);
-%         if errest > 1e-3
-%             err
-%             errest
-%             th
-%             ph
-%             tphp
-%             for jj = 1:4
-%                 jac = jacobian(tmpfunc, [th;ph], cvecs(:, jj));
-%                 jac = [1,0;0,cos(tphp(2))] * jac * [1,0;0,1/cos(ph)];
-%                 errest = abs(abs(det(jac)) - 1);
-%                 if errest < 1e-3
-%                     test = 0;
-%                     break;
-%                 else
-%                     test = 1;
-%                     continue;
-%                 end
-%             end
-%         end
-%         if test == 1
-%             R1 = Rv(:,ii);
-%             R2 = Rv(:,ii+1);
-%             testth = th;
-%             testph = ph;
-%             testfunc = @(tph) circmapping(r, R1, R2, tph);
-%             disp('check for converging issue');
-%             viscircles(Rv', r*ones(length(Rv),1));
-%             hold on;
-%             plot(Rv(1, :), Rv(2, :), 'o')
-%             plot(rv(1, :), rv(2, :), '-o')
-%             axis image;
-%         else
-%             lambda = eig(jac);
-%             lambdae = lambdae*max(abs(lambda));
-%         end
-
 %%
 tp = [];
 np = [];
@@ -346,27 +255,12 @@ end
 mv = log(tp);
 tp = 1./tp;
 
-
-%%
-wx = @(beta) exp(beta*nv(1, :)).*tp;
-zetax = @(be) zetafunc(wx(be), np, 7);
-wy = @(beta) exp(beta*nv(2, :)).*tp;
-zetay = @(be) zetafunc(wx(be), np, 7);
-wt = @(beta) exp(-beta*tv).*tp;
-zetat = @(be) zetafunc(wt(be), np, 7);
-
-%%
-derivx = [];
-for xx = -1:1e-2:1
-    dets = 1e-4;
-    derivx = [derivx, sum(zetax(dets + xx) - zetax(xx)) / dets];
-end
-
 %%
 
 j = 1;
-for i = 2:7
-   
+for i = 2:8
+    j
+    zeta(j) = 1 - zetaderivest(i, np, tp);
     Tv(j) = zetaderivest(i, np, tp, tv);
     Mv(j) = zetaderivest(i, np, tp, mv);
     Nxx(j) = zetaderivest(i, np, tp, nv(1, :), nv(1, :));
@@ -374,6 +268,16 @@ for i = 2:7
     j = j+1;
 end
 %%
-
-lambda = Mv./Tv;
+lyapunov = Mv./Tv;
 diffcoef = (Nxx + Nyy)./(2*Tv);
+
+%%
+
+
+for ii = 8:8
+    tmp = importdata(strcat('cpp/l', num2str(ii), '.txt'));
+    sbmat = tmp(:, 1:ii);
+    thmat = tmp(:, ii+1:end);
+    [sbmat, thmat] = removedup(ii, sbmat, thmat);
+    save(strcat('period_', num2str(ii), '.mat'), 'sbmat', 'thmat');
+end
