@@ -1,4 +1,4 @@
-function [ sbmat, thmat ] = linkminsearch( sblseq )
+function [ sbmat, thmat ] = linkminsearch( sblseq, varargin)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -23,11 +23,16 @@ end
 sbmat = [];
 thmat = [];
 for kk = 1:nx
-    tmpseq = sblseq(kk, :);
-    [tmpfunc, ~] = linkfunc(tmpseq);
-    
+    tmpseq = sblseq(kk, :);    
     th = rand(1, length(tmpseq))*2*pi;
-    newth = fminsearch(tmpfunc, th,  optimset('TolX',1e-10));
+    if(~isempty(varargin))
+        th = varargin{1}(kk, :);
+    end
+    exitflag = 0;
+    [newth, ~, exitflag] = fminsearch(@linkfunc, th,  optimset('TolX',1e-14));
+    % while(~exitflag)
+    %     [newth, ~, exitflag] = fminsearch(@linkfunc, th,  optimset('TolX',1e-10));
+    % end
     newth = mod(newth,2*pi);
     thseq = [newth newth(1)];
     for jj = 1:length(newth)
@@ -91,5 +96,16 @@ end
 %             waitforbuttonpress;
 %         end
     end
+
+    function [linklen] = linkfunc(thvec)
+        linklen = 0;
+        thvectmp = [thvec,thvec(1)];
+        for ii = 1:length(thvec)
+            sbidx = tmpseq(ii)+1;
+            dispv = [cos(thvectmp(ii+1));sin(thvectmp(ii+1))] - [cos(thvectmp(ii));sin(thvectmp(ii))] + Rh(:, sbidx);
+            linklen = linklen + sqrt(dot(dispv, dispv));
+        end
+    end
+       
 end
 

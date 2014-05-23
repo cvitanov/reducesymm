@@ -18,6 +18,7 @@
 #include <nag_stdlib.h>
 
 using std::cout;
+using std::cerr;
 using std::endl;
 using std::list;
 using std::string;
@@ -46,7 +47,7 @@ void genNecklace(int n, int k, iveclist& out)
     {
         tmp[i] = tmp[i] + 1;
         int j = 0;
-        while(j < n - i)
+        while(j < n - i - 1)
         {
             tmp[j + i + 1] = tmp[j];
             ++j;
@@ -104,8 +105,7 @@ private:
     bool testLink(const vector<int>& curSymbols, const vector<double>& thetas);
     double pathLength(const double* x);
 public:
-    void init(int n);
-    void mainLoop();
+    void mainLoop(int n);
     LorentzGasElCells();
     ~LorentzGasElCells() {};
     // for calling the gsl routine
@@ -151,21 +151,6 @@ bool LorentzGasElCells::pruneRule(const vector<int>& curSymbols)
             return true;
     }
     return false;
-}
-
-void LorentzGasElCells::init(int n)
-{
-    mNsyms = n;
-    // generate length n topolotical cycle out of 12 symbols
-    genNecklace(n, 12, mSymbols);
-    mSymbols.remove_if([this](const vector<int>& curSymbols){return pruneRule(curSymbols);});
-    /*
-    for (auto it : mSymbols)
-    {
-        cout << it << endl;
-    }
-    */
-    // the path depend on Ndim * n variables
 }
 
 // this is going to be our path function
@@ -269,8 +254,14 @@ bool LorentzGasElCells::testLink(const vector<int>& curSymbols, const vector<dou
     return true;
 }
 
-void LorentzGasElCells::mainLoop()
+void LorentzGasElCells::mainLoop(int n)
 {
+    mNsyms = n;
+    // generate length n topolotical cycle out of 12 symbols
+    genNecklace(n, 12, mSymbols);
+    cout << "init success" << endl;
+    mSymbols.remove_if([this](const vector<int>& curSymbols){return pruneRule(curSymbols);});
+    //
     NagError fail;
     Nag_Comm comm;
     Nag_E04_Opt options;
@@ -282,6 +273,8 @@ void LorentzGasElCells::mainLoop()
     nag_opt_init(&options);
     // options.print_fun = monit;
     options.print_level = Nag_NoPrint;
+    options.max_iter = 100000;
+    options.optim_tol = 1e-12;
     // nag_opt_read("e04ccc", "config.txt", &options, Nag_FALSE, "stdout", &fail);
     if (fail.code != NE_NOERROR)
     {
@@ -296,9 +289,9 @@ void LorentzGasElCells::mainLoop()
         // set the current symbol to evaluate
         nag_opt_simplex(mNsyms, minSrchFunc, x, &objf, &options, &comm, &fail);
         bool noIntersect = testLink(pSymbol, xvec);
-        if (fail.code == NE_TOO_MANY_ITER && noIntersect)
+        if (fail.code != NE_NOERROR)
         {
-
+            cerr << fail.message << endl;
             vector<double> tmpvec(mNsyms);
             int i = 0;
             for ( ; i < mNsyms; ++i)
@@ -333,8 +326,8 @@ void LorentzGasElCells::mainLoop()
 int main(int argc, const char * argv[])
 {
     LorentzGasElCells billiardSystem;
-    billiardSystem.init(6);
-    billiardSystem.mainLoop();
+    billiardSystem.mainLoop(8);
+    
     return 0;
 }
 
