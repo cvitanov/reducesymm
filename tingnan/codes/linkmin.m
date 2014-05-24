@@ -269,7 +269,7 @@ for i = 2:8
 end
 %%
 lyapunov = Mv./Tv;
-diffcoef = (Nxx + Nyy)./(2*Tv);
+diffcoef = (Nxx + Nyy)./(2*2*Tv);
 
 %%
 
