@@ -20,12 +20,12 @@ from subprocess import call
 import twomode 
 
 #Booleans:
-computeSolution = True
-computePsect = True
-computeArcLengths = True
+computeSolution = False
+computePsect = False
+computeArcLengths = False
 computeRPO = False
-plotPsect = True
-plotRetmap = True
+plotPsect = False
+plotRetmap = False
 
 #Search parameters:
 m = 1 #Will search for [1,m]-cycles
@@ -36,17 +36,23 @@ reqv = np.array([0.43996557973671596,
                  -0.38626705952942764,
                  0.07020440068369532], float) 
 reqv3D = twomode.four2three(reqv)
+np.savetxt('data/reqv3d.dat', reqv3D)
 #Compute reduced stability matrix for the relative equilibrium:
 Ared = twomode.StabilityMatrixRed(reqv)
 #Compute eigenvalues and eigenvectors:
 w, v = np.linalg.eig(Ared)
 #Pick the real part of unstable eigenvector as the Poincare section direction:
 unstabledir = np.real(v[:,0])
+unstabledir2 = np.imag(v[:,0])
 #unstabledir = np.real(w[0]*v[:,0]+w[1]*v[:,1])
 unstabledir = unstabledir/np.linalg.norm(unstabledir) #Normalize
+unstabledir2 = unstabledir2/np.linalg.norm(unstabledir2)
 #Auxiliary vector to define Poincare basis:
 vaux3D = np.array([0,0,1], float)
 unstabledir3D = twomode.four2three(unstabledir)
+unstabledir23D = twomode.four2three(unstabledir2)
+np.savetxt('data/unstabledir3d.dat', unstabledir3D)
+np.savetxt('data/unstabledir23d.dat', unstabledir23D)
 nhat3D = np.cross(vaux3D, unstabledir3D)
 nhat = twomode.three2four(nhat3D)
 vaux = twomode.three2four(vaux3D)
@@ -60,7 +66,7 @@ tp = np.dot(T,xp)
 if computeSolution:
     
     tf = 1000;
-    dt = 0.001;
+    dt = 0.01;
     epsilon = 1e-3;
     x0 = reqv+epsilon*unstabledir
     xphi0 = np.append(x0, 0)
@@ -126,19 +132,19 @@ def psarclength(x):
 if computeArcLengths:
     print 'Computing arclengths corresponding to data'
     #Find the first data point for the Arclengths to discard the transients
-    iArcLength0 = np.argwhere(ps[:,0]>0)[0]
+    iArcLength0 = np.argwhere(ps[:,0]>300)[0]
     sn = np.array([psarclength(ps2D[i,0]) for i in 
     range(iArcLength0, np.size(ps2D,0))], float)
     snmin = np.min(sn)
     snmax = np.max(sn) - snmin
-    sn = np.array([(sn[i] - snmin)/snmax for i in range(np.size(sn, 0))])
+    #sn = np.array([sn[i] for i in range(np.size(sn, 0))])
     snplus1 = sn[1:]
     sn = sn[0:-1]
     RetMapData = np.array([sn, snplus1], float).transpose()
     np.savetxt('data/RetMapData.dat', RetMapData)
     snMinMax = [snmin, snmax]
     np.savetxt('data/RetMapMinMax.dat', snMinMax)
-    
+
 if not('sn' in locals()):
     RetMapData = np.loadtxt('data/RetMapData.dat')
     snmin, snmax = np.loadtxt('data/RetMapMinMax.dat')
@@ -164,8 +170,15 @@ def retmapm(n, sn):
     return  snpn
 
 print "Computing the kneading sequence"
-nMax = 4;
-sCritical = fmin(lambda x: -interpolate.splev(x, tckRetMap), 0.2)
+nMax = 3;
+sCritical = fmin(lambda x: -interpolate.splev(x, tckRetMap), 1)*0.998
+
+def fCritical(s):
+    po = retmapm(3, s) - s
+    return po
+sCritical = newton(fCritical, sCritical, tol=1.48e-12)
+
+
 print "Scritical:"
 print sCritical
 
@@ -684,31 +697,32 @@ if plotRetmap:
     plt.hold(True)
     plot(xintRetMap, yintRetMap, 'k', lw=2)
     plot(srange, srange, 'g', lw=2)
-    
-    for i in range(np.size(Kneading,0)-2):
-        pair1 = [Kneading[i], Kneading[i+1]]
-        pair2 = [Kneading[i+1], Kneading[i+2]]
-        plot(np.linspace(min(pair1), max(pair1), 10), 
+
+    nKneading = np.size(Kneading)
+    for i in range(nKneading-1):
+        pair1 = [Kneading[i], Kneading[(i+1)]]
+        pair2 = [Kneading[i], Kneading[(i+1)]]
+        plot(np.linspace(min(pair1), max(pair1), 10),
             [pair1[1] for k in range(10)], '--r', lw=1.5)
         plot([pair2[0] for k in range(10)],
             np.linspace(min(pair2), max(pair2), 10), '--r', lw=1.5)
-        
-            
     
     #plot(srange, [0.825 for  i in range(np.size(srange,0))], 'r')
     ax = fig.gca()
     ax.set_aspect('equal')
-    ax.set_xlim(0,1)
-    ax.set_ylim(0,1)
+    smin = np.min(sn)
+    smax = np.max(sn)
+    ax.set_xlim(smin,smax)
+    ax.set_ylim(smin,smax)
     ax.set_xlabel('$s_n$', fontsize=24)
     ax.set_ylabel('$s_{n+1}$', fontsize=24)
     Nticks = 5
 
-    xticks = np.linspace(0, 1, Nticks)
+    xticks = np.linspace(smin, smax, Nticks)
     ax.set_xticks(xticks)
     ax.set_xticklabels(["$%.1f$" % xtik for xtik in xticks], fontsize=16); 
 
-    yticks = np.linspace(0, 1, Nticks)
+    yticks = np.linspace(smin, smax, Nticks)
     ax.set_yticks(yticks)
     ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=16); 
     
