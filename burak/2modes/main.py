@@ -21,11 +21,11 @@ import twomode
 
 #Booleans:
 computeSolution = False
-computePsect = False
-computeArcLengths = False
+computePsect = True
+computeArcLengths = True
 computeRPO = False
-plotPsect = False
-plotRetmap = False
+plotPsect = True
+plotRetmap = True
 
 #Search parameters:
 m = 1 #Will search for [1,m]-cycles
