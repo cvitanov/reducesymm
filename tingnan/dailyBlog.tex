@@ -21,7 +21,7 @@ ChaosBook.org, if that saves you LaTeXing time.
 \item[2013-02-03 Roberto]
 incorporate kneading determinants from
 G.~Cristadoro\rf{Cristad06}
-{\em Fractal diffusion coefficient from dynamical zeta functions}.
+{\em Fractal diffusion coefficient from {\dzeta}s}.
 
 \item[2009-02-27 Predrag]
 Read  Gilbert  and Lefevere\rf{GilbLef08},
@@ -526,15 +526,21 @@ once you compute it in the fundamental domain.
 \item[05-26-2014 Tingnan]
 If I am not wrong the zeta function for $n=2$ and $n=3$ cases are just the summation over the weights (using the truncation formula)
 \[
-\zeta(0,0)=1-\sum_{n_p\leq2,3}t_{p}=1-\sum_{n_p\leq2,3} \frac{1}{\Lambda_{p}}
+\zeta(0,0)=1-\sum_{\cl{p}\leq2,3}t_{p}=1-\sum_{\cl{p}\leq2,3} \frac{1}{\ExpaEig_{p}}
 \]
+I am starting to compute the cycles in the fundamental domain.
+Not sure how to convert the fundamental domain symbols (a-f, A-F) into my program. Are we still trying to use the least action method in the fundamental domain? If so, for each of the symbol, which disks should be included for the computation? In Fig.~5 of Schreiber paper we can see that the number of the disks visited for each symbol
+is different. And I am not sure about this sentence in Schreiber's paper:
 
-I am starting to compute the cycles in the fundamental domain. 
-Not sure how to convert the fundamental domain symbols (a-f, A-F) into my program. Are we still trying to use the least action method in the fundamental domain? If so, for each of the symbol, which disks should be included for the computation? In Fig.~5 of Schreiber paper we can see that the number of the disks visited for each symbol 
-is different. And I am not sure about this sentence in Shreiber's paper:
+``The right and left turns are not distinguished - instead,  one reads
+off a symbol whether the next turn has to be taken in the same or in the
+opposite sense."
 
- "The right and left turns are not distinguished - instead,  one reads off a symbol whether the next
-turn has to be taken in the same or in the opposite sense." 
+\item[2014-05-28 Predrag] Notions `right' and `left' are well defined in
+the elementary cell. In the fundamental domain on indicates only the
+successive relative orientations: either one turns in the same sense as
+in the preceding turn, or one turns in the sense opposite of the
+preceding turn. Is that clearer?
 
 \item[05-26-2014 Tingnan]
 
@@ -542,172 +548,161 @@ I spent some effort trying to derive (21.8, 21.9) in ChaosBook  (\HREF{http://ww
 {click here}), in preparation to compute the dynamical averages in the fundamental domain.
 
 \begin{align*}
-\left\langle \phi\vert\mathcal{L}(y,x)\vert\rho\right\rangle  &= \int_{M}dy\int_{M}dx\phi(y)\delta(y-f^{t}(x))\rho(x)\\
+\left\langle \phi\vert\Lop(y,x)\vert\rho\right\rangle  &= \int_{M}dy\int_{M}dx\phi(y)\delta(y-f^{t}(x))\rho(x)\\
  &= \sum_{a,b}^{\vert G\vert}\int_{\tilde{M}_{a}}dx\int_{\tilde{M}_{b}}dy\phi(y)\delta(y-f^{t}(x))\rho(x)\\
  &= \sum_{a,b}^{\vert G\vert}\int_{\tilde{M}}d\tilde{x}\int_{\tilde{M}}d\tilde{y}\phi(\mathbf{b}\tilde{y})\delta(\mathbf{b}\tilde{y}-f^{t}(\mathbf{a}\tilde{x}))\rho(\mathbf{a}\tilde{x})\\
  &= \sum_{a,b}^{\vert G\vert}\int_{\tilde{M}}d\tilde{x}\int_{\tilde{M}}d\tilde{y}\phi(\mathbf{b}\tilde{y})\delta(\tilde{y}-\mathbf{b^{-1}}\mathbf{a}f^{t}(\tilde{x}))\rho(\mathbf{a}\tilde{x})\\
  &= \sum_{h,a,b}^{\vert G\vert}\int_{\tilde{M}}d\tilde{x}\int_{\tilde{M}}d\tilde{y}\phi(\mathbf{b}\tilde{y})\delta_{h,b^{-1}a}\delta(\mathbf{h^{-1}}\tilde{y}-f(\tilde{x}))\rho(\mathbf{a}\tilde{x})
 \end{align*}
-
-
-where we have used the fact that $\mathrm{det}\vert a\vert=1$(e.g.
+where we have used the fact that $\det \vert a\vert=1$(e.g.
 rotation or translation). The product of two group actions $b^{-1}a$
-determines the relative ``dispalcement'' in the group space. We
+determines the relative ``displacement'' in the group space. We
 can then write the evolution operator using the left regular representation
 $D(h)_{ba}=\delta h,b^{-1}a$, as:
 \[
-\mathcal{L}(y,x)=\sum_{h,ab}^{\vert G\vert}D(h)_{ba}\delta(\mathbf{h}^{-1}\tilde{y}-f(\tilde{x}))=\sum_{h,ab}^{\vert G\vert}D(h)_{ba}\mathcal{L}(\mathbf{h}^{-1}\tilde{y},\tilde{x})
+\Lop(y,x)=\sum_{h,ab}^{\vert G\vert}D(h)_{ba}\delta(\mathbf{h}^{-1}\tilde{y}-f(\tilde{x}))=\sum_{h,ab}^{\vert G\vert}D(h)_{ba}\Lop(\mathbf{h}^{-1}\tilde{y},\tilde{x})
 \]
-
-
 The linear property of the evolution operator could be written as:
-
 \[
-\mathcal{L}(z,y)\mathcal{L}(y,x)=\sum_{hh^{\prime},abb^{\prime}}^{\vert G\vert}D(h^{\prime})_{b^{'}b}D(h)_{ba}\mathcal{L}(\mathbf{h}^{\prime-1}\tilde{z},\tilde{y})\mathcal{L}(\mathbf{h}^{-1}\tilde{y},\tilde{x})
+\Lop(z,y)\Lop(y,x)=\sum_{hh^{\prime},abb^{\prime}}^{\vert G\vert}D(h^{\prime})_{b^{'}b}D(h)_{ba}\Lop(\mathbf{h}^{\prime-1}\tilde{z},\tilde{y})\Lop(\mathbf{h}^{-1}\tilde{y},\tilde{x})
 \]
-
-
-We notice that $D(h^{\prime})_{b^{'}b}D(h)_{ba}$ multiplies as matrices.
+Note that $D(h^{\prime})_{b^{'}b}D(h)_{ba}$ multiplies as matrices.
 
 The trace formula in the fundamental domain can now been written as:
 \begin{align*}
-\mathrm{tr}\mathcal{L} &= \int_{\tilde{M}}d\tilde{x}\sum_{h,aa}^{\vert G\vert}D(h)_{aa}\mathcal{L}(\mathbf{h}^{-1}\tilde{x},\tilde{x})\\
- &= \int_{\tilde{M}}d\tilde{x}\sum_{h}^{\vert G\vert}\mathrm{Tr}D(h)\mathcal{L}(\mathbf{h}^{-1}\tilde{x},\tilde{x})
+\tr  \Lop &= \int_{\tilde{M}}d\tilde{x}\sum_{h,aa}^{\vert G\vert}D(h)_{aa}\Lop(\mathbf{h}^{-1}\tilde{x},\tilde{x})\\
+ &= \int_{\tilde{M}}d\tilde{x}\sum_{h}^{\vert G\vert}\Tr D(h)\Lop(\mathbf{h}^{-1}\tilde{x},\tilde{x})
 \end{align*}
-
-
 \begin{align*}
-\mathrm{tr}\mathcal{L}^{2} &= \int_{\tilde{M}}d\tilde{x}\int_{\tilde{M}}d\tilde{y}\sum_{hh^{\prime},ab^{\prime}}^{\vert G\vert}D(h^{\prime})_{ab}D(h)_{ba}\mathcal{L}(\mathbf{h}^{\prime-1}\tilde{x},\tilde{y})\mathcal{L}(\mathbf{h}^{-1}\tilde{y},\tilde{x})\\
- &= \int_{\tilde{M}}d\tilde{x}\int_{\tilde{M}}d\tilde{y}\sum_{h^{\prime}h}^{\vert G\vert}D(h^{\prime}h)_{aa}\mathcal{L}(\mathbf{h}^{\prime-1}\tilde{x},\tilde{y})\mathcal{L}(\mathbf{h}^{-1}\tilde{y},\tilde{x})\\
- &= \int_{\tilde{M}}d\tilde{x}\int_{\tilde{M}}d\tilde{y}\sum_{h^{\prime}}^{\vert G\vert}\mathrm{Tr}D(h^{\prime}h)\mathcal{L}(\mathbf{h}^{\prime-1}\tilde{x},\tilde{y})\mathcal{L}(\mathbf{h}^{-1}\tilde{y},\tilde{x})\\
- &= \int_{\tilde{M}}d\tilde{x}\sum_{h^{\prime}h\equiv e}^{\vert G\vert}\mathrm{Tr}D(h^{\prime}h)\mathcal{L}(\mathbf{h}^{\prime-1}\tilde{x},\mathbf{h}f(\tilde{x}))\\
- &= \int_{\tilde{M}}d\tilde{x}\sum_{h^{\prime}}^{\vert G\vert}\mathrm{Tr}D(h^{\prime})\mathcal{L}^{2}(\mathbf{h}^{\prime-1}\tilde{x},\tilde{x})
+\tr  \Lop^{2} &= \int_{\tilde{M}}d\tilde{x}\int_{\tilde{M}}d\tilde{y}\sum_{hh^{\prime},ab^{\prime}}^{\vert G\vert}D(h^{\prime})_{ab}D(h)_{ba}\Lop(\mathbf{h}^{\prime-1}\tilde{x},\tilde{y})\Lop(\mathbf{h}^{-1}\tilde{y},\tilde{x})\\
+ &= \int_{\tilde{M}}d\tilde{x}\int_{\tilde{M}}d\tilde{y}\sum_{h^{\prime}h}^{\vert G\vert}D(h^{\prime}h)_{aa}\Lop(\mathbf{h}^{\prime-1}\tilde{x},\tilde{y})\Lop(\mathbf{h}^{-1}\tilde{y},\tilde{x})\\
+ &= \int_{\tilde{M}}d\tilde{x}\int_{\tilde{M}}d\tilde{y}\sum_{h^{\prime}}^{\vert G\vert}\Tr  D(h^{\prime}h)\Lop(\mathbf{h}^{\prime-1}\tilde{x},\tilde{y})\Lop(\mathbf{h}^{-1}\tilde{y},\tilde{x})\\
+ &= \int_{\tilde{M}}d\tilde{x}\sum_{h^{\prime}h\equiv e}^{\vert G\vert}\Tr  D(h^{\prime}h)\Lop(\mathbf{h}^{\prime-1}\tilde{x},\mathbf{h}f(\tilde{x}))\\
+ &= \int_{\tilde{M}}d\tilde{x}\sum_{h^{\prime}}^{\vert G\vert}\Tr  D(h^{\prime})\Lop^{2}(\mathbf{h}^{\prime-1}\tilde{x},\tilde{x})
 \end{align*}
 
-
-Next, we will derive the formula for the spectral determinant in the
+Next, we will derive the formula for the {\Fd} in the
 fundamental domain.
-
 \begin{align*}
-\mathrm{Tr}\mathcal{L}^{t} &= \int_{\mathcal{M}}\mathcal{L}^{t}(x,x)dx\\
+\Tr  \Lop^{t} &= \int_{\mathcal{M}}\Lop^{t}(x,x)dx\\
  &= \int_{\tilde{\mathcal{M}}}d\tilde{x}\sum_{h,a}^{G}D_{aa}(h)\delta(\mathbf{h}^{-1}\tilde{x}-f^{t}(\tilde{x}))e^{\beta\cdot A^{t}(\mathbf{a}\tilde{x})}\\
  &= \sum_{h,a}^{G}D_{aa}(h)\int_{\tilde{\mathcal{M}}}d\tilde{x}\delta(\mathbf{h}^{-1}\tilde{x}-f^{t}(\tilde{x}))e^{\beta\cdot A^{t}(\mathbf{a}\tilde{x})}\\
- &= \sum_{a}^{G}D_{aa}(h)\sum_{\tilde{x_{i}}:\mathbf{h}f^{t}(\tilde{x_{i}})=\tilde{x_{i}}}\frac{e^{\beta\cdot A^{t}(\mathbf{a}\tilde{x_{i}})}}{\vert\mathrm{det}(1-\mathbf{h}J^{t}(\tilde{x_{i}}))\vert}\\
- &= \sum_{a}^{G}\sum_{\tilde{x_{i}}:f^{t}(\tilde{x_{i}})=\tilde{x_{i}}}\frac{e^{\beta\cdot A^{t}(\mathbf{a}\tilde{x_{i}})}}{\vert\mathrm{det}(1-J^{t}(\tilde{x_{i}}))\vert}
+ &= \sum_{a}^{G}D_{aa}(h)\sum_{\tilde{x_{i}}:\mathbf{h}f^{t}(\tilde{x_{i}})=\tilde{x_{i}}}\frac{e^{\beta\cdot A^{t}(\mathbf{a}\tilde{x_{i}})}}{\vert\det (1-\mathbf{h}J^{t}(\tilde{x_{i}}))\vert}\\
+ &= \sum_{a}^{G}\sum_{\tilde{x_{i}}:f^{t}(\tilde{x_{i}})=\tilde{x_{i}}}\frac{e^{\beta\cdot A^{t}(\mathbf{a}\tilde{x_{i}})}}{\vert\det (1-J^{t}(\tilde{x_{i}}))\vert}
 \end{align*}
-
 Now I seem to run into an issue: the trace only depends on those
-standing global orbits, and it does not take any conbributions from
+standing global orbits, and it does not take any contributions from
 those runaway orbits.
+
+\item[2014-05-28 Predrag]
+That's why I spent two weeks fumbling to derive trace formulas in
+presence of symmetries: `running orbits' are the \rpo s associated with
+the translations of the hexagonal lattice. Ask Xiong Ding to explain
+this. He understands the discrete case, is still trying to understand the
+continuous symmetry case. In other words, why does Kronecker delta take
+values 0 or 1, but the Dirac delta function has values 0 or $\infty$ :)
 
 \item[05-26-2014 Tingnan to Pavel]
 
 Here I put some essential ideas of dynamical averaging. This section could be though as a short version of what has been covered from Chapter 17 to 20 in the book.
- 
-Put the quantity that needs to be averaged to exponential 
+
+Put the quantity that needs to be averaged to exponential
 \[
 \left\langle e^{\beta\cdot A^{t}}\right\rangle =\frac{1}{\vert M\vert}\int dxe^{\beta\cdot A^{t}(x)}
 \]
-
-
 where $A^{t}(x)=\int_{0}^{t}d\tau a[f^{t}(x)]$. When divided by $t$
 this gives the time average. The quantity we are interested can be
 obtained by partial differentiation:
 \[
 \left\langle A^{t}\right\rangle =\frac{\partial}{\partial\beta}\left.\left\langle e^{\beta\cdot A^{t}}\right\rangle \right|_{\beta=0}
 \]
-
-
 The term $\left\langle e^{\beta\cdot A^{t}}\right\rangle $ is expected
 to grow exponentially in time and is dominated by the leading eigenvalue
 of the evolution operator:
 \[
 \left\langle e^{\beta\cdot A^{t}}\right\rangle \to(\mathrm{const})e^{ts(\beta)}
 \]
-
-
 The function $s(\beta)=\lim_{t\to\infty}\frac{1}{t}\ln\left\langle e^{\beta\cdot A^{t}}\right\rangle $
 is related to the observable as:
 \begin{align*}
-\left.\frac{\partial s}{\partial\beta}\right|_{\beta=0} & =\lim_{t\to\infty}\frac{1}{t}\left.\frac{\partial\ln\left\langle e^{\beta\cdot A^{t}}\right\rangle }{\partial\beta}\right|_{\beta=0}\\
- & =\lim_{t\to\infty}\frac{1}{t}\left\langle A^{t}\right\rangle \\
- & =\left\langle a\right\rangle 
+\left.\frac{\partial s}{\partial\beta}\right|_{\beta=0} & =\lim_{t\to\infty}\frac{1}{t}\left.
+\frac{\partial\ln\left\langle e^{\beta\cdot A^{t}}\right\rangle }
+     {\partial\beta}\right|_{\beta=0}
+   =\lim_{t\to\infty}\frac{1}{t}\left\langle A^{t}\right\rangle \\
+ & =\left\langle a\right\rangle
 \end{align*}
-
-
 In order to evaluate $s(\beta)$ we will examine the modified  evolution
 operator:
 \[
-\mathcal{L}^{t}(y,x)=\delta(y-f^{t}(x))e^{\beta\cdot A^{t}(x)}
+\Lop^{t}(y,x)=\delta(y-f^{t}(x))e^{\beta\cdot A^{t}(x)}
 \]
 It is a linear operator and has its eigen ``vectors'' (in the function
 space) and corresponding eigenvalues:
 \[
-[\mathcal{L}^{t}\rho_{\beta}](y)=\int_{\mathcal{M}}dx\delta(y-f^{t}(x))e^{\beta\cdot A^{t}(x)}\rho_{\beta}(x)=e^{ts(\beta)}\rho_{\beta}(y)
+[\Lop^{t}\rho_{\beta}](y)=\int_{\mathcal{M}}dx\delta(y-f^{t}(x))e^{\beta\cdot A^{t}(x)}\rho_{\beta}(x)=e^{ts(\beta)}\rho_{\beta}(y)
 \]
-
 
 So now we turn the problem into: how can be determine the eigenvalues
 (the leading one) in the infinite functional space? We can do that
-with the help of spectral determinant. suppose we have discrete mappings
-and set $\mathcal{L}\equiv\mathcal{L}^{1}$. By evaluating the zeros
-of the determinant: 
+with the help of spectral determinant. Suppose we have discrete mappings
+and set $\Lop\equiv\Lop^{1}$. By evaluating the zeros
+of the determinant
 \[
-\mathrm{det}\vert1-z\mathcal{L}\vert=\prod_{k}(1-z/\lambda_{k})
+\det (1-z\Lop)=\prod_{k}(1-z \lambda_{k})
 \]
-, one can get all eigenvalues $\lambda_{k}$s of the linear operator.
-The LHS can be re-written as exponentials:
+one can get all eigenvalues $\lambda_{k}$s of the linear operator.
+The LHS can be rewritten as exponentials:
 \[
-\mathrm{det}\vert1-z\mathcal{L}\vert=\exp\left(-\sum_{n}^{\infty}\frac{z^{n}}{n}\mathrm{Tr}\mathcal{L}^{n}\right)
+\det (1-z\Lop)=\exp\left(-\sum_{n}^{\infty}\frac{z^{n}}{n}\Tr  \Lop^{n}\right)
 \]
 Now the cycle expansion will help us determine the trace of the linear
-operator. 
+operator.
 
 \begin{align*}
-\mathrm{Tr}\mathcal{L}^{n} & =\int_{\mathcal{M}}\mathcal{L}^{n}(x,x)dx=\int_{\mathcal{M}}dx\delta(x-f^{n}(x))e^{\beta\cdot A^{n}(x)}\\
- & =\sum_{x_{i}:f^{n}(x_{i})=x_{i}}\frac{e^{\beta\cdot A^{n}(x_{i})}}{\vert\mathrm{det}(1-J^{n}(x_{i}))\vert}
+\Tr  \Lop^{n} & =\int_{\mathcal{M}}\Lop^{n}(x,x)dx=\int_{\mathcal{M}}dx\delta(x-f^{n}(x))e^{\beta\cdot A^{n}(x)}\\
+ & =\sum_{x_{i}:f^{n}(x_{i})=x_{i}}\frac{e^{\beta\cdot A^{n}(x_{i})}}{\vert\det (1-J^{n}(x_{i}))\vert}
 \end{align*}
 The summation is over all the periodic orbits of length $n$. We may
 write it in terms of prime (distinct) periodic orbits:
 \[
-\mathrm{Tr}\mathcal{L}^{n}=\sum_{p}n_{p}\sum_{r=1}^{\infty}\frac{e^{\beta\cdot rA_{p}}}{\vert\mathrm{det}(1-J_{p}^{r})\vert}\delta n,n_{p}r
+\Tr  \Lop^{n}=\sum_{p}\cl{p}\sum_{r=1}^{\infty}
+\frac{e^{\beta\cdot rA_{p}}}{\vert\det (1-J_{p}^{r})\vert}\delta n,\cl{p}r
 \]
-
-
-where $r$ is the repeatability and $n_{p}$ is the length of the
-prime orbit. The fact: prime periodic orbit of length $n_{p}$ will
-contribute to the sum $n_{p}$ times for each of the points along
+where $r$ is the repeat, and $\cl{p}$ is the length of the
+prime orbit. A fact: prime periodic orbit of length $\cl{p}$ will
+contribute to the sum $\cl{p}$ times for each of the points along
 the orbit. Now substitute the trace formula to the determinant, the
-summation over $n$ removes the awkard delta function:
+summation over $n$ removes the awkward delta function:
 \begin{align*}
-\mathrm{det}\vert1-z\mathcal{L}\vert & =\exp\left(-\sum_{n}^{\infty}\frac{z^{n}}{n}\mathrm{Tr}\mathcal{L}^{n}\right)\\
- & =\exp\left(-\sum_{n}^{\infty}\frac{z^{n}}{n}\sum_{p}n_{p}\sum_{r=1}^{\infty}\frac{e^{\beta\cdot rA_{p}}}{\vert\mathrm{det}(1-J_{p}^{r})\vert}\delta n,n_{p}r\right)\\
- & =\exp\left(-\sum_{p}\sum_{r=1}^{\infty}\frac{1}{r}\frac{z^{n_{p}r}e^{\beta\cdot rA_{p}}}{\vert\mathrm{det}(1-J_{p}^{r})\vert}\right)
+\det (1-z\Lop) & =\exp\left(-\sum_{n}^{\infty}\frac{z^{n}}{n}\Tr  \Lop^{n}\right)\\
+ & =\exp\left(-\sum_{n}^{\infty}\frac{z^{n}}{n}\sum_{p}\cl{p}\sum_{r=1}^{\infty}\frac{e^{\beta\cdot rA_{p}}}{\vert\det (1-J_{p}^{r})\vert}\delta n,\cl{p}r\right)\\
+ & =\exp\left(-\sum_{p}\sum_{r=1}^{\infty}\frac{1}{r}\frac{z^{\cl{p}r}e^{\beta\cdot rA_{p}}}{\vert\det (1-J_{p}^{r})\vert}\right)
 \end{align*}
-
-
-The spectral determinant could be further approximated using the expanding
-eigenvalues of the jacobian matrix:
+So far the {\Fd} is exact. If we are interested only in its leading
+zero, it can be approximated by keeping only the expanding
+eigenvalues of the {\jacobianM},
 \begin{align*}
-\vert\mathrm{det}(1-J_{p}^{r})\vert & =\left|\prod_{e}(1-\Lambda_{p,e}^{r})\prod_{c}(1-\Lambda_{p,c}^{r})\right|=\vert\Lambda_{p}\vert^{r}\left|\prod_{e}(1-\frac{1}{\Lambda_{p,e}^{r}})\prod_{c}(1-\Lambda_{p,c}^{r})\right|\\
- & =\vert\Lambda_{p}\vert^{r}
+\vert\det (1-J_{p}^{r})\vert & =\left|\prod_{e}(1-\ExpaEig_{p,e}^{r})\prod_{c}(1-\ExpaEig_{p,c}^{r})\right|=\vert\ExpaEig_{p}\vert^{r}\left|\prod_{e}(1-\frac{1}{\ExpaEig_{p,e}^{r}})\prod_{c}(1-\ExpaEig_{p,c}^{r})\right|\\
+ & =\vert\ExpaEig_{p}\vert^{r}
+\,,
 \end{align*}
-Where $\vert\Lambda_{p}\vert^{r}$ is the product of all the expanding
-eigenvalues. So the spectral determinant is now replaced by the dynamical
-zeta function:
+where $\ExpaEig_{p}$ is the product of all the expanding
+eigenvalues. In this way the {\Fd} is approximated by the {\dzeta}:
 \begin{align*}
-\frac{1}{\zeta(z,\beta)} & =\exp\left(-\sum_{p}\sum_{r=1}^{\infty}\frac{1}{r}\frac{z^{n_{p}r}e^{r\beta\cdot A_{p}}}{\vert\Lambda_{p}\vert^{r}}\right)\\
- & =\exp\left(-\sum_{p}\sum_{r=1}^{\infty}\frac{1}{r}t_{p}^{r}\right)\\
- & =\exp\left(\sum_{p}\ln(1-t_{p})\right)\\
+\frac{1}{\zeta(z,\beta)} & =\exp\left(-\sum_{p}\sum_{r=1}^{\infty}\frac{1}{r}\frac{z^{\cl{p}r}e^{r\beta\cdot A_{p}}}{\vert\ExpaEig_{p}\vert^{r}}\right)\\
+ & =\exp\left(-\sum_{p}\sum_{r=1}^{\infty}\frac{1}{r}t_{p}^{r}\right)
+   =\exp\left(\sum_{p}\ln(1-t_{p})\right)\\
  & =\prod_{p}(1-t_{p})
+\,,
 \end{align*}
-Where 
+where
 \[
-t_{p}=\frac{z^{n_{p}}e^{\beta\cdot A_{p}}}{\vert\Lambda_{p}\vert}
+t_{p}=\frac{z^{\cl{p}}e^{\beta\cdot A_{p}}}{\vert\ExpaEig_{p}\vert}
+\,.
 \]
-is the ``weight'' associated with each prime cycle (for flows we
-replace $z$ with $e^{-s}$ and $n_{p}$ with $T_{p}$). For each
-$\beta$, the zeros of dynamical zeta functions could be evaluated
-numerically. 
+is the weight associated with each prime cycle (for flows we
+replace $z$ with $e^{-s}$ and $\cl{p}$ with $\period{p}$). For each
+$\beta$, the zeros of {\dzeta}s could be evaluated
+numerically.
 
 \end{description}
