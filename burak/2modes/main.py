@@ -10,6 +10,7 @@ import numpy as np
 from scipy import interpolate, integrate
 from scipy.misc import derivative
 from scipy.optimize import newton, fsolve, fmin
+import sys
 #Initiate plotting environment:
 import matplotlib as mpl
 from pylab import plot, xlabel, ylabel, show, savefig
@@ -18,6 +19,7 @@ import matplotlib.pyplot as plt
 from subprocess import call
 #Import twomode system module
 import twomode 
+from PADS import Lyndon
 
 #Booleans:
 computeSolution = False
