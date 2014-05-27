@@ -23,11 +23,11 @@ from PADS import Lyndon
 
 #Booleans:
 computeSolution = False
-computePsect = True
-computeArcLengths = True
+computePsect = False
+computeArcLengths = False
 computeRPO = False
-plotPsect = True
-plotRetmap = True
+plotPsect = False
+plotRetmap = False
 
 #Search parameters:
 m = 1 #Will search for [1,m]-cycles
@@ -67,7 +67,7 @@ tp = np.dot(T,xp)
             
 if computeSolution:
     
-    tf = 1000;
+    tf = 5000;
     dt = 0.01;
     epsilon = 1e-3;
     x0 = reqv+epsilon*unstabledir
@@ -134,7 +134,7 @@ def psarclength(x):
 if computeArcLengths:
     print 'Computing arclengths corresponding to data'
     #Find the first data point for the Arclengths to discard the transients
-    iArcLength0 = np.argwhere(ps[:,0]>300)[0]
+    iArcLength0 = np.argwhere(ps[:,0]>200)[0]
     sn = np.array([psarclength(ps2D[i,0]) for i in 
     range(iArcLength0, np.size(ps2D,0))], float)
     snmin = np.min(sn)
@@ -155,7 +155,7 @@ if not('sn' in locals()):
 
 print 'Interpolating to the return map'
 isortRetMap = np.argsort(sn)
-tckRetMap = interpolate.splrep(sn[isortRetMap],snplus1[isortRetMap], k=1)
+tckRetMap = interpolate.splrep(sn[isortRetMap],snplus1[isortRetMap], k=3)
 dxintRetMap = (np.max(sn)-np.min(sn))/100000
 xintRetMap = np.arange(np.min(sn), np.max(sn), dxintRetMap)
 yintRetMap = interpolate.splev(xintRetMap, tckRetMap)
@@ -172,19 +172,19 @@ def retmapm(n, sn):
     return  snpn
 
 print "Computing the kneading sequence"
-nMax = 3;
-sCritical = fmin(lambda x: -interpolate.splev(x, tckRetMap), 1)*0.998
-
+nMax = 8;
+sCritical = fmin(lambda x: -interpolate.splev(x, tckRetMap), 1)
+print "sCritical:"
+print sCritical
 def fCritical(s):
     po = retmapm(3, s) - s
     return po
-sCritical = newton(fCritical, sCritical, tol=1.48e-12)
+s3Critical = newton(fCritical, sCritical*0.999, tol=1.48e-12)
+#s3Critical = sCritical
+print "s3Critical:"
+print s3Critical
 
-
-print "Scritical:"
-print sCritical
-
-Kneading = np.copy(sCritical)
+Kneading = np.copy(s3Critical)
 KneadingSequence = ''
 KneadingValueBin = '0.'
 KneadingValue = 0
@@ -244,12 +244,27 @@ def TopologicalCoordinate(x, n):
     Compute topological coordinate of a point in the return map
     """
     itinerary = Itinerary(x,n)
+    print itinerary
     gamma, gammaBin = Splus2gamma(itinerary)
     return gamma
 
+nPrimeMax = 4
+
 print "Kneading value fun:"
-print TopologicalCoordinate(sCritical, 8)
-    
+print TopologicalCoordinate(s3Critical, 4)
+
+PrimeCycles = []
+
+for j in range(1,nPrimeMax+1):
+    for lyndon in Lyndon.LyndonWordsWithLength(2,j):
+        PrimeCycles.append([j,
+         ''.join(str(list(lyndon)[i]) for i in range(len(lyndon)))])
+
+
+print "PrimeCycles upto length "+str(nPrimeMax)
+print PrimeCycles 
+
+
 if computeRPO:
 
     #Look upto the mth return map to find the periodic orbit candidates:
@@ -734,7 +749,7 @@ if plotRetmap:
     #plt.hold(True)
     #plot(srange,srange,'g')
     
-    savefig('RetMap.pdf', bbox_inches='tight', dpi=100) 
-    call(["pdfcrop", "RetMap.pdf", "RetMap.pdf"], shell=True)
+    #savefig('RetMap.pdf', bbox_inches='tight', dpi=100) 
+    #call(["pdfcrop", "RetMap.pdf", "RetMap.pdf"], shell=True)
     
     show()
