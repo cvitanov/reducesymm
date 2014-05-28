@@ -30,7 +30,7 @@ plotPsect = False
 plotRetmap = False
 
 #Search parameters:
-nPrimeMax = 4 #Will search for [1,m]-cycles
+nPrimeMax = 3 #Will search for [1,m]-cycles
 
 #Only relative equilibrium:
 reqv = np.array([0.43996557973671596,
@@ -67,9 +67,9 @@ tp = np.dot(T,xp)
             
 if computeSolution:
     
-    tf = 5000;
+    tf = 1000;
     dt = 0.01;
-    epsilon = 1e-3;
+    epsilon = 1e-2;
     x0 = reqv+epsilon*unstabledir
     xphi0 = np.append(x0, 0)
     print xphi0
@@ -163,7 +163,7 @@ yintRetMap = interpolate.splev(xintRetMap, tckRetMap)
 #Return map function:
 def retmap(sn):
     snp1 = interpolate.splev(sn, tckRetMap)
-    return snp1
+    return float(snp1)
 #nth return map function:
 def retmapm(n, sn):
     if n == 0:
@@ -296,9 +296,10 @@ def fs2ps2D(px, s):
 def s2ps2D(s):
     #Guessing the initial point:
     i0 = np.argmin(np.absolute(sn - s))
-    p0x = ps2D[i0,0]
-    
-    px = newton(fs2ps2D, p0x, args=((s*snmax)+snmin,), tol=1e-12)
+    #p0x = ps2D[i0,0]
+    p0x = s
+
+    px = newton(fs2ps2D, p0x, args=(s,), tol=1e-12)
     py = interpolate.splev(px, tckps)
     
     return np.array([px, py])
@@ -346,7 +347,7 @@ def timeofflight(xhat0):
     tx = np.append(np.array([t], float).transpose(), xhatsol, axis=1)
     #Compute Poincare section:
     psreturn=poincare.computeps(tx, reqv, nhat, 1)
-    print psreturn
+    #print psreturn
     #Take the time nearest to the approximated time. This is due to the
     #fact that the array ps sometimes includes the initial point and sometimes
     #does not, hence we are not always sure the position of the first return.
@@ -414,200 +415,66 @@ if computeRPO:
     print "Admissible Cycles upto length "+str(nPrimeMax)
     for i in range(len(AdmissibleCycles)):
         print AdmissibleCycles[i]
-         
-    print "Starting the Newton search ..."
-    
-    tol = 1e-9
-    Adaptive = False 
-    
+    print "Starting the Newton search..."
+    tol = 1e-6
     for i in range(len(AdmissibleCycles)):
 
-        xi = AdmissibleCycles[i][3]
-        #Get time of flights for group i:
-        Ti = AdmissibleCycles[i][4]
-        #Get group parameter for group i:
-        phii = AdmissibleCycles[i][5]
-        
-        #How many points:
-        npts = len(xi)
-        #Num of dim:
-        n = 4
-        
-        #Initiate A, xT, xTT, error, error00 matrices:
-        A = np.zeros(((n+2)*npts, (n+2)*npts))
-        xT = np.zeros((npts, n))
-    
-        error = np.zeros((npts, n))
-        error00 = np.zeros(npts*(n+2))
-        
-        #Dummy variables used in the adaptive block:
-        xTT = np.zeros(np.shape(xT))
-        xii = np.zeros(np.shape(xi))
-        Tii = np.zeros(np.shape(Ti))
-        phiii = np.zeros(np.shape(Ti))
-        errorr = np.zeros(np.shape(error))
-                
-        #Define maximum number of iterations:
-        itermax = 200
-        #Apply ChaosBook p294 (13.11) 
-        #with constraint nhat . Dx = 0
-        iteration=0
         converged = False
-        earray = np.array([], float)
-        Adaptive=True
-        iAdaptiveMax = 20           
-        factor = 2
-        
+
+        x = AdmissibleCycles[i][3]
+        tau = AdmissibleCycles[i][4]
+        phi = AdmissibleCycles[i][5]
+        nCycle = len(x)
+        #Error vector
         while not(converged):
-            AdaptiveFail = False
-            print "xi"
-            print xi
-            #raw_input("Press Enter to continue...") 
-            
-            A = np.zeros(((n+2)*npts, (n+2)*npts))
-            for j in range(npts):
-                
-                xTj = twomode.ftau(xi[j], Ti[j])
-                xT[j, :] = xTj
-                
-                #Construct Aj matrix for each cycle element:
-                #Jacobian:
-                J = twomode.Jacobian(xi[j], Ti[j])
-                
-                #minusgvx term:
-                vx = np.array(twomode.vfullssp(xTj,0), float)
-                minusgvx = -np.dot(twomode.LieElement(phii[j]), vx)
-                minusgvx = minusgvx.reshape(-1,1)
-                
-                #minusTgfTx term:
-                minusTgfTx = np.dot(twomode.LieElement(phii[j]), xTj)
-                minusTgfTx = -np.dot(T, minusTgfTx)
-                minusTgfTx = minusTgfTx.reshape(-1,1)
-                
-                Aj = np.concatenate((-np.dot(twomode.LieElement(phii[j]), J), minusgvx), axis=1)
-                Aj = np.concatenate((Aj, minusTgfTx), axis=1)
-                
-                #nhat0 = np.append(nhat.reshape(-1,1), np.array([[0], [0]], float))
-                
-                #print nhat0
-                
-                Aj = np.concatenate((Aj, np.append(vx.reshape(-1,1), np.array([[0], [0]], float), axis=0).transpose()), axis=0)
-                #Aj = np.concatenate((Aj, np.append(nhat.reshape(-1,1), np.array([[0], [0]], float), axis=0).transpose()), axis=0)
-                #Aj = np.concatenate((Aj, np.append(tp.reshape(-1,1), np.array([[0], [0]], float), axis=0).transpose()), axis=0)        
-                tx = np.dot(T, xTj)
-                Aj = np.concatenate((Aj, np.append(tx.reshape(-1,1), np.array([[0], [0]], float), axis=0).transpose()), axis=0)     
-                
-                #print Aj
-    
-                A[j*(n+2):(j+1)*(n+2), j*(n+2):(j+1)*(n+2)] = Aj
-            
-                A[j*(n+2):j*(n+2)+n, ((j+1)%npts)*(n+2) : ((j+1)%npts)*(n+2) + n] = A[j*(n+2):j*(n+2)+n, ((j+1)%npts)*(n+2) : ((j+1)%npts)*(n+2) + n] + np.identity(n)
-            
-            for k in range(npts):
-                for l in range(npts):
-                    print "A("+str(k)+", "+str(l)+")"
-                    print A[k*(n+2):(k+1)*(n+2), l*(n+2):(l+1)*(n+2)]
-                        
-            for j in range(npts):
-                
-                error[j, :] = xi[j] - np.dot(twomode.LieElement(phii[(j-1)%npts]), xT[(j-1)%npts,:])
-                error00[((j-1)%npts)*(n+2):((j-1)%npts + 1)*(n+2)] = np.append(error[j,:], np.array([0, 0]))
-                
-            print "error:"
-            print error
-            raw_input("Press Enter to continue...") 
-            
-            earray = np.append(earray, np.max(np.abs(error)))
-                        
-            Ainv = np.linalg.inv(A)
-            
-            print "Ainv.A"
-            print np.dot(Ainv, A)
-            #idntty = np.dot(Ainv, A)
-        
-            DxTphi = np.dot(Ainv, -error00)
-            
-            alpha = 1
-            iadaptive = 0
-            
-            if Adaptive:
-                
-                Converging = False
-                
-                while not(Converging):
-                    
-                    DxTphi = DxTphi*alpha
-                    iadaptive += 1
-                    print "iadaptive= ", iadaptive
-                    print "alpha= ", alpha
-                    
-                    for j in range(npts):
-                
-                        xii[j,:] = xi[j,:] + DxTphi[j*(n+2):j*(n+2)+n]
-                        Tii[j] = Ti[j] + DxTphi[j*(n+2)+n]
-                        phiii[j] = phii[j] + DxTphi[j*(n+2)+n+1]            
-                    
-                        xTT[j, :] = twomode.ftau(xii[j], Tii[j])
-        
-                    for j in range(npts):
-                        
-                        errorr[j, :] = xii[j] - np.dot(twomode.LieElement(phiii[(j-1)%npts]), xTT[(j-1)%npts,:])
-                    
-                    emax = np.max(np.abs(errorr))
-                    emaxprevious = earray[len(earray)-1]
-                        
-                    if  emax < emaxprevious:
-                        
-                        Converging = True
-                    
-                    elif iadaptive > iAdaptiveMax:
-                        
-                        print "Adaptive step failed, looks kinda hopeless."
-                        AdaptiveFail = True
-                        raw_input("Press Enter to continue...") 
-                        break
-                    
-                    else:                   
-                        
-                        alpha = float(alpha) / float(factor)
-                        
-                    
-    
-            for j in range(npts):
-                #print "j ="    
-                #print j    
-                #print "((j-1)%npts)*(n+2) ="
-                #print ((j-1)%npts)*(n+2)
-                xi[j,:] = xi[j,:] + DxTphi[j*(n+2):j*(n+2)+n]
-                #print "((j-1)%npts)*(n+2)+n ="
-                #print ((j-1)%npts)*(n+2)+n
-                Ti[j] = Ti[j] + DxTphi[j*(n+2)+n]
-                #print "((j-1)%npts)*(n+2)+n+1 ="
-                #print ((j-1)%npts)*(n+2)+n+1
-                phii[j] = phii[j] + DxTphi[j*(n+2)+n+1]
-    
-    
-            iteration += 1
-            
-            if np.max(np.abs(error)) < tol:
-            
-                #xrpo[gindices, :] = xi
-                #tofrpo[gindices] = Ti
-                #phirpo[gindices] = phii
+#            Error = np.array([np.append(x[(k+1)%nCycle] - np.dot(twomode.LieElement(phi[k]), twomode.ftau(x[k], tau[k])),
+#                             np.array([0, 0], float)) for k in range(nCycle)], float)
+            Error = np.array([np.append(x[(k)%nCycle] - np.dot(twomode.LieElement(phi[(k-1)%nCycle]),
+                                                               twomode.ftau(x[(k-1)%nCycle], tau[(k-1)%nCycle])),
+                             np.array([0, 0], float)) for k in range(nCycle)], float)
+
+            Error = Error.reshape(np.size(Error))
+            print "Error"
+            print Error
+            raw_input("Press enter to continue...")
+            if np.max(np.abs(Error)) < tol:
                 converged = True
-            
-            if iteration == itermax or AdaptiveFail:
-    
-                if AdaptiveFail:
-                    
-                    print "Adaptive step failed, looks kinda hopeless."
-                
-                print "did not converged in given maximum number of steps"
-                print "exitting..."
-                xrpo[gindices, :] = xi
-                tofrpo[gindices] = Ti
-                phirpo[gindices] = phii
-                break
+
+            N = np.size(Error,0)
+            nDim = np.size(x[0], 0)
+            #A-Matrix:
+            A = np.zeros((N,N))
+            for k in range(nCycle):
+                A[(nDim+2)*k: (nDim+2)*k + nDim, (nDim+2)*k: (nDim+2)*k + nDim] = np.dot(twomode.LieElement(phi[k]),
+                                                                                        twomode.Jacobian(x[k], tau[k]))
+                A[(nDim+2)*k: (nDim+2)*k + nDim, (nDim+2)*k + nDim] = np.dot(twomode.LieElement(phi[k]),
+                                                                        twomode.vfullssp(twomode.ftau(x[k], tau[k])))
+                A[(nDim+2)*k: (nDim+2)*k + nDim, (nDim+2)*k + nDim + 1] = np.dot(twomode.generator(),
+                                                                                 np.dot(twomode.LieElement(phi[k]),
+                                                                                 twomode.ftau(x[k], tau[k])))
+                A[(nDim+2)*k + nDim, (nDim+2)*k: (nDim+2)*k + nDim] = twomode.vfullssp(x[k])
+                A[(nDim+2)*k + nDim + 1, (nDim+2)*k: (nDim+2)*k + nDim] = np.dot(twomode.generator(), x[k])
+                #A[(nDim+2)*k + nDim, (nDim+2)*k: (nDim+2)*k + nDim] = nhat
+                #A[(nDim+2)*k + nDim + 1, (nDim+2)*k: (nDim+2)*k + nDim] = np.array(tp)
+
+                A[(nDim+2)*((k)%nCycle): (nDim+2)*((k)%nCycle) + nDim,
+                  (nDim+2)*((k+1)%nCycle): (nDim+2)*((k+1)%nCycle) + nDim] = \
+                A[(nDim+2)*((k)%nCycle): (nDim+2)*((k)%nCycle) + nDim,
+                  (nDim+2)*((k+1)%nCycle): (nDim+2)*((k+1)%nCycle) + nDim] - np.identity(nDim)
+
+            print "A"
+            print A
+            #Compute Deltas:
+            Delta=np.dot(np.linalg.inv(A), Error)
+            print "Delta"
+            print Delta
+
+            #Update:
+            for k in range(nCycle):
+                x[k] = x[k] + Delta[(nDim+2)*k:(nDim+2)*k+nDim]
+                tau[k] = tau[k] + Delta[(nDim+2)*k]
+                phi[k] = phi[k] + Delta[(nDim+2)*k+1]
+
 
 if plotPsect:
     fig=plt.figure(1, figsize=(8,8))

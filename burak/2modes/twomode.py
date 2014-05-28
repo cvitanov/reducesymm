@@ -37,7 +37,7 @@ def vinvpol(x, t, p=params):
 
     return vel
 
-def vfullssp(x, t, p=params):
+def vfullssp(x, t=0, p=params):
     """
     Velocity function in the full state space.
 	
@@ -258,7 +258,7 @@ def three2four(v3D):
 	v = np.array([v3D[0], 0, v3D[1], v3D[2]], float)
 	return v
 
-def intvar(x0, t, p=params, abserror=1.0e-12, relerror=1.0e-12):
+def intvar(x0, t, p=params, abserror=1.0e-9, relerror=1.0e-9):
 	"""
 	Integrate variational equation.
 	Takes the initial condition, parameters and the time interval
@@ -289,7 +289,7 @@ def ftau(x, tau):
 	numpoints = 2
 	t = np.linspace(0, stoptime, numpoints)
 	
-	xsol = intfull(x, t, abserror=1.0e-12, relerror=1.0e-12)
+	xsol = intfull(x, t, abserror=1.0e-9, relerror=1.0e-9)
 	fxtau = xsol[1,:]
 	
 	return fxtau
