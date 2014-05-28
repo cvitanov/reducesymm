@@ -25,12 +25,12 @@ from PADS import Lyndon
 computeSolution = False
 computePsect = False
 computeArcLengths = False
-computeRPO = False
+computeRPO = True
 plotPsect = False
 plotRetmap = False
 
 #Search parameters:
-m = 1 #Will search for [1,m]-cycles
+nPrimeMax = 4 #Will search for [1,m]-cycles
 
 #Only relative equilibrium:
 reqv = np.array([0.43996557973671596,
@@ -166,10 +166,13 @@ def retmap(sn):
     return snp1
 #nth return map function:
 def retmapm(n, sn):
-    snpn = retmap(sn)
-    for i in range(n - 1):
-        snpn = retmap(snpn)
-    return  snpn
+    if n == 0:
+        return sn
+    else:
+        snpn = retmap(sn)
+        for i in range(n - 1):
+            snpn = retmap(snpn)
+        return  snpn
 
 print "Computing the kneading sequence"
 nMax = 8;
@@ -185,20 +188,20 @@ print "s3Critical:"
 print s3Critical
 
 Kneading = np.copy(s3Critical)
-KneadingSequence = ''
+KneadingSequence = []
 KneadingValueBin = '0.'
 KneadingValue = 0
 for i in range(nMax):
     xnext = retmap(Kneading[-1])
     Kneading=np.append(Kneading, xnext)
     if xnext > sCritical:
-        KneadingSequence = KneadingSequence+'1'
+        KneadingSequence.append(1)
         if i == 0:
             KneadingValueBin = KneadingValueBin+'1'
         else:
             KneadingValueBin = KneadingValueBin+str(int(not(int(KneadingValueBin[-1]))))
     else:
-        KneadingSequence = KneadingSequence+'0'
+        KneadingSequence.append(0)
         if i == 0:
             KneadingValueBin = KneadingValueBin+'0'
         else:
@@ -218,23 +221,23 @@ def Itinerary(s, n):
     """
     Compute future itinerary of a point s on the return map
     """
-    itinerary = ''
+    itinerary = []
     for i in range(n):
         s = retmap(s)
         if s>sCritical:
-            itinerary = itinerary + '1'
+            itinerary.append(1)
         elif s<sCritical:
-            itinerary = itinerary + '0'
+            itinerary.append(0)
     return itinerary
 
 def Splus2gamma(itinerary):
     gamma = 0
     for i in range(len(itinerary)):
         if i == 0:
-            gammaBin = '0.'+itinerary[i]
-        elif itinerary[i]=='0':
+            gammaBin = '0.'+str(itinerary[i])
+        elif itinerary[i]==0:
             gammaBin = gammaBin + gammaBin[-1]
-        elif itinerary[i]=='1':
+        elif itinerary[i]==1:
             gammaBin = gammaBin + str(int(not(int(gammaBin[-1]))))      
         gamma = gamma + (int(gammaBin[-1])*0.5)**(i+1)
     return gamma, gammaBin
@@ -244,258 +247,192 @@ def TopologicalCoordinate(x, n):
     Compute topological coordinate of a point in the return map
     """
     itinerary = Itinerary(x,n)
-    print itinerary
     gamma, gammaBin = Splus2gamma(itinerary)
     return gamma
 
-nPrimeMax = 4
-
+KneadingValue = TopologicalCoordinate(s3Critical, nPrimeMax)
 print "Kneading value fun:"
-print TopologicalCoordinate(s3Critical, 4)
+print KneadingValue
 
 PrimeCycles = []
 
 for j in range(1,nPrimeMax+1):
     for lyndon in Lyndon.LyndonWordsWithLength(2,j):
-        PrimeCycles.append([j,
-         ''.join(str(list(lyndon)[i]) for i in range(len(lyndon)))])
+        PrimeCycles.append([j, list(lyndon) ])
 
+nRPO = -1
+AdmissibleCycles = []
+#Compute the maximum topological coordinate for each prime cycle:
+for k in range(len(PrimeCycles)):
+    MaxTopCoord = 0
+    nCycle = len(PrimeCycles[k][1])
+    for j in range(nCycle):
+        Permutation = [PrimeCycles[k][1][i - j] for i in range(nCycle)]
+        TopCoorPerm = Splus2gamma((Permutation*(nPrimeMax/nCycle+1))[0:nPrimeMax])[0]
+        if TopCoorPerm > MaxTopCoord:
+            MaxTopCoord = TopCoorPerm
+    PrimeCycles[k].append(MaxTopCoord)
+    if MaxTopCoord >= KneadingValue:
+        PrimeCycles[k].append('Inadmissible')
+        nRPO = nRPO + 1
+    else:
+        PrimeCycles[k].append('Admissible')
+        AdmissibleCycles.append([PrimeCycles[k][0], PrimeCycles[k][1]])
+AdmissibleCycles = AdmissibleCycles[1:]
 
 print "PrimeCycles upto length "+str(nPrimeMax)
-print PrimeCycles 
+for i in range(len(PrimeCycles)):
+    print PrimeCycles[i]
 
+def fs2ps2D(px, s):
+    """
+        Function to be solved to get relative x coordinate of the rpo on
+        the Poincare section
+    """
+    sfun = psarclength(px)  
+    return sfun-s
+
+#From arclength to projected Poincare section coordinates:
+def s2ps2D(s):
+    #Guessing the initial point:
+    i0 = np.argmin(np.absolute(sn - s))
+    p0x = ps2D[i0,0]
+    
+    px = newton(fs2ps2D, p0x, args=((s*snmax)+snmin,), tol=1e-12)
+    py = interpolate.splev(px, tckps)
+    
+    return np.array([px, py])
+
+def ps2D2psxhat(ps2Di):
+        """
+            Takes the relative position projected on Poincare section basis 
+            on the Poincare section and returns the position on the reduced 
+            state space
+        """
+        psrelproj3D = np.array([ps2Di[0], ps2Di[1], 0], float)
+        psrel = np.dot(psbasis, psrelproj3D)
+        ps = psrel + reqv
+        #ps = np.array([ps3D[0], 0, ps3D[1], ps3D[2]], float)
+        return ps
+
+def s2xhat(s):
+    """
+    From arclength to reduced state space coordinates.
+    """
+    ps2D = s2ps2D(s)
+    xhat = ps2D2psxhat(ps2D)    
+    return xhat
+
+def timeofflight(xhat0):
+    """
+    Computes time of flight for xhat0 on the Poincare section to come back onto
+    the section for a second time 
+    """
+    import poincare
+    #Find the point on the computed poincare section, closest to the x0
+    imin = np.argmin(np.linalg.norm(ps[:,1:5]-xhat0, axis=1))
+    #Take its time of flight as
+    if imin < np.size(ps,0)-1: 
+        Tapproximate = ps[imin+1,0]-ps[imin,0]
+    else:
+        Tapproximate = ps[imin,0]-ps[imin-1,0]
+    #Integrate for a little bit longer than the approximated integration time:
+    stoptime = 1.2*Tapproximate
+    numpoints = int(stoptime/0.01)
+    #Integration time array:
+    t = np.linspace(0, stoptime, numpoints)
+    xhatphi0 = np.append(xhat0, np.array([0], float))
+    xhatsol = twomode.intslice(xhatphi0, t, abserror=1.0e-14, relerror=1.0e-12)
+    tx = np.append(np.array([t], float).transpose(), xhatsol, axis=1)
+    #Compute Poincare section:
+    psreturn=poincare.computeps(tx, reqv, nhat, 1)
+    print psreturn
+    #Take the time nearest to the approximated time. This is due to the
+    #fact that the array ps sometimes includes the initial point and sometimes
+    #does not, hence we are not always sure the position of the first return.
+    itof = np.argmin(np.abs(psreturn[:,0]-Tapproximate))
+    tof = psreturn[itof,0]
+    return tof
+    
+def phireturn(xhat0, tof):
+        """
+        Computes phi for xhat0 on the Poincare section to come back onto
+        the section for a second time 
+        """
+        stoptime = tof
+        numpoints = 2
+        #Integration time array:
+        t = [stoptime * float(i) / (numpoints - 1) for i in range(numpoints)]        
+        xsol = twomode.intfull(xhat0, t, abserror=1.0e-14, relerror=1.0e-12)
+        #Phase of the first mode is the slice phase
+        phi = np.angle(xsol[1,0] + 1j*xsol[1,1])    
+        return -phi        
 
 if computeRPO:
-
-    #Look upto the mth return map to find the periodic orbit candidates:
-    scandidates = np.zeros([1,2]) #dummy matrix to hold po candidate arclengths
     smin = np.min(sn)
     smax = np.max(sn)
+    #scandidates = np.zeros([1,2]) #dummy matrix to hold po candidate arclengths
+    scandidates = [] #dummy matrix to hold po candidate arclengths
     
-    for i in range(m):
+    for i in range(nPrimeMax):
         #Define the function zeros of which would correspond to the periodic 
         #orbit arclengths:
         def fpo(s):
             po = retmapm(i+1, s) - s
             return po
-        #print "retmap %i" %(i+1)
+            
         fpoevo=0
-        for s0 in np.arange(smin, smax, (smax-smin)/50000):
+        for s0 in np.arange(smin, smax, (smax-smin)/1000):
             fpoev = fpo(s0)
             if fpoev * fpoevo < 0: #If there is a zero-crossing, look for the root: 
                 sc = newton(fpo, s0, tol=1.48e-12)
                 #print "sc = %f" %sc
                 newcandidate = 1
-                for j in range(np.size(scandidates,0)):
+                for j in range(len(scandidates)):
                     #Discard if found candidate is previously found:
-                    if np.abs(scandidates[j,1] - sc)<1e-9: 
+                    if np.abs(scandidates[j][1] - sc)<1e-9: 
                         newcandidate=0
                 if newcandidate:
-                    scandidates = np.append(scandidates, np.array([[i+1, sc]], float), axis=0)
-            fpoevo = fpoev
-    
-    scandidates = scandidates[1:np.size(scandidates,0), :]
-    print "Periodic orbit candidate arclengths:"
-    print scandidates
-    
-    #Read the maximum value of the return map to determine the point of the 
-    #binary partition:
-    imaxint = np.argmax(yintRetMap)
-    sboundary = xintRetMap[imaxint]
-    
-    #Dummy itinerary array:
-    scitineraries = np.array([''])
-    #Determine itineraries:
-    for i in range(np.size(scandidates,0)):
-        scandidate = scandidates[i,1]
-        if scandidate < sboundary:
-            itinerary = "0"
-        else:
-            itinerary = "1"
-        m = int(scandidates[i,0])   
-        for i in range(1,m):
-            scandidate = retmap(scandidate) 
-            if scandidate < sboundary:
-                itinerary = itinerary+"0"
-            else:
-                itinerary = itinerary+"1"
-        scitineraries = np.append(scitineraries, np.array([itinerary]))
-    scitineraries = scitineraries[1:]
-    print "itineraries:"
-    print scitineraries
-    
-    #Dummy assignments:
-    group = np.zeros(len(scitineraries), int)
-    position = np.zeros(len(scitineraries), int)
-    #Group candidates into multiple shooting candidates according to their itineraries:
-    for i in range(np.size(scandidates,0)):
-        "ith itinerary:"
-        iti = scitineraries[i]
-        #print "range(length of iti - 1)"
-        #print range(len(iti)-1)
-        #Indices of mth order periodic orbit candidates:
-        imth = np.argwhere(scandidates[:,0]==scandidates[i,0])
-        if len(imth)==1:
-            group[i] = int(1)
-            position[i] = int(1)
-        if group[i] == 0:
-            group[i] = int(np.max(group))+1 #ith candidate starts a new group
-            position[i] = int(1)
-            for shift in range(-len(iti)+1,0):
-                for j in imth:
-                #print j
-                    if scitineraries[j]  == (iti[shift:] + iti[0:len(iti)+shift]):
-                        group[j] = group[i] #jth candidate belong to the same group
-                        position[j] = shift + len(iti)+1                    
-    print "group:"      
-    print group     
-    print "position:"
-    print position
-    together = np.append(np.array([scitineraries]).transpose(), np.array([group]).transpose(), axis=1)
-    together = np.append(together, np.array([position]).transpose(), axis=1)
-    together = np.append(together, np.array([scandidates[:,1]], str).transpose(), axis=1)
-    print "Itinerary | Group | Position in the group"
-    print together
-    def fs2ps2D(px, s):
-        """
-            Function to be solved to get relative x coordinate of the rpo on
-            the Poincare section
-        """
-        sfun = psarclength(px)  
-        return sfun-s
-    
-    #From arclength to projected Poincare section coordinates:
-    def s2ps2D(s):
-        #Guessing the initial point:
-        i0 = np.argmin(np.absolute(sn - s))
-        p0x = ps2D[i0,0]
+                    CandidateItinerary = Itinerary(sc, i+1)
+                    scandidates.append([i+1, sc, Itinerary(sc, i+1)])
+                    for k in range(len(AdmissibleCycles)):
+                        if CandidateItinerary == AdmissibleCycles[k][1]:
+                            AdmissibleCycles[k].append([retmapm(n, sc) for n 
+                                                       in range(i+1)])
+                            AdmissibleCycles[k].append(np.array([s2xhat(
+                             AdmissibleCycles[k][2][l]) for l in range(i+1)]))
+                            AdmissibleCycles[k].append([timeofflight(
+                             AdmissibleCycles[k][3][l]) for l in range(i+1)])
+                            AdmissibleCycles[k].append([phireturn(
+                             AdmissibleCycles[k][3][l], 
+                             AdmissibleCycles[k][4][l]) for l in range(i+1)])
+                           
+                    #scandidates = np.append(scandidates, np.array([[i+1, sc]], float), axis=0)
+                    
+            fpoevo = fpoev        
         
-        px = newton(fs2ps2D, p0x, args=((s*snmax)+snmin,), tol=1e-12)
-        py = interpolate.splev(px, tckps)
-        
-        return np.array([px, py])
-    
-    ps2Dcandidates = np.array([s2ps2D(s) for s in scandidates[:,1]] )
-    print "ps2Dcandidates:"
-    print ps2Dcandidates
-    
-    def ps2D2psxhat(ps2Di):
-            """
-                Takes the relative position projected on Poincare section basis 
-                on the Poincare section and returns the position on the reduced 
-                state space
-            """
-            psrelproj3D = np.array([ps2Di[0], ps2Di[1], 0], float)
-            psrel = np.dot(psbasis, psrelproj3D)
-            ps = psrel + reqv
-            #ps = np.array([ps3D[0], 0, ps3D[1], ps3D[2]], float)
-            return ps
-    
-    pscandidates = np.array([ps2D2psxhat(ps2D) for ps2D in ps2Dcandidates] )
-    print "pscandidates"
-    print pscandidates
-    
-    def timeofflight(xhat0):
-        """
-        Computes time of flight for xhat0 on the Poincare section to come back onto
-        the section for a second time 
-        """
-        import poincare
-        #Find the point on the computed poincare section, closest to the x0
-        imin = np.argmin(np.linalg.norm(ps[:,1:5]-xhat0, axis=1))
-        #Take its time of flight as
-        if imin < np.size(ps,0)-1: 
-            Tapproximate = ps[imin+1,0]-ps[imin,0]
-        else:
-            Tapproximate = ps[imin,0]-ps[imin-1,0]
-        print "Tapproximate:"
-        print Tapproximate
-        #Integrate for a little bit longer than the approximated integration time:
-        stoptime = 1.2*Tapproximate
-        numpoints = int(stoptime/0.01)
-        #Integration time array:
-        t = np.linspace(0, stoptime, numpoints)
-        xhatphi0 = np.append(xhat0, np.array([0], float))
-        xhatsol = twomode.intslice(xhatphi0, t, abserror=1.0e-14, relerror=1.0e-12)
-        tx = np.append(np.array([t], float).transpose(), xhatsol, axis=1)
-        #Compute Poincare section:
-        psreturn=poincare.computeps(tx, reqv, nhat, 1)
-        print "psreturn:"
-        print psreturn
-        #Take the time nearest to the approximated time. This is due to the
-        #fact that the array ps sometimes includes the initial point and sometimes
-        #does not, hence we are not always sure the position of the first return.
-        itof = np.argmin(np.abs(psreturn[:,0]-Tapproximate))
-        tof = psreturn[itof,0]
-        return tof
-    
-    def phireturn(xhat0, tof):
-        """
-        Computes phi for xhat0 on the Poincare section to come back onto
-        the section for a second time 
-        """
-    
-        stoptime = tof
-        numpoints = 2
-        #Integration time array:
-        t = [stoptime * float(i) / (numpoints - 1) for i in range(numpoints)]
-        
-        xsol = twomode.intfull(xhat0, t, abserror=1.0e-14, relerror=1.0e-12)
-        #Phase of the first mode is the slice phase
-        phi = np.angle(xsol[1,0] + 1j*xsol[1,1])    
-        
-        return -phi
-    
-    TOF = np.array([timeofflight(x0) for x0 in pscandidates], float)
-    print "time of flights:"
-    print TOF
-    phiret = np.array([phireturn(pscandidates[i,:], TOF[i]) for i in range(np.size(TOF,0))], float)
-    print "phiret:"
-    print phiret
-    raw_input("Press Enter to continue...") 
-    Adaptive = False
-    iAdaptiveMax = 20           
-    factor = 2
+    print "Admissible Cycles upto length "+str(nPrimeMax)
+    for i in range(len(AdmissibleCycles)):
+        print AdmissibleCycles[i]
+         
+    print "Starting the Newton search ..."
     
     tol = 1e-9
-    earray = np.array([], float)
-    xrpo = np.zeros(np.shape(pscandidates))
-    tofrpo = np.zeros(np.shape(TOF))
-    phirpo = np.zeros(np.shape(phiret))
+    Adaptive = False 
     
-    for i in range(1, int(np.max(group)+1)):
-    
-        AdaptiveFail = False
-        print "Group no: ", i
-        
-        #Get corresponding indices for the group i:
-        gindices = np.argwhere(group == i)
-        #Reshape them in a 1D array:
-        gindices = gindices.reshape(np.size(gindices))
-        #Get coordinates of group i
-        xi = pscandidates[gindices,:]
+    for i in range(len(AdmissibleCycles)):
+
+        xi = AdmissibleCycles[i][3]
         #Get time of flights for group i:
-        Ti = TOF[gindices]
+        Ti = AdmissibleCycles[i][4]
         #Get group parameter for group i:
-        phii = phiret[gindices]
-        #Get the positions in group i
-        posi = np.array([position[gindices]-1], int)
-        posi = posi.reshape(np.size(posi))
-        print "posi = ", posi 
-        #Sort with respect to positions:
-        xi = xi[posi, :]
-        print "xi = ", xi 
-        Ti = np.array([Ti[posi]])
-        Ti = Ti.reshape(np.size(Ti))
-        print "Ti = ", Ti 
-        phii = np.array([phii[posi]])
-        phii = phii.reshape(np.size(phii))%(2*np.pi)
-        print "phii = ", phii 
-        raw_input("Press Enter to continue...") 
+        phii = AdmissibleCycles[i][5]
+        
         #How many points:
-        npts = np.size(gindices)
+        npts = len(xi)
         #Num of dim:
         n = 4
+        
         #Initiate A, xT, xTT, error, error00 matrices:
         A = np.zeros(((n+2)*npts, (n+2)*npts))
         xT = np.zeros((npts, n))
@@ -509,7 +446,7 @@ if computeRPO:
         Tii = np.zeros(np.shape(Ti))
         phiii = np.zeros(np.shape(Ti))
         errorr = np.zeros(np.shape(error))
-        
+                
         #Define maximum number of iterations:
         itermax = 200
         #Apply ChaosBook p294 (13.11) 
@@ -517,11 +454,15 @@ if computeRPO:
         iteration=0
         converged = False
         earray = np.array([], float)
+        Adaptive=True
+        iAdaptiveMax = 20           
+        factor = 2
         
         while not(converged):
-            
+            AdaptiveFail = False
             print "xi"
             print xi
+            #raw_input("Press Enter to continue...") 
             
             A = np.zeros(((n+2)*npts, (n+2)*npts))
             for j in range(npts):
@@ -571,9 +512,10 @@ if computeRPO:
                 
                 error[j, :] = xi[j] - np.dot(twomode.LieElement(phii[(j-1)%npts]), xT[(j-1)%npts,:])
                 error00[((j-1)%npts)*(n+2):((j-1)%npts + 1)*(n+2)] = np.append(error[j,:], np.array([0, 0]))
-            
+                
             print "error:"
             print error
+            raw_input("Press Enter to continue...") 
             
             earray = np.append(earray, np.max(np.abs(error)))
                         
@@ -649,9 +591,9 @@ if computeRPO:
             
             if np.max(np.abs(error)) < tol:
             
-                xrpo[gindices, :] = xi
-                tofrpo[gindices] = Ti
-                phirpo[gindices] = phii
+                #xrpo[gindices, :] = xi
+                #tofrpo[gindices] = Ti
+                #phirpo[gindices] = phii
                 converged = True
             
             if iteration == itermax or AdaptiveFail:
@@ -666,22 +608,6 @@ if computeRPO:
                 tofrpo[gindices] = Ti
                 phirpo[gindices] = phii
                 break
-            
-        
-        print "x_rpo:"
-        print xrpo
-        print "T_rpo:"
-        print tofrpo
-        print "phi_rpo:"
-        print phirpo
-        
-        #plot(np.arange(iteration), earray)
-        #xlabel('Iteration')
-        #ylabel('Error')
-        #savefig('image/errorrposearch'+str(i)+'.png', bbox_inches='tight', dpi=150)
-        #show()
-        
-        #raw_input("Press Enter to continue...")
 
 if plotPsect:
     fig=plt.figure(1, figsize=(8,8))
