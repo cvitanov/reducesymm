@@ -244,6 +244,22 @@ def intfull(x0, t, p=params, abserror=1.0e-12, relerror=1.0e-12):
 	xsol = odeint(vfullssp, x0, t, args=(p,), atol = abserror, rtol = relerror)
 	return xsol
 
+def intinvpol(x0, t, p=params, abserror=1.0e-12, relerror=1.0e-12):
+	"""
+	Takes the initial condition, parameters and the time interval
+	returns the result as a series in time.
+	"""
+	xsol = odeint(vinvpol, x0, t, args=(p,), atol = abserror, rtol = relerror)
+	return xsol
+
+def intScaledTime(x0, t, p=params, abserror=1.0e-12, relerror=1.0e-12):
+	"""
+	Takes the initial condition, parameters and the time interval
+	returns the result as a series in time.
+	"""
+	xsol = odeint(vscaledtime, x0, t, args=(p,), atol = abserror, rtol = relerror)
+	return xsol
+
 def four2three(v):
 	"""
 	Takes a 4D vector within the slice and outputs its 3D version

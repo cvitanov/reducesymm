@@ -25,12 +25,14 @@ from PADS import Lyndon
 computeSolution = False
 computePsect = False
 computeArcLengths = False
-computeRPO = True
+computeRPO = False
 plotPsect = False
 plotRetmap = False
+Shoot = False
+ShootInvPol = True
 
 #Search parameters:
-nPrimeMax = 3 #Will search for [1,m]-cycles
+nPrimeMax = 5 #Will search for [1,m]-cycles
 
 #Only relative equilibrium:
 reqv = np.array([0.43996557973671596,
@@ -64,13 +66,93 @@ psbasis = np.array([unstabledir, vaux, nhat]).transpose()
 T = twomode.generator()
 xp = np.array([1,0,0,0], float)
 tp = np.dot(T,xp)
+
+if Shoot:
+    tf = 22;
+    dt = 0.001;
+ 
+    #Create a figure window
+    fig = plt.figure()
+    ax = fig.gca(projection='3d')
+    #Modify axis colors:
+    ax.w_xaxis.set_pane_color((1, 1, 1, 1.0))
+    ax.w_yaxis.set_pane_color((1, 1, 1, 1.0))
+    ax.w_zaxis.set_pane_color((1, 1, 1, 1.0))
+    
+    ax.hold(True)
+    j = 0
+    step = 10
+    for i in np.arange(0,step*9, step):
+        
+        x0 = np.array([1e-8,0,(i+1)*5e-10,0], float)
+        t = np.linspace(0, tf, np.floor(tf/dt)+1)
+        xphi0 = np.append(x0, 0)
+        xphisol = twomode.intslice(xphi0, t)
+    
+        txphisol = np.concatenate((t.reshape(-1,1),xphisol), axis=1)
+               
+        cc = '#'+str((j+1)*step)[0:2]+'2020'
+        ax.plot(xphisol[:,0], 
+        xphisol[:,2], 
+        xphisol[:,3], linewidth=0.5, color=cc)
+        j+=1
+    
+    ax.set_xlabel('\n $\hat{x}_1$ \t  ', fontsize=32)
+    ax.set_ylabel('\n $\hat{x}_2$ \t', fontsize=32)
+    ax.set_zlabel('$\hat{y}_2$   ', fontsize=32)
+    
+    ax.scatter(reqv[0], reqv[2], reqv[3], edgecolor='#e500e5', s= 20, c='#e500e5')
+    ax.scatter(0, 0, 0, edgecolor='#f7464a', s= 20, c='#f7464a')
+    
+    plt.show()
+            
+if ShootInvPol:
+    tf = 20;
+    dt = 0.01;
+ 
+    #Create a figure window
+    fig = plt.figure()
+    ax = fig.gca(projection='3d')
+    #Modify axis colors:
+    ax.w_xaxis.set_pane_color((1, 1, 1, 1.0))
+    ax.w_yaxis.set_pane_color((1, 1, 1, 1.0))
+    ax.w_zaxis.set_pane_color((1, 1, 1, 1.0))
+    
+    ax.hold(True)
+    j = 0
+    step = 10
+    for i in np.arange(0,step*1, step):
+        
+        x0 = np.array([1e-3,0,(i+1)*5e-4,0], float)
+        x0invpol = twomode.ssp2invpol(x0)
+        #x0 = [0.19, 0.15, -0.14, -0.027]
+        t = np.linspace(0, tf, np.floor(tf/dt)+1)
+        
+        xphisol = twomode.intinvpol(x0invpol, t)
+               
+        cc = '#'+str((j+1)*step)[0:2]+'2020'
+        ax.plot(xphisol[:,0], 
+        xphisol[:,1], 
+        xphisol[:,2], linewidth=0.5, color=cc)
+        j+=1
+    
+    ax.set_xlabel('\n $\hat{x}_1$ \t  ', fontsize=32)
+    ax.set_ylabel('\n $\hat{x}_2$ \t', fontsize=32)
+    ax.set_zlabel('$\hat{y}_2$   ', fontsize=32)
+    
+    reqvinvpol = twomode.ssp2invpol(reqv)
+    ax.scatter(reqvinvpol[0], reqvinvpol[1], reqvinvpol[2], edgecolor='#e500e5', s= 20, c='#e500e5')
+    ax.scatter(0, 0, 0, edgecolor='#f7464a', s= 20, c='#f7464a')
+    
+    plt.show()
             
 if computeSolution:
     
-    tf = 1000;
+    tf = 2000;
     dt = 0.01;
     epsilon = 1e-2;
     x0 = reqv+epsilon*unstabledir
+    #x0 = np.array([1e-3,0,1e-3,0], float)
     xphi0 = np.append(x0, 0)
     print xphi0
     
@@ -88,7 +170,11 @@ if computeSolution:
             
     ax.plot(xphisol[:,0], 
     xphisol[:,2], 
-    xphisol[:,3], linewidth=0.1, color='#3c5f96')
+    xphisol[:,3], linewidth=1, color='#3c5f96')
+    
+    ax.set_xlabel('\n $\hat{x}_1$ \t  ', fontsize=32)
+    ax.set_ylabel('\n $\hat{x}_2$ \t', fontsize=32)
+    ax.set_zlabel('$\hat{y}_2$   ', fontsize=32)
     
     np.savetxt('data/txphisol.dat', txphisol)
     
@@ -175,15 +261,16 @@ def retmapm(n, sn):
         return  snpn
 
 print "Computing the kneading sequence"
-nMax = 8;
+nMax = 3;
 sCritical = fmin(lambda x: -interpolate.splev(x, tckRetMap), 1)
 print "sCritical:"
 print sCritical
 def fCritical(s):
     po = retmapm(3, s) - s
     return po
-s3Critical = newton(fCritical, sCritical*0.999, tol=1.48e-12)
-#s3Critical = sCritical
+s3Critical = newton(fCritical, sCritical*1.001, tol=1.48e-12)
+#s3Critical = newton(fCritical, sCritical*0.999, tol=1.48e-12)
+#s3Critical = sCritical*0.999
 print "s3Critical:"
 print s3Critical
 
@@ -417,6 +504,7 @@ if computeRPO:
         print AdmissibleCycles[i]
     print "Starting the Newton search..."
     tol = 1e-6
+    #for i in range(1,2):
     for i in range(len(AdmissibleCycles)):
 
         converged = False
@@ -427,10 +515,8 @@ if computeRPO:
         nCycle = len(x)
         #Error vector
         while not(converged):
-#            Error = np.array([np.append(x[(k+1)%nCycle] - np.dot(twomode.LieElement(phi[k]), twomode.ftau(x[k], tau[k])),
-#                             np.array([0, 0], float)) for k in range(nCycle)], float)
-            Error = np.array([np.append(x[(k)%nCycle] - np.dot(twomode.LieElement(phi[(k-1)%nCycle]),
-                                                               twomode.ftau(x[(k-1)%nCycle], tau[(k-1)%nCycle])),
+            Error = np.array([np.append(x[(k+1)%nCycle] - np.dot(twomode.LieElement(phi[(k)%nCycle]),
+                                                               twomode.ftau(x[(k)%nCycle], tau[(k)%nCycle])),
                              np.array([0, 0], float)) for k in range(nCycle)], float)
 
             Error = Error.reshape(np.size(Error))
@@ -461,9 +547,7 @@ if computeRPO:
                   (nDim+2)*((k+1)%nCycle): (nDim+2)*((k+1)%nCycle) + nDim] = \
                 A[(nDim+2)*((k)%nCycle): (nDim+2)*((k)%nCycle) + nDim,
                   (nDim+2)*((k+1)%nCycle): (nDim+2)*((k+1)%nCycle) + nDim] - np.identity(nDim)
-
-            print "A"
-            print A
+    
             #Compute Deltas:
             Delta=np.dot(np.linalg.inv(A), Error)
             print "Delta"
@@ -472,8 +556,8 @@ if computeRPO:
             #Update:
             for k in range(nCycle):
                 x[k] = x[k] + Delta[(nDim+2)*k:(nDim+2)*k+nDim]
-                tau[k] = tau[k] + Delta[(nDim+2)*k]
-                phi[k] = phi[k] + Delta[(nDim+2)*k+1]
+                tau[k] = tau[k] + Delta[(nDim+2)*k+nDim]
+                phi[k] = phi[k] + Delta[(nDim+2)*k+nDim+1]
 
 
 if plotPsect:
@@ -519,22 +603,22 @@ if plotRetmap:
     
     #plot(srange, [0.825 for  i in range(np.size(srange,0))], 'r')
     ax = fig.gca()
-    ax.set_aspect('equal')
+    #ax.set_aspect('equal')
     smin = np.min(sn)
     smax = np.max(sn)
     ax.set_xlim(smin,smax)
     ax.set_ylim(smin,smax)
     ax.set_xlabel('$s_n$', fontsize=24)
     ax.set_ylabel('$s_{n+1}$', fontsize=24)
-    Nticks = 5
+    #Nticks = 5
 
-    xticks = np.linspace(smin, smax, Nticks)
-    ax.set_xticks(xticks)
-    ax.set_xticklabels(["$%.1f$" % xtik for xtik in xticks], fontsize=16); 
+    #xticks = np.linspace(smin, smax, Nticks)
+    #ax.set_xticks(xticks)
+    #ax.set_xticklabels(["$%.1f$" % xtik for xtik in xticks], fontsize=16); 
 
-    yticks = np.linspace(smin, smax, Nticks)
-    ax.set_yticks(yticks)
-    ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=16); 
+    #yticks = np.linspace(smin, smax, Nticks)
+    #ax.set_yticks(yticks)
+    #ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=16); 
     
     #plt.figure(2, figsize=(8,8))
     #sp3 = np.array([retmapm(3, sn) for sn in srange])
