@@ -27,9 +27,11 @@ computePsect = False
 computeArcLengths = False
 computeRPO = False
 plotPsect = False
-plotRetmap = False
+plotRetmap = True
 Shoot = False
-ShootInvPol = True
+ShootInvPol = False
+ShootBack = False
+ShootFull = False
 
 #Search parameters:
 nPrimeMax = 5 #Will search for [1,m]-cycles
@@ -66,6 +68,65 @@ psbasis = np.array([unstabledir, vaux, nhat]).transpose()
 T = twomode.generator()
 xp = np.array([1,0,0,0], float)
 tp = np.dot(T,xp)
+
+if ShootFull:
+    tf = 5
+    dt = 1e-2
+    t = np.linspace(0, tf, np.floor(tf/dt)+1)
+
+    x0 = [1e-6,0,1e-6,0]
+    
+    #Create a figure window
+    fig = plt.figure()
+    ax = fig.gca(projection='3d')
+    #Modify axis colors:
+    ax.w_xaxis.set_pane_color((1, 1, 1, 1.0))
+    ax.w_yaxis.set_pane_color((1, 1, 1, 1.0))
+    ax.w_zaxis.set_pane_color((1, 1, 1, 1.0))
+    
+    x0 = reqv + unstabledir #stable*1e-2
+    
+    xsol = twomode.intfull(x0, t)
+            
+    ax.plot(xsol[:,0], 
+    xsol[:,1], 
+    xsol[:,2], linewidth=1, color='#3c5f96')
+    
+    ax.set_xlabel('\n $x_1$ \t  ', fontsize=32)
+    ax.set_ylabel('\n $y_1$ \t', fontsize=32)
+    ax.set_zlabel('$x_2$   ', fontsize=32)
+    
+    plt.show()
+
+if ShootBack:
+    tf = 1
+    dt = 1e-5
+    t = np.linspace(0, tf, np.floor(tf/dt)+1)
+    
+    stable = np.real(v[:,3])
+        
+    #Create a figure window
+    fig = plt.figure()
+    ax = fig.gca(projection='3d')
+    #Modify axis colors:
+    ax.w_xaxis.set_pane_color((1, 1, 1, 1.0))
+    ax.w_yaxis.set_pane_color((1, 1, 1, 1.0))
+    ax.w_zaxis.set_pane_color((1, 1, 1, 1.0))
+    
+    x0 = reqv + unstabledir #stable*1e-2
+    xphi0 = np.append(x0, 0)
+    
+    xphisol = twomode.intslicebackwards(xphi0, t)
+            
+    ax.plot(xphisol[:,0], 
+    xphisol[:,2], 
+    xphisol[:,3], linewidth=1, color='#3c5f96')
+    
+    ax.set_xlabel('\n $\hat{x}_1$ \t  ', fontsize=32)
+    ax.set_ylabel('\n $\hat{x}_2$ \t', fontsize=32)
+    ax.set_zlabel('$\hat{y}_2$   ', fontsize=32)
+    
+    plt.show()
 
 if Shoot:
     tf = 22;

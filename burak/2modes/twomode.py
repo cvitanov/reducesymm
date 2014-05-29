@@ -227,12 +227,32 @@ def vhatvphi(xphi,t,p=params):
 	vel[4] = vphi(x,t,p)
 	return vel
 
+def mvhatvphi(xphi,t,p=params):
+	"""
+    Velocity function within the slice
+    """
+	vel=np.zeros(5)
+	x = xphi[0:4]
+	phi = xphi[4]
+	vel[0:4] = vfullssp(x,t,p) - vphi(x,t,p)*np.dot(T,x)
+	vel[4] = vphi(x,t,p)
+	return -vel
+
 def intslice(xphi0, t, p=params, abserror=1.0e-12, relerror=1.0e-12):
 	"""
 	Takes the initial condition, parameters and the time interval
 	returns the result as a series in time.
 	"""
 	xsol = odeint(vhatvphi, xphi0, t, args=(p,), atol = abserror, rtol = relerror)
+	
+	return xsol
+
+def intslicebackwards(xphi0, t, p=params, abserror=1.0e-12, relerror=1.0e-12):
+	"""
+	Takes the initial condition, parameters and the time interval
+	returns the result as a series in time.
+	"""
+	xsol = odeint(mvhatvphi, xphi0, t, args=(p,), atol = abserror, rtol = relerror)
 	
 	return xsol
 
