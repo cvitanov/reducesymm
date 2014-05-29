@@ -96,7 +96,7 @@ private:
 
     // geometric params
     const double mRadius = 1;
-    const double mWidth = 0.3;
+    const double mWidth = 0.05;
     vector<vec2> mCenterList;
     vector<double> mCenterListX;
     vector<double> mCenterListY;
@@ -118,8 +118,6 @@ public:
 
 LorentzGasElCells::LorentzGasElCells(): mNsyms(0)
 {
-    myFile.open("output.txt");
-    myTest.open("converge.txt");
     const double M_SQRT3 = 1.73205080756887729352744634151;
     mCenterListX.resize(12);
     mCenterListY.resize(12);
@@ -259,6 +257,9 @@ void LorentzGasElCells::mainLoop(int n)
     mNsyms = n;
     // generate length n topolotical cycle out of 12 symbols
     genNecklace(n, 12, mSymbols);
+    std::string fname = "l" + std::to_string(n) + ".txt";
+    myFile.open(fname.c_str());
+    myTest.open("converge.txt");
     cout << "init success" << endl;
     mSymbols.remove_if([this](const vector<int>& curSymbols){return pruneRule(curSymbols);});
     //
@@ -274,7 +275,7 @@ void LorentzGasElCells::mainLoop(int n)
     // options.print_fun = monit;
     options.print_level = Nag_NoPrint;
     options.max_iter = 100000;
-    options.optim_tol = 1e-12;
+    // options.optim_tol = 1e-10;
     // nag_opt_read("e04ccc", "config.txt", &options, Nag_FALSE, "stdout", &fail);
     if (fail.code != NE_NOERROR)
     {
@@ -310,8 +311,8 @@ void LorentzGasElCells::mainLoop(int n)
             {
                 tmpvec[i] = x[i];
             }
-            mLabels.push_back(pSymbol);
-            mThetas.push_back(tmpvec);
+            // mLabels.push_back(pSymbol);
+            // mThetas.push_back(tmpvec);
             cout << "current symbols: " << pSymbol << " ";
             cout << tmpvec << endl;
             myFile << pSymbol << " ";
@@ -320,14 +321,19 @@ void LorentzGasElCells::mainLoop(int n)
         // check if it is a physically valid solution by testing intersection
         // store the solution and symbol sequence as well
     }
+    myFile.close();
+    myTest.close();
+    mSymbols.resize(0);
 }
 
 
 int main(int argc, const char * argv[])
 {
     LorentzGasElCells billiardSystem;
-    billiardSystem.mainLoop(8);
-    
+    for(int i = 2; i < 9; ++i)
+    {
+        billiardSystem.mainLoop(i); 
+    }
     return 0;
 }
 
