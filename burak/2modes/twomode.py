@@ -309,11 +309,13 @@ def Jacobian(x, Ti):
 	"""	
 	xvar = np.append(x, np.identity(4).reshape(16))
 	stoptime = Ti
+	dt = 0.01
 	numpoints = 2
+	#numpoints = np.floor(Ti/dt)+1
 	t = np.linspace(0, stoptime, numpoints)
 	xvarsol = intvar(xvar, t)
 
-	J = xvarsol[1, 4:20].reshape(4,4)
+	J = xvarsol[-1, 4:20].reshape(4,4)
 
 	return J
 

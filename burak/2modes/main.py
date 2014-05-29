@@ -25,16 +25,17 @@ from PADS import Lyndon
 computeSolution = False
 computePsect = False
 computeArcLengths = False
-computeRPO = False
+computeRPO = True
 plotPsect = False
 plotRetmap = True
+#Shooting:
 Shoot = False
 ShootInvPol = False
 ShootBack = False
 ShootFull = False
 
 #Search parameters:
-nPrimeMax = 5 #Will search for [1,m]-cycles
+nPrimeMax = 6 #Will search for [1,m]-cycles
 
 #Only relative equilibrium:
 reqv = np.array([0.43996557973671596,
@@ -210,7 +211,7 @@ if ShootInvPol:
 if computeSolution:
     
     tf = 2000;
-    dt = 0.01;
+    dt = 0.1;
     epsilon = 1e-2;
     x0 = reqv+epsilon*unstabledir
     #x0 = np.array([1e-3,0,1e-3,0], float)
@@ -231,7 +232,7 @@ if computeSolution:
             
     ax.plot(xphisol[:,0], 
     xphisol[:,2], 
-    xphisol[:,3], linewidth=1, color='#3c5f96')
+    xphisol[:,3], linewidth=0.2, color='#3c5f96')
     
     ax.set_xlabel('\n $\hat{x}_1$ \t  ', fontsize=32)
     ax.set_ylabel('\n $\hat{x}_2$ \t', fontsize=32)
@@ -322,14 +323,14 @@ def retmapm(n, sn):
         return  snpn
 
 print "Computing the kneading sequence"
-nMax = 3;
+nMax = 8;
 sCritical = fmin(lambda x: -interpolate.splev(x, tckRetMap), 1)
 print "sCritical:"
 print sCritical
 def fCritical(s):
     po = retmapm(3, s) - s
     return po
-s3Critical = newton(fCritical, sCritical*1.001, tol=1.48e-12)
+s3Critical = newton(fCritical, sCritical*0.999, tol=1.48e-12)
 #s3Critical = newton(fCritical, sCritical*0.999, tol=1.48e-12)
 #s3Critical = sCritical*0.999
 print "s3Critical:"
@@ -517,6 +518,9 @@ def phireturn(xhat0, tof):
         phi = np.angle(xsol[1,0] + 1j*xsol[1,1])    
         return -phi        
 
+Adaptive = True
+factor = 2
+
 if computeRPO:
     smin = np.min(sn)
     smax = np.max(sn)
@@ -583,7 +587,7 @@ if computeRPO:
             Error = Error.reshape(np.size(Error))
             print "Error"
             print Error
-            raw_input("Press enter to continue...")
+            #raw_input("Press enter to continue...")
             if np.max(np.abs(Error)) < tol:
                 converged = True
 
@@ -613,6 +617,33 @@ if computeRPO:
             Delta=np.dot(np.linalg.inv(A), Error)
             print "Delta"
             print Delta
+            
+            converging = False
+            if Adaptive:
+                xx = np.empty(np.shape(x))
+                tautau = np.zeros(np.shape(tau))
+                phiphi = np.zeros(np.shape(phi))
+                iAdaptive = 0
+                while not(converging):
+                    iAdaptive = iAdaptive + 1
+                    print "iAdaptive:"
+                    print iAdaptive
+                    for k in range(nCycle):
+                        xx[k] = x[k] + Delta[(nDim+2)*k:(nDim+2)*k+nDim]
+                        tautau[k] = tau[k] + Delta[(nDim+2)*k+nDim]
+                        phiphi[k] = phi[k] + Delta[(nDim+2)*k+nDim+1]
+                    
+                    ErrorNext = np.array([xx[(k+1)%nCycle] - \
+                    np.dot(twomode.LieElement(phiphi[(k)%nCycle]), \
+                    twomode.ftau(xx[(k)%nCycle], tautau[(k)%nCycle])) \
+                    for k in range(nCycle)], float)
+
+                    
+                    if np.max(np.abs(ErrorNext)) < np.max(np.abs(Error)):
+                        converging = True
+                    else:
+                        Delta = Delta / factor
+                        
 
             #Update:
             for k in range(nCycle):
@@ -620,6 +651,7 @@ if computeRPO:
                 tau[k] = tau[k] + Delta[(nDim+2)*k+nDim]
                 phi[k] = phi[k] + Delta[(nDim+2)*k+nDim+1]
 
+    #np.savetxt('data/AdmissibleCycles.dat', AdmissibleCycles)
 
 if plotPsect:
     fig=plt.figure(1, figsize=(8,8))
