@@ -23,6 +23,8 @@ for iter = 1:itermax
         updatederiv();
     end
     derival = derival + tmpderival * (-1)^iter;
+    % tmpderival
+    % icount
 end
 derival = -derival;
 

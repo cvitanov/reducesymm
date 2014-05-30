@@ -1,5 +1,5 @@
 
-w = 0.3;
+w = 0.2;
 r = 1;
 
 Rh = zeros(2,11);
@@ -87,7 +87,7 @@ sblseq = unique(sblseq, 'rows');
 
 %%
 [nx, ny] = size(sbmat);
-for num = 1
+for num = 10
 tmpseq = sbmat(num, :);
 newth = thmat(num, :);
 
@@ -176,9 +176,20 @@ line([pt1(1),pt2(1)], [pt1(2),pt2(2)]); hold on;
 plot(projm(1,:),projm(2,:),'o')
 axis image
 
+
 %%
 clear
-w = 0.3;
+w = 0.30;
+
+for ii = 2:8
+    tmp = importdata(strcat('cpp/w=', num2str(w, '%2.2f'), '/l', num2str(ii), '.txt'));
+    sbmat = tmp(:, 1:ii);
+    thmat = tmp(:, ii+1:end);
+    [sbmat, thmat] = removedup(ii, sbmat, thmat);
+    save(strcat('period_', num2str(ii), '.mat'), 'sbmat', 'thmat');
+end
+clear sbmat thmat tmp;
+
 r = 1;
 
 Rh = zeros(2,11);
@@ -195,6 +206,8 @@ for jj = 1:2:11
     Rh(:, jj+1) = sqrt(3)*(2*r+w)*[cos(ang);sin(ang)];
 end
 
+%%
+
 for np = 2:8
     load(strcat('period_',num2str(np)));
     lambdas = [];
@@ -209,29 +222,29 @@ for np = 2:8
         newth  = thmat(num, :);
 
         linknum = tmpseq(1)+1;
+        
         Rv(:,1) = [0;0];
         rv(:,1) = r*[cos(newth(1));sin(newth(1))];
-
 
         for ii = 2: ny
             Rv(:,ii) = Rh(:, linknum) + Rv(:,ii - 1);
             rv(:,ii) = Rv(:,ii) + r*[cos(newth(ii));sin(newth(ii))];
             linknum = tmpseq(ii)+1;
         end
-        Rv(:,ii+1) = Rh(:, linknum) + Rv(:,ii);
+        Rv(:,ii+1) = Rh(:,linknum) + Rv(:,ii);
         rv(:,ii+1) = Rv(:,ii+1) + r*[cos(newth(1));sin(newth(1))];
-        lambdae = 1;
-        newth = [newth,newth(1)];
+        jac = diag([1, 1]);
+        % newth = [newth,newth(1)];
         for ii = 1:ny
-            th = newth(ii+1);
+            th = newth(ii);
             tmpvec1 = r*[cos(th);sin(th)];
             tmpvec2 = rv(:,ii+1)-rv(:,ii);
             lenvec2 = sqrt(dot(tmpvec2, tmpvec2)); %% flight time
-            cosph = -dot(tmpvec2,tmpvec1)/(r*lenvec2);
-            jac = [1,lenvec2;0,1]*[1,0;2/(r*cosph),1];
-            lambda = eig(jac);
-            lambdae = lambdae*max(abs(lambda));
+            cosph = dot(tmpvec2,tmpvec1)/(r*lenvec2);
+            jac = [1,lenvec2;0,1]*[1,0;2/(r*cosph),1] * jac;
         end
+        lambda = eig(jac);
+        lambdae = max(abs(lambda));
         lambdas(num) = lambdae; %% stability
         Nv(:, num) = rv(:, end) - rv(:, 1); %% displacement
         Tv(num) = sum(sqrt(sum(diff(rv, 1, 2).^2, 1))); %%flight time
@@ -246,6 +259,11 @@ tp = [];
 np = [];
 nv = [];
 tv = [];
+Tv = [];
+zeta = [];
+Mv = [];
+Nxx = [];
+Nyy = [];
 for ii = 2:length(lambdamat)
     tp = [tp,lambdamat{ii}];
     np = [np,ii*ones(1,length(lambdamat{ii}))];
@@ -255,29 +273,28 @@ end
 mv = log(tp);
 tp = 1./tp;
 
-%%
+
 
 j = 1;
-for i = 2:8
+for i = 2:length(lambdamat)
     j
-    zeta(j) = 1 - zetaderivest(i, np, tp);
+    zeta(j) = 1-zetaderivest(i, np, tp);
     Tv(j) = zetaderivest(i, np, tp, tv);
     Mv(j) = zetaderivest(i, np, tp, mv);
     Nxx(j) = zetaderivest(i, np, tp, nv(1, :), nv(1, :));
     Nyy(j) = zetaderivest(i, np, tp, nv(2, :), nv(2, :));
     j = j+1;
 end
-%%
+
 lyapunov = Mv./Tv;
 diffcoef = (Nxx + Nyy)./(2*2*Tv);
 
 %%
 
-
-for ii = 8:8
-    tmp = importdata(strcat('cpp/l', num2str(ii), '.txt'));
-    sbmat = tmp(:, 1:ii);
-    thmat = tmp(:, ii+1:end);
-    [sbmat, thmat] = removedup(ii, sbmat, thmat);
-    save(strcat('period_', num2str(ii), '.mat'), 'sbmat', 'thmat');
+for ii = 2:length(lambdamat)
+    floq{ii} = log(lambdamat{ii})./Tvmat{ii};
 end
+
+%%
+
+save('results.mat', 'Nvmat', 'Tvmat', 'lambdamat', 'floq', 'tp', 'np', 'nv', 'tv', 'mv', 'zeta', 'Mv', 'Tv', 'Nxx', 'Nyy', 'lyapunov', 'diffcoef');

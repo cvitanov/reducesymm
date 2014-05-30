@@ -227,6 +227,17 @@ def vhatvphi(xphi,t,p=params):
 	vel[4] = vphi(x,t,p)
 	return vel
 
+def mvhatvphi(xphi,t,p=params):
+	"""
+    Velocity function within the slice
+    """
+	vel=np.zeros(5)
+	x = xphi[0:4]
+	phi = xphi[4]
+	vel[0:4] = vfullssp(x,t,p) - vphi(x,t,p)*np.dot(T,x)
+	vel[4] = vphi(x,t,p)
+	return -vel
+
 def intslice(xphi0, t, p=params, abserror=1.0e-12, relerror=1.0e-12):
 	"""
 	Takes the initial condition, parameters and the time interval
@@ -236,12 +247,37 @@ def intslice(xphi0, t, p=params, abserror=1.0e-12, relerror=1.0e-12):
 	
 	return xsol
 
+def intslicebackwards(xphi0, t, p=params, abserror=1.0e-12, relerror=1.0e-12):
+	"""
+	Takes the initial condition, parameters and the time interval
+	returns the result as a series in time.
+	"""
+	xsol = odeint(mvhatvphi, xphi0, t, args=(p,), atol = abserror, rtol = relerror)
+	
+	return xsol
+
 def intfull(x0, t, p=params, abserror=1.0e-12, relerror=1.0e-12):
 	"""
 	Takes the initial condition, parameters and the time interval
 	returns the result as a series in time.
 	"""
 	xsol = odeint(vfullssp, x0, t, args=(p,), atol = abserror, rtol = relerror)
+	return xsol
+
+def intinvpol(x0, t, p=params, abserror=1.0e-12, relerror=1.0e-12):
+	"""
+	Takes the initial condition, parameters and the time interval
+	returns the result as a series in time.
+	"""
+	xsol = odeint(vinvpol, x0, t, args=(p,), atol = abserror, rtol = relerror)
+	return xsol
+
+def intScaledTime(x0, t, p=params, abserror=1.0e-12, relerror=1.0e-12):
+	"""
+	Takes the initial condition, parameters and the time interval
+	returns the result as a series in time.
+	"""
+	xsol = odeint(vscaledtime, x0, t, args=(p,), atol = abserror, rtol = relerror)
 	return xsol
 
 def four2three(v):
@@ -273,11 +309,13 @@ def Jacobian(x, Ti):
 	"""	
 	xvar = np.append(x, np.identity(4).reshape(16))
 	stoptime = Ti
+	dt = 0.01
 	numpoints = 2
+	#numpoints = np.floor(Ti/dt)+1
 	t = np.linspace(0, stoptime, numpoints)
 	xvarsol = intvar(xvar, t)
 
-	J = xvarsol[1, 4:20].reshape(4,4)
+	J = xvarsol[-1, 4:20].reshape(4,4)
 
 	return J
 
