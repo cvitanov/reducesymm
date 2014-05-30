@@ -1,5 +1,5 @@
 
-w = 0.2;
+w = 0.3;
 r = 1;
 
 Rh = zeros(2,11);
@@ -87,7 +87,7 @@ sblseq = unique(sblseq, 'rows');
 
 %%
 [nx, ny] = size(sbmat);
-for num = 10
+for num = 96
 tmpseq = sbmat(num, :);
 newth = thmat(num, :);
 
@@ -298,3 +298,10 @@ end
 %%
 
 save('results.mat', 'Nvmat', 'Tvmat', 'lambdamat', 'floq', 'tp', 'np', 'nv', 'tv', 'mv', 'zeta', 'Mv', 'Tv', 'Nxx', 'Nyy', 'lyapunov', 'diffcoef');
+
+%%
+for ii = 2:8
+    nvtmp = Nvmat{ii};
+    tmpnxy = round(linsolve((2*r+w)*[1,0.5;0,sqrt(3)/2], nvtmp));
+    Nxymat{ii} = tmpnxy;
+end
