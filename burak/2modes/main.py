@@ -11,6 +11,7 @@ from scipy import interpolate, integrate
 from scipy.misc import derivative
 from scipy.optimize import newton, fsolve, fmin
 import sys
+import sqlite3
 #Initiate plotting environment:
 import matplotlib as mpl
 from pylab import plot, xlabel, ylabel, show, savefig
@@ -26,8 +27,9 @@ computeSolution = False
 computePsect = False
 computeArcLengths = False
 computeRPO = True
+computeRPOred = False
 plotPsect = False
-plotRetmap = True
+plotRetmap = False
 #Shooting:
 Shoot = False
 ShootInvPol = False
@@ -35,7 +37,7 @@ ShootBack = False
 ShootFull = False
 
 #Search parameters:
-nPrimeMax = 6 #Will search for [1,m]-cycles
+nPrimeMax = 4 #Will search for [1,m]-cycles
 
 #Only relative equilibrium:
 reqv = np.array([0.43996557973671596,
@@ -210,8 +212,8 @@ if ShootInvPol:
             
 if computeSolution:
     
-    tf = 2000;
-    dt = 0.1;
+    tf = 10000;
+    dt = 0.01;
     epsilon = 1e-2;
     x0 = reqv+epsilon*unstabledir
     #x0 = np.array([1e-3,0,1e-3,0], float)
@@ -262,7 +264,7 @@ ps2Dsorted = np.array(ps2D[sortingindices, :],float)
 #Interpolate to psect:
 print 'Interpolating the Poincare section'
 tckps = interpolate.splrep(ps2Dsorted[:,0],ps2Dsorted[:,1])
-dxintps = (ps2Dsorted[np.size(ps2Dsorted,0)-1,0] - ps2Dsorted[0,0])/100
+dxintps = (ps2Dsorted[np.size(ps2Dsorted,0)-1,0] - ps2Dsorted[0,0])/10000
 xintps = np.arange(ps2Dsorted[0,0], 
                       ps2Dsorted[np.size(ps2Dsorted,0)-1,0]+dxintps, 
                       dxintps)
@@ -330,9 +332,9 @@ print sCritical
 def fCritical(s):
     po = retmapm(3, s) - s
     return po
-s3Critical = newton(fCritical, sCritical*0.999, tol=1.48e-12)
 #s3Critical = newton(fCritical, sCritical*0.999, tol=1.48e-12)
-#s3Critical = sCritical*0.999
+s3Critical = newton(fCritical, sCritical*1.001, tol=1.48e-12)
+#s3Critical = sCritical*0.95
 print "s3Critical:"
 print s3Critical
 
@@ -429,9 +431,17 @@ for k in range(len(PrimeCycles)):
         AdmissibleCycles.append([PrimeCycles[k][0], PrimeCycles[k][1]])
 AdmissibleCycles = AdmissibleCycles[1:]
 
+orig_stdout = sys.stdout
+
+f = file('data/primeCycles.txt', 'w')
+sys.stdout = f
+
 print "PrimeCycles upto length "+str(nPrimeMax)
 for i in range(len(PrimeCycles)):
     print PrimeCycles[i]
+
+sys.stdout = orig_stdout
+f.close()
 
 def fs2ps2D(px, s):
     """
@@ -535,10 +545,10 @@ if computeRPO:
             return po
             
         fpoevo=0
-        for s0 in np.arange(smin, smax, (smax-smin)/1000):
+        for s0 in np.arange(smin, smax, (smax-smin)/40000):
             fpoev = fpo(s0)
             if fpoev * fpoevo < 0: #If there is a zero-crossing, look for the root: 
-                sc = newton(fpo, s0, tol=1.48e-12)
+                sc = newton(fpo, s0, tol=1.48e-9)
                 #print "sc = %f" %sc
                 newcandidate = 1
                 for j in range(len(scandidates)):
@@ -567,6 +577,7 @@ if computeRPO:
     print "Admissible Cycles upto length "+str(nPrimeMax)
     for i in range(len(AdmissibleCycles)):
         print AdmissibleCycles[i]
+    
     print "Starting the Newton search..."
     tol = 1e-6
     #for i in range(1,2):
@@ -587,7 +598,7 @@ if computeRPO:
             Error = Error.reshape(np.size(Error))
             print "Error"
             print Error
-            #raw_input("Press enter to continue...")
+            raw_input("Press enter to continue...")
             if np.max(np.abs(Error)) < tol:
                 converged = True
 
@@ -653,6 +664,195 @@ if computeRPO:
 
     #np.savetxt('data/AdmissibleCycles.dat', AdmissibleCycles)
 
+    #Create a database and write RPOs in it:
+    
+    conn = sqlite3.connect('data/rpo.db')
+    c = conn.cursor()
+    c.execute("DROP TABLE IF EXISTS rpos")
+    c.execute(" CREATE TABLE rpos (rpono int, itinerary text, x1 real, \
+                y1 real, x2 real, y2 real, period real, phase real) ")
+    
+    for i in range(len(AdmissibleCycles)):
+        itinerary = ''.join(map(str, AdmissibleCycles[i][1]))    
+        c.execute("INSERT INTO rpos VALUES ("+str(i+1)+", '" \
+                   +''.join(map(str, AdmissibleCycles[i][1]))+"', " \
+                   +', '.join(map(str, AdmissibleCycles[i][3][0]))+", " \
+                   +str(sum(AdmissibleCycles[i][4]))+", " \
+                   +str(sum(AdmissibleCycles[i][5]))+")")
+        
+        c.execute("DROP TABLE IF EXISTS rpo"+itinerary)
+        c.execute(" CREATE TABLE rpo"+itinerary+" (x1 real, y1 real, x2 real, \
+        y2 real, tau real, phi real)")
+    
+        for k in range(len(AdmissibleCycles[i][1])):
+            query = "INSERT INTO rpo"+itinerary+" VALUES("+  \
+                      ', '.join(map(str, AdmissibleCycles[i][3][k]))+", " \
+                      +str(AdmissibleCycles[i][4][k])+", " \
+                      +str(AdmissibleCycles[i][5][k])+")"              
+            c.execute(query)
+    
+    conn.commit()
+    conn.close()        
+
+if computeRPOred:
+    smin = np.min(sn)
+    smax = np.max(sn)
+    #scandidates = np.zeros([1,2]) #dummy matrix to hold po candidate arclengths
+    scandidates = [] #dummy matrix to hold po candidate arclengths
+    
+    for i in range(nPrimeMax):
+        #Define the function zeros of which would correspond to the periodic 
+        #orbit arclengths:
+        def fpo(s):
+            po = retmapm(i+1, s) - s
+            return po
+            
+        fpoevo=0
+        for s0 in np.arange(smin, smax, (smax-smin)/1000):
+            fpoev = fpo(s0)
+            if fpoev * fpoevo < 0: #If there is a zero-crossing, look for the root: 
+                sc = newton(fpo, s0, tol=1.48e-12)
+                #print "sc = %f" %sc
+                newcandidate = 1
+                for j in range(len(scandidates)):
+                    #Discard if found candidate is previously found:
+                    if np.abs(scandidates[j][1] - sc)<1e-9: 
+                        newcandidate=0
+                if newcandidate:
+                    CandidateItinerary = Itinerary(sc, i+1)
+                    scandidates.append([i+1, sc, Itinerary(sc, i+1)])
+                    for k in range(len(AdmissibleCycles)):
+                        if CandidateItinerary == AdmissibleCycles[k][1]:
+                            AdmissibleCycles[k].append([retmapm(n, sc) for n 
+                                                       in range(i+1)])
+                            AdmissibleCycles[k].append(np.array([s2xhat(
+                             AdmissibleCycles[k][2][l]) for l in range(i+1)]))
+                            AdmissibleCycles[k].append([timeofflight(
+                             AdmissibleCycles[k][3][l]) for l in range(i+1)])
+                            AdmissibleCycles[k].append([phireturn(
+                             AdmissibleCycles[k][3][l], 
+                             AdmissibleCycles[k][4][l]) for l in range(i+1)])
+                           
+                    #scandidates = np.append(scandidates, np.array([[i+1, sc]], float), axis=0)
+                    
+            fpoevo = fpoev        
+        
+    print "Admissible Cycles upto length "+str(nPrimeMax)
+    for i in range(len(AdmissibleCycles)):
+        print AdmissibleCycles[i]
+    
+    print "Starting the Newton search..."
+    tol = 1e-6
+    #for i in range(1,2):
+    for i in range(len(AdmissibleCycles)):
+
+        converged = False
+
+        x = AdmissibleCycles[i][3]
+        tau = AdmissibleCycles[i][4]
+        #phi = AdmissibleCycles[i][5]
+        nCycle = len(x)
+        #Error vector
+        while not(converged):
+            Error = np.array([np.append(np.array(x[(k+1)%nCycle] - \
+                    twomode.ftauRed(x[(k)%nCycle], tau[(k)%nCycle]), float), 0) \
+                    for k in range(nCycle)], float)
+
+            Error = Error.reshape(np.size(Error))
+            print "Error"
+            print Error
+            #raw_input("Press enter to continue...")
+            if np.max(np.abs(Error)) < tol:
+                converged = True
+
+            N = np.size(Error,0)
+            nDim = np.size(x[0], 0)
+            #A-Matrix:
+            A = np.zeros((N,N))
+            for k in range(nCycle):
+                A[(nDim+1)*k: (nDim+1)*k + nDim, 
+                  (nDim+1)*k: (nDim+1)*k + nDim] = twomode.JacobianRed(x[k], tau[k])
+                
+                A[(nDim+1)*k: (nDim+1)*k + nDim, 
+                  (nDim+1)*k + nDim] = twomode.velRed(twomode.ftauRed(x[k], tau[k]))
+                  
+                A[(nDim+1)*k + nDim, (nDim+1)*k: (nDim+1)*k + nDim] = twomode.velRed(x[k])
+                
+                #A[(nDim+2)*k + nDim, (nDim+2)*k: (nDim+2)*k + nDim] = nhat
+                #A[(nDim+2)*k + nDim + 1, (nDim+2)*k: (nDim+2)*k + nDim] = np.array(tp)
+
+                A[(nDim+1)*((k)%nCycle): (nDim+1)*((k)%nCycle) + nDim,
+                  (nDim+1)*((k+1)%nCycle): (nDim+1)*((k+1)%nCycle) + nDim] = \
+                A[(nDim+1)*((k)%nCycle): (nDim+1)*((k)%nCycle) + nDim,
+                  (nDim+1)*((k+1)%nCycle): (nDim+1)*((k+1)%nCycle) + nDim] - np.identity(nDim)
+    
+            #Compute Deltas:
+            Delta=np.dot(np.linalg.inv(A), Error)
+            print "Delta"
+            print Delta
+            
+            converging = False
+            if Adaptive:
+                xx = np.empty(np.shape(x))
+                tautau = np.zeros(np.shape(tau))
+                iAdaptive = 0
+                while not(converging):
+                    iAdaptive = iAdaptive + 1
+                    print "iAdaptive:"
+                    print iAdaptive
+                    for k in range(nCycle):
+                        xx[k] = x[k] + Delta[(nDim+1)*k:(nDim+1)*k+nDim]
+                        tautau[k] = tau[k] + Delta[(nDim+1)*k+nDim]
+                    
+                    ErrorNext = np.array([np.append(np.array(xx[(k+1)%nCycle] - \
+                    twomode.ftauRed(xx[(k)%nCycle], tautau[(k)%nCycle]), float), 0) \
+                    for k in range(nCycle)], float)
+
+                    
+                    if np.max(np.abs(ErrorNext)) < np.max(np.abs(Error)):
+                        converging = True
+                    else:
+                        Delta = Delta / factor
+                        
+
+            #Update:
+            for k in range(nCycle):
+                x[k] = x[k] + Delta[(nDim+2)*k:(nDim+2)*k+nDim]
+                tau[k] = tau[k] + Delta[(nDim+2)*k+nDim]
+                phi[k] = phi[k] + Delta[(nDim+2)*k+nDim+1]
+
+    #np.savetxt('data/AdmissibleCycles.dat', AdmissibleCycles)
+
+    #Create a database and write RPOs in it:
+    
+    conn = sqlite3.connect('data/rpo.db')
+    c = conn.cursor()
+    c.execute("DROP TABLE IF EXISTS rpos")
+    c.execute(" CREATE TABLE rpos (rpono int, itinerary text, x1 real, \
+                y1 real, x2 real, y2 real, period real, phase real) ")
+    
+    for i in range(len(AdmissibleCycles)):
+        itinerary = ''.join(map(str, AdmissibleCycles[i][1]))    
+        c.execute("INSERT INTO rpos VALUES ("+str(i+1)+", '" \
+                   +''.join(map(str, AdmissibleCycles[i][1]))+"', " \
+                   +', '.join(map(str, AdmissibleCycles[i][3][0]))+", " \
+                   +str(sum(AdmissibleCycles[i][4]))+", " \
+                   +str(sum(AdmissibleCycles[i][5]))+")")
+        
+        c.execute("DROP TABLE IF EXISTS rpo"+itinerary)
+        c.execute(" CREATE TABLE rpo"+itinerary+" (x1 real, y1 real, x2 real, \
+        y2 real, tau real, phi real)")
+    
+        for k in range(len(AdmissibleCycles[i][1])):
+            query = "INSERT INTO rpo"+itinerary+" VALUES("+  \
+                      ', '.join(map(str, AdmissibleCycles[i][3][k]))+", " \
+                      +str(AdmissibleCycles[i][4][k])+", " \
+                      +str(AdmissibleCycles[i][5][k])+")"              
+            c.execute(query)
+    
+    conn.commit()
+    conn.close()        
+    
 if plotPsect:
     fig=plt.figure(1, figsize=(8,8))
     plot(ps2D[:,0], ps2D[:,1], '.b', ms=10)
@@ -714,7 +914,7 @@ if plotRetmap:
     #ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=16); 
     
     #plt.figure(2, figsize=(8,8))
-    #sp3 = np.array([retmapm(3, sn) for sn in srange])
+    #sp3 = np.array([retmapm(7, sn) for sn in srange])
     #plot(srange, sp3, 'b')
     #plt.hold(True)
     #plot(srange,srange,'g')
