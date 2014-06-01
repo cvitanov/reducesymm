@@ -12,7 +12,7 @@ import twomode
 conn = sqlite3.connect('data/rpo.db')
 c = conn.cursor()
 
-for rpono in range(1,3):
+for rpono in range(1,19):
     c.execute("SELECT * FROM rpos WHERE rpono = "+str(rpono))
     a = c.fetchall()
     
@@ -42,7 +42,9 @@ for rpono in range(1,3):
     ax.set_xlabel('\n $\hat{x}_1$ \t  ', fontsize=32)
     ax.set_ylabel('\n $\hat{x}_2$ \t', fontsize=32)
     ax.set_zlabel('$\hat{y}_2$   ', fontsize=32)
-    
+
+
     savefig('image/'+str(itinerary)+'.png', bbox_inches='tight', dpi=100) 
-    
+
+#plt.show()
 conn.close()    

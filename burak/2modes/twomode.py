@@ -234,6 +234,15 @@ def velRed(x, t=0):
     vel = vhatvphi(np.append(x, 0), t)
     return vel[0:4]
 
+def velRed3(x3, t=0):
+    """
+    reduced velocity without vphi
+    """
+    x = three2four(x3)
+    vel = velRed(x, t)
+    vel3 = np.delete(vel, 1, 0)
+    return vel3
+
 def mvhatvphi(xphi,t,p=params):
     """
     Velocity function within the slice
@@ -245,7 +254,7 @@ def mvhatvphi(xphi,t,p=params):
     vel[4] = vphi(x,t,p)
     return -vel
 
-def intslice(xphi0, t, p=params, abserror=1.0e-12, relerror=1.0e-12):
+def intslice(xphi0, t, p=params, abserror=1.0e-9, relerror=1.0e-9):
     """
     Takes the initial condition, parameters and the time interval
     returns the result as a series in time.
@@ -254,7 +263,7 @@ def intslice(xphi0, t, p=params, abserror=1.0e-12, relerror=1.0e-12):
     
     return xsol
 
-def intslicebackwards(xphi0, t, p=params, abserror=1.0e-12, relerror=1.0e-12):
+def intslicebackwards(xphi0, t, p=params, abserror=1.0e-9, relerror=1.0e-9):
     """
     Takes the initial condition, parameters and the time interval
     returns the result as a series in time.
@@ -263,7 +272,7 @@ def intslicebackwards(xphi0, t, p=params, abserror=1.0e-12, relerror=1.0e-12):
     
     return xsol
 
-def intfull(x0, t, p=params, abserror=1.0e-12, relerror=1.0e-12):
+def intfull(x0, t, p=params, abserror=1.0e-9, relerror=1.0e-9):
     """
     Takes the initial condition, parameters and the time interval
     returns the result as a series in time.
@@ -271,7 +280,7 @@ def intfull(x0, t, p=params, abserror=1.0e-12, relerror=1.0e-12):
     xsol = odeint(vfullssp, x0, t, args=(p,), atol = abserror, rtol = relerror)
     return xsol
 
-def intinvpol(x0, t, p=params, abserror=1.0e-12, relerror=1.0e-12):
+def intinvpol(x0, t, p=params, abserror=1.0e-9, relerror=1.0e-9):
     """
     Takes the initial condition, parameters and the time interval
     returns the result as a series in time.
@@ -279,7 +288,7 @@ def intinvpol(x0, t, p=params, abserror=1.0e-12, relerror=1.0e-12):
     xsol = odeint(vinvpol, x0, t, args=(p,), atol = abserror, rtol = relerror)
     return xsol
 
-def intScaledTime(x0, t, p=params, abserror=1.0e-12, relerror=1.0e-12):
+def intScaledTime(x0, t, p=params, abserror=1.0e-9, relerror=1.0e-9):
     """
     Takes the initial condition, parameters and the time interval
     returns the result as a series in time.
@@ -301,7 +310,7 @@ def three2four(v3D):
     v = np.array([v3D[0], 0, v3D[1], v3D[2]], float)
     return v
 
-def intvar(x0, t, p=params, abserror=1.0e-12, relerror=1.0e-12):
+def intvar(x0, t, p=params, abserror=1.0e-9, relerror=1.0e-9):
     """
     Integrate variational equation.
     Takes the initial condition, parameters and the time interval
@@ -334,7 +343,7 @@ def ftau(x, tau):
     numpoints = 2
     t = np.linspace(0, stoptime, numpoints)
     
-    xsol = intfull(x, t, abserror=1.0e-12, relerror=1.0e-12)
+    xsol = intfull(x, t, abserror=1.0e-9, relerror=1.0e-9)
     fxtau = xsol[1,:]
     
     return fxtau
@@ -381,9 +390,17 @@ def JacobianRed(x, Ti):
 
     return J
 
+def JacobianRed3(x3D, Ti):
+    x = three2four(x3D)
+    J = JacobianRed(x, Ti)
+    J3 = J.copy()
+    J3 = np.delete(J3, 1, 0)
+    J3 = np.delete(J3, 1, 1)
+    return J3
+
 def ftauRed(x, tau):
     """
-    Lagrangian description of the flow.
+    Lagrangian description of the reduced flow.
     """
     stoptime = tau
     numpoints = 2
@@ -394,3 +411,12 @@ def ftauRed(x, tau):
     fxtau = xsol[1,:]
     
     return fxtau[0:4]
+
+def ftauRed3(x3, tau):
+    """
+    Lagrangian description of the flow.
+    """
+    fxtau = ftauRed(three2four(x3), tau)
+    fxtau3 = np.delete(fxtau, 1, 0)
+
+    return fxtau3

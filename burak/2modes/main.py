@@ -24,20 +24,15 @@ from PADS import Lyndon
 
 #Booleans:
 computeSolution = False
-computePsect = False
-computeArcLengths = False
+computePsect = True
+computeArcLengths = True
 computeRPO = True
-computeRPOred = False
-plotPsect = False
+computeRPOred3 = False
+plotPsect = True
 plotRetmap = False
-#Shooting:
-Shoot = False
-ShootInvPol = False
-ShootBack = False
-ShootFull = False
 
 #Search parameters:
-nPrimeMax = 4 #Will search for [1,m]-cycles
+nPrimeMax = 8 #Will search for [1,m]-cycles
 
 #Only relative equilibrium:
 reqv = np.array([0.43996557973671596,
@@ -51,8 +46,8 @@ Ared = twomode.StabilityMatrixRed(reqv)
 #Compute eigenvalues and eigenvectors:
 w, v = np.linalg.eig(Ared)
 #Pick the real part of unstable eigenvector as the Poincare section direction:
-unstabledir = np.real(v[:,0])
-unstabledir2 = np.imag(v[:,0])
+unstabledir2 = np.real(v[:,0])
+unstabledir = np.imag(v[:,0])
 #unstabledir = np.real(w[0]*v[:,0]+w[1]*v[:,1])
 unstabledir = unstabledir/np.linalg.norm(unstabledir) #Normalize
 unstabledir2 = unstabledir2/np.linalg.norm(unstabledir2)
@@ -72,147 +67,9 @@ T = twomode.generator()
 xp = np.array([1,0,0,0], float)
 tp = np.dot(T,xp)
 
-if ShootFull:
-    tf = 5
-    dt = 1e-2
-    t = np.linspace(0, tf, np.floor(tf/dt)+1)
-
-    x0 = [1e-6,0,1e-6,0]
-    
-    #Create a figure window
-    fig = plt.figure()
-    ax = fig.gca(projection='3d')
-    #Modify axis colors:
-    ax.w_xaxis.set_pane_color((1, 1, 1, 1.0))
-    ax.w_yaxis.set_pane_color((1, 1, 1, 1.0))
-    ax.w_zaxis.set_pane_color((1, 1, 1, 1.0))
-    
-    x0 = reqv + unstabledir #stable*1e-2
-    
-    xsol = twomode.intfull(x0, t)
-            
-    ax.plot(xsol[:,0], 
-    xsol[:,1], 
-    xsol[:,2], linewidth=1, color='#3c5f96')
-    
-    ax.set_xlabel('\n $x_1$ \t  ', fontsize=32)
-    ax.set_ylabel('\n $y_1$ \t', fontsize=32)
-    ax.set_zlabel('$x_2$   ', fontsize=32)
-    
-    plt.show()
-
-if ShootBack:
-    tf = 1
-    dt = 1e-5
-    t = np.linspace(0, tf, np.floor(tf/dt)+1)
-    
-    stable = np.real(v[:,3])
-        
-    #Create a figure window
-    fig = plt.figure()
-    ax = fig.gca(projection='3d')
-    #Modify axis colors:
-    ax.w_xaxis.set_pane_color((1, 1, 1, 1.0))
-    ax.w_yaxis.set_pane_color((1, 1, 1, 1.0))
-    ax.w_zaxis.set_pane_color((1, 1, 1, 1.0))
-    
-    x0 = reqv + unstabledir #stable*1e-2
-    xphi0 = np.append(x0, 0)
-    
-    xphisol = twomode.intslicebackwards(xphi0, t)
-            
-    ax.plot(xphisol[:,0], 
-    xphisol[:,2], 
-    xphisol[:,3], linewidth=1, color='#3c5f96')
-    
-    ax.set_xlabel('\n $\hat{x}_1$ \t  ', fontsize=32)
-    ax.set_ylabel('\n $\hat{x}_2$ \t', fontsize=32)
-    ax.set_zlabel('$\hat{y}_2$   ', fontsize=32)
-    
-    plt.show()
-
-if Shoot:
-    tf = 22;
-    dt = 0.001;
- 
-    #Create a figure window
-    fig = plt.figure()
-    ax = fig.gca(projection='3d')
-    #Modify axis colors:
-    ax.w_xaxis.set_pane_color((1, 1, 1, 1.0))
-    ax.w_yaxis.set_pane_color((1, 1, 1, 1.0))
-    ax.w_zaxis.set_pane_color((1, 1, 1, 1.0))
-    
-    ax.hold(True)
-    j = 0
-    step = 10
-    for i in np.arange(0,step*9, step):
-        
-        x0 = np.array([1e-8,0,(i+1)*5e-10,0], float)
-        t = np.linspace(0, tf, np.floor(tf/dt)+1)
-        xphi0 = np.append(x0, 0)
-        xphisol = twomode.intslice(xphi0, t)
-    
-        txphisol = np.concatenate((t.reshape(-1,1),xphisol), axis=1)
-               
-        cc = '#'+str((j+1)*step)[0:2]+'2020'
-        ax.plot(xphisol[:,0], 
-        xphisol[:,2], 
-        xphisol[:,3], linewidth=0.5, color=cc)
-        j+=1
-    
-    ax.set_xlabel('\n $\hat{x}_1$ \t  ', fontsize=32)
-    ax.set_ylabel('\n $\hat{x}_2$ \t', fontsize=32)
-    ax.set_zlabel('$\hat{y}_2$   ', fontsize=32)
-    
-    ax.scatter(reqv[0], reqv[2], reqv[3], edgecolor='#e500e5', s= 20, c='#e500e5')
-    ax.scatter(0, 0, 0, edgecolor='#f7464a', s= 20, c='#f7464a')
-    
-    plt.show()
-            
-if ShootInvPol:
-    tf = 20;
-    dt = 0.01;
- 
-    #Create a figure window
-    fig = plt.figure()
-    ax = fig.gca(projection='3d')
-    #Modify axis colors:
-    ax.w_xaxis.set_pane_color((1, 1, 1, 1.0))
-    ax.w_yaxis.set_pane_color((1, 1, 1, 1.0))
-    ax.w_zaxis.set_pane_color((1, 1, 1, 1.0))
-    
-    ax.hold(True)
-    j = 0
-    step = 10
-    for i in np.arange(0,step*1, step):
-        
-        x0 = np.array([1e-3,0,(i+1)*5e-4,0], float)
-        x0invpol = twomode.ssp2invpol(x0)
-        #x0 = [0.19, 0.15, -0.14, -0.027]
-        t = np.linspace(0, tf, np.floor(tf/dt)+1)
-        
-        xphisol = twomode.intinvpol(x0invpol, t)
-               
-        cc = '#'+str((j+1)*step)[0:2]+'2020'
-        ax.plot(xphisol[:,0], 
-        xphisol[:,1], 
-        xphisol[:,2], linewidth=0.5, color=cc)
-        j+=1
-    
-    ax.set_xlabel('\n $\hat{x}_1$ \t  ', fontsize=32)
-    ax.set_ylabel('\n $\hat{x}_2$ \t', fontsize=32)
-    ax.set_zlabel('$\hat{y}_2$   ', fontsize=32)
-    
-    reqvinvpol = twomode.ssp2invpol(reqv)
-    ax.scatter(reqvinvpol[0], reqvinvpol[1], reqvinvpol[2], edgecolor='#e500e5', s= 20, c='#e500e5')
-    ax.scatter(0, 0, 0, edgecolor='#f7464a', s= 20, c='#f7464a')
-    
-    plt.show()
-            
 if computeSolution:
     
-    tf = 10000;
+    tf = 1000;
     dt = 0.01;
     epsilon = 1e-2;
     x0 = reqv+epsilon*unstabledir
@@ -224,6 +81,7 @@ if computeSolution:
     xphisol = twomode.intslice(xphi0, t)
 
     txphisol = np.concatenate((t.reshape(-1,1),xphisol), axis=1)
+    txphisol = txphisol[20000:-1,:]
     #Create a figure window
     fig = plt.figure()
     ax = fig.gca(projection='3d')
@@ -263,7 +121,7 @@ ps2Dsorted = np.array(ps2D[sortingindices, :],float)
 
 #Interpolate to psect:
 print 'Interpolating the Poincare section'
-tckps = interpolate.splrep(ps2Dsorted[:,0],ps2Dsorted[:,1])
+tckps = interpolate.splrep(ps2Dsorted[:,0],ps2Dsorted[:,1], k=5)
 dxintps = (ps2Dsorted[np.size(ps2Dsorted,0)-1,0] - ps2Dsorted[0,0])/10000
 xintps = np.arange(ps2Dsorted[0,0], 
                       ps2Dsorted[np.size(ps2Dsorted,0)-1,0]+dxintps, 
@@ -278,8 +136,9 @@ def psarclength(x):
     def ds(x):
         dypsect = derivative(interpolate.splev, x, dx=1e-6, args=(tckps,), order=5)
         return np.sqrt(1 + dypsect**2)
-    quad, err = integrate.quad(ds, ps2Dsorted[0,0], x)  
-    return quad
+    #quad, err = integrate.quad(ds, ps2Dsorted[0,0], x)
+    return x
+    #return quad
 
 if computeArcLengths:
     print 'Computing arclengths corresponding to data'
@@ -332,8 +191,8 @@ print sCritical
 def fCritical(s):
     po = retmapm(3, s) - s
     return po
-#s3Critical = newton(fCritical, sCritical*0.999, tol=1.48e-12)
-s3Critical = newton(fCritical, sCritical*1.001, tol=1.48e-12)
+s3Critical = newton(fCritical, sCritical*0.999, tol=1.48e-12)
+#s3Critical = newton(fCritical, sCritical*1.001, tol=1.48e-12)
 #s3Critical = sCritical*0.95
 print "s3Critical:"
 print s3Critical
@@ -423,7 +282,7 @@ for k in range(len(PrimeCycles)):
         if TopCoorPerm > MaxTopCoord:
             MaxTopCoord = TopCoorPerm
     PrimeCycles[k].append(MaxTopCoord)
-    if MaxTopCoord >= KneadingValue:
+    if MaxTopCoord > KneadingValue:
         PrimeCycles[k].append('Inadmissible')
         nRPO = nRPO + 1
     else:
@@ -564,20 +423,56 @@ if computeRPO:
                                                        in range(i+1)])
                             AdmissibleCycles[k].append(np.array([s2xhat(
                              AdmissibleCycles[k][2][l]) for l in range(i+1)]))
-                            AdmissibleCycles[k].append([timeofflight(
-                             AdmissibleCycles[k][3][l]) for l in range(i+1)])
-                            AdmissibleCycles[k].append([phireturn(
-                             AdmissibleCycles[k][3][l], 
-                             AdmissibleCycles[k][4][l]) for l in range(i+1)])
-                           
+                            AdmissibleCycles[k].append(np.array([timeofflight(
+                             AdmissibleCycles[k][3][l]) for l in range(i+1)],
+                                                                        float))
+                            AdmissibleCycles[k].append(np.array([phireturn(
+                             AdmissibleCycles[k][3][l],
+                             AdmissibleCycles[k][4][l]) for l in range(i+1)],
+                                                                        float))
                     #scandidates = np.append(scandidates, np.array([[i+1, sc]], float), axis=0)
                     
             fpoevo = fpoev        
-        
+
+
+    # print "Admissible Cycles upto length before subdivisions:"
+    # for i in range(len(AdmissibleCycles)):
+    #     print AdmissibleCycles[i]
+    #
+    # #Divide intervals into smaller subintervals for multiple shooting:
+    # nsub = 1 #number of subintervals
+    # for k in range(len(AdmissibleCycles)):
+    #     l = 0
+    #     while l < len(AdmissibleCycles[k][3]):
+    #         #tau:
+    #         AdmissibleCycles[k][4][l] = AdmissibleCycles[k][4][l]/float(nsub)
+    #         #phi:
+    #         AdmissibleCycles[k][5][l] = phireturn(AdmissibleCycles[k][3][l],
+    #                                               AdmissibleCycles[k][4][l])
+    #         for m in range(nsub-1):
+    #             #x:
+    #             AdmissibleCycles[k][3] = \
+    #             np.insert(AdmissibleCycles[k][3], l+m+1,
+    #                       twomode.ftauRed(AdmissibleCycles[k][3][l+m,:],
+    #                             AdmissibleCycles[k][4][l]),
+    #                       axis=0)
+    #             #tau:
+    #             AdmissibleCycles[k][4] = np.insert(AdmissibleCycles[k][4],
+    #                                                l+m+1,
+    #                                                AdmissibleCycles[k][4][l])
+    #             #phi:
+    #             AdmissibleCycles[k][5] = np.insert(AdmissibleCycles[k][5],
+    #                                 l+m+1,
+    #                                 phireturn(AdmissibleCycles[k][3][l+m+1],
+    #                                 AdmissibleCycles[k][4][l+m+1]))
+    #         l += nsub
+
     print "Admissible Cycles upto length "+str(nPrimeMax)
     for i in range(len(AdmissibleCycles)):
         print AdmissibleCycles[i]
-    
+
+    #raw_input('Press enter to continue ...')
+
     print "Starting the Newton search..."
     tol = 1e-6
     #for i in range(1,2):
@@ -598,7 +493,7 @@ if computeRPO:
             Error = Error.reshape(np.size(Error))
             print "Error"
             print Error
-            raw_input("Press enter to continue...")
+            #raw_input("Press enter to continue...")
             if np.max(np.abs(Error)) < tol:
                 converged = True
 
@@ -653,7 +548,7 @@ if computeRPO:
                     if np.max(np.abs(ErrorNext)) < np.max(np.abs(Error)):
                         converging = True
                     else:
-                        Delta = Delta / factor
+                        Delta = Delta * (factor**(-1))
                         
 
             #Update:
@@ -694,53 +589,53 @@ if computeRPO:
     conn.commit()
     conn.close()        
 
-if computeRPOred:
+if computeRPOred3:
     smin = np.min(sn)
     smax = np.max(sn)
     #scandidates = np.zeros([1,2]) #dummy matrix to hold po candidate arclengths
     scandidates = [] #dummy matrix to hold po candidate arclengths
-    
+
     for i in range(nPrimeMax):
-        #Define the function zeros of which would correspond to the periodic 
+        #Define the function zeros of which would correspond to the periodic
         #orbit arclengths:
         def fpo(s):
             po = retmapm(i+1, s) - s
             return po
-            
+
         fpoevo=0
         for s0 in np.arange(smin, smax, (smax-smin)/1000):
             fpoev = fpo(s0)
-            if fpoev * fpoevo < 0: #If there is a zero-crossing, look for the root: 
+            if fpoev * fpoevo < 0: #If there is a zero-crossing, look for the root:
                 sc = newton(fpo, s0, tol=1.48e-12)
                 #print "sc = %f" %sc
                 newcandidate = 1
                 for j in range(len(scandidates)):
                     #Discard if found candidate is previously found:
-                    if np.abs(scandidates[j][1] - sc)<1e-9: 
+                    if np.abs(scandidates[j][1] - sc)<1e-9:
                         newcandidate=0
                 if newcandidate:
                     CandidateItinerary = Itinerary(sc, i+1)
                     scandidates.append([i+1, sc, Itinerary(sc, i+1)])
                     for k in range(len(AdmissibleCycles)):
                         if CandidateItinerary == AdmissibleCycles[k][1]:
-                            AdmissibleCycles[k].append([retmapm(n, sc) for n 
+                            AdmissibleCycles[k].append([retmapm(n, sc) for n
                                                        in range(i+1)])
                             AdmissibleCycles[k].append(np.array([s2xhat(
                              AdmissibleCycles[k][2][l]) for l in range(i+1)]))
                             AdmissibleCycles[k].append([timeofflight(
                              AdmissibleCycles[k][3][l]) for l in range(i+1)])
                             AdmissibleCycles[k].append([phireturn(
-                             AdmissibleCycles[k][3][l], 
+                             AdmissibleCycles[k][3][l],
                              AdmissibleCycles[k][4][l]) for l in range(i+1)])
-                           
+
                     #scandidates = np.append(scandidates, np.array([[i+1, sc]], float), axis=0)
-                    
-            fpoevo = fpoev        
-        
+
+            fpoevo = fpoev
+
     print "Admissible Cycles upto length "+str(nPrimeMax)
     for i in range(len(AdmissibleCycles)):
         print AdmissibleCycles[i]
-    
+
     print "Starting the Newton search..."
     tol = 1e-6
     #for i in range(1,2):
@@ -748,49 +643,51 @@ if computeRPOred:
 
         converged = False
 
-        x = AdmissibleCycles[i][3]
+        x = np.array(AdmissibleCycles[i][3])
+        x = np.delete(x, 1, 1)
+
         tau = AdmissibleCycles[i][4]
         #phi = AdmissibleCycles[i][5]
         nCycle = len(x)
         #Error vector
         while not(converged):
             Error = np.array([np.append(np.array(x[(k+1)%nCycle] - \
-                    twomode.ftauRed(x[(k)%nCycle], tau[(k)%nCycle]), float), 0) \
+                    twomode.ftauRed3(x[(k)%nCycle], tau[(k)%nCycle]), float), 0) \
                     for k in range(nCycle)], float)
 
             Error = Error.reshape(np.size(Error))
             print "Error"
             print Error
-            #raw_input("Press enter to continue...")
+            raw_input("Press enter to continue...")
             if np.max(np.abs(Error)) < tol:
                 converged = True
+                AdmissibleCycles[i][3] = np.insert(x, 1, 0, axis=1)
 
             N = np.size(Error,0)
             nDim = np.size(x[0], 0)
             #A-Matrix:
             A = np.zeros((N,N))
             for k in range(nCycle):
-                A[(nDim+1)*k: (nDim+1)*k + nDim, 
-                  (nDim+1)*k: (nDim+1)*k + nDim] = twomode.JacobianRed(x[k], tau[k])
-                
-                A[(nDim+1)*k: (nDim+1)*k + nDim, 
-                  (nDim+1)*k + nDim] = twomode.velRed(twomode.ftauRed(x[k], tau[k]))
-                  
-                A[(nDim+1)*k + nDim, (nDim+1)*k: (nDim+1)*k + nDim] = twomode.velRed(x[k])
-                
-                #A[(nDim+2)*k + nDim, (nDim+2)*k: (nDim+2)*k + nDim] = nhat
+                A[(nDim+1)*k: (nDim+1)*k + nDim,
+                  (nDim+1)*k: (nDim+1)*k + nDim] = twomode.JacobianRed3(x[k], tau[k])
+
+                A[(nDim+1)*k: (nDim+1)*k + nDim,
+                  (nDim+1)*k + nDim] = twomode.velRed3(twomode.ftauRed3(x[k], tau[k]))
+
+                A[(nDim+1)*k + nDim, (nDim+1)*k: (nDim+1)*k + nDim] = twomode.velRed3(x[k])
+                #A[(nDim+1)*k + nDim, (nDim+1)*k: (nDim+1)*k + nDim] = nhat3D
                 #A[(nDim+2)*k + nDim + 1, (nDim+2)*k: (nDim+2)*k + nDim] = np.array(tp)
 
                 A[(nDim+1)*((k)%nCycle): (nDim+1)*((k)%nCycle) + nDim,
                   (nDim+1)*((k+1)%nCycle): (nDim+1)*((k+1)%nCycle) + nDim] = \
                 A[(nDim+1)*((k)%nCycle): (nDim+1)*((k)%nCycle) + nDim,
                   (nDim+1)*((k+1)%nCycle): (nDim+1)*((k+1)%nCycle) + nDim] - np.identity(nDim)
-    
+
             #Compute Deltas:
             Delta=np.dot(np.linalg.inv(A), Error)
             print "Delta"
             print Delta
-            
+
             converging = False
             if Adaptive:
                 xx = np.empty(np.shape(x))
@@ -803,56 +700,55 @@ if computeRPOred:
                     for k in range(nCycle):
                         xx[k] = x[k] + Delta[(nDim+1)*k:(nDim+1)*k+nDim]
                         tautau[k] = tau[k] + Delta[(nDim+1)*k+nDim]
-                    
+
                     ErrorNext = np.array([np.append(np.array(xx[(k+1)%nCycle] - \
-                    twomode.ftauRed(xx[(k)%nCycle], tautau[(k)%nCycle]), float), 0) \
+                    twomode.ftauRed3(xx[(k)%nCycle], tautau[(k)%nCycle]), float), 0) \
                     for k in range(nCycle)], float)
 
-                    
+
                     if np.max(np.abs(ErrorNext)) < np.max(np.abs(Error)):
                         converging = True
                     else:
                         Delta = Delta / factor
-                        
+
 
             #Update:
             for k in range(nCycle):
-                x[k] = x[k] + Delta[(nDim+2)*k:(nDim+2)*k+nDim]
-                tau[k] = tau[k] + Delta[(nDim+2)*k+nDim]
-                phi[k] = phi[k] + Delta[(nDim+2)*k+nDim+1]
+                x[k] = x[k] + Delta[(nDim+1)*k:(nDim+1)*k+nDim]
+                tau[k] = tau[k] + Delta[(nDim+1)*k+nDim]
 
     #np.savetxt('data/AdmissibleCycles.dat', AdmissibleCycles)
 
     #Create a database and write RPOs in it:
-    
+
     conn = sqlite3.connect('data/rpo.db')
     c = conn.cursor()
     c.execute("DROP TABLE IF EXISTS rpos")
     c.execute(" CREATE TABLE rpos (rpono int, itinerary text, x1 real, \
                 y1 real, x2 real, y2 real, period real, phase real) ")
-    
+
     for i in range(len(AdmissibleCycles)):
-        itinerary = ''.join(map(str, AdmissibleCycles[i][1]))    
+        itinerary = ''.join(map(str, AdmissibleCycles[i][1]))
         c.execute("INSERT INTO rpos VALUES ("+str(i+1)+", '" \
                    +''.join(map(str, AdmissibleCycles[i][1]))+"', " \
                    +', '.join(map(str, AdmissibleCycles[i][3][0]))+", " \
                    +str(sum(AdmissibleCycles[i][4]))+", " \
                    +str(sum(AdmissibleCycles[i][5]))+")")
-        
+
         c.execute("DROP TABLE IF EXISTS rpo"+itinerary)
         c.execute(" CREATE TABLE rpo"+itinerary+" (x1 real, y1 real, x2 real, \
         y2 real, tau real, phi real)")
-    
+
         for k in range(len(AdmissibleCycles[i][1])):
             query = "INSERT INTO rpo"+itinerary+" VALUES("+  \
                       ', '.join(map(str, AdmissibleCycles[i][3][k]))+", " \
                       +str(AdmissibleCycles[i][4][k])+", " \
-                      +str(AdmissibleCycles[i][5][k])+")"              
+                      +str(AdmissibleCycles[i][5][k])+")"
             c.execute(query)
-    
+
     conn.commit()
-    conn.close()        
-    
+    conn.close()
+
 if plotPsect:
     fig=plt.figure(1, figsize=(8,8))
     plot(ps2D[:,0], ps2D[:,1], '.b', ms=10)
@@ -863,14 +759,14 @@ if plotPsect:
     ax.set_xlabel('$v_1$', fontsize=24)
     ax.set_ylabel('$v_{2 \quad (\\times 100)}$', fontsize=24)
     Nticks=5
-    xticks = np.linspace(min(ps2D[:,0]), max(ps2D[:,0]), Nticks)
-    ax.set_xticks(xticks)
-    ax.set_xticklabels(["$%.1f$" % xtik for xtik in xticks], fontsize=16); 
-    yticks = np.linspace(min(ps2D[:,1]), max(ps2D[:,1]), Nticks)
-    ax.set_yticks(yticks)
+    #xticks = np.linspace(min(ps2D[:,0]), max(ps2D[:,0]), Nticks)
+    #ax.set_xticks(xticks)
+    #ax.set_xticklabels(["$%.1f$" % xtik for xtik in xticks], fontsize=16);
+    #yticks = np.linspace(min(ps2D[:,1]), max(ps2D[:,1]), Nticks)
+    #ax.set_yticks(yticks)
     #plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
-    yticks=yticks*100
-    ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=16);  
+    #yticks=yticks*100
+    #ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=16);
     
     savefig('Psect.pdf', bbox_inches='tight', dpi=100)  
     call(["pdfcrop", "Psect.pdf", "Psect.pdf"], shell=True)
