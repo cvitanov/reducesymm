@@ -24,11 +24,11 @@ from PADS import Lyndon
 
 #Booleans:
 computeSolution = False
-computePsect = True
-computeArcLengths = True
+computePsect = False
+computeArcLengths = False
 computeRPO = True
 computeRPOred3 = False
-plotPsect = True
+plotPsect = False
 plotRetmap = False
 
 #Search parameters:
@@ -565,16 +565,28 @@ if computeRPO:
     c = conn.cursor()
     c.execute("DROP TABLE IF EXISTS rpos")
     c.execute(" CREATE TABLE rpos (rpono int, itinerary text, x1 real, \
-                y1 real, x2 real, y2 real, period real, phase real) ")
-    
+                y1 real, x2 real, y2 real, period real, phase real, \
+                FloquetMults text) ")
+                #FloquetMults text, FloquetExps text) ")
+
     for i in range(len(AdmissibleCycles)):
-        itinerary = ''.join(map(str, AdmissibleCycles[i][1]))    
+        rpo = AdmissibleCycles[i][3][0]
+        Period = sum(AdmissibleCycles[i][4])
+        Phase = sum(AdmissibleCycles[i][5])
+        FloquetMults = twomode.Floquet(rpo, Period, Phase)
+        print FloquetMults
+        #FloquetExps = np.log(FloquetMults)
+
+        itinerary = ''.join(map(str, AdmissibleCycles[i][1]))
         c.execute("INSERT INTO rpos VALUES ("+str(i+1)+", '" \
-                   +''.join(map(str, AdmissibleCycles[i][1]))+"', " \
-                   +', '.join(map(str, AdmissibleCycles[i][3][0]))+", " \
-                   +str(sum(AdmissibleCycles[i][4]))+", " \
-                   +str(sum(AdmissibleCycles[i][5]))+")")
-        
+                   +itinerary+"', " \
+                   +', '.join(map(str, rpo))+", " \
+                   +str(Period)+", " \
+                   +str(Phase)+", '" \
+                   +str(FloquetMults)+"')")
+                   #+str(FloquetMults)+"' , '" \
+                   #+str(FloquetExps)+"' )")
+
         c.execute("DROP TABLE IF EXISTS rpo"+itinerary)
         c.execute(" CREATE TABLE rpo"+itinerary+" (x1 real, y1 real, x2 real, \
         y2 real, tau real, phi real)")
@@ -586,166 +598,6 @@ if computeRPO:
                       +str(AdmissibleCycles[i][5][k])+")"              
             c.execute(query)
     
-    conn.commit()
-    conn.close()        
-
-if computeRPOred3:
-    smin = np.min(sn)
-    smax = np.max(sn)
-    #scandidates = np.zeros([1,2]) #dummy matrix to hold po candidate arclengths
-    scandidates = [] #dummy matrix to hold po candidate arclengths
-
-    for i in range(nPrimeMax):
-        #Define the function zeros of which would correspond to the periodic
-        #orbit arclengths:
-        def fpo(s):
-            po = retmapm(i+1, s) - s
-            return po
-
-        fpoevo=0
-        for s0 in np.arange(smin, smax, (smax-smin)/1000):
-            fpoev = fpo(s0)
-            if fpoev * fpoevo < 0: #If there is a zero-crossing, look for the root:
-                sc = newton(fpo, s0, tol=1.48e-12)
-                #print "sc = %f" %sc
-                newcandidate = 1
-                for j in range(len(scandidates)):
-                    #Discard if found candidate is previously found:
-                    if np.abs(scandidates[j][1] - sc)<1e-9:
-                        newcandidate=0
-                if newcandidate:
-                    CandidateItinerary = Itinerary(sc, i+1)
-                    scandidates.append([i+1, sc, Itinerary(sc, i+1)])
-                    for k in range(len(AdmissibleCycles)):
-                        if CandidateItinerary == AdmissibleCycles[k][1]:
-                            AdmissibleCycles[k].append([retmapm(n, sc) for n
-                                                       in range(i+1)])
-                            AdmissibleCycles[k].append(np.array([s2xhat(
-                             AdmissibleCycles[k][2][l]) for l in range(i+1)]))
-                            AdmissibleCycles[k].append([timeofflight(
-                             AdmissibleCycles[k][3][l]) for l in range(i+1)])
-                            AdmissibleCycles[k].append([phireturn(
-                             AdmissibleCycles[k][3][l],
-                             AdmissibleCycles[k][4][l]) for l in range(i+1)])
-
-                    #scandidates = np.append(scandidates, np.array([[i+1, sc]], float), axis=0)
-
-            fpoevo = fpoev
-
-    print "Admissible Cycles upto length "+str(nPrimeMax)
-    for i in range(len(AdmissibleCycles)):
-        print AdmissibleCycles[i]
-
-    print "Starting the Newton search..."
-    tol = 1e-6
-    #for i in range(1,2):
-    for i in range(len(AdmissibleCycles)):
-
-        converged = False
-
-        x = np.array(AdmissibleCycles[i][3])
-        x = np.delete(x, 1, 1)
-
-        tau = AdmissibleCycles[i][4]
-        #phi = AdmissibleCycles[i][5]
-        nCycle = len(x)
-        #Error vector
-        while not(converged):
-            Error = np.array([np.append(np.array(x[(k+1)%nCycle] - \
-                    twomode.ftauRed3(x[(k)%nCycle], tau[(k)%nCycle]), float), 0) \
-                    for k in range(nCycle)], float)
-
-            Error = Error.reshape(np.size(Error))
-            print "Error"
-            print Error
-            raw_input("Press enter to continue...")
-            if np.max(np.abs(Error)) < tol:
-                converged = True
-                AdmissibleCycles[i][3] = np.insert(x, 1, 0, axis=1)
-
-            N = np.size(Error,0)
-            nDim = np.size(x[0], 0)
-            #A-Matrix:
-            A = np.zeros((N,N))
-            for k in range(nCycle):
-                A[(nDim+1)*k: (nDim+1)*k + nDim,
-                  (nDim+1)*k: (nDim+1)*k + nDim] = twomode.JacobianRed3(x[k], tau[k])
-
-                A[(nDim+1)*k: (nDim+1)*k + nDim,
-                  (nDim+1)*k + nDim] = twomode.velRed3(twomode.ftauRed3(x[k], tau[k]))
-
-                A[(nDim+1)*k + nDim, (nDim+1)*k: (nDim+1)*k + nDim] = twomode.velRed3(x[k])
-                #A[(nDim+1)*k + nDim, (nDim+1)*k: (nDim+1)*k + nDim] = nhat3D
-                #A[(nDim+2)*k + nDim + 1, (nDim+2)*k: (nDim+2)*k + nDim] = np.array(tp)
-
-                A[(nDim+1)*((k)%nCycle): (nDim+1)*((k)%nCycle) + nDim,
-                  (nDim+1)*((k+1)%nCycle): (nDim+1)*((k+1)%nCycle) + nDim] = \
-                A[(nDim+1)*((k)%nCycle): (nDim+1)*((k)%nCycle) + nDim,
-                  (nDim+1)*((k+1)%nCycle): (nDim+1)*((k+1)%nCycle) + nDim] - np.identity(nDim)
-
-            #Compute Deltas:
-            Delta=np.dot(np.linalg.inv(A), Error)
-            print "Delta"
-            print Delta
-
-            converging = False
-            if Adaptive:
-                xx = np.empty(np.shape(x))
-                tautau = np.zeros(np.shape(tau))
-                iAdaptive = 0
-                while not(converging):
-                    iAdaptive = iAdaptive + 1
-                    print "iAdaptive:"
-                    print iAdaptive
-                    for k in range(nCycle):
-                        xx[k] = x[k] + Delta[(nDim+1)*k:(nDim+1)*k+nDim]
-                        tautau[k] = tau[k] + Delta[(nDim+1)*k+nDim]
-
-                    ErrorNext = np.array([np.append(np.array(xx[(k+1)%nCycle] - \
-                    twomode.ftauRed3(xx[(k)%nCycle], tautau[(k)%nCycle]), float), 0) \
-                    for k in range(nCycle)], float)
-
-
-                    if np.max(np.abs(ErrorNext)) < np.max(np.abs(Error)):
-                        converging = True
-                    else:
-                        Delta = Delta / factor
-
-
-            #Update:
-            for k in range(nCycle):
-                x[k] = x[k] + Delta[(nDim+1)*k:(nDim+1)*k+nDim]
-                tau[k] = tau[k] + Delta[(nDim+1)*k+nDim]
-
-    #np.savetxt('data/AdmissibleCycles.dat', AdmissibleCycles)
-
-    #Create a database and write RPOs in it:
-
-    conn = sqlite3.connect('data/rpo.db')
-    c = conn.cursor()
-    c.execute("DROP TABLE IF EXISTS rpos")
-    c.execute(" CREATE TABLE rpos (rpono int, itinerary text, x1 real, \
-                y1 real, x2 real, y2 real, period real, phase real) ")
-
-    for i in range(len(AdmissibleCycles)):
-        itinerary = ''.join(map(str, AdmissibleCycles[i][1]))
-        c.execute("INSERT INTO rpos VALUES ("+str(i+1)+", '" \
-                   +''.join(map(str, AdmissibleCycles[i][1]))+"', " \
-                   +', '.join(map(str, AdmissibleCycles[i][3][0]))+", " \
-                   +str(sum(AdmissibleCycles[i][4]))+", " \
-                   +str(sum(AdmissibleCycles[i][5]))+")")
-
-        c.execute("DROP TABLE IF EXISTS rpo"+itinerary)
-        c.execute(" CREATE TABLE rpo"+itinerary+" (x1 real, y1 real, x2 real, \
-        y2 real, tau real, phi real)")
-
-        for k in range(len(AdmissibleCycles[i][1])):
-            query = "INSERT INTO rpo"+itinerary+" VALUES("+  \
-                      ', '.join(map(str, AdmissibleCycles[i][3][k]))+", " \
-                      +str(AdmissibleCycles[i][4][k])+", " \
-                      +str(AdmissibleCycles[i][5][k])+")"
-            c.execute(query)
-
     conn.commit()
     conn.close()
 
@@ -767,10 +619,10 @@ if plotPsect:
     #plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
     #yticks=yticks*100
     #ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=16);
-    
-    savefig('Psect.pdf', bbox_inches='tight', dpi=100)  
+
+    savefig('Psect.pdf', bbox_inches='tight', dpi=100)
     call(["pdfcrop", "Psect.pdf", "Psect.pdf"], shell=True)
-    
+
     show()
 
 if plotRetmap:
