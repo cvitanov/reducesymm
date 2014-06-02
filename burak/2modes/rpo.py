@@ -16,7 +16,7 @@ for rpono in range(1,19):
     c.execute("SELECT * FROM rpos WHERE rpono = "+str(rpono))
     a = c.fetchall()
     
-    rpono,  itinerary, x1, y1, x2, y2, T, phi = a[0]
+    rpono,  itinerary, x1, y1, x2, y2, T, phi , floquet= a[0]
     z1 = x1 + 1j*y1
     z2 = x2 + 1j*y2
     slicePhase = np.angle(z1)

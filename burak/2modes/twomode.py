@@ -420,3 +420,28 @@ def ftauRed3(x3, tau):
     fxtau3 = np.delete(fxtau, 1, 0)
 
     return fxtau3
+
+def x2xhat(x):
+    """
+    Takes the full state space point and find the corresponding reduced state
+    space point within the first mode slice
+    """
+    x1, y1, x2, y2 = x
+    z1 = x1 + 1j*y1
+    z2 = x2 + 1j*y2
+    slicePhase = np.angle(z1)
+    z1 = np.exp(-1j*slicePhase)*z1
+    z2 = np.exp(-2*1j*slicePhase)*z2
+
+    xhat = np.array([np.real(z1), np.imag(z1), np.real(z2), np.imag(z2)],
+                    float)
+    return xhat
+
+def Floquet(x, T, phi):
+    """
+    Compute Floquet multipliers of a relative periodic orbit
+    """
+    J = Jacobian(x, T)
+    Jp = np.dot(LieElement(phi), J)
+    w, v = np.linalg.eig(Jp)
+    return w
