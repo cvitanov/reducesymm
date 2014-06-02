@@ -305,3 +305,6 @@ for ii = 2:8
     tmpnxy = round(linsolve((2*r+w)*[1,0.5;0,sqrt(3)/2], nvtmp));
     Nxymat{ii} = tmpnxy;
 end
+
+%%
+

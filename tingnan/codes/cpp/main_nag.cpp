@@ -7,6 +7,7 @@
 //
 
 #include <iostream>
+#include <sstream>
 #include <iomanip>
 #include <fstream>
 #include <string>
@@ -329,10 +330,30 @@ void LorentzGasElCells::mainLoop(int n)
 
 int main(int argc, const char * argv[])
 {
+    /*
     LorentzGasElCells billiardSystem;
     for(int i = 2; i < 9; ++i)
     {
         billiardSystem.mainLoop(i); 
+    }
+    */
+    for (int i = 2; i < 3; ++i)
+    {
+        string fname =  "w=0.30/l" + std::to_string(i) + ".txt";
+        std::ifstream inputFile(fname);
+        while (inputFile.good())
+        {
+            string strvalue;
+            getline(inputFile, strvalue, '\n');
+            std::istringstream line_stream(strvalue);
+            for (int j = 0; j < i; ++j)
+            {
+                string symbolval;
+                getline(line_stream, symbolval, ' ');
+                cout << symbolval << "\t";
+            }
+            cout << endl;
+        }
     }
     return 0;
 }
