@@ -30,12 +30,14 @@ fdtable = [
 2	3	0	1
 0	1	0	1];
 strlist = 'abcdefABCDEF';
+NSYMS = 12;
 
 [nx, ny] = size(sbtable);
 newtable = '';
 for ii = 1:nx
     currline = [sbtable(ii,:), sbtable(ii,1)];
     currstr = [];
+    curridx = [];
     aofchange = zeros(1,ny+1);
     dofchange = zeros(1,ny+2);
     for jj = 2:ny+1 % all the relative direction change
@@ -53,13 +55,35 @@ for ii = 1:nx
         lastsymbol = currline(jj-1);
         dofc = ~abs(dofchange(jj+1)-dofchange(jj));
         aofc = aofchange(jj);
-        currstr = [currstr, symbolTable(lastsymbol, aofc, dofc)];
+        currsblidx = symbolTable(lastsymbol, aofc, dofc);
+        if isempty(find(currsblidx))
+            sbtable(ii,:)
+            aofc
+            dofc
+            lastsymbol
+        end
+        curridx = [curridx, find(currsblidx)];
+        currstr = [currstr, strlist(currsblidx)];
     end
-    newtable(ii, :) = currstr
+    minidxarray = curridx;
+    for jj = 1:ny-1
+        tmpidxarray = circshift(curridx, [0, jj]);
+        for kk = 1:ny
+            if tmpidxarray(kk) == minidxarray(kk)
+                continue;
+            end
+            if tmpidxarray(kk) < minidxarray(kk)
+                minidxarray = tmpidxarray;
+                break;
+            else
+                break; 
+            end
+        end
+    end
+    newtable(ii, :) = strlist(minidxarray);
 end
 
-
-    function currstr = symbolTable(lastsymbol, aofc, dofc)
+    function currsblidx = symbolTable(lastsymbol, aofc, dofc)
         if mod(lastsymbol, 2)
             % last long
             aidx = 1;
@@ -74,7 +98,11 @@ end
             % next opposite
             didx = 4;
         end
-        currstr = strlist(ismember(fdtable(:, [aidx didx]), [aofc, 1], 'rows'));
+        if aofc == 6
+            didx = 3;
+        end
+        currsblidx = ismember(fdtable(:, [aidx didx]), [aofc, 1], 'rows');
     end
+
 end
 

@@ -35,59 +35,59 @@ axis image;
 
 
 %%
-clear;
-np = 3;
-tmpsblseq = genNecklaces(np, 12);
-
-% now let us do the symbol reduction for the hard disk 
-sblseq = [];
-[nx, ~] = size(tmpsblseq);
-for ii = 1:nx
-    tp = tmpsblseq(ii, :);
-    tp = [tp, tp(1)]; % make this periodic to check the last symbol
-    test = 1;
-    for jj = 2:np+1
-        if tp(jj) == tp(jj-1)
-            test = 0;
-            break;
-        end
-        numdiff = abs(tp(jj) - tp(jj - 1));
-        if numdiff > 6
-            numdiff = 12 - numdiff;
-        end
-        if mod(tp(jj - 1), 2) % odd, change of number should be at least 3
-           if numdiff < 3
-               test = 0;
-               break;
-           end
-        else
-            % even, change of number should be at least 2
-           if numdiff < 2
-               test = 0;
-               break;
-           end
-        end
-    end
-    if test == 0
-        disp('not a valid sequence for current prunning')
-    else
-        tp = tp(1:np);
-        [~,index] = min(tp(1:np));
-        tp = [tp(index:end), tp(1:index-1)];
-        sblseq = [sblseq;tp(1:np)];
-    end
-end
-
-sblseq = unique(sblseq, 'rows');
-
-
-
-[sbmat, thmat] = linkminsearch(sblseq);
+% clear;
+% np = 3;
+% tmpsblseq = genNecklaces(np, 12);
+% 
+% % now let us do the symbol reduction for the hard disk 
+% sblseq = [];
+% [nx, ~] = size(tmpsblseq);
+% for ii = 1:nx
+%     tp = tmpsblseq(ii, :);
+%     tp = [tp, tp(1)]; % make this periodic to check the last symbol
+%     test = 1;
+%     for jj = 2:np+1
+%         if tp(jj) == tp(jj-1)
+%             test = 0;
+%             break;
+%         end
+%         numdiff = abs(tp(jj) - tp(jj - 1));
+%         if numdiff > 6
+%             numdiff = 12 - numdiff;
+%         end
+%         if mod(tp(jj - 1), 2) % odd, change of number should be at least 3
+%            if numdiff < 3
+%                test = 0;
+%                break;
+%            end
+%         else
+%             % even, change of number should be at least 2
+%            if numdiff < 2
+%                test = 0;
+%                break;
+%            end
+%         end
+%     end
+%     if test == 0
+%         disp('not a valid sequence for current prunning')
+%     else
+%         tp = tp(1:np);
+%         [~,index] = min(tp(1:np));
+%         tp = [tp(index:end), tp(1:index-1)];
+%         sblseq = [sblseq;tp(1:np)];
+%     end
+% end
+% 
+% sblseq = unique(sblseq, 'rows');
+% 
+% 
+% 
+% [sbmat, thmat] = linkminsearch(sblseq);
 
 
 %%
 [nx, ny] = size(sbmat);
-for num = 96
+for num = 4
 tmpseq = sbmat(num, :);
 newth = thmat(num, :);
 
@@ -105,8 +105,8 @@ end
 Rv(:,ii+1) = Rh(:, linknum) + Rv(:,ii);
 rv(:,ii+1) = Rv(:,ii+1) + r*[cos(newth(1));sin(newth(1))];
 linknum = tmpseq(1)+1;
-Rv(:,ii+2) = Rh(:, linknum) + Rv(:,ii+1);
-rv(:,ii+2) = Rv(:,ii+2) + r*[cos(newth(2));sin(newth(2))];
+% Rv(:,ii+2) = Rh(:, linknum) + Rv(:,ii+1);
+% rv(:,ii+2) = Rv(:,ii+2) + r*[cos(newth(2));sin(newth(2))];
 
 
 viscircles(Rv', r*ones(length(Rv),1));
