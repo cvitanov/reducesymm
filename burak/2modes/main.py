@@ -69,7 +69,7 @@ tp = np.dot(T,xp)
 
 if computeSolution:
     
-    tf = 1000;
+    tf = 2000;
     dt = 0.01;
     epsilon = 1e-2;
     x0 = reqv+epsilon*unstabledir
@@ -121,7 +121,7 @@ ps2Dsorted = np.array(ps2D[sortingindices, :],float)
 
 #Interpolate to psect:
 print 'Interpolating the Poincare section'
-tckps = interpolate.splrep(ps2Dsorted[:,0],ps2Dsorted[:,1], k=5)
+tckps = interpolate.splrep(ps2Dsorted[:,0],ps2Dsorted[:,1], k=3)
 dxintps = (ps2Dsorted[np.size(ps2Dsorted,0)-1,0] - ps2Dsorted[0,0])/10000
 xintps = np.arange(ps2Dsorted[0,0], 
                       ps2Dsorted[np.size(ps2Dsorted,0)-1,0]+dxintps, 
@@ -164,7 +164,7 @@ if not('sn' in locals()):
 
 print 'Interpolating to the return map'
 isortRetMap = np.argsort(sn)
-tckRetMap = interpolate.splrep(sn[isortRetMap],snplus1[isortRetMap], k=3)
+tckRetMap = interpolate.splrep(sn[isortRetMap],snplus1[isortRetMap], k=1)
 dxintRetMap = (np.max(sn)-np.min(sn))/100000
 xintRetMap = np.arange(np.min(sn), np.max(sn), dxintRetMap)
 yintRetMap = interpolate.splev(xintRetMap, tckRetMap)
@@ -407,7 +407,7 @@ if computeRPO:
         for s0 in np.arange(smin, smax, (smax-smin)/40000):
             fpoev = fpo(s0)
             if fpoev * fpoevo < 0: #If there is a zero-crossing, look for the root: 
-                sc = newton(fpo, s0, tol=1.48e-9)
+                sc = newton(fpo, s0, tol=1.48e-8)
                 #print "sc = %f" %sc
                 newcandidate = 1
                 for j in range(len(scandidates)):
