@@ -21,6 +21,10 @@ from subprocess import call
 #Import twomode system module
 import twomode 
 from PADS import Lyndon
+import oct2py
+import os
+peddir = os.getcwd()+'/ped' #Add /ped to the current working directory location
+oct2py.octave.addpath(peddir) #Add mfiles for ped
 
 #Booleans:
 computeSolution = False
@@ -570,10 +574,22 @@ if computeRPO:
                 #FloquetMults text, FloquetExps text) ")
 
     for i in range(len(AdmissibleCycles)):
+        
         rpo = AdmissibleCycles[i][3][0]
         Period = sum(AdmissibleCycles[i][4])
         Phase = sum(AdmissibleCycles[i][5])
-        FloquetMults = twomode.Floquet(rpo, Period, Phase)
+        JJ = np.dot(twomode.LieElement(AdmissibleCycles[i][5][0]),
+                    twomode.Jacobian(AdmissibleCycles[i][3][0], 
+                                     AdmissibleCycles[i][4][0]))
+        for k in range(1, len(AdmissibleCycles[i][3])):
+            JJ = np.append(JJ, 
+                          np.dot(twomode.LieElement(AdmissibleCycles[i][5][k]),
+                          twomode.Jacobian(AdmissibleCycles[i][3][k], 
+                                           AdmissibleCycles[i][4][k])), axis=1)
+        eig = oct2py.octave.ped(JJ)
+        FloquetMults = np.array([np.exp(eig[j, 0]) for j in range(len(eig))], 
+                                float)
+        #FloquetMults = twomode.Floquet(rpo, Period, Phase)
         print FloquetMults
         #FloquetExps = np.log(FloquetMults)
 
