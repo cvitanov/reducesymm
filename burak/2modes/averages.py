@@ -17,7 +17,7 @@ escapeRate = 1
 
 z = sympy.symbols('z')
 
-for rpono in range(1,27):
+for rpono in range(1,19):
     c.execute("SELECT * FROM rpos WHERE rpono = "+str(rpono))
     a = c.fetchall()
     
@@ -35,7 +35,7 @@ for rpono in range(1,27):
 from sympy import degree, LT
 escapeRate = sympy.expand(escapeRate)    
 escapeRateVal = []
-ExpOrder = 9
+ExpOrder = 8
 for j in range(ExpOrder,0,-1):
     while degree(escapeRate) > j:
     

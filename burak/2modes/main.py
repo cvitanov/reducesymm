@@ -36,7 +36,7 @@ plotPsect = False
 plotRetmap = False
 
 #Search parameters:
-nPrimeMax = 9 #Will search for [1,m]-cycles
+nPrimeMax = 8 #Will search for [1,m]-cycles
 
 #Only relative equilibrium:
 reqv = np.array([0.43996557973671596,
@@ -408,7 +408,7 @@ if computeRPO:
             return po
             
         fpoevo=0
-        for s0 in np.arange(smin, smax, (smax-smin)/100000):
+        for s0 in np.arange(smin, smax, (smax-smin)/40000):
             fpoev = fpo(s0)
             if fpoev * fpoevo < 0: #If there is a zero-crossing, look for the root: 
                 sc = newton(fpo, s0, tol=1.48e-8)
@@ -477,7 +477,7 @@ if computeRPO:
     #raw_input('Press enter to continue ...')
 
     print "Starting the Newton search..."
-    tol = 1e-6
+    tol = 1e-9
     #for i in range(1,2):
     for i in range(len(AdmissibleCycles)):
 
