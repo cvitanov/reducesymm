@@ -36,7 +36,7 @@ plotPsect = False
 plotRetmap = False
 
 #Search parameters:
-nPrimeMax = 8 #Will search for [1,m]-cycles
+nPrimeMax = 9 #Will search for [1,m]-cycles
 
 #Only relative equilibrium:
 reqv = np.array([0.43996557973671596,
@@ -188,7 +188,7 @@ def retmapm(n, sn):
         return  snpn
 
 print "Computing the kneading sequence"
-nMax = 8;
+nMax = nPrimeMax;
 sCritical = fmin(lambda x: -interpolate.splev(x, tckRetMap), 1)
 print "sCritical:"
 print sCritical
@@ -197,7 +197,7 @@ def fCritical(s):
     return po
 s3Critical = newton(fCritical, sCritical*0.999, tol=1.48e-12)
 #s3Critical = newton(fCritical, sCritical*1.001, tol=1.48e-12)
-#s3Critical = sCritical*0.95
+#s3Critical = sCritical*0.9995
 print "s3Critical:"
 print s3Critical
 
@@ -408,7 +408,7 @@ if computeRPO:
             return po
             
         fpoevo=0
-        for s0 in np.arange(smin, smax, (smax-smin)/40000):
+        for s0 in np.arange(smin, smax, (smax-smin)/100000):
             fpoev = fpo(s0)
             if fpoev * fpoevo < 0: #If there is a zero-crossing, look for the root: 
                 sc = newton(fpo, s0, tol=1.48e-8)
@@ -439,37 +439,36 @@ if computeRPO:
             fpoevo = fpoev        
 
 
-    # print "Admissible Cycles upto length before subdivisions:"
-    # for i in range(len(AdmissibleCycles)):
-    #     print AdmissibleCycles[i]
-    #
-    # #Divide intervals into smaller subintervals for multiple shooting:
-    # nsub = 1 #number of subintervals
-    # for k in range(len(AdmissibleCycles)):
-    #     l = 0
-    #     while l < len(AdmissibleCycles[k][3]):
-    #         #tau:
-    #         AdmissibleCycles[k][4][l] = AdmissibleCycles[k][4][l]/float(nsub)
-    #         #phi:
-    #         AdmissibleCycles[k][5][l] = phireturn(AdmissibleCycles[k][3][l],
-    #                                               AdmissibleCycles[k][4][l])
-    #         for m in range(nsub-1):
-    #             #x:
-    #             AdmissibleCycles[k][3] = \
-    #             np.insert(AdmissibleCycles[k][3], l+m+1,
-    #                       twomode.ftauRed(AdmissibleCycles[k][3][l+m,:],
-    #                             AdmissibleCycles[k][4][l]),
-    #                       axis=0)
-    #             #tau:
-    #             AdmissibleCycles[k][4] = np.insert(AdmissibleCycles[k][4],
-    #                                                l+m+1,
-    #                                                AdmissibleCycles[k][4][l])
-    #             #phi:
-    #             AdmissibleCycles[k][5] = np.insert(AdmissibleCycles[k][5],
-    #                                 l+m+1,
-    #                                 phireturn(AdmissibleCycles[k][3][l+m+1],
-    #                                 AdmissibleCycles[k][4][l+m+1]))
-    #         l += nsub
+    print "Admissible Cycles upto length before subdivisions:"
+    for i in range(len(AdmissibleCycles)):
+        print AdmissibleCycles[i]
+        # #Divide intervals into smaller subintervals for multiple shooting:
+    #nsub = 1 #number of subintervals
+    #for k in range(len(AdmissibleCycles)):
+        #l = 0
+        #while l < len(AdmissibleCycles[k][3]):
+            ##tau:
+            #AdmissibleCycles[k][4][l] = AdmissibleCycles[k][4][l]/float(nsub)
+            ##phi:
+            #AdmissibleCycles[k][5][l] = phireturn(AdmissibleCycles[k][3][l],
+                                                  #AdmissibleCycles[k][4][l])
+            #for m in range(nsub-1):
+                ##x:
+                #AdmissibleCycles[k][3] = \
+                #np.insert(AdmissibleCycles[k][3], l+m+1,
+                          #twomode.ftauRed(AdmissibleCycles[k][3][l+m,:],
+                                #AdmissibleCycles[k][4][l]),
+                          #axis=0)
+                ##tau:
+                #AdmissibleCycles[k][4] = np.insert(AdmissibleCycles[k][4],
+                                                   #l+m+1,
+                                                   #AdmissibleCycles[k][4][l])
+                ##phi:
+                #AdmissibleCycles[k][5] = np.insert(AdmissibleCycles[k][5],
+                                    #l+m+1,
+                                    #phireturn(AdmissibleCycles[k][3][l+m+1],
+                                    #AdmissibleCycles[k][4][l+m+1]))
+            #l += nsub
 
     print "Admissible Cycles upto length "+str(nPrimeMax)
     for i in range(len(AdmissibleCycles)):
@@ -586,8 +585,9 @@ if computeRPO:
                           np.dot(twomode.LieElement(AdmissibleCycles[i][5][k]),
                           twomode.Jacobian(AdmissibleCycles[i][3][k], 
                                            AdmissibleCycles[i][4][k])), axis=1)
+        #raw_input("dfasfdsavfass")
         eig = oct2py.octave.ped(JJ)
-        FloquetMults = np.array([np.exp(eig[j, 0]) for j in range(len(eig))], 
+        FloquetMults = np.array([np.real(np.exp(eig[j, 0])*eig[j, 1]) for j in range(len(eig))], 
                                 float)
         #FloquetMults = twomode.Floquet(rpo, Period, Phase)
         print FloquetMults
@@ -607,7 +607,7 @@ if computeRPO:
         c.execute(" CREATE TABLE rpo"+itinerary+" (x1 real, y1 real, x2 real, \
         y2 real, tau real, phi real)")
     
-        for k in range(len(AdmissibleCycles[i][1])):
+        for k in range(len(AdmissibleCycles[i][3])):
             query = "INSERT INTO rpo"+itinerary+" VALUES("+  \
                       ', '.join(map(str, AdmissibleCycles[i][3][k]))+", " \
                       +str(AdmissibleCycles[i][4][k])+", " \
