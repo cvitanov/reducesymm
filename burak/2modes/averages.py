@@ -17,7 +17,7 @@ escapeRate = 1
 
 z = sympy.symbols('z')
 
-for rpono in range(1,19):
+for rpono in range(1,27):
     c.execute("SELECT * FROM rpos WHERE rpono = "+str(rpono))
     a = c.fetchall()
     
@@ -28,20 +28,20 @@ for rpono in range(1,19):
     floquet = np.loadtxt(floquetobj)
     TopLength = len(str(itinerary))
     #if str(itinerary)=='001':
-    #    continue
+        #continue
         
     escapeRate = escapeRate * (1 - (z**TopLength)/np.abs(floquet[0]))
 
 from sympy import degree, LT
 escapeRate = sympy.expand(escapeRate)    
 escapeRateVal = []
-ExpOrder = 8
+ExpOrder = 9
 for j in range(ExpOrder,0,-1):
     while degree(escapeRate) > j:
     
         escapeRate = escapeRate - LT(escapeRate)
         if degree(escapeRate) <= ExpOrder:
-            escapeRateVal.insert(0, np.abs(escapeRate.subs(z,1)))
+            escapeRateVal.insert(0, (np.float(np.abs(escapeRate.subs(z,1)))))
 
 
 #print escapeRate

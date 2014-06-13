@@ -30,13 +30,13 @@ oct2py.octave.addpath(peddir) #Add mfiles for ped
 computeSolution = False
 computePsect = False
 computeArcLengths = False
-computeRPO = True
+computeRPO = False
 computeRPOred3 = False
 plotPsect = False
-plotRetmap = False
+plotRetmap = True
 
 #Search parameters:
-nPrimeMax = 8 #Will search for [1,m]-cycles
+nPrimeMax = 9 #Will search for [1,m]-cycles
 
 #Only relative equilibrium:
 reqv = np.array([0.43996557973671596,
@@ -408,7 +408,7 @@ if computeRPO:
             return po
             
         fpoevo=0
-        for s0 in np.arange(smin, smax, (smax-smin)/40000):
+        for s0 in np.arange(smin, smax, (smax-smin)/120000):
             fpoev = fpo(s0)
             if fpoev * fpoevo < 0: #If there is a zero-crossing, look for the root: 
                 sc = newton(fpo, s0, tol=1.48e-8)
@@ -443,32 +443,32 @@ if computeRPO:
     for i in range(len(AdmissibleCycles)):
         print AdmissibleCycles[i]
         # #Divide intervals into smaller subintervals for multiple shooting:
-    #nsub = 1 #number of subintervals
-    #for k in range(len(AdmissibleCycles)):
-        #l = 0
-        #while l < len(AdmissibleCycles[k][3]):
-            ##tau:
-            #AdmissibleCycles[k][4][l] = AdmissibleCycles[k][4][l]/float(nsub)
-            ##phi:
-            #AdmissibleCycles[k][5][l] = phireturn(AdmissibleCycles[k][3][l],
-                                                  #AdmissibleCycles[k][4][l])
-            #for m in range(nsub-1):
-                ##x:
-                #AdmissibleCycles[k][3] = \
-                #np.insert(AdmissibleCycles[k][3], l+m+1,
-                          #twomode.ftauRed(AdmissibleCycles[k][3][l+m,:],
-                                #AdmissibleCycles[k][4][l]),
-                          #axis=0)
-                ##tau:
-                #AdmissibleCycles[k][4] = np.insert(AdmissibleCycles[k][4],
-                                                   #l+m+1,
-                                                   #AdmissibleCycles[k][4][l])
-                ##phi:
-                #AdmissibleCycles[k][5] = np.insert(AdmissibleCycles[k][5],
-                                    #l+m+1,
-                                    #phireturn(AdmissibleCycles[k][3][l+m+1],
-                                    #AdmissibleCycles[k][4][l+m+1]))
-            #l += nsub
+    nsub = 20 #number of subintervals
+    for k in range(len(AdmissibleCycles)):
+        l = 0
+        while l < len(AdmissibleCycles[k][3]):
+            #tau:
+            AdmissibleCycles[k][4][l] = AdmissibleCycles[k][4][l]/float(nsub)
+            #phi:
+            AdmissibleCycles[k][5][l] = phireturn(AdmissibleCycles[k][3][l],
+                                                  AdmissibleCycles[k][4][l])
+            for m in range(nsub-1):
+                #x:
+                AdmissibleCycles[k][3] = \
+                np.insert(AdmissibleCycles[k][3], l+m+1,
+                          twomode.ftauRed(AdmissibleCycles[k][3][l+m,:],
+                                AdmissibleCycles[k][4][l]),
+                          axis=0)
+                #tau:
+                AdmissibleCycles[k][4] = np.insert(AdmissibleCycles[k][4],
+                                                   l+m+1,
+                                                   AdmissibleCycles[k][4][l])
+                #phi:
+                AdmissibleCycles[k][5] = np.insert(AdmissibleCycles[k][5],
+                                    l+m+1,
+                                    phireturn(AdmissibleCycles[k][3][l+m+1],
+                                    AdmissibleCycles[k][4][l+m+1]))
+            l += nsub
 
     print "Admissible Cycles upto length "+str(nPrimeMax)
     for i in range(len(AdmissibleCycles)):
@@ -581,10 +581,14 @@ if computeRPO:
                     twomode.Jacobian(AdmissibleCycles[i][3][0], 
                                      AdmissibleCycles[i][4][0]))
         for k in range(1, len(AdmissibleCycles[i][3])):
-            JJ = np.append(JJ, 
-                          np.dot(twomode.LieElement(AdmissibleCycles[i][5][k]),
-                          twomode.Jacobian(AdmissibleCycles[i][3][k], 
-                                           AdmissibleCycles[i][4][k])), axis=1)
+            #JJ = np.append(JJ, 
+                          #np.dot(twomode.LieElement(AdmissibleCycles[i][5][k]),
+                          #twomode.Jacobian(AdmissibleCycles[i][3][k], 
+                                           #AdmissibleCycles[i][4][k])), axis=1)
+            JJ = np.concatenate((np.dot(twomode.LieElement(AdmissibleCycles[i][5][k]),
+                                twomode.Jacobian(AdmissibleCycles[i][3][k], 
+                                           AdmissibleCycles[i][4][k]))
+                                           , JJ), axis=1)
         #raw_input("dfasfdsavfass")
         eig = oct2py.octave.ped(JJ)
         FloquetMults = np.array([np.real(np.exp(eig[j, 0])*eig[j, 1]) for j in range(len(eig))], 
