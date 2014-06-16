@@ -13,7 +13,8 @@ import matplotlib.pyplot as plt
 conn = sqlite3.connect('data/rpo.db')
 c = conn.cursor()
 
-escapeRate = 1
+Zeta00 = 1
+Trace00 = 0
 
 z = sympy.symbols('z')
 
@@ -30,22 +31,22 @@ for rpono in range(1,27):
     #if str(itinerary)=='001':
         #continue
         
-    escapeRate = escapeRate * (1 - (z**TopLength)/np.abs(floquet[0]))
+    Zeta00 = Zeta00 * (1 - (z**TopLength)/np.abs(floquet[0]))
 
 from sympy import degree, LT
-escapeRate = sympy.expand(escapeRate)    
-escapeRateVal = []
+Zeta00 = sympy.expand(Zeta00)    
+Zeta00Val = []
 ExpOrder = 9
 for j in range(ExpOrder,0,-1):
-    while degree(escapeRate) > j:
+    while degree(Zeta00) > j:
     
-        escapeRate = escapeRate - LT(escapeRate)
-        if degree(escapeRate) <= ExpOrder:
-            escapeRateVal.insert(0, (np.float(np.abs(escapeRate.subs(z,1)))))
+        Zeta00 = Zeta00 - LT(Zeta00)
+        if degree(Zeta00) <= ExpOrder:
+            Zeta00Val.insert(0, (np.float(np.abs(Zeta00.subs(z,1)))))
 
 
-#print escapeRate
-#print escapeRate.subs(z, 1)
-print escapeRateVal
-plot(range(1, ExpOrder+1),escapeRateVal)
+#print Zeta00
+#print Zeta00.subs(z, 1)
+print Zeta00Val
+plot(range(1, ExpOrder+1),Zeta00Val)
 plt.show()
