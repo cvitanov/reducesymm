@@ -21,7 +21,9 @@ f.write("\t\\begin{tabular}{c|c|c|c|c}\n")
 f.write("\tItinerary & $(x_{1,RPO}, y_{1,RPO}, x_{2,RPO}, y_{2,RPO})$ & Period & Phase Shift & Floquet Multipliers \\\\ \n")
 f.write("\t\\hline\n")
 
-for rpono in range(1,27):
+Ncycle = 36
+
+for rpono in range(1,Ncycle+1):
     c.execute("SELECT * FROM rpos WHERE rpono = "+str(rpono))
     a = c.fetchall()
     

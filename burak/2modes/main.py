@@ -30,13 +30,13 @@ oct2py.octave.addpath(peddir) #Add mfiles for ped
 computeSolution = False
 computePsect = False
 computeArcLengths = False
-computeRPO = False
+computeRPO = True
 computeRPOred3 = False
 plotPsect = False
-plotRetmap = True
+plotRetmap = False
 
 #Search parameters:
-nPrimeMax = 9 #Will search for [1,m]-cycles
+nPrimeMax = 10 #Will search for [1,m]-cycles
 
 #Only relative equilibrium:
 reqv = np.array([0.43996557973671596,
@@ -197,7 +197,7 @@ def fCritical(s):
     return po
 s3Critical = newton(fCritical, sCritical*0.999, tol=1.48e-12)
 #s3Critical = newton(fCritical, sCritical*1.001, tol=1.48e-12)
-#s3Critical = sCritical*0.9995
+#s3Critical = sCritical
 print "s3Critical:"
 print s3Critical
 
@@ -286,7 +286,7 @@ for k in range(len(PrimeCycles)):
         if TopCoorPerm > MaxTopCoord:
             MaxTopCoord = TopCoorPerm
     PrimeCycles[k].append(MaxTopCoord)
-    if MaxTopCoord > KneadingValue:
+    if MaxTopCoord >= KneadingValue:
         PrimeCycles[k].append('Inadmissible')
         nRPO = nRPO + 1
     else:
@@ -408,7 +408,7 @@ if computeRPO:
             return po
             
         fpoevo=0
-        for s0 in np.arange(smin, smax, (smax-smin)/120000):
+        for s0 in np.arange(smin, smax, (smax-smin)/150000):
             fpoev = fpo(s0)
             if fpoev * fpoevo < 0: #If there is a zero-crossing, look for the root: 
                 sc = newton(fpo, s0, tol=1.48e-8)
@@ -443,7 +443,7 @@ if computeRPO:
     for i in range(len(AdmissibleCycles)):
         print AdmissibleCycles[i]
         # #Divide intervals into smaller subintervals for multiple shooting:
-    nsub = 20 #number of subintervals
+    nsub = 100 #number of subintervals
     for k in range(len(AdmissibleCycles)):
         l = 0
         while l < len(AdmissibleCycles[k][3]):

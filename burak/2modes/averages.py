@@ -13,12 +13,12 @@ import matplotlib.pyplot as plt
 conn = sqlite3.connect('data/rpo.db')
 c = conn.cursor()
 
-Zeta00 = 1
+Zeta0 = 1
 Trace00 = 0
 
-z = sympy.symbols('z')
+s, z = sympy.symbols('s,z')
 
-for rpono in range(1,27):
+for rpono in range(1,26):
     c.execute("SELECT * FROM rpos WHERE rpono = "+str(rpono))
     a = c.fetchall()
     
@@ -31,18 +31,22 @@ for rpono in range(1,27):
     #if str(itinerary)=='001':
         #continue
         
-    Zeta00 = Zeta00 * (1 - (z**TopLength)/np.abs(floquet[0]))
+    Zeta0 = Zeta0 * (1 - (sympy.exp(-s*T)*z**TopLength)/np.abs(floquet[0]))
+
+conn.close()
 
 from sympy import degree, LT
-Zeta00 = sympy.expand(Zeta00)    
-Zeta00Val = []
-ExpOrder = 9
+#Zeta0 = sympy.expand(Zeta0)    
+#Zeta00 = []
+#ExpOrder = 4
+
+raw_input("fdasfdsafdsa")
 for j in range(ExpOrder,0,-1):
     while degree(Zeta00) > j:
     
-        Zeta00 = Zeta00 - LT(Zeta00)
-        if degree(Zeta00) <= ExpOrder:
-            Zeta00Val.insert(0, (np.float(np.abs(Zeta00.subs(z,1)))))
+        Zeta0 = Zeta0 - LT(Zeta0)
+        if degree(Zeta0) <= ExpOrder:
+            Zeta00.insert(0, (np.float(Zeta00.subs(z,1))))
 
 
 #print Zeta00
