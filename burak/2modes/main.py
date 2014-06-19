@@ -443,7 +443,7 @@ if computeRPO:
     for i in range(len(AdmissibleCycles)):
         print AdmissibleCycles[i]
         # #Divide intervals into smaller subintervals for multiple shooting:
-    nsub = 100 #number of subintervals
+    nsub = 40 #number of subintervals
     for k in range(len(AdmissibleCycles)):
         l = 0
         while l < len(AdmissibleCycles[k][3]):

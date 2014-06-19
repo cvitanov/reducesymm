@@ -3463,7 +3463,7 @@ about the slow progress, combinatorics is certainly not one of my strengths.
 
 Thank you Evangelos, pseudocode in your thesis will definitely help.
 
-\item[2014-06-10] \refTab{t-rpo2modeupto8} shows \twomode\ \rpo s
+\item[2014-06-10 Burak] \refTab{t-rpo2modeupto8} shows \twomode\ \rpo s
 up to length, their periods, phase shifts after one period and the
 Floquet multipliers. I used Xiong's periodic Schur
 decomposition\rf{DinCvi14} code\rf{DinCvi14} to compute the Floquet
@@ -3488,11 +3488,98 @@ $\cl{}>8$; someplace I have counting for the golden mean prime cycles, but where
 
 \input{../blog/t-mal-2GM}
 
+\begin{figure}%[ht]
+  \begin{center}
+   \includegraphics[width=0.6\textwidth]{GammaConv}
+  \end{center}
+  \caption{Convergence of the escape rate ($\gamma$) estimated from the dynamical 
+  zeta function (blue) and the spectral determinant (red).
+    }
+  \label{f-GammaConv}
+\end{figure}
 
+\item[2014-06-18 Burak] Before moving forward, I wanted to blog about what I 
+did lately. After not seeing nice convergence with cycles upto topological 
+length $8$, I computed the ones with topological lengths upto $10$. Now there
+are $36$ of them, listed in \reftab{t-rpo2modeupto8}. To compute Floquet 
+multipliers accurately, I used Xiong's periodic schur decomposition code with 
+$n \times 100$ subdivisions of the trajectory for an $n$-cycle, whole computation
+took approximately a day. After having these, I computed the dynamical zeta 
+function and the \Fd. Procedure for dynamical zeta function 
+was described in \refref{DasBuch}, but for the \Fd, I used
+something slightly different than what was in the book. So I'm writing it here
+for future use: Take the following definition of the spectral determinant with
+the order-tracking parameter $z$ to be set to $1$ at the end of calculations:
+\beq
+    \det (s-\mathcal{A}) = \exp \left( - \sum_p \sum_{r=1}^{\infty}
+                             \frac{e^{r(\beta A_p - s T_p)} z^{n_p r}}{
+                                    \oneMinJ{r}} \right) 
+                           = \prod_p \exp \left( - \sum_{r=1}^{\infty}
+                             \frac{e^{r(\beta A_p - s T_p)} z^{n_p r}}{
+                                    \oneMinJ{r}} \right) \, .
+\eeq
+Now for an $N$-th order approximation to this determinant, we compute the sum 
+that appears inside the exponential to the upto $N^{th}$ order in $z$ 
+for $p^{th}$ cycle, as follows:
+\bea
+    - \sum_{r=1}^{\infty} \frac{e^{r(\beta A_p - s T_p)} z^{n_p r}}{
+                                \oneMinJ{r}} &\approx &
+    - \sum_{r=1}^{r n_p \leq N} \frac{e^{r(\beta A_p - s T_p)} z^{n_p r}}{
+                                    \oneMinJ{r}} \, 
+                                    \continue
+                                 &=&
+                          c_1(\beta , s) z^{n_p} 
+                          + c_2(\beta , s) z^{2n_p} + \ldots
+                          + c_R(\beta , s) z^{Rn_p} \label{e-Exponent}
+                          \\ 
+                          && \mbox{where,} \quad 
+                          R n_p \leq N < (R+1) n_p 
+                          \nonumber
+\eea
+For each cycle we expand the exponential of \refeq{e-Exponent} upto $N-th$ order
+in $z$:
+\beq
+    \det (s - \mathcal{A})^{(p)} = 1 + b_1 (\beta, s) z^1 
+                                    + b_2 (\beta, s) z^2 + \ldots
+                                    + b_3 (\beta, s) z^N \, . 
+                                    \label{e-pthContribution}
+\eeq
+Finally, we compute the spectral determinant iteratively, droping terms with 
+order greater than N after each step, as follows:
+\beq
+    \det (s - \mathcal{A})_{(i+1)} = \det (s - \mathcal{A})_{(i)}
+                                       \det (s - \mathcal{A})^{(i+1)}
+                                     \quad \mbox{where,} \quad
+                                      \det (s - \mathcal{A})_{(1)}
+                                      = \det (s - \mathcal{A})^{(1)} \, .
+\eeq
+Where we denoted the contributions from the individual cycles 
+\refeq{e-pthContribution} with superscripts and the refined \Fd after the 
+contribution of the $(i+1)^{th}$ cycle with subscript $(i+1)$. Let us denote
+the $N^{th}$ order contribution to the spectral determinant after setting $z=1$, 
+following \refref{DasBuch} as follows:
+\beq
+    F_N(s, \beta ) = 1 - \sum_{n=1}^{N} Q_n(s, \beta ) \, . 
+    \label{e-NthOrderSpectDet}
+\eeq
+In order to compute the escape rate (hoping to find something close to 0), I looked 
+for the leading zero of \refeq{e-NthOrderSpectDet} with $\beta = 0$, namely, solved
+$F_N(s_0, 0) = 0$ close to the origin.
+Leading zeros of the \Fd , with approximations upto order $10$ are listed in 
+\refTab{t-s0} .  While the final numbers seem to be converging with $6$-digit
+accuracy, something strange happens when $N=7$. In order to visualize this, I 
+plotted the errors of the $N^{th}$ order estimates to the escape rate, 
+$\gamma = - s_0$ relative to its $10^{th}$ order estimate in 
+\reffig{f-GammaConv}. As you can see from \reffig{f-GammaConv}, while the 
+estimates from \Fd\ converges with much higher accuracy than those from the 
+\dzeta , \dzeta estimates seem to have a better convergence behavior. 
+Jump in the error when $N=7$ (see the red curve in \reffig{f-GammaConv}) is 
+worrisome, and hopefully is due to something being wrong. Tomorrow I'll check 
+the individual shadowing terms that could be the source of this error and also
+compute other observables such as the mean phase speed. I think I'm close to 
+finishing the results for this paper, had been harder than I expected.
 
-
-
-
+\input{../blog/twomodes0}
 
 \item[2013-08-10  Predrag to Chaos Gang] It's not over until it is over.
 

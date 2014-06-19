@@ -14,9 +14,9 @@ import matplotlib.pyplot as plt
 #ExpOrder = 8
 EscapeRate = []
 ConservationRule = []
-Ncycle = 25
+Ncycle = 36
 
-for ExpOrder in range(1,10):
+for ExpOrder in range(1,11):
 
     conn = sqlite3.connect('data/rpo.db')
     c = conn.cursor()
@@ -70,6 +70,9 @@ for ExpOrder in range(1,10):
         #if Zeta0.subs(s, splus)*Zeta0.subs(s, splusnext) < 0:
             #EscapeRate.append(float(sympy.nsolve(Zeta0, (splus+splusnext)/2.0, tol=1e-7)))
             #found = True
-    EscapeRate.append(fsolve(fcomplex, [0, 0]))        
+    #EscapeRate.append(fsolve(fcomplex, [0, 0]))        
+    EscapeRate.append(float(fsolve(f, 0)))
     print "EscapeRate:", EscapeRate
     
+escrate = np.array(EscapeRate, float)
+np.savetxt('data/escratedynzeta.dat', escrate)

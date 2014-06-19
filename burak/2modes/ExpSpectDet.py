@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 conn = sqlite3.connect('data/rpo.db')
 c = conn.cursor()
 rpos = []
-Ncycle = 25
+Ncycle = 36
 
 for rpono in range(1,Ncycle + 1):
     c.execute("SELECT * FROM rpos WHERE rpono = "+str(rpono))
@@ -34,7 +34,7 @@ s, z = sympy.symbols('s z')
 EscapeRate = []
 ConservationRule = []
 
-for Nexpansion in range(1,10):
+for Nexpansion in range(1,11):
     SpectralDeterminant = 1
     #Nexpansion = 3
     Exponent = 0
@@ -82,6 +82,30 @@ for Nexpansion in range(1,10):
         #if f(splus)*f(splusnext) < 0:
             #EscapeRate.append(float(fsolve(f, (splus + splusnext)/2.0)))
             #found = True
-    #EscapeRate.append(float(fsolve(f, 0)))
-    EscapeRate.append(fsolve(fcomplex, [0, 0]))
+    EscapeRate.append(float(fsolve(f, 0)))
+    #EscapeRate.append(fsolve(fcomplex, [0, 0]))
     print EscapeRate
+
+
+f = open("tex/s0.tex", "w")
+
+f.write("\\begin{table}\n")
+f.write("\t\\begin{tabular}{c|c}\n")
+
+f.write("\t N & s_0 \\\\ \n")
+f.write("\t\\hline\n")
+
+for i in range(len(EscapeRate)):
+    f.write("\t%s & " % str(i+1))
+    f.write("%5.8f \\\\ \n " % float(EscapeRate[i]))
+    
+f.write("\t\\end{tabular}\n")
+f.write("\t\\caption{Leading zero of the spectral determinant (\\beta = 0) \
+computed using the finite grammar approximation}\n")
+f.write("\t\\label{t-s0}\n")
+f.write("\\end{table}")
+
+f.close()     
+
+escrate = np.array(EscapeRate, float)
+np.savetxt('data/escratespecdet.dat', escrate)
