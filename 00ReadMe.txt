@@ -3,6 +3,8 @@
 
 Burak Badanur thesis, publications and working notes
 ========================================================
+GitHub.com/cvitanov/reducesymm/		created 2013-07-07
+
 includes some of svn repo siminos (Evangelos Siminos)
 but only up to creation of gitHub reducesymm 2013-07-07
 
