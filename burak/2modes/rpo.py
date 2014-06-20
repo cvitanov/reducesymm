@@ -85,7 +85,7 @@ for rpono in range(1,Ncycle+1):
     f.write("%5.8f \\\\ \n " % float(1.0/np.abs(floquet[0]))) 
     
     fig = plt.figure(2, figsize=(8,6))
-    plot(np.log(np.abs(floquet[0]))/T ,1.0/TopLength, '.')
+    plot(np.log(np.abs(floquet[0]))/T ,1.0/TopLength, '.', ms=10)
     
     plt.hold(True)
 
@@ -99,9 +99,12 @@ f.close()
 
 ylim(0,0.6)
 ax = fig.gca()
-yticks = np.array([1.0/n for n in range(2,10)], float)
+yticks = np.array([1.0/n for n in range(2,11)], float)
 ax.set_yticks(yticks)
-ax.set_yticklabels(["1 / %i" % n for n in range(2,10)], fontsize=12); 
+ax.set_yticklabels(["%s" % n for n in ['1/2', '1/3', '1/4', '', '1/6', '', '1/8', 
+                                        '', '1/10']], fontsize=14); 
+xlabel('$\lambda$', fontsize=24)
+ylabel('$1/n$', fontsize=24)
 
 plt.show()
 conn.close()    

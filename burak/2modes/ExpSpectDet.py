@@ -35,7 +35,7 @@ for rpono in range(1,Ncycle + 1):
 
 conn.close()
 
-s, z = sympy.symbols('s z')
+s, z, beta = sympy.symbols('s z beta')
 EscapeRate = []
 AveragePhase = []
 AveragePeriod = []
@@ -63,30 +63,30 @@ for Nexpansion in range(1,11):
         
         while npr*r <= Nexpansion:
             Sum = Sum + (sympy.exp(-r*s*Tp)*z**(npr*r))/(r*abs(1.0-Lambda**r))
-            SumT = SumT + (-r*Tp*sympy.exp(-r*s*Tp)*z**(npr*r))/(r*abs(1.0-Lambda**r))
-            Sumphi = Sumphi + (-r*phi*sympy.exp(-r*s*Tp)*z**(npr*r))/(r*abs(1.0-Lambda**r))
+            #SumT = Sum + (sympy.exp(r*(beta*Tp-s*Tp))*z**(npr*r))/(r*abs(1.0-Lambda**r))
+            Sumphi = Sum + (sympy.exp(r*(beta*phi - s*Tp))*z**(npr*r))/(r*abs(1.0-Lambda**r))
             r += 1
         #Expand the exponentials and discard higher order terms:
         ExpSum = sympy.series(sympy.exp(-Sum), z, n=Nexpansion+1).subs(sympy.O(z**(Nexpansion+1)), 0)
-        ExpSumT = sympy.series(sympy.exp(-SumT), z, n=Nexpansion+1).subs(sympy.O(z**(Nexpansion+1)), 0)
+        #ExpSumT = sympy.series(sympy.exp(-SumT), z, n=Nexpansion+1).subs(sympy.O(z**(Nexpansion+1)), 0)
         ExpSumphi = sympy.series(sympy.exp(-Sumphi), z, n=Nexpansion+1).subs(sympy.O(z**(Nexpansion+1)), 0)
         SpectralDeterminant = (SpectralDeterminant * ExpSum).expand()
-        AvgT = (AvgT * ExpSumT).expand()
+        #AvgT = (AvgT * ExpSumT).expand()
         Avgphi = (Avgphi * ExpSumphi).expand()
         while sympy.degree(SpectralDeterminant, z) > Nexpansion:
             SpectralDeterminant = SpectralDeterminant - sympy.LT(SpectralDeterminant, z)
             SpectralDeterminant = sympy.collect(SpectralDeterminant, z)
     
-        while sympy.degree(AvgT, z) > Nexpansion:
-            AvgT = AvgT - sympy.LT(AvgT, z)
-            AvgT = sympy.collect(AvgT, z)
+        #while sympy.degree(AvgT, z) > Nexpansion:
+        #    AvgT = AvgT - sympy.LT(AvgT, z)
+        #    AvgT = sympy.collect(AvgT, z)
 
         while sympy.degree(Avgphi, z) > Nexpansion:
             Avgphi = Avgphi - sympy.LT(Avgphi, z)
             Avgphi = sympy.collect(Avgphi, z)
     
     SpectralDeterminant = SpectralDeterminant.subs(z,1)    
-    AvgT = AvgT.subs(z,1)    
+    #AvgT = AvgT.subs(z,1)    
     Avgphi = Avgphi.subs(z,1)    
         #Exponent = Exponent - Sum
     #Extract coefficients of the expansion:
@@ -115,8 +115,12 @@ for Nexpansion in range(1,11):
             #EscapeRate.append(float(fsolve(f, (splus + splusnext)/2.0)))
             #found = True
     EscapeRate.append(float(fsolve(f, 0)))
-    AveragePeriod.append(AvgT.subs(s, EscapeRate[-1]))
-    AveragePhase.append(Avgphi.subs(s, EscapeRate[-1]))
+    #AvgT = sympy.diff(SpectralDeterminant, s).subs(s, EscapeRate[-1])
+    AveragePeriod.append(sympy.diff(SpectralDeterminant, s).subs(s, 
+                        EscapeRate[-1]))
+    #AveragePhase.append(Avgphi.subs(s, EscapeRate[-1]))
+    AveragePhase.append(sympy.diff(-Avgphi, beta).subs(beta,0).subs(s,
+                        EscapeRate[-1]))
     AveragePhaseSpeed.append(AveragePhase[-1]/AveragePeriod[-1])
     #EscapeRate.append(fsolve(fcomplex, [0, 0]))
     print "EscapeRate", EscapeRate
