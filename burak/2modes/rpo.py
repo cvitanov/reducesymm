@@ -2,7 +2,7 @@ import numpy as np
 import sqlite3
 #Initiate plotting environment:
 import matplotlib as mpl
-from pylab import plot, xlabel, ylabel, show, savefig
+from pylab import plot, xlabel, ylabel, show, savefig, xlim, ylim
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 from subprocess import call
@@ -16,9 +16,11 @@ c = conn.cursor()
 f = open("tex/twomoderpos.tex", "w")
 
 f.write("\\begin{table}\n")
-f.write("\t\\begin{tabular}{c|c|c|c|c}\n")
+f.write("\t\\begin{tabular}{c|c|c|c|c|c|c}\n")
 
-f.write("\tItinerary & $(x_{1,RPO}, y_{1,RPO}, x_{2,RPO}, y_{2,RPO})$ & Period & Phase Shift & Floquet Multipliers \\\\ \n")
+#f.write("\tItinerary & $(x_{1,RPO}, y_{1,RPO}, x_{2,RPO}, y_{2,RPO})$ & Period & Phase Shift & Floquet Multipliers \\\\ \n")
+f.write("\tItinerary & $(x_{1,RPO}, y_{1,RPO}, x_{2,RPO}, y_{2,RPO})$ & Period \
+& Phase Shift & $\\Lambda$ & $\\lambda$ & $1/|\\Lambda|$ \\\\ \n")
 f.write("\t\\hline\n")
 
 Ncycle = 36
@@ -44,9 +46,12 @@ for rpono in range(1,Ncycle+1):
     tsol = np.linspace(0, T, np.floor(T/dt)+1)
     xphisol = twomode.intslice(rpo, tsol)
     #print phifetch, xphisol[-1,-1]
-    phi = xphisol[-1,-1]
+    #phi = xphisol[-1,-1]
+    phi = -phifetch
     
-    fig = plt.figure()
+    TopLength = len(str(itinerary))
+    
+    fig = plt.figure(1)
     ax = fig.gca(projection='3d')
     #Modify axis colors:
     ax.w_xaxis.set_pane_color((1, 1, 1, 1.0))
@@ -71,10 +76,18 @@ for rpono in range(1,Ncycle+1):
     f.write("%5.8f) & " % float(rpo[3])) 
     f.write("%5.8f & " % float(T))
     f.write("%5.8f & " % float(phi))
-    f.write("(%5.8f, " % float(floquet[0])) 
-    f.write("%5.8f, " % float(floquet[1]))
-    f.write("%5.8f, " % float(floquet[2])) 
-    f.write("%0.4g) \\\\ \n " % float(floquet[3])) 
+    f.write("%5.8f &" % float(floquet[0])) 
+    #f.write("(%5.8f, " % float(floquet[0])) 
+    #f.write("%5.8f, " % float(floquet[1]))
+    #f.write("%5.8f, " % float(floquet[2])) 
+    #f.write("%0.4g) \\\\ \n " % float(floquet[3])) 
+    f.write("%5.8f &" % float(np.log(np.abs(floquet[0]))/T)) 
+    f.write("%5.8f \\\\ \n " % float(1.0/np.abs(floquet[0]))) 
+    
+    fig = plt.figure(2, figsize=(8,6))
+    plot(np.log(np.abs(floquet[0]))/T ,1.0/TopLength, '.')
+    
+    plt.hold(True)
 
 f.write("\t\\end{tabular}\n")
 f.write("\t\\caption{\\rpo s of the \\twoMode\\ system. \
@@ -84,5 +97,11 @@ f.write("\\end{table}")
 
 f.close()
 
-#plt.show()
+ylim(0,0.6)
+ax = fig.gca()
+yticks = np.array([1.0/n for n in range(2,10)], float)
+ax.set_yticks(yticks)
+ax.set_yticklabels(["1 / %i" % n for n in range(2,10)], fontsize=12); 
+
+plt.show()
 conn.close()    
