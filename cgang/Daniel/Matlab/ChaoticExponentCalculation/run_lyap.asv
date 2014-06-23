@@ -43,27 +43,25 @@ warning off
 
 params(10) = 1; 
 
-for i = 1:100
+L = []
+
+for i = 1:20
     testparams = params ;%+ 0.5*(2*rand(1,9)-1);
-    u = 3*rand(1);
+    u = 3*rand(1)
     v = 3*rand(1);
-    phi = pi/2*rand(1);
-    w = 2*u*sqrt(v)*cos(phi);
-    q = 2*u*sqrt(v)*sin(phi);
-    [T,Res]=lyapunov(4,@PKeqInv,@ode45,0,0.5,1500,[u v w q],0, testparams);
+    w = 2*u*sqrt(v)
+    [T,Res]=lyapunov(4,@PKeqInv,@ode45,0,0.5,1500,[1.25 1.45 0.3 -.5],0, testparams);
    
     Res(end,:)
     
-    L = [L Res(end,1)]
-    
-%     if  Res(end,1) > lyapunov_exp(1) && Res(end,3) < -8 && abs(Res(end,2)) < 0.001
-%         disp('Win')
-%         params = testparams
-%         lyapunov_exp = Res(end,:)
-%         save params.mat params
-%         save lyapunov_exp.mat lyapunov_exp
-%         
-%     end
+    if  Res(end,1) > lyapunov_exp(1) && Res(end,3) < -8 && abs(Res(end,2)) < 0.001
+        disp('Win')
+        params = testparams
+        lyapunov_exp = Res(end,:)
+        save params.mat params
+        save lyapunov_exp.mat lyapunov_exp
+        
+    end
 end
 
 
