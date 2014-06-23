@@ -14,7 +14,8 @@ import twomode
 conn = sqlite3.connect('data/rpo.db')
 c = conn.cursor()
 rpos = []
-Ncycle = 36
+Ncycle = 54
+NmaxExp = 11
 
 for rpono in range(1,Ncycle + 1):
     c.execute("SELECT * FROM rpos WHERE rpono = "+str(rpono))
@@ -38,14 +39,17 @@ conn.close()
 s, z, beta = sympy.symbols('s z beta')
 EscapeRate = []
 AveragePhase = []
+AveragePhaseVar = []
 AveragePeriod = []
 AveragePhaseSpeed = []
+AverageLyapunovExponent = []
 ConservationRule = []
 
-for Nexpansion in range(1,11):
+for Nexpansion in range(1,NmaxExp+1):
     SpectralDeterminant = 1
     AvgT = 1
     Avgphi = 1
+    AvgLy = 1
     #Nexpansion = 3
     Exponent = 0
     #Compute Spectral Determinant according to ChaosBook v14 eq. 19.6
@@ -57,6 +61,7 @@ for Nexpansion in range(1,11):
         Sum = 0
         SumT = 0
         Sumphi = 0
+        SumLy = 0
         r = 1
         #if npr == 3:
         #    continue
@@ -65,14 +70,17 @@ for Nexpansion in range(1,11):
             Sum = Sum + (sympy.exp(-r*s*Tp)*z**(npr*r))/(r*abs(1.0-Lambda**r))
             #SumT = Sum + (sympy.exp(r*(beta*Tp-s*Tp))*z**(npr*r))/(r*abs(1.0-Lambda**r))
             Sumphi = Sum + (sympy.exp(r*(beta*phi - s*Tp))*z**(npr*r))/(r*abs(1.0-Lambda**r))
+            SumLy = SumLy + (sympy.exp(r*(beta*(np.log(np.abs(Lambda))) - s*Tp))*z**(npr*r))/(r*abs(1.0-Lambda**r))
             r += 1
         #Expand the exponentials and discard higher order terms:
         ExpSum = sympy.series(sympy.exp(-Sum), z, n=Nexpansion+1).subs(sympy.O(z**(Nexpansion+1)), 0)
         #ExpSumT = sympy.series(sympy.exp(-SumT), z, n=Nexpansion+1).subs(sympy.O(z**(Nexpansion+1)), 0)
         ExpSumphi = sympy.series(sympy.exp(-Sumphi), z, n=Nexpansion+1).subs(sympy.O(z**(Nexpansion+1)), 0)
+        ExpSumLy = sympy.series(sympy.exp(-SumLy), z, n=Nexpansion+1).subs(sympy.O(z**(Nexpansion+1)), 0)
         SpectralDeterminant = (SpectralDeterminant * ExpSum).expand()
         #AvgT = (AvgT * ExpSumT).expand()
         Avgphi = (Avgphi * ExpSumphi).expand()
+        AvgLy = (AvgLy * ExpSumLy).expand()
         while sympy.degree(SpectralDeterminant, z) > Nexpansion:
             SpectralDeterminant = SpectralDeterminant - sympy.LT(SpectralDeterminant, z)
             SpectralDeterminant = sympy.collect(SpectralDeterminant, z)
@@ -85,9 +93,14 @@ for Nexpansion in range(1,11):
             Avgphi = Avgphi - sympy.LT(Avgphi, z)
             Avgphi = sympy.collect(Avgphi, z)
     
+        while sympy.degree(AvgLy, z) > Nexpansion:
+            AvgLy = AvgLy - sympy.LT(AvgLy, z)
+            AvgLy = sympy.collect(AvgLy, z)
+    
     SpectralDeterminant = SpectralDeterminant.subs(z,1)    
     #AvgT = AvgT.subs(z,1)    
     Avgphi = Avgphi.subs(z,1)    
+    AvgLy = AvgLy.subs(z,1)    
         #Exponent = Exponent - Sum
     #Extract coefficients of the expansion:
     #SpectralDeterminant = sympy.series(sympy.exp(Exponent),z,n=Nexpansion+1).subs(sympy.O(z**(Nexpansion+1)), 0)
@@ -121,13 +134,19 @@ for Nexpansion in range(1,11):
     #AveragePhase.append(Avgphi.subs(s, EscapeRate[-1]))
     AveragePhase.append(sympy.diff(-Avgphi, beta).subs(beta,0).subs(s,
                         EscapeRate[-1]))
+    AveragePhaseVar.append(sympy.diff(-Avgphi, beta, 2).subs(beta,0).subs(s, 
+                           EscapeRate[-1]))
+    AverageLyapunovExponent.append((sympy.diff(-AvgLy, beta).subs(beta,0).subs(s,
+                           EscapeRate[-1]))/AveragePeriod[-1])
+    #raw_input("stop!")
     AveragePhaseSpeed.append(AveragePhase[-1]/AveragePeriod[-1])
     #EscapeRate.append(fsolve(fcomplex, [0, 0]))
     print "EscapeRate", EscapeRate
     print "AveragePeriod", AveragePeriod
     print "AveragePhase", AveragePhase
+    print "AveragePhaseVar", AveragePhaseVar
     print "AveragePhaseSpeed", AveragePhaseSpeed
-
+    print "AverageLyapunovExponent", AverageLyapunovExponent
 
 f = open("tex/s0.tex", "w")
 
@@ -149,7 +168,14 @@ f.write("\\end{table}")
 
 f.close()     
 
+DiffusionCoefficient = [AveragePhaseVar[i]/(2*AveragePeriod[i]) for i in range(len(AveragePhaseVar))]
+
 escrate = np.array(EscapeRate, float)
+escrate = -escrate
 np.savetxt('data/EscapeRate.dat', escrate)
 np.savetxt('data/AveragePeriod.dat', AveragePeriod)
 np.savetxt('data/AveragePhase.dat', AveragePhase)
+np.savetxt('data/AveragePhaseVar.dat', AveragePhaseVar)
+np.savetxt('data/AverageLyapunovExponent.dat', AverageLyapunovExponent)
+np.savetxt('data/DiffusionCoefficient.dat', DiffusionCoefficient)
+np.savetxt('data/AveragePhaseSpeed.dat', AveragePhaseSpeed)

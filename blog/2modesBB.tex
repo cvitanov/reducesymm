@@ -3517,7 +3517,7 @@ the order-tracking parameter $z$ to be set to $1$ at the end of calculations:
                            = \prod_p \exp \left( - \sum_{r=1}^{\infty}
                              \frac{1}{r} \frac{e^{r(\beta A_p - s T_p)} 
                                           z^{n_p r}}{\oneMinJ{r}} \right) \, .
-\eeq
+\ee{e-SpectralDeterminant}
 Now for an $N$-th order approximation to this determinant, we compute the sum 
 that appears inside the exponential to the upto $N^{th}$ order in $z$ 
 for $p^{th}$ cycle, as follows:
@@ -3600,8 +3600,6 @@ finishing the results for this paper, had been harder than I expected.
   topological length of the cycles.
   }{f-2modesFloquetExpDist} 
 
-\item[2013-08-10  Predrag to Chaos Gang] It's not over until it is over.
-
 \item[2014-06-20 Burak] \refFig{f-2modesCycleExpPhiT} shows the mean phase drift 
 $<\phi>$ per return time (a) and the mean return time $<T>$ (b). I didn't do any
 extrapolation on these yet, but their ratio is on the same order with average 
@@ -3618,6 +3616,59 @@ to that of the \cycle{1}. Another thing to note on this plot is the large
 Floquet exponent of the only length-$3$ cycle, \cycle{011}, which causes the 
 shadowing effects kick in much slower than we expected.
 
-\item[2014-05-26 Daniel] At Burak's request I have used my Lyaupnov exponent code based on Wolf et al. \cite{WolfSwift85} to calculate the leading Lyapunov exponent for the \twomode\ system with $\mu_1 = -2.8, \mu_2 = 1, a_1 = -1, a_2 = -2.66, b_1 = 0, b_2 = 0, c_1 = -7.75, c_2 = 1, e_1 = 0, \,\mathrm{and}\, e_2 = 1$. I did my calculation in invariant polynomial coordinates. Since this method requires an initial conditions to start the calculation, I started with 16 different initial conditions in the range $u,v \in [0,3]$ and $\psi \in [0 \pi]$. I got a mean value of $\lambda_1 = 0.1174$ with standard error of $\pm .0023$ (95\% confidence level), which seems to agree quite nicely with Burak's calculation of 0.118268 from cycle expansions. I'll run some more trials later tonight and report back with better statistics.
+\item[2014-06-23 Daniel] At Burak's request I have used my Lyaupnov exponent code based on Wolf et al. \cite{WolfSwift85} to calculate the leading Lyapunov exponent for the \twomode\ system with $\mu_1 = -2.8, \mu_2 = 1, a_1 = -1, a_2 = -2.66, b_1 = 0, b_2 = 0, c_1 = -7.75, c_2 = 1, e_1 = 0, \,\mathrm{and}\, e_2 = 1$. I did my calculation in invariant polynomial coordinates. Since this method requires an initial conditions to start the calculation, I started with 16 different initial conditions in the range $u,v \in [0,3]$ and $\psi \in [0 \pi]$. I got a mean value of $\lambda_1 = 0.1174$ with standard error of $\pm .0023$ (95\% confidence level), which seems to agree quite nicely with Burak's calculation of 0.118268 from cycle expansions. I'll run some more trials later tonight and report back with better statistics.
+
+\item[2014-06-23 Burak] Thanks! My averages from cycle expansions are in
+\reftab{t-DynamicalAverages}.
+I computed escape rate, mean period, Lyapunov exponent, mean phase velocity and
+the diffusion coefficient. While I got 6 digit convergence for the Lyapunov 
+exponent, diffusion coefficient seems to converge only with single digit. Even 
+and odd expansion orders seem to follow individual trends. I'm currently running
+the Newton solver to find \rpo s with $n=12$ also imroving accuracy of the 
+Floquet multipliers. I think, however, this is about as good as it gets.
+
+I'm writing the formulas that I used to compute averages here so that Predrag 
+can check and confirm that I didn't do anything criminal: 
+
+Mean period:
+\beq
+    \langle T \rangle_N = \left. \frac{\partial F_N}{\partial s} 
+                            \right|_{\beta=0, s=s_0} \, ,
+\ee{e-meanT}
+with, $F_N$ given by \refeq{e-NthOrderSpectDet}. 
+
+Lyapunov exponent and mean phase velocity computed by the same formula:
+\beq
+    \langle a \rangle_N = - \frac{1}{\langle T \rangle_N} \left. 
+                              \frac{\partial F_N}{\partial \beta} 
+                              \right|_{\beta=0, s=s_0} \, ,
+\ee{e-meana}
+with, $A_p = \phi_p, \ln \Lambda_p$ respectively for the phase velocity and the 
+mean phase velocity and the Lyapunov exponent.
+
+Variance in the phase shift:
+\beq
+    \langle \sigma_{\phi}^2 \rangle_N = \langle (\phi - \langle \phi 
+                                                      \rangle )^2 \rangle_N 
+    = - \left. \frac{\partial^2 F_N}{\partial \beta^2} \right|_{\beta=0, 
+                                                                    s=s_0} \, .
+\ee{e-meansigma} 
+NOTE: This formula differs from the one in the ChaosBook (current stable 
+version) formula (20.22) by a minus sign and I believe the minus sign should be 
+there for two reasons: 1) I get negative variances if I don't have it. 2) In 
+the spectral determinant \refeq{e-SpectralDeterminant}, observables measured 
+over the cycles ($A_p$) appear in the exponential with positive signs, so 
+taking a second partial derivative with respect to $\beta$ should not kill the 
+minus sign that is in \refeq{e-meana}.
+
+Finally, the diffusion coefficient:
+\beq
+    D_N = \frac{1}{2} \frac{\langle \sigma_{\phi}^2 \rangle_N}{
+                             \langle T \rangle_N}
+\eeq
+
+\item[2013-08-10  Predrag to Chaos Gang] It's not over until it is over.
+
+\input{../blog/2modesDynamicalAverages}
 
 \end{description}

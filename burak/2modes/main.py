@@ -36,7 +36,7 @@ plotPsect = False
 plotRetmap = False
 
 #Search parameters:
-nPrimeMax = 10 #Will search for [1,m]-cycles
+nPrimeMax = 12 #Will search for [1,m]-cycles
 
 #Only relative equilibrium:
 reqv = np.array([0.43996557973671596,
@@ -408,10 +408,12 @@ if computeRPO:
             return po
             
         fpoevo=0
-        for s0 in np.arange(smin, smax, (smax-smin)/150000):
+        sstep = (smax-smin)/200000
+        for s0 in np.arange(smin, smax, sstep):
             fpoev = fpo(s0)
             if fpoev * fpoevo < 0: #If there is a zero-crossing, look for the root: 
-                sc = newton(fpo, s0, tol=1.48e-8)
+                #sc = newton(fpo, s0-sstep/2.0, tol=1.48e-8)
+                sc = fsolve(fpo, s0-sstep/2.0)
                 #print "sc = %f" %sc
                 newcandidate = 1
                 for j in range(len(scandidates)):
@@ -443,7 +445,8 @@ if computeRPO:
     for i in range(len(AdmissibleCycles)):
         print AdmissibleCycles[i]
         # #Divide intervals into smaller subintervals for multiple shooting:
-    nsub = 40 #number of subintervals
+    nsub = 100 #number of subintervals
+    raw_input("Make sure everything is here before continue")
     for k in range(len(AdmissibleCycles)):
         l = 0
         while l < len(AdmissibleCycles[k][3]):
@@ -494,6 +497,7 @@ if computeRPO:
                              np.array([0, 0], float)) for k in range(nCycle)], float)
 
             Error = Error.reshape(np.size(Error))
+            print "Cycle no: ", i+1
             print "Error"
             print Error
             #raw_input("Press enter to continue...")
