@@ -50,7 +50,7 @@ for i = 1:100
     phi = pi/2*rand(1);
     w = 2*u*sqrt(v)*cos(phi);
     q = 2*u*sqrt(v)*sin(phi);
-    [T,Res]=lyapunov(4,@PKeqInv,@ode45,0,0.5,1500,[u v w q],0, testparams);
+    [T,Res]=lyapunov(4,@PKeqInv,@ode45,0,0.5,2500,[u v w q],0, testparams);
    
     Res(end,:)
     
