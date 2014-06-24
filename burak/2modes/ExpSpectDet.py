@@ -11,11 +11,14 @@ from pylab import plot, xlabel, ylabel, show, savefig
 import matplotlib.pyplot as plt
 import twomode
 
-conn = sqlite3.connect('data/rpo.db')
+#conn = sqlite3.connect('data/rpo.db')
+conn = sqlite3.connect('data/rpoall.db')
 c = conn.cursor()
 rpos = []
-Ncycle = 79
-NmaxExp = 12
+#Ncycle = 79
+#NmaxExp = 12
+Ncycle = 22
+NmaxExp = 8
 
 for rpono in range(1,Ncycle + 1):
     c.execute("SELECT * FROM rpos WHERE rpono = "+str(rpono))
@@ -46,6 +49,7 @@ AverageLyapunovExponent = []
 ConservationRule = []
 
 for Nexpansion in range(1,NmaxExp+1):
+#for Nexpansion in range(NmaxExp,NmaxExp+1):
     SpectralDeterminant = 1
     AvgT = 1
     Avgphi = 1
@@ -73,14 +77,19 @@ for Nexpansion in range(1,NmaxExp+1):
             SumLy = SumLy + (sympy.exp(r*(beta*(np.log(np.abs(Lambda))) - s*Tp))*z**(npr*r))/(r*abs(1.0-Lambda**r))
             r += 1
         #Expand the exponentials and discard higher order terms:
+        print "Exponentiating sums"
         ExpSum = sympy.series(sympy.exp(-Sum), z, n=Nexpansion+1).subs(sympy.O(z**(Nexpansion+1)), 0)
+        print "done with first"
         #ExpSumT = sympy.series(sympy.exp(-SumT), z, n=Nexpansion+1).subs(sympy.O(z**(Nexpansion+1)), 0)
         ExpSumphi = sympy.series(sympy.exp(-Sumphi), z, n=Nexpansion+1).subs(sympy.O(z**(Nexpansion+1)), 0)
+        print "done with second"
         ExpSumLy = sympy.series(sympy.exp(-SumLy), z, n=Nexpansion+1).subs(sympy.O(z**(Nexpansion+1)), 0)
+        print "Expanding exponentials"
         SpectralDeterminant = (SpectralDeterminant * ExpSum).expand()
         #AvgT = (AvgT * ExpSumT).expand()
         Avgphi = (Avgphi * ExpSumphi).expand()
         AvgLy = (AvgLy * ExpSumLy).expand()
+        print "Fixing degrees"
         while sympy.degree(SpectralDeterminant, z) > Nexpansion:
             SpectralDeterminant = SpectralDeterminant - sympy.LT(SpectralDeterminant, z)
             SpectralDeterminant = sympy.collect(SpectralDeterminant, z)
@@ -148,34 +157,35 @@ for Nexpansion in range(1,NmaxExp+1):
     print "AveragePhaseSpeed", AveragePhaseSpeed
     print "AverageLyapunovExponent", AverageLyapunovExponent
 
-f = open("tex/s0.tex", "w")
+#f = open("tex/s0.tex", "w")
 
-f.write("\\begin{table}\n")
-f.write("\t\\begin{tabular}{c|c}\n")
+#f.write("\\begin{table}\n")
+#f.write("\t\\begin{tabular}{c|c}\n")
 
-f.write("\t N & s_0 \\\\ \n")
-f.write("\t\\hline\n")
+#f.write("\t N & s_0 \\\\ \n")
+#f.write("\t\\hline\n")
 
-for i in range(len(EscapeRate)):
-    f.write("\t%s & " % str(i+1))
-    f.write("%5.8f \\\\ \n " % float(EscapeRate[i]))
+#for i in range(len(EscapeRate)):
+    #f.write("\t%s & " % str(i+1))
+    #f.write("%5.8f \\\\ \n " % float(EscapeRate[i]))
     
-f.write("\t\\end{tabular}\n")
-f.write("\t\\caption{Leading zero of the spectral determinant (\\beta = 0) \
-computed using the finite grammar approximation}\n")
-f.write("\t\\label{t-s0}\n")
-f.write("\\end{table}")
+#f.write("\t\\end{tabular}\n")
+#f.write("\t\\caption{Leading zero of the spectral determinant (\\beta = 0) \
+#computed using the finite grammar approximation}\n")
+#f.write("\t\\label{t-s0}\n")
+#f.write("\\end{table}")
 
-f.close()     
+#f.close()     
 
-DiffusionCoefficient = [AveragePhaseVar[i]/(2*AveragePeriod[i]) for i in range(len(AveragePhaseVar))]
-
-escrate = np.array(EscapeRate, float)
-escrate = -escrate
-np.savetxt('data/EscapeRate.dat', escrate)
-np.savetxt('data/AveragePeriod.dat', AveragePeriod)
-np.savetxt('data/AveragePhase.dat', AveragePhase)
-np.savetxt('data/AveragePhaseVar.dat', AveragePhaseVar)
-np.savetxt('data/AverageLyapunovExponent.dat', AverageLyapunovExponent)
-np.savetxt('data/DiffusionCoefficient.dat', DiffusionCoefficient)
-np.savetxt('data/AveragePhaseSpeed.dat', AveragePhaseSpeed)
+    DiffusionCoefficient = [AveragePhaseVar[i]/(2*AveragePeriod[i]) for i in range(len(AveragePhaseVar))]
+    
+    escrate = np.array(EscapeRate, float)
+    escrate = -escrate
+    np.savetxt('data/EscapeRate.dat', escrate)
+    np.savetxt('data/AveragePeriod.dat', AveragePeriod)
+    np.savetxt('data/AveragePhase.dat', AveragePhase)
+    np.savetxt('data/AveragePhaseVar.dat', AveragePhaseVar)
+    np.savetxt('data/AverageLyapunovExponent.dat', AverageLyapunovExponent)
+    np.savetxt('data/DiffusionCoefficient.dat', DiffusionCoefficient)
+    np.savetxt('data/AveragePhaseSpeed.dat', AveragePhaseSpeed)
+    

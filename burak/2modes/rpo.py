@@ -10,10 +10,10 @@ import sys
 #Import twomode system module
 import twomode 
 from StringIO import StringIO 
-conn = sqlite3.connect('data/rpo.db')
+conn = sqlite3.connect('data/rpoall.db')
 c = conn.cursor()
 
-f = open("tex/twomoderpos.tex", "w")
+f = open("tex/twomoderposall.tex", "w")
 
 f.write("\\begin{table}\n")
 f.write("\t\\begin{tabular}{c|c|c|c|c|c|c}\n")
@@ -23,7 +23,7 @@ f.write("\tItinerary & $(x_{1,RPO}, y_{1,RPO}, x_{2,RPO}, y_{2,RPO})$ & Period \
 & Phase Shift & $\\Lambda$ & $\\lambda$ & $1/|\\Lambda|$ \\\\ \n")
 f.write("\t\\hline\n")
 
-Ncycle = 79
+Ncycle = 22
 
 for rpono in range(1,Ncycle+1):
     c.execute("SELECT * FROM rpos WHERE rpono = "+str(rpono))
@@ -67,7 +67,7 @@ for rpono in range(1,Ncycle+1):
     ax.set_zlabel('$\hat{y}_2$   ', fontsize=32)
 
 
-    savefig('image/'+str(itinerary)+'.png', bbox_inches='tight', dpi=100) 
+    savefig('image/_'+str(itinerary)+'.png', bbox_inches='tight', dpi=100) 
     
     f.write("\t%s & " % itinerary)
     f.write("(%5.8f, " % float(rpo[0])) 

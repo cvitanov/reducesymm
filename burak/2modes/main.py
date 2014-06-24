@@ -36,7 +36,7 @@ plotPsect = False
 plotRetmap = False
 
 #Search parameters:
-nPrimeMax = 12 #Will search for [1,m]-cycles
+nPrimeMax = 10 #Will search for [1,m]-cycles
 
 #Only relative equilibrium:
 reqv = np.array([0.43996557973671596,
@@ -195,9 +195,9 @@ print sCritical
 def fCritical(s):
     po = retmapm(3, s) - s
     return po
-s3Critical = newton(fCritical, sCritical*0.999, tol=1.48e-12)
+#s3Critical = newton(fCritical, sCritical*0.999, tol=1.48e-12)
 #s3Critical = newton(fCritical, sCritical*1.001, tol=1.48e-12)
-#s3Critical = sCritical
+s3Critical = sCritical
 print "s3Critical:"
 print s3Critical
 
@@ -568,7 +568,7 @@ if computeRPO:
 
     #Create a database and write RPOs in it:
     
-    conn = sqlite3.connect('data/rpo.db')
+    conn = sqlite3.connect('data/rpoall.db')
     c = conn.cursor()
     c.execute("DROP TABLE IF EXISTS rpos")
     c.execute(" CREATE TABLE rpos (rpono int, itinerary text, x1 real, \

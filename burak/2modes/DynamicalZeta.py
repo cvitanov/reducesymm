@@ -13,15 +13,17 @@ import matplotlib.pyplot as plt
 
 #ExpOrder = 8
 EscapeRate = []
+AverageT = []
 ConservationRule = []
-Ncycle = 36
+Ncycle = 17
 
-for ExpOrder in range(1,11):
+for ExpOrder in range(1,9):
 
     conn = sqlite3.connect('data/rpo.db')
     c = conn.cursor()
     
     Zeta0 = 1
+    ZetaT = 1
     s, z = sympy.symbols('s,z')
     
     for rpono in range(1,Ncycle+1):
@@ -39,17 +41,26 @@ for ExpOrder in range(1,11):
             
         Zeta0 = Zeta0 * (1 - (sympy.exp(-s*T)/np.abs(floquet[0]))*(z**TopLength))
         Zeta0 = Zeta0.expand()
+        
+        ZetaT = ZetaT * (1 - (sympy.exp(-s*T)*T/np.abs(floquet[0]))*(z**TopLength))
+        ZetaT = ZetaT.expand()
+        
         while sympy.degree(Zeta0, z) > ExpOrder:
             Zeta0 = Zeta0 - sympy.LT(Zeta0, z)
             Zeta0 = sympy.collect(Zeta0, z)
+
+        while sympy.degree(ZetaT, z) > ExpOrder:
+            ZetaT = ZetaT - sympy.LT(ZetaT, z)
+            ZetaT = sympy.collect(ZetaT, z)
     
     conn.close()
     
     Zeta0 = Zeta0.subs(z,1)
+    ZetaT = ZetaT.subs(z,1)
     
     ConservationRule.append(Zeta0.subs(s,0))
     print "Conservation rule:", ConservationRule
-    
+     
     f = sympy.lambdify(s, Zeta0, "numpy")
     def fcomplex(xy):
         x, y = xy
@@ -71,8 +82,11 @@ for ExpOrder in range(1,11):
             #EscapeRate.append(float(sympy.nsolve(Zeta0, (splus+splusnext)/2.0, tol=1e-7)))
             #found = True
     #EscapeRate.append(fsolve(fcomplex, [0, 0]))        
-    EscapeRate.append(float(fsolve(f, 0)))
+    EscapeRate.append(-float(fsolve(f, 0)))
     print "EscapeRate:", EscapeRate
     
+    AverageT.append(ZetaT.subs(s,EscapeRate[-1]))
+    print "AverageT", AverageT
+
 escrate = np.array(EscapeRate, float)
 np.savetxt('data/escratedynzeta.dat', escrate)
