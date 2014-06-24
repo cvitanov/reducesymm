@@ -23,7 +23,7 @@ f.write("\tItinerary & $(x_{1,RPO}, y_{1,RPO}, x_{2,RPO}, y_{2,RPO})$ & Period \
 & Phase Shift & $\\Lambda$ & $\\lambda$ & $1/|\\Lambda|$ \\\\ \n")
 f.write("\t\\hline\n")
 
-Ncycle = 54
+Ncycle = 79
 
 for rpono in range(1,Ncycle+1):
     c.execute("SELECT * FROM rpos WHERE rpono = "+str(rpono))

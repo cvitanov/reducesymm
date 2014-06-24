@@ -14,8 +14,8 @@ import twomode
 conn = sqlite3.connect('data/rpo.db')
 c = conn.cursor()
 rpos = []
-Ncycle = 54
-NmaxExp = 11
+Ncycle = 79
+NmaxExp = 12
 
 for rpono in range(1,Ncycle + 1):
     c.execute("SELECT * FROM rpos WHERE rpono = "+str(rpono))

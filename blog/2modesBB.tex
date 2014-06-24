@@ -3673,13 +3673,30 @@ overlap with Burak's result (if the 6 digit accuracy claim is correct), but then
 state of the art. I don't know that anyone can claim that this method is good beyond a couple of decimal
 places. Also, the $\pm 0.0008$ is a standard error at the 95\% confidence level ($1.96 \sigma/\sqrt{N}$). The standard deviation is actually more like 0.004.Hope this is useful... back to the thesis cave...
 
+\item[2014-06-24 Burak] There is still room for investigation, but slightly under
+estimating the Lyapunov exponent makes sense to me because we cut off the sharpest,
+thus the most unstable, piece of the return map to have finite grammar and good
+convergence. This probably is trade-off of this approximation.
+
 \item[2014-06-24 Evangelos] I have some naive questions in order to make sure I understand what
 is going on. In order to find your cycles you approximate the return map by a dike
-map, with golden mean symbolic dynamics, right? This way you consider very unstable cycles 
+map, with golden mean symbolic dynamics, right? \BBedit{Right.} This way you consider very unstable cycles 
 with sequence '00' as pruned. However, for the cusp map, not all of these cycles are pruned, right?
 If we try to locate and include some of these cycles, would convergence of your cycle expansions 
 improve or not? For instance you have '001', but as far as I understand it is not included in
 cycle expansion. What would happen if you include it?
+
+\item[2014-06-24 Burak] I tried including \cycle{001} when I had much less cycles
+and it worsened the convergence. The motivation of approximating the map with a 
+dike map with golden mean symbolic dynamics was the fact that golden mean symbolic
+dynamics have finite grammar hence all the terms after $t_1$ and $t_{01}$ in the
+cycle expansion to the zeta function are curvature corrections. So we hoped
+for a super exponential convergence after the third term, however, it turns out
+this was an overly optimistic expectation because the curvature corrections are
+far from being exact due to the high Floquet exponent of \cycle{011} (see 
+\refTab{t-rpo2modeupto8}) hence whenever it appears in a shadowing combination
+that term cancels only a small portion of the respective fundamental cycle 
+contribution, so the higher order terms continue to matter. 
 
 The main reason I am asking is that, if I understand people correctly, it is not straightforward to compute
 averages for maps that have a cusp. To my understanding, if you try to simply use ensemble averages
@@ -3687,12 +3704,32 @@ over trajectories, convergence can be poor because rare visits in the ``pruned''
 large influence since the values of observables may be very different in this region.
 From that perspective, the introduction of the dike map for averaging is very-very interesting.
 
+\item[2014-06-24] The alternative approach is to find as many cycles as possible,
+and then compute all the pseudocycles, and discard the ones that are above some
+certain stability threshold. This is called ``Stability ordering'' and I haven't
+tried it yet. It's not all clear to me how to implement this for the spectral 
+determinant, but I can start with the zeta function and try to keep the same terms.
+So the answer to this question is, we don't know yet whether the finite grammar 
+approach does a better job in terms of convergence compared to the alternative.
+
 \item[2014-06-24 Evangelos] My other naive question is, to interepret escape rate, should we 
 consider the map to be a repeller, with the flat-top of the dike map being the ``open'' part
 of the map? Then, this would seem to tell us how often we have ``rare events''.
 
+\item[2014-06-24 Burak] I believe this is correct. And this is the reason that
+the escape rate is not exactly zero, but a small number.
+
 \item[2014-06-24 Evangelos] In \refeq{e-meana}, is it $A_p = \phi_p$ or $A_p = \dot{\phi}_p$ for
 the phase velocity?
+
+\item[2014-06-24 Burak] That is $\phi_p$, and it's important. I got confused last
+week about it and asked Predrag why I cannot define $\phi_p / T_p$ as a measurable, 
+and got immeadiately informed that I did not understand the periodic orbit
+theory. The reason that we cannot average over the ``phase velocities of 
+individual cycles'' is the necessity that the measurable must be additive along
+the orbit, so that we can define it's infinitesimal generator in the derivation 
+of trace formulas. That's why we first compute the average phase shift per cycle, 
+and then divide it by average cycle period.
 
 \item[2014-06-24 Evangelos] Something that confuses me is the following: does your cycle expansion 
 use the reduced dynamical system on the slice only? Is there a differentiation between invariant 
@@ -3700,6 +3737,20 @@ and equivariant observables? For instance, $\lambda_1$, $\dot{\phi}$, etc. shoul
 invariant, but would it make sense to ask what $\langle x_1\rangle$ is? Also, in order to get
 $\langle \phi \rangle$, one uses the reconstruction equation, so it seems that some
 reference to the original system is implied?
+
+\item[2014-06-24 Burak] I use reduced system, within the slice. In general case
+the continuous symmetry reduced trace formulas have group characters described
+in \HREF{http://chaosbook.org/~predrag/papers/preprints.html\#Cvi07}{the paper 
+that nobody understands}, however, as far as I understood these terms doesn't 
+matter for these set of measurables. Heuristically, I think of it as all the 
+quantities that I'm computing here translates identically to their values in
+the full \statesp\ so I don't need a ``correction'' that cares about symmetry
+(I might be dead wrong). For example, Lyapunov exponent should be coordinate 
+independent, so it totally makes sense to compute it directly within the slice. 
+Phase shifts of \rpo s are also quantities that I can compute within the slice 
+so I can define that as a measurable along the reduced orbit since it fulfills 
+the additivity requirement. Also since I don't have any discrete-symmetry copies
+of these cycles so I don't need to worry about that too.
 
 \item[2013-08-10  Predrag to Chaos Gang] It's not over until it is over.
 
