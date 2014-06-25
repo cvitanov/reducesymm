@@ -26,22 +26,24 @@ from subprocess import call
 p = np.loadtxt('data/parameters.dat')
 
 x01 = [0.43997, 0, -0.38627, 0.07020] #reqv
-x02 = [4.525719078826287434e-01, -2.791192295890519988e-18, 
-5.092565177630036660e-02, 3.354280141917114627e-02] #rpo 1  
+#x02 = [4.525719078826287434e-01, -2.791192295890519988e-18, 
+#5.092565177630036660e-02, 3.354280141917114627e-02] #rpo 1  
+x02 = [0.43998243, 0.0, -1.68577368, 0.06639063]# rpo01
 x03 = [0.0384074556708, 0.0, -1.90362452394, 0.0668631895808] #attractor
 
 xphi01 = [0.43997, 0, -0.38627, 0.07020, 0] #reqv
-xphi02 = [4.525719078826287434e-01, -2.791192295890519988e-18, 
-5.092565177630036660e-02, 3.354280141917114627e-02, 0] #rpo 1 
+#xphi02 = [4.525719078826287434e-01, -2.791192295890519988e-18, 
+#5.092565177630036660e-02, 3.354280141917114627e-02, 0] #rpo 1 
+xphi02 = [0.43998243, 0.0, -1.68577368, 0.06639063, 0]# rpo01
 xphi03 = [0.0384074556708, 0.0, -1.90362452394, 0.0668631895808, 0] #attractor
 
 u01 = twomode.ssp2invpol(x01)
 u02 = twomode.ssp2invpol(x02)
 u03 = twomode.ssp2invpol(x03)
 
-t1 = np.linspace(0,150,100000)
-t2 = np.linspace(0, 10*3.641511999233241426e+00, 10000)
-t3 = t1/2
+t1 = np.linspace(0,100,100000)
+t2 = np.linspace(0, 2*7.34594139e+00, 10000)
+t3 = t1
 
 xsol1 = sspsolver.integrate(x01, p, t1)
 xsol2 = sspsolver.integrate(x02, p, t2)
@@ -61,7 +63,7 @@ xtildesol3 = twomode.ssp2sspRed2(xsol3)
 
 #Plot full state space:
 
-fig = plt.figure()
+fig = plt.figure(figsize=(8,7))
 ax = fig.gca(projection='3d')
 
 ax.w_xaxis.set_pane_color((1, 1, 1, 1.0))
@@ -71,7 +73,7 @@ ax.w_zaxis.set_pane_color((1, 1, 1, 1.0))
 ax.plot(xsol3[:,0], xsol3[:,2], xsol3[:,3], linewidth=0.5, color='#3c5f96')
 ax.hold(True)
 ax.plot(xsol2[:,0], xsol2[:,2], xsol2[:,3], linewidth=0.8, color='#f7464a')
-ax.plot(xsol1[:,0], xsol1[:,2], xsol1[:,3], linewidth=2.5, color='#33CC33')
+ax.plot(xsol1[:,0], xsol1[:,2], xsol1[:,3], linewidth=2.0, color='#33CC33')
 
 ax.set_xlabel('\n $x_1$ \t', fontsize=32)
 ax.set_ylabel('\n $x_2$ \t', fontsize=32)
@@ -106,7 +108,7 @@ ax.w_zaxis.set_pane_color((1, 1, 1, 1.0))
 
 ax.plot(xhatsol3[:,0], xhatsol3[:,2], xhatsol3[:,3], linewidth=0.5, color='#3c5f96')
 ax.hold(True)
-ax.plot(xhatsol2[:,0], xhatsol2[:,2], xhatsol2[:,3], linewidth=3, color='#f7464a')
+ax.plot(xhatsol2[:,0], xhatsol2[:,2], xhatsol2[:,3], linewidth=2, color='#f7464a')
 ax.plot(xhatsol1[:,0], xhatsol1[:,2], xhatsol1[:,3], linewidth=5, color='#33CC33')
 
 ax.set_xlabel('\n $\hat{x}_1$ \t  ', fontsize=32)
@@ -141,7 +143,7 @@ ax.w_zaxis.set_pane_color((1, 1, 1, 1.0))
 
 ax.plot(usol3[:,0], usol3[:,1], usol3[:,2], linewidth=0.5, color='#3c5f96')
 ax.hold(True)
-ax.plot(usol2[:,0], usol2[:,1], usol2[:,2], linewidth=3, color='#f7464a')
+ax.plot(usol2[:,0], usol2[:,1], usol2[:,2], linewidth=2, color='#f7464a')
 ax.plot(usol1[:,0], usol1[:,1], usol1[:,2], linewidth=5, color='#33CC33')
 
 ax.set_xlabel('\n $u$ \t  ', fontsize=32)

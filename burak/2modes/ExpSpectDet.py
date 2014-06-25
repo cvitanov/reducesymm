@@ -11,14 +11,20 @@ from pylab import plot, xlabel, ylabel, show, savefig
 import matplotlib.pyplot as plt
 import twomode
 
-#conn = sqlite3.connect('data/rpo.db')
-conn = sqlite3.connect('data/rpoall.db')
+FiniteGrammar=False
+
+if FiniteGrammar:
+    Ncycle = 79
+    NmaxExp = 12
+    conn = sqlite3.connect('data/rpo.db')
+
+else:
+    Ncycle = 55
+    NmaxExp = 10
+    conn = sqlite3.connect('data/rpoall.db')
+
 c = conn.cursor()
 rpos = []
-#Ncycle = 79
-#NmaxExp = 12
-Ncycle = 22
-NmaxExp = 8
 
 for rpono in range(1,Ncycle + 1):
     c.execute("SELECT * FROM rpos WHERE rpono = "+str(rpono))

@@ -79,7 +79,7 @@ f.close()
 
 center = reqv
 basis1 = np.array([0,  0, 1], float)/4
-basis2 = unstabledir*2
+basis2 = unstabledir*2.5
 
 #x = np.array([center-basis1-basis2, center+basis1-basis2, center+basis1+basis2, center-basis1+basis2], float)
 x = np.array([center-basis1, center+basis1, center+basis1+basis2, center-basis1+basis2], float)

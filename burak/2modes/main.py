@@ -29,14 +29,14 @@ oct2py.octave.addpath(peddir) #Add mfiles for ped
 #Booleans:
 computeSolution = False
 computePsect = False
-computeArcLengths = False
-computeRPO = True
+computeArcLengths = True
+computeRPO = False
 computeRPOred3 = False
 plotPsect = False
-plotRetmap = False
+plotRetmap = True
 
 #Search parameters:
-nPrimeMax = 10 #Will search for [1,m]-cycles
+nPrimeMax = 12 #Will search for [1,m]-cycles
 
 #Only relative equilibrium:
 reqv = np.array([0.43996557973671596,
@@ -85,7 +85,7 @@ if computeSolution:
     xphisol = twomode.intslice(xphi0, t)
 
     txphisol = np.concatenate((t.reshape(-1,1),xphisol), axis=1)
-    txphisol = txphisol[20000:-1,:]
+    #txphisol = txphisol[20000:-1,:]
     #Create a figure window
     fig = plt.figure()
     ax = fig.gca(projection='3d')
@@ -147,7 +147,8 @@ def psarclength(x):
 if computeArcLengths:
     print 'Computing arclengths corresponding to data'
     #Find the first data point for the Arclengths to discard the transients
-    iArcLength0 = np.argwhere(ps[:,0]>200)[0]
+    #iArcLength0 = np.argwhere(ps[:,0]>200)[0]
+    iArcLength0 = np.argwhere(ps[:,0]>0)[0]
     sn = np.array([psarclength(ps2D[i,0]) for i in 
     range(iArcLength0, np.size(ps2D,0))], float)
     snmin = np.min(sn)
@@ -195,9 +196,9 @@ print sCritical
 def fCritical(s):
     po = retmapm(3, s) - s
     return po
-#s3Critical = newton(fCritical, sCritical*0.999, tol=1.48e-12)
+s3Critical = fsolve(fCritical, sCritical*0.999)
 #s3Critical = newton(fCritical, sCritical*1.001, tol=1.48e-12)
-s3Critical = sCritical
+#s3Critical = sCritical
 print "s3Critical:"
 print s3Critical
 
@@ -321,7 +322,8 @@ def s2ps2D(s):
     #p0x = ps2D[i0,0]
     p0x = s
 
-    px = newton(fs2ps2D, p0x, args=(s,), tol=1e-12)
+    #px = newton(fs2ps2D, p0x, args=(s,), tol=1e-12)
+    px = fsolve(fs2ps2D, p0x, args=(s,))
     py = interpolate.splev(px, tckps)
     
     return np.array([px, py])
@@ -425,13 +427,18 @@ if computeRPO:
                     scandidates.append([i+1, sc, Itinerary(sc, i+1)])
                     for k in range(len(AdmissibleCycles)):
                         if CandidateItinerary == AdmissibleCycles[k][1]:
+                            #Append arclengths for every point on the cycle:
                             AdmissibleCycles[k].append([retmapm(n, sc) for n 
                                                        in range(i+1)])
+                            #Append reduced ssp coordinates  for every point 
+                            #on the cycle:
                             AdmissibleCycles[k].append(np.array([s2xhat(
                              AdmissibleCycles[k][2][l]) for l in range(i+1)]))
                             AdmissibleCycles[k].append(np.array([timeofflight(
                              AdmissibleCycles[k][3][l]) for l in range(i+1)],
                                                                         float))
+                            #Append phase increments of every point in the cycle
+                            #after one return to the Poincare section
                             AdmissibleCycles[k].append(np.array([phireturn(
                              AdmissibleCycles[k][3][l],
                              AdmissibleCycles[k][4][l]) for l in range(i+1)],
@@ -440,13 +447,24 @@ if computeRPO:
                     
             fpoevo = fpoev        
 
+    PopedCycles = []
 
     print "Admissible Cycles upto length before subdivisions:"
-    for i in range(len(AdmissibleCycles)):
+    
+    while i <= len(AdmissibleCycles)-1:
+        if len(AdmissibleCycles[i]) < 3:
+            print 'No candidate found for ', AdmissibleCycles[i][1]
+            print 'Discarding ',  AdmissibleCycles[i][1]
+            PopedCycles.append(AdmissibleCycles.pop(i))
+            i -= 1
+            #raw_input("Attention here")            
         print AdmissibleCycles[i]
+        i += 1
         # #Divide intervals into smaller subintervals for multiple shooting:
     nsub = 100 #number of subintervals
-    raw_input("Make sure everything is here before continue")
+    print PopedCycles
+    raw_input("Poped cycles")
+    
     for k in range(len(AdmissibleCycles)):
         l = 0
         while l < len(AdmissibleCycles[k][3]):
@@ -635,15 +653,17 @@ if plotPsect:
     ax.set_xlabel('$v_1$', fontsize=24)
     ax.set_ylabel('$v_{2 \quad (\\times 100)}$', fontsize=24)
     Nticks=5
-    #xticks = np.linspace(min(ps2D[:,0]), max(ps2D[:,0]), Nticks)
-    #ax.set_xticks(xticks)
-    #ax.set_xticklabels(["$%.1f$" % xtik for xtik in xticks], fontsize=16);
-    #yticks = np.linspace(min(ps2D[:,1]), max(ps2D[:,1]), Nticks)
-    #ax.set_yticks(yticks)
-    #plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
-    #yticks=yticks*100
-    #ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=16);
-
+    xticks = np.linspace(min(ps2D[:,0]), max(ps2D[:,0]), Nticks)
+    ax.set_xticks(xticks)
+    ax.set_xticklabels(["$%.1f$" % xtik for xtik in xticks], fontsize=16);
+    yticks = np.linspace(min(ps2D[:,1]), max(ps2D[:,1]), Nticks)
+    ax.set_yticks(yticks)
+    plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
+    yticks=yticks*100
+    ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=16);
+    ax.set_xlim(min(ps2D[:,0]),max(ps2D[:,0]))
+    ax.set_ylim(min(ps2D[:,1]),max(ps2D[:,1]))
+    
     savefig('Psect.pdf', bbox_inches='tight', dpi=100)
     call(["pdfcrop", "Psect.pdf", "Psect.pdf"], shell=True)
 
@@ -657,33 +677,33 @@ if plotRetmap:
     plot(xintRetMap, yintRetMap, 'k', lw=2)
     plot(srange, srange, 'g', lw=2)
 
-    nKneading = np.size(Kneading)
+    nKneading = 4 #np.size(Kneading)
     for i in range(nKneading-1):
         pair1 = [Kneading[i], Kneading[(i+1)]]
         pair2 = [Kneading[i], Kneading[(i+1)]]
-        plot(np.linspace(min(pair1), max(pair1), 10),
-            [pair1[1] for k in range(10)], '--r', lw=1.5)
-        plot([pair2[0] for k in range(10)],
-            np.linspace(min(pair2), max(pair2), 10), '--r', lw=1.5)
+#        plot(np.linspace(min(pair1), max(pair1), 10),
+#            [pair1[1] for k in range(10)], '--r', lw=1.5)
+#        plot([pair2[0] for k in range(10)],
+#            np.linspace(min(pair2), max(pair2), 10), '--r', lw=1.5)
     
     #plot(srange, [0.825 for  i in range(np.size(srange,0))], 'r')
     ax = fig.gca()
-    #ax.set_aspect('equal')
+    ax.set_aspect('equal')
     smin = np.min(sn)
     smax = np.max(sn)
     ax.set_xlim(smin,smax)
     ax.set_ylim(smin,smax)
     ax.set_xlabel('$s_n$', fontsize=24)
     ax.set_ylabel('$s_{n+1}$', fontsize=24)
-    #Nticks = 5
+    Nticks = 5
 
-    #xticks = np.linspace(smin, smax, Nticks)
-    #ax.set_xticks(xticks)
-    #ax.set_xticklabels(["$%.1f$" % xtik for xtik in xticks], fontsize=16); 
+    xticks = np.linspace(smin, smax, Nticks)
+    ax.set_xticks(xticks)
+    ax.set_xticklabels(["$%.1f$" % xtik for xtik in xticks], fontsize=16); 
 
-    #yticks = np.linspace(smin, smax, Nticks)
-    #ax.set_yticks(yticks)
-    #ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=16); 
+    yticks = np.linspace(smin, smax, Nticks)
+    ax.set_yticks(yticks)
+    ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=16); 
     
     #plt.figure(2, figsize=(8,8))
     #sp3 = np.array([retmapm(7, sn) for sn in srange])
@@ -691,7 +711,7 @@ if plotRetmap:
     #plt.hold(True)
     #plot(srange,srange,'g')
     
-    #savefig('RetMap.pdf', bbox_inches='tight', dpi=100) 
-    #call(["pdfcrop", "RetMap.pdf", "RetMap.pdf"], shell=True)
+    savefig('RetMap.pdf', bbox_inches='tight', dpi=100) 
+    call(["pdfcrop", "RetMap.pdf", "RetMap.pdf"], shell=True)
     
     show()

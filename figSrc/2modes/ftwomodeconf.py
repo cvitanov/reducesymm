@@ -24,8 +24,8 @@ p = np.loadtxt('data/parameters.dat')
 
 x01 = [0.43997, 0, -0.38627, 0.07020] #reqv
 x02 = [4.525719078826287434e-01, -2.791192295890519988e-18, 
-5.092565177630036660e-02, 3.354280141917114627e-02] #rpo 1  
-x02 = [0.43998243, 0.0, -1.68577368, 0.06639063]
+5.092565177630036660e-02, 3.354280141917114627e-02] #rpo1  
+x02 = [0.43998243, 0.0, -1.68577368, 0.06639063]# rpo01
 
 x03 = [0.0384074556708, 0.0, -1.90362452394, 0.0668631895808] #attractor
 
@@ -44,7 +44,7 @@ tfrpo = 2* 7.34594127
 tfergo = tfreqv
 treqv = np.linspace(0,tfreqv,5000)
 trpo = np.linspace(0, tfrpo, 10000)
-tergo = treqv
+tergo = np.linspace(0, tfergo, 5000)
 
 xsolreqv = sspsolver.integrate(x01, p, treqv)
 xsolrpo = sspsolver.integrate(x02, p, trpo)
@@ -80,13 +80,14 @@ im = plt.pcolormesh(x, y, usolreqv[range(0,np.size(treqv),10),:], shading='goura
 
 plt.axis([x.min(), x.max(), y.min(), y.max()])
 
-plt.xticks([x[0],x[np.floor(np.size(x)/2)],x[-1]], ('$-L/2$', '$0$', '$L/2$'), fontsize=24)
+plt.xticks([x[0],x[np.floor(np.size(x)/2)],x[-1]], ('$-L/2$', '$0$', '$L/2$'), fontsize=32)
 plt.yticks([0,tfreqv/2,tfreqv], 
-('$'+str(0)+'$', '$'+str(np.floor(tfreqv/2))+'$', '$'+str(tfreqv)+'$'), fontsize=24)
-plt.xlabel('$x$', fontsize=32)
-plt.ylabel('$t$', fontsize=32)
+('$'+str(0)+'$', '$'+str(np.floor(tfreqv/2))+'$', '$'+str(tfreqv)+'$'), fontsize=32)
+plt.xlabel('$x$', fontsize=40)
+plt.ylabel('$t$', fontsize=40)
 
-savefig('twomodeconfreqv.png', bbox_inches='tight', dpi=100)
+savefig('2modes-conf-reqv.png', bbox_inches='tight', dpi=100)
+call(['convert', '-trim', '2modes-conf-reqv.png', '2modes-conf-reqv.png'])
 
 fig.clf()
 
@@ -97,13 +98,14 @@ im = plt.pcolormesh(x, y, usolrpo[range(0,np.size(trpo),10),:], shading='gouraud
 
 plt.axis([x.min(), x.max(), y.min(), y.max()])
 
-plt.xticks([x[0],x[np.floor(np.size(x)/2)],x[-1]], ('$-L/2$', '$0$', '$L/2$'), fontsize=24)
+plt.xticks([x[0],x[np.floor(np.size(x)/2)],x[-1]], ('$-L/2$', '$0$', '$L/2$'), fontsize=32)
 plt.yticks([0,tfrpo/2,tfrpo], 
-('$'+str(0)+'$', '$'+str(np.floor(tfrpo/2))[0:4]+'$', '$'+str(tfrpo)[0:4]+'$'), fontsize=24)
-plt.xlabel('$x$', fontsize=32)
-plt.ylabel('$t$', fontsize=32)
+('$'+str(0)+'$', '$'+str(np.floor(tfrpo/2))[0:4]+'$', '$'+str(tfrpo)[0:4]+'$'), fontsize=32)
+plt.xlabel('$x$', fontsize=40)
+plt.ylabel('$t$', fontsize=40)
 
-savefig('twomodeconfrpo.png', bbox_inches='tight', dpi=100)
+savefig('2modes-conf-rpo.png', bbox_inches='tight', dpi=100)
+call(['convert', '-trim', '2modes-conf-rpo.png', '2modes-conf-rpo.png'])
 
 fig.clf()
 
@@ -114,10 +116,11 @@ im = plt.pcolormesh(x, y, usolergo[range(0,np.size(tergo),10),:], shading='goura
 
 plt.axis([x.min(), x.max(), y.min(), y.max()])
 
-plt.xticks([x[0],x[np.floor(np.size(x)/2)],x[-1]], ('$-L/2$', '$0$', '$L/2$'), fontsize=24)
+plt.xticks([x[0],x[np.floor(np.size(x)/2)],x[-1]], ('$-L/2$', '$0$', '$L/2$'), fontsize=32)
 plt.yticks([0,tfergo/2,tfergo], 
-('$'+str(0)+'$', '$'+str(np.floor(tfergo/2))+'$', '$'+str(tfergo)+'$'), fontsize=24)
-plt.xlabel('$x$', fontsize=32)
-plt.ylabel('$t$', fontsize=32)
+('$'+str(0)+'$', '$'+str(np.floor(tfergo/2))+'$', '$'+str(tfergo)+'$'), fontsize=32)
+plt.xlabel('$x$', fontsize=40)
+plt.ylabel('$t$', fontsize=40)
 
-savefig('twomodeconfergo.png', bbox_inches='tight', dpi=100)
+savefig('2modes-conf-ergodic.png', bbox_inches='tight', dpi=100)
+call(['convert', '-trim', '2modes-conf-ergodic.png', '2modes-conf-ergodic.png'])
