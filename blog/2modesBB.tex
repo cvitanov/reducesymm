@@ -3792,6 +3792,50 @@ escape rate calculation with stability expansion, when I was back at Georgia Tec
 If you could tell me how to read multipliers of cycles from a file, I could try
 it, to see if it is worth going towards that direction.
 
+\item[2014-06-26 Burak]  I added two sqlite3 databases:
+
+\texttt{reducesymm/burak/2modes/data/rpo.db} and 
+\texttt{reducesymm/burak/2modes/data/rpoall.db}
+in the repository. Both of them have a table named rpos in them, 
+the content of which you can see by: 
+
+\begin{verbatim}
+select * from rpos
+\end{verbatim}
+
+Columns of the table \texttt{rpos} goes like this:
+\begin{verbatim}
+rpono (int)| itinerary (str) |x1 (real) | y1 (real) | x2 (real) | y2 (real) |  ...
+period (real) | phase (real) | FloquetMults (str)
+\end{verbatim}
+Floquet multipliers are strings like this:
+\begin{verbatim}
+`[ -1.48372354e+00   1.00000001e+00   9.99999640e-01  -8.99728179e-10]'
+\end{verbatim}
+I now it looks terrible, but I found it convenient to work like this on python 
+because there is a build in function that converts the this type of strings directly
+to the \texttt{numpy} array.
+
+For example if you run something like
+\begin{verbatim}
+for rpono = 1:127
+	itinerary, x1, y1, x2, y2, T, phi, Lambda = Query(`select * from rpos where rpono = rpono')
+\end{verbatim}
+You can get all the rpos.
+
+The difference between \texttt{rpo.db} and \texttt{rpoall.db} is that 
+the former has golden mean pruned rpos, whereas the latter has
+all periodic orbits upto topological length 12. 
+
+Are you going to use the dynamical zeta function or the spectral determinant? If 
+you know how to stability order the spectral determinant can you explain? I'm
+really confused about that.
+
+\HREF{http://stackoverflow.com/questions/8952268/how-to-import-database-of-sqlite-to-mathematica}{Here
+is a stackoverflow page} about how to open sqlite dbs in Mathematica. I'm sure you can do it
+on Matlab too.
+
+
 \item[2014-06-24 Burak] I updated \reftab{t-DynamicalAveragesNoGrammar} and
 figures \reffig{fig:psectandretmap} and \reffig{fig:Set1}, I'll start writing
 results section tonight. I commented out the second Fourier mode slice figure, 
@@ -3809,6 +3853,7 @@ People will find this information interesting.
 Regarding second Fourier mode slice figure, I would think it's not a bad idea to keep 
 it in the text. The reason is that it's better to show that what you have can be
 easily generalized.
+
 
 \item[2013-08-10  Predrag to Chaos Gang] It's not over until it is over.
 
