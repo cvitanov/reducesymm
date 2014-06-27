@@ -19,8 +19,8 @@ if FiniteGrammar:
     conn = sqlite3.connect('data/rpo.db')
 
 else:
-    Ncycle = 55
-    NmaxExp = 10
+    Ncycle = 84
+    NmaxExp = 11
     conn = sqlite3.connect('data/rpoall.db')
 
 c = conn.cursor()
