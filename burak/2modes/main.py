@@ -29,7 +29,7 @@ oct2py.octave.addpath(peddir) #Add mfiles for ped
 #Booleans:
 computeSolution = False
 computePsect = False
-computeArcLengths = True
+computeArcLengths = False
 computeRPO = False
 computeRPOred3 = False
 plotPsect = False
@@ -147,8 +147,8 @@ def psarclength(x):
 if computeArcLengths:
     print 'Computing arclengths corresponding to data'
     #Find the first data point for the Arclengths to discard the transients
-    #iArcLength0 = np.argwhere(ps[:,0]>200)[0]
-    iArcLength0 = np.argwhere(ps[:,0]>0)[0]
+    iArcLength0 = np.argwhere(ps[:,0]>200)[0]
+    #iArcLength0 = np.argwhere(ps[:,0]>0)[0]
     sn = np.array([psarclength(ps2D[i,0]) for i in 
     range(iArcLength0, np.size(ps2D,0))], float)
     snmin = np.min(sn)
@@ -197,18 +197,21 @@ def fCritical(s):
     po = retmapm(3, s) - s
     return po
 s3Critical = fsolve(fCritical, sCritical*0.999)
-#s3Critical = newton(fCritical, sCritical*1.001, tol=1.48e-12)
+s3Critical2 = fsolve(fCritical, sCritical*1.001)
 #s3Critical = sCritical
 print "s3Critical:"
 print s3Critical
 
 Kneading = np.copy(s3Critical)
+Kneading2 = np.copy(s3Critical2)
 KneadingSequence = []
 KneadingValueBin = '0.'
 KneadingValue = 0
 for i in range(nMax):
     xnext = retmap(Kneading[-1])
+    xnext2 = retmap(Kneading2[-1])
     Kneading=np.append(Kneading, xnext)
+    Kneading2=np.append(Kneading2, xnext2)
     if xnext > sCritical:
         KneadingSequence.append(1)
         if i == 0:
@@ -681,10 +684,17 @@ if plotRetmap:
     for i in range(nKneading-1):
         pair1 = [Kneading[i], Kneading[(i+1)]]
         pair2 = [Kneading[i], Kneading[(i+1)]]
-#        plot(np.linspace(min(pair1), max(pair1), 10),
-#            [pair1[1] for k in range(10)], '--r', lw=1.5)
-#        plot([pair2[0] for k in range(10)],
-#            np.linspace(min(pair2), max(pair2), 10), '--r', lw=1.5)
+        plot(np.linspace(min(pair1), max(pair1), 10),
+            [pair1[1] for k in range(10)], '--r', lw=1.5)
+        plot([pair2[0] for k in range(10)],
+            np.linspace(min(pair2), max(pair2), 10), '--r', lw=1.5)
+
+        ppair1 = [Kneading2[i], Kneading2[(i+1)]]
+        ppair2 = [Kneading2[i], Kneading2[(i+1)]]
+        plot(np.linspace(min(ppair1), max(ppair1), 10),
+            [ppair1[1] for k in range(10)], '--c', lw=1.5)
+        plot([ppair2[0] for k in range(10)],
+            np.linspace(min(ppair2), max(ppair2), 10), '--', lw=1.5)
     
     #plot(srange, [0.825 for  i in range(np.size(srange,0))], 'r')
     ax = fig.gca()
@@ -712,6 +722,6 @@ if plotRetmap:
     #plot(srange,srange,'g')
     
     savefig('RetMap.pdf', bbox_inches='tight', dpi=100) 
-    call(["pdfcrop", "RetMap.pdf", "RetMap.pdf"], shell=True)
+    #call(["pdfcrop", "RetMap.pdf", "RetMap.pdf"], shell=True)
     
     show()

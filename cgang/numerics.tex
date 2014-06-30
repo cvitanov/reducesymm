@@ -70,10 +70,12 @@ We visualize the dynamics of the \twomode\ system in four different representati
 \eea
 \refFig{fig:Set1} shows the only \reqv , \rpo\ \cycle{01} and an ergodic trajectory of the \twomode\ system in the four different representations we described above. Note that translation of the \reqv\ in the configuration space \reffig{fig:Set1} (a), corresponds to the \SOn{2} rotations in the \statesp\ of Fourier modes in \reffig{fig:Set1} (d) (green curve) and these orbits correspond to a single point in the symmetry reduced representations of \reffig{fig:Set1} (e, f). Note also that the \rpo\ \cycle{01} translates/rotates as it advances in configuration space (\reffig{fig:Set1} (b)) and in the equivariant \statesp\ \reffig{fig:Set1} (\reffig{fig:Set1} (d)), whereas in the symmetry reduced plots (\reffig{fig:Set1} (e, f)), it closes onto itself after one period.
 
+\subsection{Finding Cycles}
+
 The simple structure of the symmetry reduced dynamics allows us to determine the 
 \rpo s of the \twomode\ system by means of a Poincar\'e section and a return map. We illustrated this procedure in \reffig{fig:psectandretmap}. Starting with an initial
 point close to the \REQV{}{}, we computed a long ergodic trajectory of the symmetry reduced \twomode\ system by integrating \refeq{e-so2red1stmode} (blue curve in \reffig{fig:psectandretmap} (a)) and recorded its intersections (marked with red in \reffig{fig:psectandretmap} (a)) with the Poincar\'e section (transparent plane in \reffig{fig:psectandretmap} (a)), which includes the \REQV{}{} and the imaginary part of its unstable stability eigenvector (one of the green arrows in \reffig{fig:psectandretmap} (a)). We then projected these intersections onto a
-basis $(v_1, v_2)$, which spans the Poincar\'e section, and fit cubic splines to this set of points, see \reffig{fig:psectandretmap} (b). The return map of arclengths from the origin which is set to \REQV{}{} in \reffig{fig:psectandretmap} (b), is unimodal with an sharp cusp located at its critical point, shown in \reffig{fig:psectandretmap} (c). Note that the region corresponds to the neighborhood of the \reqv\ $s = (0, 0.6)$ is never visited once the flow leaves this region and falls onto the chaotic attractor. For this reason, we re-drew this return map after discarding the data corresponding to the initial transients in \reffig{fig:psectandretmap} (d). We use this return map to determine the accessible \rpo s  with their respective binary symbol sequences.
+basis $(v_1, v_2)$, which spans the Poincar\'e section, and fit cubic splines to this set of points, see \reffig{fig:psectandretmap} (b). The return map of arclengths from the origin which is set to \REQV{}{} in \reffig{fig:psectandretmap} (b), is unimodal with an sharp cusp located at its critical point, shown in \reffig{fig:psectandretmap} (c). Note that the region corresponds to the neighborhood of the \reqv\ $s = (0, 0.6)$ is never visited once the flow leaves it and falls onto the chaotic attractor. For this reason, we re-drew this return map after discarding the data corresponding to the initial transients in \reffig{fig:psectandretmap} (d). We use this return map to determine the accessible \rpo s  with their respective binary symbol sequences.
 
 \begin{figure}
 \centering
@@ -94,6 +96,38 @@ basis $(v_1, v_2)$, which spans the Poincar\'e section, and fit cubic splines to
 		    Poincar\'e section (b).
 		 (d) The return map without the transient points, framed by
             orbit of the critical point.
-		 	Dashed lines show the 3-cycle \cycle{001}.}
+		 	Dashed lines show the 3-cycles \cycle{001} (red) and \cycle{011} (cyan).}
 \label{fig:psectandretmap}
 \end{figure}
+
+Unimodal return map of \reffig{fig:psectandretmap} (d) lets us name the periodic orbits of the \twomode\ system according to their binary symbolic dynamics. Critical point of this map is at $s_C=0.98102264$, corresponding to the tip of the return map. Topological coordinate of the critical point, the kneading value, lets us determine the all admissible cycles of the system. For a detailed introduction to the symbolic dyanmics techniques we refer to \refref{DasBuch}. After determining the admissible cycles, we find candidates corresponding to the admissible symbol sequences from the return map, and feed them into a multiple shooting Newton solver (see Appendix \ref{s:newton}) to precisely determine the \rpo s. This way, we found the admissible cycles of the \twomode\ system upto the topological length 12. In \reffig{f-2modesrpofirst4} we show shortest $4$ of the \rpo s of the \twomode\ system within the first Fourier mode \slicePlane . As seen from \reffig{f-2modesrpofirst4}, trajectories of \cycle{001} and \cycle{011} almost overlap in a large region of the \statesp . This behavior is also manifested in the return map of \reffig{fig:psectandretmap} (d), where we have shown cycles \cycle{001} and \cycle{011} with red and cyan respectively. This is a general property of the \twomode\ cycles with odd topological lengths: They come in pairs with almost equal Floquet exponents, see \reffig{f-2modes-lambdaDist}.
+
+\begin{figure}%[H]
+\centering
+ \includegraphics[width=0.45\textwidth]{2modesrpofirst4}
+\caption{Shortest four \rpo s of the \twomode\ system: \cycle{1} (dark blue), \cycle{01} (green), \cycle{001} (red), \cycle{011} (cyan). Note that \rpo s \cycle{001} and \cycle{011} almost overlap everywhere except $\hat{x}_1 \approx 0$ .}
+\label{f-2modesrpofirst4}
+\end{figure}
+
+\begin{figure}%[H]
+\centering
+ \includegraphics[width=0.45\textwidth]{2modes-lambdaDist}
+\caption{Distribution of the leading Floquet exponents of \twomode\ cycles.}
+\label{f-2modes-lambdaDist}
+\end{figure}
+
+\subsection{Dynamical Averages}
+Spectrum of an observable, such as diffusion constant, or energy dissipation, of a dynamical system is dual to the spectrum of its periodic orbits by means of the classical trace formula \rf{DasBuch}:
+\beq
+\sum_{\alpha=0}^{\infty} \frac{1}{s-s_{\alpha}} = \sum_p T_p \sum_{r=1}^{\infty} \frac{e^{r(\beta A_p - s T_p)}}{\oneMinJ{r}} .
+\ee{e-ClassicalTraceFormula}
+
+Here, $s_{\alpha}$ are the eigenvalues of $\mathcal{A}$, the semigroup generator of the dynamical evolution corresponding to the observable $A$, outer sum on the RHS runs over the ``prime cycles'' of the system, $T_p$ is the period of the prime cycle $p$, $A_p$ is the value of the observable along the prime cycle, $\monodromy_p$ is the transverse (no marginal directions) monodromy matrix and $s$ and $\beta$ are auxilliary variables dual to the observable $A$ and time respectively. 
+
+While the classical trace formula \refeq{e-ClassicalTraceFormula} manifests the essential duality between the spectrum of an observable and that of the periodic orbits, in practice, it is hard to work with since the eigenvalues are located at the poles of
+\refeq{e-ClassicalTraceFormula}. For this reason, one expresses this duality equivalently as the following spectral determinant
+\beq
+    \det (s-\mathcal{A}) = \exp \left( - \sum_p \sum_{r=1}^{\infty}
+                             \frac{1}{r} \frac{e^{r(\beta A_p - s T_p)}}{\oneMinJ{r}} \right)\, ,
+\ee{e-SpectralDeterminant}
+logarithmic derivative of which gives the classical trace formula \refeq{e-ClassicalTraceFormula}. The spectral determinant \refeq{e-SpectralDeterminant} is easier to work with since the spectrum of $\mathcal{A}$, is now located at the zeros of \refeq{e-SpectralDeterminant}
