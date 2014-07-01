@@ -1,0 +1,194 @@
+\section{Multiple shooting method for search for the \rpo s:}
+\label{s:newton}
+Let us assume that we have a set of good guesses
+for a set of \statesp\ points,
+flight times and
+$1D$ symmetry group parameter increments
+$\{\ssp_i^{(0)}\,,\,\zeit_i^{(0)}\,,\,\gSpace_i^{(0)}\}$
+such that the points
+$\{\ssp_i^{(0)}\}$
+lie close to the \rpo\ $p$,
+\beq
+	\ssp_{i+1}^{(0)} \approx \LieEl (\gSpace_i^{(0)}) \flow{{\zeit_i^{(0)}}}{\ssp_i^{(0)}}
+    \quad  \mbox{cyclic in $i = 1, ..., n$}
+\,.
+\eeq
+Here the period and the shift of the \rpo\ $p$ are
+$\period{p} \approx \sum \zeit_i\,,$
+$\gSpace_p \approx \sum \gSpace_i \,.$
+We want to determine
+$(\Delta\ssp_i\,,\,\Delta\zeit_i\,,\,\Delta\gSpace_i)$
+corresponding to the exact \rpo,
+\beq
+	\ssp_{i+1} + \Delta \ssp_{i+1} = \LieEl (\gSpace_i + \Delta \gSpace_i)
+		\flow{\zeit_i + \Delta \zeit_i}{\ssp_i + \Delta \ssp_i}
+		\quad  \mbox{cyclic in } i = 1, ..., n
+\,.
+\eeq
+To linear order in
+\[
+(\Delta\ssp_i^{(m+1)}\,,\, \Delta\zeit_i^{(m+1)}\,,\,\Delta\gSpace_i^{(m+1)})
+=
+(\ssp_i^{(m+1)}-\ssp_i^{(m)}\,,\,
+ \zeit_i^{(m+1)}-\zeit_i^{(m)}\,,\,
+ \gSpace_i^{(m+1)}-\gSpace_i^{(m)})
+\]
+the improved Newton guess
+$
+(\ssp_i^{(m+1)}\,,\,\zeit_i^{(m+1)}\,,\,\gSpace_i^{(m+1)} )
+$
+is obtained by minimizing the effect of perturbations along
+the spatial, time and phase directions,
+    \PC{2014-02-02 I have changed Burak's \refeq{PCnetwonStep} by
+    $\Lg \flow{\zeit_i}{\ssp_i}
+        \to
+    \Lg \LieEl (\gSpace_i)\flow{\zeit_i}{\ssp_i}$.
+    The rest of the formulas need to be changed accordingly.}
+    \PC{2014-02-02 to Burak: please write up the detailed
+    derivation, with what $O(\Delta^2)$'s are dropped
+    as a problem / solution set for \texttt{cycles.tex}.}
+\beq
+	\ssp_{i+1}^{'} - \LieEl_{i+1} \flow{{\zeit_i}}{\ssp_i}
+= \LieEl_{i+1}\left(
+  \groupTan_{i+1} \Delta \gSpace_i
++ \vel_{i+1} \Delta \zeit_i
++ \jMps_{i+1} \Delta \ssp_i
+    \right)
+\,,
+\ee{PCnetwonStep}
+where, for brevity,
+$\ssp_{i}^{(m+1)} = \ssp_{i}^{(m)} + \Delta \ssp_{i}^{(m)}
+   = \ssp_{i}^{'}$,
+$\ssp_{i}^{(m)} = \ssp_{i}$,
+$\LieEl (\gSpace_i) = \LieEl_{i+1}$,
+$\vel (\ssp_{i}) = \vel_i$,
+$\jMps^{\zeit_i}(\ssp_i) = \jMps_{i+1}$,
+$\groupTan(\ssp_{i}) = \Lg \ssp_{i} = \groupTan_i$,
+\etc.
+For sufficiently good initial guesses,
+the improved values converge under Newton iterations to
+the exact values
+$(\Delta\ssp_i\,,\,\Delta\zeit_i\,,\,\Delta\gSpace_i)$
+=$(\Delta\ssp_i^{(\infty)}\,,\,\Delta\zeit_i^{(\infty)}\,,\,\Delta\gSpace_i^{(\infty)})$
+at a super-exponential rate.
+    \PC{2014-02-02 I am often running into the situation that the linear
+    operators are better marked by the final rather than by the initial
+    points of trajectory segments, as in $\jMps^{\zeit_i}(\ssp_i) =
+    \jMps_{i+1}$. Implementing this requires a huge rewrite of the
+    ChaosBook}
+%
+%Regrouping terms we get a form that we can turn to a matrix equation:
+%\beq
+%	 \LieEl (\gSpace_i) \jMps^{\zeit_i}(\ssp_i) \Delta \ssp_i
+%	+ \LieEl (\gSpace_i) \vel (\flow{\zeit_i}{\ssp_i}) \Delta \zeit_i
+%	+\Lg \flow{\zeit_i}{\ssp_i} \Delta \gSpace_i
+%	- \Delta \ssp_{i+1}
+%	= \ssp_{i+1} - \LieEl (\gSpace_i) \flow{\zeit_i}{\ssp_i}
+%\eeq
+In order to deal with the marginal multipliers along the time and group
+orbit directions, one needs to apply a pair of constraints, which
+eliminate variations along the marginal directions on the \rpo s\ $2D$
+torus (see \reffig{fig:BBO2RpoSspComovSlice}). As our guesses
+$\{\ssp_i^{(m)}\}$ are
+computed in the global slice \reffig{fig:BBpsecthd} and Poincar\'e
+section \reffig{fig:psectandretmap}\,(a),
+%Parameters: \refeq{eq:parsO2a1only} with $a_1 = 0.45$.
+and read off the (nearly)
+unimodal return map \reffig{fig:psectandretmap}\,(b), one can
+impose the corresponding global slice and section constraints
+\refeq{eq:firstmodetemplate} and \refeq{eq:nhat0GS-1},
+\beq
+[write the global constraints here]
+\,,
+\ee{RPOConstrsGlobal}
+for each return map cycle point $\ssp_i$ in \reffig{fig:psectandretmap}\,(b),
+compute the first return time and phase shift
+$(\ssp_i^{(m)}\,,\,\zeit_i^{(m)}\,,\,\gSpace_i^{(m)} )$,
+and then restart with $\ssp_{i+1}$ in \reffig{fig:psectandretmap}\,(b).
+
+However, imposition of the global slice condition induces high
+velocities along the phase reconstruction coordinate $\dot{\gSpace}(\zeit)$
+close to the {\chartBord}. These high $\dot{\gSpace}(\zeit)$
+are artifacts of the symmetry reduction methods, they are not present in
+the full \statesp\ flow.
+For that reason local transversality constraints -
+a local Poincar\'e section orthogonal to the flow, and a local slice
+orthogonal to the group orbit at each point along the orbit,
+\beq
+   \vel_i \cdot \Delta x_i = 0
+\,,\qquad
+   \groupTan_{i} \cdot \Delta x_i = 0
+\,,
+\ee{RPOConstrsLocal}
+are natural and numerically preferable; in the limit of infinitely many
+infinitesimal time steps, the solutions that they yield are the \rpo s in
+the {\comovframe} transformed equations \refeq{transvFlow}, see
+\reffig{fig:BBO2RpoSspComovSlice}\,(b), with the {\comovframe}
+$\gSpace_{p}^{cm}$. This $\gSpace_{p}^{cm}$ might be the so much bandied
+around `geometrical phase.'. As the {\mconn} is not a symmetry-reduction
+method, the trajectory explores ergodically the same invariant torus, but
+with a different shift per period. Once the \rpo\ is computed, its shift
+$\gSpace_p$ in the `lab frame' can be computed by imposing the fixed
+slice condition \refeq{RPOConstrsGlobal} on any cycle point.
+
+We can rewrite everything as one matrix equation:
+\beq \label{eq:multishootmatrix}
+	{\bf A} \Delta = E,
+\eeq
+where,
+\beq \label{eq:AforNewton}
+	{\bf A} = \\
+	\begin{pmatrix}
+	  \LieEl_{2} \jMps_{2} &
+	  \LieEl_{2} \vel_2 &
+	  \Lg \LieEl_{2} \flow{\zeit_1}{\ssp_1}  &
+	  - \matId & 0 & 0 & 0 & \cdots & 0 \\
+	  \vel_1 & 0 & 0 & 0 & 0 & 0 & 0 & \cdots & 0 \\
+	  \sliceTan{} & 0 & 0 & 0 & 0 & 0 & 0 & \cdots & 0 \\
+	  0 & 0 & 0 &
+	  \LieEl_{3} \jMps_{3} &
+	  \LieEl_{3} \vel_3 &
+	  \Lg \LieEl_{3} \flow{\zeit_2}{\ssp_2}   &
+	  - \matId & \cdots & 0 \\
+	  0 & 0 & 0 & \vel_2 & 0 & 0 & 0 & \cdots & 0 \\
+	  0 & 0 & 0 & \sliceTan{} & 0 & 0 & 0 & \cdots & 0 \\
+	  \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+	  - \matId & 0 & \cdots & 0 & 0 & 0 &
+	  \LieEl_{1} \jMps_{1} &
+	  \LieEl_{1} \vel_1 &
+	   \Lg \LieEl_{1} \flow{\zeit_1}{\ssp_1}   \\
+	  0 & 0 & \cdots & 0 & 0 & 0 & \vel_n & 0 & 0 \\
+	  0 & 0 & \cdots & 0 & 0 & 0 & \sliceTan{} & 0 & 0
+	 \end{pmatrix}	
+\eeq
+\beq \label{eq:DeltaandE}
+	\Delta =
+	 \begin{pmatrix}
+	  \Delta \ssp_1 \\
+	  \Delta \zeit_1 	\\
+	  \Delta \gSpace_1 \\
+	  \Delta \ssp_2 \\
+	  \Delta \zeit_2 	\\
+	  \Delta \gSpace_2 \\
+	  \vdots \\
+	  \Delta \ssp_n \\
+	  \Delta \zeit_n 	\\
+	  \Delta \gSpace_n \\
+	 \end{pmatrix}  	
+	 \ \mbox{and} \
+	 E =
+	 \begin{pmatrix}
+	  \ssp_{2} - \LieEl_2 \flow{\zeit_1}{\ssp_1} \\
+	   0 	\\
+	   0 	\\
+	  \ssp_{3} - \LieEl_3 \flow{\zeit_2}{\ssp_2} \\
+	  0 	\\
+	  0 \\
+	  \vdots \\
+	  \ssp_{1} - \LieEl_1 \flow{\zeit_n}{\ssp_n} \\
+	  0 	\\
+	  0 	\\
+	 \end{pmatrix}
+\eeq
+We than solve \refeq{eq:multishootmatrix} for $\Delta$ and update our initial
+guess by adding the vector of the computed $\Delta$ values, and iterate.
