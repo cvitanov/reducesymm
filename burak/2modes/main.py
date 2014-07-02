@@ -30,7 +30,7 @@ oct2py.octave.addpath(peddir) #Add mfiles for ped
 computeSolution = False
 computePsect = False
 computeArcLengths = False
-computeRPO = False
+computeRPO = True
 computeRPOred3 = False
 plotPsect = False
 plotRetmap = True
@@ -140,9 +140,9 @@ def psarclength(x):
     def ds(x):
         dypsect = derivative(interpolate.splev, x, dx=1e-6, args=(tckps,), order=5)
         return np.sqrt(1 + dypsect**2)
-    #quad, err = integrate.quad(ds, ps2Dsorted[0,0], x)
-    return x
-    #return quad
+    quad, err = integrate.quad(ds, ps2Dsorted[0,0], x)
+    #return x
+    return quad
 
 if computeArcLengths:
     print 'Computing arclengths corresponding to data'
@@ -198,7 +198,7 @@ def fCritical(s):
     return po
 s3Critical = fsolve(fCritical, sCritical*0.999)
 s3Critical2 = fsolve(fCritical, sCritical*1.001)
-#s3Critical = sCritical
+s3Critical = sCritical
 print "s3Critical:"
 print s3Critical
 
@@ -411,14 +411,15 @@ if computeRPO:
         def fpo(s):
             po = retmapm(i+1, s) - s
             return po
-            
+        
+        print "Searching for candidates on "+str(i+1)+"-th return map"
         fpoevo=0
-        sstep = (smax-smin)/200000
+        sstep = (smax-smin)/3000000
         for s0 in np.arange(smin, smax, sstep):
             fpoev = fpo(s0)
             if fpoev * fpoevo < 0: #If there is a zero-crossing, look for the root: 
                 #sc = newton(fpo, s0-sstep/2.0, tol=1.48e-8)
-                sc = fsolve(fpo, s0-sstep/2.0)
+                sc = fsolve(fpo, s0-sstep/2.0, xtol = 1e-9)
                 #print "sc = %f" %sc
                 newcandidate = 1
                 for j in range(len(scandidates)):
@@ -460,7 +461,8 @@ if computeRPO:
             print 'Discarding ',  AdmissibleCycles[i][1]
             PopedCycles.append(AdmissibleCycles.pop(i))
             i -= 1
-            #raw_input("Attention here")            
+            #raw_input("Attention here")
+            raw_input("Pop!")            
         print AdmissibleCycles[i]
         i += 1
         # #Divide intervals into smaller subintervals for multiple shooting:
