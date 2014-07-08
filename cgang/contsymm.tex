@@ -64,7 +64,13 @@ scheme applicable to high-dimensional flows like the \NS\ equations.
 \subsection{\Mslices}
 \label{s-slice}
 
-While the \mslices\ goes back to Cartan\rf{CartanMF}, to the
+In a system with $N$ continuous symmetries, a \emph{\slice} \pSRed\ is a codimension $N$ submanifold
+of \pS\ that cuts every group orbit once and only once. In the \emph{\mslices}, the solution
+of a $d$-\dmn\ dynamical system is represented as a symmetry-reduced trajectory $\sspRed (t)$ within the
+$(d-N)$-\dmn\ \slice\ and $N$ time dependent group parameters $\theta(t)$, which
+map $\sspRed (t)$ to the full \statesp\ by the group action $\LieEl(\theta(t))$.
+
+While this idea goes back to Cartan\rf{CartanMF}, to the
 best to our knowledge, Rowley and Marsden\rf{rowley_reconstruction_2000}
 were first to apply it to spatially extended nonlinear flows.
 They demonstrated their method by applying it to the one-dimensional \KS\ equation
@@ -74,48 +80,8 @@ Rowley \etal~\rf{rowley_reduction_2003} generalized the method in order
 to handle self-similar solutions. Beyn and Th\"{u}mmler\rf{BeTh04} applied
 the \mslices\ to `freeze' spiral waves in reaction-diffusion systems.
 
-These early studies applied the \mslices\ to a single solution at a time, but
-studying the nonlinear dynamics of extended systems requires symmetry reduction
-of global objects, such as strange attractors or invariant manifolds.
-In this spirit, Siminos and Cvitanovi\'{c}\rf{SiCvi10} used the \mslices\ to
-quotient the \SOn{2} symmetry of chaotic dynamics in \cLf\ and showed that the
-slice-dependent singularity of the reconstruction equation
-causes the reduced flow to make discontinuous jumps. This singularity was studied
-in detail by Froehlich and Cvitanovi\'{c}\rf{FrCv11}.
-
-Two strategies have been proposed in order to handle this problem: either to
-try to identify a template such that slice singularities are not visited
-by dynamics\rf{SiCvi10} or to use multiple `charts' of connected
-slices\rf{rowley_reconstruction_2000,FrCv11}.
-The latter approach was applied to \cLf\ by Cvitanovi\'{c} \etal~\rf{atlas12} and
-to pipe flow by Willis, Cvitanovi\'{c}, and Avila\rf{ACHKW11}.
-\ESedit{However, neither approach is straightforward to apply, particularly in
-high-dimensional dynamical systems.
-More recently, Budanur \etal\rf{BudCvi14} considered Fourier space discretizations of
-PDEs, in which translational symmetry naturally appears as the rotation group
-\SOn{2}. They showed that a simple choice of \slice, associated to the first Fourier mode,
-results in a \slice\ singularity that generic dynamics is extremely improbable to visit.}
-\ES{2014-06-03}{rephrased this to make easier to follow for the casual reader:
-followed a geometrical approach
-and showed that for \SOn{2} a specific choice of a \slice\
-\template\ can be used to move the \slice\ singularity to the border of the
-symmetry-reduced submanifold.
-}
-Close-passages to the
-singularity were regularized by means of a time rescaling. Here, we follow this approach
-and apply \ESedit{this so-called ``first Fourier mode slice''} method
-to a 2-mode ODE normal form, which may be
-the simplest system with \SOn{2} equivariant dynamics
-that exhibits chaos.
-
-In a system with $N$ continuous symmetries, a \emph{\slice} \pSRed\ is a codimension $N$ submanifold
-of \pS\ that cuts every group orbit once and only once. In the \emph{\mslices}, the solution
-of a $d$-\dmn\ dynamical system is represented as a symmetry-reduced trajectory $\sspRed (t)$ within the
-$(d-N)$-\dmn\ \slice\ and $N$ time dependent group parameters $\theta(t)$, which
-map $\sspRed (t)$ to the full \statesp\ by the group action $\LieEl(\theta(t))$.
-
-While this definition puts no restriction on the shape of the
-\slice, it also provides no guidance on how to construct it.
+The definition we gave above for the \slice\ puts no restriction on the shape of the
+\slice, and it also does not provide any guidance on how to construct it.
 In practice, a local approximation of the slice in the neighborhood of a point $\slicep$ called a \emph{\slicePlane}
 can be constructed by using $\slicep$ as \emph{\template}. The \slicePlane\ is then defined as the hyperplane
 that contains $\slicep$ and is perpendicular to its group tangent $\sliceTan{} = \Lg \slicep$.
@@ -125,6 +91,7 @@ not the same group orbit. What terminology are we going to use going forward? Ar
 \ES{05.20.2014}{A wurst is a group orbit of a trajectory, so I do not think we need more terminology for this paper.
 I also made the dependence of $\theta$ on $\tau$ explicit in the caption of \reffig{f-ReducTraj1} in order to stress the fact
 that each point on the trajectory is rotated by different angle.}
+
 
 %% ReducTraj*.* - read dasbuch/book/FigSrc/inkscape/00ReadMe.txt
 \begin{figure}
@@ -178,10 +145,48 @@ In the second method, one reformulates the dynamics (for Abelian groups) as
 \end{subequations}
 and computes $\sspRed (\zeit)$ and $\theta (\zeit)$ directly. In \refeq{eq:so2reduced}, $\velRed$ is the projection
 of the full \statesp\ velocity \vel(\ssp) onto the \slicePlane. For a detailed derivation
-of \refeq{eq:so2reduced}, see \refref{DasBuch}. Note that the time derivative
-of the group parameter, which also appears in $\velRed$,
-becomes singular if the dot product $\braket{\groupTan(\sspRed)}{\sliceTan{}}$
-vanishes. We will refer the set of points on the \slicePlane\ which satisfy
+of \refeq{eq:so2reduced}, see \refref{DasBuch}. 
+
+The early studies\rf{rowley_reconstruction_2000, rowley_reduction_2003, BeTh04} applied the \mslices\ to a single solution at a time, but
+studying the nonlinear dynamics of extended systems requires symmetry reduction
+of global objects, such as strange attractors or invariant manifolds.
+In this spirit, Siminos and Cvitanovi\'{c}\rf{SiCvi10} used the \mslices\ to
+quotient the \SOn{2} symmetry of chaotic dynamics in \cLf\ and showed that the
+slice-dependent singularity of the reconstruction equation
+causes the reduced flow to make discontinuous jumps, when the projection of
+group tanget onto the slice template tangent vanishes, see \refeq{eq:reconstruction}.
+This singularity was studied in detail by Froehlich and Cvitanovi\'{c}\rf{FrCv11}.
+
+Two strategies have been proposed in order to handle this problem: either to
+try to identify a template such that slice singularities are not visited
+by dynamics\rf{SiCvi10} or to use multiple `charts' of connected
+slices\rf{rowley_reconstruction_2000,FrCv11}.
+The latter approach was applied to \cLf\ by Cvitanovi\'{c} \etal~\rf{atlas12} and
+to pipe flow by Willis, Cvitanovi\'{c}, and Avila\rf{ACHKW11}.
+\ESedit{However, neither approach is straightforward to apply, particularly in
+high-dimensional dynamical systems.
+More recently, Budanur \etal\rf{BudCvi14} considered Fourier space discretizations of
+PDEs, in which translational symmetry naturally appears as the rotation group
+\SOn{2}. They showed that a simple choice of \slice, associated to the first Fourier mode,
+results in a \slice\ singularity that generic dynamics is extremely improbable to visit.}
+\ES{2014-06-03}{rephrased this to make easier to follow for the casual reader:
+followed a geometrical approach
+and showed that for \SOn{2} a specific choice of a \slice\
+\template\ can be used to move the \slice\ singularity to the border of the
+symmetry-reduced submanifold.
+}
+Close-passages to the
+singularity were regularized by means of a time rescaling. Here, we follow this approach
+and apply \ESedit{this so-called ``first Fourier mode slice''} method
+to a 2-mode ODE normal form, which may be
+the simplest system with \SOn{2} equivariant dynamics
+that exhibits chaos.
+
+%Note that the time derivative
+%of the group parameter, which also appears in $\velRed$,
+%becomes singular if the dot product $\braket{\groupTan(\sspRed)}{\sliceTan{}}$
+%vanishes. 
+We will refer the set of points on the \slicePlane\ which satisfy
 \beq
 \braket{\groupTan(\sspRed^*)}{\sliceTan{}} = 0
 \,
