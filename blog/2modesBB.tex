@@ -3759,6 +3759,46 @@ really confused about that.
 is a stackoverflow page} about how to open sqlite dbs in Mathematica. I'm sure you can do it
 on Matlab too.
 
+\item[2014-07-01 Evangelos] Thanks for the database files. I tried the following in ipython:
+\begin{verbatim}
+import sqlite3
+select * from rpos
+\end{verbatim}
+I get the following complaint:
+\begin{verbatim}
+ from rpos select *
+ ^
+SyntaxError: invalid syntax
+\end{verbatim}
+I will try to export a table with all multipliers from python, then import it in mathematica.
+Did I not import some module, or did I skip a test?
+
+I will use the dynamical zeta function. I do not know how to do it with the spectral determinant.
+
+\item[2014-07-01 Burak] I just wrote a little python script for you so that you
+can read the rpos into a python list, in general you need a cursor object to
+send queries to the db, so it goes like:
+\begin{verbatim}
+import sqlite3
+conn = sqlite3.connect('data/rpo.db')
+c = conn.cursor()
+c.execute("SELECT * FROM rpos WHERE rpono = "+str(rpono))
+a = c.fetchall()
+conn.close()
+\end{verbatim}
+but you don't need to worry about these. In \texttt{reducesymm/burak/2modes}
+if you run
+\begin{verbatim}
+ipython -i ReadRpoDb.py
+\end{verbatim}
+you will have an interactive ipython session with a list named \texttt{rpos}
+whose collumns are:
+\begin{verbatim}
+[TopologicalLength, Period, ExpandingFloquetMultiplier, PhaseShift]
+\end{verbatim}
+hope this helps.
+
+\item[2014-07-14 Evangelos] Thanks, it helps!
 
 \item[2014-06-24 Burak] I updated \reftab{t-DynamicalAveragesNoGrammar} and
 figures \reffig{fig:psectandretmap}, \reffig{fig:2modes-invpol}

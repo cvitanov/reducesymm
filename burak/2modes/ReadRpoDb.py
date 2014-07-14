@@ -4,7 +4,7 @@ from StringIO import StringIO
 from subprocess import call
 from scipy.optimize import fsolve
 import sys
-import sympy
+#import sympy
 #Initiate plotting environment:
 import matplotlib as mpl
 from pylab import plot, xlabel, ylabel, show, savefig
