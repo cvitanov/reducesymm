@@ -3852,8 +3852,39 @@ Using only the first cycle $\overline{1}$, I get the following estimate for the 
 from the inverse $\zeta$ function:
 \beq
   \gamma \simeq 1- 1/|\Lambda_{\overline{1}}| \simeq 0.326
-\eeq
+\ee{e-ZetaConsRule}
 which does not depend on how we approximate the grammar. What do I miss? 
+
+\item[2014-07-14 Burak] You are right, $N=1$ results in \reftab{t-DynamicalAveragesNoGrammar}
+and \reftab{t-DynamicalAverages} must be the same, and they are close to each other but differ
+at the fifth decimal place. It is completely my fault, and result of my implementation. `Finite
+grammar' and `all rpos' are two different databases and I probably used different multiple shooting
+sub-divisions for each case, so Floquet multiplier of \cycle{1} in two cases differ by a small
+amount, causing the apparent discrepancy.
+
+The quantity that you are looking at in \refeq{e-ZetaConsRule} is not the escape rate,
+but it's the flow conservation rule that should be close to zero if periodic orbits 
+cover the attractor well. You implicitely assume that the escape rate is `0' and plug
+that in the zeta function, and expect the zeta function to vanish for $0$ escape rate,
+and write that conversation rule. However, for a particular order in expansion,
+escape rate is found by solving $\zeta (\beta = 0, s_0) = 0$, where $s_0$ is the leading
+$0$ of the dynamical zeta function; then the escape rate is $\gamma = - s_0$. 
+
+Here are numbers I get when I compute the flow conversation rule for the zeta function
+(finite grammar) in order upto $5$ in the expansion:
+\bea
+	\zeta (0, 0) &=& 0.326019994263891, -0.173842965806291, 0.126663646598951, \continue
+				 && 	-0.0681237161617973, 0.0293660939936478, ...
+\eea
+so our initial numbers are same. For the escape rate, I get the following:
+\bea
+	\gamma &=& 0.10834917226127472, -0.031018879366355036, 0.04607247616487041, \continue
+		   && -0.012530861909001791, 0.007462614819364516, ...
+\eea
+These numbers are not the same with those in \reftab{t-DynamicalAverages}, but
+I believe it's normal because even at the first order in expansion, we 
+approximate the denominator $|1 - \Lambda|$ in the spectral determinant by $|\Lambda|$
+and this approximation is simply wrong for \cycle{1}, since $\Lambda_{\cycle{1}} \approx -1.5$ .
 
 \item[2013-08-10  Predrag to Chaos Gang] It's not over until it is over.
 

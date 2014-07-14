@@ -19,7 +19,7 @@ Lambdath = 1e-6 #Stability Threshold
 
 for ExpOrder in range(1,8):
 
-    conn = sqlite3.connect('data/rpoall.db')
+    conn = sqlite3.connect('data/rpo.db')
     c = conn.cursor()
     
     Zeta0 = 1
