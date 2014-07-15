@@ -1,30 +1,65 @@
 \section{\CycForm s}
 \label{s:DynAvers}
-
-Spectrum of an observable, such as phase drift, or energy dissipation, of
-a dynamical system is dual to the spectrum of its periodic orbits by
-means of the classical trace formula\rf{DasBuch}
+We begin with a brief review of main results of the periodic 
+orbit theory, for a detailed introduction to the subject, we refer the reader to 
+\refref{DasBuch}. Consider the evolution operator corresponding to an observable 
+$A$ that is `additive' along every deterministic orbit $f^t(x)$:
+\beq
+	\Lop^t (y, x) = \delta (y - f^t (x)) e^{\beta A^t(x)} \, .
+	\label{eq-EvOp}
+\eeq
+Here, $\beta$ is an auxilliary variable use of which will be apparent soon.
+Since we required $A$ to be additive along the orbit and exponentiated
+it in the definition of the evolution operator \refeq{eq-EvOp}, the
+evolution operator itself is multiplicative:
+\beq
+	\Lop^{t_1 + t_2} (y,x) = \int dz \Lop^{t_2} (y, z) \Lop^{t_1} (z, x) \, . 
+	\label{eq-SemiGroup}
+\eeq
+This semigroup property of the evolution operator allows us to define
+the evolution operator as the formal exponential of its infinitesimal
+generator \Aop :
+\beq
+	\Lop^t = e^{\Aop t} \, . 
+	\label{eq-EvOpExp}
+\eeq 
+Now we can construct the resolvent of \Aop , by taking the Laplace
+transform of \refeq{eq-EvOpExp}, 
+\beq
+	\int_0^{\infty} dt e^{-st} \Lop^t = (s-\Aop^t)^{-1} \, ,
+	\label{eq-ResoolventA}
+\eeq
+trace of which peaks at the eigen values of \Aop. By taking the
+Laplace transform of \refeq{eq-EvOp} and computing its trace 
+by $\tr \Lop (y,x) = \int dy dx \Lop (y,x)$ we obtain the
+classical trace formula:
 \beq
 \sum_{\alpha=0}^{\infty} \frac{1}{s-s_{\alpha}} = \sum_p T_p \sum_{r=1}^{\infty} \frac{e^{r(\beta A_p - s T_p)}}{\oneMinJ{r}} .
 \ee{e-ClassicalTraceFormula}
+which relates the spectrum of \Aop\ to the spectrum of the periodic 
+orbits. Here, $s_{\alpha}$ are the eigenvalues of $\mathcal{A}$, 
+outer sum on the RHS runs over the `prime cycles' of the system, 
+$T_p$ is the period of the prime cycle $p$, $A_p$ is the value of 
+the observable along the prime cycle, $\monodromy_p$ is the transverse 
+(no marginal directions) monodromy matrix and $s$ is the auxilliary
+variable of the Laplace transform.
 
-\begin{figure}%[H]
-\centering
- \includegraphics[width=0.45\textwidth]{2modes-lambdaDist}
-\caption{Distribution of the leading Floquet exponents of \twomode\ cycles.}
-\label{f-2modes-lambdaDist}
-\end{figure}
-
-
-Here, $s_{\alpha}$ are the eigenvalues of $\mathcal{A}$, the semigroup generator of the dynamical evolution of the observable $A$, outer sum on the RHS runs over the ``prime cycles'' of the system, $T_p$ is the period of the prime cycle $p$, $A_p$ is the value of the observable along the prime cycle, $\monodromy_p$ is the transverse (no marginal directions) monodromy matrix and $s$ and $\beta$ are auxilliary variables dual to the observable $A$ and time respectively.
-
-While the classical trace formula \refeq{e-ClassicalTraceFormula} manifests the essential duality between the spectrum of an observable and that of the periodic orbits, in practice, it is hard to work with since the eigenvalues are located at the poles of
-\refeq{e-ClassicalTraceFormula}. For this reason, one expresses this duality equivalently as the following spectral determinant
+While the classical trace formula \refeq{e-ClassicalTraceFormula} manifests 
+the essential duality between the spectrum of an observable and that of 
+the periodic orbits, in practice, it is hard to work with since the eigenvalues 
+are located at the poles of \refeq{e-ClassicalTraceFormula}. For this reason, 
+one expresses this duality equivalently as the following spectral determinant
 \beq
     \det (s-\mathcal{A}) = \exp \left( - \sum_p \sum_{r=1}^{\infty}
                              \frac{1}{r} \frac{e^{r(\beta A_p - s T_p)}}{\oneMinJ{r}} \right)\, ,
 \ee{e-SpectralDeterminant}
-logarithmic derivative of which gives \refeq{e-ClassicalTraceFormula}. The spectral determinant \refeq{e-SpectralDeterminant} is easier to work with since the spectrum of $\mathcal{A}$, is now located at the zeros of \refeq{e-SpectralDeterminant}. Convergence of \refeq{e-SpectralDeterminant} is still not obvious. More insight is gained by approximating $\oneMinJ{r}$ by the product of expanding Floquet multipliers and then computing the $r$ sum in \refeq{e-SpectralDeterminant}.
+logarithmic derivative of which gives \refeq{e-ClassicalTraceFormula}. 
+The spectral determinant \refeq{e-SpectralDeterminant} is easier to work 
+with since the spectrum of $\mathcal{A}$, is now located at the zeros of 
+\refeq{e-SpectralDeterminant}. Convergence of \refeq{e-SpectralDeterminant} 
+is still not obvious. More insight is gained by approximating $\oneMinJ{r}$ 
+by the product of expanding Floquet multipliers and then computing the $r$ 
+sum in \refeq{e-SpectralDeterminant}.
 \bea
 \oneMinJ{} &=& | (1 - \ExpaEig_{e,1})(1 - \ExpaEig_{e,2})... \continue
 			&&(1 - \ExpaEig_{c,1}) (1 - \ExpaEig_{c,2}) ... | \nonumber \\
@@ -40,28 +75,59 @@ Where we inserted the `order tracking' term $z$. For complete binary symbolic dy
 		  && - [(t_{011} - t_{01}t_1) + (t_{001} - t_{01} t_0)] - ... \continue
 		  &=& 1 - \sum_f t_f - \sum_n \hat{c}_n \label{e-CurvatureExpansion}.
 \eea
-In the curvature expansion \refeq{e-CurvatureExpansion}, we grouped the contributions to the dynamical zeta function as `fundamental' contributions $t_f$ and `curvature' corrections. One expects the curvature corrections to be small since the longer prime cycles are `shadowed' by the combination of the shorter ones, the `pseudocycles'.
+In the curvature expansion \refeq{e-CurvatureExpansion}, we grouped the 
+contributions to the dynamical zeta function as `fundamental' contributions 
+$t_f$ and `curvature' corrections. One expects the curvature corrections to 
+be small since the longer prime cycles are `shadowed' by the combination of 
+the shorter ones, the `pseudocycles'.
 
-For complete binary symbolic dynamics, the only fundamental contributions to the dynamical zeta function are the cycles with topological length $1$, see \refeq{e-CurvatureExpansion}. This is not the case for any map since in general there might be non-trivial pruning rules, hence longer cycles can appear unshadowed. The Poincar\'e return map of \reffig{fig:psectandretmap}\,{d) is such a map with non-trivial pruning rules, however, note that cycles \cycle{001} and \cycle{011} passes very close to the tip of the cusp, the critical point, in \reffig{fig:psectandretmap}\,{d). This observation motivates us to approximate the return map of \reffig{fig:psectandretmap}\,{d), as if its tip is located at $s = 0.97986453$, where the cycle \cycle{001} lands, and omit the contributions above this point. We will refer this approximation as the `finite grammar approximation' since by doing it, we obtain single pruning rule; that is the symbol sequence $00$ is not allowed. This grammar is known as the `golden mean' pruning and a complete binary symbolic dynamics can be converted to the golden mean symbolic dynamics by substitution $0 \rightarrow 01$. We can write the dynamical zeta function for the golden mean pruned symbolic dynamics by replacing $0$s in \refeq{e-CycleExpansion} by $01$:
+For complete binary symbolic dynamics, the only fundamental contributions to 
+the dynamical zeta function are the cycles with topological length $1$, see 
+\refeq{e-CurvatureExpansion}. This is not the case for any map since in general 
+there might be non-trivial pruning rules, hence longer cycles can appear unshadowed. 
+The Poincar\'e return map of \reffig{fig:psectandretmap}\,{d) is such a map 
+with non-trivial pruning rules, however, note that cycles \cycle{001} and \cycle{011} 
+passes very close to the tip of the cusp, the critical point, in 
+\reffig{fig:psectandretmap}\,{d). This observation motivates us to approximate 
+the return map of \reffig{fig:psectandretmap}\,{d), as if its tip is located at 
+$s = 0.97986453$, where the cycle \cycle{001} lands, and omit the contributions 
+above this point. We will refer this approximation as the `finite grammar approximation' 
+since by doing it, we obtain single pruning rule; that is the symbol sequence 
+$00$ is not allowed. This grammar is known as the `golden mean' pruning and a 
+complete binary symbolic dynamics can be converted to the golden mean symbolic 
+dynamics by substitution $0 \rightarrow 01$. We can write the dynamical zeta 
+function for the golden mean pruned symbolic dynamics by replacing $0$s in 
+\refeq{e-CycleExpansion} by $01$:
 \bea
 1 / \zeta &=& 1 - t_{01} - t_1 - (t_{011} - t_{01} t_1 ) \label{e-GoldenMeanCycleExpansion}\\
 		  && - [(t_{0111} - t_{011}t_1) + (t_{01011} - t_{01} t_{011} ) ] - ... \nonumber
 \eea
 Note that all the contributions longer than topological length $2$ to the golden mean dynamical zeta function are in form of shadowing combinations. However, as we shall see, they are not small.
 
-While dynamical zeta functions are useful for investigating the convergence properties, they are not exact, and their computational cost is same with that of the exact spectral determinants. For this reason, we will expand the spectral determinant \refeq{e-SpectralDeterminant} ordered in the topological length of cycles and pseudocycles as follows:
+While dynamical zeta functions are useful for investigating the convergence 
+properties, they are not exact, and their computational cost is same with 
+that of the exact spectral determinants. For this reason, we will expand the 
+spectral determinant \refeq{e-SpectralDeterminant} ordered in the topological 
+length of cycles and pseudocycles as follows:
 \beq
     \det (s-\mathcal{A}) =   \prod_p \exp \left( - \sum_{r=1}^{n_p r < N}
                              \frac{1}{r} \frac{e^{r(\beta A_p - s T_p)}
                                           }{\oneMinJ{r}} z^{n_p r} \right) \, .
 \ee{e-SpectralDeterminantExp}
-This is the form that we use to compute the spectral determinant. For each prime cycle, we compute the sum term in \refeq{e-SpectralDeterminantExp} truncated at the expansion order $N$, and then expand the exponential upto order $N$, and multiply this expansion with the contributions from previous cycles and drop terms with order greater than $N$. This way, we obtain the $N^{th}$ order spectral determinant \refeq{e-SpectralDeterminant}. Let us denote the resultant series after setting $z=1$ as
+This is the form that we use to compute the spectral determinant. For each prime 
+cycle, we compute the sum term in \refeq{e-SpectralDeterminantExp} truncated at 
+the expansion order $N$, and then expand the exponential upto order $N$, and multiply 
+this expansion with the contributions from previous cycles and drop terms with 
+order greater than $N$. This way, we obtain the $N^{th}$ order spectral determinant 
+\refeq{e-SpectralDeterminant}. Let us denote the resultant series after setting $z=1$ as
 \beq
     F_N(s, \beta ) = 1 - \sum_{n=1}^{N} Q_n(s, \beta ) \, .
     \label{e-NthOrderSpectDet}
 \eeq
-Leading $0$ of $F_N(s, 0)$, $s_0$, corresponds to the leading eigenvalue of the Perron-Forbenius operator, $\gamma_0 = - s_0$, which can be interpreted as the `escape rate'. We expect the escape rate to be small, ideally zero, if the cycle expansion is good.
-After finding $s_0$, we can compute the dynamical averages as follows:
+Leading $0$ of $F_N(s, 0)$, $s_0$, corresponds to the leading eigenvalue of the 
+Perron-Forbenius operator, $\gamma_0 = - s_0$, which can be interpreted as the 
+`escape rate'. We expect the escape rate to be small, ideally zero, if the cycle 
+expansion is good. After finding $s_0$, we can compute the dynamical averages as follows:
 Mean period:
 \bea
     \langle T \rangle_N &=& \left. \frac{\partial F_N}{\partial s}
@@ -79,15 +145,49 @@ Mean period:
     &=& - \frac{1}{\langle T \rangle_N} \left. \frac{\partial^2 F_N}{\partial \beta^2} \right|_{\beta=0,
                                                                     s=s_0} \, \label{e-Avgsigma} .
 \eea
-Here, $\langle T \rangle_N$ is average cycle period, $A$ denotes an observable that is ``additive'' along the trajectories, in other words, that satisfies semi-group property; and $a$ a is the rate of that observable. For example, for $A = \phi$, \refeq{e-AvgA} yields the ``average phase shift per cycle'', whereas \refeq{e-Avga} yields ``average phase speed''. Variances \refeq{e-AvgSigma} and \refeq{e-Avgsigma} are respectively interpreted similarly as the ``variance per cycle'' and ``variance rate'' of an observable.
+Here, $\langle T \rangle_N$ is average cycle period, $A$ denotes an observable 
+that is ``additive'' along the trajectories, in other words, that satisfies 
+semi-group property; and $a$ a is the rate of that observable. For example, 
+for $A = \phi$, \refeq{e-AvgA} yields the ``average phase shift per cycle'', 
+whereas \refeq{e-Avga} yields ``average phase speed''. Variances \refeq{e-AvgSigma} 
+and \refeq{e-Avgsigma} are respectively interpreted similarly as the 
+``variance per cycle'' and ``variance rate'' of an observable.
 
-We computed escape rate $\gamma$, average cycle period $\langle T \rangle$, leading Lyapunov exponent $\Lyap$, average phase speed $\langle \dot{\phi} \rangle$ and the phase diffusion constant $D$ of the \twomode\ system using cycle averaging formulas \refeqs{e-AveragePeriod}{e-Avgsigma}. We listed our findings with respect to the increasing expansion order in \reftab{t-DynamicalAverages} and \reftab{t-DynamicalAveragesNoGrammar}. While in \reftab{t-DynamicalAverages} we used the finite grammar approximation, in \reftab{t-DynamicalAveragesNoGrammar} we input all the cycles we found to the calculation.
+We computed escape rate $\gamma$, average cycle period $\langle T \rangle$, 
+leading Lyapunov exponent $\Lyap$, average phase speed $\langle \dot{\phi} \rangle$ 
+and the phase diffusion constant $D$ of the \twomode\ system using cycle 
+averaging formulas \refeqs{e-AveragePeriod}{e-Avgsigma}. We listed our 
+findings with respect to the increasing expansion order in \reftab{t-DynamicalAverages} 
+and \reftab{t-DynamicalAveragesNoGrammar}. While in \reftab{t-DynamicalAverages} 
+we used the finite grammar approximation, in \reftab{t-DynamicalAveragesNoGrammar} 
+we input all the cycles we found to the calculation.
 
 \input{2modesDynamicalAverages}
 \input{2modesDynamicalAveragesNoGrammar}
 
-We motivated our finite grammar approximation by expecting a fast convergence after second order in the cycle expansion, however,
-this is not the case. The reason is, as we mentioned before, that the curvature corrections of \refeq{e-GoldenMeanCycleExpansion} are not small. This is due to the fact that the Floquet exponent of the cycle \cycle{011} (marked cyan at $1/3$ line of \reffig{f-2modes-lambdaDist}), is much larger than the rest of the set that appears in the cycle expansion, and since the cycle contributions are weighted by the inverse Floquet multipliers, $t_{011}$ almost cancels every shadowing combination it appears. Hence the curvature corrections in which $t_{011}$ appears as a shadowing orbit, are not small. However, we still get a better convergence comparing to the case where we include all cycles in the calculation. \refTab{t-DynamicalAverages} and \reftab{t-DynamicalAveragesNoGrammar} show that when the expansion order is $10$, the Lyapunov exponents converges with a $6$ digits in the finite grammmar calculations, whereas it has $4$ digit convergence in the case where we included all cycle contributions.
+\begin{figure}%[H]
+\centering
+ \includegraphics[width=0.45\textwidth]{2modes-lambdaDist}
+\caption{Distribution of the leading Floquet exponents of \twomode\ cycles.}
+\label{f-2modes-lambdaDist}
+\end{figure}
+
+We motivated our finite grammar approximation by expecting a fast convergence
+after second order in the cycle expansion, however, this is not the case. The 
+reason is, as we mentioned before, that the curvature corrections of
+\refeq{e-GoldenMeanCycleExpansion} are not small. This is due to the fact 
+that the Floquet exponent of the cycle \cycle{011} (marked cyan at $1/3$ 
+line of \reffig{f-2modes-lambdaDist}), is much larger than the rest of the 
+set that appears in the cycle expansion, and since the cycle contributions 
+are weighted by the inverse Floquet multipliers, $t_{011}$ almost cancels 
+every shadowing combination it appears. Hence the curvature corrections in
+which $t_{011}$ appears as a shadowing orbit, are not small. However, we 
+still get a better convergence comparing to the case where we include 
+all cycles in the calculation. \refTab{t-DynamicalAverages} and 
+\reftab{t-DynamicalAveragesNoGrammar} show that when the expansion order 
+is $10$, the Lyapunov exponents converges with a $6$ digits in the finite 
+grammmar calculations, whereas it has $4$ digit convergence in the case 
+where we included all cycle contributions.
 
 In order to compare with the cycle averages, we numerically estimated the
 leading Lyapunov exponent of the \twomode\ system using the method of
