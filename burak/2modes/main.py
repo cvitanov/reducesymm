@@ -1,7 +1,7 @@
 """
     Main file to produce results that are going to be included in the 2modes paper
     Not every calculation needs to be done at each run, data can be produced
-    and stored locally, see the booleans in line 18
+    and stored locally, see the booleans in lines 30-36
     
     Requires numpy ver > 1.8
 """
@@ -33,7 +33,7 @@ computeArcLengths = False
 computeRPO = True
 computeRPOred3 = False
 plotPsect = False
-plotRetmap = True
+plotRetmap = False
 
 #Search parameters:
 nPrimeMax = 12 #Will search for [1,m]-cycles
@@ -414,7 +414,7 @@ if computeRPO:
         
         print "Searching for candidates on "+str(i+1)+"-th return map"
         fpoevo=0
-        sstep = (smax-smin)/3000000
+        sstep = (smax-smin)/10000000
         for s0 in np.arange(smin, smax, sstep):
             fpoev = fpo(s0)
             if fpoev * fpoevo < 0: #If there is a zero-crossing, look for the root: 
@@ -462,13 +462,19 @@ if computeRPO:
             PopedCycles.append(AdmissibleCycles.pop(i))
             i -= 1
             #raw_input("Attention here")
-            raw_input("Pop!")            
+            #raw_input("Pop!")            
         print AdmissibleCycles[i]
         i += 1
         # #Divide intervals into smaller subintervals for multiple shooting:
     nsub = 100 #number of subintervals
+    #Print poped cycles:
+    orig_stdout = sys.stdout
+    f = file('data/popedcycles.txt', 'w')
+    sys.stdout = f
     print PopedCycles
-    raw_input("Poped cycles")
+    sys.stdout = orig_stdout
+    f.close()
+    #raw_input("Poped cycles")
     
     for k in range(len(AdmissibleCycles)):
         l = 0
@@ -677,7 +683,7 @@ if plotPsect:
 if plotRetmap:
     fig=plt.figure(1, figsize=(8,8))
     srange = np.arange(np.min(sn), np.max(sn), np.max(sn)/50000)
-    plot(sn, snplus1, '.b',                                                     ms=10)
+    plot(sn, snplus1, '.b',  ms=10)
     plt.hold(True)
     plot(xintRetMap, yintRetMap, 'k', lw=2)
     plot(srange, srange, 'g', lw=2)
