@@ -3,13 +3,14 @@
 We begin with a brief review of main results of the periodic 
 orbit theory, for a detailed introduction to the subject, we refer the reader to 
 \refref{DasBuch}. Consider the evolution operator corresponding to an observable 
-$A$ that is `additive' along every deterministic orbit $f^t(x)$:
+$a$ that is `additive' along every deterministic orbit $f^t(x)$:
 \beq
 	\Lop^t (y, x) = \delta (y - f^t (x)) e^{\beta A^t(x)} \, .
 	\label{eq-EvOp}
 \eeq
-Here, $\beta$ is an auxilliary variable use of which will be apparent soon.
-Since we required $A$ to be additive along the orbit and exponentiated
+Here, $\beta$ is an auxilliary variable use of which will be apparent soon, 
+$A^t (x)$ is the value of $a$ integrated along the orbit $f^t(x)$.
+Since we required $a$ to be additive along the orbit and exponentiated
 it in the definition of the evolution operator \refeq{eq-EvOp}, the
 evolution operator itself is multiplicative:
 \beq
@@ -23,26 +24,61 @@ generator \Aop :
 	\Lop^t = e^{\Aop t} \, . 
 	\label{eq-EvOpExp}
 \eeq 
-Now we can construct the resolvent of \Aop , by taking the Laplace
-transform of \refeq{eq-EvOpExp}, 
+By definition \refeq{eq-EvOp}, eigenvalues and eigenfunctions of $\Lop^t$ (and 
+thus \Aop ), are functions of $\beta$. Let us define $\rho_{\beta} (x)$ as the 
+eigenfunction of \refeq{eq-EvOp} with the leading eigenvalue (the one with the 
+largest real part); we can write the action of \refeq{eq-EvOp} on this density 
+eplicitely as follows:
 \beq
-	\int_0^{\infty} dt e^{-st} \Lop^t = (s-\Aop^t)^{-1} \, ,
+    \left[ \Lop^t \rho_{\beta} \right] (x) = e^{t s(\beta )} \rho_{\beta} (x) \, .
+    \label{eq-EigenvalueRel}
+\eeq
+Here, $s(\beta)$ is the eigenvalue of $\Aop$. Note that for $\beta = 0$, 
+\refeq{eq-EvOp} becomes the so called Perron-Frobenius operator (or transfer operator),
+action of which simply evolves densities in time. If the system at hand is ergodic, 
+$s(0) = 0$ and $\rho_0 (x)$ is called `invariant measure'. By evaluating the action 
+of \refeq{eq-EvOp} for infinitesimal times one can show that long time average
+(and higher moments) of the observable $a$ are given by the derivatives of $s(\beta)$:
+\beq
+    \langle a \rangle = \left. \frac{d s}{d \beta} \right|_{\beta = 0} \, , \quad
+    \langle (a - \langle a \rangle )^2 \rangle = \left. \frac{d^2 s}{d \beta^2} 
+                                                     \right|_{\beta = 0} \,, ...
+    \label{eq-moments}                                                    
+\eeq
+In order to obtain $s(\beta)$ we construct the resolvent of \Aop , by taking the 
+Laplace transform of \refeq{eq-EvOpExp}: 
+\beq
+	\int_0^{\infty} dt e^{-st} \Lop^t = (s-\Aop)^{-1} \, ,
 	\label{eq-ResoolventA}
 \eeq
 trace of which peaks at the eigen values of \Aop. By taking the
 Laplace transform of \refeq{eq-EvOp} and computing its trace 
-by $\tr \Lop (y,x) = \int dy dx \Lop (y,x)$ we obtain the
+by $\tr \Lop (y,x) = \int dx \Lop (x,x)$ we obtain the
 classical trace formula:
 \beq
-\sum_{\alpha=0}^{\infty} \frac{1}{s-s_{\alpha}} = \sum_p T_p \sum_{r=1}^{\infty} \frac{e^{r(\beta A_p - s T_p)}}{\oneMinJ{r}} .
+\sum_{\alpha=0}^{\infty} \frac{1}{s-s_{\alpha}} = \sum_p T_p 
+\sum_{r=1}^{\infty} \frac{e^{r(\beta A_p - s T_p)}}{\oneMinJ{r}} .
 \ee{e-ClassicalTraceFormula}
 which relates the spectrum of \Aop\ to the spectrum of the periodic 
-orbits. Here, $s_{\alpha}$ are the eigenvalues of $\mathcal{A}$, 
+orbits. Here, $s_{\alpha}$ are the eigenvalues of \Aop , 
 outer sum on the RHS runs over the `prime cycles' of the system, 
 $T_p$ is the period of the prime cycle $p$, $A_p$ is the value of 
-the observable along the prime cycle, $\monodromy_p$ is the transverse 
-(no marginal directions) monodromy matrix and $s$ is the auxilliary
-variable of the Laplace transform.
+the observable along the prime cycle, $s$ is the auxilliary
+variable of the Laplace transform, and $\monodromy_p$ is the transverse 
+monodromy matrix, eigenvalues of which are the Floquet multipliers of the prime 
+cycle $p$ excluding the marginal ones ($|\Lambda| \neq 1$). In deriving  
+\refeq{e-ClassicalTraceFormula} one assumes a single marginal direction, namely 
+the direction that is parallel to the periodic orbit at all times, and evaluates 
+the trace integral by transforming to a local coordinate system where one of the 
+coordinates is paralel to the flow while the rest is transverse. Integration along
+the parallel direction contributes factors of $T_p$, and the transverse integral
+over the delta function contributes $\oneMinJ{r}$. Important observation is that
+the final result \refeq{e-ClassicalTraceFormula} do not depend on the choice
+of the coordinate system. In the \twomode\ system, we have an extra unit Floquet
+multiplier for the symmetry direction, however, if we assume that we are working
+in the \slice , and define all of our observables within the \slice , we can 
+simply ignore this direction and apply \refeq{e-ClassicalTraceFormula} and what
+follows using non-marginal Floquet multipliers. 
 
 While the classical trace formula \refeq{e-ClassicalTraceFormula} manifests 
 the essential duality between the spectrum of an observable and that of 
@@ -124,34 +160,46 @@ order greater than $N$. This way, we obtain the $N^{th}$ order spectral determin
     F_N(s, \beta ) = 1 - \sum_{n=1}^{N} Q_n(s, \beta ) \, .
     \label{e-NthOrderSpectDet}
 \eeq
-Leading $0$ of $F_N(s, 0)$, $s_0$, corresponds to the leading eigenvalue of the 
-Perron-Forbenius operator, $\gamma_0 = - s_0$, which can be interpreted as the 
-`escape rate'. We expect the escape rate to be small, ideally zero, if the cycle 
-expansion is good. After finding $s_0$, we can compute the dynamical averages as follows:
-Mean period:
+Remember that we are looking for the eigenvalues $s ( \beta)$ of the \Aop , more
+specifically, we would like to compute the moments \refeq{eq-moments}. $s ( \beta)$
+are located at the zeros of the spectral determinant, hence they satisfy the implicit
+equation:
+\beq
+    F_N(s, s(\beta )) = 0 \, .
+    \label{e-FNimplicit}
+\eeq
+By taking derivative of \refeq{e-FNimplicit} with respect to $\beta$ and applying
+chain rule we obtain
+\beq
+    \frac{d s}{d \beta} = - \left. \frac{\partial F}{\partial \beta} \right/
+                                     \frac{\partial F}{\partial s}
+\eeq
+We can similarly take the higher order derivatives to get higher order moments. 
+Finally, by defining $\langle T \rangle_N &=& \left. \frac{\partial F_N}{\partial s} \right|_{\beta=0, s=s (0)} $
+we obtain the \CycForm s:
 \bea
-    \langle T \rangle_N &=& \left. \frac{\partial F_N}{\partial s}
-                            \right|_{\beta=0, s=s_0} \, , \label{e-AveragePeriod} \\
-    \langle A \rangle_N &=& - \left.
-                              \frac{\partial F_N}{\partial \beta}
-                              \right|_{\beta=0, s=s_0} \, ,   \label{e-AvgA} \\
-    \langle (A - \langle A \rangle )^2 \rangle_N
-    &=& - \left. \frac{\partial^2 F_N}{\partial \beta^2} \right|_{\beta=0,
-                                                  s=s_0} \, , \label{e-AvgSigma} \\
     \langle a \rangle_N &=& - \frac{1}{\langle T \rangle_N} \left.
                               \frac{\partial F_N}{\partial \beta}
-                              \right|_{\beta=0, s=s_0} \, ,   \label{e-Avga} \\
+                              \right|_{\beta=0, s=s (0)} \, ,   \label{e-Avga} \\
     \langle (a - \langle a \rangle )^2 \rangle_N
     &=& - \frac{1}{\langle T \rangle_N} \left. \frac{\partial^2 F_N}{\partial \beta^2} \right|_{\beta=0,
-                                                                    s=s_0} \, \label{e-Avgsigma} .
+                                                                    s=s (0)} \, \label{e-Avgsigma} .
 \eea
-Here, $\langle T \rangle_N$ is average cycle period, $A$ denotes an observable 
-that is ``additive'' along the trajectories, in other words, that satisfies 
-semi-group property; and $a$ a is the rate of that observable. For example, 
-for $A = \phi$, \refeq{e-AvgA} yields the ``average phase shift per cycle'', 
-whereas \refeq{e-Avga} yields ``average phase speed''. Variances \refeq{e-AvgSigma} 
-and \refeq{e-Avgsigma} are respectively interpreted similarly as the 
-``variance per cycle'' and ``variance rate'' of an observable.
+While for an invariant measure we expect $s (0)$ to be $0$, we did not make that
+substitution in \CycForm s, since in practice, our approximation to the spectral
+determinant is always of a finite precision, hence the solution of 
+$F_N(0, s(0)) = 0$ is not exactly $0$. This eigenvalue has a special meaning:
+since it is the leading eigenvalue of the Perron-Frobenius operator, it determines
+how much the dominant measure decays in time (see \refeq{eq-EigenvalueRel} ). With
+this interpretation, we define $\gamma = - s(0)$ as the `escape rate'. 
+
+%Here, $\langle T \rangle_N$ is average cycle period, $A$ denotes an observable 
+%that is ``additive'' along the trajectories, in other words, that satisfies 
+%semi-group property; and $a$ a is the rate of that observable. For example, 
+%for $A = \phi$, \refeq{e-AvgA} yields the ``average phase shift per cycle'', 
+%whereas \refeq{e-Avga} yields ``average phase speed''. Variances \refeq{e-AvgSigma} 
+%and \refeq{e-Avgsigma} are respectively interpreted similarly as the 
+%``variance per cycle'' and ``variance rate'' of an observable.
 
 We computed escape rate $\gamma$, average cycle period $\langle T \rangle$, 
 leading Lyapunov exponent $\Lyap$, average phase speed $\langle \dot{\phi} \rangle$ 
