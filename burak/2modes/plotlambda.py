@@ -13,7 +13,7 @@ from StringIO import StringIO
 conn = sqlite3.connect('data/rpoall.db')
 c = conn.cursor()
 
-Ncycle = 127
+Ncycle = 133
 
 for rpono in range(1,Ncycle+1):
     c.execute("SELECT * FROM rpos WHERE rpono = "+str(rpono))
@@ -38,7 +38,7 @@ ax = fig.gca()
 Nticks = 8
 xticks = np.linspace(0.05, 0.40, Nticks)
 ax.set_xticks(xticks) 
-ax.set_xticklabels(["$%.2f$" % xtik for xtik in xticks], fontsize=12); 
+ax.set_xticklabels(["$%.2f$" % xtik for xtik in xticks], fontsize=14); 
 
 yticks = np.array([1.0/n for n in range(2,13)], float)
 ax.set_yticks(yticks)

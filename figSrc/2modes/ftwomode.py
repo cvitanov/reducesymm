@@ -91,7 +91,7 @@ ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=24);
 
 zticks = np.linspace(-1.5, 1.5, Nticks)
 ax.set_zticks(zticks)
-ax.set_zticklabels(["$-1.5$ \t", " $0.0$", " $1.5$"], fontsize=24); 
+ax.set_zticklabels(["$-1.5$ \t ", " $0.0$  ", " $1.5$  "], fontsize=24); 
 
 ax.view_init(15,30)
 savefig('2modes-ssp.pdf', bbox_inches='tight', dpi=100)
@@ -117,7 +117,7 @@ ax.set_zlabel('$\hat{y}_2$   ', fontsize=32)
 
 xticks = np.linspace(0, 2, Nticks)
 ax.set_xticks(xticks) 
-ax.set_xticklabels(["$%.1f$" % xtik for xtik in xticks], fontsize=24); 
+ax.set_xticklabels(["$%.1f$ " % xtik for xtik in xticks], fontsize=24); 
 
 yticks = np.linspace(-1.8, 0, Nticks)
 ax.set_yticks(yticks)
@@ -125,7 +125,8 @@ ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=24);
 
 zticks = np.linspace(-0.3, 0.3, Nticks)
 ax.set_zticks(zticks)
-ax.set_zticklabels(["$%.1f$ " % ztik for ztik in zticks], fontsize=24); 
+#ax.set_zticklabels(["$%.1f$ " % ztik for ztik in zticks], fontsize=24); 
+ax.set_zticklabels(["$-0.3$ \t ", " $0.0$  ", " $0.3$  "], fontsize=24); 
 
 ax.view_init(15,30)
 savefig('2modes-sspRed.pdf', bbox_inches='tight', dpi=100)
@@ -160,7 +161,8 @@ ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=24);
 
 zticks = np.linspace(-10, 0, Nticks)
 ax.set_zticks(zticks)
-ax.set_zticklabels(["$%.1f$ " % ztik for ztik in zticks], fontsize=24); 
+#ax.set_zticklabels(["$%.1f$ " % ztik for ztik in zticks], fontsize=24); 
+ax.set_zticklabels(["$-10.0$    ", " $-5.0$    ", " $0.0$ "], fontsize=24); 
 
 ax.view_init(15,30)
 savefig('2modes-invpol.pdf', bbox_inches='tight', dpi=100)

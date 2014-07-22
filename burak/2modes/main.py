@@ -30,10 +30,11 @@ oct2py.octave.addpath(peddir) #Add mfiles for ped
 computeSolution = False
 computePsect = False
 computeArcLengths = False
-computeRPO = True
+computeRPO = False
 computeRPOred3 = False
-plotPsect = False
+plotPsect = True
 plotRetmap = False
+plotRetmapFull = True
 
 #Search parameters:
 nPrimeMax = 12 #Will search for [1,m]-cycles
@@ -147,8 +148,8 @@ def psarclength(x):
 if computeArcLengths:
     print 'Computing arclengths corresponding to data'
     #Find the first data point for the Arclengths to discard the transients
-    iArcLength0 = np.argwhere(ps[:,0]>200)[0]
-    #iArcLength0 = np.argwhere(ps[:,0]>0)[0]
+    #iArcLength0 = np.argwhere(ps[:,0]>200)[0]
+    iArcLength0 = np.argwhere(ps[:,0]>0)[0]
     sn = np.array([psarclength(ps2D[i,0]) for i in 
     range(iArcLength0, np.size(ps2D,0))], float)
     snmin = np.min(sn)
@@ -198,7 +199,7 @@ def fCritical(s):
     return po
 s3Critical = fsolve(fCritical, sCritical*0.999)
 s3Critical2 = fsolve(fCritical, sCritical*1.001)
-s3Critical = sCritical
+#s3Critical = sCritical
 print "s3Critical:"
 print s3Critical
 
@@ -661,22 +662,24 @@ if plotPsect:
     plot(xintps, yintps, 'k', lw=2)
     ax=fig.gca()
     #ax.set_aspect('equal')
-    ax.set_xlabel('$v_1$', fontsize=24)
-    ax.set_ylabel('$v_{2 \quad (\\times 100)}$', fontsize=24)
+    ax.set_xlabel('$v_1$', fontsize=52)
+    ax.set_ylabel('$v_{2 \quad (\\times 100)}$', fontsize=52)
     Nticks=5
     xticks = np.linspace(min(ps2D[:,0]), max(ps2D[:,0]), Nticks)
     ax.set_xticks(xticks)
-    ax.set_xticklabels(["$%.1f$" % xtik for xtik in xticks], fontsize=16);
+    ax.set_xticklabels(["\n$%.1f$" % xtik for xtik in xticks], fontsize=48, linespacing=1);
+    ax.xaxis.set_tick_params(width=2)
     yticks = np.linspace(min(ps2D[:,1]), max(ps2D[:,1]), Nticks)
     ax.set_yticks(yticks)
     plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
     yticks=yticks*100
-    ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=16);
+    ax.set_yticklabels(["$%.1f$ " % ytik for ytik in yticks], fontsize=48, linespacing=0.6);
+    ax.yaxis.set_tick_params(width=2)
     ax.set_xlim(min(ps2D[:,0]),max(ps2D[:,0]))
     ax.set_ylim(min(ps2D[:,1]),max(ps2D[:,1]))
     
-    savefig('Psect.pdf', bbox_inches='tight', dpi=100)
-    call(["pdfcrop", "Psect.pdf", "Psect.pdf"], shell=True)
+    savefig('BBpsectonslice.pdf', bbox_inches='tight', dpi=100)
+    #call(["pdfcrop", "Psect.pdf", "Psect.pdf"], shell=True)
 
     show()
 
@@ -702,7 +705,7 @@ if plotRetmap:
         plot(np.linspace(min(ppair1), max(ppair1), 10),
             [ppair1[1] for k in range(10)], '--c', lw=1.5)
         plot([ppair2[0] for k in range(10)],
-            np.linspace(min(ppair2), max(ppair2), 10), '--', lw=1.5)
+            np.linspace(min(ppair2), max(ppair2), 10), '--c', lw=1.5)
     
     #plot(srange, [0.825 for  i in range(np.size(srange,0))], 'r')
     ax = fig.gca()
@@ -711,17 +714,20 @@ if plotRetmap:
     smax = np.max(sn)
     ax.set_xlim(smin,smax)
     ax.set_ylim(smin,smax)
-    ax.set_xlabel('$s_n$', fontsize=24)
-    ax.set_ylabel('$s_{n+1}$', fontsize=24)
+    ax.set_xlabel('$s_n$', fontsize=26)
+    ax.set_ylabel('$s_{n+1}$', fontsize=26)
     Nticks = 5
 
     xticks = np.linspace(smin, smax, Nticks)
     ax.set_xticks(xticks)
-    ax.set_xticklabels(["$%.1f$" % xtik for xtik in xticks], fontsize=16); 
-
+    #ax.set_xticklabels(["$%.1f$" % xtik for xtik in xticks], fontsize=22); 
+    ax.set_xticklabels(["\n$%.1f$" % xtik for xtik in xticks], fontsize=24, linespacing=0.9); 
+    
+    #yticks = np.linspace(smin+(smax-smin)/float(Nticks-1), smax, Nticks-1)
     yticks = np.linspace(smin, smax, Nticks)
     ax.set_yticks(yticks)
-    ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=16); 
+    #ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=22); 
+    ax.set_yticklabels(["$%.1f$ " % xtik for xtik in xticks], fontsize=24, linespacing=0.2);
     
     #plt.figure(2, figsize=(8,8))
     #sp3 = np.array([retmapm(7, sn) for sn in srange])
@@ -729,7 +735,50 @@ if plotRetmap:
     #plt.hold(True)
     #plot(srange,srange,'g')
     
-    savefig('RetMap.pdf', bbox_inches='tight', dpi=100) 
+    savefig('BBretmaponsliceZoom.pdf', bbox_inches='tight', dpi=100) 
+    #call(["pdfcrop", "RetMap.pdf", "RetMap.pdf"], shell=True)
+    
+    show()
+
+if plotRetmapFull:
+    fig=plt.figure(1, figsize=(8,8))
+    srange = np.arange(np.min(sn), np.max(sn), np.max(sn)/50000)
+    plot(sn, snplus1, '.b',  ms=10)
+    plt.hold(True)
+    plot(xintRetMap, yintRetMap, 'k', lw=2)
+    plot(srange, srange, 'g', lw=2)
+   
+    #plot(srange, [0.825 for  i in range(np.size(srange,0))], 'r')
+    ax = fig.gca()
+    ax.set_aspect('equal')
+    smin = np.min(sn)
+    smax = np.max(sn)
+    ax.set_xlim(smin,smax)
+    ax.set_ylim(smin,smax)
+    ax.set_xlabel('$s_n$', fontsize=52)
+    ax.set_ylabel('$s_{n+1}$', fontsize=52)
+    Nticks = 5
+
+    xticks = np.linspace(smin, smax, Nticks)
+    ax.set_xticks(xticks)
+    #ax.set_xticklabels(["$%.1f$" % xtik for xtik in xticks], fontsize=48); 
+    ax.set_xticklabels(["\n$%.1f$" % xtik for xtik in xticks], fontsize=48, linespacing=1); 
+
+    #yticks = np.linspace(smin+(smax-smin)/float(Nticks-1), smax, Nticks-1)
+    yticks = np.linspace(smin, smax, Nticks)
+    ax.set_yticks(yticks)
+    #ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=48); 
+    ax.set_yticklabels(["$%.1f$ " % xtik for xtik in xticks], fontsize=48, linespacing=0.6);
+    
+    ax.xaxis.set_tick_params(width=2)
+    ax.yaxis.set_tick_params(width=2)
+    #plt.figure(2, figsize=(8,8))
+    #sp3 = np.array([retmapm(7, sn) for sn in srange])
+    #plot(srange, sp3, 'b')
+    #plt.hold(True)
+    #plot(srange,srange,'g')
+    
+    savefig('BBretmaponslice.pdf', bbox_inches='tight', dpi=100) 
     #call(["pdfcrop", "RetMap.pdf", "RetMap.pdf"], shell=True)
     
     show()
