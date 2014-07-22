@@ -206,14 +206,30 @@ determinant \refeq{e-SpectralDeterminant}. In both series, partial derivative wi
 respect to $s$ turns them into weighted sum of the cycle periods; with this intuition, 
 we define $\langle T \rangle$ as the `mean cycle period'.
 
-We computed escape rate $\gamma$, average cycle period $\langle T \rangle$, 
-leading Lyapunov exponent $\Lyap$, average phase speed $\langle \dot{\phi} \rangle$ 
-and the phase diffusion constant $D$ of the \twomode\ system using cycle 
-averaging formulas \refeqs{e-AveragePeriod}{e-Avgsigma}. We listed our 
-findings with respect to the increasing expansion order in \reftab{t-DynamicalAverages} 
-and \reftab{t-DynamicalAveragesNoGrammar}. While in \reftab{t-DynamicalAverages} 
-we used the finite grammar approximation, in \reftab{t-DynamicalAveragesNoGrammar} 
-we input all the cycles we found to the calculation.
+We constructed the spectral determinant \refeq{e-NthOrderSpectDet} at different 
+orders for two observables: phase velocity $\dot{\phi}$ and the leading Lyapunov 
+exponent. Note that $A_p$ appearing in \refeq{e-SpectralDeterminantExp} is the
+integrated observable, so in order to obtain the moments of phase velocity and
+Lyapunov exponent from \refeq{e-Avga} and \refeq{e-Avgsigma}, we respectively input 
+$A_p = \phi_p$ phase shift of the prime cycle, and $A_p = \ln |\Lambda_p|$ logarithm
+of the expanding Floquet multiplier of the prime cycle. 
+
+In \refsect{s:visual}, we explained that \SOn{2} phase shifts corresponds to 
+the drifts in the configuration space, with this in mind, we can relate the 
+variance of phase velocity to the diffusion constant of our system:
+\beq
+    D = \frac{1}{2 d} \sigma_{\dot{\phi}}^2 
+      = \frac{\langle (\dot{\phi} - \langle \dot{\phi} \rangle)^2 \rangle}{2} ,
+\eeq
+where $d=1$ since our configuration space is one dimensional. 
+
+\reftab{t-DynamicalAverages} and \reftab{t-DynamicalAveragesNoGrammar} shows
+the cycle averages of the escape rate ($\gamma$), mean period ($\langle T \rangle$),
+leading Lyapunov exponent ($\Lyap$), mean phase velocity ($\langle \dot{\phi} \rangle$)
+and the diffusion constant ($D$) respectively within and without the finite grammar 
+approximation. In the latter, we input all the \rpo s we have found into the expansion
+\refeq{e-SpectralDeterminantExp}, whereas in the former, we discarded the cycles
+with symbol sequence `00'.
 
 \input{2modesDynamicalAverages}
 \input{2modesDynamicalAveragesNoGrammar}
@@ -225,29 +241,27 @@ we input all the cycles we found to the calculation.
 \label{f-2modes-lambdaDist}
 \end{figure}
 
-We motivated our finite grammar approximation by expecting a fast convergence
-after second order in the cycle expansion, however, this is not the case. The 
-reason is, as we mentioned before, that the curvature corrections of
-\refeq{e-GoldenMeanCycleExpansion} are not small. This is due to the fact 
-that the Floquet exponent of the cycle \cycle{011} (marked cyan at $1/3$ 
-line of \reffig{f-2modes-lambdaDist}), is much larger than the rest of the 
-set that appears in the cycle expansion, and since the cycle contributions 
-are weighted by the inverse Floquet multipliers, $t_{011}$ almost cancels 
-every shadowing combination it appears. Hence the curvature corrections in
-which $t_{011}$ appears as a shadowing orbit, are not small. However, we 
-still get a better convergence comparing to the case where we include 
-all cycles in the calculation. \refTab{t-DynamicalAverages} and 
-\reftab{t-DynamicalAveragesNoGrammar} show that when the expansion order 
-is $10$, the Lyapunov exponents converges with a $6$ digits in the finite 
-grammmar calculations, whereas it has $4$ digit convergence in the case 
-where we included all cycle contributions.
+We motivated our finite grammar approximation by expecting a fast convergence 
+due to the nearly exact shadowing combinations and we can clearly see this 
+by comparing numbers in 
+\reftab{t-DynamicalAverages} and \reftab{t-DynamicalAveragesNoGrammar}.
+Take, for example, Lyapunov exponent which converges with $7$ digit accuracy
+at the final order in \reftab{t-DynamicalAverages} while we have only $4$ digits 
+at this order in \reftab{t-DynamicalAveragesNoGrammar}. Other observables compares
+similarly in terms of their convergence in both cases. Note, however, that the 
+escape rate in \reftab{t-DynamicalAverages} converges to $\gamma = 0.000727889$,
+whereas in \reftab{t-DynamicalAveragesNoGrammar} it gets smaller and smaller
+with an oscillatory behavior. This is due to the fact that in the finite grammar
+approximation, we neglect a definite piece of attractor that corresponds to the 
+cusp of the return map in \reffig{fig:psectandretmap} (d), above the part that 
+is cut by \cycle{001}.
 
 In order to compare with the cycle averages, we numerically estimated the
 leading Lyapunov exponent of the \twomode\ system using the method of
 Wolf \etal\rf{WolfSwift85}. This procedure was repeated 100 times for
 different initial conditions, yielding a mean estimate of
 $\Lyap_{Numerical} = 0.1198 \pm 0.0008$. While the finite grammar
-estimate $\Lyap_{FG} = 0.118268$ is within $1\%$ range of this value,
+estimate $\Lyap_{FG} = 0.1183$ is within $0.6\%$ range of this value,
 the full cycle expansion agrees with the numerical estimate. This is not
 surprising, since in the finite grammar approximation, we discard the
 most unstable cycles, thus, we obtain a slightly smaller Lyapunov
