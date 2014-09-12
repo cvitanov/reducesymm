@@ -73,15 +73,81 @@ the direction that is parallel to the periodic orbit at all times, and evaluates
 the trace integral by transforming to a local coordinate system where one of the
 coordinates is parallel to the flow while the rest is transverse. Integration along
 the parallel direction contributes factors of $T_p$, and the transverse integral
-over the delta function contributes $\oneMinJ{r}$. Important observation is that
-the final result \refeq{e-ClassicalTraceFormula} does not depend on the choice
-of the coordinate system. In the \twomode\ system, we have an extra unit Floquet
-multiplier for the symmetry direction, however, if we assume that we are working
-in the \slice , and define all of our observables within the \slice , we can
-simply ignore this direction and apply \refeq{e-ClassicalTraceFormula} and what
-follows using non-marginal Floquet multipliers. This assumption is valid since
-we can think of the symmetry reduction as a coordinate transformation that 
-seperates the physical dynamics from the phase coordinates, 
+over the delta function contributes $\oneMinJ{r}$. 
+
+Classical trace formula \refeq{e-ClassicalTraceFormula} receives contributions
+from \po s, however, \rpo s of the \twomode\ system are never periodic in the
+full \statesp . In order to be able to compute \rpo\ contributions to the trace
+of the \evOper, one has to factorize the \evOper\ into the irreducible 
+subspaces of the symmetry group. For discrete symmetries, this procedure is 
+studied in \refref{CvitaEckardt} and for the quantum systems with continuous 
+symmetries (Abelian and 3D rotations), factorization of semiclassical Green's 
+operator is carried out in \refref{Creagh93}. \refRef{Cvi07} addresses the 
+continuous factorization of the \evOper\ and its trace, and here we are going 
+to sketch this treatment. Consider the following projection operator onto $m$th
+irreducible subspace of the $g$:
+\beq
+    P_m = d_m \int_G d \mu(g) \chi_m (\LieEl(\theta)) D(\LieEl(\theta)) \, .
+    \label{e-ProjectionOperator}
+\eeq 
+Here, $d_m$ is the dimension of the representation, $d \mu(g)$ is the 
+normalized ``Haar'' measure, $\chi_m (\LieEl)$ is the ``character'' of $m$th 
+irreducible representation and $D(\LieEl(\theta))$ is the operator which 
+transforms a scalar field defined on \statesp\ according to $\LieEl (\theta)$, 
+namely, $D(\LieEl(\theta) \rho (\ssp) = \rho(\LieEl^{-1}(\theta) \ssp)$. For 
+our specific case of one continuous $\SOn{2}$ symmetry, 
+\bea
+d_m &\rightarrow& 1\, , \\
+\int_G d \mu(g) &\rightarrow& \oint \frac{d \theta} {2 \pi} \, , \\
+\chi_m (\LieEl(\theta)) &\rightarrow& e^{\ii m \theta } \, .
+\eea
+Since the projection 
+operator \refeq{e-ProjectionOperator} factorizes scalar fields in the \statesp\ 
+into their projections onto irreducible subspaces of the $\LieEl$, it can as
+well be used to factorize the \evOper\ since it acts on scalar fields 
+(densities) and returns scalar fields on the \statesp . Thus the Kernel of the
+\evOper\ transforms under the action of $D(\LieEl(\theta))$ as:
+\bea
+    D(\LieEl(\theta)) \Lop^t (y, x) &=& \Lop^t (\LieEl^{-1}(\theta) y, x)\,,
+    \continue
+    &=& \Lop^t (y, \LieEl(\theta) x) \,, \continue
+    &=& \delta (y - \LieEl(\theta) f^t (x)) e^{\beta A^t(x)} \, ,
+    \label{e-gEvOper}
+\eea
+where the second step followed from the equivariance of the system at 
+consideration. \Rpo s contribute to the $P_m \Lop^t = \Lop_m^t$ since its 
+Kernel is modified as in \refeq{e-gEvOper} and projection involves and integral 
+over the group parameters which will be non-zero at the phase shift of the 
+\rpo s. By computing the trace of $\Lop_m^t$, which in addition to the integral
+over $\ssp$ involves also an integral over the group parameters, one obtains 
+the $m$th irreducible subspace contribution to the classical trace as
+\beq
+\sum_{\alpha=0}^{\infty} \frac{1}{s-s_{m, \alpha}} = \sum_p T_p
+\sum_{r=1}^{\infty} \frac{\chi_m (\LieEl(\theta_p)) e^{r(\beta A_p - s T_p)}}{
+            \oneMinJred{r}} .
+\ee{e-ReducedTraceFormula}
+The reduced trace formula \refeq{e-ReducedTraceFormula} differs from the 
+classical trace formula \refeq{e-ClassicalTraceFormula} by the group character
+term which is evaluated at the \rpo\ phase shifts, and the reduced monodromy
+matrix, which is the $(d-N-1)\times(d-N-1)$ reduced Jacobian for the \rpo\ 
+evaluated on a Poincar\'e section in the \reducedsp , eigenvalues of which are 
+those of the \rpo\ Jacobian \refeq{e-rpoJacobian} without the marginal ones. 
+
+Since we are only interested in the leading eigenvalue of the \evOper , from 
+here on, we are going to consider contributions only from the 
+$0$th (fully symmetric) irreducible subspace to the trace 
+\refeq{e-ClassicalTraceFormula} from its projections 
+\refeq{e-ReducedTraceFormula} which we can write for our $\SOn{2}$ case 
+explicitely as
+\beq
+\sum_{\alpha=0}^{\infty} \frac{1}{s-s_{0, \alpha}} = \sum_p T_p
+\sum_{r=1}^{\infty} \frac{e^{r(\beta A_p - s T_p)}}{\oneMinJred{r}} .
+\ee{e-tracem0}
+This form differs from the classical trace formula 
+\refeq{e-ClassicalTraceFormula} only by the monodromy matrix since $0$th 
+irreducible representation has character $1$. Thus, we can apply our techiques
+regarding the applications of \refeq{e-ClassicalTraceFormula}, such as cycle 
+expansions, after the replacement $\monodromy \rightarrow \monodromyRed$. 
 
 While the classical trace formula \refeq{e-ClassicalTraceFormula} manifests
 the essential duality between the spectrum of an observable and that of
