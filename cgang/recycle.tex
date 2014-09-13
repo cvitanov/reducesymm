@@ -36,14 +36,14 @@ shall see, attaching the integrated observables to this operator enables us to
 study values of these observables averaged over the invariant measures. 
 
 Since we required our observable to be additive along an orbit, and 
-exponentiated its integrated value in our construction of the \evOper\ 
+exponentiated its integrated value in the construction of the \evOper\ 
 \refeq{e-EvOper}; the evolution operator itself is multiplicative:
 \beq
     \Lop^{\zeit_1 + \zeit_2} = \Lop^{\zeit_2} \Lop^{\zeit_1} \, .
     \label{eq-SemiGroup}
 \eeq
 For the kernel of the evolution integral, which we will refer to as 
-$\Lop^\zeit (\ssp, \ssp')$ with explicit indices, we can write this relation 
+$\Lop^\zeit (\ssp, \ssp')$ with explicit arguments, we can write this relation 
 as:
 \beq
 	\Lop^{\zeit_1 + \zeit_2} (\ssp,\ssp') = 
@@ -73,7 +73,7 @@ operator is known as the {\FPoper}. We assume the system we study is ergodic,
 and hence an `invariant measure' $\rho_0(\ssp)$ exists, with eigenvalue 
 $s(0) = 0$. Long time spectrum of any observable is going to be dominated by 
 its average over such a density, hence we define the average of an observable
-is its average over the invariant measure:
+as its average over the invariant measure:
 \beq
     \langle \obser \rangle = \int d \ssp \obser(\ssp) \rho_0 (\ssp) \, .
     \label{e-obserAvg}
@@ -96,26 +96,27 @@ the Laplace transform of \refeq{eq-EvOpExp}:
 	\label{eq-ResolventA}
 \eeq
 trace of which peaks at the eigenvalues of \Aop. By taking the
-Laplace transform of \refeq{e-EvOper} and computing its trace
-by $\tr \Lop^\zeit = \int d\ssp \Lop (\ssp,\ssp)$ we obtain the
+Laplace transform of $\Lop^\zeit$ and computing its trace
+by $\tr \Lop^\zeit = \int d\ssp \Lop^\zeit (\ssp,\ssp)$ one obtains the
 classical trace formula:
 \beq
 \sum_{\alpha=0}^{\infty} \frac{1}{s-s_{\alpha}} = \sum_p T_p
 \sum_{r=1}^{\infty} \frac{e^{r(\beta \Obser_p - s T_p)}}{\oneMinJ{r}} .
 \ee{e-ClassicalTraceFormula}
-which relates the spectrum of \Aop\ to the spectrum of the periodic
+which relates the spectrum of the {\evOper} to the spectrum of the periodic
 orbits. Here, $s_{\alpha}$ are the eigenvalues of \Aop ,
 outer sum on the RHS runs over the `prime cycles' of the system,
 $T_p$ is the period of the prime cycle $p$, $\Obser_p$ is the value of
 the observable integrated along the prime cycle, $s$ is the auxiliary
 variable of the Laplace transform, and $\monodromy_p$ is the transverse
 monodromy matrix, eigenvalues of which are the Floquet multipliers of the prime
-cycle $p$ excluding the marginal ones ($|\Lambda| \neq 1$). In deriving
+cycle $p$ excluding the marginal ones ($|\Lambda| \neq 1$). While deriving
 \refeq{e-ClassicalTraceFormula} one assumes a single marginal direction, namely
-the direction that is parallel to the periodic orbit at all times, and evaluates
-the trace integral by transforming to a local coordinate system where one of the
-coordinates is parallel to the flow while the rest is transverse. Integration along
-the parallel direction contributes factors of $T_p$, and the transverse integral
+the direction that is parallel to the periodic orbit at all times, for every 
+\po\ and evaluates the contribution of each \po\ to the trace integral by 
+transforming to a local coordinate system where one of the coordinates is 
+parallel to the flow while the rest is transverse. Integration along the 
+parallel direction contributes factors of $T_p$, and the transverse integral 
 over the delta function contributes $\oneMinJ{r}$. 
 
 \subsection{Continuous factorization}
@@ -163,10 +164,11 @@ well be used to factorize the \evOper\ since the \evOper\ acts on scalar
 fields (densities) and returns scalar fields on the \statesp . Thus the kernel 
 of the \evOper\ transforms under the action of $D(\LieEl(\theta))$ as:
 \bea
-    D(\LieEl(\theta)) \Lop^t (y, x) &=& \Lop^t (\LieEl^{-1}(\theta) y, x)\,,
+    D(\LieEl(\theta)) \Lop^t (\ssp', \ssp) &=& 
+        \Lop^t (\LieEl^{-1}(\theta) \ssp', \ssp)\,,
     \continue
-    &=& \Lop^t (y, \LieEl(\theta) x) \,, \continue
-    &=& \delta (y - \LieEl(\theta) f^t (x)) e^{\beta \Obser^t(x)} \, ,
+    &=& \Lop^t (\ssp', \LieEl(\theta) \ssp) \,, \continue
+    &=& \delta (\ssp' - \LieEl(\theta) f^t (\ssp)) e^{\beta \Obser^t(\ssp)} \, ,
     \label{e-gEvOper}
 \eea
 where the second step followed from the equivariance of the system at 
@@ -184,38 +186,53 @@ obtains the $m$th irreducible subspace contribution to the classical trace as
 The reduced trace formula \refeq{e-ReducedTraceFormula} differs from the 
 classical trace formula \refeq{e-ClassicalTraceFormula} by the group character
 term which is evaluated at the \rpo\ phase shifts, and the reduced monodromy
-matrix, which is the $(d-N-1)\times(d-N-1)$ reduced Jacobian for the \rpo\ 
-evaluated on a Poincar\'e section in the \reducedsp , eigenvalues of which are 
-those of the \rpo\ Jacobian \refeq{e-rpoJacobian} without the marginal ones. 
+matrix $\monodromyRed$, which is the $(d-N-1)\times(d-N-1)$ reduced Jacobian for the \rpo\ 
+evaluated on a Poincar\'e section in the \reducedsp . Eigenvalues of 
+$\monodromyRed$ are those of the \rpo\ Jacobian \refeq{e-rpoJacobian} without 
+the marginal ones. 
 
-Since we are only interested in the leading eigenvalue of the \evOper , from 
-here on, we are going to consider contributions only from the 
-$0$th irreducible subspace to the trace \refeq{e-ClassicalTraceFormula} from 
-its projections \refeq{e-ReducedTraceFormula} which we can write for our 
-$\SOn{2}$ case explicitly as
+Since we are only interested in the leading eigenvalue of the \evOper , we are 
+going to consider contributions only from the $0$th irreducible subspace to the 
+trace \refeq{e-ClassicalTraceFormula} from its projections 
+\refeq{e-ReducedTraceFormula} which we can write for our $\SOn{2}$ case 
+explicitly as
 \beq
 \sum_{\alpha=0}^{\infty} \frac{1}{s-s_{0, \alpha}} = \sum_p T_p
-\sum_{r=1}^{\infty} \frac{e^{r(\beta \Obser_p - s T_p)}}{\oneMinJred{r}} .
+\sum_{r=1}^{\infty} \frac{e^{r(\beta \Obser_p - s T_p)}}{\oneMinJred{r}} \, .
 \ee{e-tracem0}
 This form differs from the classical trace formula 
-\refeq{e-ClassicalTraceFormula} only by the monodromy matrix since $0$th 
-irreducible representation of $\SOn{2}$ has character $1$. Thus, we can apply 
-our techiques regarding the applications of \refeq{e-ClassicalTraceFormula}, 
-such as cycle expansions, after the replacement $\monodromy \rightarrow \monodromyRed$. 
+\refeq{e-ClassicalTraceFormula} only by the reduced monodromy matrix since 
+$0$th irreducible representation of $\SOn{2}$ has character $1$. For this 
+reason, cycle expansions \rf{AACI}, which we will cover next, are applicable
+to the \refeq{e-tracem0} after the replacement 
+$\monodromy \rightarrow \monodromyRed$. 
 
 \subsection{Cycle expansions}
 \label{s-CycExp}
 
-While the classical trace formula \refeq{e-ClassicalTraceFormula} manifests
+While the classical trace formula \refeq{e-ClassicalTraceFormula} and its 
+continuous factorization \refeq{e-ReducedTraceFormula} manifest
 the essential duality between the spectrum of an observable and that of
-the periodic orbits, in practice, it is hard to work with since the eigenvalues
-are located at the poles of \refeq{e-ClassicalTraceFormula}. For this reason,
-one expresses this duality equivalently as the following spectral determinant
+the \po s and \rpo s; in practice, they are hard to work with since the 
+eigenvalues are located at the poles of \refeq{e-ClassicalTraceFormula} and
+\refeq{e-ReducedTraceFormula}. Moreover, the dynamical zeta function 
+\refeq{e-DynamicalZeta}, which we will obtain after some algebraic manipulation 
+and one approximation, is going to provide us a perturbative expansion form,
+which will enable us to order terms in decreasing importance while computing 
+spectra for the \twomode\ system. In our review of results, we are going to 
+present the cycle expansion of the classical trace 
+\refeq{e-ClassicalTraceFormula} as it is the general formula, however, we are 
+going to use the $0$th irreducible subspace contribution to the trace 
+\refeq{e-tracem0} in the applications. As we stated earlier, \refeq{e-tracem0}
+is equivalent to the \refeq{e-ClassicalTraceFormula} via substitution 
+$\monodromy \rightarrow \monodromyRed$. We start by defining the 
+`spectral determinant':
 \beq
-    \det (s-\mathcal{A}) = \exp \left( - \sum_p \sum_{r=1}^{\infty}
-                             \frac{1}{r} \frac{e^{r(\beta \Obser_p - s T_p)}}{\oneMinJ{r}} \right)\, ,
+  \det (s-\Aop) = \exp \left( - \sum_p \sum_{r=1}^{\infty}
+      \frac{1}{r} \frac{e^{r(\beta \Obser_p - s T_p)}}{\oneMinJ{r}} \right)\, ,
 \ee{e-SpectralDeterminant}
-logarithmic derivative of which gives \refeq{e-ClassicalTraceFormula}.
+logarithmic derivative of which ($(d/ds) \ln \det(s - \Aop)$) gives 
+the classical trace \refeq{e-ClassicalTraceFormula}.
 The spectral determinant \refeq{e-SpectralDeterminant} is easier to work
 with since the spectrum of $\mathcal{A}$, is now located at the zeros of
 \refeq{e-SpectralDeterminant}. Convergence of \refeq{e-SpectralDeterminant}
@@ -225,11 +242,11 @@ sum in \refeq{e-SpectralDeterminant}.
 \bea
 \oneMinJ{} &=& | (1 - \ExpaEig_{e,1})(1 - \ExpaEig_{e,2})... \continue
 			&&(1 - \ExpaEig_{c,1}) (1 - \ExpaEig_{c,2}) ... | \nonumber \\
-			&\approx& \prod_e |\ExpaEig_e| = |\ExpaEig_p|,
+			&\approx& \prod_e |\ExpaEig_e| \equiv |\ExpaEig_p|,
 \eea
 where $|\ExpaEig_{e,i}| > 1$ and $|\ExpaEig_{c,i}| < 1$ are expanding and contracting Floquet multipliers respectively. After this approximation, $r$-sum in \refeq{e-SpectralDeterminant} becomes the Taylor expansion of natural logarithm and it can be compactly written as follows:
 \beq
-1 / \zeta = \prod_r (1 - t_p) \, \mbox{where}, \, t_p = \frac{1}{|\ExpaEig_p|} e^{\beta \Obser_p - s T_p} z^{n_p} .
+1 / \zeta = \prod_p (1 - t_p) \, \mbox{where}, \, t_p = \frac{1}{|\ExpaEig_p|} e^{\beta \Obser_p - s T_p} z^{n_p} .
 \ee{e-DynamicalZeta}
 Where we inserted the `order tracking' term $z$. For complete binary symbolic dynamics, the dynamical zeta function \refeq{e-DynamicalZeta} can be brought into the `curvature expansion' form:
 \bea
