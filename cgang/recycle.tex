@@ -64,7 +64,8 @@ eigenfunction of \refeq{e-EvOper} with the leading eigenvalue (the one with the
 largest real part); we can write the action of \refeq{e-EvOper} on this density
 explicitly as follows:
 \beq
-    \left[ \Lop^t \rho_{\beta} \right] (x) = e^{t s(\beta )} \rho_{\beta} (x) \, .
+    \left[ \Lop^t \rho_{\beta} \right] (x) = e^{t s(\beta )} \rho_{\beta} (x) 
+    \, .
     \label{eq-EigenvalueRel}
 \eeq
 Here, $s(\beta)$ is the eigenvalue of $\Aop$. As we stated earlier, when 
@@ -168,7 +169,7 @@ of the \evOper\ transforms under the action of $D(\LieEl(\theta))$ as:
         \Lop^t (\LieEl^{-1}(\theta) \ssp', \ssp)\,,
     \continue
     &=& \Lop^t (\ssp', \LieEl(\theta) \ssp) \,, \continue
-    &=& \delta (\ssp' - \LieEl(\theta) f^t (\ssp)) e^{\beta \Obser^t(\ssp)} \, ,
+    &=& \delta (\ssp' - \LieEl(\theta) f^t (\ssp)) e^{\beta \Obser^t(\ssp)}\, ,
     \label{e-gEvOper}
 \eea
 where the second step followed from the equivariance of the system at 
@@ -186,10 +187,10 @@ obtains the $m$th irreducible subspace contribution to the classical trace as
 The reduced trace formula \refeq{e-ReducedTraceFormula} differs from the 
 classical trace formula \refeq{e-ClassicalTraceFormula} by the group character
 term which is evaluated at the \rpo\ phase shifts, and the reduced monodromy
-matrix $\monodromyRed$, which is the $(d-N-1)\times(d-N-1)$ reduced Jacobian for the \rpo\ 
-evaluated on a Poincar\'e section in the \reducedsp . Eigenvalues of 
-$\monodromyRed$ are those of the \rpo\ Jacobian \refeq{e-rpoJacobian} without 
-the marginal ones. 
+matrix $\monodromyRed$, which is the $(d-N-1)\times(d-N-1)$ reduced Jacobian 
+for the \rpo\ evaluated on a Poincar\'e section in the \reducedsp . Eigenvalues
+of $\monodromyRed$ are those of the \rpo\ Jacobian \refeq{e-rpoJacobian} 
+without the marginal ones. 
 
 Since we are only interested in the leading eigenvalue of the \evOper , we are 
 going to consider contributions only from the $0$th irreducible subspace to the 
@@ -236,161 +237,229 @@ the classical trace \refeq{e-ClassicalTraceFormula}.
 The spectral determinant \refeq{e-SpectralDeterminant} is easier to work
 with since the spectrum of $\mathcal{A}$, is now located at the zeros of
 \refeq{e-SpectralDeterminant}. Convergence of \refeq{e-SpectralDeterminant}
-is still not obvious. More insight is gained by approximating $\oneMinJ{r}$
-by the product of expanding Floquet multipliers and then computing the $r$
-sum in \refeq{e-SpectralDeterminant}.
+is, however, still not obvious. More insight is gained by approximating 
+$\oneMinJ{r}$ by the product of expanding Floquet multipliers and then 
+carrying out the sum over $r$ in \refeq{e-SpectralDeterminant}. The 
+approximation yields
 \bea
 \oneMinJ{} &=& | (1 - \ExpaEig_{e,1})(1 - \ExpaEig_{e,2})... \continue
 			&&(1 - \ExpaEig_{c,1}) (1 - \ExpaEig_{c,2}) ... | \nonumber \\
 			&\approx& \prod_e |\ExpaEig_e| \equiv |\ExpaEig_p|,
+    \label{e-LambdapApprox}
 \eea
-where $|\ExpaEig_{e,i}| > 1$ and $|\ExpaEig_{c,i}| < 1$ are expanding and contracting Floquet multipliers respectively. After this approximation, $r$-sum in \refeq{e-SpectralDeterminant} becomes the Taylor expansion of natural logarithm and it can be compactly written as follows:
+where $|\ExpaEig_{e,i}| > 1$ and $|\ExpaEig_{c,i}| < 1$ are expanding and 
+contracting Floquet multipliers respectively. $r$-sum in 
+\refeq{e-SpectralDeterminant} becomes the Taylor expansion of natural logarithm 
+after approximation \refeq{e-LambdapApprox}. Carrying this sum out, brings the 
+spectral determinant \refeq{e-SpectralDeterminant} to a product (over prime 
+cycles) form that is known as the dynamical zeta function:   
 \beq
-1 / \zeta = \prod_p (1 - t_p) \, \mbox{where}, \, t_p = \frac{1}{|\ExpaEig_p|} e^{\beta \Obser_p - s T_p} z^{n_p} .
+1 / \zeta = \prod_p (1 - t_p) \, \mbox{where}, \, t_p = \frac{1}{|\ExpaEig_p|} 
+            e^{\beta \Obser_p - s T_p} z^{n_p} .
 \ee{e-DynamicalZeta}
-Where we inserted the `order tracking' term $z$. For complete binary symbolic dynamics, the dynamical zeta function \refeq{e-DynamicalZeta} can be brought into the `curvature expansion' form:
+We multiplied each `cycle weight' $t_p$ by the `order tracking term' $z^{n_p}$ 
+where $n_p$ is the topological length of the $p$th prime cycle. Such polynomial
+ordering naturally arises when one studies the discrete time systems where the
+Laplace transform is replaced by $z$-transform. Here, we insert the powers of 
+$z$ by hand and we will set its value to $1$ at the end of calculations. The 
+reason for doing this is to write the dynamical zeta function 
+\refeq{e-DynamicalZeta} in the `cycle expansion' form, after grouping its
+terms in powers of $z$. For complete binary dynamics, where every binary symbol
+sequence is accessible, the cycle expansion reads
 \bea
 1 / \zeta &=& 1 - t_0 - t_1 - (t_{01} - t_0 t_1 )  \label{e-CycleExpansion} \\
 		  && - [(t_{011} - t_{01}t_1) + (t_{001} - t_{01} t_0)] - ... \continue
 		  &=& 1 - \sum_f t_f - \sum_n \hat{c}_n \label{e-CurvatureExpansion}.
 \eea
-In the curvature expansion \refeq{e-CurvatureExpansion}, we grouped the
-contributions to the dynamical zeta function as `fundamental' contributions
-$t_f$ and `curvature' corrections. One expects the curvature corrections to
-be small since the longer prime cycles are `shadowed' by the combination of
-the shorter ones, the `pseudocycles'.
+Where we labeled each prime cycle by its binary symbol sequence and in 
+\refeq{e-CurvatureExpansion} we grouped the contributions to the zeta function
+as `fundamental' contributions $t_f$ and `curvature' corrections $c_n$. 
+As we have written explicitly in parentheses in \refeq{e-CycleExpansion}, 
+curvature corrections appear in `shadowing' combinations where combination of
+shorter cycle weights, `pseudocycle' weights, are subtracted by the longer 
+cycle weights. Since the cycle weights \refeq{e-DynamicalZeta} already 
+decreases exponentially with increasing cycle period, cycle expansion 
+\refeq{e-CycleExpansion} converges even faster than exponential when all the 
+longer terms of the expansion are shadowed.
 
 For complete binary symbolic dynamics, the only fundamental contributions to
-the dynamical zeta function are the cycles with topological length $1$, see
-\refeq{e-CurvatureExpansion}. This is not the case for any map since in general
-there might be non-trivial pruning rules, hence longer cycles can appear unshadowed.
-The Poincar\'e return map of \reffig{fig:psectandretmap}\,{d) is such a map
-with non-trivial pruning rules, however, note that cycles \cycle{001} and \cycle{011}
-passes very close to the tip of the cusp, the critical point, in
-\reffig{fig:psectandretmap}\,{d). This observation motivates us to approximate
-the return map of \reffig{fig:psectandretmap}\,{d), as if its tip is located at
-$s = 0.97986453$, where the cycle \cycle{001} lands, and omit the contributions
-above this point. We will refer this approximation as the `finite grammar approximation'
-since by doing it, we obtain single pruning rule; that is the symbol sequence
-$00$ is not allowed. This grammar is known as the `golden mean' grammar and a
-complete binary symbolic dynamics can be converted to the golden mean symbolic
-dynamics by substitution $0 \rightarrow 01$. We can write the dynamical zeta
+the dynamical zeta function are from the cycles with topological length $1$
+and all the longer cycles appear in the shadowing combinations 
+\refeq{e-CycleExpansion}. This is not the case for any unimodal map since some 
+symbol sequences might be inaccessible and corresponding pseudocycles of 
+the cycle expansion \refeq{e-CycleExpansion} fail to appear. However, if the 
+symbolic dynamics of a system can be obtained from complete binary set by 
+finite number of replacements, then another cycle expansion form can be 
+obtained which would be guaranteed to converge super exponentially. Such a 
+duality is be obtained when there exists a finite set of `grammar rules'
+to the symbolic dynamics that makes some symbol sequences inaccessible, or 
+`pruned'. We argued in \refsect{s:numerics} that the Poincar\'e return map for 
+the \twomode\ system (\reffig{fig:psectandretmap} (d)) diverges around 
+$s \approx 0.98$ and we approximated this map as if its tip is located at the 
+furthest ergodically visited point while searching for the \rpo s. In the 
+spirit of the discussion of this section, we ask the following question: Can we 
+reasonably approximate the map in \reffig{fig:psectandretmap} (d) in such a way 
+that corresponding symbolic dynamics has a finite grammar of prunning rules? 
+The answer is, fortunately, yes. 
+
+As we have shown in \reffig{fig:psectandretmap} (d) that the cycles \cycle{001} 
+and \cycle{011} pass quite close to the tip of the cusp, and approximating this 
+map as if its tip located exactly at the point where \cycle{001} cuts gives us 
+exactly what we are looking for: a single grammar rule, that is the symbol 
+sequence `00' is inaccessible. This can be made rigorous by the help of 
+kneading theory, however, the simple result is easy to see from the return map 
+in \reffig{fig:psectandretmap} (d): Cover the parts of the return map, which 
+are outside the borders set by the red dashed lines, the cycle \cycle{001} and 
+then start any point on the LHS of the tip and look at images. You will always 
+land on a point on the RHS of the tip, unless you start at the lower left 
+corner, exactly on the cycle \cycle{001}. We expect this `finite grammar 
+approximation' to be reasonable also because the orbits, which visit outside 
+the borders set by \cycle{001} are very unstable, and hence, less 
+important for the description of invariant dynamics.
+
+The binary grammar with only rule that forbids repeats of one of the symbols is
+known as `golden mean' shift, named after its topological entropy which is 
+$\ln (1 + \sqrt{5})/2$. Binary itineraries of golden mean cycles can be easiliy
+obtained from the complete binary symbolic dynamics by substitution
+$0 \rightarrow 01$ in  the latter. Thus, we can write the dynamical zeta
 function for the golden mean pruned symbolic dynamics by replacing $0$s in
 \refeq{e-CycleExpansion} by $01$:
 \bea
-1 / \zeta &=& 1 - t_{01} - t_1 - (t_{011} - t_{01} t_1 ) \label{e-GoldenMeanCycleExpansion}\\
-		  && - [(t_{0111} - t_{011}t_1) + (t_{01011} - t_{01} t_{011} ) ] - ... \nonumber
+1 / \zeta &=& 1 - t_{01} - t_1 - (t_{011} - t_{01} t_1 ) 
+              \label{e-GoldenMeanCycleExpansion}\\
+		  && - [(t_{0111} - t_{011}t_1) + (t_{01011} - t_{01} t_{011} ) ] - ... 
+          \nonumber
 \eea
-Note that all the contributions longer than topological length $2$ to the golden mean dynamical zeta function are in form of shadowing combinations. However, as we shall see, they are not small.
+Note that all the contributions longer than topological length $2$ to the 
+golden mean dynamical zeta function are in form of shadowing combinations. We
+are going to compare convergence of the cycle averages within and without the 
+finite grammar approximation in \refsect{s-NumResults}, but before moving to 
+the numerical results, we explain the remaining details of computation.
 
 While dynamical zeta functions are useful for investigating the convergence
 properties, they are not exact, and their computational cost is same with
 that of the exact spectral determinants. For this reason, we will expand the
 spectral determinant \refeq{e-SpectralDeterminant} ordered in the topological
-length of cycles and pseudocycles as follows:
+length of cycles and pseudocycles. We start with the following form of the 
+spectral determinant \refeq{e-SpectralDeterminant}:
 \beq
-    \det (s-\mathcal{A}) =   \prod_p \exp \left( - \sum_{r=1}^{n_p r < N}
+    \det (s-\Aop) =   \prod_p \exp \left( - \sum_{r=1}^{n_p r < N}
                              \frac{1}{r} \frac{e^{r(\beta \Obser_p - s T_p)}
-                                          }{\oneMinJ{r}} z^{n_p r} \right) \, .
+                                          }{\oneMinJ{r}} z^{n_p r} \right) \, ,
 \ee{e-SpectralDeterminantExp}
-This is the form that we use to compute the spectral determinant. For each prime
-cycle, we compute the sum term in \refeq{e-SpectralDeterminantExp} truncated at
-the expansion order $N$, and then expand the exponential upto order $N$, and multiply
-this expansion with the contributions from previous cycles and drop terms with
-order greater than $N$. This way, we obtain the $N^{th}$ order spectral determinant
-\refeq{e-SpectralDeterminant}. Let us denote the resultant series after setting $z=1$ as
+where, we took the sum over the prime cycles in the exponential out as a 
+product, inserted the order tracking term $z$, and truncated the sum over cycle
+repeats at the expansion order $N$. For each prime cycle, we compute the sum in 
+\refeq{e-SpectralDeterminantExp}, and then expand the exponential upto order 
+$N$, and multiply this expansion with the contributions from previous cycles 
+and drop terms with order greater than $N$. This way, after setting $z=1$,
+we obtain the $N^{th}$ order spectral determinant, which we will denote as 
 \beq
-    F_N(s, \beta ) = 1 - \sum_{n=1}^{N} Q_n(s, \beta ) \, .
+    F_N(\beta , s) = 1 - \sum_{n=1}^{N} Q_n(s, \beta ) \, .
     \label{e-NthOrderSpectDet}
 \eeq
-Remember that we are searching for the eigenvalues $s ( \beta)$ of the \Aop , more
-specifically, we would like to compute the moments \refeq{eq-moments}. $s ( \beta)$
-are located at the zeros of the spectral determinant, hence they satisfy the implicit
-equation:
+Remember that we are searching for the eigenvalues $s ( \beta)$ of the \Aop , 
+more specifically, we would like to compute the moments \refeq{eq-moments}. 
+$s ( \beta)$ are located at the zeros of the spectral determinant, hence they 
+satisfy the implicit equation:
 \beq
-    F_N(s, s(\beta )) = 0 \, .
+    F_N(\beta, s(\beta )) = 0 \, .
     \label{e-FNimplicit}
 \eeq
-By taking derivative of \refeq{e-FNimplicit} with respect to $\beta$ and applying
-chain rule we obtain
+By taking derivative of \refeq{e-FNimplicit} with respect to $\beta$ and 
+applying chain rule we obtain
 \beq
     \frac{d s}{d \beta} = - \left. \frac{\partial F}{\partial \beta} \right/
-                                     \frac{\partial F}{\partial s}
+                                     \frac{\partial F}{\partial s}\, .
 \eeq
-We can similarly take the higher order derivatives to get higher order moments.
-Finally, by defining
+Higher order derivatives yield higher can also be obtained similarly, and 
+finally, we define
 \beq
-	\langle T \rangle_N = \left. \partial F_N / \partial s \right|_{\beta=0, s=s (0)}
+	\langle T \rangle_N = \left. \partial F_N / \partial s 
+                          \right|_{\beta=0, s=s (0)} \, ,
 	\label{eq-Tavg}
 \eeq
-we obtain the \cycForm s:
+and write the \cycForm s as
 \bea
     \langle \obser \rangle_N &=& - \frac{1}{\langle T \rangle_N} \left.
                               \frac{\partial F_N}{\partial \beta}
-                              \right|_{\beta=0, s=s (0)} \, ,   \label{e-Avga} \\
+                              \right|_{\beta=0, s=s (0)} \, , \label{e-Avga} \\
     \langle (\obser - \langle \obser \rangle )^2 \rangle_N
-    &=& - \frac{1}{\langle T \rangle_N} \left. \frac{\partial^2 F_N}{\partial \beta^2} \right|_{\beta=0,
-                                                                    s=s (0)} \, \label{e-Avgsigma} .
+    &=& - \frac{1}{\langle T \rangle_N} \left. \frac{\partial^2 F_N}{
+                        \partial \beta^2} \right|_{\beta=0, s=s (0)} \, 
+                        \label{e-Avgsigma} .
 \eea
-While for an invariant measure we expect $s (0)$ to be $0$, we did not make such
-substitution in \cycForm s, since in practice, our approximation to the spectral
-determinant is always of a finite precision, hence the solution of
-$F_N(0, s(0)) = 0$ is not exactly $0$. This eigenvalue has a special meaning:
-since it is the leading eigenvalue of the Perron-Frobenius operator, it determines
-how much the dominant measure decays in time (see \refeq{eq-EigenvalueRel} ). With
-this interpretation, we define $\gamma = - s(0)$ as the `escape rate'. This quantity
-has a certain meaning in our finite grammar approximation; it tells us how frequently
-does the flow visit the part of the attractor that we cut off within the approximation.
+As we mentioned earlier, for the invariant measure we expect $s (0)$ to be $0$,
+however, we did not make such substitution in \cycForm s, since in practice, 
+our approximation to the spectral determinant is always of a finite precision, 
+hence the solution of $F_N(0, s(0)) = 0$ is small, but not exactly $0$. This 
+eigenvalue has a special meaning: It indicates how well the \po s cover the 
+strange attractor. Following this interpretation, we define $\gamma = - s(0)$ 
+as the `escape rate': the rate at which the dynamics escape the region that is
+covered by the \po s. Specifically for our finite grammar approximation; the 
+escape rate tells us how frequently does the flow visit the part of the 
+Poincar\'e map that we cut off within the approximation.
 
 We defined $\langle T \rangle$ in \refeq{eq-Tavg} as a shorthand for a partial
-derivative, however, we can also develop and interpretation for it by looking at
-definitions of dynamical zeta function \refeq{e-DynamicalZeta} and the spectral
-determinant \refeq{e-SpectralDeterminant}. In both series, partial derivative with
-respect to $s$ turns them into weighted sum of the cycle periods; with this intuition,
-we define $\langle T \rangle$ as the `mean cycle period'.
+derivative, however, we can also develop and interpretation for it by looking 
+at definitions of dynamical zeta function \refeq{e-DynamicalZeta} and the 
+spectral determinant \refeq{e-SpectralDeterminant}. In both series, partial 
+derivative with respect to $s$ turns them into weighted sum of the cycle 
+periods; with this intuition, we define $\langle T \rangle$ as the `mean cycle 
+period'.
+
+These final remarks conclude our review of the periodic theory and its 
+extension to the equivariant dynamical systems. We are now ready to present 
+our numerical results and discuss their quality.
 
 \subsection{Numerical results}
 \label{s-NumResults}
 
 We constructed the spectral determinant \refeq{e-NthOrderSpectDet} at different
-orders for two observables: phase velocity $\dot{\theta}$ and the leading Lyapunov
-exponent. Remember that $\Obser_p$ appearing in \refeq{e-SpectralDeterminantExp} is the
-integrated observable, so in order to obtain the moments of phase velocity and
-Lyapunov exponent from \refeq{e-Avga} and \refeq{e-Avgsigma}, we respectively input
-$\Obser_p = \theta_p$ phase shift of the prime cycle, and $\Obser_p = \ln |\Lambda_p|$ logarithm
-of the expanding Floquet multiplier of the prime cycle.
+orders for two observables: phase velocity $\dot{\theta}$ and the leading 
+Lyapunov exponent. Remember that $\Obser_p$ appearing in 
+\refeq{e-SpectralDeterminantExp} is the integrated observable, so in order to 
+obtain the moments of phase velocity and the leading Lyapunov exponent from 
+\refeq{e-Avga} and \refeq{e-Avgsigma}, we respectively input 
+$\Obser_p = \theta_p$ phase shift of the prime cycle, and 
+$\Obser_p = \ln |\Lambda_{p,e}|$ logarithm the expanding Floquet multiplier of 
+the prime cycle.
 
 In \refsect{s:visual}, we explained that \SOn{2} phase shifts corresponds to
 the drifts in the configuration space, with this in mind, we can relate the
-variance of phase velocity to the diffusion constant of our system:
+variance of phase velocity to the diffusion these drifts. We define the 
+diffusion constantas:
 \beq
     D = \frac{1}{2 d} \sigma_{\dot{\theta}}^2
-      = \frac{\langle (\dot{\theta} - \langle \dot{\theta} \rangle)^2 \rangle}{2} ,
+      = \frac{\langle (\dot{\theta} - \langle \dot{\theta} \rangle)^2 
+              \rangle}{2} ,
 \eeq
 where $d=1$ since our configuration space is one dimensional.
 
 \refTab{t-DynamicalAverages} and \reftab{t-DynamicalAveragesNoGrammar} shows
-the cycle averages of the escape rate $\gamma$, mean period $\langle T \rangle$,
-leading Lyapunov exponent $\Lyap$, mean phase velocity $\langle \dot{\theta} \rangle$
-and the diffusion constant $D$ respectively within and without the finite grammar
-approximation. In the latter, we input all the \rpo s we have found into the expansion
-\refeq{e-SpectralDeterminantExp}, whereas in the former, we discarded the cycles
-with symbol sequence `00'.
+the cycle averages of the escape rate $\gamma$, mean period 
+$\langle T \rangle$, leading Lyapunov exponent $\Lyap$, mean phase velocity 
+$\langle \dot{\theta} \rangle$ and the diffusion constant $D$ respectively 
+within and without the finite grammar approximation. In the latter, we input 
+all the \rpo s we have found into the expansion 
+\refeq{e-SpectralDeterminantExp}, whereas in the former, we discarded the 
+cycles with symbol sequence `00'.
 
 \input{2modesDynamicalAverages}
 \input{2modesDynamicalAveragesNoGrammar}
 
-We motivated our finite grammar approximation by expecting a fast convergence
-due to the nearly exact shadowing combinations and we can clearly see this
-by comparing numbers in
-\reftab{t-DynamicalAverages} and \reftab{t-DynamicalAveragesNoGrammar}.
-Take, for example, Lyapunov exponent which converges with $7$ digit accuracy
-at the final order in \reftab{t-DynamicalAverages} while we have only $4$ digits
-at this order in \reftab{t-DynamicalAveragesNoGrammar}. Other observables compares
-similarly in terms of their convergence in both cases. Note, however, that the
-escape rate in \reftab{t-DynamicalAverages} converges to $\gamma = 0.000727889$,
-whereas in \reftab{t-DynamicalAveragesNoGrammar} it gets smaller and smaller
-with an oscillatory behavior. This is due to the fact that in the finite grammar
+We motivated the finite grammar approximation by expecting a faster convergence
+due to the nearly exact shadowing combinations of the golden mean zeta function 
+\refeq{e-GoldenMeanCycleExpansion} and this claim is clearly supported by the
+numbers in \reftab{t-DynamicalAverages} and 
+\reftab{t-DynamicalAveragesNoGrammar}. Take, for example, Lyapunov exponent 
+which converges with $7$ digit accuracy at the final order in 
+\reftab{t-DynamicalAverages} while we have only $4$ digits at this order in 
+\reftab{t-DynamicalAveragesNoGrammar}. Other observables compares similarly in 
+terms of their convergence in both cases. Note, however, that the escape rate 
+in \reftab{t-DynamicalAverages} converges to $\gamma = 0.000727889$, whereas 
+in \reftab{t-DynamicalAveragesNoGrammar} it gets smaller and smaller with an 
+oscillatory behavior. This is due to the fact that in the finite grammar 
 approximation, we neglect a definite piece of attractor that corresponds to the
 cusp of the return map in \reffig{fig:psectandretmap} (d), above the part that
 is cut by \cycle{001}.
@@ -404,4 +473,4 @@ estimate $\Lyap_{FG} = 0.1183$ is within $0.6\%$ range of this value,
 the full cycle expansion agrees with the numerical estimate. This is not
 surprising, since in the finite grammar approximation, we discard the
 most unstable cycles, thus, we obtain a slightly smaller Lyapunov
-exponent while obtaining a better convergence.
+exponent while obtaining a significantly better convergence.
