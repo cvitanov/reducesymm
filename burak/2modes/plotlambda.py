@@ -13,7 +13,7 @@ from StringIO import StringIO
 conn = sqlite3.connect('data/rpoall.db')
 c = conn.cursor()
 
-Ncycle = 127
+Ncycle = 133
 
 for rpono in range(1,Ncycle+1):
     c.execute("SELECT * FROM rpos WHERE rpono = "+str(rpono))
@@ -38,14 +38,14 @@ ax = fig.gca()
 Nticks = 8
 xticks = np.linspace(0.05, 0.40, Nticks)
 ax.set_xticks(xticks) 
-ax.set_xticklabels(["$%.2f$" % xtik for xtik in xticks], fontsize=12); 
+ax.set_xticklabels(["$%.2f$" % xtik for xtik in xticks], fontsize=24); 
 
 yticks = np.array([1.0/n for n in range(2,13)], float)
 ax.set_yticks(yticks)
 ax.set_yticklabels(["%s" % n for n in ['$1/2$', '$1/3$', '$1/4$', '', '$1/6$', '', '$1/8$', 
-                                        '', '$1/10$', '', '\n $1/12$']], fontsize=14); 
-xlabel('$\lambda$', fontsize=24)
-ylabel('$1/n$', fontsize=24)
+                                        '', '', '', '\n $1/12$']], fontsize=24); 
+xlabel('$\lambda$', fontsize=26)
+ylabel('$1/n$', fontsize=26)
 
 savefig('lambdaDist.pdf', bbox_inches='tight', dpi=100) 
 conn.close()    

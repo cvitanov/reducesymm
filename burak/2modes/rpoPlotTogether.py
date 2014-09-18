@@ -81,9 +81,10 @@ yticks = np.linspace(-1.8, 0, Nticks)
 ax.set_yticks(yticks)
 ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=24); 
 
-zticks = np.linspace(-0.3, 0.3, Nticks)
+zticks = np.linspace(-0.4, 0.4, Nticks)
 ax.set_zticks(zticks)
-ax.set_zticklabels(["$%.1f$ " % ztik for ztik in zticks], fontsize=24); 
+#ax.set_zticklabels(["$%.1f$ " % ztik for ztik in zticks], fontsize=24); 
+ax.set_zticklabels(["$-0.4$ \t ", " $0.0$  ", " $0.4$  "], fontsize=24); 
 
 savefig('rpofirst'+str(Ncycle)+'.pdf', bbox_inches='tight', dpi=100) 
 

@@ -38,11 +38,11 @@ f.write("\t\\hline\n")
 
 for i in range(len(EscapeRate)):
     f.write("\t%s & " % str(i+1))
-    f.write("%5.8f & " % float(EscapeRate[i]))
-    f.write("%5.8f & " % float(AveragePeriod[i]))
+    f.write("%5.9f & " % float(EscapeRate[i]))
+    f.write("%5.7f & " % float(AveragePeriod[i]))
     f.write("%5.8f & " % float(LyapunovExponent[i]))
-    f.write("%5.8f & " % float(AveragePhaseSpeed[i]))
-    f.write("%5.8f \\\\ \n " % float(DiffusionCoefficient[i]))
+    f.write("%5.7f & " % float(AveragePhaseSpeed[i]))
+    f.write("%5.6f \\\\ \n " % float(DiffusionCoefficient[i]))
     
 f.write("\t\\end{tabular}\n")
 f.write("\t\\caption{Cyle expansion estimates of the escape rate $\gamma$, \
@@ -54,14 +54,14 @@ f.write("\\end{table}")
 
 f.close()
 
-poptPeriodeven, pcovPeriododd = curve_fit(Exponential, xdataeven, AveragePeriod[xdataeven-1])
-poptPeriododd, pcovPeriododd = curve_fit(Exponential, xdataodd, AveragePeriod[xdataodd-1])
-aPeriododd, bPeriododd, cPeriododd = poptPeriododd
-aPeriodeven, bPeriodeven, cPeriodeven = poptPeriodeven
+#poptPeriodeven, pcovPeriododd = curve_fit(Exponential, xdataeven, AveragePeriod[xdataeven-1])
+#poptPeriododd, pcovPeriododd = curve_fit(Exponential, xdataodd, AveragePeriod[xdataodd-1])
+#aPeriododd, bPeriododd, cPeriododd = poptPeriododd
+#aPeriodeven, bPeriodeven, cPeriodeven = poptPeriodeven
 
-plt.figure(1)
-plot(range(1,Nexpansion+1), AveragePeriod)
-plt.hold('True')
+#plt.figure(1)
+#plot(range(1,Nexpansion+1), AveragePeriod)
+#plt.hold('True')
 #xRange = np.arange(1,Nexpansion+0.01, 0.01)
 #plot(xRange, [Exponential(xRange[i], aPeriododd, bPeriododd, cPeriododd) \
 #              for i in range(len(xRange))])

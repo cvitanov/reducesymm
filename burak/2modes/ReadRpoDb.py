@@ -20,7 +20,7 @@ if FiniteGrammar:
     conn = sqlite3.connect('data/rpo.db')
 
 else:
-    Ncycle = 127
+    Ncycle = 133
     NmaxExp = 12
     conn = sqlite3.connect('data/rpoall.db')
 
@@ -46,3 +46,13 @@ for rpono in range(1,Ncycle + 1):
 conn.close()
 
 np.savetxt('rpos.dat',rpos)
+orig_stdout = sys.stdout
+
+f = file('data/rpotext.dat', 'w')
+sys.stdout = f
+
+for i in range(len(rpos)):
+    print str(rpos[i]).strip("[]").replace(",", "")
+
+sys.stdout = orig_stdout
+f.close()

@@ -22,6 +22,9 @@ Adviser: Predrag Cvitanovic
 - ../bibtex/siminos.bib
 
 ----- NOTES        ------------------------------------------
+Burak                                   Jul 22 2014
+Added cleanup.sh, run it if 2modes.tex stops compiling.
+
 
 Predrag                                 May 11 2012
 remember to remove

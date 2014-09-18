@@ -79,7 +79,7 @@ for Nexpansion in range(1,NmaxExp+1):
         while npr*r <= Nexpansion:
             Sum = Sum + (sympy.exp(-r*s*Tp)*z**(npr*r))/(r*abs(1.0-Lambda**r))
             #SumT = Sum + (sympy.exp(r*(beta*Tp-s*Tp))*z**(npr*r))/(r*abs(1.0-Lambda**r))
-            Sumphi = Sum + (sympy.exp(r*(beta*phi - s*Tp))*z**(npr*r))/(r*abs(1.0-Lambda**r))
+            Sumphi = Sumphi + (sympy.exp(r*(beta*phi - s*Tp))*z**(npr*r))/(r*abs(1.0-Lambda**r))
             SumLy = SumLy + (sympy.exp(r*(beta*(np.log(np.abs(Lambda))) - s*Tp))*z**(npr*r))/(r*abs(1.0-Lambda**r))
             r += 1
         #Expand the exponentials and discard higher order terms:
