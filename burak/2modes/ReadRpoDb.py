@@ -4,6 +4,7 @@ from StringIO import StringIO
 from subprocess import call
 from scipy.optimize import fsolve
 import sys
+import numpy as np
 #import sympy
 #Initiate plotting environment:
 import matplotlib as mpl
@@ -11,7 +12,7 @@ from pylab import plot, xlabel, ylabel, show, savefig
 import matplotlib.pyplot as plt
 import twomode
 
-FiniteGrammar=False
+FiniteGrammar=True
 
 if FiniteGrammar:
     Ncycle = 79
@@ -43,3 +44,5 @@ for rpono in range(1,Ncycle + 1):
     rpos.append([TopLength, T, floquet[0], phi])
 
 conn.close()
+
+np.savetxt('rpos.dat',rpos)
