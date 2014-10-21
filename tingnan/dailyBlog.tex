@@ -1149,5 +1149,98 @@ Now let us try to simplify the formula for each irreducible representation. Beca
 
 There we have a scary $\vert G\vert$ (while $m_{\tilde{p}}$ is not a problem). Stucked here...
 
+\item[2014-10-20 Tingnan]
+
+Using the method discussed today, I was able to re-construct the determinant from another way, but the bad news is the formula is still not simplified...
+
+% Preview source code from paragraph 9 to 18
+
+Let us consider the expansion from another way:
+
+\begin{align*}
+\zeta_{\alpha}(\beta\cdot a,s,z) & =\exp\left(-\sum_{\tilde{p}}\frac{1}{n_{\tilde{p}}}\sum_{\tilde{x}_{i}\in\tilde{p}}\sum_{r=1}^{\infty}\frac{1}{r}\frac{z^{n_{\tilde{p}}r}\chi_{\alpha}(g_{\tilde{p}}^{-r})e^{\beta\cdot a\cdot(e+g_{\tilde{p}}(\tilde{x}_{i})\cdots+g_{\tilde{p}}^{r-1}(\tilde{x}_{i}))\cdot\hat{n}_{\tilde{p}}(\tilde{x}_{i})}e^{-srT_{\tilde{p}}}}{\vert\Lambda_{\tilde{p}}\vert^{r}}\right)\\
+ & =\exp\left(-\sum_{\tilde{p}}\frac{1}{n_{\tilde{p}}}\sum_{\tilde{x}_{i}\in\tilde{p}}\sum_{r=1}^{\infty}\frac{t_{\tilde{p}}^{r}}{r}\chi_{\alpha}(g_{\tilde{p}}^{-r})e^{\beta\cdot a\cdot(e+g_{\tilde{p}}(\tilde{x}_{i})\cdots+g_{\tilde{p}}^{r-1}(\tilde{x}_{i}))\cdot\hat{n}_{\tilde{p}}(\tilde{x}_{i})}\right)
+\end{align*}
+
+
+If we do not do the logrithm first, but evaluate the sum:
+\begin{eqnarray*}
+\sum_{n=1}^{\infty}z^{n}\mathrm{Tr}\mathcal{L}^{n} & = & \sum_{n}^{\infty}z^{n}\sum_{\alpha}\sum_{a\in G}\frac{d_{\alpha}}{\vert G\vert}\sum_{h\in G}\chi_{\alpha}(h)\int_{\mathcal{\tilde{\mathcal{M}}}}d\tilde{x}\delta(h^{-1}\tilde{x}-f^{n}(\tilde{x}))e^{\beta\cdot a\cdot\hat{n}_{(n)}(\tilde{x})-sT_{(n)}(\tilde{x})}\\
+ & = & \sum_{n}^{\infty}z^{n}\sum_{\alpha}\sum_{a\in G}\frac{d_{\alpha}}{\vert G\vert}\sum_{h\in G}\chi_{\alpha}(h)\sum_{\tilde{p}}\sum_{\tilde{x}_{i}\in\tilde{p}}\sum_{r=1}^{\infty}\delta_{n,n_{\tilde{p}}r}\delta_{h^{-1},g_{\tilde{p}}^{r}}\frac{e^{\beta\cdot a\cdot(e+g_{\tilde{p}}\cdots+g_{\tilde{p}}^{r-1})\cdot\hat{n}_{\tilde{p}}(\tilde{x}_{i})-srT_{\tilde{p}}}}{\vert1-M_{\tilde{p}}^{r}(\tilde{x}_{i})\vert}\\
+ & \simeq & \sum_{\alpha}\sum_{a\in G}\frac{d_{\alpha}}{\vert G\vert}\sum_{\tilde{p}}\sum_{\tilde{x}_{i}\in\tilde{p}}\sum_{r=1}^{\infty}\frac{z^{n_{\tilde{p}}r}\chi_{\alpha}(g_{\tilde{p}}^{-r})e^{\beta\cdot a\cdot(e+g_{\tilde{p}}\cdots+g_{\tilde{p}}^{r-1})\cdot\hat{n}_{\tilde{p}}(\tilde{x}_{i})-srT_{\tilde{p}}}}{\vert\Lambda\vert^{r}}\\
+ & = & \sum_{\alpha}\sum_{a\in G}\frac{d_{\alpha}}{\vert G\vert}\sum_{\tilde{p}}\sum_{\tilde{x}_{i}\in\tilde{p}}\sum_{r=1}^{\infty}t_{\tilde{p}}^{r}\chi_{\alpha}(g_{\tilde{p}}^{-r})e^{\beta\cdot a\cdot(e+g_{\tilde{p}}\cdots+g_{\tilde{p}}^{r-1})\cdot\hat{n}_{\tilde{p}}(\tilde{x}_{i})}
+\end{eqnarray*}
+
+
+Now we can do regrouping. Let $m_{\tilde{p}}$ be the smallest integer
+such that $g^{-m_{\tilde{p}}}=e$ (i.e. the number of repeats needed
+for a fundamental domain cycle to form a elementary cell cycle. Let
+us introduce
+\[
+\sum_{k=1}^{m_{\tilde{p}}}t_{\tilde{p}}^{k}\chi_{\alpha}(g_{\tilde{p}}^{-k})e^{\beta\cdot a\cdot(e+g_{\tilde{p}}\cdots+g_{\tilde{p}}^{k-1})\cdot\hat{n}_{\tilde{p}}(\tilde{x}_{i})}.
+\]
+The sum can be written using re-grouping:
+\begin{align*}
+ & \sum_{r=1}^{\infty}t_{\tilde{p}}^{r}\chi_{\alpha}(g_{\tilde{p}}^{-r})e^{\beta\cdot a\cdot(e+g_{\tilde{p}}\cdots+g_{\tilde{p}}^{r-1})\cdot\hat{n}_{\tilde{p}}(\tilde{x}_{i})}\\
+= & \sum_{k=1}^{m_{\tilde{p}}}t_{\tilde{p}}^{k}\chi_{\alpha}(g_{\tilde{p}}^{-k})e^{\beta\cdot a\cdot(e+g_{\tilde{p}}\cdots+g_{\tilde{p}}^{k-1})\cdot\hat{n}_{\tilde{p}}(\tilde{x}_{i})}\sum_{r^{\prime}=0}^{\infty}\left(t_{\tilde{p}}^{m_{\tilde{p}}}e^{m_{\tilde{p}}\beta\cdot a\cdot\hat{L}_{\tilde{p}}(\tilde{x}_{i})}\right)^{r^{\prime}}\\
+= & \frac{\sum_{k=1}^{m_{\tilde{p}}}t_{\tilde{p}}^{k}\chi_{\alpha}(g_{\tilde{p}}^{-k})e^{\beta\cdot a\cdot(e+g_{\tilde{p}}\cdots+g_{\tilde{p}}^{k-1})\cdot\hat{n}_{\tilde{p}}(\tilde{x}_{i})}}{1-t_{\tilde{p}}^{m_{\tilde{p}}}e^{m_{\tilde{p}}\beta\cdot a\cdot\hat{L}_{\tilde{p}}(\tilde{x}_{i})}}
+\end{align*}
+We have:
+\begin{align*}
+\sum_{n=1}^{\infty}z^{n}\mathrm{Tr}\mathcal{L}^{n} & =\sum_{a\in G}\sum_{\alpha}\frac{d_{\alpha}}{\vert G\vert}\sum_{\tilde{p}}\sum_{\tilde{x}_{i}\in\tilde{p}}\frac{\sum_{k=1}^{m_{\tilde{p}}}t_{\tilde{p}}^{k}\chi_{\alpha}(g_{\tilde{p}}^{-k})e^{\beta\cdot a\cdot(e+g_{\tilde{p}}\cdots+g_{\tilde{p}}^{k-1})\cdot\hat{n}_{\tilde{p}}(\tilde{x}_{i})}}{1-t_{\tilde{p}}^{m_{\tilde{p}}}e^{m_{\tilde{p}}\beta\cdot a\cdot\hat{L}_{\tilde{p}}(\tilde{x}_{i})}}\\
+ & =-z\frac{d}{dz}\ln\mathrm{det}(1-z\mathcal{L})
+\end{align*}
+Let us do an integration over $z$ on both side, this suggest
+us to evaluate integral of this form:
+\[
+\int dz\frac{z^{n}}{1-bz^{m}}=\frac{z^{n+1}\ _{2}F_{1}(1,\frac{n+1}{m},\frac{m+n+1}{m};bx^{m})}{n+1}
+\]
+
+
+where 
+\[
+_{2}F_{1}(1,\frac{n+1}{m},\frac{m+n+1}{m};bx^{m})
+\]
+is the hypergeometric function. Plugin the actual numbers we have:
+\begin{align*}
+\zeta & =\exp\left(-\sum_{a\in G}\sum_{\alpha}\frac{d_{\alpha}}{\vert G\vert}\sum_{\tilde{p}}\sum_{\tilde{x}_{i}\in\tilde{p}}\sum_{k=1}^{m_{\tilde{p}}}\int dz\frac{\chi_{\alpha}(g_{\tilde{p}}^{-k})e^{\beta\cdot a\cdot(e+g_{\tilde{p}}\cdots+g_{\tilde{p}}^{k-1})\cdot\hat{n}_{\tilde{p}}(\tilde{x}_{i})}t_{\tilde{p}}^{k}}{z(1-t_{\tilde{p}}^{m_{\tilde{p}}}e^{m_{\tilde{p}}\beta\cdot a\cdot\hat{L}_{\tilde{p}}(\tilde{x}_{i})})}\right)\\
+ & =\exp\left(-\sum_{a\in G}\sum_{\alpha}\frac{d_{\alpha}}{\vert G\vert}\sum_{\tilde{p}}\sum_{\tilde{x}_{i}\in\tilde{p}}\sum_{k=1}^{m_{\tilde{p}}}\chi_{\alpha}(g_{\tilde{p}}^{-k})e^{\beta\cdot a\cdot(e+g_{\tilde{p}}\cdots+g_{\tilde{p}}^{k-1})\cdot\hat{n}_{\tilde{p}}(\tilde{x}_{i})}f_{\tilde{p}}(\tilde{x}_{i},k,z)\right)
+\end{align*}
+
+
+where 
+\[
+f_{\tilde{p}}(\tilde{x}_{i},k,z)=\frac{1}{kn_{\tilde{p}}}\left(\frac{e^{-sT_{\tilde{p}}}}{\vert\Lambda_{\tilde{p}}\vert}z^{n_{\tilde{p}}}\right)^{k}\ _{2}F_{1}\left(1,\frac{k}{m_{\tilde{p}}},1+\frac{k}{m_{\tilde{p}}};\left(\frac{e^{\beta\cdot a\cdot\hat{L}_{\tilde{p}}(\tilde{x}_{i})-sT_{\tilde{p}}}}{\vert\Lambda_{\tilde{p}}\vert}z^{n_{\tilde{p}}}\right)^{m_{\tilde{p}}}\right)
+\]
+
+
+For $m_{\tilde{p}}=1$ the hypergeometric function gives $-\ln(1-\frac{e^{\beta\cdot a\cdot\hat{L}_{\tilde{p}}(\tilde{x}_{i})-sT_{\tilde{p}}}}{\vert\Lambda_{\tilde{p}}\vert}z)$,
+which is correct. In fact, the correctness is guanranteed from the
+fact: 
+\[
+\sum_{k=1}^{m}\frac{x^{k}}{k}{}_{2}F_{1}(1,\frac{k}{m},\frac{m+k}{m};x^{m})\equiv-\ln(1-x).
+\]
+The hypergeometric function can be expanded:
+\[
+F_{1}(1,\frac{k}{m},\frac{m+k}{m};x^{m})=\sum_{n=0}^{\infty}\frac{(1)_{n}(\frac{k}{m})_{n}}{(\frac{k}{m}+1)_{n}}\frac{x^{mn}}{n!}
+\]
+where the $(q)_{n}$ denotes the rising Pochhammer symbol:
+\[
+(q)_{n}\equiv\begin{cases}
+1 & n=0\\
+q(q+1)\cdots(q+n-1) & n>0
+\end{cases}
+\]
+
+
+The expansion then simplifies to:
+\begin{align*}
+F_{1}(1,\frac{k}{m},\frac{m+k}{m};x^{m}) & =\sum_{n=0}^{\infty}\frac{(\frac{k}{m})_{n}}{(\frac{k}{m}+1)_{n}}x^{mn}\\
+ & =\sum_{n=0}^{\infty}\frac{\frac{k}{m}}{\frac{k}{m}+n}x^{mn}
+\end{align*}
+
+
+If we plugin the expansion to the zeta function, we actually recovers
+the old form :/.
 
 \end{description}
