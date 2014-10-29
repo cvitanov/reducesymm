@@ -5,9 +5,8 @@ Dangelmayr,\rf{Dang86} Armbruster, Guckenheimer and Holmes,\rf{AGHO288}
 Jones and Proctor,\rf{JoPro87} and Porter and Knobloch\rf{PoKno05} (see
 Golubitsky \etal\rf{golubII}, Sect. XX.1) have investigated bifurcations
 in 1:2 resonance ODE normal form models to third order in the amplitudes.
-We use this model as a starting point from which we derive what may
-be the simplest chaotic system with a continuous symmetry. We will
-refer to as the {\twomode} system:
+Here, we use this model as a starting point from which we derive what may
+be one of the simplest chaotic systems with a continuous symmetry. We refer to this as the {\twomode} system:
 \bea
 	\dot{z}_1 &=& (\mu_1-\ii\, e_1)\,z_1+a_1\,z_1|z_1|^2
 				 +b_1\,z_1|z_2|^2+c_1\,\overline{z}_1\,z_2
@@ -16,10 +15,12 @@ refer to as the {\twomode} system:
 				 +b_2\,z_2|z_2|^2+c_2\,z_1^2 \,,
 	\label{eq:DangSO2}
 \eea
-with $z_1,\,z_2$  complex, and all parameters real valued. This complex
-\twomode\ system \refeq{eq:DangSO2} is a 4-dimensional
-first order real ODE system,
-by substitution $z_1 = x_1 + i\,y_1$, $z_2 = x_2 + i\,y_2$,
+where $z_1$ and $z_2$ are complex and all parameters real-valued. The parameters $\{e_1,e_2\}$ break the $\On{2}$ symmetry of the
+ normal form studied by Dangelmayr\rf{Dang86} leading to an $\SOn{2}$-equivariant
+system. As we will show below in \refeq{PKinvEqs1}, only the combination
+$(2e_1-e_2)$ matters in the symmetry reduced dynamics, so for simplicity
+we set $e_1=0$.\DB{2014-10-28}{We say this and then never really do it in any of the analysis except in numerics. Should we get rid of $e_1$ everywhere or keep it?} This complex two mode system can be expressed as a 4-dimensional
+first order real ODE system by substituting $z_1 = x_1 + i\,y_1$, $z_2 = x_2 + i\,y_2$, so that
 \bea
 \dot{x}_1 &=& (\mu_1 + a_1 r_1^2 + b_1 r_2^2 + c_1 x_2)x_1 + c_1 y_1 y_2 + e_1 y_1 % double checked DBE 05/22/2014
 \continue
@@ -33,13 +34,12 @@ by substitution $z_1 = x_1 + i\,y_1$, $z_2 = x_2 + i\,y_2$,
 \,.
 \label{2mode4D}
 \eea
-The normal-form analysis leaves us with a large set of parameters
-$\left(\mu_1,\mu_2,a_1,a_2,b_1,b_2,c_1,c_2,e_1,e_2\right)$.
 
-Following the time-hallowed tradition of Lorenz\rf{lorenz},
+This normal form has a large set of parameters $\left(\mu_1,\mu_2,a_1,a_2,b_1,b_2,c_1,c_2,e_1,e_2\right)$.
+Following in the tradition of Lorenz\rf{lorenz},
 H\'enon\rf{henon} and R\"ossler\rf{ross}, we have played with various
-choices of parameters until settling on the set values used in all
-numerical \twomode\  calculations presented here:
+choices of parameters until settling on the following set of values, which we will use in all
+numerical calculations presented here:
 \beq
 	\begin{tabular}{c c c c c c c c c c}
 	% after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
@@ -49,11 +49,11 @@ numerical \twomode\  calculations presented here:
 	\end{tabular}
 	\label{eq:pars}
 \eeq
-While our choice of parameters is far from the bifurcation values studied
-by previous authors \rf{Dang86,AGHO288,JoPro87,PoKno05}, and thus the
-model has no physical interpretation, it is the simplest model for the
-study of chaotic dynamics in systems with continuous symmetry that we
-know of: it is a 4\dmn\ $\SOn{2}$-equivariant model in which the three
+This choice of parameters is far from the bifurcation values studied
+by previous authors \rf{Dang86,AGHO288,JoPro87,PoKno05}, so that the
+model has no physical interpretation. However, this set of parameters yield chaotic dynamics,
+making ours the simplest model for the study of chaotic dynamics in systems with continuous symmetry that we
+are aware of: it is a 4\dmn\ $\SOn{2}$-equivariant model in which the three
 dimensional $\SOn{2}$-reduced dynamics are chaotic.
 
 It can be checked by inspection that eqs.~\refeq{eq:DangSO2} are
@@ -64,7 +64,7 @@ equivariant under the \Un{1}\ transformation
 \ee{Dang86(1.1)aa}
 In the real representation \refeq{2mode4D}, the $\SOn{2}$ group action
 \refeq{Dang86(1.1)aa} is given by $\ssp'= \exp\left( \theta \Lg\right)\ssp$,
-where $\transp{\ssp} =$ \cartpt{x_1, y_1,x_2, y_2}, and $\Lg$ is the Lie algebra
+where $\transp{\ssp} =$ {\cartpt{x_1, y_1,x_2, y_2}}, and $\Lg$ is the Lie algebra
 generator
 \beq
 \Lg  \, =
@@ -79,13 +79,7 @@ generator
 One can easily check that the real \twomode\ system \refeq{2mode4D}
 satisfies the equivariance condition \refeq{inftmInv}.
 
-The parameters $\{e_1,e_2\}$ break the $\On{2}$ symmetry of the
-Dangelmayr normal form system\rf{Dang86} to an $\SOn{2}$-equivariant
-system. As we will show below in \refeq{PKinvEqs1}, only the combination
-$(2e_1-e_2)$ matters in the symmetry reduced dynamics, so for simplicity
-we set $e_1=0$.
-
-From \refeq{eq:DangSO2} we note that the \eqv\ point \((z_1,z_2)=(0,0)\)
+From \refeq{eq:DangSO2}, it is obvious that the \eqv\ point \((z_1,z_2)=(0,0)\)
 is an invariant subspace, and that $z_1=0$, $z_2 \neq 0$ is a 2\dmn\
 flow-invariant subspace,
 \beq
@@ -95,14 +89,11 @@ flow-invariant subspace,
 \,,
 \ee{eq:DangSO2spsp}
 with a single circular \reqv\ of radius $r_2 = \norm{z_2} = \sqrt{-\mu_2/b_2}$ with
-\phaseVel\ $\velRel=-e_2/2$.
-    \PC{recheck: is $\velRel=e_2$?} \BB{}{I confirm.} \ES{}{ES: If I write $z_2=e^{i2\phi}z2$, then I get $c=-e_2/2$.}
-		\DB{}{I agree with Vagelis... If the phase velocity is defined as written down in Sect. II, s.t. $v(a_q) = c \Lg a_q$, then $v(0,0,x_2,y_2) = (0,0,e_2 y_2, -e_2 x_2)$ and $\Lg (0,0,x_2,y_2) = (0,0,-2 y_2, 2 x_2)$ so $c = -e_2/2$.}
-At the origin $\Mvar$ commutes with $\Lg$, and thus can be block-diagonalized
-into two $[2\!\times\!2]$ matrices.
+\phaseVel\ $\velRel=-e_2/2$. At the origin the stability matrix $\Mvar$ commutes with $\Lg$, 
+and thus can be block-diagonalized into two $[2\!\times\!2]$ matrices.
 % According to {\bf [2012-04-27 Daniel]},
-The \cartpt{0,0,0,0} \eqv\ eigenvalues are $\Lyap_1 = \mu_1$ with multiplicity 2 and
-$\Lyap_3 = \mu_2 \pm i e_2$. The eigenvectors for $\Lyap_1$ are \cartpt{1,0,0,0} and
+The eigenvalues of $\Mvar$ at \cartpt{0,0,0,0} are $\Lyap_1 = \mu_1$ with multiplicity 2 and
+$\Lyap_2 = \mu_2 \pm i e_2$. The eigenvectors for $\Lyap_1$ are \cartpt{1,0,0,0} and
 \cartpt{0,1,0,0} in the \cartpt{x_1,x_2,y_1,y_2} basis. The eigenvectors for $\Lyap_2$
 are \cartpt{0,0,1,0} and \cartpt{0,0,0,1}.
 
@@ -122,9 +113,7 @@ take the flow out of the $z_2 =0$ plane.
 
 Consider the \statesp\ of a dynamical system
 constructed from two complex Fourier modes\rf{Dang86,AGHO288,PoKno05}
-$m=(1,2)$, with the $\SOn{2} \simeq \Un{1}$ group action given by
-rotation \refeq{Dang86(1.1)aa}. In this
-case it is easy to construct a set of four real-valued
+$m=(1,2)$, with the $\SOn{2} \simeq \Un{1}$\DB{2014-10-28}{What does \simeq mean in this context? Aren't they actually the same?} group action given by \refeq{Dang86(1.1)aa}. In this case, it is easy to construct a set of four real-valued
 $\SOn{2}$ invariant polynomials
 \bea
 u &=& {z}_1 \overline{z}_1
@@ -141,12 +130,10 @@ The polynomials $\{u,v,w,q\}$ are
 linearly independent, but related through one syzygy,
 \beq
 w^2+q^2 - 4\,u^2v = 0 % Double checked syzygy is satisfied by eq Dang86(1.2)PK DBE 05/22/2014
-  \,,
 \label{eq:syzPK}
 \eeq
-which confines the dynamics to a 3-dim\-ens\-ion\-al $\pSRed=\pS/\SOn{2}$
-\reducedsp\ manifold, a symmetry-invariant repre\-sent\-ati\-on of the
-4-dim\-ens\-ion\-al \SOn{2} equivariant dynamics. By construction $u \geq
+that confines the dynamics to a 3-dim\-ens\-ion\-al manifold $\pSRed=\pS/\SOn{2}$, a symmetry-invariant repre\-sent\-ati\-on of the
+4-dim\-ens\-ion\-al \SOn{2} equivariant dynamics, which we call the \reducedsp\. By construction, $u \geq
 0$, $v \geq 0$, but $w$ and $q$ can be of either sign. That is explicit
 in in polar coordinates $ {z}_1 = |u|^{1/2} e^{\ii\phi_1}$, $ {z}_2 =
 |v|^{1/2} e^{\ii\phi_2}$, where the  $w, q$ invariants take the form
@@ -162,9 +149,9 @@ where $\psi = 2 \phi_1 - \phi_2$.
 The dynamical equations for \invpt{u,v,w,q} follow from the chain rule
 \( %beq
  \dot{ u}_i= \sum_j ({\partial u_i}/{\partial \ssp_j}) \, \dot{\ssp}_j
- \,
+ \,,
 \) %ee{HilbChainRl}
-. This yields
+which yields
 \bea
   \dot{u} &=& \overline{z}_1 \dot{z}_1 + {z}_1 \dot{\overline{z}}_1 % Triple checked DBE 05/22/2014
 \,,\qquad
@@ -182,7 +169,7 @@ The dynamical equations for \invpt{u,v,w,q} follow from the chain rule
            )/\ii
 \label{PKinvEqs}
 \eea
-Substituting  \refeq{eq:DangSO2} into \refeq{PKinvEqs} we obtain the set
+Substituting \refeq{eq:DangSO2} into \refeq{PKinvEqs}, we obtain a set
 of four $\SOn{2}$-invariant equations,
 
 \bea
@@ -206,7 +193,7 @@ Note that the $\On{2}$-symmetry breaking parameters
 Dangelmayr normal form system\rf{Dang86} appear only in the
 relative phase combination $(2e_1-e_2)$.
 %[2012-07-31 Evangelos]
-Using the syzygy \refeq{eq:syzPK} we can
+Using the syzygy \refeq{eq:syzPK}, we can
 eliminate $q$ from \refeq{PKinvEqs1} to get
     \PC{
     Note that $4u^2v-w^2 = 4u^2v(1-\cos^2\psi)$, so
