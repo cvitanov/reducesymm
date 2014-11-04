@@ -2,20 +2,20 @@
 \label{s:DynAvers}
 
 So far, we have explained how we find the \rpo s of the \twomode\ system in 
-its \reducedsp\ and how to compute their stability, however, we have not yet
+its \reducedsp\ and how to compute their stability. However, we have not yet
 said anything about what to do with these numbers. We begin this section with 
-an overview of the main results of the periodic orbit theory, for a detailed 
-introduction to the subject, we refer the reader to \refref{DasBuch}. We 
-closely follow the presentation of \refref{DasBuch} with the addition of how 
+an overview of the main results of the periodic orbit theory, referring the reader 
+to \refref{DasBuch} for a detailed introduction to the subject. Our discussion 
+closely follows the presentation of \refref{DasBuch} with the addition of how 
 the theory is modified in the presence of continuous symmetries in 
 \refsect{s-ContFac}. In \refsect{s-CycExp}, we present cycle expansions and
-explain how we approximate the Poincar\'e section in 
+explain how to approximate the Poincar\'e section in 
 \reffig{fig:psectandretmap} (d), in order to obtain a better convergence of 
 the spectral determinants. We finish this section with the numerical results in 
 \refsect{s-NumResults}
 
 \subsection{Classical trace formula}
-Consider the {\evOper}, action of which evolves a density 
+Consider the {\evOper}, the action of which evolves a density 
 $\rho_0(\ssp)$ in the \statesp :
 \bea
     \rho(\zeit ,\ssp) &=& [\Lop^\zeit \rho_0 ] (\ssp) \, , \continue
@@ -32,10 +32,11 @@ $\flow{\zeit}{\ssp'}$:
 \eeq
 Notice that when $\beta = 0$, the \evOper\ \refeq{e-EvOper} simply evolves 
 the density of \statesp\ points to its new form after time $\zeit$. As we 
-shall see, attaching the integrated observables to this operator enables us to 
+shall see, attaching\DB{2014-11-3}{What does ``attaching'' mean in this context... might be lacking technical rigor here.} 
+the integrated observables to this operator enables us to 
 study values of these observables averaged over the invariant measures. 
 
-Since we required our observable to be additive along an orbit, and 
+Since we required our observable to be additive along an orbit and 
 exponentiated its integrated value in the construction of the \evOper\ 
 \refeq{e-EvOper}; the evolution operator itself is multiplicative:
 \beq
@@ -58,9 +59,9 @@ define the {\evOper} as the formal exponential of its infinitesimal generator
 	\Lop^t = e^{\Aop t} \, .
 	\label{eq-EvOpExp}
 \eeq
-By definition \refeq{e-EvOper}, eigenvalues and eigenfunctions of $\Lop^t$ (and
+By definition \refeq{e-EvOper}, the eigenvalues and eigenfunctions of $\Lop^t$ (and
 thus \Aop ) are functions of $\beta$. Let us define $\rho_{\beta} (x)$ as the
-eigenfunction of \refeq{e-EvOper} with the leading eigenvalue (the one with the
+eigenfunction of \refeq{e-EvOper} corresponding to the leading eigenvalue (i.e., the one with the
 largest real part); we can write the action of \refeq{e-EvOper} on this density
 explicitly as follows:
 \beq
@@ -68,20 +69,20 @@ explicitly as follows:
     \, .
     \label{eq-EigenvalueRel}
 \eeq
-Here, $s(\beta)$ is the eigenvalue of $\Aop$. As we stated earlier, when 
+Here, $s(\beta)$ is the eigenvalue of $\Aop$. As stated earlier, when 
 $\beta = 0$, the {\evOper} simply evolves densities; this form of the evolution
-operator is known as the {\FPoper}. We assume the system we study is ergodic, 
-and hence an `invariant measure' $\rho_0(\ssp)$ exists, with eigenvalue 
-$s(0) = 0$. Long time spectrum of any observable is going to be dominated by 
+operator is known as the {\FPoper}. If we assume that the system under study is ergodic, 
+then an `invariant measure' $\rho_0(\ssp)$ exists with eigenvalue 
+$s(0) = 0$ exists. The long time spectrum of any observable is going to be dominated by 
 its average over such a density, hence we define the average of an observable
 as its average over the invariant measure:
 \beq
-    \langle \obser \rangle = \int d \ssp \obser(\ssp) \rho_0 (\ssp) \, .
+    \langle \obser \rangle = \int d \ssp \, \obser(\ssp) \rho_0 (\ssp) \, .
     \label{e-obserAvg}
 \eeq
-By evaluating the action of {\evOper} \refeq{e-EvOper} for infinitesimal 
-times and after some algebra, which we will skip here, one finds that the 
-averages of observables and the higher moments can be generated from the 
+By evaluating the action of the {\evOper} \refeq{e-EvOper} for infinitesimal 
+times and after some algebra, which we skip here, one finds that the 
+averages of observables, as well as their higher moments, can be generated from the 
 derivatives of $s(\beta)$:
 \beq
     \langle \obser \rangle = 
@@ -90,56 +91,57 @@ derivatives of $s(\beta)$:
         \left. \frac{d^2 s}{d \beta^2} \right|_{\beta = 0} \,, ...
     \label{eq-moments}
 \eeq
-In order to obtain $s(\beta)$ we construct the resolvent of \Aop , by taking 
+In order to obtain $s(\beta)$, we construct the resolvent of \Aop , by taking 
 the Laplace transform of \refeq{eq-EvOpExp}:
 \beq
 	\int_0^{\infty} d\zeit e^{-s\zeit} \Lop^\zeit = (s-\Aop)^{-1} \, ,
 	\label{eq-ResolventA}
 \eeq
-trace of which peaks at the eigenvalues of \Aop. By taking the
+the trace of which peaks at the eigenvalues of \Aop. By taking the
 Laplace transform of $\Lop^\zeit$ and computing its trace
-by $\tr \Lop^\zeit = \int d\ssp \Lop^\zeit (\ssp,\ssp)$ one obtains the
+by $\tr \Lop^\zeit = \int d\ssp \Lop^\zeit (\ssp,\ssp)$, one obtains the
 classical trace formula:
 \beq
 \sum_{\alpha=0}^{\infty} \frac{1}{s-s_{\alpha}} = \sum_p T_p
-\sum_{r=1}^{\infty} \frac{e^{r(\beta \Obser_p - s T_p)}}{\oneMinJ{r}} .
+\sum_{r=1}^{\infty} \frac{e^{r(\beta \Obser_p - s T_p)}}{\oneMinJ{r}} 
 \ee{e-ClassicalTraceFormula}
-which relates the spectrum of the {\evOper} to the spectrum of the periodic
-orbits. Here, $s_{\alpha}$ are the eigenvalues of \Aop ,
-outer sum on the RHS runs over the `prime cycles' of the system,
-$T_p$ is the period of the prime cycle $p$, $\Obser_p$ is the value of
-the observable integrated along the prime cycle, $s$ is the auxiliary
-variable of the Laplace transform, and $\monodromy_p$ is the transverse
-monodromy matrix, eigenvalues of which are the Floquet multipliers of the prime
-cycle $p$ excluding the marginal ones ($|\Lambda| \neq 1$). While deriving
-\refeq{e-ClassicalTraceFormula} one assumes a single marginal direction, namely
-the direction that is parallel to the periodic orbit at all times, for every 
-\po\ and evaluates the contribution of each \po\ to the trace integral by 
-transforming to a local coordinate system where one of the coordinates is 
+that relates the spectrum of the {\evOper} to the spectrum of the periodic
+orbits. Here,  $s$ is the auxiliary
+variable of the Laplace transform and $s_{\alpha}$ are the eigenvalues of \Aop . The
+outer sum on the right hand side runs over the `prime cycles' $p$ of the system,
+which have periods $T_p$. $\Obser_p$ is the value of
+the observable integrated along the prime cycle and $\monodromy_p$ is the transverse
+monodromy matrix, the eigenvalues of which are the Floquet multipliers of $p$ 
+excluding the marginal ones ($|\Lambda| \neq 1$). In the derivation of 
+\refeq{e-ClassicalTraceFormula}, one assumes that the flow has a single marginal direction, 
+namely the direction that is parallel to the periodic orbit at all times, and evaluates the 
+contribution of each \po\ to the trace integral by transforming to a local coordinate 
+system where one of the coordinates is 
 parallel to the flow while the rest is transverse. Integration along the 
-parallel direction contributes factors of $T_p$, and the transverse integral 
-over the delta function contributes $\oneMinJ{r}$. 
+parallel direction is what contributes the factors of $T_p$. The transverse integral 
+over the delta function contributes the factor of $\oneMinJ{r}$. 
 
 \subsection{Continuous factorization}
 \label{s-ContFac}
 
-Classical trace formula \refeq{e-ClassicalTraceFormula} receives contributions
-from \po s, however, \rpo s of equivariant systems are almost never 
-periodic in the full \statesp . In order to be able to compute \rpo\ 
-contributions to the trace of the \evOper, one has to factorize the \evOper\ 
+The classical trace formula \refeq{e-ClassicalTraceFormula} accounts for contributions from \po s
+to long time dynamical averages. However, \rpo s of equivariant systems are almost never 
+periodic in the full \statesp . In order to compute the contributions of \rpo s 
+to the trace of the \evOper, one has to factorize\DB{}{factor or factorize... not sure which sounds better... 
+are they different?} the \evOper\ 
 into the irreducible subspaces of the symmetry group. For discrete symmetries, 
 this procedure is studied in \refref{CvitaEckardt} and for the quantum systems 
 with continuous symmetries (Abelian and 3D rotations), factorization of 
 semiclassical Green's operator is carried out in \refref{Creagh93}. 
 \refRef{Cvi07} addresses the continuous factorization of the \evOper\ and its 
-trace; we are going to sketch this treatment here. We start by stating, without
+trace; we provide a sketch of this treatment here. We start by stating, without
 proof, that a square-integrable field $\psi (\ssp)$ over a vector space can be 
 factorized into its projections over the irreducible subspaces of a group 
 $\Group$: 
 \beq
     \psi (\ssp) = \sum_m P_m \psi (\ssp) \, ,
 \eeq
-where the sum runs over the irreducible representations of the $\Group$, and 
+where the sum runs over the irreducible representations of the $\Group$ and 
 the projection operator onto the $m$th irreducible subspace, for a continuous
 group, is:
 \beq
@@ -151,7 +153,8 @@ Here, $d_m$ is the dimension of the representation, $d \mu(g)$ is the
 normalized `Haar measure', $\chi_m (\LieEl)$ is the `character' of $m$th 
 irreducible representation and $D(\LieEl(\theta))$ is the operator which 
 transforms a scalar field defined on \statesp\ according to $\LieEl (\theta)$, 
-namely, $D(\LieEl(\theta) \rho (\ssp) = \rho(\LieEl^{-1}(\theta) \ssp)$. For 
+namely, $D(\LieEl(\theta)) \rho (\ssp) = \rho(\LieEl^{-1}(\theta) \ssp)$ \DB{2014-11-3}{Added missing parenthesis to 
+this expression. Did I put it in the right place? I think so, but please double check.}. For 
 our specific case of single $\SOn{2}$ symmetry, 
 \bea
 d_m &\rightarrow& 1\, , \\
@@ -160,8 +163,8 @@ d_m &\rightarrow& 1\, , \\
 \eea
 Since the projection 
 operator \refeq{e-ProjectionOperator} factorizes scalar fields in the \statesp\ 
-into their projections onto irreducible subspaces of the $\Group$, it can as
-well be used to factorize the \evOper\ since the \evOper\ acts on scalar 
+into their projections onto irreducible subspaces of the $\Group$, it can be used to 
+factorize the \evOper\ since the \evOper\ acts on scalar 
 fields (densities) and returns scalar fields on the \statesp . Thus the kernel 
 of the \evOper\ transforms under the action of $D(\LieEl(\theta))$ as:
 \bea
@@ -172,12 +175,12 @@ of the \evOper\ transforms under the action of $D(\LieEl(\theta))$ as:
     &=& \delta (\ssp' - \LieEl(\theta) f^t (\ssp)) e^{\beta \Obser^t(\ssp)}\, ,
     \label{e-gEvOper}
 \eea
-where the second step followed from the equivariance of the system at 
-consideration. \Rpo s contribute to the $P_m \Lop^t = \Lop_m^t$ since its 
-kernel is modified as in \refeq{e-gEvOper} and projection involves and integral 
-over the group parameters which will be non-zero at the phase shift of the 
+where the second step followed from the equivariance of the system under 
+consideration. \Rpo s contribute to the $P_m \Lop^t = \Lop_m^t$ since when its 
+kernel is modified as in \refeq{e-gEvOper}, the projection involves an integral 
+over the group parameters that will be non-zero at the phase shift of the 
 \rpo s. By computing the trace of $\Lop_m^t$, which in addition to the integral
-over \statesp\ involves also another integral over the group parameters, one 
+over \statesp , now involves another integral over the group parameters, one 
 obtains the $m$th irreducible subspace contribution to the classical trace as
 \beq
 \sum_{\alpha=0}^{\infty} \frac{1}{s-s_{m, \alpha}} = \sum_p T_p
@@ -186,45 +189,42 @@ obtains the $m$th irreducible subspace contribution to the classical trace as
 \ee{e-ReducedTraceFormula}
 The reduced trace formula \refeq{e-ReducedTraceFormula} differs from the 
 classical trace formula \refeq{e-ClassicalTraceFormula} by the group character
-term which is evaluated at the \rpo\ phase shifts, and the reduced monodromy
+term, which is evaluated at the \rpo\ phase shifts, and the reduced monodromy
 matrix $\monodromyRed$, which is the $(d-N-1)\times(d-N-1)$ reduced Jacobian 
-for the \rpo\ evaluated on a Poincar\'e section in the \reducedsp . Eigenvalues
+for the \rpo\ evaluated on a Poincar\'e section in the \reducedsp . The eigenvalues
 of $\monodromyRed$ are those of the \rpo\ Jacobian \refeq{e-rpoJacobian} 
-without the marginal ones. 
+excluding the marginal ones, i.e., the ones corresponding to time evolution and evolution 
+along the continuous symmetry directions.
 
 Since we are only interested in the leading eigenvalue of the \evOper , we are 
 going to consider contributions only from the $0$th irreducible subspace to the 
 trace \refeq{e-ClassicalTraceFormula} from its projections 
 \refeq{e-ReducedTraceFormula} which we can write for our $\SOn{2}$ case 
-explicitly as
+explicitly as \DB{2014-11-3}{This sentence is weird but I'm kind of lost at this point, so
+I don't know how to fix it.}
 \beq
 \sum_{\alpha=0}^{\infty} \frac{1}{s-s_{0, \alpha}} = \sum_p T_p
 \sum_{r=1}^{\infty} \frac{e^{r(\beta \Obser_p - s T_p)}}{\oneMinJred{r}} \, .
 \ee{e-tracem0}
 This form differs from the classical trace formula 
 \refeq{e-ClassicalTraceFormula} only by the reduced monodromy matrix since 
-$0$th irreducible representation of $\SOn{2}$ has character $1$. For this 
+the $0$th irreducible representation of $\SOn{2}$ has character $1$. For this 
 reason, cycle expansions \rf{AACI}, which we will cover next, are applicable
-to the \refeq{e-tracem0} after the replacement 
+to \refeq{e-tracem0} after the replacement 
 $\monodromy \rightarrow \monodromyRed$. 
 
 \subsection{Cycle expansions}
 \label{s-CycExp}
 
 While the classical trace formula \refeq{e-ClassicalTraceFormula} and its 
-continuous factorization \refeq{e-ReducedTraceFormula} manifest
+factorization for systems with continuous symmetry \refeq{e-ReducedTraceFormula} manifest
 the essential duality between the spectrum of an observable and that of
-the \po s and \rpo s; in practice, they are hard to work with since the 
+the \po s and \rpo s, in practice, they are hard to work with since the 
 eigenvalues are located at the poles of \refeq{e-ClassicalTraceFormula} and
-\refeq{e-ReducedTraceFormula}. Moreover, the dynamical zeta function 
-\refeq{e-DynamicalZeta}, which we will obtain after some algebraic manipulation 
-and one approximation, is going to provide us a perturbative expansion form,
-which will enable us to order terms in decreasing importance while computing 
-spectra for the \twomode\ system. In our review of results, we are going to 
-present the cycle expansion of the classical trace 
-\refeq{e-ClassicalTraceFormula} as it is the general formula, however, we are 
-going to use the $0$th irreducible subspace contribution to the trace 
-\refeq{e-tracem0} in the applications. As we stated earlier, \refeq{e-tracem0}
+\refeq{e-ReducedTraceFormula}. The dynamical zeta function 
+\refeq{e-DynamicalZeta}, which we derive below provides a perturbative expansion form,
+which enables us to order terms in decreasing importance while computing 
+spectra for the \twomode\ system. As stated earlier, \refeq{e-tracem0}
 is equivalent to the \refeq{e-ClassicalTraceFormula} via substitution 
 $\monodromy \rightarrow \monodromyRed$. We start by defining the 
 `spectral determinant':
@@ -232,14 +232,14 @@ $\monodromy \rightarrow \monodromyRed$. We start by defining the
   \det (s-\Aop) = \exp \left( - \sum_p \sum_{r=1}^{\infty}
       \frac{1}{r} \frac{e^{r(\beta \Obser_p - s T_p)}}{\oneMinJ{r}} \right)\, ,
 \ee{e-SpectralDeterminant}
-logarithmic derivative of which ($(d/ds) \ln \det(s - \Aop)$) gives 
-the classical trace \refeq{e-ClassicalTraceFormula}.
+whose logarithmic derivative ($(d/ds) \ln \det(s - \Aop)$) gives 
+the classical trace formula \refeq{e-ClassicalTraceFormula}.
 The spectral determinant \refeq{e-SpectralDeterminant} is easier to work
-with since the spectrum of $\mathcal{A}$, is now located at the zeros of
-\refeq{e-SpectralDeterminant}. Convergence of \refeq{e-SpectralDeterminant}
+with since the spectrum of $\mathcal{A}$ is now located at the zeros of
+\refeq{e-SpectralDeterminant}. The convergence of \refeq{e-SpectralDeterminant}
 is, however, still not obvious. More insight is gained by approximating 
 $\oneMinJ{r}$ by the product of expanding Floquet multipliers and then 
-carrying out the sum over $r$ in \refeq{e-SpectralDeterminant}. The 
+carrying out the sum over $r$ in \refeq{e-SpectralDeterminant}. This 
 approximation yields
 \bea
 \oneMinJ{} &=& | (1 - \ExpaEig_{e,1})(1 - \ExpaEig_{e,2})... \continue
@@ -248,18 +248,18 @@ approximation yields
     \label{e-LambdapApprox}
 \eea
 where $|\ExpaEig_{e,i}| > 1$ and $|\ExpaEig_{c,i}| < 1$ are expanding and 
-contracting Floquet multipliers respectively. $r$-sum in 
+contracting Floquet multipliers respectively. The sum over $r$ in 
 \refeq{e-SpectralDeterminant} becomes the Taylor expansion of natural logarithm 
-after approximation \refeq{e-LambdapApprox}. Carrying this sum out, brings the 
+after approximation \refeq{e-LambdapApprox}. Carrying out this sum, brings the 
 spectral determinant \refeq{e-SpectralDeterminant} to a product (over prime 
-cycles) form that is known as the dynamical zeta function:   
+cycles) known as the dynamical zeta function:   
 \beq
 1 / \zeta = \prod_p (1 - t_p) \, \mbox{where}, \, t_p = \frac{1}{|\ExpaEig_p|} 
             e^{\beta \Obser_p - s T_p} z^{n_p} .
 \ee{e-DynamicalZeta}
 We multiplied each `cycle weight' $t_p$ by the `order tracking term' $z^{n_p}$ 
-where $n_p$ is the topological length of the $p$th prime cycle. Such polynomial
-ordering naturally arises when one studies the discrete time systems where the
+where $n_p$ is the topological length of the $p$th prime cycle. This polynomial
+ordering arises naturally in the study of discrete time systems where the
 Laplace transform is replaced by $z$-transform. Here, we insert the powers of 
 $z$ by hand and we will set its value to $1$ at the end of calculations. The 
 reason for doing this is to write the dynamical zeta function 
