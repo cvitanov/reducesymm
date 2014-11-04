@@ -25,7 +25,8 @@ where
 $ \groupTan(\ssp) = \Lg \ssp $ is the group tangent of $\ssp$,
 $ \groupTan(\vel(\ssp)) = \Lg \vel(\ssp) $ is the group tangent of
 the velocity vector at \ssp,
-and $\Mvar_{ij}(a)$ is the \stabmat\ 
+and $\Mvar(\ssp)$ is the \stabmat\, with elements 
+$\Mvar_{ij}(\ssp)={\pde \vel_i}/{\pde\ssp_j}|_{\ssp}$.
 \DB{9/16/2014}{Should stability matrices and Jacobians be bolded like \Lg ?}
 \BB{9/17/2014}{\Lg is bolded because in general it is 
 $\Lg = (\Lg_1, \Lg_2, ..., \Lg_N)$. Chaosbook convention is to use small 
@@ -36,7 +37,7 @@ perfect. In general we have $N$ group parameters that determines the group
 element as $g(\gSpace) = e^{\theta \cdot \Lg}$. I think easiest way to get rid
 off this ambiguity is to say that we are formulating everything for a single 
 parameter group and than remove `\\bf' from the macro for \Lg . }
-${\pde \vel_i}/{\pde\ssp_j}$.
+
 
 If the trajectory of a point $\ssp_\stagn$ coincides with its group
 orbit, \ie, the group parameter $\theta (\zeit)$ satisfies
@@ -86,7 +87,7 @@ $\ssp(\zeit) = \flow{\zeit}{\ssp(0)}$ and define the Jacobian as
 \jMps^{\zeit}_{ij} (\ssp(\zeit)) = \frac{\partial\ssp_i(\zeit)}{\partial\ssp_j(0)}\, .
 \ee{e-rpoJacobian}
 
-The Floquet multipliers are then given by the eigenvalues $\ExpaEig_{p,j}$ of $\jMps_{\rpprime}$. 
+The Floquet multipliers are then given by the eigenvalues $\ExpaEig_{p,j}$ of $\jMpsRed_{\rpprime}$. 
 The magnitude of $\ExpaEig_{p,j}$ determines whether a small perturbation along its corresponding
 eigendirection (or Floquet vector) will expand or contract after one period. If the magnitude of 
 $\ExpaEig_{p,j}$ is greater than $1$, the perturbation expands; if it is less than $1$, the perturbation
@@ -113,9 +114,9 @@ high-dimensional flows like the \NS\ equations\rf{WiShCv14}.
 
 In a system with $N$ continuous symmetries, a \emph{\slice} \pSRed\ is a codimension $N$ submanifold
 of \pS\ that cuts every group orbit once and only once. In the \emph{\mslices}, the solution
-of a $d$-\dmn\ dynamical system is represented as a symmetry-reduced trajectory $\sspRed (t)$ within the
-$(d-N)$-\dmn\ \slice\ and $N$ time dependent group parameters $\theta(t)$, which
-map $\sspRed (t)$ to the full \statesp\ by the group action $\LieEl(\theta(t))$.
+of a $d$-\dmn\ dynamical system is represented as a symmetry-reduced trajectory $\sspRed (\zeit)$ within the
+$(d-N)$-\dmn\ \slice\ and $N$ time dependent group parameters $\theta(\zeit)$, which
+map $\sspRed (\zeit)$ to the full \statesp\ by the group action $\LieEl(\theta(\zeit))$.
 
 While this idea goes back to Cartan\rf{CartanMF},
 Rowley and Marsden\rf{rowley_reconstruction_2000}
@@ -207,7 +208,7 @@ to pipe flow by Willis, Cvitanovi\'{c}, and Avila\rf{ACHKW11}.
 However, neither approach is straightforward to apply, particularly in
 high-dimensional dynamical systems.
 
-A second strategy has recently been proposed by Budanur \etal\rf{BudCvi14}, who considered Fourier 
+A third strategy has recently been proposed by Budanur \etal\rf{BudCvi14}, who considered Fourier 
 space discretizations of PDEs with \SOn{2} symmetry. They showed that in these cases a simple choice 
 of \slice template, associated with the first Fourier mode, results in a \slice\ in which it is highly
 unlikely that generic dynamics visit the neighborhood of the singularity. If the dynamics do occasionally
@@ -312,18 +313,16 @@ explicitly for the template \refeq{firstmodetemp}:
 \begin{subequations}
 \beq
 \velRed ( \sspRed )  = \vel(\sspRed)
-   - \frac{\dot{y}_1\left(\sspRed\right)}{\hat{x}_1} \, \groupTan(\sspRed)
+   - \frac{\dot{y}_1\left(\sspRed\right)}{\hat{x}_1} \, \groupTan(\sspRed) \, ,
 \label{e-so2red1stmode}
-\,.
 \eeq
 \ESedit{
   \beq\label{eq:reconstruction1stmode}
 	\dot{\theta}(\sspRed) = \frac{\dot{y}_1(\sspRed)}{\hat{x}_1}
-  \, ,
+  \, .
   \eeq
 }
 \end{subequations}
-
 Since the argument $\phi_1$ of a point $(x_1,y_1)$ in the first Fourier mode plane is given by $\phi_1=\tan^{-1}\frac{y_1}{x_1}$,
 its velocity is
 \beq
@@ -387,8 +386,8 @@ $\hat{x}_1 > 0$
 fixes the phase of the first complex Fourier mode to $0$. This also follows from 
 the fact that the reconstruction phase of the first Fourier mode \slice\ is the
 phase of the first mode \refeq{eq:phi1}.\DB{2014-10-28}{I don't really understand what this   is saying} In complex representation, we can express
-the relationship between Fourier modes ($\sspC_n = x_n + y_n$) and their 
-representative points ($\sspRedC = \hat{x}_n + \hat{y}_n$) on the \slicePlane\ 
+the relationship between Fourier modes ($\sspC_n = x_n + \ii y_n$) and their 
+representative points ($\sspRedC = \hat{x}_n +  \ii \hat{y}_n$) on the \slicePlane\ 
 by the $\Un{1}$ action:
 \beq
 	\sspRedC_n = e^{-\ii n \phi_1} \sspC_n \, .
@@ -406,9 +405,8 @@ small (pink curve in \reffig{fig:BBgorbitsandslice}), the group tangent has a la
 component parallel to the \slicePlane . If the first mode magnitude was exactly
 $0$, the group tangent would lie entirely on the \slicePlane , satisfying the
 \sliceBord\ condition. 
-
-\subsection{Polar coordinates}
-\label{s-polar}
+%\subsection{Polar coordinates}
+%\label{s-polar}
 
 In \refref{PoKno05}, a polar coordinate representation of two Fourier mode 
 truncation is obtained by defining the $\LieEl$-invariant phase: $\Phi = \phi_2 - 2 \phi_1$
@@ -419,4 +417,9 @@ representation is a special case $(m=2)$, of the \slice\ defined by
 \refeq{firstmodetemp}. Corresponding ODEs for the polar representation
 were obtained in \refref{PoKno05} by  chain rule and substitution. Note
 that \mslices\ provides a general form \refeq{e-so2red1stmode} for symmetry
-reduced time evolution.\DB{2014-10-28}{This section is kind of weird... doesn't seem to flow and we don't really use this stuff anywhere. Maybe consider deleting.}
+reduced time evolution.\DB{2014-10-28}{This section is kind of weird... doesn't seem to flow and we don't really use this stuff anywhere. Maybe consider deleting.} 
+\BB{2014-10-30}{In \refref{PoKno05} they use this representation and their plots
+of chaotic dynamics (yes, they have parameters for which the \twomode\ system exhibits 
+chaos) look very similar to ours. We have to state somewhere that this similarity
+is not an accident. I agree that it looks awkward as an individual subsection, 
+I removed the subsection title for now, we may move it to the `flow' section.}
