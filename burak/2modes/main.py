@@ -2,14 +2,14 @@
     Main file to produce results that are going to be included in the 2modes paper
     Not every calculation needs to be done at each run, data can be produced
     and stored locally, see the booleans in lines 30-36
-    
+
     Requires numpy ver > 1.8
 """
 
 import numpy as np
 from scipy import interpolate, integrate
 from scipy.misc import derivative
-from scipy.optimize import newton, fsolve, fmin
+from scipy.optimize import fsolve, fmin
 import sys
 import sqlite3
 #Initiate plotting environment:
@@ -19,12 +19,13 @@ from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 from subprocess import call
 #Import twomode system module
-import twomode 
+import twomode
 from PADS import Lyndon
 import oct2py
 import os
-peddir = os.getcwd()+'/ped' #Add /ped to the current working directory location
-oct2py.octave.addpath(peddir) #Add mfiles for ped
+peddir = os.getcwd() + '/ped'  # Add /ped to the current working directory
+                             # location
+oct2py.octave.addpath(peddir)  # Add mfiles for ped
 
 #Booleans:
 computeSolution = False
@@ -32,9 +33,9 @@ computePsect = False
 computeArcLengths = False
 computeRPO = False
 computeRPOred3 = False
-plotPsect = True
+plotPsect = False
 plotRetmap = False
-plotRetmapFull = True
+plotRetmapFull = False
 
 #Search parameters:
 nPrimeMax = 12 #Will search for [1,m]-cycles
@@ -43,7 +44,7 @@ nPrimeMax = 12 #Will search for [1,m]-cycles
 reqv = np.array([0.43996557973671596,
                  0,
                  -0.38626705952942764,
-                 0.07020440068369532], float) 
+                 0.07020440068369532], float)
 reqv3D = twomode.four2three(reqv)
 np.savetxt('data/reqv3d.dat', reqv3D)
 #Compute reduced stability matrix for the relative equilibrium:
@@ -73,7 +74,7 @@ xp = np.array([1,0,0,0], float)
 tp = np.dot(T,xp)
 
 if computeSolution:
-    
+
     tf = 2000;
     dt = 0.01;
     epsilon = 1e-2;
@@ -81,7 +82,7 @@ if computeSolution:
     #x0 = np.array([1e-3,0,1e-3,0], float)
     xphi0 = np.append(x0, 0)
     print xphi0
-    
+
     t = np.linspace(0, tf, np.floor(tf/dt)+1)
     xphisol = twomode.intslice(xphi0, t)
 
@@ -94,19 +95,19 @@ if computeSolution:
     ax.w_xaxis.set_pane_color((1, 1, 1, 1.0))
     ax.w_yaxis.set_pane_color((1, 1, 1, 1.0))
     ax.w_zaxis.set_pane_color((1, 1, 1, 1.0))
-            
-    ax.plot(xphisol[:,0], 
-    xphisol[:,2], 
+
+    ax.plot(xphisol[:,0],
+    xphisol[:,2],
     xphisol[:,3], linewidth=0.2, color='#3c5f96')
-    
+
     ax.set_xlabel('\n $\hat{x}_1$ \t  ', fontsize=32)
     ax.set_ylabel('\n $\hat{x}_2$ \t', fontsize=32)
     ax.set_zlabel('$\hat{y}_2$   ', fontsize=32)
-    
+
     np.savetxt('data/txphisol.dat', txphisol)
-    
+
     plt.show()
-    
+
 if computePsect:
     import poincare
     if not('txphisol' in locals()):
@@ -128,15 +129,15 @@ ps2Dsorted = np.array(ps2D[sortingindices, :],float)
 print 'Interpolating the Poincare section'
 tckps = interpolate.splrep(ps2Dsorted[:,0],ps2Dsorted[:,1], k=3)
 dxintps = (ps2Dsorted[np.size(ps2Dsorted,0)-1,0] - ps2Dsorted[0,0])/10000
-xintps = np.arange(ps2Dsorted[0,0], 
-                      ps2Dsorted[np.size(ps2Dsorted,0)-1,0]+dxintps, 
+xintps = np.arange(ps2Dsorted[0,0],
+                      ps2Dsorted[np.size(ps2Dsorted,0)-1,0]+dxintps,
                       dxintps)
 yintps = interpolate.splev(xintps, tckps)
 
 def psarclength(x):
     """
     Function to compute arclenghts in the Poincare section
-    Ref: http://www.mathwords.com/a/arc_length_of_a_curve.htm 
+    Ref: http://www.mathwords.com/a/arc_length_of_a_curve.htm
     """
     def ds(x):
         dypsect = derivative(interpolate.splev, x, dx=1e-6, args=(tckps,), order=5)
@@ -150,7 +151,7 @@ if computeArcLengths:
     #Find the first data point for the Arclengths to discard the transients
     #iArcLength0 = np.argwhere(ps[:,0]>200)[0]
     iArcLength0 = np.argwhere(ps[:,0]>0)[0]
-    sn = np.array([psarclength(ps2D[i,0]) for i in 
+    sn = np.array([psarclength(ps2D[i,0]) for i in
     range(iArcLength0, np.size(ps2D,0))], float)
     snmin = np.min(sn)
     snmax = np.max(sn) - snmin
@@ -225,7 +226,7 @@ for i in range(nMax):
             KneadingValueBin = KneadingValueBin+'0'
         else:
             KneadingValueBin = KneadingValueBin+KneadingValueBin[-1]
-            
+
     KneadingValue = KneadingValue + (int(KneadingValueBin[-1])*0.5)**(i+1)
 print "Kneading:"
 print Kneading
@@ -257,10 +258,10 @@ def Splus2gamma(itinerary):
         elif itinerary[i]==0:
             gammaBin = gammaBin + gammaBin[-1]
         elif itinerary[i]==1:
-            gammaBin = gammaBin + str(int(not(int(gammaBin[-1]))))      
+            gammaBin = gammaBin + str(int(not(int(gammaBin[-1]))))
         gamma = gamma + (int(gammaBin[-1])*0.5)**(i+1)
     return gamma, gammaBin
-    
+
 def TopologicalCoordinate(x, n):
     """
     Compute topological coordinate of a point in the return map
@@ -316,7 +317,7 @@ def fs2ps2D(px, s):
         Function to be solved to get relative x coordinate of the rpo on
         the Poincare section
     """
-    sfun = psarclength(px)  
+    sfun = psarclength(px)
     return sfun-s
 
 #From arclength to projected Poincare section coordinates:
@@ -329,13 +330,13 @@ def s2ps2D(s):
     #px = newton(fs2ps2D, p0x, args=(s,), tol=1e-12)
     px = fsolve(fs2ps2D, p0x, args=(s,))
     py = interpolate.splev(px, tckps)
-    
+
     return np.array([px, py])
 
 def ps2D2psxhat(ps2Di):
         """
-            Takes the relative position projected on Poincare section basis 
-            on the Poincare section and returns the position on the reduced 
+            Takes the relative position projected on Poincare section basis
+            on the Poincare section and returns the position on the reduced
             state space
         """
         psrelproj3D = np.array([ps2Di[0], ps2Di[1], 0], float)
@@ -349,19 +350,19 @@ def s2xhat(s):
     From arclength to reduced state space coordinates.
     """
     ps2D = s2ps2D(s)
-    xhat = ps2D2psxhat(ps2D)    
+    xhat = ps2D2psxhat(ps2D)
     return xhat
 
 def timeofflight(xhat0):
     """
     Computes time of flight for xhat0 on the Poincare section to come back onto
-    the section for a second time 
+    the section for a second time
     """
     import poincare
     #Find the point on the computed poincare section, closest to the x0
     imin = np.argmin(np.linalg.norm(ps[:,1:5]-xhat0, axis=1))
     #Take its time of flight as
-    if imin < np.size(ps,0)-1: 
+    if imin < np.size(ps,0)-1:
         Tapproximate = ps[imin+1,0]-ps[imin,0]
     else:
         Tapproximate = ps[imin,0]-ps[imin-1,0]
@@ -382,20 +383,20 @@ def timeofflight(xhat0):
     itof = np.argmin(np.abs(psreturn[:,0]-Tapproximate))
     tof = psreturn[itof,0]
     return tof
-    
+
 def phireturn(xhat0, tof):
         """
         Computes phi for xhat0 on the Poincare section to come back onto
-        the section for a second time 
+        the section for a second time
         """
         stoptime = tof
         numpoints = 2
         #Integration time array:
-        t = [stoptime * float(i) / (numpoints - 1) for i in range(numpoints)]        
+        t = [stoptime * float(i) / (numpoints - 1) for i in range(numpoints)]
         xsol = twomode.intfull(xhat0, t, abserror=1.0e-14, relerror=1.0e-12)
         #Phase of the first mode is the slice phase
-        phi = np.angle(xsol[1,0] + 1j*xsol[1,1])    
-        return -phi        
+        phi = np.angle(xsol[1,0] + 1j*xsol[1,1])
+        return -phi
 
 Adaptive = True
 factor = 2
@@ -405,27 +406,27 @@ if computeRPO:
     smax = np.max(sn)
     #scandidates = np.zeros([1,2]) #dummy matrix to hold po candidate arclengths
     scandidates = [] #dummy matrix to hold po candidate arclengths
-    
+
     for i in range(nPrimeMax):
-        #Define the function zeros of which would correspond to the periodic 
+        #Define the function zeros of which would correspond to the periodic
         #orbit arclengths:
         def fpo(s):
             po = retmapm(i+1, s) - s
             return po
-        
+
         print "Searching for candidates on "+str(i+1)+"-th return map"
         fpoevo=0
         sstep = (smax-smin)/10000000
         for s0 in np.arange(smin, smax, sstep):
             fpoev = fpo(s0)
-            if fpoev * fpoevo < 0: #If there is a zero-crossing, look for the root: 
+            if fpoev * fpoevo < 0: #If there is a zero-crossing, look for the root:
                 #sc = newton(fpo, s0-sstep/2.0, tol=1.48e-8)
                 sc = fsolve(fpo, s0-sstep/2.0, xtol = 1e-9)
                 #print "sc = %f" %sc
                 newcandidate = 1
                 for j in range(len(scandidates)):
                     #Discard if found candidate is previously found:
-                    if np.abs(scandidates[j][1] - sc)<1e-9: 
+                    if np.abs(scandidates[j][1] - sc)<1e-9:
                         newcandidate=0
                 if newcandidate:
                     CandidateItinerary = Itinerary(sc, i+1)
@@ -433,9 +434,9 @@ if computeRPO:
                     for k in range(len(AdmissibleCycles)):
                         if CandidateItinerary == AdmissibleCycles[k][1]:
                             #Append arclengths for every point on the cycle:
-                            AdmissibleCycles[k].append([retmapm(n, sc) for n 
+                            AdmissibleCycles[k].append([retmapm(n, sc) for n
                                                        in range(i+1)])
-                            #Append reduced ssp coordinates  for every point 
+                            #Append reduced ssp coordinates  for every point
                             #on the cycle:
                             AdmissibleCycles[k].append(np.array([s2xhat(
                              AdmissibleCycles[k][2][l]) for l in range(i+1)]))
@@ -449,13 +450,13 @@ if computeRPO:
                              AdmissibleCycles[k][4][l]) for l in range(i+1)],
                                                                         float))
                     #scandidates = np.append(scandidates, np.array([[i+1, sc]], float), axis=0)
-                    
-            fpoevo = fpoev        
+
+            fpoevo = fpoev
 
     PopedCycles = []
 
     print "Admissible Cycles upto length before subdivisions:"
-    
+
     while i <= len(AdmissibleCycles)-1:
         if len(AdmissibleCycles[i]) < 3:
             print 'No candidate found for ', AdmissibleCycles[i][1]
@@ -463,7 +464,7 @@ if computeRPO:
             PopedCycles.append(AdmissibleCycles.pop(i))
             i -= 1
             #raw_input("Attention here")
-            #raw_input("Pop!")            
+            #raw_input("Pop!")
         print AdmissibleCycles[i]
         i += 1
         # #Divide intervals into smaller subintervals for multiple shooting:
@@ -476,7 +477,7 @@ if computeRPO:
     sys.stdout = orig_stdout
     f.close()
     #raw_input("Poped cycles")
-    
+
     for k in range(len(AdmissibleCycles)):
         l = 0
         while l < len(AdmissibleCycles[k][3]):
@@ -555,12 +556,12 @@ if computeRPO:
                   (nDim+2)*((k+1)%nCycle): (nDim+2)*((k+1)%nCycle) + nDim] = \
                 A[(nDim+2)*((k)%nCycle): (nDim+2)*((k)%nCycle) + nDim,
                   (nDim+2)*((k+1)%nCycle): (nDim+2)*((k+1)%nCycle) + nDim] - np.identity(nDim)
-    
+
             #Compute Deltas:
             Delta=np.dot(np.linalg.inv(A), Error)
             print "Delta"
             print Delta
-            
+
             converging = False
             if Adaptive:
                 xx = np.empty(np.shape(x))
@@ -575,18 +576,18 @@ if computeRPO:
                         xx[k] = x[k] + Delta[(nDim+2)*k:(nDim+2)*k+nDim]
                         tautau[k] = tau[k] + Delta[(nDim+2)*k+nDim]
                         phiphi[k] = phi[k] + Delta[(nDim+2)*k+nDim+1]
-                    
+
                     ErrorNext = np.array([xx[(k+1)%nCycle] - \
                     np.dot(twomode.LieElement(phiphi[(k)%nCycle]), \
                     twomode.ftau(xx[(k)%nCycle], tautau[(k)%nCycle])) \
                     for k in range(nCycle)], float)
 
-                    
+
                     if np.max(np.abs(ErrorNext)) < np.max(np.abs(Error)):
                         converging = True
                     else:
                         Delta = Delta * (factor**(-1))
-                        
+
 
             #Update:
             for k in range(nCycle):
@@ -597,7 +598,7 @@ if computeRPO:
     #np.savetxt('data/AdmissibleCycles.dat', AdmissibleCycles)
 
     #Create a database and write RPOs in it:
-    
+
     conn = sqlite3.connect('data/rpoall.db')
     c = conn.cursor()
     c.execute("DROP TABLE IF EXISTS rpos")
@@ -607,25 +608,25 @@ if computeRPO:
                 #FloquetMults text, FloquetExps text) ")
 
     for i in range(len(AdmissibleCycles)):
-        
+
         rpo = AdmissibleCycles[i][3][0]
         Period = sum(AdmissibleCycles[i][4])
         Phase = sum(AdmissibleCycles[i][5])
         JJ = np.dot(twomode.LieElement(AdmissibleCycles[i][5][0]),
-                    twomode.Jacobian(AdmissibleCycles[i][3][0], 
+                    twomode.Jacobian(AdmissibleCycles[i][3][0],
                                      AdmissibleCycles[i][4][0]))
         for k in range(1, len(AdmissibleCycles[i][3])):
-            #JJ = np.append(JJ, 
+            #JJ = np.append(JJ,
                           #np.dot(twomode.LieElement(AdmissibleCycles[i][5][k]),
-                          #twomode.Jacobian(AdmissibleCycles[i][3][k], 
+                          #twomode.Jacobian(AdmissibleCycles[i][3][k],
                                            #AdmissibleCycles[i][4][k])), axis=1)
             JJ = np.concatenate((np.dot(twomode.LieElement(AdmissibleCycles[i][5][k]),
-                                twomode.Jacobian(AdmissibleCycles[i][3][k], 
+                                twomode.Jacobian(AdmissibleCycles[i][3][k],
                                            AdmissibleCycles[i][4][k]))
                                            , JJ), axis=1)
         #raw_input("dfasfdsavfass")
         eig = oct2py.octave.ped(JJ)
-        FloquetMults = np.array([np.real(np.exp(eig[j, 0])*eig[j, 1]) for j in range(len(eig))], 
+        FloquetMults = np.array([np.real(np.exp(eig[j, 0])*eig[j, 1]) for j in range(len(eig))],
                                 float)
         #FloquetMults = twomode.Floquet(rpo, Period, Phase)
         print FloquetMults
@@ -644,14 +645,14 @@ if computeRPO:
         c.execute("DROP TABLE IF EXISTS rpo"+itinerary)
         c.execute(" CREATE TABLE rpo"+itinerary+" (x1 real, y1 real, x2 real, \
         y2 real, tau real, phi real)")
-    
+
         for k in range(len(AdmissibleCycles[i][3])):
             query = "INSERT INTO rpo"+itinerary+" VALUES("+  \
                       ', '.join(map(str, AdmissibleCycles[i][3][k]))+", " \
                       +str(AdmissibleCycles[i][4][k])+", " \
-                      +str(AdmissibleCycles[i][5][k])+")"              
+                      +str(AdmissibleCycles[i][5][k])+")"
             c.execute(query)
-    
+
     conn.commit()
     conn.close()
 
@@ -677,7 +678,7 @@ if plotPsect:
     ax.yaxis.set_tick_params(width=2)
     ax.set_xlim(min(ps2D[:,0]),max(ps2D[:,0]))
     ax.set_ylim(min(ps2D[:,1]),max(ps2D[:,1]))
-    
+
     savefig('BBpsectonslice.pdf', bbox_inches='tight', dpi=100)
     #call(["pdfcrop", "Psect.pdf", "Psect.pdf"], shell=True)
 
@@ -706,7 +707,7 @@ if plotRetmap:
             [ppair1[1] for k in range(10)], '--c', lw=1.5)
         plot([ppair2[0] for k in range(10)],
             np.linspace(min(ppair2), max(ppair2), 10), '--c', lw=1.5)
-    
+
     #plot(srange, [0.825 for  i in range(np.size(srange,0))], 'r')
     ax = fig.gca()
     ax.set_aspect('equal')
@@ -720,24 +721,24 @@ if plotRetmap:
 
     xticks = np.linspace(smin, smax, Nticks)
     ax.set_xticks(xticks)
-    #ax.set_xticklabels(["$%.1f$" % xtik for xtik in xticks], fontsize=22); 
-    ax.set_xticklabels(["\n$%.1f$" % xtik for xtik in xticks], fontsize=24, linespacing=0.9); 
-    
+    #ax.set_xticklabels(["$%.1f$" % xtik for xtik in xticks], fontsize=22);
+    ax.set_xticklabels(["\n$%.1f$" % xtik for xtik in xticks], fontsize=24, linespacing=0.9);
+
     #yticks = np.linspace(smin+(smax-smin)/float(Nticks-1), smax, Nticks-1)
     yticks = np.linspace(smin, smax, Nticks)
     ax.set_yticks(yticks)
-    #ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=22); 
+    #ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=22);
     ax.set_yticklabels(["$%.1f$ " % xtik for xtik in xticks], fontsize=24, linespacing=0.2);
-    
+
     #plt.figure(2, figsize=(8,8))
     #sp3 = np.array([retmapm(7, sn) for sn in srange])
     #plot(srange, sp3, 'b')
     #plt.hold(True)
     #plot(srange,srange,'g')
-    
-    savefig('BBretmaponsliceZoom.pdf', bbox_inches='tight', dpi=100) 
+
+    savefig('BBretmaponsliceZoom.pdf', bbox_inches='tight', dpi=100)
     #call(["pdfcrop", "RetMap.pdf", "RetMap.pdf"], shell=True)
-    
+
     show()
 
 if plotRetmapFull:
@@ -747,7 +748,7 @@ if plotRetmapFull:
     plt.hold(True)
     plot(xintRetMap, yintRetMap, 'k', lw=2)
     plot(srange, srange, 'g', lw=2)
-   
+
     #plot(srange, [0.825 for  i in range(np.size(srange,0))], 'r')
     ax = fig.gca()
     ax.set_aspect('equal')
@@ -761,15 +762,15 @@ if plotRetmapFull:
 
     xticks = np.linspace(smin, smax, Nticks)
     ax.set_xticks(xticks)
-    #ax.set_xticklabels(["$%.1f$" % xtik for xtik in xticks], fontsize=48); 
-    ax.set_xticklabels(["\n$%.1f$" % xtik for xtik in xticks], fontsize=48, linespacing=1); 
+    #ax.set_xticklabels(["$%.1f$" % xtik for xtik in xticks], fontsize=48);
+    ax.set_xticklabels(["\n$%.1f$" % xtik for xtik in xticks], fontsize=48, linespacing=1);
 
     #yticks = np.linspace(smin+(smax-smin)/float(Nticks-1), smax, Nticks-1)
     yticks = np.linspace(smin, smax, Nticks)
     ax.set_yticks(yticks)
-    #ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=48); 
+    #ax.set_yticklabels(["$%.1f$" % ytik for ytik in yticks], fontsize=48);
     ax.set_yticklabels(["$%.1f$ " % xtik for xtik in xticks], fontsize=48, linespacing=0.6);
-    
+
     ax.xaxis.set_tick_params(width=2)
     ax.yaxis.set_tick_params(width=2)
     #plt.figure(2, figsize=(8,8))
@@ -777,8 +778,8 @@ if plotRetmapFull:
     #plot(srange, sp3, 'b')
     #plt.hold(True)
     #plot(srange,srange,'g')
-    
-    savefig('BBretmaponslice.pdf', bbox_inches='tight', dpi=100) 
+
+    savefig('BBretmaponslice.pdf', bbox_inches='tight', dpi=100)
     #call(["pdfcrop", "RetMap.pdf", "RetMap.pdf"], shell=True)
-    
+
     show()
