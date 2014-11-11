@@ -1,4 +1,4 @@
-\section{Multiple shooting method for search for the \rpo s}
+\section{Multiple shooting method for finding \rpo s}
 \label{s:newton}
 
 Let us assume that we have a set of good guesses
@@ -20,6 +20,8 @@ lie close to the \rpo\ $p$,
 Here the period and the shift of the \rpo\ $p$ are
 $\period{p} \approx \sum \zeit_i\,,$
 $\gSpace_p \approx \sum \gSpace_i \,.$
+and the Lagrangian description of the flow is
+$\ssp(\zeit) = \flow{\zeit}{\ssp(0)}$
 We want to determine
 $(\Delta\ssp_i\,,\,\Delta\zeit_i\,,\,\Delta\gSpace_i)$
 corresponding to the exact \rpo,
@@ -52,8 +54,8 @@ the spatial, time and phase directions,
     derivation, with what $O(\Delta^2)$'s are dropped
     as a problem / solution set for \texttt{cycles.tex}.}
 \beq
-	\ssp_{i+1}^{'} - \LieEl_{i+1} \flow{{\zeit_i}}{\ssp_i}
-= \LieEl_{i+1}\left(
+	\ssp_{i+1}^{'} - \matrixRep_{i+1} \flow{{\zeit_i}}{\ssp_i}
+= \matrixRep_{i+1}\left(
   \groupTan_{i+1} \Delta \gSpace_i
 + \vel_{i+1} \Delta \zeit_i
 + \jMps_{i+1} \Delta \ssp_i
@@ -64,10 +66,10 @@ where, for brevity,
 $\ssp_{i}^{(m+1)} = \ssp_{i}^{(m)} + \Delta \ssp_{i}^{(m)}
    = \ssp_{i}^{'}$,
 $\ssp_{i}^{(m)} = \ssp_{i}$,
-$\matrixRep(\gSpace_i) = \LieEl_{i+1}$,
-$\vel (\ssp_{i}) = \vel_i$,
+$\matrixRep(\gSpace_i) = \matrixRep_{i+1}$,
+$\vel (\ssp_{i}(\zeit_{i})) = \vel_{i+1}$,
 $\jMps^{\zeit_i}(\ssp_i) = \jMps_{i+1}$,
-$\groupTan(\ssp_{i}) = \Lg \ssp_{i} = \groupTan_i$,
+$\groupTan(\ssp_{i}(\zeit_{i})) = \Lg \ssp_{i}(\zeit_{i}) = \groupTan_{i+1}$,
 \etc.
 For sufficiently good initial guesses,
 the improved values converge under Newton iterations to
@@ -95,71 +97,97 @@ eliminate variations along the marginal directions on the \rpo s\ $2D$
 torus: a local Poincar\'e section orthogonal to the flow, and a local slice
 orthogonal to the group orbit at each point along the orbit,
 \beq
-   \vel_i \cdot \Delta x_i = 0
+   \vel(\ssp_i ) \cdot \Delta \ssp_i = 0
 \,,\qquad
-   \groupTan_{i} \cdot \Delta x_i = 0
+   \groupTan(\ssp_i ) \cdot \Delta \ssp_i = 0
 \,.
 \ee{RPOConstrsLocal}
 We can rewrite everything as one matrix equation:
 \beq \label{eq:multishootmatrix}
-	{\bf A} \Delta = E,
+	A \Delta = E, \quad \mbox{where,}
 \eeq
-where,
 \begin{widetext}
-\beq \label{eq:AforNewton}
-	{\bf A} = \\
-	\begin{pmatrix}
-	  \LieEl_{2} \jMps_{2} &
-	  \LieEl_{2} \vel_2 &
-	  \Lg \LieEl_{2} \flow{\zeit_1}{\ssp_1}  &
-	  - \matId & 0 & 0 & 0 & \cdots & 0 \\
-	  \vel_1 & 0 & 0 & 0 & 0 & 0 & 0 & \cdots & 0 \\
-	  \sliceTan{} & 0 & 0 & 0 & 0 & 0 & 0 & \cdots & 0 \\
+\bea 
+	A &=& \left(
+	\begin{array}{ccccccccccc}	
+	  \matrixRep_{2} \jMps_{2} &
+	  \matrixRep_{2} \vel_2 &
+	  \Lg \LieEl_{2} \flow{\zeit_1}{\ssp_1} &
+	  - \matId & 0 & 0 & 0 & \cdots & 0 & 0 & 0 \\
+	  \vel(\ssp_1) & 0 & 0 & 0 & 0 & 0 & 0 & \cdots & 0 & 0 & 0 \\
+	  \groupTan(\ssp_1) & 0 & 0 & 0 & 0 & 0 & 0 & \cdots & 0 & 0 & 0 \\
 	  0 & 0 & 0 &
-	  \LieEl_{3} \jMps_{3} &
-	  \LieEl_{3} \vel_3 &
+	  \matrixRep_{3} \jMps_{3} &
+	  \matrixRep_{3} \vel_3 &
 	  \Lg \LieEl_{3} \flow{\zeit_2}{\ssp_2}   &
-	  - \matId & \cdots & 0 \\
-	  0 & 0 & 0 & \vel_2 & 0 & 0 & 0 & \cdots & 0 \\
-	  0 & 0 & 0 & \sliceTan{} & 0 & 0 & 0 & \cdots & 0 \\
-	  \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
-	  - \matId & 0 & \cdots & 0 & 0 & 0 &
-	  \LieEl_{1} \jMps_{1} &
-	  \LieEl_{1} \vel_1 &
-	   \Lg \LieEl_{1} \flow{\zeit_1}{\ssp_1}   \\
-	  0 & 0 & \cdots & 0 & 0 & 0 & \vel_n & 0 & 0 \\
-	  0 & 0 & \cdots & 0 & 0 & 0 & \sliceTan{} & 0 & 0
-	 \end{pmatrix}	
-\eeq
+	  - \matId & \cdots & 0 & 0 & 0\\
+	  0 & 0 & 0 & \vel(\ssp_2) & 0 & 0 & 0 & \cdots & 0 & 0 & 0 \\
+	  0 & 0 & 0 & \groupTan(\ssp_2) & 0 & 0 & 0 & \cdots & 0 & 0 & 0 \\
+	  \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\
+	  - \matId & 0 & 0 & 0 & 0 & 0 & 0 & \cdots &
+	  \matrixRep_{1} \jMps_{1} &
+	  \matrixRep_{1} \vel_1 &
+	  \Lg \matrixRep_{1} \flow{\zeit_1}{\ssp_1} \\
+	  0 & 0 & 0 & 0 & 0 & 0 & 0 & \cdots & \vel(\ssp_n) & 0 & 0 \\
+	  0 & 0 & 0 & 0 & 0 & 0 & 0 & \cdots & \groupTan(\ssp_n) & 0 & 0
+	\end{array} \right) \label{eq:AforNewton} \\
+	\Delta &=&
+	 (
+	  \Delta \ssp_1, \,
+	  \Delta \zeit_1, \,
+	  \Delta \gSpace_1, \,
+	  \Delta \ssp_2, \,
+	  \Delta \zeit_2, \,
+	  \Delta \gSpace_2, \,
+	  \ldots , \,
+	  \Delta \ssp_n, \,
+	  \Delta \zeit_n, \,
+	  \Delta \gSpace_n
+	 )^T 
+	 \continue	 
+	 E &=&
+	 (
+	  \ssp_{2} - \matrixRep_2 \flow{\zeit_1}{\ssp_1} , \,
+	   0 	, \,
+	   0 	, \,
+	  \ssp_{3} - \matrixRep_3 \flow{\zeit_2}{\ssp_2} , \,
+	  0 	, \,
+	  0 	, \,
+	  \ldots , \,
+	  \ssp_{1} - \matrixRep_1 \flow{\zeit_n}{\ssp_n} , \,
+	  0 	, \,
+	  0 	
+	  )^T \label{eq:DeltaandE}	 
+\eea
 \end{widetext}
-\beq \label{eq:DeltaandE}
-	\Delta =
-	 \begin{pmatrix}
-	  \Delta \ssp_1 \\
-	  \Delta \zeit_1 	\\
-	  \Delta \gSpace_1 \\
-	  \Delta \ssp_2 \\
-	  \Delta \zeit_2 	\\
-	  \Delta \gSpace_2 \\
-	  \vdots \\
-	  \Delta \ssp_n \\
-	  \Delta \zeit_n 	\\
-	  \Delta \gSpace_n \\
-	 \end{pmatrix}  	
-	 \ \mbox{and} \
-	 E =
-	 \begin{pmatrix}
-	  \ssp_{2} - \LieEl_2 \flow{\zeit_1}{\ssp_1} \\
-	   0 	\\
-	   0 	\\
-	  \ssp_{3} - \LieEl_3 \flow{\zeit_2}{\ssp_2} \\
-	  0 	\\
-	  0 \\
-	  \vdots \\
-	  \ssp_{1} - \LieEl_1 \flow{\zeit_n}{\ssp_n} \\
-	  0 	\\
-	  0 	\\
-	 \end{pmatrix}
-\eeq
+%\beq \label{eq:DeltaandE}
+%	\Delta =
+%	 \begin{pmatrix}
+%	  \Delta \ssp_1 \\
+%	  \Delta \zeit_1 	\\
+%	  \Delta \gSpace_1 \\
+%	  \Delta \ssp_2 \\
+%	  \Delta \zeit_2 	\\
+%	  \Delta \gSpace_2 \\
+%	  \vdots \\
+%	  \Delta \ssp_n \\
+%	  \Delta \zeit_n 	\\
+%	  \Delta \gSpace_n \\
+%	 \end{pmatrix}  	
+%	 \ \mbox{and} \
+%	 E =
+%	 \begin{pmatrix}
+%	  \ssp_{2} - \LieEl_2 \flow{\zeit_1}{\ssp_1} \\
+%	   0 	\\
+%	   0 	\\
+%	  \ssp_{3} - \LieEl_3 \flow{\zeit_2}{\ssp_2} \\
+%	  0 	\\
+%	  0 \\
+%	  \vdots \\
+%	  \ssp_{1} - \LieEl_1 \flow{\zeit_n}{\ssp_n} \\
+%	  0 	\\
+%	  0 	\\
+%	 \end{pmatrix}
+%\eeq
 We than solve \refeq{eq:multishootmatrix} for $\Delta$ and update our initial
 guess by adding the vector of the computed $\Delta$ values, and iterate.
