@@ -1,0 +1,1091 @@
+%%%% for public version, toggle \draftfalse in setup2modes.tex
+%    (that removes all comments, the blog)
+
+% reducesymm/cgang/2modes.tex    this is master file:    pdflatex 2modes
+%     then:    pdflatex def2modes; bibtex def2modes; pdflatex def2modes; pdflatex def2modes
+
+% until 2012-08-20 this was in svn repo siminos/cgang/2modes.tex
+
+\documentclass[aip,cha,
+reprint,
+secnumarabic,
+nofootinbib, tightenlines,
+nobibnotes, showkeys, showpacs,
+superscriptaddress,
+%preprint,%
+%author-year,%
+%author-numerical,%
+]{revtex4-1}
+
+\newcommand{\version}{2modes ver. 2.3, Nov 11 2014}
+% Predrag                   ver. 2.3, Nov 11 2014
+% Predrag                   ver. 2.2, Jul 24 2014
+% Predrag                   ver. 2.1, Jul 14 2014
+% Burak                     ver. 2.0, Jul  8 2014
+% Predrag                   ver. 1.3, May 11 2014
+% Burak                     ver. 1.2, May  6 2014
+% Predrag                   ver. 1.1, Nov 16 2013
+% Burak                     ver. 1.0, Oct  6 2013
+% Predrag                   ver. 0.3, Aug  1 2012
+% Predrag                   ver. 0.2, Apr 30 2012}
+% Predrag from atlas12      ver. 0.1, Apr 25 2012}
+
+        \input setup2modes
+        \input def2modes
+
+\begin{document}
+
+\title[Periodic orbit analysis of a system with continuous symmetry]
+{Periodic orbit analysis of a system with continuous symmetry - a tutorial}
+
+\author{Nazmi Burak Budanur}
+\email{budanur3@gatech.edu}
+\affiliation{
+ School of Physics and Center for Nonlinear Science,
+ Georgia Institute of Technology,
+ Atlanta GA 30332
+}
+\author{Daniel Borrero-Echeverry}
+\affiliation{
+ School of Physics and Center for Nonlinear Science,
+ Georgia Institute of Technology,
+ Atlanta, GA 30332
+}
+\affiliation{
+ Department of Physics,
+ Reed College,
+ Portland OR 97202
+}
+\author{Predrag Cvitanovi\'{c}}
+\affiliation{
+ School of Physics and Center for Nonlinear Science,
+ Georgia Institute of Technology,
+ Atlanta GA 30332
+}
+    \ifdraft
+\date{\today}
+    \else
+\date{14 November 2014}
+   \fi
+
+\begin{abstract}
+Dynamical systems with translational or rotational symmetry arise
+frequently in studies of spatially extended physical systems, such as
+Navier-Stokes flows on periodic domains. In these cases, it is natural to
+express a state of the fluid in terms of a Fourier series truncated to a
+finite number of modes. Here we study a 4-dimensional two-mode
+SO(2)-equivariant model of this type, the smallest possible truncation
+that retains the symmetry while remaining high-dimensional enough to
+allow for chaotic dynamics. A crucial step in analysis of such a system
+is symmetry reduction. We use the model to illustrate different
+symmetry-reduction schemes. Its relative equilibria are conveniently
+determined by rewriting the dynamics in terms of a symmetry-invariant
+polynomial basis. However, for study of chaotic dynamics, the `method of
+slices', applicable also to very high-dimensional problems, is
+preferable. We show that a Poincar\'e section within the `slice' can be
+used to further reduce this flow to what is for all practical purposes a
+unimodal map. This enables us to systematically determine all relative
+periodic orbits and their symbolic dynamics up to any desired period. We
+then compute several dynamical averages using relative periodic orbits
+and discuss the convergence of such computations.
+\end{abstract}
+
+\pacs{02.20.-a, 05.45.-a, 05.45.Jn, 47.27.ed, 47.52.+j, 83.60.Wc}
+\keywords{
+symmetry reduction,
+equivariant dynamics,
+relative equilibria,
+relative periodic orbits,
+periodic orbit theory,
+slices,
+moving frames, chaos
+}
+\maketitle
+
+\begin{quotation}
+Periodic orbit theory provides a way to compute dynamical averages for
+chaotic flows by means of {\cycForm s} that relate the time averages of
+observables to the spectra of unstable periodic orbits. Standard
+{\cycForm s} are valid under the assumption that the stability
+multipliers of all periodic orbits have a single marginal direction
+corresponding to time evolution, and are hyperbolic in all other
+directions. However, if a dynamical system has $N$ continuous symmetries,
+periodic orbits are replaced by relative periodic orbits, invariant
+$(N+1)$-dimensional tori with marginal stability in $(N+1)$ directions.
+These exact invariant solutions arise in studies of turbulent flows, such
+as the pipe flow or the plane Couette flow, where the translational
+symmetries of the flow are approximated by carrying out simulations in
+periodic domains. A state of the fluid can then be expressed as a Fourier
+series, truncated to a large but finite (from tens to thousands) set of
+Fourier modes. This paper is a tutorial on how such problems are to be
+analyzed using periodic orbit theory. We illustrate all steps of
+\rpo s analysis on what is arguably the simplest such dynamical system, a
+`\twomode' model.
+\end{quotation}
+
+\section{Introduction}
+\label{s:intro}
+
+Recent experimental observations of travelling waves in pipe flows have
+confirmed dynamical systems theory intuition that the invariant solutions
+of \NSe\ play an important role in shaping the \statesp\ of turbulent
+flows\rf{science04}. When one recasts fluid flow equations in a
+particular basis, the outcome is an infinite dimensional dynamical system
+that is often equivariant under transformations such as
+translations, reflections and rotations. For example, when a periodic
+boundary condition is imposed along the streamwise direction, equations
+for pipe flow retain their form under streamwise translations, azimuthal
+rotations and reflections about the central axis, \ie, they are invariant
+under the actions of $\SOn{2} \times \On{2}$. In that case it is natural
+that the states of the fluid be expressed in a Fourier basis. However,
+as the system evolves the nonlinear terms in the equations mix the
+Fourier modes, and thus the state of the system evolves both along
+symmetry directions and directions transverse to them.
+This phenomenon in dynamical systems with continuous symmetries
+complicates their \statesp, and gives rise to the high dimensional coherent
+solutions such as \reqva\ and \rpo s, which take on the roles played by
+\eqva\ and \po s in flows without symmetry.
+
+This paper is a tutorial that works through an example in order to
+illustrate step-by-step how periodic orbit theory is applied to flows
+with continuous symmetries, an analysis that should ultimately be applied
+to turbulent flows, once sufficiently many exact invariant solutions
+become numerically accessible. For this purpose, we study a \twomode\
+\SOn{2} equivariant flow, of minimal dimensionality required for chaotic
+dynamics. The paper is organized as follows: In \refsect{s:symm} we
+define basic concepts and briefly review the relevant symmetry reduction
+literature. In \refsect{s:twoMode}, we introduce the \twomode\ model
+system, describe several of its representations, and utilize a
+symmetry-reduced polynomial representation to find the only \reqv\ of the
+system. In \refsect{s:numerics}, we show how the \mslices\ can be used to
+quotient the symmetry and reduce the dynamics onto a symmetry-reduced
+\statesp, or `\slice'. A Poincar\'e section within the \slice\ then
+reduces the 4\dmn\ chaotic dynamics in the full \statesp\ to a
+1-dimensional unimodal Poincar\'e return map. This return map is then
+used to construct a finite grammar symbolic dynamics for the flow, and
+determine {\em all} \rpo s up to a given period. In \refsect{s:DynAvers},
+these orbits are used as input to various {\cycForm s} in order to calculate
+dynamically interesting observables. In \refsect{s:concl},
+we discuss possible applications of the \mslices\ to various spatially
+extended systems. \refAppe{s:newton} describes the multi-shooting method used 
+to calculate the \rpo s. \refAppe{s:schur} discusses how periodic Schur 
+decomposition can be used to determine their Floquet multipliers, which can 
+easily differ by 100s of orders of magnitude even in a model as simple as the 
+\twomode\ system.
+
+\section{Continuous symmetries}
+\label{s:symm}
+
+A dynamical system $\dot{\ssp}=\vel(\ssp)$ is said to be \emph{equivariant} 
+or \emph{\Group-equivariant} under the symmetry group \Group\ transformations 
+if
+\beq
+	\vel( \ssp )
+    =  \matrixRep(\LieEl)^{-1}\vel(\matrixRep(\LieEl)\ssp)
+	\,
+\ee{equiv}
+for every \statesp\ point $\ssp \in \pS$ and every element $\LieEl \in
+\Group$, where \LieEl\ is an abstract group element, and 
+$\matrixRep(\LieEl)$ is its $[d\!\times\!d]$ matrix representation.
+Infinitesimally, the equivariance condition \refeq{equiv} is expressed as
+a vanishing Lie derivative\rf{DasBuch}
+\beq
+  \Lg \, \vel(\ssp)  - \Mvar(\ssp) \, \groupTan(\ssp) =0
+  \,,
+\ee{inftmInv}
+where
+$\Mvar(\ssp)$ is the $[d\!\times\!d]$ \stabmat\, with elements
+$\Mvar_{ij}(\ssp)={\pde \vel_i}/{\pde\ssp_j}|_{\ssp}$, $ \groupTan(\ssp)
+= \Lg \ssp $ is the group tangent at $\ssp$, and $\Lg$ is the
+$[d\!\times\!d]$ generator of infinitesimal transformations, such that
+$\matrixRep(\theta) = \exp(\theta\Lg)$, with phase $\theta \in [0,2\pi)$
+parametrizing the group action. (We shall interchangeably use notations
+$\matrixRep(\LieEl)$ and $\matrixRep(\theta)$.) In general, there is a
+generator associated with each continuous symmetry direction, but as in
+the $\SOn{2}$ example studied here there is only one parameter $\theta$,
+we have only one generator \Lg.
+
+If the trajectory of a point $\ssp_\stagn$ coincides with its group
+orbit, \ie, for every $\zeit$ there is a group transformation such that
+\beq
+\ssp (\zeit)
+    = \ssp_\stagn + \int_0^\zeit \!\!d\zeit' \vel(\ssp (\zeit'))
+    = \matrixRep(\theta (\zeit))\,\ssp_\stagn
+  \,,
+\ee{releq}
+$\ssp_\stagn$ is a point on \emph{\reqv} $\stagn$, here a 1-torus in the
+\statesp. Expanding both sides of \refeq{releq} for infinitesimal time
+verifies that the group orbit tangent and the time evolution trajectory
+tangent vectors are parallel,
+$\vel(\ssp_\stagn) = \dot{\theta}(0) \, \groupTan(\ssp_\stagn)$.
+By symmetry, this must hold for all $\ssp(\zeit) \in q$, so for a \reqv\
+the \emph{\phaseVel} is a constant, $\dot{\theta}(\zeit) = \velRel$.
+Multiplying the equivariance condition \refeq{inftmInv} by $\velRel$ we
+find that velocity is a marginal stability eigenvector in \reqv\
+co-moving frame,
+\beq
+(\Mvar (\ssp) - \velRel \Lg) \vel (\ssp) = 0
+\,,\qquad \ssp \in \pS_\stagn
+\,.
+\ee{ReqvMargEig}
+
+A \statesp\ point $\ssp_\rpprime$ lies on a \emph{\rpo} of period
+$\period{\rpprime}$ if its trajectory first intersects its group orbit after
+a finite time $\period{\rpprime}$,
+\beq
+\ssp(\period{\rpprime})
+    = \ssp_\rpprime
+     + \int_0^\period{\rpprime} \!\!\!\!d\tau' \vel(\ssp (\tau'))
+    = \matrixRep(-\theta_\rpprime) \,  \ssp_\rpprime
+  \,,
+\ee{relpo}
+with a non-zero phase $\theta_{\rpprime}$. In systems with \SOn{2}
+symmetry, \rpo s are topologically 2-tori, with the trajectory of
+$\ssp_\rpprime$ generically ergodically tracing out the torus by
+repeating the same path, shifted by the group action
+$\matrixRep(\theta_\rpprime)$ after each prime period
+$\period{\rpprime}$. As we will see in \refsect{s:numerics}, these tori
+can be very convoluted objects, difficult to visualize. In case that
+$\theta_{\rpprime}=0$, the solution is a \po, a 1-dimensional loop, and
+the 2-torus is generated by all actions of the symmetry group on this
+loop.
+
+The linear stability of \rpo s is captured by their \emph{Floquet
+multipliers}, the eigenvalues of the time-forward map
+$\ssp(\zeit)=\flow{\zeit}{\ssp(0)}$ Jacobian
+\beq
+\jMpsRed_{\rpprime}
+= \matrixRep(\theta_\rpprime ) \jMps^\period{\rpprime} (\ssp_\rpprime)
+\,, \; \mbox{~where~}\;
+\jMps^{\zeit}_{ij} (\ssp(0)) = \frac{\partial\ssp_i(\zeit)}{\partial\ssp_j(0)}\, .
+\ee{e-rpoJacobian}
+The magnitude of $\ExpaEig_{p,j}$ determines whether a small perturbation
+along its corresponding eigendirection (or Floquet vector) will expand or
+contract after one period. If the magnitude of $\ExpaEig_{p,j}$ is
+greater than $1$, the perturbation expands; if it is less than $1$, the
+perturbation contracts. In systems with $N$ continuous symmetries, \rpo s
+have $(N+1)$ marginal directions ($\left|\ExpaEig_{p,j}\right| = 1$),
+which correspond to the temporal evolution of the flow and the $N$
+symmetries. By applying symmetry reduction, the marginal Floquet
+multipliers corresponding to the symmetries are replaced by $0$ and make
+periodic orbit theory, which requires that the flow have only one
+marginal direction, applicable.
+
+\emph{Symmetry reduction} is a coordinate transformation that maps all the 
+points on a group orbit $\matrixRep(\theta) \ssp$, which are equivalent from 
+a dynamical perspective, to a single representative point in a symmetry 
+reduced space. Such a transformation converts \reqva\ and \rpo s to \eqva\ and 
+\po s in a reduced \statesp, with no loss of dynamical information; the full 
+\statesp\ trajectory can always be retrieved via the reconstruction equation. 
+One well-studied technique for symmetry reduction, which works well for 
+low-dimensional dynamical systems, such as the Lorenz system, is to recast the 
+dynamical equations in terms of invariant polynomials\rf{GL-Gil07b}. 
+Establishing such invariant polynomial bases, however, quickly becomes 
+impractical for systems with more than a dozen dimensions\rf{gatermannHab}. In 
+contrast, the \mslices\ 
+\rf{rowley_reconstruction_2000,BeTh04,SiCvi10,FrCv11,atlas12,ACHKW11,BudCvi14},
+which we study in detail here, is a symmetry reduction scheme applicable to
+high-dimensional flows like the \NS\ equations\rf{WiShCv14}.
+
+\subsection{\Mslices}
+\label{s-slice}
+
+In a system with $N$ continuous symmetries, a \emph{\slice} \pSRed\ is a codimension $N$ submanifold
+of \pS\ that cuts every group orbit once and only once. In the \emph{\mslices}, the solution
+of a $d$-\dmn\ dynamical system is represented as a symmetry-reduced trajectory $\sspRed (\zeit)$ within the
+$(d-N)$-\dmn\ \slice\ and $N$ time dependent group parameters $\theta(\zeit)$, which
+map $\sspRed (\zeit)$ to the full \statesp\ by the group action $\matrixRep(\theta(\zeit))$.
+
+While this idea goes back to Cartan\rf{CartanMF},
+Rowley and Marsden\rf{rowley_reconstruction_2000}
+were the first to apply it to a spatially extended nonlinear flow. They used it to study the dynamics of
+the $1D$ \KS\ equation in the neighborhood of
+a \reqv, using the \reqv\ itself as the \slice\ `\template'.
+Independently, Beyn and Th\"{u}mmler\rf{BeTh04} applied
+the \mslices\ to `freeze' spiral waves in reaction-diffusion systems.
+
+The definition given above for the \slice\ puts no restriction on its shape
+and offers no guidance on how to construct it. In practice, a
+local approximation of the slice called a \emph{\slicePlane} can be constructed
+in the neighborhood of a point $\slicep$ by using $\slicep$ as
+\emph{\template}. The \slicePlane\ is then defined as the hyperplane that
+contains $\slicep$ and is perpendicular to its group tangent $\sliceTan{}
+= \Lg \slicep$. The relationship between a \template\, its \slicePlane, and symmetry-reduced trajectories
+is illustrated in \reffig{f-ReducTraj1}.
+
+%% ReducTraj*.* - read dasbuch/book/FigSrc/inkscape/00ReadMe.txt
+\begin{figure}
+\begin{center}
+ \setlength{\unitlength}{0.40\textwidth}
+ %% \unitlength = units used in the Picture Environment
+ \begin{picture}(1,0.8361641)%
+   \put(0,0){\includegraphics[width=\unitlength]{ReducTraj5}}%
+   \put(0.06854399,0.36282057){\color[rgb]{0,0,0}\rotatebox{-30.34758661}{\makebox(0,0)[lb]{\smash{$\pSRed$}}}}%
+   \put(0.57768586,0.29773425){\color[rgb]{0,0,0}\rotatebox{0.0313674}{\makebox(0,0)[lb]{\smash{$\sspRed(0)$}}}}%
+   \put(0.59310014,0.69932675){\color[rgb]{0,0,0}\rotatebox{0.03136739}{\makebox(0,0)[lb]{\smash{$\ssp(\zeit)$}}}}%
+   \put(0.8268425,0.39772328){\color[rgb]{0,0,0}\rotatebox{0.03136739}{\makebox(0,0)[lb]{\smash{$\sspRed(\zeit)$}}}}%
+   \put(0.81220962,0.66529577){\color[rgb]{0,0,0}\rotatebox{0.03136739}{\makebox(0,0)[lb]{\smash{$\matrixRep(\theta(\zeit))\ssp(\zeit)$}}}}%
+   \put(0.21150193,0.63610779){\color[rgb]{0,0,0}\rotatebox{0.0313674}{\makebox(0,0)[lb]{\smash{$\matrixRep(\theta)\,\slicep$}}}}%
+   \put(0.37740434,0.49597258){\color[rgb]{0,0,0}\rotatebox{0.0313674}{\makebox(0,0)[lb]{\smash{$\slicep$}}}}%
+   \put(0.3627714,0.69665188){\color[rgb]{0,0,0}\rotatebox{0.0313674}{\makebox(0,0)[lb]{\smash{$\sliceTan{}$}}}}%
+ \end{picture}%
+\end{center}
+\caption{\label{f-ReducTraj1}
+(Color online) The \slicePlane\ \pSRed\ is a hyperplane % \refeq{PCsect0}
+passing through the {\template} point $\slicep$ and normal to its group
+tangent $\sliceTan{}$. It intersects all group orbits (dotted lines) in
+an open neighborhood of $\slicep$.  The full \statesp\ trajectory
+$\ssp(\tau)$ (solid black line) and the \reducedsp\ trajectory
+$\sspRed(\zeit)$ (solid green line) belong to the same group orbit
+$\pS_{\ssp(\zeit)}$ and are equivalent up to a group rotation
+$\matrixRep(\theta(\zeit))$.
+}%
+\end{figure}
+
+Reduced trajectories $\sspRed (t)$ can be obtained in two ways: by
+post-processing data or by reformulating the dynamics and integrating
+directly in the \slice. The post-processing method (also called the
+\emph{method of moving frames}\rf{FelsOlver98,OlverInv}) can be applied
+to both numerical and experimental data, one takes the data in the full
+\statesp\ and looks for the time dependent group parameter that brings
+the trajectory $\ssp(\zeit)$ onto the \slice. That is, one finds $\theta
+(\zeit)$ such that $\sspRed(\zeit)=\matrixRep(-\theta (\zeit)) \ssp
+(\zeit)$ satisfies the \slice\ condition:
+\beq
+\braket{\sspRed(\zeit) - \slicep}{\sliceTan{}} = 0
+\,.
+\ee{SliceCond}
+
+In the second implementation, one reformulates the dynamics (for Abelian
+groups) as
+\begin{subequations}\label{eq:so2reduced}
+  \beq\label{eq:intSlice}
+	\velRed(\sspRed) = \vel(\sspRed)
+	-\dot{\theta}(\sspRed) \, \groupTan(\sspRed)
+  \eeq
+  \beq\label{eq:reconstruction}
+	\dot{\theta}(\sspRed) = {\braket{\vel(\sspRed)}{\sliceTan{}}}/
+				{\braket{\groupTan(\sspRed)}{\sliceTan{}}}
+  \, ,
+  \eeq
+\end{subequations}
+and directly calculates the symmetry-reduced trajectory directly by integrating $\sspRed (\zeit)$ and $\theta (\zeit)$.
+In \refeq{eq:so2reduced}, $\velRed$ is the projection of the full \statesp\ velocity \vel(\ssp) onto the \slicePlane.
+For a derivation of \refeq{eq:so2reduced}, see \refref{DasBuch}.
+
+While early studies\rf{rowley_reconstruction_2000, rowley_reduction_2003,
+BeTh04} applied the \mslices\ to a single solution at a time, studying
+the nonlinear dynamics of extended systems requires symmetry reduction of
+global objects, such as strange attractors or invariant manifolds. In
+this spirit, Siminos and Cvitanovi\'{c}\rf{SiCvi10} used the \mslices\ to
+quotient the \SOn{2} symmetry from the chaotic dynamics of \cLf. They
+showed that the slice-dependent singularity of the reconstruction
+equation that occurs when the denominator in \refeq{eq:reconstruction}
+vanishes (e.g., when the group tangents of the trajectory and the
+template are orthogonal) causes the reduced flow to make discontinuous
+jumps. This set of points $\sspRed^*$ in the \slicePlane\ that satisfy
+\beq
+\braket{\groupTan(\sspRed^*)}{\sliceTan{}} = 0
+\ee{ChartBordCond}
+forms the \emph{\sliceBord}, studied in detail by Froehlich and Cvitanovi\'{c}\rf{FrCv11}.
+
+Two strategies have been proposed in order to handle this problem: The first attempts to
+try to identify a template such that slice singularities are not visited
+by the dynamics\rf{SiCvi10} or to use multiple `charts' of connected
+slices\rf{rowley_reconstruction_2000,FrCv11}.
+The latter approach was applied to \cLf\ by Cvitanovi\'{c} \etal~\rf{atlas12} and
+to pipe flow by Willis, Cvitanovi\'{c}, and Avila\rf{ACHKW11}.
+However, neither approach is straightforward to apply, particularly in
+high-dimensional dynamical systems.
+
+\subsection{\FFslice}
+\label{sect:fFslice}
+
+A third strategy has recently been proposed by Budanur
+\etal\rf{BudCvi14}, who considered Fourier space discretizations of
+partial differential equations (PDEs) with \SOn{2} symmetry. They showed
+that in these cases a simple choice of \slice\ template, associated with
+the first Fourier mode, results in a \slice\ in which it is highly
+unlikely that generic dynamics visit the neighborhood of the singularity.
+If the dynamics do occasionally come near the singularity, these close
+passages can be regularized by means of a time rescaling.
+
+Here, we shall illustrate this approach, which we call the `\fFslice',
+and apply it to a 2-mode model system described in \refsect{s:twoMode},
+arguably the simplest system with \SOn{2} equivariant dynamics that can
+exhibit chaos.
+
+In the discussion so far, we have not specified any constraints on the 
+symmetry group to be quotiented, beyond the requirement that it be Abelian, 
+which is required for \refeq{eq:so2reduced} to be valid. Since we are 
+interested in spatially extended systems with translational symmetry, and in 
+order to keep the notation compact, we restrict our discussion to one 
+dimensional PDEs describing the evolution of a field $u(x,t)$ in a periodic 
+domain. By introducing a Fourier series expansion
+\beq
+	u(x,\zeit) = \sum\limits_{k=- \infty}^\infty u_k\left(\zeit\right) 
+				 e^{i k x}, \,\,\,u_k = x_k + i y_k,
+\ee{FourierSeries}
+a PDE invariant under translations can be expressed as a system of coupled 
+nonlinear ODEs equivariant under the 1-parameter compact group of \SOn{2} 
+rotations.
+
+Truncating the expansion to $m$ modes, we write the real and imaginary parts 
+of the Fourier coefficients with $k \geq 1$ as the state vector 
+$\ssp=\cartpt{x_1, y_1, x_2, y_2,..., x_m, y_m}$. The action of the $\SOn{2}$ 
+group on this vector can then be expressed as a block diagonal matrix:
+\beq
+	\matrixRep(\theta) = \begin{pmatrix}
+						R(\theta) & 0 			  & \cdots & 0 \\
+						0		   & R(2 \theta) & \cdots & 0 \\
+						\vdots	   & \vdots 	  & \ddots & \vdots \\
+						0		   & 0	          & \cdots & R (m \theta)
+					   \end{pmatrix}
+\,,
+\ee{mmodeLieEl}
+where
+\beq
+	R(n \theta) =	\begin{pmatrix}
+					\cos n \theta & - \sin n \theta \\
+					\sin n \theta & ~\cos n \theta
+					\end{pmatrix}
+\ee{rotationmatrix}
+is the rotation matrix for $n$th Fourier mode.
+The Lie algebra generator for $\matrixRep(\theta)$ is given by
+\beq
+	 \Lg =  \begin{pmatrix}
+			 0 & -1 & 0 & 0 & \cdots & 0 & 0 \\
+			 1 & 0 & 0 & 0 & \cdots & 0 & 0 \\
+			 0 & 0 & 0 & -2 & \cdots & 0 & 0 \\
+			 0 & 0 & 2 & 0 & \cdots & 0 & 0 \\
+			 \vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+			 0 & 0 & 0 & 0 & \cdots & 0 & -m \\
+			 0 & 0 & 0 & 0 & \cdots & m & 0
+			 \end{pmatrix} .
+\ee{mmodeLg}
+
+In order to construct a \slicePlane\ for such a system, let us choose the
+following \slice\ \template:
+\beq
+	\slicep = (1, 0, ..., 0) .
+\ee{firstmodetemp}
+The \slice\ condition \refeq{SliceCond} then constraints points on the
+reduced trajectory to the hyperplane given by
+\beq
+	\sspRed = (\hat{x}_1, 0, \hat{x}_2, \hat{y}_2, ..., \hat{x}_m, \hat{y}_m) .
+\ee{slicetemp}
+As discussed earlier, group orbits should cross the \slice\ once and only
+once, which we achieve by restricting the \slicePlane\ to the half-space
+where $\hat{x}_1 > 0$. In general, a \slicePlane\ can be constructed by
+following a similar procedure for any choice of \template, allowing the
+symmetry reduction of the dynamics in a neighborhood of the \template\
+bounded by the \sliceBord\ \refeq{ChartBordCond}. However, the power of
+choosing template \refeq{firstmodetemp} becomes apparent by computing the
+border of its \slicePlane. The points on \refeq{slicetemp} lie on the
+\sliceBord\ only if $\hat{x}_1 = 0$. This means that as long the dynamics
+are such that the magnitude of the first mode never vanishes,
+\emph{every} group orbit is guaranteed to have a unique representative
+point on the \slicePlane. By symmetry, any template of the form $\slicep
+=\cartpt{\hat{x}'_1, \hat{y}'_1, 0,...,0}$  would work just as well. The
+\slice\ \template\ \refeq{firstmodetemp} was chosen for notational and
+computational convenience.
+
+More insight can be
+gained by writing the symmetry-reduced evolution equations 
+\refeq{eq:so2reduced} explicitly for the template \refeq{firstmodetemp}:
+\begin{subequations}
+\beq
+\velRed ( \sspRed )  = \vel(\sspRed)
+   - \frac{\dot{y}_1\left(\sspRed\right)}{\hat{x}_1} \, \groupTan(\sspRed) \, ,
+\label{e-so2red1stmode}
+\eeq
+\ESedit{
+  \beq\label{eq:reconstruction1stmode}
+	\dot{\theta}(\sspRed) = \frac{\dot{y}_1(\sspRed)}{\hat{x}_1}
+  \, .
+  \eeq
+}
+\end{subequations}
+Since the argument $\phi_1$ of a point $(x_1,y_1)$ in the first Fourier mode 
+plane is given by $\phi_1=\tan^{-1}\frac{y_1}{x_1}$, its velocity is
+\beq
+  \dot{\phi}_1 = \frac{x_1}{r_1^2}\dot{y}_1-\frac{y_1}{r_1^2}\,\dot{x}_1\,,
+\eeq
+where $r_1^2=x_1^2+y_1^2$. Therefore, on the \slicePlane \refeq{slicetemp}, 
+where $\hat{y}_1=0$,
+\beq\label{eq:phi1}
+  \dot{\theta}(\sspRed) = \dot{\phi}_1(\sspRed)\,.
+\eeq
+That is, for our choice of \template\ \refeq{firstmodetemp}, the
+reconstruction phase coincides with the first Fourier mode phase. In this
+sense, from a group-theoretic point of view, this choice of template is
+thus more natural than the physically motivated templates used in
+\refrefs{rowley_reconstruction_2000,BeTh04,SiCvi10,FrCv11,atlas12,ACHKW11}.
+
+In general, additional care must be taken when the dynamics approach the 
+\slice\ border $\hat{x}_1 = 0$. Whenever this happens, the near-divergence of 
+$\velRed$ can be regularized by introducing a rescaled time coordinate such 
+that $d\hat{\zeit} = d\zeit / \hat{x}_1$\rf{BudCvi14}. However, in our study 
+of the \twomode\ system that we will introduce below, we omit this step since 
+points with a vanishing first mode are in an invariant subspace of the flow 
+and hence are never visited by the dynamics.
+
+\subsection{Post-processing approach}
+\label{s-mframes}
+
+\begin{figure}%[H]
+\centering
+ \includegraphics[width=0.45\textwidth]{BBgorbitsandslice}
+\caption{(Color online)
+$\SOn{2}$ group orbits of \statesp\ points $\cartpt{0.75, 0, 0.1, 0.1}$
+(orange), $\cartpt{0.5, 0, 0.5, 0.5}$ (green)
+$\cartpt{0.1, 0, 0.75, 0.75}$ (pink) and the first mode \refeq{slicetemp} 
+\slicePlane\ (blue). The group tangents at the intersections with the
+\slicePlane\ are shown as red arrows.
+As the magnitude of the first Fourier mode decreases relative to the
+magnitude of the second one, so does the group tangent angle to the
+\slicePlane.}
+\label{fig:BBgorbitsandslice}
+\end{figure}
+
+In \refsect{s-slice}, we explained the general procedure for reducing the 
+\SOn{2} symmetry by \mslices. Here, we focus on its geometrical 
+interpretation. The \slice\ defined by \refeq{firstmodetemp} and the 
+directional constraint $\hat{x}_1 > 0$ fixes the phase of the first complex 
+Fourier mode to $0$. This also follows from the fact that the reconstruction 
+phase of the first Fourier mode \slice\ is the phase of the first mode 
+In complex representation, we can express the relationship between Fourier 
+modes ($\sspC_n = x_n + \ii y_n$) and their representative points 
+($\sspRedC = \hat{x}_n +  \ii \hat{y}_n$) on the \slicePlane\ by the $\Un{1}$ 
+action:
+\beq
+	\sspRedC_n = e^{-\ii n \phi_1} \sspC_n \, . \ee{e-1stmodeTransform}
+This relation provides another interpretation for the \sliceBord:  For
+template \refeq{firstmodetemp}, the \sliceBord\ condition
+\refeq{ChartBordCond} yields, $|\sspRedC_1| = |\sspC_1| = 0$, which means
+that the phase of the first Fourier mode and hence the
+transformation \refeq{e-1stmodeTransform} is not well-defined.
+This is illustrated in \reffig{fig:BBgorbitsandslice}, which shows the
+first Fourier mode \slicePlane\ along with three-dimensional projections
+of the group orbits of points with decreasing $|\sspC_1|$. When the
+magnitude of the first mode $\sqrt{\hat{x}_1^2 + \hat{y}_1^2}$, relative
+to that of the second mode is small (pink curve in
+\reffig{fig:BBgorbitsandslice}), the group tangent has a larger component
+parallel to the \slicePlane . If the first mode magnitude was exactly
+$0$, the group tangent would lie entirely on the \slicePlane , satisfying
+the \sliceBord\ condition.
+
+In \refref{PoKno05}, a polar coordinate representation of two Fourier mode
+truncation is obtained by defining the $\Group$-invariant phase: 
+$\Phi = \phi_2 - 2 \phi_1$
+and three symmetry invariant coordinates 
+\polpt{r_1, r_2 \cos \Phi, r_2 \sin \Phi}.
+One can see by direct comparison with \refeq{e-1stmodeTransform}, which
+yields $\sspRedC_1 = r_1$ and $\sspRedC_2 = r_2 e^{\ii \Phi}$, that this
+representation is a special case $(m=2)$, of the \slice\ defined by
+\refeq{firstmodetemp}. Corresponding ODEs for the polar representation
+were obtained in \refref{PoKno05} by  chain rule and substitution. Note
+that \mslices\ provides a general form \refeq{e-so2red1stmode} for symmetry
+reduced time evolution.
+
+\section{\twoMode\ $\SOn{2}$-equivariant flow}
+\label{s:twoMode}
+
+Dangelmayr,\rf{Dang86} Armbruster, Guckenheimer and Holmes,\rf{AGHO288}
+Jones and Proctor,\rf{JoPro87} and Porter and Knobloch\rf{PoKno05} (see
+Golubitsky \etal\rf{golubII}, Sect. XX.1) have investigated bifurcations
+in 1:2 resonance ODE normal form models to third order in the amplitudes.
+Here, we use this model as a starting point from which we derive what may
+be one of the simplest chaotic systems with a continuous symmetry. We refer 
+to this as the {\twomode} system:
+\bea
+	\dot{z}_1 &=& (\mu_1-\ii\, e_1)\,z_1+a_1\,z_1|z_1|^2
+				 +b_1\,z_1|z_2|^2+c_1\,\overline{z}_1\,z_2
+	\continue
+	\dot{z}_2 &=& (\mu_2-\ii\, e_2)\,{z_2}+a_2\,z_2|z_1|^2
+				 +b_2\,z_2|z_2|^2+c_2\,z_1^2 \,,
+	\label{eq:DangSO2}
+\eea
+where $z_1$ and $z_2$ are complex and all parameters real-valued. The 
+parameters $\{e_1,e_2\}$ break the $\On{2}$ symmetry of the normal form 
+studied by Dangelmayr\rf{Dang86} leading to an $\SOn{2}$-equivariant system. 
+As we will show below in \refeq{PKinvEqs1}, only the combination $(2e_1-e_2)$ 
+matters in the symmetry reduced dynamics, so for simplicity we set $e_1=0$. 
+This complex two mode system can be expressed as a 4-dimensional first order 
+real ODE system by substituting $z_1 = x_1 + i\,y_1$, $z_2 = x_2 + i\,y_2$, 
+so that 
+\bea
+\dot{x}_1 &=& (\mu_1 + a_1 r_1^2 + b_1 r_2^2 + c_1 x_2)x_1 
+			  + c_1 y_1 y_2 + e_1 y_1 \, ,
+\continue
+\dot{y}_1 &=& (\mu_1 + a_1 r_1^2 + b_1 r_2^2 - c_1 x_2)y_1 
+			  + c_1 x_1 y_2 - e_1 x_1 \, ,
+\continue
+\dot{x}_2 &=& (\mu_2 + a_2 r_1^2 + b_2 r_2^2)x_2 
+			  + c_2 (x_1^2 - y_1^2) + e_2 y_2 \, ,
+\label{2mode4D}
+\continue
+\dot{y}_2 &=& (\mu_2 + a_2 r_1^2 + b_2 r_2^2)y_2 
+			  + 2 c_2 x_1 y_1 - e_2 x_2 \, ,
+\continue
+		  && \mbox{where } r_1^2 = x_1^2 + y_1^2\, , \quad r_2^2 = x_2^2 + y_2^2
+\,.
+\eea
+This normal form has a large set of parameters 
+$\left(\mu_1,\mu_2,a_1,a_2,b_1,b_2,c_1,c_2,e_1,e_2\right)$. Following in the 
+tradition of Lorenz\rf{lorenz}, H\'enon\rf{henon} and R\"ossler\rf{ross}, we 
+have played with various choices of parameters until settling on the following 
+set of values, which we will use in all numerical calculations presented here:
+\beq
+	\begin{tabular}{c c c c c c c c c c}
+	 $\mu_1$ & $\mu_2$ & $e_1$ & $e_2$ & $a_1$ & $a_2$ & $b_1$ & $b_2$ & $c_1$ & $c_2$ \\
+	\hline
+	 -2.8	& 1		  & 0	  & 1	  & -1	  & -2.66 & 0	  & 0 	  & -7.75 & 1
+	\end{tabular}
+	\label{eq:pars}
+\eeq
+This choice of parameters is far from the bifurcation values studied by 
+previous authors\rf{Dang86,AGHO288,JoPro87,PoKno05}, so that the model has no 
+physical interpretation. However, this set of parameters yield chaotic 
+dynamics, making the two-mode system a simple model for the study of chaos in 
+the presence of a continuous symmetry: It is a 4\dmn\ $\SOn{2}$-equivariant 
+model in which the three dimensional $\SOn{2}$-reduced dynamics are chaotic.
+
+It can be checked by inspection that eqs.~\refeq{eq:DangSO2} are equivariant 
+under the \Un{1}\ transformation
+\beq
+(z_1,z_2) \rightarrow   (e^{i {\gSpace}}z_1,e^{i 2{\gSpace}} z_2)
+\,.
+\ee{Dang86(1.1)aa}
+In the real representation \refeq{2mode4D}, the $\SOn{2}$ group action
+\refeq{Dang86(1.1)aa} is given by $\ssp'= \exp\left( \theta \Lg\right)\ssp$,
+where $\transp{\ssp} =\cartpt{x_1, y_1,x_2, y_2}$, and $\Lg$ is the Lie algebra
+generator
+\beq
+\Lg  \, =
+\left( \begin{array}{cccc}
+         0 & -1 & 0 & 0 \\
+         1 & 0 & 0 & 0 \\
+         0 & 0 & 0 & -2\\
+         0 & 0 & 2 & 0
+      \end{array} \right)
+\,.
+\ee{LGTwoMode}
+One can easily check that the real \twomode\ system \refeq{2mode4D}
+satisfies the equivariance condition \refeq{inftmInv}.
+
+From \refeq{eq:DangSO2}, it is obvious that the \eqv\ point \((z_1,z_2)=(0,0)\)
+is an invariant subspace, and that $z_1=0$, $z_2 \neq 0$ is a 2\dmn\
+flow-invariant subspace,
+\beq
+  \dot{z}_1 = 0 
+\,,\qquad
+  \dot{z}_2 = (\mu_2-\ii\, e_2 +b_2 |z_2|^2)\,{z_2} 
+\,,
+\ee{eq:DangSO2spsp}
+with a single circular \reqv\ of radius 
+$r_2 = \norm{z_2} = \sqrt{-\mu_2/b_2}$ with \phaseVel\ $\velRel=-e_2/2$. At 
+the origin the stability matrix $\Mvar$ commutes with $\Lg$, and thus can be 
+block-diagonalized into two $[2\!\times\!2]$ matrices. The eigenvalues of 
+$\Mvar$ at $\cartpt{0,0,0,0}$ are $\Lyap_1 = \mu_1$ with multiplicity 2 and
+$\Lyap_2 = \mu_2 \pm i e_2$. The eigenvectors for $\Lyap_1$ are 
+$\cartpt{1,0,0,0}$ and $\cartpt{0,1,0,0}$ in the $\cartpt{x_1,y_1,x_2,y_2}$ 
+coordinates. The eigenvectors for $\Lyap_2$ are $\cartpt{0,0,1,0}$ and 
+$\cartpt{0,0,0,1}$.
+
+In contrast, $z_2 =0$ is not, in general, a flow-invariant subspace, since the dynamics
+\[
+  \dot{z}_1 = (\mu_1-\ii\, e_1)\,z_1+a_1\,z_1|z_1|^2
+\,,\qquad
+  \dot{z}_2 = c_2\,z_1^2
+\,.
+\]
+takes the flow out of the $z_2 =0$ plane.
+
+\subsection{Invariant polynomial bases}
+\label{s:invPol}
+
+Consider the \statesp\ of a dynamical system constructed from two complex
+Fourier modes\rf{Dang86,AGHO288,PoKno05} $m=(1,2)$, with the $\SOn{2}
+\simeq \Un{1}$ group action given by \refeq{Dang86(1.1)aa}. In this case,
+it is easy to construct a set of four real-valued $\SOn{2}$ invariant
+polynomials
+\bea
+u &=& {z}_1 \overline{z}_1
+    \,,\quad
+v = {z}_2 \overline{z}_2
+    \continue
+w &=& z_1^2 \overline{z}_2 + \overline{z}_1^2 {z}_2
+    \,,\quad
+q = (z_1^2 \overline{z}_2 - \overline{z}_1^2 {z}_2)/\ii
+\,.
+\label{Dang86(1.2)PK}
+\eea
+The polynomials $\invpt{u,v,w,q}$ are linearly independent, but related 
+through one syzygy,
+\beq
+w^2+q^2 - 4\,u^2v = 0 
+\label{eq:syzPK}
+\eeq
+that confines the dynamics to a 3-dim\-ens\-ion\-al manifold 
+$\pSRed=\pS/\SOn{2}$, a symmetry-invariant repre\-sent\-ati\-on of the 
+4-dim\-ens\-ion\-al \SOn{2} equivariant dynamics, which we call the 
+\reducedsp. By construction, $u \geq 0$, $v \geq 0$, but $w$ and $q$ can be of 
+either sign. That is explicit in in polar coordinates 
+$ {z}_1 = |u|^{1/2} e^{\ii\phi_1}$, $ {z}_2 = |v|^{1/2} e^{\ii\phi_2}$, where 
+the  $w, q$ invariants take the form
+\bea
+w &=& 2\,\Re(z_1^2 \overline{z}_2) = 2\,u |v|^{1/2} \cos \psi 
+\continue
+q &=& 2\,\Im(z_1^2 \overline{z}_2) = 2\,u |v|^{1/2} \sin \psi 
+\,,
+\label{Dang86(1.2)polar}
+\eea
+where $\psi = 2 \phi_1 - \phi_2$.
+
+The dynamical equations for $\invpt{u,v,w,q}$ follow from the chain rule, which yields
+\bea
+  \dot{u} &=& \overline{z}_1 \dot{z}_1 + {z}_1 \dot{\overline{z}}_1 
+\,,\qquad
+  \dot{v} = \overline{z}_2 \dot{z}_2 + {z}_2 \dot{\overline{z}}_2 
+\continue
+  \dot{w} &=& 2 \,\overline{z}_2 {z}_1 \dot{z}_1 
+           + 2\,{z}_2 \overline{z}_1 \dot{\overline{z}}_1
+           + {z}_1^2 \dot{\overline{z}}_2
+           + \overline{z}_1^2 \dot{z}_2
+\continue
+  \dot{q} &=&  (2\,\overline{z}_2 {z}_1 \dot{z}_1 
+           - 2\,{z}_2 \overline{z}_1 \dot{\overline{z}}_1
+           + {z}_1^2 \dot{\overline{z}}_2
+           - \overline{z}_1^2 \dot{z}_2
+           )/\ii
+\label{PKinvEqs}
+\eea
+Substituting \refeq{eq:DangSO2} into \refeq{PKinvEqs}, we obtain a set of four 
+$\SOn{2}$-invariant equations,
+\bea
+  \dot{u} &=& 2\,\mu_1\,u+2\,a_1\,u^2+2\,b_1\,u\,v+c_1\,w 
+\continue
+  \dot{v} &=& 2\,\mu_2\,v+2\,a_2\,u\,v+2\,b_2\,v^2+c_2\,w 
+\continue
+  \dot{w} &=& (2\,\mu_1+\mu_2)\,w+(2a_1+a_2)\,u\,w+(2b_1+b_2)\,v\,w 
+\ceq
+             +\, 4c_1\,u\,v + 2c_2\,u^2 +(2e_1 - e_2)\,q
+\label{PKinvEqs1}\\
+  \dot{q} &=& (2\mu_1+\mu_2)\,q+(2a_1+a_2)\,u\,q
+\ceq
+             +(2b_1+b_2)\,v\,q
+             -(2e_1-e_2)\,w 
+\,.
+\nnu
+\eea
+Note that the $\On{2}$-symmetry breaking parameters $\{e_1,e_2\}$ of the
+Dangelmayr normal form system\rf{Dang86} appear only in the relative phase 
+combination $(2e_1-e_2)$. Using the syzygy \refeq{eq:syzPK}, we can eliminate 
+$q$ from \refeq{PKinvEqs1} to get
+\bea
+  \dot{u} &=& 2\,\mu_1\,u+2\,a_1\,u^2+2\,b_1\,u\,v+c_1\,w \nonumber 
+\\
+  \dot{v} &=& 2\,\mu_2\,v+2\,a_2\,u\,v+2\,b_2\,v^2+c_2\,w \label{PKinvEqs1syz}  
+\\
+  \dot{w} &=& (2\,\mu_1+\mu_2)\,w+(2a_1+a_2)\,u\,w+(2b_1+b_2)\,v\,w 
+\ceq
+             +\, 4c_1\,u\,v + 2c_2\,u^2 +(2e_1 - e_2)(4u^2v-w^2)^{1/2}\,
+  \nonumber
+\eea
+This invariant basis can be used either to investigate the dynamics directly 
+or to visualize solutions\rf{GL-Gil07b} computed in the full equivariant basis 
+\refeq{eq:DangSO2}. While representations of our model in terms of invariant 
+polynomials \refeq{PKinvEqs1} and polar coordinates \refeq{Dang86(1.2)polar} 
+are useful for cross-checking calculations in the full \statesp\ 
+$\transp{\ssp} =\cartpt{x_1, x_2,y_1, y_2}$ , construction requires a bit of 
+algebra even for this simple 4-dimensional flow. For very high\dmn\ flows, 
+such as \KS\ and \NS\ flows, we do not know how to carry out such 
+constructions.
+
+\subsection{\Eqva\ of the symmetry-reduced dynamics}
+\label{s:eqva}
+
+The first step in elucidating the geometry of attracting sets is the
+determination of their \eqva. We shall now show that the problem of
+determining the \eqva\ of the symmetry-reduced \twomode\
+\refeq{PKinvEqs1} system $\invpt{u^*,v^*,w^*,q^*}$ can be reduced to
+finding the real roots of a multinomial expression. First, let we define
+\beq
+A_1= \mu_1+a_1\,u+b_1\,v
+    \,,\qquad
+A_2 = \mu_2+a_2\,u+b_2\,v
+\ee{PKinvEqs2a}
+and rewrite \refeq{PKinvEqs1} as
+\bea
+  0  &=&  2\,A_1\,u +c_1\,w 
+    \,,\qquad
+  0  =  2\,A_2\,v +c_2\,w 
+\continue
+  0  &=& (2\,A_1+ A_2)\,w
+          +2\,\left(c_2\,u+2\,c_1\,v\right)\,u 
+          \ceq
+		  + (2e_1-e_2)\,q
+\label{PKinvEqs3}\\
+  0  &=& (2\,A_1+ A_2)\,q - (2e_1-e_2)\,\,w 
+\nnu
+\eea
+We already know that $\invpt{0,0,0,0}$ and $\cartpt{0,-\mu_2/b_2,0,0}$ are the 
+only roots in the $u=0$ and $v=0$ subspaces, so we are looking only for the 
+$u>0$, $v>0$, $w,q \in \reals$ solutions; there could be non-generic roots 
+with either $w=0$ or $q=0$, but not both simultaneously, since the syzygy 
+\refeq{eq:syzPK} precludes that. Either $w$ or $q$ can be eliminated by 
+obtaining the following relations from \refeq{PKinvEqs3}:
+\bea
+	w  &=& - \frac{2\,u}{c_1}\,A_1 = - \frac{2\,v}{c_2}\,A_2 
+	\continue
+	q &=& \frac{2(-2e_1+\,e_2)\,u\,v}{c_2\,u+2\,c_1\,v} .  root.
+	\label{PKinvEqs4}
+\eea
+Substituting \refeq{PKinvEqs4} into \refeq{PKinvEqs3} we get two bivariate
+polynomials whose roots are the \eqva\ of the system \refeq{PKinvEqs1}:
+\bea
+	f(u,v) &=& c_2\,u\,A_1 - c_1\,v\,A_2 = 0 \,,\qquad  \nonumber
+	\\
+	g(u,v) &=&
+ \left(4\,A_1^2 u^2 - 4\,c_1^2\,u^2 v\right)\left(c_2\,u+2\,c_1\,v\right)^2 \label{PKinvEqs5} 
+	\ceq
+	+\,4\,c_1^2\,(-2e_1+e_2)^2\,u^2\,v^2 = 0
+\,,
+	\\
+	\mbox{\rm deg}(f) &=& 2, \, \mbox{\rm deg}(g) = 6 \nonumber
+\,.
+\eea
+We divide the common multiplier $u^2$ from the second equation and by doing 
+so, eliminate one of the two roots at the origin, as well as the 
+$\cartpt{0,-\mu_2/b_2,0,0}$ root within the invariant subspace
+\refeq{eq:DangSO2spsp}. Furthermore, we scale the parameters and variables as
+$\tilde{u} = c_2\,u$,
+$\tilde{v} = c_1\,v$,
+$\tilde{a_1} = a_1/c_2$,
+$\tilde{b_1} = b_1/c_1$,
+$\tilde{a_2} = a_2/c_2$,
+$\tilde{b_2} = b_2/c_1$
+to get
+\bea
+\tilde{f}(\tilde{u},\tilde{v}) &=&
+  \tilde{u}\,\tilde{A}_1 - \tilde{v}\,\tilde{A}_2 = 0 
+\,,\qquad \mbox{\rm deg}(f) = 2 \, , \label{PKinvEqs5a}
+\\
+\tilde{g}(\tilde{u},\tilde{v}) &=&  
+ \left(\tilde{A}_1^2
+ - c_1\,\tilde{v}\right)
+ \left(\tilde{u}+2\,\tilde{v}\right)^2
+ +e_2^2\,\tilde{v}^2 = 0
+\,,
+\ceq
+   \mbox{\rm deg}(g) = 4 \, , \label{PKinvEqs5b}
+\\
+ && \mbox{where }
+\tilde{A}_1 = \mu_1+\tilde{a_1}\,\tilde{u}+\tilde{b_1}\,\tilde{v}
+\,,\ceq
+\qquad\quad \tilde{A}_2 = \mu_2+\tilde{a_2}\,\tilde{u}+\tilde{b_2}\,\tilde{v}
+\,,
+\label{PKinvEqs5c}
+\eea
+Solving coupled bivariate polynomials \refeq{PKinvEqs5a} is not, in general, a 
+trivial task. However, for the choice of parameters given by \refeq{eq:pars}, 
+eq.~\refeq{PKinvEqs5a} yields 
+$\tilde{v} = (\mu_1 + \tilde{a}_1 \tilde{u})/(\mu_2 + \tilde{a}_2 \tilde{u})$. 
+Substituting this into \refeq{PKinvEqs5b} makes it a fourth order polynomial 
+in $u$, which we can solve. Only the non-negative, real roots of this 
+polynomial correspond to \reqva\ in the \twomode\ \statesp\ since $u$ and $v$ 
+are the squares of first and second mode amplitudes, respectively. Two roots 
+satisfy this condition, the \eqv\ at the origin:
+\beq
+	\invpol_{\EQV{}} = \invpt{0,0,0,0}\,, 
+\ee{eq:origin}
+and the \reqv:
+\beq
+	\invpol_{\REQV{}{}} = \invpt{0.193569,0.154131,-0.149539,-0.027178}\,.
+\ee{eq:reqv}
+Note that by setting $b_2 = 0$, we send the \reqv\ at
+$\cartpt{0,-\mu_2/b_2,0,0}$ to infinity. Thus, \refeq{eq:reqv} is the
+only \reqv\ of the \twomode\ system for our choice of parameters. While
+this is an \eqv\ in the invariant polynomial basis, in the
+\SOn{2}-equivariant, real-valued \statesp\ this is a 1\dmn\ \reqv\ group orbit.
+The point on this orbit that lies in first Fourier mode slice is
+(see \refFig{fig:2modes-ssp}\,(c)):
+\beq
+  \left(x_1, y_1, x_2, y_2\right) = \left(0.439966, 0, -0.386267, 0.070204\right)
+\,.
+  \label{e-req}
+\eeq
+We computed the linear stability eigenvalues and eigenvectors of this \reqv
+, by evaluating \stabmat\ within the first Fourier mode slice
+$\MvarRed_{ij} (\sspRed) = \partial \velRed_i / \partial \sspRed_j |_{\sspRed}$
+on the \reqv . Linear stability eigenvalues for the \reqv\ \refeq{e-req}
+\beq
+	\lambda_{1,2} = 0.05073 \pm \ii \, 2.4527, \quad
+	\lambda_3 = -5.5055, \quad \lambda_4 = 0 \, .
+\eeq
+The $0$ eigenvalue corresponds to the direction outside the slice, we expect
+this since the reduced trajectory equations \refeq{eq:intSlice} keeps the
+solution within the slice. Imaginary part of the expanding complex pair sets
+the `winding time' in the neighborhood of the equilibrium to
+$T_w = 2 \pi / \Im(\lambda_1) = 2.5617$. The large \eqv\  of the
+contracting eigenvalue $\lambda_3$ yields a very thin attractor in the
+reduced \statesp, thus, when looked at on a planar Poincare\'{e} section,
+the \twomode\ flow is almost one dimensional, see \reffig{fig:psectandretmap}\,(a, b).
+
+\begin{figure*}%[H]
+\centering
+\includegraphics[height=0.22\textwidth]{2modes-conf-reqv}\quad%
+\includegraphics[height=0.22\textwidth]{2modes-confred-reqv}\quad%
+\includegraphics[height=0.22\textwidth]{2modes-conf-rpo}\quad%
+\includegraphics[height=0.22\textwidth]{2modes-confred-rpo}\quad%
+\includegraphics[height=0.22\textwidth]{2modes-conf-ergodic}\quad%
+\includegraphics[height=0.22\textwidth]{2modes-confred-ergodic}%
+\caption{(Color online)
+The \reqv\ \REQV{}{} in
+ (a) the system's configuration space becomes an \eqv\ in
+ (b) the symmetry-reduced configuration space.
+Two cycles of the \rpo\ \cycle{01} in the
+ (c) the symmetry-equivariant configuration space become a \po\ in
+ (d) the symmetry-reduced configuration space. A typical ergodic trajectory of 
+ the \twomode\ system in the system's configuration space (e), in the 
+ symmetry-reduced configuration space (f). The color scale used in each figure 
+ is different to enhance contrast.
+}
+\label{fig:2modes-conf}
+\end{figure*}
+
+\begin{figure*}%[H]
+\centering
+(a)\includegraphics[width=0.30\textwidth]{2modes-ssp}
+(b)\includegraphics[width=0.30\textwidth]{2modes-invpol}
+(c)\includegraphics[width=0.30\textwidth]{2modes-sspRed}
+\caption{(Color online)
+The same trajectories as in \reffig{fig:2modes-conf}\,(a,c,d),
+colored green, red and blue respectively,
+	(a) in a 3D projection of the 4\dmn\ \statesp ,
+	(b) in a terms of 3 invariant polynomials,
+	(c) in the 3\dmn\  first Fourier mode \slicePlane.
+Note that in the symmetry reduced representations (b and c), the \reqv\ 
+\REQV{}{} is reduced to an \eqv , the green point; and the \cycle{01} (red) 
+closes onto itself after one repeat. In contrast to the invariant polynomial 
+representation (b), in the first Fourier mode \slicePlane (c), the qualitative 
+difference between shifts by $\approx \pi$ and $\approx-\pi$ in near passages 
+to the {\sliceBord} is very clear, and it leads to the unimodal Poincar\'e 
+return map of \reffig{fig:psectandretmap}.
+}
+\label{fig:2modes-ssp}
+\end{figure*}
+
+\subsection{No chaos when the reflection symmetry is restored}
+\label{s:dfsafs}
+
+Before finishing our discussion of invariant polynomials, we make an important 
+observation regarding the case when both of the reflection symmetry breaking
+parameters, $e_{1}$ and $e_2$ are set to $0$. In this case, 
+$\sspC_{1,2} \rightarrow \bar{\sspC}_{1,2}$ symmetry is restored and the 
+evolution equations for $u$, $v$, and $w$ in \refeq{PKinvEqs1} become 
+independent of $q$. Furthermore, the time evolution equation for $q$ becomes 
+linear in $q$ itself, so that it can be expressed as:
+\beq
+    \dot{q} = \xi (u, v) q \,.
+\ee{e-qlinearq}
+Hence, the time evolution of $q$ can be written as
+\beq
+    q(\zeit) =  e^{\int_0^\zeit d \zeit' \xi (u(\zeit'), v(\zeit'))} q(0) \, .
+\ee{e-qO2solq}
+If we assume that the flow is bounded, then we can also assume that a long 
+time average of $\xi$ exists. The sign of this average determines the long 
+term behavior of $q(\zeit)$; it will either diverge or vanish depending on the 
+sign of $\langle \xi \rangle$ being positive or negative respectively. The 
+former case leads to a contradiction: If $q(\zeit)$ diverges, the 
+symmetry-invariant flow cannot be bounded since the syzygy \refeq{eq:syzPK} 
+must be satisfied at all times. If $q(t)$ vanishes, there are three invariant 
+polynomials left, which are still related to each other by the syzygy. Thus, 
+the flow is confined to a two dimensional manifold and cannot exhibit chaos.
+We must stress that this is a special result when one has only first and 
+second Fourier mode, and the equivariant normal form includes terms upto the
+third order.
+
+\subsection{Visualizing \twomode\ dynamics}
+\label{s:visual}
+
+We now present visualizations of the dynamics of the \twomode\ system in
+four different representations: as 3D projections of the four-dimensional
+real-valued \statesp, as 3D projections in the invariant polynomial
+basis, as dynamics in the 3D \slicePlane, and as two-dimensional
+spacetime diagrams of the color-coded field
+$u(\conf,\zeit)$\DB{11-3-2014}{Using $u$ here is confusing since we've
+just spent the last few pages talking about $u$ in the $(u,v,w,q)$ basis}
+is defined as follows:
+\[
+	u(\conf, \tau) = \sum_{k=-2}^{2} \sspC_k(\zeit) \, e^{i k \conf}
+\,,
+\]
+where $\sspC_{-k} = \bar{\sspC}_k \,, \; 	\sspC_0 = 0$ ,  and $\conf
+\in [- \pi, \pi]$. We can also define the symmetry reduced configuration
+space representation as the inverse Fourier transform of the symmetry
+reduced Fourier modes:
+\[
+	\hat{u}(\conf, \tau) = \sum_{k=-2}^{2} \sspRedC_k(\zeit) e^{i k \conf}
+\,,
+\]
+where $\sspRedC_{-k} = \bar{\sspRedC}_k$ \,, \; 	$\sspRedC_0 = 0$ \;
+and$\conf \in [- \pi, \pi]$. \refFig{fig:2modes-conf}\,(a,b) show the
+sole \reqv\ \REQV{}{} of the \twomode\ system in the symmetry-equivariant
+and symmetry-reduced configuration spaces, respectively. After the
+symmetry reduction, the \reqv\ becomes an \eqv.
+\refFig{fig:2modes-conf}\,(c,d) show the \rpo\ \cycle{01} again
+respectively in the symmetry-equivariant and symmetry-reduced
+configuration space representations. Similar to the \reqv, the \rpo\
+becomes a \po\ after symmetry reduction. Finally,
+\refFig{fig:2modes-conf}\,(e,d) show a typical ergodic trajectory of the
+\twomode\ system in symmetry-equivariant and symmetry-reduced
+configuration space representations. Note that in each case, symmetry
+reduction cancels the `drifts' along the symmetry ($x$) direction.
+
+As can be seen clearly in \reffig{fig:2modes-ssp}\,(a), these drifts show up in
+the Fourier mode representation as $\SOn{2}$ rotations. The \reqv\ \REQV{}{}
+traces its \SOn{2} group orbit (green curve in \reffig{fig:2modes-ssp}\,(a))
+as it drifts in the configuration space. The
+\rpo\ \cycle{01}\,(red) and the ergodic trajectory (blue) rotate
+in the same fashion as they evolve. \refFig{fig:2modes-ssp}\,(b,c)
+show a three dimensional projection onto the invariant polynomial basis and the 3\dmn\
+trajectory on the \slicePlane\ for the same orbits. In both figures, the \reqv\ is reduced
+to an \eqv\ and the \rpo\ is reduced to a \po.
+
+%\input{numerics}
+%\input{recycle}
+%\input{conclusion}
+
+\begin{acknowledgments}
+We are grateful to Evangelos Siminos for his contributions to this project
+and Mohammad M.~Farazmand for a critical reading of the manuscript.
+We acknowledge stimulating discussion with
+Xiong Ding,
+Ruslan L.~Davidchack,
+Ashley P.~Willis,
+Al Shapere
+and
+Francesco Fedele.
+We are indebted to the 2012 ChaosBook.org class, in particular to
+Keith M.~Carroll,
+Sarah Flynn,
+Bryce Robbins,
+and
+Lei Zhang,
+for the initial fearless fishing expeditions into the enormous sea of the
+parameter values of the \twomode\ model.
+P.~C.\ thanks the family of late G.~Robinson,~Jr.
+and
+NSF~DMS-1211827 for support. D.~B.\ thanks M.~F.\ Schatz for support during
+the early stages of this work under NSF~CBET-0853691.
+\end{acknowledgments}
+
+\appendix
+%\input{newton}
+%\input{schur}
+
+\bibliography{../../bibtex/siminos}
+
+\end{document}
