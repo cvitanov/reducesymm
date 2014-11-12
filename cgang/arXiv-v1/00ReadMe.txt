@@ -23,11 +23,11 @@ need to supply the following identifier:
 Fix these (mark when done):
 ---------------------------
 
-[ ] merge the included .tex files into a single 2modes.tex file for the main 
-    text
+[DONE Nov 12 (Burak)] merge the included .tex files into a single 2modes.tex 
+                      file for the main text
     
-[ ] move figures to arXiv-v1/figs
+[DONE Nov 12 (Burak)]  move figures to arXiv-v1/figs
 
-[ ] remove all author edits and author edit macros
+[DONE Nov 12 (Burak)]  remove all author edits and author edit macros
 
 [ ] remove extraneous macros from def2modes.tex before submission

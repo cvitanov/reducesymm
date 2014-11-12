@@ -1016,9 +1016,7 @@ four different representations: as 3D projections of the four-dimensional
 real-valued \statesp, as 3D projections in the invariant polynomial
 basis, as dynamics in the 3D \slicePlane, and as two-dimensional
 spacetime diagrams of the color-coded field
-$u(\conf,\zeit)$\DB{11-3-2014}{Using $u$ here is confusing since we've
-just spent the last few pages talking about $u$ in the $(u,v,w,q)$ basis}
-is defined as follows:
+$u(\conf,\zeit)$ is defined as follows:
 \[
 	u(\conf, \tau) = \sum_{k=-2}^{2} \sspC_k(\zeit) \, e^{i k \conf}
 \,,
@@ -1226,8 +1224,586 @@ s \cycle{001} and \cycle{011} almost overlap everywhere except $\hat{x}_1
 \label{f-2modes-lambdaDist}
 \end{figure}
 
-%\input{recycle}
-%\input{conclusion}
+\section{Cycle Averages}
+\label{s:DynAvers}
+
+So far, we have explained how we find the \rpo s of the \twomode\ system and c
+ompute their stability. However, we have not yet said anything about what to 
+do with these numbers. We begin this section with an overview of the main 
+results of the periodic orbit theory. Our review starts by recapitulating the 
+presentation of \refref{DasBuch}, but then, in \refsect{s-ContFac}, explains 
+how the theory is modified in the presence of continuous symmetries\rf{Cvi07}.
+In \refsect{s-CycExp}, we present cycle expansions and explain how to 
+approximate the Poincar\'e section in \reffig{fig:psectandretmap}\,(d), in 
+order to obtain a better convergence of the spectral determinants. The 
+numerical results are discussed in \refsect{s-NumResults}
+
+\subsection{Classical trace formula}
+
+Consider the {\evOper}, the action of which evolves a density $\rho_0(\ssp)$ 
+in the \statesp:
+\bea
+    \rho(\zeit ,\ssp) &=& [\Lop^\zeit \rho_0 ] (\ssp)
+    \continue
+    &=& \int d \ssp' \delta (\ssp - \flow{\zeit}{\ssp'})
+        e^{\beta \Obser^\zeit (\ssp' )} \rho_0(\ssp') \label{e-EvOper}
+\,,
+\eea
+where $\beta$ is an auxiliary variable and $\Obser^\zeit (\ssp')$ is the 
+integrated value of an observable $\obser$ along the orbit 
+$\flow{\zeit}{\ssp'}$:
+\beq
+    \Obser^\zeit (\ssp' ) = \int_0^{\zeit} d \zeit'
+                              \obser(\flow{\zeit'}{\ssp'})
+\,.
+\eeq
+Notice that when $\beta = 0$, the \evOper\ \refeq{e-EvOper} simply evolves
+the density of \statesp\ points to its new form after time $\zeit$. As we 
+shall see, attaching the integrated observables to this operator enables us to
+study values of these observables averaged over the invariant measures.
+
+Since we required our observable to be additive along an orbit and 
+exponentiated its integrated value in the construction of the \evOper\
+\refeq{e-EvOper}; the evolution operator itself is multiplicative:
+\beq
+    \Lop^{\zeit_1 + \zeit_2} = \Lop^{\zeit_2} \Lop^{\zeit_1} \, .
+    \label{eq-SemiGroup}
+\eeq
+For the kernel of the evolution integral, which we will refer to as 
+$\Lop^\zeit (\ssp, \ssp')$ with explicit arguments, we can write this relation
+as:
+\beq
+	\Lop^{\zeit_1 + \zeit_2} (\ssp,\ssp') =
+    \int d\ssp'' \Lop^{\zeit_2} (\ssp, \ssp'')
+                   \Lop^{\zeit_1} (\ssp'', \ssp) \, .
+	\label{eq-SemiGroupKernel}
+\eeq
+This `semigroup property' \refeq{eq-SemiGroup} of the {\evOper} allows us to
+define the {\evOper} as the formal exponential of its infinitesimal generator
+\Aop :
+\beq
+	\Lop^t = e^{\Aop t} \, .
+	\label{eq-EvOpExp}
+\eeq
+By definition \refeq{e-EvOper}, the eigenvalues and eigenfunctions of $\Lop^t$ 
+(and thus \Aop ) are functions of $\beta$. Let us define $\rho_{\beta} (x)$ as 
+the eigenfunction of \refeq{e-EvOper} corresponding to the leading eigenvalue 
+(i.e., the one with the largest real part); we can write the action of 
+\refeq{e-EvOper} on this density explicitly as follows:
+\beq
+    \left[ \Lop^t \rho_{\beta} \right] (x) = e^{t s(\beta )} \rho_{\beta} (x)
+    \, .
+    \label{eq-EigenvalueRel}
+\eeq
+Here, $s(\beta)$ is the eigenvalue of $\Aop$. As stated earlier, when 
+$\beta = 0$, the {\evOper} simply evolves densities; this form of the 
+evolution operator is known as the {\FPoper}. If we assume that the system 
+under study is ergodic, then an `invariant measure' $\rho_0(\ssp)$ exists 
+with eigenvalue $s(0) = 0$ exists. The long time spectrum of any observable is 
+going to be dominated by its average over such a density, hence we define the 
+average of an observable as its average over the invariant measure:
+\beq
+    \langle \obser \rangle = \int d \ssp \, \obser(\ssp) \rho_0 (\ssp) \, .
+    \label{e-obserAvg}
+\eeq
+By evaluating the action of the {\evOper} \refeq{e-EvOper} for infinitesimal 
+times and after some algebra, which we skip here, one finds that the averages 
+of observables, as well as their higher moments, can be generated from the
+derivatives of $s(\beta)$:
+\beq
+    \langle \obser \rangle =
+        \left. \frac{d s}{d \beta} \right|_{\beta = 0} \, , \quad
+    \langle (\obser - \langle \obser \rangle )^2 \rangle =
+        \left. \frac{d^2 s}{d \beta^2} \right|_{\beta = 0} \,, ...
+    \label{eq-moments}
+\eeq
+In order to obtain $s(\beta)$, we construct the resolvent of \Aop , by taking
+the Laplace transform of \refeq{eq-EvOpExp}:
+\beq
+	\int_0^{\infty} d\zeit e^{-s\zeit} \Lop^\zeit = (s-\Aop)^{-1} \, ,
+	\label{eq-ResolventA}
+\eeq
+the trace of which peaks at the eigenvalues of \Aop. By taking the Laplace 
+transform of $\Lop^\zeit$ and computing its trace by 
+$\tr \Lop^\zeit = \int d\ssp \Lop^\zeit (\ssp,\ssp)$, one obtains the 
+classical trace formula:
+\beq
+\sum_{\alpha=0}^{\infty} \frac{1}{s-s_{\alpha}} = \sum_p T_p
+\sum_{r=1}^{\infty} \frac{e^{r(\beta \Obser_p - s T_p)}}{\oneMinJ{r}}
+\ee{e-ClassicalTraceFormula}
+that relates the spectrum of the {\evOper} to the spectrum of the periodic 
+orbits. Here,  $s$ is the auxiliary variable of the Laplace transform and 
+$s_{\alpha}$ are the eigenvalues of \Aop . The outer sum on the right hand 
+side runs over the `prime cycles' $p$ of the system, which have periods 
+$T_p$. $\Obser_p$ is the value of the observable integrated along the prime 
+cycle and $\monodromy_p$ is the transverse monodromy matrix, the eigenvalues 
+of which are the Floquet multipliers of $p$ excluding the marginal ones 
+($|\Lambda| \neq 1$). In the derivation of \refeq{e-ClassicalTraceFormula}, 
+one assumes that the flow has a single marginal direction, namely the 
+direction that is parallel to the periodic orbit at all times, and evaluates 
+the contribution of each \po\ to the trace integral by transforming to a local 
+coordinate system where one of the coordinates is parallel to the flow while 
+the rest is transverse. Integration along the parallel direction is what 
+contributes the factors of $T_p$. The transverse integral over the delta 
+function contributes the factor of $\oneMinJ{r}$.
+
+\subsection{Decomposition of the trace formula over irreducible representations}
+\label{s-ContFac}
+
+The classical trace formula \refeq{e-ClassicalTraceFormula} accounts for 
+contributions from \po s to long time dynamical averages. However, \rpo s 
+of equivariant systems are almost never periodic in the full \statesp. In 
+order to compute the contributions of \rpo s to the trace of the \evOper, 
+one has to factorize the \evOper\ into the irreducible subspaces of the 
+symmetry group. For discrete symmetries, this procedure is studied in 
+\refref{CvitaEckardt}. For the quantum systems with continuous symmetries 
+(Abelian and 3D rotations), the factorization of the semiclassical Green's 
+operator is carried out in \refref{Creagh93}. \refRef{Cvi07} addresses the 
+continuous factorization of the \evOper\ and its trace; we provide a sketch of 
+this treatment here. We start by stating, without proof, that a 
+square-integrable field $\psi (\ssp)$ over a vector space can be factorized 
+into its projections over the irreducible subspaces of a group
+$\Group$:
+\beq
+    \psi (\ssp) = \sum_m \mathbb{P}_m \psi (\ssp) \, ,
+\eeq
+where the sum runs over the irreducible representations of $\Group$ and the 
+projection operator onto the $m$th irreducible subspace, for a continuous 
+group, is:
+\beq
+    \mathbb{P}_m = d_m \int_\Group d \mu(\LieEl) \chi_m (\LieEl(\theta))
+                            \mathbb{D}(\theta)
+\,.
+\ee{e-ProjectionOperator}
+Here, $d_m$ is the dimension of the representation, $d \mu(g)$ is the
+normalized Haar measure, $\chi_m (\LieEl)$ is the character of $m$th
+irreducible representation and $\mathbb{D}(\theta)$ is the operator that
+transforms a scalar field defined on the \statesp\ as
+$\mathbb{D}(\theta) \rho (\ssp) = \rho(\matrixRep(\theta)^{-1} \ssp)$.
+For our specific case of a single $\SOn{2}$ symmetry,
+\bea
+d_m &\rightarrow& 1\, , \\
+\int_G d \mu(g) &\rightarrow& \oint \frac{d \theta} {2 \pi} \, , \\
+\chi_m (\LieEl(\theta)) &\rightarrow& e^{- \ii m \theta } \, .
+\eea
+Because the projection operator \refeq{e-ProjectionOperator} decomposes 
+scalar fields defined over the \statesp\ into their irreducible subspaces 
+under action of $\Group$, it can be used to factorize the \evOper. Thus, the 
+kernel of the \evOper\ transforms under the action of $\mathbb{D}(\theta)$ as:
+\bea
+    \mathbb{D}(\theta) \Lop^t (\ssp', \ssp) &=&
+        \Lop^t (\matrixRep(\theta)^{-1} \ssp', \ssp)\,,
+    \continue
+    &=& \Lop^t (\ssp', \matrixRep(\theta) \ssp) \,, \continue
+    &=& \delta (\ssp' - \matrixRep(\theta) f^t (\ssp)) e^{\beta \Obser^t(\ssp)}\, ,
+    \label{e-gEvOper}
+\eea
+where the second step follows from the equivariance of the system under 
+consideration. \Rpo s contribute to $\mathbb{P}_m \Lop^t = \Lop_m^t$ since 
+when its kernel is modified as in \refeq{e-gEvOper}, the projection involves 
+an integral over the group parameters that is non-zero when 
+$\theta=\theta_{\rpprime}$, the phase shifts of the \rpo s. By computing the 
+trace of $\Lop_m^t$, which in addition to the integral over \statesp , now 
+involves another integral over the group parameters, one obtains the $m$th 
+irreducible subspace contribution to the classical trace as
+\beq
+\sum_{\alpha=0}^{\infty} \frac{1}{s-s_{m, \alpha}} = \sum_p T_{\rpprime}
+\sum_{r=1}^{\infty} \frac{\chi_m (\LieEl^r(\theta_{\rpprime}))
+            e^{r(\beta \Obser_{\rpprime} - s T_{\rpprime})}}{\oneMinJred{r}} .
+\ee{e-ReducedTraceFormula}
+The reduced trace formula \refeq{e-ReducedTraceFormula} differs from the 
+classical trace formula \refeq{e-ClassicalTraceFormula} by the group character
+term, which is evaluated at the \rpo\ phase shifts, and the reduced monodromy
+matrix $\monodromyRed$, which is the $(d-N-1)\times(d-N-1)$ reduced Jacobian
+for the \rpo\ evaluated on a Poincar\'e section in the \reducedsp . The 
+eigenvalues of $\monodromyRed$ are those of the \rpo\ Jacobian 
+\refeq{e-rpoJacobian} excluding the marginal ones, i.e., the ones 
+corresponding to time evolution and evolution along the continuous symmetry 
+directions.
+
+Since we are only interested in the leading eigenvalue of the \evOper , we
+only consider contributions to the trace \refeq{e-ClassicalTraceFormula} from 
+the projections \refeq{e-ReducedTraceFormula} of the $0$th irreducible 
+subspace. For the $\SOn{2}$ case at hand, these can be written explicitly as
+\beq
+\sum_{\alpha=0}^{\infty} \frac{1}{s-s_{0, \alpha}} = \sum_p T_p
+\sum_{r=1}^{\infty} \frac{e^{r(\beta \Obser_p - s T_p)}}{\oneMinJred{r}} \, .
+\ee{e-tracem0}
+This form differs from the classical trace formula
+\refeq{e-ClassicalTraceFormula} only by the use of the reduced monodromy 
+matrix instead of the full monodromy matrix since the $0$th irreducible 
+representation of $\SOn{2}$ has character $1$. For this reason, cycle 
+expansions \rf{AACI}, which we cover next, are applicable to 
+\refeq{e-tracem0} after the replacement 
+$\monodromy \rightarrow \monodromyRed$.
+
+\subsection{Cycle expansions}
+\label{s-CycExp}
+
+While the classical trace formula \refeq{e-ClassicalTraceFormula} and its
+factorization for systems with continuous symmetry 
+\refeq{e-ReducedTraceFormula} manifest the essential duality between the 
+spectrum of an observable and that of the \po s and \rpo s, in practice, 
+they are hard to work with since the eigenvalues are located at the poles of 
+\refeq{e-ClassicalTraceFormula} and \refeq{e-ReducedTraceFormula}. The 
+dynamical zeta function \refeq{e-DynamicalZeta}, which we derive below, 
+provides a perturbative expansion form that enables us to order terms in 
+decreasing importance while computing spectra for the \twomode\ system. 
+As stated earlier, \refeq{e-tracem0} is equivalent to 
+\refeq{e-ClassicalTraceFormula} via substitution 
+$\monodromy \rightarrow \monodromyRed$. We start by defining the
+`spectral determinant':
+\beq
+  \det (s-\Aop) = \exp \left( - \sum_p \sum_{r=1}^{\infty}
+      \frac{1}{r} \frac{e^{r(\beta \Obser_p - s T_p)}}{\oneMinJ{r}} \right)\, ,
+\ee{e-SpectralDeterminant}
+whose logarithmic derivative ($(d/ds) \ln \det(s - \Aop)$) gives
+the classical trace formula \refeq{e-ClassicalTraceFormula}.
+The spectral determinant \refeq{e-SpectralDeterminant} is easier to work
+with since the spectrum of $\mathcal{A}$ is now located at the zeros of
+\refeq{e-SpectralDeterminant}. The convergence of 
+\refeq{e-SpectralDeterminant} is, however, still not obvious. More insight is 
+gained by approximating $\oneMinJ{r}$ by the product of expanding Floquet 
+multipliers and then carrying out the sum over $r$ in 
+\refeq{e-SpectralDeterminant}. This approximation yields
+\bea
+\oneMinJ{} &=& | (1 - \ExpaEig_{e,1})(1 - \ExpaEig_{e,2})... \continue
+			&&(1 - \ExpaEig_{c,1}) (1 - \ExpaEig_{c,2}) ... | \nonumber \\
+			&\approx& \prod_e |\ExpaEig_e| \equiv |\ExpaEig_p|,
+    \label{e-LambdapApprox}
+\eea
+where $|\ExpaEig_{e,i}| > 1$ and $|\ExpaEig_{c,i}| < 1$ are expanding and
+contracting Floquet multipliers respectively. By making this approximation, 
+the sum over $r$ in \refeq{e-SpectralDeterminant} becomes the Taylor expansion 
+of natural logarithm. Carrying out this sum, brings the spectral determinant 
+\refeq{e-SpectralDeterminant} to a product (over prime cycles) known as the 
+dynamical zeta function:
+\beq
+1 / \zeta = \prod_p (1 - t_p) \, \mbox{where}, \, t_p = \frac{1}{|\ExpaEig_p|}
+            e^{\beta \Obser_p - s T_p} z^{n_p} .
+\ee{e-DynamicalZeta}
+Each `cycle weight' $t_p$ is multiplied by the `order tracking term' 
+$z^{n_p}$, where $n_p$ is the topological length of the $p$th prime cycle. 
+This polynomial ordering arises naturally in the study of discrete time 
+systems where the Laplace transform is replaced by $z$-transform. Here, 
+we insert the powers of $z$ by hand, to keep track of the ordering, and 
+then set its value to $1$ at the end of calculation. Doing so allows us to 
+write the dynamical zeta function \refeq{e-DynamicalZeta} in the 
+`cycle expansion' form by grouping its terms in powers of $z$. For complete 
+binary symbolic dynamics, where every binary symbol sequence is accessible, 
+the cycle expansion reads
+\bea
+1 / \zeta &=& 1 - t_0 - t_1 - (t_{01} - t_0 t_1 )  \label{e-CycleExpansion} \\
+		  && - [(t_{011} - t_{01}t_1) + (t_{001} - t_{01} t_0)] - ... \continue
+		  &=& 1 - \sum_f t_f - \sum_n \hat{c}_n \label{e-CurvatureExpansion},
+\eea
+where we labeled each prime cycle by its binary symbol sequence. In
+\refeq{e-CurvatureExpansion} we grouped the contributions to the zeta function
+into two groups: `fundamental' contributions $t_f$ and `curvature' corrections $c_n$.
+The curvature correction terms are denoted explicitly by parentheses in \refeq{e-CycleExpansion} and
+correspond to `shadowing' combinations where combinations of
+shorter cycle weights, also known as `pseudocycle' weights, are subtracted from the weights of longer
+prime cycles. Since the cycle weights in \refeq{e-DynamicalZeta} already
+decrease exponentially with increasing cycle period, the cycle expansion
+\refeq{e-CycleExpansion} converges even faster than exponentially when the
+terms corresponding to longer prime cycles are shadowed.
+
+For complete binary symbolic dynamics, the only fundamental contributions to
+the dynamical zeta function are from the cycles with topological length $1$, 
+and all longer cycles appear in the shadowing pseudocycle combinations. More 
+generally, if the symbolic dynamics is a subshift of finite type\rf{DasBuch},
+with the grammar of admissible sequences described by a finite set of pruning 
+rules, and the flow is uniformly hyperbolic, cycle expansions of {\Fd s} are 
+guaranteed to converge super-exponentially\rf{hhrugh92}. A generic unimodal 
+map symbolic dynamics is not a subshift of finite type. However, we have 
+shown in \refsect{s:numerics} that the Poincar\'e return map for the \twomode\ 
+system (\reffig{fig:psectandretmap}\,(d)) diverges at $s \approx 0.98$ and 
+approximated it as if its tip was located at the furthest point visited by an 
+ergodic trajectory. Can we approximate the map in 
+\reffig{fig:psectandretmap}\,(d) in such a way that corresponding symbolic 
+dynamics has a finite grammar of pruning rules? The answer is yes.
+
+As shown in \reffig{fig:psectandretmap}\,(d) the cycles \cycle{001}
+and \cycle{011} pass quite close to the tip of the cusp. Approximating the
+map as if its tip is located exactly at the point where \cycle{001} cuts gives us
+what we are looking for: a single grammar rule, which says that the symbol
+sequence `00' is inadmissible. This can be made rigorous by the help of
+kneading theory, however, the simple result is easy to see from the return map
+in \reffig{fig:psectandretmap}\,(d): Cover the parts of the return map, which
+are outside the borders set by the red dashed lines, the cycle \cycle{001} and
+then start any point to the left of the tip and look at images. You will always
+land on a point to the right of the tip, unless you start at the lower left
+corner, exactly on the cycle \cycle{001}. As we will show, this `finite grammar
+approximation' is reasonable since the orbits that visit outside
+the borders set by \cycle{001} are very unstable, and hence, less
+important for the description of invariant dynamics.
+
+The binary grammar with only rule that forbids repeats of one of the symbols is
+known as the `golden mean' shift\rf{DasBuch}, named after its topological entropy which is
+$\ln (1 + \sqrt{5})/2$. Binary itineraries of golden mean cycles can be easily
+obtained from the complete binary symbolic dynamics by substitution
+$0 \rightarrow 01$ in  the latter. Thus, we can write the dynamical zeta
+function for the golden mean pruned symbolic dynamics by replacing $0$s in
+\refeq{e-CycleExpansion} by $01$:
+\bea
+1 / \zeta &=& 1 - t_{01} - t_1 - (t_{011} - t_{01} t_1 )
+              \label{e-GoldenMeanCycleExpansion}\\
+		  && - [(t_{0111} - t_{011}t_1) + (t_{01011} - t_{01} t_{011} ) ] - ...
+          \nonumber
+\eea
+Note that all the contributions longer than topological length $2$ to the
+golden mean dynamical zeta function are in form of shadowing combinations. In \refsect{s-NumResults},
+we will compare the convergence of the cycle averages with and without the
+finite grammar approximation, but before moving on to numerical results,
+we explain the remaining details of computation.
+
+While dynamical zeta functions are useful for investigating the convergence
+properties, they are not exact, and their computational cost is same as that of
+exact spectral determinants. For this reason, we expand the
+spectral determinant \refeq{e-SpectralDeterminant} ordered in the topological
+length of cycles and pseudocycles. We start with the following form of the
+spectral determinant \refeq{e-SpectralDeterminant}:
+\beq
+    \det (s-\Aop) =   \prod_p \exp \left( - \sum_{r=1}^{n_p r < N}
+                             \frac{1}{r} \frac{e^{r(\beta \Obser_p - s T_p)}
+                                          }{\oneMinJ{r}} z^{n_p r} \right) \, ,
+\ee{e-SpectralDeterminantExp}
+where the sum over the prime cycles in the exponential becomes a
+product. We also inserted the order tracking term $z$ and truncated the sum over cycle
+repeats at the expansion order $N$. For each prime cycle, we compute the sum in
+\refeq{e-SpectralDeterminantExp} and expand the exponential up to order
+$N$. We then multiply this expansion with the contributions from previous cycles
+and drop terms with order greater than $N$. This way, after setting $z=1$,
+we obtain the $N^{th}$ order spectral determinant, which we denote as
+\beq
+    F_N(\beta , s) = 1 - \sum_{n=1}^{N} Q_n(s, \beta ) \, .
+    \label{e-NthOrderSpectDet}
+\eeq
+Remember that we are searching for the eigenvalues $s ( \beta)$ of the
+operator \Aop,
+more specifically, we would like to compute the moments \refeq{eq-moments}.
+$s ( \beta)$ are located at the zeros of the spectral determinant, hence they
+satisfy the implicit equation:
+\beq
+    F_N(\beta, s(\beta )) = 0 \, .
+    \label{e-FNimplicit}
+\eeq
+By taking derivative of \refeq{e-FNimplicit} with respect to $\beta$ and
+applying chain rule we obtain
+\beq
+    \frac{d s}{d \beta} = - \left. \frac{\partial F}{\partial \beta} \right/
+                                     \frac{\partial F}{\partial s}\, .
+\eeq
+Higher order derivatives can be evaluated similarly.
+We define the `mean cycle period' as
+\beq
+	\langle T \rangle_N = \left. \partial F_N / \partial s
+                          \right|_{\beta=0, s=s (0)} \, ,
+	\label{eq-Tavg}
+\eeq
+and write the \cycForm s as
+\bea
+    \langle \obser \rangle_N &=& - \frac{1}{\langle T \rangle_N} \left.
+                              \frac{\partial F_N}{\partial \beta}
+                              \right|_{\beta=0, s=s (0)} \, , \label{e-Avga} \\
+    \langle (\obser - \langle \obser \rangle )^2 \rangle_N
+    &=& - \frac{1}{\langle T \rangle_N} \left. \frac{\partial^2 F_N}{
+                        \partial \beta^2} \right|_{\beta=0, s=s (0)} \,
+                        \label{e-Avgsigma} .
+\eea
+By probability conservation, we expect that for an invariant measure
+$\rho_0(\ssp)$, the eigenvalue $s(0)$ is $0$. However, we did not make
+this substitution in \cycForm s since, in practice, our approximation of
+the spectral determinant is always of a finite precision, so that the
+solution of $F_N(0, s(0)) = 0$ is small, but not exactly $0$. This
+eigenvalue has a special meaning: It indicates how well the \po s cover
+the strange attractor. Following this interpretation, we define $\gamma =
+- s(0)$ as the `escape rate': the rate at which the dynamics escape the
+region that is covered by the \po s. Specifically, for our finite grammar
+approximation; the escape rate tells us how frequently the ergodic flow
+visits the part of the Poincar\'e map that we cut off by applying our
+finite grammar approximation.
+
+We defined $\langle T \rangle$ in \refeq{eq-Tavg} as a shorthand for a partial
+derivative, however, we can also develop and interpretation for it by looking
+at the definitions of the dynamical zeta function \refeq{e-DynamicalZeta} and the
+spectral determinant \refeq{e-SpectralDeterminant}. In both series, the partial
+derivative with respect to $s$ turns them into weighted sum of the cycle
+periods; with this intuition, we define $\langle T \rangle$ as the `mean cycle
+period'.
+
+These remarks conclude our review of the periodic theory and its
+extension to the equivariant dynamical systems. We are now ready to present
+our numerical results and discuss their quality.
+
+\subsection{Numerical results}
+\label{s-NumResults}
+
+We constructed the spectral determinant \refeq{e-NthOrderSpectDet} to different
+orders for two observables: phase velocity $\dot{\theta}$ and the leading
+Lyapunov exponent. Remember that $\Obser_p$ appearing in
+\refeq{e-SpectralDeterminantExp} is the integrated observable, so in order to
+obtain the moments of phase velocity and the leading Lyapunov exponent from
+\refeq{e-Avga} and \refeq{e-Avgsigma}, we respectively input
+$\Obser_p = \theta_p$ phase shift of the prime cycle, and
+$\Obser_p = \ln |\Lambda_{p,e}|$ logarithm of the expanding Floquet
+multiplier of $\Lambda_{p,e}$ the prime cycle $p$.
+
+In \refsect{s:visual}, we explained that \SOn{2} phase shifts correspond
+to the drifts in the analogous configuration space. We now define the
+corresponding diffusion constant proportional to the variance of the
+phase (drift) velocity,
+\beq
+    D = \frac{1}{2 d} \sigma_{\dot{\theta}}^2
+      = \frac{\langle (\dot{\theta} - \langle \dot{\theta} \rangle)^2
+              \rangle}{2}
+\,,
+\eeq
+where $d=1$ since the configuration space is one dimensional.
+
+\refTab{t-DynamicalAverages} and \reftab{t-DynamicalAveragesNoGrammar} shows
+the cycle averages of the escape rate $\gamma$, mean period
+$\langle T \rangle$, leading Lyapunov exponent $\Lyap$, mean phase velocity
+$\langle \dot{\theta} \rangle$ and the diffusion constant $D$ respectively
+with and without the finite grammar approximation. In the latter, we input
+all the \rpo s we have found into the expansion
+\refeq{e-SpectralDeterminantExp}, whereas in the former, we discarded the
+cycles with symbol sequence `00'.
+
+\begin{table}
+	\begin{tabular}{c|c|c|c|c|c}
+	 $N$ & $\gamma$ & $\langle T \rangle$ & $\lambda$ & $\langle \dot{\theta} \rangle$ & $D$ \\
+	\hline
+	1 & 0.249829963 & 3.6415122 & 0.10834917 & 0.0222352 & 0.000900 \\
+ 	2 & -0.011597609 & 5.8967605 & 0.10302891 & -0.1391709 & 0.226199 \\
+ 	3 & 0.027446312 & 4.7271381 & 0.11849761 & -0.1414933 & 0.234572 \\
+ 	4 & -0.004455525 & 6.2386572 & 0.10631066 & -0.2141194 & 0.472633 \\
+ 	5 & 0.000681027 & 5.8967424 & 0.11842700 & -0.2120545 & 0.461628 \\
+ 	6 & 0.000684898 & 5.8968762 & 0.11820050 & -0.1986756 & 0.385774 \\
+ 	7 & 0.000630426 & 5.9031596 & 0.11835159 & -0.1997353 & 0.392404 \\
+ 	8 & 0.000714870 & 5.8918832 & 0.11827581 & -0.1982025 & 0.380317 \\
+ 	9 & 0.000728657 & 5.8897511 & 0.11826873 & -0.1982254 & 0.380338 \\
+ 	10 & 0.000728070 & 5.8898549 & 0.11826788 & -0.1982568 & 0.380721 \\
+ 	11 & 0.000727891 & 5.8898903 & 0.11826778 & -0.1982561 & 0.380720 \\
+ 	12 & 0.000727889 & 5.8898908 & 0.11826780 & -0.1982563 & 0.380724 \\
+ 	\end{tabular}
+	\caption{Cycle expansion estimates based on the golden mean approximation
+             \refeq{e-GoldenMeanCycleExpansion} to symbolic dynamics for
+             the escape rate $\gamma$, average cycle period $\langle T \rangle$,
+             Lyapunov exponent $\lambda$, average phase velocity
+             $\langle \dot{\theta} \rangle$ and the diffusion coefficient $D$,
+             up to cycle length $N$.}
+	\label{t-DynamicalAverages}
+\end{table}
+
+\begin{table}
+	\begin{tabular}{c|c|c|c|c|c}
+	 $N$ & $\gamma$ & $\langle T \rangle$ & $\lambda$ & $\langle \dot{\theta} \rangle$ & $D$ \\ 
+	\hline
+	1 & 0.249829963 & 3.6415122 & 0.10834917 & 0.0222352 & 0.000900 \\ 
+ 	2 & -0.011597609 & 5.8967605 & 0.10302891 & -0.1391709 & 0.226199 \\ 
+ 	3 & 0.022614694 & 4.8899587 & 0.13055574 & -0.1594782 & 0.294880 \\ 
+ 	4 & -0.006065601 & 6.2482261 & 0.11086469 & -0.2191881 & 0.488973 \\ 
+ 	5 & 0.000912644 & 5.7771642 & 0.11812034 & -0.2128347 & 0.448434 \\ 
+ 	6 & 0.000262099 & 5.8364534 & 0.11948918 & -0.2007615 & 0.383389 \\ 
+ 	7 & 0.000017707 & 5.8638210 & 0.12058951 & -0.2021046 & 0.392894 \\ 
+ 	8 & 0.000113284 & 5.8511045 & 0.12028459 & -0.2006143 & 0.381039 \\ 
+ 	9 & 0.000064082 & 5.8587350 & 0.12045664 & -0.2006756 & 0.381315 \\ 
+ 	10 & 0.000093124 & 5.8536181 & 0.12035185 & -0.2007018 & 0.381465 \\ 
+ 	11 & 0.000153085 & 5.8417694 & 0.12014700 & -0.2004520 & 0.377156 \\ 
+ 	12 & 0.000135887 & 5.8455331 & 0.12019940 & -0.2005299 & 0.378651 \\ 
+ 	\end{tabular}
+	\caption{Cyle expansion estimates of the escape rate $\gamma$, average 
+    cycle period $\langle T \rangle$, Lyapunov exponent $\lambda$, average 
+    phase velocity $\langle \dot{\theta} \rangle$ and the diffusion coefficient 
+    $D$ with respect to the expansion order $N$ .}
+	\label{t-DynamicalAveragesNoGrammar}
+\end{table}
+
+In \refsect{s-CycExp}, we motivated the finite grammar approximation by 
+expecting a faster convergence due to the nearly exact shadowing combinations 
+of the golden mean zeta function \refeq{e-GoldenMeanCycleExpansion}. This 
+claim is clearly supported by the data in \reftab{t-DynamicalAverages} and 
+\reftab{t-DynamicalAveragesNoGrammar}. Take, for example, the Lyapunov 
+exponent which converges to $7$ digits for the $12^{th}$ order expansion when 
+using the finite grammar approximation \reftab{t-DynamicalAverages}, only 
+converges to $4$ digits at this order in 
+\reftab{t-DynamicalAveragesNoGrammar}. Other observables compare similarly in
+terms of their convergence in both cases. Note, however, that the escape rate
+in \reftab{t-DynamicalAverages} converges to $\gamma = 0.000727889$, whereas
+in \reftab{t-DynamicalAveragesNoGrammar} it gets smaller and smaller with an
+oscillatory behavior. This is due to the fact that in the finite grammar
+approximation, we threw out the part of attractor that corresponds to the
+cusp of the return map in \reffig{fig:psectandretmap}\,(d) above the point that
+is cut by \cycle{001}.
+
+In order to compare with the cycle averages, we numerically estimated the
+leading Lyapunov exponent of the \twomode\ system using the method of
+Wolf \etal\rf{WolfSwift85}. This procedure was repeated 100 times for
+different initial conditions, yielding a numerical mean estimate of
+$\timeAver{\Lyap} = 0.1198 \pm 0.0008$. While the finite grammar
+estimate $\Lyap_{FG} = 0.1183$ is within $0.6\%$ range of this value,
+the full cycle expansion agrees with the numerical estimate. This is not
+surprising, since in the finite grammar approximation, we discard the
+most unstable cycles, thus, obtaining a slightly smaller Lyapunov
+exponent while obtaining a significantly better convergence.
+
+\section{Conclusions and discussion}
+\label{s:concl}
+
+In this tutorial, we have studied what is probably the simplest dynamical 
+system which exhibits chaos and is equivariant under a continuous symmetry 
+transformation. We have shown that reducing this symmetry simplifies the 
+qualitative dynamics to a great extent and enables one to find all \rpo s of 
+the systems via standard techniques such as Poincar\'e sections and return 
+maps. In addition, we have shown that one can extract quantitative information
+from the \rpo s by computing cycle averages.
+
+We motivated our study of the \twomode\ system by the resemblance of its
+symmetry structure to that of the spatially extended systems; and the
+steps we outlined here are, in principle, applicable to physical systems
+that are described by $N$-Fourier mode truncations of PDEs such as $1D$
+\KS\rf{SCD07}, $3D$ pipe flows\rf{WiShCv14}, \etc.
+
+We showed in \refsect{s:numerics} that \twomode\ dynamics can be completely
+described by a unimodal return map on the Poincar\'e section we constructed
+after continuous symmetry reduction. In a high-dimensional system, finding 
+such an easy symbolic dynamics, or any symbolic dynamics at all is a 
+challenging problem on its own. For desymmetrized (confined in the odd 
+subspace) $1$D spatio-temporally \KS\ system \refref{lanCvit07} finds a 
+bimodal return map after reducing the discrete symmetry of the problem, 
+however, for turbulent fluids, we do not know any study that simplifies the 
+flow to such an extent.
+
+In \refsect{s:DynAvers}, we have shown that the symbolic dynamics and the
+associated grammar rules greatly affect the convergence of \cycForm s.
+In general, finding a finite symbolic description of a flow is rarely as easy 
+is in our model system. There exist other methods of ordering cycle expansion 
+terms, for example, ordering pseudo-cycles by their stability and discarding 
+terms that are above a threshold\rf{DM97}; one expects the remaining terms to 
+form shadowing combinations and converge exponentially.Whichever method of 
+term ordering is deployed, the cycle expansions are only as good as the least 
+unstable cycle that one fails to find. Symbolic dynamics solves both of 
+problems at once since it puts the cycles into a topological order so that one 
+cannot miss any accessible cycle and shadowing combinations naturally occur 
+when the expansion is ordered in topological length. The question one might 
+ask is: When there is no symbolic dynamics, how can we make sure that we find 
+all periodic orbits of a flow up to some cycle period?
+
+In the searches of the cycles of high-dimensional flows, one usually looks at
+the near recurrences of the ergodic flow, and then runs Newton searches
+starting nearby these recurrences to find if they are influenced by an exact
+recurrence. Such an approach does not answer the question we just asked to 
+full confidence, however, one may argue that the dynamically important cycles
+influence recurrences of the ergodic flow, and hence cycles found this way are
+those that are relevant for computing averages.
+
+To sum up, we have shown that the periodic orbit theory successfully extends 
+to the systems with continuous symmetries. One still needs to think about
+remaining challenges, discussed above, associated with high dimensional 
+systems. Once these are overcome, we would then be able to extract 
+quantitative information from turbulence by using its exact unstable solutions,
+which would be big news.
 
 \begin{acknowledgments}
 We are grateful to Evangelos Siminos for his contributions to this project
@@ -1254,8 +1830,195 @@ the early stages of this work under NSF~CBET-0853691.
 \end{acknowledgments}
 
 \appendix
-%\input{newton}
-%\input{schur}
+\section{Multiple shooting method for finding \rpo s}
+\label{s:newton}
+
+Let us assume that we have a set of good guesses
+for a set of \statesp\ points,
+flight times and
+$1D$ symmetry group parameter increments
+$\{\ssp_i^{(0)}\,,\,\zeit_i^{(0)}\,,\,\gSpace_i^{(0)}\}$
+such that the points
+$\{\ssp_i^{(0)}\}$
+lie close to the \rpo\ $p$,
+\beq
+	\ssp_{i+1}^{(0)}
+\approx
+    \matrixRep(\gSpace_i^{(0)}) \flow{{\zeit_i^{(0)}}}{\ssp_i^{(0)}}
+\quad
+    \mbox{cyclic in $i = 1, ..., n$}
+\,.
+\eeq
+Here the period and the shift of the \rpo\ $p$ are
+$\period{p} \approx \sum \zeit_i\,,$
+$\gSpace_p \approx \sum \gSpace_i \,.$
+and the Lagrangian description of the flow is
+$\ssp(\zeit) = \flow{\zeit}{\ssp(0)}$
+We want to determine
+$(\Delta\ssp_i\,,\,\Delta\zeit_i\,,\,\Delta\gSpace_i)$
+corresponding to the exact \rpo,
+\bea
+	\ssp_{i+1} + \Delta \ssp_{i+1} &=& \matrixRep(\gSpace_i + \Delta \gSpace_i)
+		\flow{\zeit_i + \Delta \zeit_i}{\ssp_i + \Delta \ssp_i} \continue
+		&&  \mbox{cyclic in } i = 1, ..., n
+\,.
+\eea
+To linear order in
+\bea
+&& (\Delta\ssp_i^{(m+1)}\,,\, \Delta\zeit_i^{(m+1)}\,,\,\Delta\gSpace_i^{(m+1)}) \\
+&&=
+(\ssp_i^{(m+1)}-\ssp_i^{(m)}\,,\,
+ \zeit_i^{(m+1)}-\zeit_i^{(m)}\,,\,
+ \gSpace_i^{(m+1)}-\gSpace_i^{(m)}) \nonumber
+\eea
+the improved Newton guess
+$
+(\ssp_i^{(m+1)}\,,\,\zeit_i^{(m+1)}\,,\,\gSpace_i^{(m+1)} )
+$
+is obtained by minimizing the effect of perturbations along
+the spatial, time and phase directions,
+\beq
+	\ssp_{i+1}^{'} - \matrixRep_{i+1} \flow{{\zeit_i}}{\ssp_i}
+= \matrixRep_{i+1}\left(
+  \groupTan_{i+1} \Delta \gSpace_i
++ \vel_{i+1} \Delta \zeit_i
++ \jMps_{i+1} \Delta \ssp_i
+    \right)
+\,,
+\ee{PCnetwonStep}
+where, for brevity,
+$\ssp_{i}^{(m+1)} = \ssp_{i}^{(m)} + \Delta \ssp_{i}^{(m)}
+   = \ssp_{i}^{'}$,
+$\ssp_{i}^{(m)} = \ssp_{i}$,
+$\matrixRep(\gSpace_i) = \matrixRep_{i+1}$,
+$\vel (\ssp_{i}(\zeit_{i})) = \vel_{i+1}$,
+$\jMps^{\zeit_i}(\ssp_i) = \jMps_{i+1}$,
+$\groupTan(\ssp_{i}(\zeit_{i})) = \Lg \ssp_{i}(\zeit_{i}) = \groupTan_{i+1}$,
+\etc.
+For sufficiently good initial guesses,
+the improved values converge under Newton iterations to
+the exact values
+$(\Delta\ssp_i\,,\,\Delta\zeit_i\,,\,\Delta\gSpace_i)$
+=$(\Delta\ssp_i^{(\infty)}\,,\,\Delta\zeit_i^{(\infty)}\,,\,\Delta\gSpace_i^{(\infty)})$
+at a super-exponential rate.
+
+In order to deal with the marginal multipliers along the time and group
+orbit directions, one needs to apply a pair of constraints, which
+eliminate variations along the marginal directions on the \rpo s\ $2D$
+torus: a local Poincar\'e section orthogonal to the flow, and a local slice
+orthogonal to the group orbit at each point along the orbit,
+\beq
+   \braket{\vel(\ssp_i )}{\Delta \ssp_i} = 0
+\,,\qquad
+   \braket{\groupTan(\ssp_i )}{\Delta \ssp_i} = 0
+\,.
+\ee{RPOConstrsLocal}
+We can rewrite everything as one matrix equation:
+\beq \label{eq:multishootmatrix}
+	A \Delta = E, \quad \mbox{where,}
+\eeq
+\begin{widetext}
+\bea 
+	A &=& \left(
+	\begin{array}{ccccccccccc}	
+	  \matrixRep_{2} \jMps_{2} &
+	  \matrixRep_{2} \vel_2 &
+	  \Lg \LieEl_{2} \flow{\zeit_1}{\ssp_1} &
+	  - \matId & 0 & 0 & 0 & \cdots & 0 & 0 & 0 \\
+	  \vel(\ssp_1) & 0 & 0 & 0 & 0 & 0 & 0 & \cdots & 0 & 0 & 0 \\
+	  \groupTan(\ssp_1) & 0 & 0 & 0 & 0 & 0 & 0 & \cdots & 0 & 0 & 0 \\
+	  0 & 0 & 0 &
+	  \matrixRep_{3} \jMps_{3} &
+	  \matrixRep_{3} \vel_3 &
+	  \Lg \LieEl_{3} \flow{\zeit_2}{\ssp_2}   &
+	  - \matId & \cdots & 0 & 0 & 0\\
+	  0 & 0 & 0 & \vel(\ssp_2) & 0 & 0 & 0 & \cdots & 0 & 0 & 0 \\
+	  0 & 0 & 0 & \groupTan(\ssp_2) & 0 & 0 & 0 & \cdots & 0 & 0 & 0 \\
+	  \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\
+	  - \matId & 0 & 0 & 0 & 0 & 0 & 0 & \cdots &
+	  \matrixRep_{1} \jMps_{1} &
+	  \matrixRep_{1} \vel_1 &
+	  \Lg \matrixRep_{1} \flow{\zeit_1}{\ssp_1} \\
+	  0 & 0 & 0 & 0 & 0 & 0 & 0 & \cdots & \vel(\ssp_n) & 0 & 0 \\
+	  0 & 0 & 0 & 0 & 0 & 0 & 0 & \cdots & \groupTan(\ssp_n) & 0 & 0
+	\end{array} \right) \label{eq:AforNewton} \\
+	\Delta &=&
+	 (
+	  \Delta \ssp_1, \,
+	  \Delta \zeit_1, \,
+	  \Delta \gSpace_1, \,
+	  \Delta \ssp_2, \,
+	  \Delta \zeit_2, \,
+	  \Delta \gSpace_2, \,
+	  \ldots , \,
+	  \Delta \ssp_n, \,
+	  \Delta \zeit_n, \,
+	  \Delta \gSpace_n
+	 )^T 
+	 \continue	 
+	\mathrm{and} E &=&
+	 (
+	  \ssp_{2} - \matrixRep_2 \flow{\zeit_1}{\ssp_1} , \,
+	   0 	, \,
+	   0 	, \,
+	  \ssp_{3} - \matrixRep_3 \flow{\zeit_2}{\ssp_2} , \,
+	  0 	, \,
+	  0 	, \,
+	  \ldots , \,
+	  \ssp_{1} - \matrixRep_1 \flow{\zeit_n}{\ssp_n} , \,
+	  0 	, \,
+	  0 	
+	  )^T \label{eq:DeltaandE}	 
+\eea
+\end{widetext}
+We then solve \refeq{eq:multishootmatrix} for $\Delta$ and update our initial
+guess by adding the vector of the computed $\Delta$ values to it and iterate.
+
+\section{Periodic Schur decomposition}
+\label{s:schur}
+
+Here we briefly summarize the periodic eigen decomposition\rf{DingCvit14}
+needed for evaluation of Floquet multipliers for \twomode\ \po s. Due to
+the non-hyperbolicity of the return map of
+\reffig{fig:psectandretmap}\,(d), Floquet multipliers can easily differ
+by 100s of orders of magnitude even in a model as simple as the \twomode\
+system.
+    \PC{2014-07-14: cannot find anyplace in the blog numerical value of
+    any of the allegedly very large unstable multipliers. $\ExpaEig
+    \approx 80,000$ does not seem so large compared to the numerical
+    precision? I guess it shows I did not have to compute them myself
+    :)}
+
+We obtain the Jacobian of the \rpo\ as the following multiplication of short-time
+Jacobians from the multiple shooting computation of the previous section:
+\bea
+    \jMpsRed &=& \LieEl_n \jMps_n  \LieEl_{n-1} \jMps_{n-1} \, ... \, \LieEl_1 \jMps_1  \continue
+                 &=& \hat{\jMps}_n \hat{\jMps}_{n-1} \, ... \, \hat{\jMps}_1 \label{e-JacobianProduct} \\
+                 && \mbox{where,}\, \hat{\jMps_i} = \LieEl_i \jMps_i \in
+                    \mathbb{R}^{4 \times 4}, i = 1,2,...,n \, . \nonumber
+\eea
+This Jacobian is equivalent to our previous definition in \refeq{e-rpoJacobian}
+since $J_i$ and $g_i$\DB{2014-11-11}{Should this be $g$ or $D$?} commute with 
+each other, and are multiplicative respectively in time and phase. In order to 
+determine the eigenvalues of $\hat{\jMps}$, we bring each term appearing in 
+the product \refeq{e-JacobianProduct} into periodic, real Schur form as 
+follows:
+\beq
+    \jMpsRed_i = Q_i R_i Q_{i-1}^T \, ,
+\eeq
+where $Q_i$ are orthogonal matrices that satisfy the cyclic property: $Q_0 = Q_n$.
+After this similarity transformation, we can define $R = R_k R_{k-1} ... R_1$ and
+re-write the Jacobian as:
+\beq
+    \jMpsRed = Q_n R Q_n^T \, .
+\eeq
+The matrix $R$ is block-diagonal, in general, with $1 \times 1$ blocks for real
+eigenvalues and $2 \times 2$ blocks for the complex pairs. It also has the same
+eigenvalues as $\hat{\jMps}$. In our case, it is diagonal since all Floquet 
+multipliers are real in the \twomode\ system \rpo s. For each \rpo , we have 
+two marginal Floquet multipliers corresponding to the time evolution direction 
+and the continuous symmetry direction, in addition to one expanding and one 
+contracting eigenvalue.
 
 \bibliography{../../bibtex/siminos}
 
