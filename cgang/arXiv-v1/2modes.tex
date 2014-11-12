@@ -501,12 +501,10 @@ gained by writing the symmetry-reduced evolution equations
    - \frac{\dot{y}_1\left(\sspRed\right)}{\hat{x}_1} \, \groupTan(\sspRed) \, ,
 \label{e-so2red1stmode}
 \eeq
-\ESedit{
-  \beq\label{eq:reconstruction1stmode}
-	\dot{\theta}(\sspRed) = \frac{\dot{y}_1(\sspRed)}{\hat{x}_1}
+\beq\label{eq:reconstruction1stmode}
+  \dot{\theta}(\sspRed) = \frac{\dot{y}_1(\sspRed)}{\hat{x}_1}
   \, .
-  \eeq
-}
+\eeq
 \end{subequations}
 Since the argument $\phi_1$ of a point $(x_1,y_1)$ in the first Fourier mode 
 plane is given by $\phi_1=\tan^{-1}\frac{y_1}{x_1}$, its velocity is
@@ -1941,7 +1939,7 @@ We can rewrite everything as one matrix equation:
 	  \Lg \matrixRep_{1} \flow{\zeit_1}{\ssp_1} \\
 	  0 & 0 & 0 & 0 & 0 & 0 & 0 & \cdots & \vel(\ssp_n) & 0 & 0 \\
 	  0 & 0 & 0 & 0 & 0 & 0 & 0 & \cdots & \groupTan(\ssp_n) & 0 & 0
-	\end{array} \right) \label{eq:AforNewton} \\
+	\end{array} \right) \, , \label{eq:AforNewton} \\
 	\Delta &=&
 	 (
 	  \Delta \ssp_1, \,
@@ -1954,9 +1952,9 @@ We can rewrite everything as one matrix equation:
 	  \Delta \ssp_n, \,
 	  \Delta \zeit_n, \,
 	  \Delta \gSpace_n
-	 )^T 
-	 \continue	 
-	\mathrm{and} E &=&
+	 )^T \, ,
+	 \\
+	E &=&
 	 (
 	  \ssp_{2} - \matrixRep_2 \flow{\zeit_1}{\ssp_1} , \,
 	   0 	, \,
@@ -1968,7 +1966,7 @@ We can rewrite everything as one matrix equation:
 	  \ssp_{1} - \matrixRep_1 \flow{\zeit_n}{\ssp_n} , \,
 	  0 	, \,
 	  0 	
-	  )^T \label{eq:DeltaandE}	 
+	  )^T \, . \label{eq:DeltaandE}	 
 \eea
 \end{widetext}
 We then solve \refeq{eq:multishootmatrix} for $\Delta$ and update our initial
@@ -1983,26 +1981,20 @@ the non-hyperbolicity of the return map of
 \reffig{fig:psectandretmap}\,(d), Floquet multipliers can easily differ
 by 100s of orders of magnitude even in a model as simple as the \twomode\
 system.
-    \PC{2014-07-14: cannot find anyplace in the blog numerical value of
-    any of the allegedly very large unstable multipliers. $\ExpaEig
-    \approx 80,000$ does not seem so large compared to the numerical
-    precision? I guess it shows I did not have to compute them myself
-    :)}
 
 We obtain the Jacobian of the \rpo\ as the following multiplication of short-time
 Jacobians from the multiple shooting computation of the previous section:
 \bea
-    \jMpsRed &=& \LieEl_n \jMps_n  \LieEl_{n-1} \jMps_{n-1} \, ... \, \LieEl_1 \jMps_1  \continue
+    \jMpsRed &=& \matrixRep_n \jMps_n  \matrixRep_{n-1} \jMps_{n-1} \, ... \, \matrixRep_1 \jMps_1  \continue
                  &=& \hat{\jMps}_n \hat{\jMps}_{n-1} \, ... \, \hat{\jMps}_1 \label{e-JacobianProduct} \\
-                 && \mbox{where,}\, \hat{\jMps_i} = \LieEl_i \jMps_i \in
+                 && \mbox{where,}\, \hat{\jMps_i} = \matrixRep_i \jMps_i \in
                     \mathbb{R}^{4 \times 4}, i = 1,2,...,n \, . \nonumber
 \eea
-This Jacobian is equivalent to our previous definition in \refeq{e-rpoJacobian}
-since $J_i$ and $g_i$\DB{2014-11-11}{Should this be $g$ or $D$?} commute with 
-each other, and are multiplicative respectively in time and phase. In order to 
-determine the eigenvalues of $\hat{\jMps}$, we bring each term appearing in 
-the product \refeq{e-JacobianProduct} into periodic, real Schur form as 
-follows:
+This Jacobian is the same with our previous definition in \refeq{e-rpoJacobian}
+since $J_i$ and $\matrixRep_i$ commute with each other, and are multiplicative 
+respectively in time and phase. In order to determine the eigenvalues of 
+$\hat{\jMps}$, we bring each term appearing in the product 
+\refeq{e-JacobianProduct} into periodic, real Schur form as follows:
 \beq
     \jMpsRed_i = Q_i R_i Q_{i-1}^T \, ,
 \eeq
