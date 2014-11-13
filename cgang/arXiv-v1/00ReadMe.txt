@@ -18,7 +18,21 @@ arXiv submission notes
 To submit to an overlay journal based on arXiv you
 need to supply the following identifier:
 
- arXiv:tracking/**********
+ arXiv:tracking/1411.3303
+
+-----------------------------------------------------------
+
+Your submission submit/1112914 has been assigned the permanent arXiv
+identifier 1411.3303 and is available at:
+
+http://arxiv.org/abs/1411.3303
+
+
+The paper password for this article is: *****
+
+Please share this with your co-authors. They may use it to claim
+ownership.
+
 
 Fix these (mark when done):
 ---------------------------
@@ -26,8 +40,9 @@ Fix these (mark when done):
 [DONE Nov 12 (Burak)] merge the included .tex files into a single 2modes.tex 
                       file for the main text
     
-[DONE Nov 12 (Burak)]  move figures to arXiv-v1/figs
+[DONE Nov 12 (Burak)] move figures to arXiv-v1/figs
 
-[DONE Nov 12 (Burak)]  remove all author edits and author edit macros
+[DONE Nov 12 (Burak)] remove all author edits and author edit macros
 
-[ ] remove extraneous macros from def2modes.tex before submission
+[DONE Nov 12 (Burak)] remove extraneous macros from def2modes.tex before 
+                      submission
