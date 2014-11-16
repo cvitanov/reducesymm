@@ -17,7 +17,8 @@ superscriptaddress,
 %author-numerical,%
 ]{revtex4-1}
 
-\newcommand{\version}{2modes ver. 2.3, Nov 11 2014}
+\newcommand{\version}{2modes ver. 2.4, Nov 15 2014}
+% Daniel                    ver. 2.4, Nov 15 2014 - first version past arxiv v1.0 submission
 % Predrag                   ver. 2.3, Nov 11 2014
 % Predrag                   ver. 2.2, Jul 24 2014
 % Predrag                   ver. 2.1, Jul 14 2014
@@ -35,21 +36,21 @@ superscriptaddress,
 
 \begin{document}
 
-\title[Periodic orbit analysis of a system with continuous symmetry]
-{Periodic orbit analysis of a system with continuous symmetry - a tutorial}
+\title[Periodic orbit analysis of systems with continuous symmetry]
+{Periodic orbit analysis of systems with continuous symmetry}
 
 \author{Nazmi Burak Budanur}
 \email{budanur3@gatech.edu}
 \affiliation{
  School of Physics and Center for Nonlinear Science,
  Georgia Institute of Technology,
- Atlanta GA 30332
+ Atlanta, GA 30332
 }
 \author{Daniel Borrero-Echeverry}
 \affiliation{
  School of Physics and Center for Nonlinear Science,
  Georgia Institute of Technology,
- Atlanta GA 30332
+ Atlanta, GA 30332
 }
 \affiliation{
  Department of Physics,
@@ -60,7 +61,7 @@ superscriptaddress,
 \affiliation{
  School of Physics and Center for Nonlinear Science,
  Georgia Institute of Technology,
- Atlanta GA 30332
+ Atlanta, GA 30332
 }
     \ifdraft
 \date{\today}
@@ -72,22 +73,23 @@ superscriptaddress,
 Dynamical systems with translational or rotational symmetry arise
 frequently in studies of spatially extended physical systems, such as
 Navier-Stokes flows on periodic domains. In these cases, it is natural to
-express a state of the fluid in terms of a Fourier series truncated to a
-finite number of modes. Here we study a 4-dimensional two-mode
+express the state of the fluid in terms of a Fourier series truncated to a
+finite number of modes. Here, we study a 4-dimensional two-mode
 SO(2)-equivariant model of this type, the smallest possible truncation
-that retains the symmetry while remaining high-dimensional enough to
-allow for chaotic dynamics. A crucial step in analysis of such a system
+that retains the symmetry but is high-dimensional enough to
+allow for chaotic dynamics. A crucial step in the analysis of such a system
 is symmetry reduction. We use the model to illustrate different
-symmetry-reduction schemes. Its relative equilibria are conveniently
+symmetry-reduction techniques. Its relative equilibria are conveniently
 determined by rewriting the dynamics in terms of a symmetry-invariant
-polynomial basis. However, for study of chaotic dynamics, the `method of
-slices', applicable also to very high-dimensional problems, is
-preferable. We show that a Poincar\'e section within the `slice' can be
+polynomial basis. However, for the analysis of its chaotic dynamics, the `method of
+slices', which is applicable to very high-dimensional problems, is
+preferable. We show that a Poincar\'e section taken on the `slice' can be
 used to further reduce this flow to what is for all practical purposes a
 unimodal map. This enables us to systematically determine all relative
 periodic orbits and their symbolic dynamics up to any desired period. We
-then compute several dynamical averages using relative periodic orbits
-and discuss the convergence of such computations.
+then present cycle averaging formulas adequate for systems with continuous symmetry 
+and use them to compute dynamical averages using relative periodic orbits. The convergence
+of such computations is discussed.
 \end{abstract}
 
 \pacs{02.20.-a, 05.45.-a, 05.45.Jn, 47.27.ed, 47.52.+j, 83.60.Wc}
@@ -97,7 +99,7 @@ equivariant dynamics,
 relative equilibria,
 relative periodic orbits,
 periodic orbit theory,
-slices,
+method of slices,
 moving frames, chaos
 }
 \maketitle
@@ -108,70 +110,72 @@ chaotic flows by means of {\cycForm s} that relate the time averages of
 observables to the spectra of unstable periodic orbits. Standard
 {\cycForm s} are valid under the assumption that the stability
 multipliers of all periodic orbits have a single marginal direction
-corresponding to time evolution, and are hyperbolic in all other
+corresponding to time evolution and are hyperbolic in all other
 directions. However, if a dynamical system has $N$ continuous symmetries,
 periodic orbits are replaced by relative periodic orbits, invariant
 $(N+1)$-dimensional tori with marginal stability in $(N+1)$ directions.
-These exact invariant solutions arise in studies of turbulent flows, such
-as the pipe flow or the plane Couette flow, where the translational
-symmetries of the flow are approximated by carrying out simulations in
-periodic domains. A state of the fluid can then be expressed as a Fourier
-series, truncated to a large but finite (from tens to thousands) set of
-Fourier modes. This paper is a tutorial on how such problems are to be
-analyzed using periodic orbit theory. We illustrate all steps of
-\rpo s analysis on what is arguably the simplest such dynamical system, a
-`\twomode' model.
+Such exact invariant solutions arise in studies of turbulent flows, such
+as the pipe flow or the plane Couette flow, which have continuous symmetries.
+In practice, the translational invariance of these flows is approximated by 
+carrying out simulations in periodic domains so that the state of the fluid 
+is conveniently expressed as a Fourier series, truncated to a large but finite 
+number (from tens to thousands) of Fourier modes. This paper is a tutorial on 
+how such problems are to be analyzed using periodic orbit theory. We illustrate 
+all the necessary steps using a simple `\twomode' model as an example.
 \end{quotation}
 
 \section{Introduction}
 \label{s:intro}
 
-Recent experimental observations of travelling waves in pipe flows have
-confirmed dynamical systems theory intuition that the invariant solutions
+Recent experimental observations of traveling waves in pipe flows have
+confirmed the intuition from dynamical systems theory that invariant solutions
 of \NSe\ play an important role in shaping the \statesp\ of turbulent
-flows\rf{science04}. When one recasts fluid flow equations in a
+flows\rf{science04}. When one casts fluid flow equations in a
 particular basis, the outcome is an infinite dimensional dynamical system
 that is often equivariant under transformations such as
-translations, reflections and rotations. For example, when a periodic
-boundary condition is imposed along the streamwise direction, equations
-for pipe flow retain their form under streamwise translations, azimuthal
-rotations and reflections about the central axis, \ie, they are invariant
-under the actions of $\SOn{2} \times \On{2}$. In that case it is natural
-that the states of the fluid be expressed in a Fourier basis. However,
-as the system evolves the nonlinear terms in the equations mix the
-Fourier modes, and thus the state of the system evolves both along
-symmetry directions and directions transverse to them.
-This phenomenon in dynamical systems with continuous symmetries
-complicates their \statesp, and gives rise to the high dimensional coherent
+translations, reflections and rotations. For example, when periodic
+boundary conditions are imposed along the streamwise direction, the equations
+for pipe flow retain their form under the action of streamwise translations, 
+azimuthal rotations and reflections about the central axis, \ie, they are equivariant
+under the actions of $\SOn{2} \times \On{2}$. In this case it is natural
+to express the state of the fluid in a Fourier basis. However,
+as the system evolves, the nonlinear terms in the equations mix the
+various modes, so that the state of the system evolves not only along the
+symmetry directions, but also along directions transverse to them.
+This complicates the dynamics and gives rise to high dimensional coherent
 solutions such as \reqva\ and \rpo s, which take on the roles played by
 \eqva\ and \po s in flows without symmetry.
 
-This paper is a tutorial that works through an example in order to
-illustrate step-by-step how periodic orbit theory is applied to flows
-with continuous symmetries, an analysis that should ultimately be applied
-to turbulent flows, once sufficiently many exact invariant solutions
-become numerically accessible. For this purpose, we study a \twomode\
-\SOn{2} equivariant flow, of minimal dimensionality required for chaotic
-dynamics. The paper is organized as follows: In \refsect{s:symm} we
+This paper provides a step-by-step tutorial on how periodic orbit theory can be 
+applied to flows with continuous symmetries. Such an analysis should ultimately 
+be applicable to turbulent flows, once sufficiently many exact invariant solutions
+become numerically accessible. As an example, we study a \twomode\
+\SOn{2} equivariant flow that has the minimal dimensionality required for chaotic
+dynamics. The rest of the paper is organized as follows: In \refsect{s:symm} we
 define basic concepts and briefly review the relevant symmetry reduction
 literature. In \refsect{s:twoMode}, we introduce the \twomode\ model
-system, describe several of its representations, and utilize a
+system and discuss several of its symmetry-reduced representations, \DBedit{and utilize a
 symmetry-reduced polynomial representation to find the only \reqv\ of the
-system. In \refsect{s:numerics}, we show how the \mslices\ can be used to
+system}\DB{201-11-15}{I would throw this out, at least as a highlight in the ``review'' of the
+paper. Our take-home message is that you could use our approach on turbulent flows, so the
+fact that we can cheat by using invariant polynomials shouldn't be celebrated}
+. In \refsect{s:numerics}, we show how the \mslices\ can be used to
 quotient the symmetry and reduce the dynamics onto a symmetry-reduced
-\statesp, or `\slice'. A Poincar\'e section within the \slice\ then
-reduces the 4\dmn\ chaotic dynamics in the full \statesp\ to a
-1-dimensional unimodal Poincar\'e return map. This return map is then
-used to construct a finite grammar symbolic dynamics for the flow, and
+\statesp or `\slice'. A Poincar\'e section taken on the \slice\ then
+reduces the 4\dmn\ chaotic dynamics in the full \statesp\ to an approximately
+one-dimensional, unimodal Poincar\'e return map. The return map is then
+used to construct a finite grammar symbolic dynamics for the flow and
 determine {\em all} \rpo s up to a given period. In \refsect{s:DynAvers},
-these orbits are used as input to various {\cycForm s} in order to calculate
-dynamically interesting observables. In \refsect{s:concl},
+we present {\cycForm s} adequate for systems with continuous symmetries
+and use the relative periodic orbits calculated in \refsec{s:numerics} 
+to calculate dynamically interesting observables. Finally, in \refsect{s:concl},
 we discuss possible applications of the \mslices\ to various spatially
 extended systems.
-\refAppe{s:newton} describes the multi-shooting method used to calculate
-the \rpo s.
+
+The main text is supplemented by two appendices. \refAppe{s:newton} describes 
+the multi-shooting method used to calculate the \rpo s.
 \refAppe{s:schur} discusses how periodic Schur decomposition can be used
-to determine their Floquet multipliers, which can easily differ by 100s
+to determine their Floquet multipliers, which can differ by 100s
 of orders of magnitude even in a model as simple as the \twomode\ system.
 
 
