@@ -21,13 +21,12 @@
 %  Add 'draft' option to mark overfull boxes with black boxes
 %  Add 'showpacs' option to make PACS codes appear
 %  Add 'showkeys' option to make keywords appear
-\documentclass[aps,pre,preprint,groupedaddress, twocolumn, floatfix]{revtex4-1}
+\documentclass[aps,pre,preprint,groupedaddress, floatfix]{revtex4-1}
 \input ../inputs/setupSveZha
 \input ../inputs/editsDasbuch   %% editing comments, DasBuch style
 \input ../inputs/def            %% do not edit; update from dasbuch/book/inputs/def.tex
 \input ../inputs/defsSveZha     %% all diffusion project edits: \renewcommand, etc
-\usepackage[pdftex]{graphicx}
-\graphicspath{{../figs/}{../tingnan/figs/}{../Fig/}{ChaosBook/}}  %% directories with graphics
+
 %\documentclass[aps,prl,preprint,superscriptaddress]{revtex4-1}
 %\documentclass[aps,prl,reprint,groupedaddress]{revtex4-1}
 
@@ -114,6 +113,28 @@ as well as the recent literature probabilistic estimates.
 % References should be done using the \cite, \ref, and \label commands
 
 \section{Introduction}
+\section{Diffusion Confusion}
+\subsection{Translational Symmetry}
+\begin{figure}
+\begin{center}
+(a)\includegraphics[width=0.29\textwidth]{diskDirectionsElCell}
+(b)\includegraphics[width=0.29\textwidth]{diskDirecsElCell05}
+(c)\includegraphics[width=0.29\textwidth]{diskDirecsElCell05red}
+\end{center}
+\caption{
+Elementary cell symbolic dynamics is obtained by labeling the translation
+vectors connecting the center of the current disk to the center of the
+next disk.
+(a) The finite horizon is here imposed by limiting jumps from the
+center cell to only the short jumps (six even labels $0, 2,\cdots,10$)
+and the `long jumps' (six odd labels $1, 3,\cdots,11$).
+(b) Running mode \cycle{05} advances by $\hn_4$ per period.
+(c) In the elementary cell this is a \po\ \cycle{05}
+    of topological length 2.
+    }
+\label{diskDirectionsElCell}
+\end{figure}
+\subsection{Into Fundamental Domain}
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[width=0.45\textwidth]{schreiberFig1}
@@ -132,10 +153,119 @@ as well as the recent literature probabilistic estimates.
 \caption[]{Multiplicity of periodic orbits in FD. \label{fig:schrieberFig3}}
 \end{center}
 \end{figure}
-\section{Diffusion Confusion}
+\subsubsection{Grammar of FD cycle}
+\begin{figure}
+\begin{center}
+(a) \includegraphics[width=0.45\textwidth]{7diskFundDflips}
+(b) \includegraphics[width=0.45\textwidth]{7diskFundDtiles}
+\end{center}
+\caption{
+(a) The three generators of tiling of the plane by a fundamental domain:
+two generators of \Dn{12} tiling, reflection $s$ across the short
+disk-disk separation, reflection  $\ell$  across the long disk-disk
+separation;
+and
+a translation generator $f$ that pivots (`flips') a disk center to disk
+center by flip across the symmetry line normal to the short disk-disk
+separation.
+(5) Tiling of the 7-disk by copies of the fundamental domain, labelled
+by a (not unique) sequence of the three generators
+$\{s,\ell,f\}$, chosen so that each sequence contain one and only on
+    disk-to-disk pivot $f$.
+\label{fig:7diskFundDflips} }
 
+\end{figure}
+\begin{figure}[htbp]
+\includegraphics[width=0.45\textwidth]{fdSymbolIllustration}
+\caption{topologically distinct flights, with imposed finite horizon.\label{fig:fdflights}}
+\end{figure}
+\subsubsection{How point group changes translation}
+Starting from each point on the cycle, the translation in full space is different after completion of one cycle.
+\subsubsection{Gymnastics of equations}
+
+G-equivariance of the displacement in the full space.
+
+\begin{align}
+\tr{\cal L}^t &=
+\sum_{\alpha \in\II_G} \tr{\cal L}_{\alpha}^t\nonumber\\
+\tr{\cal L}_{\alpha}^t &=
+\frac{d_\alpha}{|G|}\sum_{\sigma \in G}\sum_{h\in G}\chi_\alpha(h)
+\int_{\t {\cal M}} d\tx \delta (h\tx - f^t(\tx))
+e^{\beta\cdot\sigma\cdot\hphi^t(\tx)}~,
+\label{e1}
+\end{align}
+
+\begin{align}
+\frac{1}{\zeta_{\alpha}(\beta,s,z)} &=\exp\left(
+-\frac{d_\alpha}{|G|}\sum_{\sigma\in G}\sum_{\tp}\frac{1}{n_{\tp}}
+\sum_{\tx_{i}\in\tilde{p}}\sum_{r=1}^{\infty}
+\frac{t_{\tp}^{r}}{r}\chi_{\alpha}(\hp^{r}(\tx_i))
+e^{\beta\cdot\sigma\cdot\hat{L}_{\tp}(r,\tx_i)}
+\right)
+\end{align}
+where we have defined
+\begin{equation}
+t_{\tp}\equiv \frac{z^{n_{\tp}}e^{-sT_{\tp}}}{|\ExpaEig_\tp|}
+\end{equation}
+and 
+\begin{equation}
+\hat{L}_{\tp}(r,\tx_i)\equiv (e+\hp^{-1}(\tx_i)\cdots+\hp^{-r+1}(\tx_i))\cdot\hn_{\tp}(\tx_i)
+\end{equation}
+
+We are interested in the one dimensional, symmetric trivial representation with $ d_\alpha = 1 $ and all $ \chi(h) = 1 $,; there by we drop the subscript $ \alpha $ in the following calculation. Partial derivative with respect to $\beta$:
+\begin{align}
+\frac{\partial^{2}}{\partial\beta^{2}}\frac{1}{\zeta(\beta,s,z)} 
+ &=\frac{1}{\zeta(\beta,s,z)}\left(\left(\frac{1}{|G|}
+\sum_{\sigma\in G}\sum_{\tp}\sum_{\tx_i\in \tp}\sum_{r=1}^{\infty}\frac{\sigma\cdot \hat{L}_{\tp}(r,\tx_i)t_{\tp}^r e^{\beta\cdot\sigma\cdot \hat{L}_{\tp}(r,\tx_i)}}{n_{\tp}r}\right)^{2}\right.\nonumber\\
+ & \left.-\frac{1}{|G|}\sum_{\sigma\in G}\left(\sum_{\tp}\sum_{\tx_i\in \tp}\sum_{r=1}^{\infty}\frac{\vert \sigma\cdot \hat{L}_{\tp}(r,\tx_i)\vert^{2}t_{\tp}^{r}e^{\beta\cdot\sigma\cdot \hat{L}_{\tp}(r,\tx_i)}}{n_{p}r}\right)\right).
+\end{align}
+The first term in the formula corresponds to $ \langle\hx\rangle^2 $ and second to $ \langle\hx^2\rangle $
 \section{Results and Discussions}
 
+\begin{table}[htbp]
+{\small
+%\begin{center}
+\begin{tabular}{|r|r|r|l|l|}
+\hline
+$\period{p}$ & \# cycles & $\zeta$(0,0) & $\lambda$ & D \\ \hline\hline
+1      & 0      &   -    &   -  &   - \\
+2      & 24     & -0.31697 & 1.330 & 0.375\\
+3      & 64     & -0.54152 & 1.435 & 0.339\\
+4      & 168    & -0.09764 & 1.902 & 0.284\\
+5      & 516    &  0.02334 & 2.324 & 0.215\\
+6      & 1589   & -0.00481 & 1.975 & 0.133\\
+7      & 5700   & -0.01241 & 1.885 & 0.184\\
+8      & 20729  & -0.01006 & 1.785 & 0.247\\ \hline\hline
+\multicolumn{4}{|l|}{numerical experiment} 1.760 & 0.25 \\ \hline
+\end{tabular}
+\hfill
+\begin{tabular}{|r|r|r|l|l|}
+\hline
+$\period{p}$ & \# cycles & $\zeta$(0,0) & $\lambda$ & D \\ \hline\hline
+1      & 5      &   -0.2169759    &   1.39193  &   0.37795 \\
+2      & 10     & -0.0248233 & 1.74541 & 0.23118\\
+3      & 33     & -0.0221962 & 1.72235 & 0.25257\\
+4      & 108    & -0.0002192 & 1.74450 & 0.24165\\
+5      & 373    &  0.0023463 & 1.76079 & 0.24468\\
+6      & 1378   &  0.0096330 & 1.75610 & 0.24068\\ \hline\hline
+\multicolumn{3}{|l|}{numerical experiment}
+                           & 1.760 & 0.25
+\\ \hline
+\end{tabular}
+}
+
+\caption{\label{TCELL2}
+Results for $w$=0.3.
+(left) Schreiber 1992 calculation\rf{CGS92} (and Zhang 2014) in EC. (right) Zhang 2014 calculation in FD. Gaspard 1992 note: ``My numerical estimate for the Lyapunov exponent
+when $w=0.3$ is $\lambda = 1.760 \pm 0.002$, which supports the result of
+this table.''
+}
+\end{table}
+
+\begin{figure}
+\includegraphics[width=0.5\textwidth]{diffcoefplot}
+\caption[]{Diffusion coefficients as a function of inter-disk separation distance $w$.\label{fig:results}}
+\end{figure}
 % Put \label in argument of \section for cross-referencing
 %\section{\label{}}
 
