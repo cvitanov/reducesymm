@@ -36,10 +36,10 @@ tg = T*x; % Calculate group tangent for current state of PK system
 v = zeros(4,1); 
 
 % Porter Knobloch equations in the full Cartesian space
-v(1) = a1.*x1.^3 + a1.*x1.*x2.^2 + b1.*x1.*y1.^2 + c1.*x1.*y1 + b1.*x1.*y2.^2 + mu1.*x1 + c1.*x2.*y2;
-v(2) = a1*x1^2*x2 + c1*x1*y2 + a1*x2^3 + b1*x2*y1^2 - c1*x2*y1 + b1*x2*y2^2 + mu1*x2;
-v(3) = a2*x1^2*y1 + c2*x1^2 + a2*x2^2*y1 - c2*x2^2 + b2*y1^3 + b2*y1*y2^2 + mu2*y1 + e2*y2;
-v(4) = a2*x1^2*y2 + 2*c2*x1*x2 + a2*x2^2*y2 + b2*y1^2*y2 - e2*y1 + b2*y2^3 + mu2*y2;
+v(1) = a1*x1^3 + b1*x1*x2^2 + c1*x1*x2 + a1*x1*y1^2 + b1*x1*y2^2 + mu1*x1 + c1*y1*y2;
+v(2) = a1*x1^2*y1 + c1*x1*y2 + b1*x2^2*y1 - c1*x2*y1 + a1*y1^3 + b1*y1*y2^2 + mu1*y1;
+v(3) = c2*(x1^2 - y1^2) + e2*y2 + mu2*x2 + x2*(a2*x1^2 + a2*y1^2) + 2*b2*x2*y2^2 + b2*x2*(x2^2 - y2^2);
+v(4) = a2*x1^2*y2 + 2*c2*x1*y1 + b2*x2^2*y2 - e2*x2 + a2*y1^2*y2 + b2*y2^3 + mu2*y2;
  
 phidot =  ((v.')*tgprime)/(tg.'*tgprime); % Calculate phase velocity by eq. 10.49 in Chaosbook
 
