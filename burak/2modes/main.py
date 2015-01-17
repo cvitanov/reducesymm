@@ -28,7 +28,7 @@ peddir = os.getcwd() + '/ped'  # Add /ped to the current working directory
 oct2py.octave.addpath(peddir)  # Add mfiles for ped
 
 #Booleans:
-computeSolution = False
+computeSolution = True
 computePsect = False
 computeArcLengths = False
 computeRPO = False
