@@ -12,7 +12,7 @@ from pylab import plot, xlabel, ylabel, show, savefig
 import matplotlib.pyplot as plt
 import twomode
 
-FiniteGrammar=True
+FiniteGrammar=False
 
 if FiniteGrammar:
     Ncycle = 79
