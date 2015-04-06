@@ -85,15 +85,28 @@ as its average over the invariant measure:
 \eeq
 By evaluating the action of the {\evOper} \refeq{e-EvOper} for infinitesimal
 times and after some algebra, which we skip here, one finds that the
-averages of observables, as well as their higher moments, can be generated from the
-derivatives of $s(\beta)$:
-\beq
-    \langle \obser \rangle =
-        \left. \frac{d s}{d \beta} \right|_{\beta = 0} \, , \quad
-    \langle (\obser - \langle \obser \rangle )^2 \rangle =
-        \left. \frac{d^2 s}{d \beta^2} \right|_{\beta = 0} \,, ...
+long-term averages of observables, as well as their higher moments, 
+can be generated from the derivatives of $s(\beta)$:
+\bea
+    \langle \obser \rangle &=& 
+    \lim_{\zeit \rightarrow \infty} \frac{1}{\zeit} \langle \Obser^\zeit \rangle = 
+        \left. \frac{\partial s_0 (\beta) }{\partial \beta} \right|_{\beta = 0} 
+        \, , \continue
+        \Delta_{\Obser} &=& 
+        \lim_{\zeit \rightarrow \infty} \frac{1}{\zeit} 
+        \langle (\Obser^{\zeit})^2 - \langle \Obser^\zeit \rangle^2 \rangle = 
+        \left. \frac{\partial^2 s_0 (\beta) }{\partial \beta^2} \right|_{\beta = 0}
+    \, ,
     \label{eq-moments}
-\eeq
+    \\
+    \, &\vdots & \nonumber
+\eea
+We will refer to $\Delta_{\Obser}$ in \refeq{eq-moments} as generalized 
+diffusion constant, as it characterizes the growth of of the standard
+deviation of the integrated observable. 
+The integrated observable $\Obser$ is not necessarily a spatial 
+displacement and can be any observable in a chaotic flow, hence the 
+term `generalized diffusion constant'. 
 In order to obtain $s(\beta)$, we construct the resolvent of \Aop , by taking
 the Laplace transform of \refeq{eq-EvOpExp}:
 \beq
@@ -378,21 +391,45 @@ applying chain rule we obtain
                                      \frac{\partial F}{\partial s}\, .
 \eeq
 Higher order derivatives can be evaluated similarly.
-We define the `mean cycle period' as
-\beq
-	\langle T \rangle_N = \left. \partial F_N / \partial s
-                          \right|_{\beta=0, s=s (0)} \, ,
-	\label{eq-Tavg}
-\eeq
-and write the \cycForm s as
+Defining
 \bea
-    \langle \obser \rangle_N &=& - \frac{1}{\langle T \rangle_N} \left.
-                              \frac{\partial F_N}{\partial \beta}
-                              \right|_{\beta=0, s=s (0)} \, , \label{e-Avga} \\
-    \langle (\obser - \langle \obser \rangle )^2 \rangle_N
-    &=& - \frac{1}{\langle T \rangle_N} \left. \frac{\partial^2 F_N}{
-                        \partial \beta^2} \right|_{\beta=0, s=s (0)} \,
-                        \label{e-Avgsigma} .
+    \langle \Obser \rangle_N &=& - \left. \partial F_N / \partial \beta
+                                \right|_{\beta=0, s=s (0)} 
+                                \, , \label{e-ObserAvg} \\
+	\langle \period{} \rangle_N &=& \left. \partial F_N / \partial s
+                            \right|_{\beta=0, s=s (0)} 
+                         \, , \label{eq-Tavg} \\
+    \langle \Obser^2 \rangle_N &=& 
+    	- \left. \partial^2 F_N / \partial \beta^2
+          \right|_{\beta=0, s=s (0)} 
+          \, , \label{e-Obser2Avg} \\                         
+    \langle \Obser \period{} \rangle_N &=& 
+    	  \left. \partial^2 F_N / \partial \beta \partial s
+          \right|_{\beta=0, s=s (0)} 
+          \, , \label{e-ObserTAvg}                         
+\eea
+we write the \cycForm s as
+\bea
+    \langle \obser \rangle_N
+            &=&  \left.
+                  - \frac{\pde F_N}{\pde \beta} \,\Big/\, \frac{\pde F_N}{\pde s}
+                  \right|_{\beta=0, s=s (0)} \, , \continue
+            &=& \frac{\langle \Obser \rangle_N}{\langle \period{} \rangle_N } \, ,
+    \label{e-Avga} \\
+   \Delta_{\Obser, N}
+            &=&  \small{
+  - \left.\frac{
+          \frac{\pde^2 F_N}{\pde \beta^2}
+           \,+\, 2 \frac{d s}{d\beta}
+              \frac{\pde^2 F_N}{\pde \beta  \pde s}
+           \,+\, \left(\frac{d s}{d \beta}\right)^2
+                      \frac{\pde^2 F_N}{\pde s^2}
+           }{\frac{\pde F_N}{\pde s}}\right|_{\beta=0, s=s (0)}} 
+           \, , \continue
+           &=& 
+   \frac{ 1~}{\langle \period{} \rangle_N}
+   \langle (\Obser-\period{}\,\langle  \obser \rangle)^2 \rangle_N
+    \label{e-Avgsigma} \, ,
 \eea
 By probability conservation, we expect that for an invariant measure
 $\rho_0(\ssp)$, the eigenvalue $s(0)$ is $0$. However, we did not make
@@ -408,7 +445,7 @@ visits the part of the Poincar\'e map that we cut off by applying our
 finite grammar approximation.
 
 We defined $\langle T \rangle$ in \refeq{eq-Tavg} as a shorthand for a partial
-derivative, however, we can also develop and interpretation for it by looking
+derivative, however, we can also develop an interpretation for it by looking
 at the definitions of the dynamical zeta function \refeq{e-DynamicalZeta} and the
 spectral determinant \refeq{e-SpectralDeterminant}. In both series, the partial
 derivative with respect to $s$ turns them into weighted sum of the cycle
@@ -434,12 +471,11 @@ multiplier of $\Lambda_{p,e}$ the prime cycle $p$.
 
 In \refsect{s:visual}, we explained that \SOn{2} phase shifts correspond
 to the drifts in the analogous configuration space. We now define the
-corresponding diffusion constant proportional to the variance of the
-phase (drift) velocity,
+corresponding diffusion constant as
 \beq
-    D = \frac{1}{2 d} \sigma_{\dot{\theta}}^2
-      = \frac{\langle (\dot{\theta} - \langle \dot{\theta} \rangle)^2
-              \rangle}{2}
+    D = \frac{1}{2 d}         \lim_{\zeit \rightarrow \infty} \frac{1}{\zeit} 
+        \langle (\theta(\zeit))^2 - \langle \theta(\zeit) \rangle^2 \rangle 
+      = \frac{\Delta_{\theta}}{2}
 \,,
 \eeq
 where $d=1$ since the configuration space is one dimensional.
