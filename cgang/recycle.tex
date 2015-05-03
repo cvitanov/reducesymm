@@ -16,97 +16,95 @@ the spectral determinants. The numerical results are discussed in
 
 \subsection{Classical trace formula}
 
-Consider the {\evOper}, the action of which evolves a density
-$\rho_0(\ssp)$ in the \statesp:
+Consider the {\evOper} $\Lop^\zeit$, the action of which evolves a
+weighted density $\rho(\ssp,\zeit)$ in the \statesp,
 \bea
-    \rho(\zeit ,\ssp) &=& [\Lop^\zeit \rho_0 ] (\ssp)
+    \rho(\ssp',\zeit) &=& [\Lop^\zeit \rho ] (\ssp')
+    = \int\!d \ssp \, \Lop^\zeit (\ssp', \ssp) \, \rho(\ssp,0)
     \continue
-    &=& \int d \ssp' \delta (\ssp - \flow{\zeit}{\ssp'})
-        e^{\beta \Obser^\zeit (\ssp' )} \rho_0(\ssp') \label{e-EvOper}
+    \Lop^\zeit (\ssp', \ssp)
+    &=&
+    \delta (\ssp' - \flow{\zeit}{\ssp})\,
+        e^{\beta \Obser^\zeit(\ssp)}
 \,,
+\label{e-EvOper}
 \eea
-where $\beta$ is an auxiliary variable and $\Obser^\zeit (\ssp')$ is the
-integrated value of an observable $\obser$ along the orbit
-$\flow{\zeit}{\ssp'}$:
+where $\beta$ is an auxiliary variable and $\Obser^\zeit (\ssp)$ is the
+integrated value of an observable $\obser (\ssp)$ along the trajectory
+$\flow{\zeit}{\ssp}$,
 \beq
-    \Obser^\zeit (\ssp' ) = \int_0^{\zeit} d \zeit'
-                              \obser(\flow{\zeit'}{\ssp'})
+    \Obser^\zeit (\ssp ) = \int_0^{\zeit} d \zeit'
+                              \obser(\flow{\zeit'}{\ssp})
 \,.
 \eeq
-Notice that when $\beta = 0$, the \evOper\ \refeq{e-EvOper} simply evolves
-the density of \statesp\ points to its new form after time $\zeit$. As we
-shall see, attaching\DB{2014-11-3}{What does ``attaching'' mean in this context... might be lacking technical rigor here.}
-the integrated observables to this operator enables us to
-study values of these observables averaged over the invariant measures.
+When $\beta = 0$, the \evOper\ \refeq{e-EvOper} evolves the initial density of
+\statesp\ points to its new form after time $\zeit$; this form of the
+evolution operator is known as the {\FPoper}. The
+multiplicative weight $\exp(\beta \Obser^\zeit(\ssp))$
+    \DB{2014-11-03}{What does ``attaching'' mean in this context... might be
+    lacking technical rigor here. Predrag 2015-05-03 Better now?}
+will enable us to compute the value of the observable $\obser$ averaged over
+the natural measure.
 
-Since we required our observable to be additive along an orbit and
-exponentiated its integrated value in the construction of the \evOper\
-\refeq{e-EvOper}; the evolution operator itself is multiplicative:
+As the integrated observable $\Obser^\zeit (\ssp)$, additive along the
+trajectory, is exponentiated in \refeq{e-EvOper}, the \evOper\
+is multiplicative along the trajectory:
 \beq
-    \Lop^{\zeit_1 + \zeit_2} = \Lop^{\zeit_2} \Lop^{\zeit_1} \, .
-    \label{eq-SemiGroup}
-\eeq
-For the kernel of the evolution integral, which we will refer to as
-$\Lop^\zeit (\ssp, \ssp')$ with explicit arguments, we can write this relation
-as
-\beq
-	\Lop^{\zeit_1 + \zeit_2} (\ssp,\ssp') =
-    \int d\ssp'' \Lop^{\zeit_2} (\ssp, \ssp'')
+	\Lop^{\zeit_1 + \zeit_2} (\ssp',\ssp) =
+    \int d\ssp'' \Lop^{\zeit_2} (\ssp', \ssp'')
                    \Lop^{\zeit_1} (\ssp'', \ssp) \, .
 	\label{eq-SemiGroupKernel}
 \eeq
-This `semigroup property' \refeq{eq-SemiGroup} of the {\evOper} allows us to
-define the {\evOper} as the formal exponential of its infinitesimal generator
-\Aop :
+This semigroup property allows us to define the {\evOper} as the formal
+exponential of its infinitesimal generator \Aop:
 \beq
 	\Lop^t = e^{\Aop t} \, .
 	\label{eq-EvOpExp}
 \eeq
-By definition \refeq{e-EvOper}, the eigenvalues and eigenfunctions of $\Lop^t$ (and
-thus \Aop ) are functions of $\beta$. Let us define $\rho_{\beta} (x)$ as the
-eigenfunction of \refeq{e-EvOper} corresponding to the leading eigenvalue (i.e., the one with the
-largest real part); we can write the action of \refeq{e-EvOper} on this density
-explicitly as follows:
+Let $\rho_{\beta} (\ssp)$ be the eigenfunction of
+\refeq{e-EvOper} corresponding to the leading eigenvalue (\ie, the one
+with the largest real part) for a given $\beta$,
 \beq
-    \left[ \Lop^t \rho_{\beta} \right] (x) = e^{t s(\beta )} \rho_{\beta} (x)
+    \left[ \Lop^t \rho_{\beta} \right] (\ssp)
+    =
+    e^{t s(\beta )} \rho_{\beta}(\ssp)
     \, .
     \label{eq-EigenvalueRel}
 \eeq
-Here, $s(\beta)$ is the eigenvalue of $\Aop$. As stated earlier, when
-$\beta = 0$, the {\evOper} simply evolves densities; this form of the evolution
-operator is known as the {\FPoper}. If we assume that the system under study is ergodic,
-then an `invariant measure' $\rho_0(\ssp)$ exists with eigenvalue
-$s(0) = 0$ exists. The long time spectrum of any observable is going to be dominated by
-its average over such a density, hence we define the average of an observable
-as its average over the invariant measure:
+Here $s(\beta)$ is the eigenvalue of $\Aop$. If the system under study is
+ergodic, then an invariant `natural measure' $\rho_0(\ssp)$ with
+eigenvalue $s(0) = 0$ exists, and the long time average of an observable is
+then its \statesp\ average over the natural measure:
 \beq
     \langle \obser \rangle = \int d \ssp \, \obser(\ssp) \rho_0 (\ssp) \, .
     \label{e-obserAvg}
 \eeq
-By evaluating the action of the {\evOper} \refeq{e-EvOper} for infinitesimal
-times and after some algebra, which we skip here, one finds that the
-\revision{long-term averages of observables, as well as their higher moments, 
-can be generated from the derivatives of $s(\beta)$:
+By evaluating the action of the {\evOper} \refeq{e-EvOper} for
+infinitesimal times, one finds that the \revision{long-time averages of
+observables, as well as of their higher moments, are given by the
+derivatives of $s(\beta)$:
 \bea
-    \langle \obser \rangle &=& 
-    \lim_{\zeit \rightarrow \infty} \frac{1}{\zeit} \langle \Obser^\zeit \rangle = 
-        \left. \frac{\partial s_0 (\beta) }{\partial \beta} \right|_{\beta = 0} 
+    \langle \obser \rangle &=&
+    \lim_{\zeit \rightarrow \infty} \frac{1}{\zeit} \langle \Obser^\zeit \rangle =
+        \left. \frac{\partial s(\beta) }{\partial \beta} \right|_{\beta = 0}
         \, , \continue
-        \Delta_{\Obser} &=& 
-        \lim_{\zeit \rightarrow \infty} \frac{1}{\zeit} 
-        \langle (\Obser^{\zeit})^2 - \langle \Obser^\zeit \rangle^2 \rangle = 
-        \left. \frac{\partial^2 s_0 (\beta) }{\partial \beta^2} \right|_{\beta = 0}
+        \Delta_{\obser} &=&
+        \lim_{\zeit \rightarrow \infty} \frac{1}{\zeit}
+        \langle (\Obser^{\zeit})^2 - \langle \Obser^\zeit \rangle^2 \rangle =
+        \left. \frac{\partial^2 s(\beta) }{\partial \beta^2} \right|_{\beta = 0}
     \, ,
     \label{eq-moments}
     \\
     \, &\vdots & \nonumber
 \eea
-We will refer to $\Delta_{\Obser}$ in \refeq{eq-moments} as generalized 
-diffusion constant, as it characterizes the growth of of the standard
-deviation of the integrated observable. 
-The integrated observable $\Obser$ is not necessarily a spatial 
-displacement and can be any observable in a chaotic flow, hence the 
-term `generalized diffusion constant'.} 
+As the integrated observable $\Obser$ can be any observable in a chaotic
+flow, not necessarily a spatial displacement, we refer to
+$\Delta_{\obser}$, the growth rate of the standard deviation of the
+integrated observable $\Obser$, as the `generalized diffusion constant'.
+    \PC{2015-05-03 I have changed Burak's $\Delta_{\Obser}$ to
+    $\Delta_{\obser}$, as $\Obser^\zeit$ depends on time, but $\obser$
+    does not.    }
+}
 In order to obtain $s(\beta)$, we construct the resolvent of \Aop , by taking
 the Laplace transform of \refeq{eq-EvOpExp}:
 \beq
@@ -115,7 +113,7 @@ the Laplace transform of \refeq{eq-EvOpExp}:
 \eeq
 the trace of which peaks at the eigenvalues of \Aop. By taking the
 Laplace transform of $\Lop^\zeit$ and computing its trace
-by $\tr \Lop^\zeit = \int d\ssp \Lop^\zeit (\ssp,\ssp)$, one obtains the
+by $\tr \Lop^\zeit = \int d\ssp \, \Lop^\zeit (\ssp,\ssp)$, one obtains the
 classical trace formula:
 \beq
 \sum_{\alpha=0}^{\infty} \frac{1}{s-s_{\alpha}} = \sum_p T_p
@@ -125,17 +123,17 @@ that relates the spectrum of the {\evOper} to the spectrum of the periodic
 orbits. Here,  $s$ is the auxiliary
 variable of the Laplace transform and $s_{\alpha}$ are the eigenvalues of \Aop . The
 outer sum on the right hand side runs over the `prime cycles' $p$ of the system,
-which have periods $T_p$. $\Obser_p$ is the value of
+\ie, the shortest \po s of period $T_p$. $\Obser_p$ is the value of
 the observable integrated along the prime cycle and $\monodromy_p$ is the transverse
 monodromy matrix, the eigenvalues of which are the Floquet multipliers of $p$
-excluding the marginal ones ($|\Lambda| \neq 1$). In the derivation of
+excluding the marginal ones, $|\Lambda| \neq 1$. In the derivation of
 \refeq{e-ClassicalTraceFormula}, one assumes that the flow has a single marginal direction,
 namely the direction that is parallel to the periodic orbit at all times, and evaluates the
 contribution of each \po\ to the trace integral by transforming to a local coordinate
 system where one of the coordinates is
 parallel to the flow while the rest is transverse. Integration along the
 parallel direction is what contributes the factors of $T_p$. The transverse integral
-over the delta function contributes the factor of $\oneMinJ{r}$.
+over the delta function contributes the factor of $1/\oneMinJ{r}$.
 
 \subsection{Decomposition of the trace formula over irreducible representations}
 \label{s-ContFac}
@@ -394,19 +392,19 @@ Higher order derivatives can be evaluated similarly.
 \revision{Defining
 \bea
     \langle \Obser \rangle_N &=& - \left. \partial F_N / \partial \beta
-                                \right|_{\beta=0, s=s (0)} 
+                                \right|_{\beta=0, s=s (0)}
                                 \, , \label{e-ObserAvg} \\
 	\langle \period{} \rangle_N &=& \left. \partial F_N / \partial s
-                            \right|_{\beta=0, s=s (0)} 
+                            \right|_{\beta=0, s=s (0)}
                          \, , \label{eq-Tavg} \\
-    \langle \Obser^2 \rangle_N &=& 
+    \langle \Obser^2 \rangle_N &=&
     	- \left. \partial^2 F_N / \partial \beta^2
-          \right|_{\beta=0, s=s (0)} 
-          \, , \label{e-Obser2Avg} \\                         
-    \langle \Obser \period{} \rangle_N &=& 
+          \right|_{\beta=0, s=s (0)}
+          \, , \label{e-Obser2Avg} \\
+    \langle \Obser \period{} \rangle_N &=&
     	  \left. \partial^2 F_N / \partial \beta \partial s
-          \right|_{\beta=0, s=s (0)} 
-          \, , \label{e-ObserTAvg}                         
+          \right|_{\beta=0, s=s (0)}
+          \, , \label{e-ObserTAvg}
 \eea
 we write the \cycForm s as
 \bea
@@ -416,7 +414,7 @@ we write the \cycForm s as
                   \right|_{\beta=0, s=s (0)} \, , \continue
             &=& \frac{\langle \Obser \rangle_N}{\langle \period{} \rangle_N } \, ,
     \label{e-Avga} \\
-   \Delta_{\Obser, N}
+   \Delta_{\obser, N}
             &=&  \small{
   - \left.\frac{
           \frac{\pde^2 F_N}{\pde \beta^2}
@@ -424,9 +422,9 @@ we write the \cycForm s as
               \frac{\pde^2 F_N}{\pde \beta  \pde s}
            \,+\, \left(\frac{d s}{d \beta}\right)^2
                       \frac{\pde^2 F_N}{\pde s^2}
-           }{\frac{\pde F_N}{\pde s}}\right|_{\beta=0, s=s (0)}} 
+           }{\frac{\pde F_N}{\pde s}}\right|_{\beta=0, s=s (0)}}
            \, , \continue
-           &=& 
+           &=&
    \frac{ 1~}{\langle \period{} \rangle_N}
    \langle (\Obser-\period{}\,\langle  \obser \rangle)^2 \rangle_N
     \label{e-Avgsigma} \, ,
@@ -473,8 +471,8 @@ In \refsect{s:visual}, we explained that \SOn{2} phase shifts correspond
 to the drifts in the analogous configuration space. We now define the
 \revision{corresponding diffusion constant as
 \beq
-    D = \frac{1}{2 d}         \lim_{\zeit \rightarrow \infty} \frac{1}{\zeit} 
-        \langle (\theta(\zeit))^2 - \langle \theta(\zeit) \rangle^2 \rangle 
+    D = \frac{1}{2 d}         \lim_{\zeit \rightarrow \infty} \frac{1}{\zeit}
+        \langle (\theta(\zeit))^2 - \langle \theta(\zeit) \rangle^2 \rangle
       = \frac{\Delta_{\theta}}{2}
 \,,
 \eeq
@@ -493,20 +491,20 @@ all the \rpo s we have found into the expansion
 cycles with symbol sequence `00'.
 \begin{table}
     \begin{tabular}{c|c|c|c|c|c}
-     $N$ & $\gamma$ & $\langle T \rangle$ & $\lambda$ & $\langle \dot{\phi} \rangle$ & $D$ \\ 
+     $N$ & $\gamma$ & $\langle T \rangle$ & $\lambda$ & $\langle \dot{\phi} \rangle$ & $D$ \\
     \hline
-    1 & 0.249829963 & 3.6415122 & 0.10834917 & 0.0222352 & \revision{0.000000} \\ 
-    2 & -0.011597609 & 5.8967605 & 0.10302891 & -0.1391709 & \revision{0.143470} \\ 
-    3 & 0.027446312 & 4.7271381 & 0.11849761 & -0.1414933 & \revision{0.168658} \\ 
-    4 & -0.004455525 & 6.2386572 & 0.10631066 & -0.2141194 & \revision{0.152201} \\ 
-    5 & 0.000681027 & 5.8967424 & 0.11842700 & -0.2120545 & \revision{0.164757} \\ 
-    6 & 0.000684898 & 5.8968762 & 0.11820050 & -0.1986756 & \revision{0.157124} \\ 
-    7 & 0.000630426 & 5.9031596 & 0.11835159 & -0.1997353 & \revision{0.157345} \\ 
-    8 & 0.000714870 & 5.8918832 & 0.11827581 & -0.1982025 & \revision{0.156001} \\ 
-    9 & 0.000728657 & 5.8897511 & 0.11826873 & -0.1982254 & \revision{0.156091} \\ 
-    10 & 0.000728070 & 5.8898549 & 0.11826788 & -0.1982568 & \revision{0.156217} \\ 
-    11 & 0.000727891 & 5.8898903 & 0.11826778 & -0.1982561 & \revision{0.156218} \\ 
-    12 & 0.000727889 & 5.8898908 & 0.11826780 & -0.1982563 & \revision{0.156220} \\ 
+    1 & 0.249829963 & 3.6415122 & 0.10834917 & 0.0222352 & \revision{0.000000} \\
+    2 & -0.011597609 & 5.8967605 & 0.10302891 & -0.1391709 & \revision{0.143470} \\
+    3 & 0.027446312 & 4.7271381 & 0.11849761 & -0.1414933 & \revision{0.168658} \\
+    4 & -0.004455525 & 6.2386572 & 0.10631066 & -0.2141194 & \revision{0.152201} \\
+    5 & 0.000681027 & 5.8967424 & 0.11842700 & -0.2120545 & \revision{0.164757} \\
+    6 & 0.000684898 & 5.8968762 & 0.11820050 & -0.1986756 & \revision{0.157124} \\
+    7 & 0.000630426 & 5.9031596 & 0.11835159 & -0.1997353 & \revision{0.157345} \\
+    8 & 0.000714870 & 5.8918832 & 0.11827581 & -0.1982025 & \revision{0.156001} \\
+    9 & 0.000728657 & 5.8897511 & 0.11826873 & -0.1982254 & \revision{0.156091} \\
+    10 & 0.000728070 & 5.8898549 & 0.11826788 & -0.1982568 & \revision{0.156217} \\
+    11 & 0.000727891 & 5.8898903 & 0.11826778 & -0.1982561 & \revision{0.156218} \\
+    12 & 0.000727889 & 5.8898908 & 0.11826780 & -0.1982563 & \revision{0.156220} \\
     \end{tabular}
     \caption{Cycle expansion estimates based on the golden mean approximation
              \refeq{e-GoldenMeanCycleExpansion} to symbolic dynamics for
@@ -519,24 +517,24 @@ cycles with symbol sequence `00'.
 
 \begin{table}
     \begin{tabular}{c|c|c|c|c|c}
-     $N$ & $\gamma$ & $\langle T \rangle$ & $\lambda$ & $\langle \dot{\phi} \rangle$ & $D$ \\ 
+     $N$ & $\gamma$ & $\langle T \rangle$ & $\lambda$ & $\langle \dot{\phi} \rangle$ & $D$ \\
     \hline
-    1 & 0.249829963 & 3.6415122 & 0.10834917 & 0.0222352 & \revision{0.000000} \\ 
-    2 & -0.011597609 & 5.8967605 & 0.10302891 & -0.1391709 & \revision{0.143470} \\ 
-    3 & 0.022614694 & 4.8899587 & 0.13055574 & -0.1594782 & \revision{0.190922} \\ 
-    4 & -0.006065601 & 6.2482261 & 0.11086469 & -0.2191881 & \revision{0.157668} \\ 
-    5 & 0.000912644 & 5.7771642 & 0.11812034 & -0.2128347 & \revision{0.168337} \\ 
-    6 & 0.000262099 & 5.8364534 & 0.11948918 & -0.2007615 & \revision{0.160662} \\ 
-    7 & 0.000017707 & 5.8638210 & 0.12058951 & -0.2021046 & \revision{0.160364} \\ 
-    8 & 0.000113284 & 5.8511045 & 0.12028459 & -0.2006143 & \revision{0.159233} \\ 
-    9 & 0.000064082 & 5.8587350 & 0.12045664 & -0.2006756 & \revision{0.158234} \\ 
-    10 & 0.000093124 & 5.8536181 & 0.12035185 & -0.2007018 & \revision{0.158811} \\ 
-    11 & 0.000153085 & 5.8417694 & 0.12014700 & -0.2004520 & \revision{0.158255} \\ 
-    12 & 0.000135887 & 5.8455331 & 0.12019940 & -0.2005299 & \revision{0.158465} \\ 
+    1 & 0.249829963 & 3.6415122 & 0.10834917 & 0.0222352 & \revision{0.000000} \\
+    2 & -0.011597609 & 5.8967605 & 0.10302891 & -0.1391709 & \revision{0.143470} \\
+    3 & 0.022614694 & 4.8899587 & 0.13055574 & -0.1594782 & \revision{0.190922} \\
+    4 & -0.006065601 & 6.2482261 & 0.11086469 & -0.2191881 & \revision{0.157668} \\
+    5 & 0.000912644 & 5.7771642 & 0.11812034 & -0.2128347 & \revision{0.168337} \\
+    6 & 0.000262099 & 5.8364534 & 0.11948918 & -0.2007615 & \revision{0.160662} \\
+    7 & 0.000017707 & 5.8638210 & 0.12058951 & -0.2021046 & \revision{0.160364} \\
+    8 & 0.000113284 & 5.8511045 & 0.12028459 & -0.2006143 & \revision{0.159233} \\
+    9 & 0.000064082 & 5.8587350 & 0.12045664 & -0.2006756 & \revision{0.158234} \\
+    10 & 0.000093124 & 5.8536181 & 0.12035185 & -0.2007018 & \revision{0.158811} \\
+    11 & 0.000153085 & 5.8417694 & 0.12014700 & -0.2004520 & \revision{0.158255} \\
+    12 & 0.000135887 & 5.8455331 & 0.12019940 & -0.2005299 & \revision{0.158465} \\
     \end{tabular}
-    \caption{Cyle expansion estimates of the escape rate $\gamma$, average 
-    cycle period $\langle T \rangle$, Lyapunov exponent $\lambda$, average 
-    phase velocity $\langle \dot{\theta} \rangle$ and the diffusion coefficient 
+    \caption{Cyle expansion estimates of the escape rate $\gamma$, average
+    cycle period $\langle T \rangle$, Lyapunov exponent $\lambda$, average
+    phase velocity $\langle \dot{\theta} \rangle$ and the diffusion coefficient
     $D$ with respect to the expansion order $N$ .}
     \label{t-DynamicalAveragesNoGrammar}
 \end{table}
