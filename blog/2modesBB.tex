@@ -3441,20 +3441,20 @@ for future use: Take the following definition of the spectral determinant with
 the order-tracking parameter $z$ to be set to $1$ at the end of calculations:
 \beq
     \det (s-\mathcal{A}) = \exp \left( - \sum_p \sum_{r=1}^{\infty}
-                             \frac{1}{r} \frac{e^{r(\beta A_p - s T_p)}
+                             \frac{1}{r} \frac{e^{r(\beta A_p - s \period{p})}
                                           z^{n_p r}}{\oneMinJ{r}} \right)
                            = \prod_p \exp \left( - \sum_{r=1}^{\infty}
-                             \frac{1}{r} \frac{e^{r(\beta A_p - s T_p)}
+                             \frac{1}{r} \frac{e^{r(\beta A_p - s \period{p})}
                                           z^{n_p r}}{\oneMinJ{r}} \right) \, .
 \ee{e-SpectralDeterminant1}
 Now for an $N$-th order approximation to this determinant, we compute the sum
 that appears inside the exponential to the upto $N^{th}$ order in $z$
 for $p^{th}$ cycle, as follows:
 \bea
-    - \sum_{r=1}^{\infty} \frac{1}{r} \frac{e^{r(\beta A_p - s T_p)}
+    - \sum_{r=1}^{\infty} \frac{1}{r} \frac{e^{r(\beta A_p - s \period{p})}
                                                z^{n_p r}}{\oneMinJ{r}}
                                                &\approx &
-    - \sum_{r=1}^{r n_p \leq N} \frac{1}{r} \frac{e^{r(\beta A_p - s T_p)}
+    - \sum_{r=1}^{r n_p \leq N} \frac{1}{r} \frac{e^{r(\beta A_p - s \period{p})}
                                                     z^{n_p r}}{\oneMinJ{r}} \,
                                     \continue
                                  &=&
@@ -3490,10 +3490,10 @@ the $N^{th}$ order contribution to the spectral determinant after setting $z=1$,
 following \refref{DasBuch} as follows:
 \beq
     F_N(s, \beta ) = 1 - \sum_{n=1}^{N} Q_n(s, \beta ) \, .
-    \label{e-NthOrderSpectDet}
+    \label{e-NthOrderSpectDet1}
 \eeq
 In order to compute the escape rate (hoping to find something close to 0), I looked
-for the leading zero of \refeq{e-NthOrderSpectDet} with $\beta = 0$, namely, solved
+for the leading zero of \refeq{e-NthOrderSpectDet1} with $\beta = 0$, namely, solved
 $F_N(s_0, 0) = 0$ close to the origin.
 Leading zeros of the \Fd , with approximations upto order $10$ are listed in
 \refTab{t-s0} .  While the final numbers seem to be converging with $6$-digit
@@ -3564,7 +3564,7 @@ Mean period:
     \langle T \rangle_N = \left. \frac{\partial F_N}{\partial s}
                             \right|_{\beta=0, s=s_0} \, ,
 \ee{e-meanT}
-with, $F_N$ given by \refeq{e-NthOrderSpectDet}.
+with, $F_N$ given by \refeq{e-NthOrderSpectDet1}.
 
 Lyapunov exponent and mean phase velocity computed by the same formula:
 \beq
@@ -3652,7 +3652,7 @@ the escape rate is not exactly zero, but a small number.
 the phase velocity?
 
 \item[2014-06-24 Burak] That is $\phi_p$, and it's important. I got confused last
-week about it and asked Predrag why I cannot define $\phi_p / T_p$ as a measurable,
+week about it and asked Predrag why I cannot define $\phi_p / \period{p}$ as a measurable,
 and got immeadiately informed that I did not understand the periodic orbit
 theory {\bf [ES: Apparently, neither did I :-)]}. The reason that we cannot average over the ``phase velocities of
 individual cycles'' is the necessity that the measurable must be additive along
@@ -3696,7 +3696,7 @@ $n=8$ including some with '00' sequence and computed averages with all of them
 ordering the spectral determinant with respect to the topological lengths.
 I still am not clear about how to order terms in the Spectral determinant
 according to their stabilities. Results are in
-\reftab{t-DynamicalAveragesNoGrammar}. Convergence-wise, it goes slightly
+\reftab{t-DynamicalAveragesNoGrammar1}. Convergence-wise, it goes slightly
 slower than the finite grammar approximation, which is something we would expect.
 Notice that the escape rate is smaller than that of the
 \reftab{t-DynamicalAverages}, which again makes sense because now we are
@@ -3707,13 +3707,13 @@ guess of underestimating the Lyapunov exponent in the finite grammar case due
 to the fact that we always skip most unstable cycles. To me, it seems like the
 finite grammar approximation earns us $1$ digit more accuracy while bringing
 systematic errors. And again, spectral determinant that produce results in
-\reftab{t-DynamicalAveragesNoGrammar} is ordered in $z^n$, not in the
+\reftab{t-DynamicalAveragesNoGrammar1} is ordered in $z^n$, not in the
 pseudocycle stabilities, so the convergence of the sequences in
-\reftab{t-DynamicalAveragesNoGrammar} can potentially be improved.
+\reftab{t-DynamicalAveragesNoGrammar1} can potentially be improved.
 
 \item[2014-06-26 Evangelos] Do you mean that you now have all cycles permitted by
 symbolic dynamics up to length 8? Why is there a jump in the escape rate
-at length 8 in \reftab{t-DynamicalAveragesNoGrammar}? If finite grammar approximation
+at length 8 in \reftab{t-DynamicalAveragesNoGrammar1}? If finite grammar approximation
 converges faster towards a skewed result, then it's not very useful.
 Stability expansion might be a good idea for this problem.
 I have written a routine that implements
@@ -3805,7 +3805,7 @@ hope this helps.
 
 \item[2014-07-14 Evangelos] Thanks, it helps!
 
-\item[2014-06-24 Burak] I updated \reftab{t-DynamicalAveragesNoGrammar} and
+\item[2014-06-24 Burak] I updated \reftab{t-DynamicalAveragesNoGrammar1} and
 figures \reffig{fig:psectandretmap}, \reffig{fig:2modes-invpol}
 and \reffig{2modes-sspRed}, I'll start writing
 results section tonight. I commented out the second Fourier mode slice figure,
@@ -3847,7 +3847,7 @@ feel free to make changes. I think I'll go back to improving results now.
 
 \item[2014-07-14 Evangelos] I am probably missing something important here, or I have forgotten
 everything, so please be patient with me. I do not understand
-why you get different results for escape rate for $N=1$ in \reftab{t-DynamicalAveragesNoGrammar}
+why you get different results for escape rate for $N=1$ in \reftab{t-DynamicalAveragesNoGrammar1}
 and \reftab{t-DynamicalAverages}? At this level you only use the first cycle, so I would expect
 to get the same answer, irrespective of how you approximate the grammar.
 
@@ -3860,7 +3860,7 @@ from the inverse $\zeta$ function:
 \ee{e-ZetaConsRule}
 which does not depend on how we approximate the grammar. What do I miss?
 
-\item[2014-07-14 Burak] You are right, $N=1$ results in \reftab{t-DynamicalAveragesNoGrammar}
+\item[2014-07-14 Burak] You are right, $N=1$ results in \reftab{t-DynamicalAveragesNoGrammar1}
 and \reftab{t-DynamicalAverages} must be the same, and they are close to each other but differ
 at the fifth decimal place. It is completely my fault, and result of my implementation. `Finite
 grammar' and `all rpos' are two different databases and I probably used different multiple shooting
@@ -3949,7 +3949,7 @@ figures. We might add a seperate discussion section and we should expand conclus
 Please read the paper critically and fix the errors you see. If you find a problem
 with a figure, let me know, I probably need to fix some ticks, labels and such.
 
-\item[2014-07-19 Evangelos] Great! Now \reftab{t-DynamicalAveragesNoGrammar} and
+\item[2014-07-19 Evangelos] Great! Now \reftab{t-DynamicalAveragesNoGrammar1} and
 \reftab{t-DynamicalAverages} start differ at level 3, as they should! How about
 the calculation of the flow conservation sum rule? Do we now get the same results
 up to fifth order? I would be interested to check my stability ordered calculation,
@@ -3958,7 +3958,7 @@ even if we do not need it anymore.
 \item[2014-07-19 Evangelos] The missing rpo '0011' which should have multiplier
 around 70, seems to be crucial for stability ordering, because not having it in
 the set implies one has to impose very low stability threshold. Would it be possible
-to find it? This would also make the comparison between \reftab{t-DynamicalAveragesNoGrammar}
+to find it? This would also make the comparison between \reftab{t-DynamicalAveragesNoGrammar1}
 and \reftab{t-DynamicalAverages} more fair.
 
 \item[2014-07-19 Evangelos] I find the fast convergence of the finite grammar result
@@ -4004,7 +4004,7 @@ trying to figure out how to do the whole professor thing. I've been advising
 seniors on possible thesis projects and it's just been a giant time sink. Anyway,
 I'm back into at least editing mode.
 
-\item[2014-11-15 Daniel] So I modified the title yet again... 
+\item[2014-11-15 Daniel] So I modified the title yet again...
 The previous title was ``Periodic orbit analysis of A system with continuous symmetry - a tutorial''.
 I have changed it to ``Periodic orbit analysis of systemS with continuous symmetry''. Here's my rationale:
 First, it make sense to advertise this as a paper that will help people looking at systems other than our
@@ -4012,11 +4012,11 @@ two mode model, so the change from singular ``a system'' to ``systems'' makes se
 not controversial and I don't foresee you guys having issues with it. If you guys absolutely hate ``systems''
 rather than ``a system'', I would have no objections to reverting it. The second part, which was removing
 ``-a tutorial'' from the title, might be a worthy of more discussion. I realize that Predrag just added it back.
-From the standpoint of the Director of CNS and a full professor this makes sense. His reputation is established 
+From the standpoint of the Director of CNS and a full professor this makes sense. His reputation is established
 and he's not submitting CVs anywhere. So having a paper that evangelizes his approach to dealing with chaotic systems
 with a title that reflects this (i.e., ``-a tutorial'') is fun and useful since it highlights the educational value
-of the paper. On the flipside, Burak and I are/will be submitting CVs to places that are looking for researchers. We 
-don't have a huge publication list. Most of these places will shun anything that has to do with (gasp) education! 
+of the paper. On the flipside, Burak and I are/will be submitting CVs to places that are looking for researchers. We
+don't have a huge publication list. Most of these places will shun anything that has to do with (gasp) education!
 This means that any paper that has ``-a tutorial'' in the title will automatically get discounted as not a valuable
 scientific contribution and therefore not a useful feather in Burak and my hats. Without the ``-a tutorial'' they might
 actually have to read the paper to figure out whether it fits their definition of useful contribution, which they won't
@@ -4025,35 +4025,35 @@ attract those that are looking to apply periodic orbit analysis to systems with 
 in terms of ``systems'' (or ``a system'') guarantees that, so Predrag's goal of getting people to learn how to do it right
 is still satisfied. Anyway... those are my thoughts... I am definitely open to discuss this...
 
-\item[2015-01-15 Burak] Sorry that it took me a two months to respond, life is 
-hard. 
-Contrary to your assumption, I gave the `tutorial' title to this paper with the exactly same intention 
-of yours: to improve its impact. I disagree with you that the name 
-`tutorial' would lead people to ignore the paper, I believe the truth is the 
-opposite. Take 
+\item[2015-01-15 Burak] Sorry that it took me a two months to respond, life is
+hard.
+Contrary to your assumption, I gave the `tutorial' title to this paper with the exactly same intention
+of yours: to improve its impact. I disagree with you that the name
+`tutorial' would lead people to ignore the paper, I believe the truth is the
+opposite. Take
 \HREF{http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=18626}{
-this tutorial}, for example, it's cited $20k$ times, and it's just a 
-pedagogical review of a highly useful technique. Another experimental evidence which 
-supports my point happened last week in dynamics days: 
+this tutorial}, for example, it's cited $20k$ times, and it's just a
+pedagogical review of a highly useful technique. Another experimental evidence which
+supports my point happened last week in dynamics days:
 \HREF{http://scholar.google.com/citations?user=pSOhCyAAAAAJ&hl=en}{
 Ned Corron} looked at my poster and then the references, and asked whether
 this paper is published, and I told him that it's on arXiv, and he said that
 he will check it out and he expressed his love for tutorials. So my point is,
-if the utility of a method is proven, than people tend to look for a 
-pedagogical resource to actually learn the method and start to use it in their 
-own research. I am hoping this paper to be the pedagogical resource, where 
-people go to learn the first Fourier mode slice and cycle expansions for 
-systems with continuous symmetries. But of course, for that to happen, we 
-actually need to prove the strength of our method. Since you are away from 
+if the utility of a method is proven, than people tend to look for a
+pedagogical resource to actually learn the method and start to use it in their
+own research. I am hoping this paper to be the pedagogical resource, where
+people go to learn the first Fourier mode slice and cycle expansions for
+systems with continuous symmetries. But of course, for that to happen, we
+actually need to prove the strength of our method. Since you are away from
 us, let me give you a short summary on the current status in here: Our PRL on
-the first Fourier slice is very close to being published. Kimberly, 
-Ashley and Predrag have found over 30 \rpo s in the pipe flow using the first 
-Fourier mode slice, and they are going to send these results as another PRL. Last 
-month, I computed cycle averages for \KS\ system and started writing another 
+the first Fourier slice is very close to being published. Kimberly,
+Ashley and Predrag have found over 30 \rpo s in the pipe flow using the first
+Fourier mode slice, and they are going to send these results as another PRL. Last
+month, I computed cycle averages for \KS\ system and started writing another
 article on that calculation, which you can find it in
 \texttt{siminos/ksRecycled/tex/ksRecycled.tex}. So the situation is very optimistic
-about the periodic orbit theory of turbulence. I hope 
-you find my arguments convincing, we can continue discussing if you don't. 
+about the periodic orbit theory of turbulence. I hope
+you find my arguments convincing, we can continue discussing if you don't.
 
 \item[2015-1-9 Daniel] Is the notation $\pS_{\ssp(\zeit)}$ for group orbit weird in \reffig{f-ReducTraj1}? We use $\pS$ for state
 space, slices, and other manifolds... I guess technically, the group orbit is a manifold too.. hmmm... anyway, something to think about.
@@ -4061,20 +4061,20 @@ space, slices, and other manifolds... I guess technically, the group orbit is a 
 \item[2014-01-15 Burak] I believe Predrag replaced this expression with the group \\
 action on the state.
 
-\item[2014-01-15 Burak] To Predrag and Daniel: I think this paper is ready for 
-journal submission. If you agree, let's make a final reading of it and 
+\item[2014-01-15 Burak] To Predrag and Daniel: I think this paper is ready for
+journal submission. If you agree, let's make a final reading of it and
 start the publication process. Since this is a rather long paper, we are likely to
-make major revisions on it through the publication process, and I think it would 
-be nice to have third person opinions while making those. 
+make major revisions on it through the publication process, and I think it would
+be nice to have third person opinions while making those.
 
 \item[2014-01-16 Burak] I did the painful $\theta \rightarrow - \theta$ replacement
 everywhere, which I think made everything consistent. I went over other footnotes,
-and made minor changes to places that I found necessary. 
+and made minor changes to places that I found necessary.
 
-Daniel, please have a final read (without scrutinizing :)) and make edits as you 
-see necessary. You have already gone through these 20 pages in great detail, so I 
-think we're in good shape, our message is clear. Predrag left the submission 
-decision to us, so once I have your approval, I'll produce the arXiv-v2 and 
+Daniel, please have a final read (without scrutinizing :)) and make edits as you
+see necessary. You have already gone through these 20 pages in great detail, so I
+think we're in good shape, our message is clear. Predrag left the submission
+decision to us, so once I have your approval, I'll produce the arXiv-v2 and
 start the submission process.
 
 \item[2013-08-10  Predrag to Chaos Gang] It's not over until it is over.

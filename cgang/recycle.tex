@@ -1,13 +1,15 @@
 \section{Cycle Averages}
 \label{s:DynAvers}
 
+\renewcommand{\zeit}{\ensuremath{t}}  %time variable
+
 So far, we have explained how we find the \rpo s of the \twomode\ system
 and compute their stability. However, we have not yet
 said anything about what to do with these numbers. We begin this section with
 an overview of the main results of the periodic orbit theory. Our review starts
 by recapitulating the presentation of \refref{DasBuch}, but then, in
 \refsect{s-ContFac}, explains how
-the theory is modified in the presence of continuous symmetries.\rf{Cvi07} 
+the theory is modified in the presence of continuous symmetries.\rf{Cvi07}
 In \refsect{s-CycExp}, we present cycle expansions and
 explain how to approximate the Poincar\'e section in
 \reffig{fig:psectandretmap}\,(d), in order to obtain a better convergence of
@@ -31,7 +33,7 @@ weighted density $\rho(\ssp,\zeit)$ in the \statesp,
 \eea
 where $\beta$ is an auxiliary variable and $\Obser^\zeit (\ssp)$ is the
 integrated value of an observable $\obser (\ssp)$ along the trajectory
-$\flow{\zeit}{\ssp}$,
+$\ssp(\zeit)=\flow{\zeit}{\ssp}$,
 \beq
     \Obser^\zeit (\ssp ) = \int_0^{\zeit} d \zeit'
                               \obser(\flow{\zeit'}{\ssp})
@@ -41,8 +43,6 @@ When $\beta = 0$, the \evOper\ \refeq{e-EvOper} evolves the initial density of
 \statesp\ points to its new form after time $\zeit$; this form of the
 evolution operator is known as the {\FPoper}. The
 multiplicative weight $\exp(\beta \Obser^\zeit(\ssp))$
-    \DB{2014-11-03}{What does ``attaching'' mean in this context... might be
-    lacking technical rigor here. Predrag 2015-05-03 Better now?}
 will enable us to compute the value of the observable $\obser$ averaged over
 the natural measure.
 
@@ -58,20 +58,20 @@ is multiplicative along the trajectory:
 This semigroup property allows us to define the {\evOper} as the formal
 exponential of its infinitesimal generator \Aop:
 \beq
-	\Lop^t = e^{\Aop t} \, .
+	\Lop^\zeit = e^{\Aop \zeit} \, .
 	\label{eq-EvOpExp}
 \eeq
 Let $\rho_{\beta} (\ssp)$ be the eigenfunction of
-\refeq{e-EvOper} corresponding to the leading eigenvalue (\ie, the one
+\refeq{e-EvOper} corresponding to the leading eigenvalue of $\Aop$ (\ie, the one
 with the largest real part) for a given $\beta$,
 \beq
-    \left[ \Lop^t \rho_{\beta} \right] (\ssp)
+    \left[ \Lop^\zeit \rho_{\beta} \right] (\ssp)
     =
-    e^{t s(\beta )} \rho_{\beta}(\ssp)
+    e^{\zeit s(\beta )} \rho_{\beta}(\ssp)
     \, .
     \label{eq-EigenvalueRel}
 \eeq
-Here $s(\beta)$ is the eigenvalue of $\Aop$. If the system under study is
+If the system under study is
 ergodic, then an invariant `natural measure' $\rho_0(\ssp)$ with
 eigenvalue $s(0) = 0$ exists, and the long time average of an observable is
 then its \statesp\ average over the natural measure:
@@ -80,15 +80,17 @@ then its \statesp\ average over the natural measure:
     \label{e-obserAvg}
 \eeq
 By evaluating the action of the {\evOper} \refeq{e-EvOper} for
-infinitesimal times, one finds that the \revision{long-time averages of
-observables, as well as of their higher moments, are given by the
+infinitesimal times, one finds that the
+\revision{
+long-time averages of
+observables, as well as of their higher moments, are given by
 derivatives of $s(\beta)$:
 \bea
     \langle \obser \rangle &=&
     \lim_{\zeit \rightarrow \infty} \frac{1}{\zeit} \langle \Obser^\zeit \rangle =
         \left. \frac{\partial s(\beta) }{\partial \beta} \right|_{\beta = 0}
         \, , \continue
-        \Delta_{\obser} &=&
+        \Delta \; &=&
         \lim_{\zeit \rightarrow \infty} \frac{1}{\zeit}
         \langle (\Obser^{\zeit})^2 - \langle \Obser^\zeit \rangle^2 \rangle =
         \left. \frac{\partial^2 s(\beta) }{\partial \beta^2} \right|_{\beta = 0}
@@ -97,44 +99,42 @@ derivatives of $s(\beta)$:
     \\
     \, &\vdots & \nonumber
 \eea
-Since the integrated observable $\Obser$ can be any observable in a chaotic
-flow, not only spatial displacement, we refer to
-$\Delta_{\obser}$, the growth rate of the standard deviation of the
-integrated observable $\Obser$, as the `generalized diffusion constant'.
-    \PC{2015-05-03I have changed Burak's $\Delta_{\Obser}$ to
-    $\Delta_{\obser}$, as $\Obser^\zeit$ depends on time, but $\obser$
-    does not.}
-		\DB{2015-05-06}{Why not just use $\Delta\obser$? That notation is pretty typical
-		in quantum mechanics, right? Like when we write the Heisenberg uncertainty principle?}
-}In order to obtain $s(\beta)$, we construct the resolvent of \Aop , by taking
+For example, if the observable \obser\ is a velocity
+$\dot{\ssp}=\vel(\ssp)$, the integrated observable $\Obser^\zeit$ is the
+displacement $\ssp(\zeit)$ in $d$ dimensions, and $\Delta/2d$ is
+Einstein's diffusion coefficient.
+}
+In order to obtain $s(\beta)$, we construct the resolvent of \Aop , by taking
 the Laplace transform of \refeq{eq-EvOpExp}:
 \beq
-	\int_0^{\infty} d\zeit e^{-s\zeit} \Lop^\zeit = (s-\Aop)^{-1} \, ,
+	\int_0^{\infty} \!d\zeit\, e^{-s\zeit} \Lop^\zeit = (s-\Aop)^{-1} \, ,
 	\label{eq-ResolventA}
 \eeq
 the trace of which peaks at the eigenvalues of \Aop. By taking the
 Laplace transform of $\Lop^\zeit$ and computing its trace
 by $\tr \Lop^\zeit = \int d\ssp \, \Lop^\zeit (\ssp,\ssp)$, one obtains the
-classical trace formula:
+classical trace formula\rf{pexp}:
 \beq
-\sum_{\alpha=0}^{\infty} \frac{1}{s-s_{\alpha}} = \sum_p T_p
-\sum_{r=1}^{\infty} \frac{e^{r(\beta \Obser_p - s T_p)}}{\oneMinJ{r}}
+\sum_{\alpha=0}^{\infty} \frac{1}{s-s_{\alpha}} = \sum_p \period{p}
+\sum_{r=1}^{\infty} \frac{e^{r(\beta \Obser_p - s \period{p})}}{\oneMinJ{r}}
 \ee{e-ClassicalTraceFormula}
-that relates the spectrum of the {\evOper} to the spectrum of the periodic
-orbits. Here,  $s$ is the auxiliary
+that relates the spectrum of the {\evOper} to the spectrum of periodic
+orbits. Here  $s$ is the auxiliary
 variable of the Laplace transform and $s_{\alpha}$ are the eigenvalues of \Aop . The
 outer sum on the right hand side runs over the `prime cycles' $p$ of the system,
-\ie, the shortest \po s of period $T_p$. $\Obser_p$ is the value of
-the observable integrated along the prime cycle and $\monodromy_p$ is the transverse
-monodromy matrix, the eigenvalues of which are the Floquet multipliers of $p$
-excluding the marginal ones, $|\Lambda| \neq 1$. In the derivation of
-\refeq{e-ClassicalTraceFormula}, one assumes that the flow has a single marginal direction,
-namely the direction that is parallel to the periodic orbit at all times, and evaluates the
-contribution of each \po\ to the trace integral by transforming to a local coordinate
-system where one of the coordinates is
-parallel to the flow while the rest is transverse. Integration along the
-parallel direction is what contributes the factors of $T_p$. The transverse integral
-over the delta function contributes the factor of $1/\oneMinJ{r}$.
+\ie, the shortest \po s of period $\period{p}$. $\Obser_p$ is the value of
+the observable integrated along the prime cycle and $\monodromy_p$ is the
+transverse monodromy matrix, the eigenvalues $\Obser^\zeit (\ssp)$ of
+which are the Floquet multipliers of $p$ with the marginal ones excluded.
+In the derivation of \refeq{e-ClassicalTraceFormula}, one assumes that
+the flow has a single marginal direction, namely the $\vel(\ssp)$ tangent
+to the periodic orbit, and evaluates the contribution of each \po\ to the
+trace integral by transforming to a local coordinate system where one of
+the coordinates is parallel to the flow, while the rest are transverse.
+Integral along the parallel direction contributes the factors of
+$\period{p}$ in \refeq{e-ClassicalTraceFormula}. The transverse integral
+over the delta function \refeq{e-EvOper} contributes the factor of
+$1/\oneMinJ{r}$.
 
 \subsection{Decomposition of the trace formula over irreducible representations}
 \label{s-ContFac}
@@ -186,18 +186,18 @@ into their irreducible subspaces under action of $\Group$, it can be used to
 factorize the \evOper. Thus, the kernel
 of the \evOper\ transforms under the action of $\mathbb{D}(\theta)$ as
 \bea
-    \mathbb{D}(\theta) \Lop^t (\ssp', \ssp) &=&
-        \Lop^t (\matrixRep(\theta)^{-1} \ssp', \ssp)\,,
+    \mathbb{D}(\theta) \Lop^\zeit (\ssp', \ssp) &=&
+        \Lop^\zeit (\matrixRep(\theta)^{-1} \ssp', \ssp)\,,
     \continue
-    &=& \Lop^t (\ssp', \matrixRep(\theta) \ssp) \,, \continue
-    &=& \delta (\ssp' - \matrixRep(\theta) f^t (\ssp)) e^{\beta \Obser^t(\ssp)}\, ,
+    &=& \Lop^\zeit (\ssp', \matrixRep(\theta) \ssp) \,, \continue
+    &=& \delta (\ssp' - \matrixRep(\theta) f^\zeit (\ssp)) e^{\beta \Obser^\zeit(\ssp)}\, ,
     \label{e-gEvOper}
 \eea
 where the second step follows from the equivariance of the system under
-consideration. \Rpo s contribute to $\mathbb{P}_m \Lop^t = \Lop_m^t$ since when its
+consideration. \Rpo s contribute to $\mathbb{P}_m \Lop^\zeit = \Lop_m^\zeit$ since when its
 kernel is modified as in \refeq{e-gEvOper}, the projection involves an integral
 over the group parameters that is non-zero when $\theta= - \theta_{\rpprime}$, the phase shifts of the
-\rpo s. By computing the trace of $\Lop_m^t$, which in addition to the integral
+\rpo s. By computing the trace of $\Lop_m^\zeit$, which in addition to the integral
 over \statesp , now involves another integral over the group parameters, one
 obtains the $m$th irreducible subspace contribution to the classical trace as
 \beq
@@ -220,8 +220,8 @@ trace \refeq{e-ClassicalTraceFormula} from the projections
 \refeq{e-ReducedTraceFormula} of the $0$th irreducible subspace. For the $\SOn{2}$ case at hand, these can be written
 explicitly as
 \beq
-\sum_{\alpha=0}^{\infty} \frac{1}{s-s_{0, \alpha}} = \sum_p T_p
-\sum_{r=1}^{\infty} \frac{e^{r(\beta \Obser_p - s T_p)}}{\oneMinJred{r}} \, .
+\sum_{\alpha=0}^{\infty} \frac{1}{s-s_{0, \alpha}} = \sum_p \period{p}
+\sum_{r=1}^{\infty} \frac{e^{r(\beta \Obser_p - s \period{p})}}{\oneMinJred{r}} \, .
 \ee{e-tracem0}
 This form differs from the classical trace formula
 \refeq{e-ClassicalTraceFormula} only by the use of the reduced monodromy matrix
@@ -249,7 +249,7 @@ $\monodromy \rightarrow \monodromyRed$. We start by defining the
 `spectral determinant':
 \beq
   \det (s-\Aop) = \exp \left( - \sum_p \sum_{r=1}^{\infty}
-      \frac{1}{r} \frac{e^{r(\beta \Obser_p - s T_p)}}{\oneMinJ{r}} \right)\, ,
+      \frac{1}{r} \frac{e^{r(\beta \Obser_p - s \period{p})}}{\oneMinJ{r}} \right)\, ,
 \ee{e-SpectralDeterminant}
 whose logarithmic derivative ($(d/ds) \ln \det(s - \Aop)$) gives
 the classical trace formula \refeq{e-ClassicalTraceFormula}.
@@ -273,7 +273,7 @@ spectral determinant \refeq{e-SpectralDeterminant} to a product (over prime
 cycles) known as the dynamical zeta function:
 \beq
 1 / \zeta = \prod_p (1 - t_p) \, \mbox{where}, \, t_p = \frac{1}{|\ExpaEig_p|}
-            e^{\beta \Obser_p - s T_p} z^{n_p} .
+            e^{\beta \Obser_p - s \period{p}} z^{n_p} .
 \ee{e-DynamicalZeta}
 Each `cycle weight' $t_p$ is multiplied by the `order tracking term' $z^{n_p}$,
 where $n_p$ is the topological length of the $p$th prime cycle. This polynomial
@@ -358,7 +358,7 @@ length of cycles and pseudocycles. We start with the following form of the
 spectral determinant \refeq{e-SpectralDeterminant}
 \beq
     \det (s-\Aop) =   \prod_p \exp \left( - \sum_{r=1}^{n_p r < N}
-                             \frac{1}{r} \frac{e^{r(\beta \Obser_p - s T_p)}
+                             \frac{1}{r} \frac{e^{r(\beta \Obser_p - s \period{p})}
                                           }{\oneMinJ{r}} z^{n_p r} \right) \, ,
 \ee{e-SpectralDeterminantExp}
 where the sum over the prime cycles in the exponential becomes a
@@ -367,18 +367,21 @@ repeats at the expansion order $N$. For each prime cycle, we compute the sum in
 \refeq{e-SpectralDeterminantExp} and expand the exponential up to order
 $N$. We then multiply this expansion with the contributions from previous cycles
 and drop terms with order greater than $N$. This way, after setting $z=1$,
-we obtain the $N^{th}$ order spectral determinant, which we denote as
+we obtain the spectral determinant truncated to cycles and pseudo-cycles of
+topological length up to $\cl{\pi} \leq N$,
 \beq
     F_N(\beta , s) = 1 - \sum_{n=1}^{N} Q_n(s, \beta ) \, .
     \label{e-NthOrderSpectDet}
 \eeq
-Remember that we are searching for the eigenvalues $s ( \beta)$ of the
-operator \Aop,
-more specifically, we would like to compute the moments \refeq{eq-moments}.
-$s ( \beta)$ are located at the zeros of the spectral determinant, hence they
-satisfy the implicit equation
+In what follows, we shall drop the subscript, $F_N \to F$, but actual
+calculations are always done for a range of finite topological truncation
+lengths $N$. Remember that we are searching for the eigenvalues $s (
+\beta)$ of the operator \Aop\ in order to compute the moments
+\refeq{eq-moments}. $s ( \beta)$ are located at the zeros of the spectral
+determinant, hence as  function of $\beta$ they satisfy the implicit
+equation
 \beq
-    F_N(\beta, s(\beta )) = 0 \, .
+    F(\beta, s(\beta )) = 0 \, .
     \label{e-FNimplicit}
 \eeq
 By taking derivative of \refeq{e-FNimplicit} with respect to $\beta$ and
@@ -390,49 +393,45 @@ applying chain rule we obtain
 Higher order derivatives can be evaluated similarly.
 \revision{Defining
 \bea
-    \langle \Obser \rangle_N &=& - \left. \partial F_N / \partial \beta
-                                \right|_{\beta=0, s=s (0)}
-                                \, , \label{e-ObserAvg} \\
-	\langle \period{} \rangle_N &=& \left. \partial F_N / \partial s
-                            \right|_{\beta=0, s=s (0)}
-                         \, , \label{eq-Tavg} \\
-    \langle \Obser^2 \rangle_N &=&
-    	- \left. \partial^2 F_N / \partial \beta^2
-          \right|_{\beta=0, s=s (0)}
-          \, , \label{e-Obser2Avg} \\
-    \langle \Obser \period{} \rangle_N &=&
-    	  \left. \partial^2 F_N / \partial \beta \partial s
-          \right|_{\beta=0, s=s (0)}
+    \langle \Obser \rangle &=& -  \partial F / \partial \beta
+                               \label{e-ObserAvg} \\
+	\langle \period{} \rangle &=&  \partial F / \partial s
+                    \,,\qquad
+	\langle \period{}^2 \rangle \,=\,  \partial^2 F / \partial s^2
+                        \label{eq-Tavg} \\
+    \langle \Obser^2 \rangle &=&
+    	-  \partial^2 F / \partial \beta^2
+          \label{e-Obser2Avg} \\
+    \langle \Obser \period{} \rangle &=&
+    	   \partial^2 F / \partial \beta \partial s
           \, , \label{e-ObserTAvg}
 \eea
 we write the \cycForm s as
 \bea
-    \langle \obser \rangle_N
-            &=&  \left.
-                  - \frac{\pde F_N}{\pde \beta} \,\Big/\, \frac{\pde F_N}{\pde s}
-                  \right|_{\beta=0, s=s (0)} \, , \continue
-            &=& \frac{\langle \Obser \rangle_N}{\langle \period{} \rangle_N } \, ,
+    \langle \obser \rangle
+            &=& \langle \Obser \rangle / \langle \period{} \rangle \, ,
     \label{e-Avga} \\
-   \Delta_{\obser, N}
-            &=&  \small{
-  - \left.\frac{
-          \frac{\pde^2 F_N}{\pde \beta^2}
-           \,+\, 2 \frac{d s}{d\beta}
-              \frac{\pde^2 F_N}{\pde \beta  \pde s}
+   \Delta
+            &=&
+           \frac{ 1~}{\langle \period{} \rangle}\left(
+          \langle \Obser^2 \rangle
+           \,-\, 2 \frac{d s}{d\beta}
+              \langle \Obser \period{} \rangle
            \,+\, \left(\frac{d s}{d \beta}\right)^2
-                      \frac{\pde^2 F_N}{\pde s^2}
-           }{\frac{\pde F_N}{\pde s}}\right|_{\beta=0, s=s (0)}}
-           \, , \continue
+                       \langle \period{}^2 \rangle \right)
+           \continue
            &=&
-   \frac{ 1~}{\langle \period{} \rangle_N}
-   \langle (\Obser-\period{}\,\langle  \obser \rangle)^2 \rangle_N
+   \frac{ 1~}{\langle \period{} \rangle}
+   \langle (\Obser-\period{}\,\langle  \obser \rangle)^2 \rangle
     \label{e-Avgsigma} \, ,
 \eea
-}By probability conservation, we expect that for an invariant measure
+with everything evaluated at $\beta=0$, $s=s (0)$.
+}
+By probability conservation, we expect that for an invariant measure
 $\rho_0(\ssp)$, the eigenvalue $s(0)$ is $0$. However, we did not make
 this substitution in \cycForm s since, in practice, our approximation of
 the spectral determinant is always of a finite precision, so that the
-solution of $F_N(0, s(0)) = 0$ is small, but not exactly $0$. This
+solution of $F(0, s(0)) = 0$ is small, but not exactly $0$. This
 eigenvalue has a special meaning: It indicates how well the \po s cover
 the strange attractor. Following this interpretation, we define $\gamma =
 - s(0)$ as the `escape rate': the rate at which the dynamics escape the
@@ -467,15 +466,16 @@ $\Obser_p = \ln |\Lambda_{p,e}|$ logarithm of the expanding Floquet
 multiplier of $\Lambda_{p,e}$ the prime cycle $p$.
 
 In \refsect{s:visual}, we explained that \SOn{2} phase shifts correspond
-to the drifts in the analogous configuration space. We now define the
-\revision{corresponding diffusion constant as
+to the drifts in the configuration space. We define the
+\revision{corresponding diffusion coefficient as
 \beq
     D = \frac{1}{2 d}         \lim_{\zeit \rightarrow \infty} \frac{1}{\zeit}
-        \langle (\theta(\zeit))^2 - \langle \theta(\zeit) \rangle^2 \rangle
-      = \frac{\Delta_{\theta}}{2}
+        \langle \theta(\zeit)^2 - \langle \theta(\zeit) \rangle^2 \rangle
+%      = \frac{\Delta_{\theta}}{2}
 \,,
 \eeq
-}where $d=1$ since the configuration space is one dimensional.
+}
+where $d=1$ since the configuration space is one dimensional.
 \PC{2014-11-11: this looks wrong. The full \statesp\ is 4\dmn,
 this diffusion seems to be defined relative to \slice, which is 3\dmn.
 Have to seriously rethink this - you might well be right.}
@@ -483,7 +483,7 @@ Have to seriously rethink this - you might well be right.}
 \refTab{t-DynamicalAverages} and \reftab{t-DynamicalAveragesNoGrammar} shows
 the cycle averages of the escape rate $\gamma$, mean period
 $\langle T \rangle$, leading Lyapunov exponent $\Lyap$, mean phase velocity
-$\langle \dot{\theta} \rangle$ and the diffusion constant $D$ respectively
+$\langle \dot{\theta} \rangle$ and the diffusion coefficient $D$ respectively
 with and without the finite grammar approximation. In the latter, we input
 all the \rpo s we have found into the expansion
 \refeq{e-SpectralDeterminantExp}, whereas in the former, we discarded the
@@ -537,13 +537,14 @@ cycles with symbol sequence `00'.
     $D$ with respect to the expansion order $N$ .}
     \label{t-DynamicalAveragesNoGrammar}
 \end{table}
-In \refsect{s-CycExp}, we motivated the finite grammar approximation by expecting a faster convergence
-due to the nearly exact shadowing combinations of the golden mean zeta function
-\DB{2014-11-11}{What's with $G69$ here}.\refeq{e-GoldenMeanCycleExpansion} This claim is clearly supported by the
-data in \reftab{t-DynamicalAverages}\DB{2014-11-11}{Table numbering is all screwy} and
-\reftab{t-DynamicalAveragesNoGrammar}. Take, for example, the Lyapunov exponent
-which converges to $7$ digits for the $12^{th}$ order expansion when using the finite
-grammar approximation
+In \refsect{s-CycExp}, we motivated the finite grammar approximation by
+expecting a faster convergence due to the nearly exact shadowing
+combinations of the golden mean zeta function
+\refeq{e-GoldenMeanCycleExpansion}. This claim is supported by the data
+in \reftab{t-DynamicalAverages}
+and \reftab{t-DynamicalAveragesNoGrammar}. Take, for example, the
+Lyapunov exponent which converges to $7$ digits for the $12^{th}$ order
+expansion when using the finite grammar approximation
 \reftab{t-DynamicalAverages}, only converges to $4$ digits at this order in
 \reftab{t-DynamicalAveragesNoGrammar}. Other observables compare similarly in
 terms of their convergence in both cases. Note, however, that the escape rate
@@ -562,5 +563,8 @@ $\timeAver{\Lyap} = 0.1198 \pm 0.0008$. While the finite grammar
 estimate $\Lyap_{FG} = 0.1183$ is within $0.6\%$ range of this value,
 the full cycle expansion agrees with the numerical estimate. This is not
 surprising, since in the finite grammar approximation, we discard the
-most unstable cycles, thus, obtaining a slightly smaller Lyapunov
+most unstable cycles, thus, obtaining a slight underestimate of the Lyapunov
 exponent while obtaining a significantly better convergence.
+
+
+\renewcommand{\zeit}{\ensuremath{\tau}}  %time variable
