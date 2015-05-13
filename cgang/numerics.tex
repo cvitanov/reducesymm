@@ -16,7 +16,7 @@ think it's necessary.}\DB{2014-11-10}{Dropped color coding from main text since 
 Reworded a little to make Poincare section definition more precise and make our work repeatable. Also see comments in figure caption.}
 We then project these points onto a basis $(v_1, v_2)$, which
 spans the Poincar\'e section and fit cubic splines to the data as shown in \reffig{fig:psectandretmap}\,(b).
-We then construct a return map along this curve and express this in terms of the distance $s$ from \REQV{}{}
+This allows us to construct a return map along this curve, which can be expressed in terms of the distance $s$ from \REQV{}{}
 as measured by the arc length along the cubic spline fit. The resulting map, which is shown in
 \reffig{fig:psectandretmap}\,(c), is unimodal with a sharp cusp located at its critical point.
 Note that the region $s \in (0, 0.6)$ corresponds to
@@ -32,24 +32,23 @@ accessible \rpo s  with their respective binary symbol sequences.
   (c) \includegraphics[height=0.19\textwidth]{BBretmaponslice} \\
   (d) \includegraphics[width=0.40\textwidth]{BBretmaponsliceZoom}
 \caption{(Color online)
-         (a) Symmetry-reduced ergodic trajectory within the slice hyperplane 
+         (a) A Symmetry-reduced ergodic trajectory within the slice hyperplane 
              (blue). Green arrows indicate the real and imaginary parts of the 
-             complex eigenvectors $v_u$ which span the unstable manifold of 
+             complex eigenvectors $v_u$ that span the unstable manifold of 
              \REQV{}{}. The Poincar\'e section, which contains \REQV{}{} and 
              is spanned by $\Im[v_u]$ and $\hat{y}_2$, is visualized as a 
-             transparent plane. Points where the flow crosses the are marked 
+             transparent plane. Points where the flow crosses the section are marked 
              in red.
-		 (b) Poincar\'e section shown in (a) projected on to two dimensions, 
-		 	 where $v_{1,2}$ are the basis which spans the section hyperplane.
+		 (b) \revision{A closer look at the Poincar\'e section shows that the attractor is very thin.
 		 	 Note that the vertical axis, which corresponds to the direction 
 		 	 parallel to $\hat{y}_2$ is magnified by $100$. All (blue) points 
-		 	 are located relative to the \REQV{}{}, which it self is on the origin.
-		 	 Black curve is a cubic spline interpolation to this data set.		  	
-		 (c) Return map of the arclengths (along the interpolation curve, measured
-		     from the origin \REQV{}{}) of Poincar\'e section data shown in (b). 
+		 	 are located relative to the \REQV{}{}, which is at the origin.
+		 	 The black curve is a cubic spline interpolation of the data.		  	
+		 (c) By measuring arclengths $s$ along the interpolation curve, a return map 
+		 of the Poincar\'e section can be constructed.} 
 			 Note that once the flow exits the neighborhood of the \REQV{}{} 
 			 ($s < 0.6$) it stays on the attractor and never comes back. Thus the data 
-			 up to this is transient.
+			 up to this point is transient.
 		 (d) The return map without the transient points framed by orbit of the 
 		     critical point. Dashed lines show the 3-cycles \cycle{001} (red) and 
 		     \cycle{011} (cyan).}
@@ -60,7 +59,7 @@ The unimodal return map of \reffig{fig:psectandretmap} diverges around
 $s \approx 0.98$ and this neighborhood is visited very rarely by the flow. We
 took the furthest point that is visited by the ergodic flow, $s_C=0.98102264$
 as the critical point of this map and coded points to the left and right hand sides of this
-point as `0' and `1', respectively, to construct binary symbolic dynamics.
+point as `0' and `1', respectively, and constructed a binary symbolic dynamics.
 Accessible periodic orbits are then those with the topological coordinates
 less than that of this critical point. We skip the technical details
 regarding symbolic dynamics and kneading theory in this tutorial since
@@ -73,11 +72,10 @@ Suppose the binary itinerary
 $\cycle{I_0 I_1 \dots\ I_{n-1}}, \mbox{where,}\, I_j = 0,1$
 corresponds to an admissible `n-cycle', a \rpo\ that intersects our Poincar\'e
 section n-times. We first find arc-lengths $\{s_0,\,s_1,\,\dots\,s_n\}$ that
-constitutes this cycle on the return map \reffig{fig:psectandretmap}\,(d). We
+constitute this cycle on the return map \reffig{fig:psectandretmap}\,(d). We
 then find corresponding reduced \statesp\ points
-$\{\sspRed_0,\,\sspRed_1,\,\dots\, \sspRed_{n-1}\}$. Finally we integrate the
-reduced flow and the phase \refeq{eq:so2reduced} starting from each found
-reduced \statesp\ point $\sspRed_j$ until it returns to the Poincar\'e
+$\{\sspRed_0,\,\sspRed_1,\,\dots\, \sspRed_{n-1}\}$. Finally, we integrate the
+reduced flow and the phase \refeq{eq:so2reduced} starting from each point $\sspRed_j$ until it returns to the Poincar\'e
 section, and divide this trajectory into $N$ small pieces. As a result, we obtain
 $n \times N$ \statesp\ points, durations and phase shifts
 $\{\ssp_i^{(0)}\,,\,\zeit_i^{(0)}\,,\,\theta_i^{(0)}\}$ where
@@ -85,9 +83,9 @@ $i=1,\,2,\,\dots\,n \times N$ , which we feed into the multiple shooting Newton
 solver (see \refappe{s:newton}) to precisely determine the \rpo , its period
 and the associated phase shift. After finding $n \times N$ \statesp\ points
 ($\ssp_i$), flight times ($\zeit_i$), and phase shifts ($\theta_i$) associated
-with the $n$ cycle, we then compute the flow Jacobian associated with each
-piece $\jMps^{\zeit_i}(\ssp_i)$, using which we represent the Jacobian
-associated with the \rpo\ as
+with the $n$ cycle, we can compute the stability of the orbit. We do this by computing 
+the flow Jacobian associated with each segment of the orbit $\jMps^{\zeit_i}(\ssp_i)$, so that 
+the Jacobian associated with the \rpo\ is then
 \bea
     \jMpsRed &=&
     \matrixRep(- \theta_{n \times N} ) \jMps^{\zeit_{n \times N}} (\ssp_{n \times N})
@@ -96,20 +94,20 @@ associated with the \rpo\ as
        \matrixRep(- \theta_1 ) \jMps^{\zeit_1} (\ssp_1) \, .
     \label{e-MultiShootJacobian}
 \eea
-This construction \refeq{e-MultiShootJacobian} of Jacobian is equivalent to our
-definition in \refeq{e-rpoJacobian}, since both group action $\LieEl$ and flow
-Jacobian $\jMps$ are multiplicative and they commute with each other as a
+This construction \refeq{e-MultiShootJacobian} of the Jacobian is equivalent to our
+definition in \refeq{e-rpoJacobian}, since the group action $\LieEl$ and the flow
+Jacobian $\jMps$ are both multiplicative and commute with each other as a
 consequence of $\LieEl$-equivariance of the flow. The form
 \refeq{e-MultiShootJacobian} is essential in determining its eigenvalues
-(Floquet multipliers) precisely for which we utilized periodic Schur
-decomposition (\refappe{s:schur}) .
+(Floquet multipliers) precisely, since it allows us to use periodic Schur
+decomposition, as described in \refAppe{s:schur}.
 
 
 We found the admissible cycles of the
 \twomode\ system up to the topological length 12. We listed binary itineraries
 of shortest $7$ \rpo s (with topological lengths up to 5), along with their
 periods, phase shifts, Floquet multipliers, and Floquet exponents in
-\reftab{t-rpofirst10}. In \reffig{f-2modesrpofirst4} we show shortest $4$ of
+\refTab{t-rpofirst10}. In \reffig{f-2modesrpofirst4} we show shortest $4$ of
 the \rpo s of the \twomode\ system within the first Fourier mode \slicePlane .
 As seen from \reffig{f-2modesrpofirst4}, trajectories of \cycle{001} (red) and
 \cycle{011} (cyan) almost overlap in a large region of the \statesp . This
@@ -117,7 +115,7 @@ behavior is also manifested in the return map of
 \reffig{fig:psectandretmap}\,{d), where we have shown cycles \cycle{001} and
 \cycle{011} with red and cyan respectively. This is a general property of the
 \twomode\ cycles with odd topological lengths: They come in pairs with almost
-equal leading (largest) Floquet exponents , see \reffig{f-2modes-lambdaDist}.
+equal leading (largest) Floquet exponents, see \reffig{f-2modes-lambdaDist}.
 Floquet exponents ($\Lyap_j$) characterize the rate of expansion/contraction
 of nearby perturbations to the \rpo s and are related to Floquet multipliers
 ($\ExpaEig_j$) by
@@ -126,8 +124,9 @@ of nearby perturbations to the \rpo s and are related to Floquet multipliers
                          \ln | \ExpaEig_{\rpprime,j} |
                          \, , \quad j=1,2,\dots,d \, ,
 \eeq
-where the subscript $\rpprime$ indicates `prime \rpo\ $p$' and
-$\period{\rpprime}$ is its period. Having computed periods, phase shifts,
+where the subscript $\rpprime$ associates $\Lyap_{\rpprime,j}$ and $\ExpaEig_j$
+with the `prime \rpo' $p$ and its period
+$\period{\rpprime}$. Having computed periods, phase shifts,
 and Floquet multipliers of \rpo s, we are now ready to calculate dynamical
 averages and other statistical moments of observables using \cycForm s.
 
