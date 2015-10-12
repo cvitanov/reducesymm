@@ -23,8 +23,29 @@
 %  Add 'showpacs' option to make PACS codes appear
 %  Add 'showkeys' option to make keywords appear
 
-\documentclass[aps,pre,preprint,groupedaddress,floatfix]{revtex4-1}
 
+                        %% logical setup, no need to edit %%%%%%%%%%
+                        \newif\ifpaper \newif\ifPDF               %%
+                        \newif\ifOUP \newif\ifboyscout            %%
+                        \newif\ifdasbuch \newif\iftoCB            %%
+                        \newif\ifsolutions \newif\ifblog          %%
+                        \blogtrue                                 %%
+                        \boyscouttrue       %% commented, WWW/drafts %%
+                        \dasbuchtrue %% DasBuch, not QFT lectures %%
+                        \solutionstrue %% include solutions       %%
+                        \paperfalse\PDFtrue %% hyperlinked        %%
+                        \OUPfalse \toCBtrue      %% ChaosBook %%%%%%
+%%%% Toggle between draft and non-draft versions
+%    \boyscoutfalse        % public, for hyperlinked ChaosBook/projects
+
+        \ifboyscout
+\documentclass[aps,pre,showpacs,preprint,groupedaddress,floatfix]{revtex4-1}
+%\documentclass[pre,aps,twocolumn,showpacs,groupedaddress,floatfix,hyperref]{revtex4-1} %or {revtex4-1}
+        \else
+\documentclass[pre,aps,twocolumn,showpacs,
+               superscriptaddress,groupedaddress,floatfix,hyperref]{revtex4} %or {revtex4-1}
+%\documentclass[pre,aps,preprint,showpacs]{revtex4-1} %or {revtex4-1}
+        \fi
 
 \input ../inputs/setupSveZha
 \input ../inputs/editsDasbuch   %% editing comments, DasBuch style
@@ -93,17 +114,75 @@
 
 \section{Introduction}
 
-The advances in the theory of dynamical systems have brought a new life to Boltzmann's mechanical formulation of statistical mechanics. Sinai, Ruelle and Bowen (SRB) have generalized Boltzmann's notion of ergodicity for a constant energy surface for a Hamiltonian system in equilibrium to dissipative systems in {nonequilibrium} stationary states. In this more general setting the attractor plays the role of a constant energy surface, and the SRB measure x is a generalization of the Liouville measure. Such measures are purely microscopic and indifferent to whether the system is at equilibrium, close to equilibrium or far from it. ``Far for equilibrium'' in this context refers to systems with large deviations from Maxwell's equilibrium velocity distribution. Furthermore, the theory of dynamical systems has yielded new sets of microscopic dynamics formulas for macroscopic observables such as diffusion constants, to which we turn now.
+The advances in the theory of dynamical systems have brought a new life
+to Boltzmann's mechanical formulation of statistical mechanics. Sinai,
+Ruelle and Bowen (SRB) have generalized Boltzmann's notion of ergodicity
+for a constant energy surface for a Hamiltonian system in equilibrium to
+dissipative systems in {nonequilibrium} stationary states. In this more
+general setting the attractor plays the role of a constant energy
+surface, and the SRB measure x is a generalization of the Liouville
+measure. Such measures are purely microscopic and indifferent to whether
+the system is at equilibrium, close to equilibrium or far from it. ``Far
+for equilibrium'' in this context refers to systems with large deviations
+from Maxwell's equilibrium velocity distribution. Furthermore, the theory
+of dynamical systems has yielded new sets of microscopic dynamics
+formulas for macroscopic observables such as diffusion constants, to
+which we turn now.
 
-Chaotic motions exist in many systems. There are physical problems such as beam defocusing in particle accelerators (ref?) or chaotic behavior of passive tracers in $2$\dmn\ rotating flows~\cite{solomon1994chaotic} which can be described as deterministic diffusion in periodic arrays. In biological field, many important dynamical processes (often at cellular level) are described in terms of diffusion coefficients. Such examples include the transport of ions across the cell membranes~\cite{stein2012transport} and the movement of microorganism (e.g. bacterials) through natural ecosystems~\cite{koch1990diffusion}. In this paper we will discuss the transport property of more "macroscopic" systems (such as moving robots~\cite{saranli2001rhex}) where a ``diffusive description'' also applies. 
+Chaotic motions exist in many systems. There are physical problems such
+as beam defocusing in particle accelerators (ref?) or chaotic behavior of
+passive tracers in $2$\dmn\ rotating flows~\cite{solomon1994chaotic}
+which can be described as deterministic diffusion in periodic arrays. In
+biological field, many important dynamical processes (often at cellular
+level) are described in terms of diffusion coefficients. Such examples
+include the transport of ions across the cell
+membranes~\cite{stein2012transport} and the movement of microorganism
+(e.g. bacterials) through natural ecosystems~\cite{koch1990diffusion}. In
+this paper we will discuss the transport property of more "macroscopic"
+systems (such as moving robots~\cite{saranli2001rhex}) where a
+``diffusive description'' also applies.
 
-Lately, there has been an increased focus on robot locomotion in complex environments (check Science and ROPP reference, the systematic study of interactions between environment and locomotion, which we now called ``robophysics''). Many of those studies uses substrates that are spatially homogeneous and we have a relatively good understanding of it~\cite{li2009sensitive, li2013terradynamics}. However, little is known for locomotion in heterogeneous environment and there are only limited experiment/theory study in relative simple settings. In this paper we intend to understand the longterm transport properties of motion on heterogeneous terrain. The potential applications of this study such mars navigation, hazardous rescue.
+Lately, there has been an increased focus on robot locomotion in complex
+environments (check Science and ROPP reference, the systematic study of
+interactions between environment and locomotion, which we now called
+``robophysics''). Many of those studies uses substrates that are
+spatially homogeneous and we have a relatively good understanding of
+it~\cite{li2009sensitive, li2013terradynamics}. However, little is known
+for locomotion in heterogeneous environment and there are only limited
+experiment/theory study in relative simple settings. In this paper we
+intend to understand the longterm transport properties of motion on
+heterogeneous terrain. The potential applications of this study such mars
+navigation, hazardous rescue.
 
-We abstract the locomotion problem into the simplest setting. A passively controlled robot is moving in a boulder field at constant speed. We would want to study the long term dynamics of the system. The diffusion coefficient, which describes roughly how much area the robot explored in a unit time, is the key quantity here. We may place the boulder in a regular, periodic array and assume that we are in the heavy boulder limit such that after each collision event, only the robot is deflected and boulders remain immobilized. With these presumptions we effectively created a periodic Lorentz gas model~\cite{} for locomotion in a boulder field.
+We abstract the locomotion problem into the simplest setting. A passively
+controlled robot is moving in a boulder field at constant speed. We would
+want to study the long term dynamics of the system. The diffusion
+coefficient, which describes roughly how much area the robot explored in
+a unit time, is the key quantity here. We may place the boulder in a
+regular, periodic array and assume that we are in the heavy boulder limit
+such that after each collision event, only the robot is deflected and
+boulders remain immobilized. With these presumptions we effectively
+created a periodic Lorentz gas model~\cite{} for locomotion in a boulder
+field.
 
-In the paper We apply cycle expansions to the analysis of {\em diffusion} properties of the system. The resulting formulas are exact; no probabilistic assumptions are made, and the all correlations are taken into account by the inclusion of cycles of all periods. The infinite extent systems for which the periodic orbit theory yields formulas for diffusion and other transport coefficients are spatially periodic, the global {\statesp} being tiled with copies of a elementary cell.
+In the paper We apply cycle expansions to the analysis of {\em diffusion}
+properties of the system. The resulting formulas are exact; no
+probabilistic assumptions are made, and the all correlations are taken
+into account by the inclusion of cycles of all periods. The infinite
+extent systems for which the periodic orbit theory yields formulas for
+diffusion and other transport coefficients are spatially periodic, the
+global {\statesp} being tiled with copies of a elementary cell.
 
-In \refsect{s-DiffPerArr} we briefly review the formulas for diffusion coefficients in a simple physical setting, the $2$\dmn\ periodic Lorentz gas, using dynamics restricted in elementary cell. In\refsect{s-SymmetryReduction} we consider further the rotational symmetry of the lattice and derive the diffusion coefficients using fundamental domain cycles. Because we will work with different kinds of \statesp s, through out the text we will repeatedly using tildes ($\tilde{\quad}$), nothings and hats ($\hat{\quad}$) atop symbols to signify the dynamical quantities in fundamental domain, elementary cell and full state space, respectively.
+In \refsect{s-DiffPerArr} we briefly review the formulas for diffusion
+coefficients in a simple physical setting, the $2$\dmn\ periodic Lorentz
+gas, using dynamics restricted in elementary cell.
+In\refsect{s-SymmetryReduction} we consider further the rotational
+symmetry of the lattice and derive the diffusion coefficients using
+fundamental domain cycles. Because we will work with different kinds of
+\statesp s, through out the text we will repeatedly using tildes
+($\tilde{\quad}$), nothings and hats ($\hat{\quad}$) atop symbols to
+signify the dynamical quantities in fundamental domain, elementary cell
+and full state space, respectively.
 
 \section{Diffusion in periodic arrays}
 \label{s-DiffPerArr}
@@ -112,31 +191,64 @@ In \refsect{s-DiffPerArr} we briefly review the formulas for diffusion coefficie
 \begin{center}
 \includegraphics[width=0.45\textwidth]{diffuseChaoticBouncing}
 \end{center}
-\caption[]{\label{fig-chaoticBouncing} Chaos in the Lorentz gas system. A ``gas'' particle is bouncing in the array of disks arranged in a hexagonal lattice pattern. The distance between the disks are close enough such that the particle has no infinite free flight (finite horizon). }
+\caption[]{\label{fig-chaoticBouncing}
+    Chaos in the Lorentz gas system. A ``gas'' particle is bouncing in
+    the array of disks arranged in a hexagonal lattice pattern. The
+    distance between the disks are close enough such that the particle
+    has no infinite free flight (finite horizon). }
 \end{figure}
 
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[width=0.45\textwidth]{diffuseSchreiberFig1}
 \end{center}
-\caption[]{\label{fig-schrieberFig1}Motion in fundamental domain (top left), elementary cell (top right) and in full space (bottom).}
+\caption[]{\label{fig-schrieberFig1}
+    Motion in fundamental domain (top left), elementary cell (top right)
+    and in full space (bottom).}
 
 \end{figure}
 
-The $2$\dmn\ Lorentz gas is an infinite scatterer array in which diffusion of a light molecule in a gas of heavy scatterers is modeled by the motion of a point particle in a plane bouncing off an array of reflecting disks. The Lorentz gas is called ``gas'' as one can equivalently think of it as consisting of any number of point-like fast ``light molecules'' interacting only with the stationary ``heavy molecules'' and not among themselves.  As the scatterer array is built up from only defocusing concave surfaces, it is a pure hyperbolic system, and one of the simplest nontrivial dynamical systems that exhibits deterministic diffusion, \reffig{fig-chaoticBouncing}.
+The $2$\dmn\ Lorentz gas is an infinite scatterer array in which
+diffusion of a light molecule in a gas of heavy scatterers is modeled by
+the motion of a point particle in a plane bouncing off an array of
+reflecting disks. The Lorentz gas is called ``gas'' as one can
+equivalently think of it as consisting of any number of point-like fast
+``light molecules'' interacting only with the stationary ``heavy
+molecules'' and not among themselves.  As the scatterer array is built up
+from only defocusing concave surfaces, it is a pure hyperbolic system,
+and one of the simplest nontrivial dynamical systems that exhibits
+deterministic diffusion, \reffig{fig-chaoticBouncing}.
 
 % The original Lorentz gas assumed a random distribution of heavy
 % scatterers; in this case a probabilistic description is unavoidable.
 \subsection{Formulation of Cycle Expansion Theory}
-In \refref{cvitanovic1992investigation} we have shown that the {\em  periodic} Lorentz  gas is amenable to a purely deterministic treatment, and have derived the cycle expansion formula to calculate global dynamical quantities such like Lyapunov exponent and diffusion coefficient, using dynamics in the elementary cell. For any dynamical system that has translational symmetry, the full state space $\hM$ (i.e., both spatial coordinates and momenta) has a periodic tiling \[\hM=\bigcup_{ \hn \in T} \pS_{\hn},\] by {\em translating} $\pS_{\hn}$ of an {\em elementary cell} $\pS$, with $T$ the abelian group of lattice translations. 
+In \refref{CGS92} we have shown that the {\em  periodic} Lorentz  gas is
+amenable to a purely deterministic treatment, and have derived the cycle
+expansion formula to calculate global dynamical quantities such like
+Lyapunov exponent and diffusion coefficient, using dynamics in the
+elementary cell. For any dynamical system that has translational
+symmetry, the full state space $\hM$ (i.e., both spatial coordinates and
+momenta) has a periodic tiling \[\hM=\bigcup_{ \hn \in T} \pS_{\hn},\] by
+{\em translating} $\pS_{\hn}$ of an {\em elementary cell} $\pS$, with $T$
+the abelian group of lattice translations.
 
-In the context of Lorentz gas system, the elementary cell is the hexagon region (\reffig{fig-schrieberFig1}) centered at the scatterer. The dynamics restricted inside the elementary cell is understood as the periodic boundary condition: when the particle leaves the edge of the hexagon cell, it immediately enters the region again from the opposite edge. We distinguish two types of diffusive behavior; the {\em infinite horizon} case, which allows for infinite length flights, and the {\em finite horizon} case, where any free particle trajectory must hit a disk in finite time. The transition between horizon and infinite horizon is controlled by the ratio of $w/r$, where $w$ is the gap between nearest pair of disk and $r$ the radius of the disk.   
+In the context of Lorentz gas system, the elementary cell is the hexagon
+region (\reffig{fig-schrieberFig1}) centered at the scatterer. The
+dynamics restricted inside the elementary cell is understood as the
+periodic boundary condition: when the particle leaves the edge of the
+hexagon cell, it immediately enters the region again from the opposite
+edge. We distinguish two types of diffusive behavior; the {\em infinite
+horizon} case, which allows for infinite length flights, and the {\em
+finite horizon} case, where any free particle trajectory must hit a disk
+in finite time. The transition between horizon and infinite horizon is
+controlled by the ratio of $w/r$, where $w$ is the gap between nearest
+pair of disk and $r$ the radius of the disk.
 
 We shall now relate the dynamics in $\pS$ to diffusive properties of the Lorentz gas in $\hM$. Let $\hx(t)\,=\,\hflow{}{\hx_0}$ denotes the point in the global space $\hM$ reached by the flow in time $t$. $x(t)\,=\,\flow{}{\xInit}$ denotes the corresponding flow in the elementary cell; the two are related by
 \beq
 \hn_t(\xInit)= \hflow{\xInit} - \flow{\xInit} \in T
 \,,
-\ee{l-diff-hatn} 
+\ee{l-diff-hatn}
 the translation of the endpoint of the global path into the elementary cell $\pS$.
 
 Fix a vector $\beta \in \reals^d$, where $d$ is the dimension of the {\statesp}. We will compute the diffusive properties of the Lorentz gas from the leading eigenvalue of the Rulle-Frobenius-Perron \evOper\
@@ -144,7 +256,7 @@ Fix a vector $\beta \in \reals^d$, where $d$ is the dimension of the {\statesp}.
 \eigenvL(\beta)\,=\, \lim_{t \rightarrow \infty} \frac{1}{t} \log
 \langle e^{\beta \cdot (\hx(t) -x) } \rangle_\pS
 ~, \quad
-\ee{lor-diff-1} 
+\ee{lor-diff-1}
 where the average is over all initial points in the elementary cell, $x \in \pS$. %, $\tx \in {\widetilde \pS}$ respectively.
 
 If all odd derivatives vanish by symmetry, there is no drift and the second derivatives
@@ -155,7 +267,7 @@ If all odd derivatives vanish by symmetry, there is no drift and the second deri
 \eigenvL(\beta)\right |_{\beta=0} \,=\,\lim_{t\rightarrow \infty} {1\over t}
 \langle {(\hx(t) -x)_i (\hx(t) -x)_j } \rangle_\pS ~,
 \]
-yield a diffusion matrix.  This symmetric matrix can, in general, be anisotropic (\ie, have $d$ distinct eigenvalues and eigen\-vectors). The spatial diffusion constant is then given by the Einstein relation 
+yield a diffusion matrix.  This symmetric matrix can, in general, be anisotropic (\ie, have $d$ distinct eigenvalues and eigen\-vectors). The spatial diffusion constant is then given by the Einstein relation
 \[
 D\,=\,{1\over 2 d} \sum_i
 \left .{{\partial}^2 \over {\partial \beta^2_i}}
@@ -249,11 +361,11 @@ Elementary cell symbolic dynamics is obtained by labeling the translation vector
 \end{center}
 \caption{\label{fig-7diskFundDflips} (a) The three generators of tiling of the plane by a fundamental domain: two generators of \Dn{12} tiling, reflection $s$ across the short disk-disk separation, reflection  $\ell$  across the long disk-disk separation; and a translation generator $f$ that pivots (`flips') a disk center to disk center by flip across the symmetry line normal to the short disk-disk separation. (5) Tiling of the 7-disk by copies of the fundamental domain, labelled by a (not unique) sequence of the three generators $\{s,\ell,f\}$, chosen so that each sequence contain one and only on disk-to-disk pivot $f$. }
 \end{figure}
-XX I do not really use the three generators to compute the FD domain cycles, instead I use the idea of topological flights (\reffig{fig-fdflights}). 
+XX I do not really use the three generators to compute the FD domain cycles, instead I use the idea of topological flights (\reffig{fig-fdflights}).
 
 \subsection{How point group changes translation}
 
-Starting from each point on the cycle, the translation in full space is different after completion of one cycle. 
+Starting from each point on the cycle, the translation in full space is different after completion of one cycle.
 
 
 
@@ -429,14 +541,13 @@ $\lambda = 1.760 \pm 0.002$, which supports the result of this table.''
 % put your acknowledgments here.
 %\end{acknowledgments}
 
-Test of the temporary diffuse specific bibliography - \refref{RoMo08a}
-is a repeat, for testing purpose only.
-% Create the reference section using BibTeX:
 \bibliography{../bibtex/siminos,../bibtex/diffuse}
 
-\PublicPrivate{}{% switch \PublicPrivate{
+        \ifboyscout
+%\PublicPrivate{}{% switch \PublicPrivate{
+\newpage
 \input ../tingnan/flotsam
-      }% end \PublicPrivate{
+%      }% end \PublicPrivate{
 
 
 \end{document}
