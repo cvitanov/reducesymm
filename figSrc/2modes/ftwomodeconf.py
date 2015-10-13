@@ -91,13 +91,13 @@ im = plt.pcolormesh(x, y, usolreqv[range(0,np.size(treqv),10),:], shading='goura
 
 plt.axis([x.min(), x.max(), y.min(), y.max()])
 
-plt.xticks([x[0],x[np.floor(np.size(x)/2)],x[-1]], ('$-\pi / 2$', '$0$', '$\pi / 2$'), fontsize=32)
+plt.xticks([x[0],x[np.floor(np.size(x)/2)],x[-1]], ('$-\pi$', '$0$', '$\pi$'), fontsize=32)
 plt.yticks([0,tfreqv/2.0,tfreqv], 
 ('$'+str(0)+'$', '$'+str(tfreqv/2)[0:2]+'$', '$'+str(tfreqv)[0:2]+'$'), fontsize=32)
 plt.xlabel('$x$', fontsize=40)
-plt.ylabel('$t$', fontsize=40)
+plt.ylabel('$\\tau$', fontsize=40)
 
-savefig('2modes-conf-reqv.png', bbox_inches='tight', dpi=100)
+savefig('2modes-conf-reqv.png', bbox_inches='tight', dpi=150)
 call(['convert', '-trim', '2modes-conf-reqv.png', '2modes-conf-reqv.png'])
 
 fig.clf()
@@ -109,13 +109,13 @@ im = plt.pcolormesh(x, y, uhatsolreqv[range(0,np.size(treqv),10),:], shading='go
 
 plt.axis([x.min(), x.max(), y.min(), y.max()])
 
-plt.xticks([x[0],x[np.floor(np.size(x)/2)],x[-1]], ('$-\pi / 2$', '$0$', '$\pi / 2$'), fontsize=32)
+plt.xticks([x[0],x[np.floor(np.size(x)/2)],x[-1]], ('$-\pi$', '$0$', '$\pi$'), fontsize=32)
 plt.yticks([0,tfreqv/2.0,tfreqv], 
 ('$'+str(0)+'$', '$'+str(tfreqv/2)[0:2]+'$', '$'+str(tfreqv)[0:2]+'$'), fontsize=32)
 plt.xlabel('$x$', fontsize=40)
-plt.ylabel('$t$', fontsize=40)
+plt.ylabel('$\\tau$', fontsize=40)
 
-savefig('2modes-confred-reqv.png', bbox_inches='tight', dpi=100)
+savefig('2modes-confred-reqv.png', bbox_inches='tight', dpi=150)
 call(['convert', '-trim', '2modes-confred-reqv.png', '2modes-confred-reqv.png'])
 
 fig.clf()
@@ -127,13 +127,13 @@ im = plt.pcolormesh(x, y, usolrpo[range(0,np.size(trpo),10),:], shading='gouraud
 
 plt.axis([x.min(), x.max(), y.min(), y.max()])
 
-plt.xticks([x[0],x[np.floor(np.size(x)/2)],x[-1]], ('$-\pi / 2$', '$0$', '$\pi / 2$'), fontsize=32)
+plt.xticks([x[0],x[np.floor(np.size(x)/2)],x[-1]], ('$-\pi$', '$0$', '$\pi$'), fontsize=32)
 plt.yticks([0,tfrpo/2,tfrpo], 
 ('$'+str(0)+'$', '$'+str(tfrpo/2.0)[0:3]+'$', '$'+str(tfrpo)[0:4]+'$'), fontsize=32)
 plt.xlabel('$x$', fontsize=40)
-plt.ylabel('$t$', fontsize=40)
+plt.ylabel('$\\tau$', fontsize=40)
 
-savefig('2modes-conf-rpo.png', bbox_inches='tight', dpi=100)
+savefig('2modes-conf-rpo.png', bbox_inches='tight', dpi=150)
 call(['convert', '-trim', '2modes-conf-rpo.png', '2modes-conf-rpo.png'])
 
 fig.clf()
@@ -145,13 +145,13 @@ im = plt.pcolormesh(x, y, uhatsolrpo[range(0,np.size(trpo),10),:], shading='gour
 
 plt.axis([x.min(), x.max(), y.min(), y.max()])
 
-plt.xticks([x[0],x[np.floor(np.size(x)/2)],x[-1]], ('$-\pi / 2$', '$0$', '$\pi / 2$'), fontsize=32)
+plt.xticks([x[0],x[np.floor(np.size(x)/2)],x[-1]], ('$-\pi$', '$0$', '$\pi$'), fontsize=32)
 plt.yticks([0,tfrpo/2,tfrpo], 
 ('$'+str(0)+'$', '$'+str(tfrpo/2.0)[0:3]+'$', '$'+str(tfrpo)[0:4]+'$'), fontsize=32)
 plt.xlabel('$x$', fontsize=40)
-plt.ylabel('$t$', fontsize=40)
+plt.ylabel('$\\tau$', fontsize=40)
 
-savefig('2modes-confred-rpo.png', bbox_inches='tight', dpi=100)
+savefig('2modes-confred-rpo.png', bbox_inches='tight', dpi=150)
 call(['convert', '-trim', '2modes-confred-rpo.png', '2modes-confred-rpo.png'])
 
 fig.clf()
@@ -163,13 +163,13 @@ im = plt.pcolormesh(x, y, usolergo[range(0,np.size(tergo),10),:], shading='goura
 
 plt.axis([x.min(), x.max(), y.min(), y.max()])
 
-plt.xticks([x[0],x[np.floor(np.size(x)/2)],x[-1]], ('$-\pi / 2$', '$0$', '$\pi / 2$'), fontsize=32)
+plt.xticks([x[0],x[np.floor(np.size(x)/2)],x[-1]], ('$-\pi$', '$0$', '$\pi$'), fontsize=32)
 plt.yticks([0,tfergo/2.0,tfergo], 
 ('$'+str(0)+'$', '$'+str(tfergo/2.0)[0:2]+'$', '$'+str(tfergo)+'$'), fontsize=32)
 plt.xlabel('$x$', fontsize=40)
-plt.ylabel('$t$', fontsize=40)
+plt.ylabel('$\\tau$', fontsize=40)
 
-savefig('2modes-conf-ergodic.png', bbox_inches='tight', dpi=100)
+savefig('2modes-conf-ergodic.png', bbox_inches='tight', dpi=150)
 call(['convert', '-trim', '2modes-conf-ergodic.png', '2modes-conf-ergodic.png'])
 
 fig.clf()
@@ -181,11 +181,11 @@ im = plt.pcolormesh(x, y, uhatsolergo[range(0,np.size(tergo),10),:], shading='go
 
 plt.axis([x.min(), x.max(), y.min(), y.max()])
 
-plt.xticks([x[0],x[np.floor(np.size(x)/2)],x[-1]], ('$-\pi / 2$', '$0$', '$\pi / 2$'), fontsize=32)
+plt.xticks([x[0],x[np.floor(np.size(x)/2)],x[-1]], ('$-\pi$', '$0$', '$\pi$'), fontsize=32)
 plt.yticks([0,tfergo/2.0,tfergo], 
 ('$'+str(0)+'$', '$'+str(tfergo/2.0)[0:2]+'$', '$'+str(tfergo)+'$'), fontsize=32)
 plt.xlabel('$x$', fontsize=40)
-plt.ylabel('$t$', fontsize=40)
+plt.ylabel('$\\tau$', fontsize=40)
 
-savefig('2modes-confred-ergodic.png', bbox_inches='tight', dpi=100)
+savefig('2modes-confred-ergodic.png', bbox_inches='tight', dpi=150)
 call(['convert', '-trim', '2modes-confred-ergodic.png', '2modes-confred-ergodic.png'])
