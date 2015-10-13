@@ -334,11 +334,30 @@ We will use the same symbolic dynamics developed in \refref{CGS92} and only brie
 \subsection{How point group changes translation}
 
 
-In fundamental domain, one has to realize a few things to proceed the cycle expansion derivation. 
+% In fundamental domain, one has to realize a few things to proceed the cycle expansion derivation. 
 
-The first thing is about G-equivariance of displacement under point group actions, which connects the displacement in full space when starting from elementary cell and fundamental domain. 
+% The first thing is about G-equivariance of displacement under point group actions, which connects the displacement in full space when starting from elementary cell and fundamental domain. 
 
-Also, one notice that after traveling along a fundamental domain cycle once, the displacement in full space depends on where we start from on the cycle.  
+A point $x$ in the elementary cell can be uniquely identified by its ``mirror image'' in the fundamental domain:
+\[
+x=g\circ\tx,
+\]
+given a group action $g\in G$ the discrete symmetry group. In the triangular periodic Lorentz gas the underlying point group is $C_{6v}$ (isomorphic to $D_6$), and the group action partition the hexagon into 12 identical triangular domains. We have to appreciate that $\hflow{}$ is G-equivariant under the lattice group symmetry, and proceed with the argument that the displacement in full space is also equivariant under the point group symmetry (which is a subgroup of the lattice group):
+\beq
+\hn_t(x)\equiv\hn_t(g\circ \tx)= g\circ\hn_t(\tx).
+\eeq
+
+We can apply this fact to the displacement associated with a prime periodic orbit $\tp$ observed in the fundamental domain. Let $\tp\equiv\{\tx_0,\tx_1,\ldots,\tx_{N_\tp}\}$, with topological length $N_\tp$ and $\tx_i$ the bouncing points along the orbit. For each flight (e.g. from $\tx_i$ to $\tx_{i+1}$) we denote the associated displacement in full space $\hn(\tx_i)$. However, one has to be careful when adding the individual displacements together. Unlike in elementary cell, the fundamental domain point $\tx_i$ does not distinguish in which triangular piece it is. Instead, we assign a point group element $g_\tp(\tx_{i+1},\tx_{i})$ to keep track of changes in absolute orientation. We may now write the displacement traveled along the orbit, after finishing a full cycle:
+\[
+\hn_{\tp}(\tx_{0})=\sum_{i=0}^{N_\tp-1}\hn(\tx_{i},g_{\tp,\tx_0}(\tx_{i}))=\sum_{i=0}^{\vert\tp\vert-1}g_{\tp,\tx_{0}}(\tx_{i})\circ\hn(\tx_{i},e),
+\]
+where $g_{\tp,\tx_{0}}(\tx_i)=\prod_0^{j-1} g_\tp(\tx_{j+1},\tx_{j})$ is the accumulated orientation changes along the orbit when starting from $\tx_{0}$. The displacement now has its dependence on the starting point we choose. Though one may not appreciate immediately, we denote the total group action for the orbit \[h_{\tp}(\tx_i)\equiv g_\tp(\tx_{i},\tx_{i-1})\circ\ldots\circ g_\tp(\tx_{0},\tx_{N_\tp-1})\circ g_\tp(\tx_{N_\tp-1},\tx_{N_\tp-2})\circ \ldots\circ g_\tp(\tx_{i+1},\tx_{i}),\] and define the quantity:
+\beq
+\hat{L}_{\tp}^{r}(\tx_i)\equiv (e+\hp^{1}(\tx_i)\cdots+\hp^{r-1}(\tx_i))\cdot\hn_{\tp}(\tx_i),
+\eeq
+to be the displacement traveled along the orbit $r$ times, when starting at $\tx_i$. Although the group action $h_{\tp}(\tx_i)\in G$ depends on the initial points on the orbit, It directly reflects the symmetry of the orbit, and subsequently all $h_{\tp}(\tx_i), \tx_i\in G$ belongs to the \emph{same} subgroup. 
+
+% Also, one notice that after traveling along a fundamental domain cycle once, the displacement in full space depends on where we start from on the cycle.  
 
 \subsection{Gymnastics of equations}
 
@@ -351,24 +370,21 @@ Also, one notice that after traveling along a fundamental domain cycle once, the
 \end{align}
 
 \begin{align}
-\frac{1}{\zeta_{\alpha}(\beta,s,z)} &=\exp\left(-\frac{d_\alpha}{|G|}\sum_{\sigma\in G}\sum_{\tp}\frac{1}{n_{\tp}}\sum_{\tx_{i}\in\tilde{p}}\sum_{r=1}^{\infty}\frac{t_{\tp}^{r}}{r}\chi_{\alpha}(\hp^{r}(\tx_i))e^{\beta\cdot\sigma\cdot\hat{L}_{\tp}(r,\tx_i)}\right)
+\frac{1}{\zeta_{\alpha}(\beta,s,z)} &=\exp\left(-\frac{d_\alpha}{|G|}\sum_{\sigma\in G}\sum_{\tp}\frac{1}{N_{\tp}}\sum_{\tx_{i}\in\tp}\sum_{r=1}^{\infty}\frac{t_{\tp}^{r}}{r}\chi_{\alpha}(\hp^{r}(\tx_i))e^{\beta\cdot\sigma\cdot\hat{L}_{\tp}(r,\tx_i)}\right)
 \end{align}
 where we have defined
 \begin{equation}
 t_{\tp}\equiv \frac{z^{n_{\tp}}e^{-sT_{\tp}}}{|\ExpaEig_\tp|}
 \end{equation}
-and
-\begin{equation}
-\hat{L}_{\tp}(r,\tx_i)\equiv (e+\hp^{-1}(\tx_i)\cdots+\hp^{-r+1}(\tx_i))\cdot\hn_{\tp}(\tx_i)
-\end{equation}
 
-We are interested in the one dimensional, symmetric trivial representation with $ d_\alpha = 1 $ and all $ \chi(h) = 1 $,; there by we drop the subscript $ \alpha $ in the following calculation. Partial derivative with respect to $\beta$:
+We are interested in the one dimensional, symmetric trivial representation with $ d_\alpha = 1 $ and all $ \chi(h) = 1 $,; there by we drop the subscript $ \alpha $ in the following calculation. Partial derivative with respect to $\beta$ gives:
 \bea
 \frac{\partial^{2}}{\partial\beta^{2}}\frac{1}{\zeta(\beta,s,z)}
- &=\frac{1}{\zeta(\beta,s,z)}\left(\left(\frac{1}{|G|} \sum_{\sigma\in G}\sum_{\tp}\sum_{\tx_i\in \tp}\sum_{r=1}^{\infty}\frac{\sigma\cdot \hat{L}_{\tp}(r,\tx_i)t_{\tp}^r e^{\beta\cdot\sigma\cdot \hat{L}_{\tp}(r,\tx_i)}}{n_{\tp}r}\right)^{2}\right.\nonumber\\
- & \left.-\frac{1}{|G|}\sum_{\sigma\in G}\left(\sum_{\tp}\sum_{\tx_i\in \tp}\sum_{r=1}^{\infty}\frac{\vert \sigma\cdot \hat{L}_{\tp}(r,\tx_i)\vert^{2}t_{\tp}^{r}e^{\beta\cdot\sigma\cdot \hat{L}_{\tp}(r,\tx_i)}}{n_{p}r}\right)\right).
+ &=\frac{1}{\zeta(\beta,s,z)}\left(\left(\frac{1}{|G|} \sum_{\sigma\in G}\sum_{\tp}\sum_{\tx_i\in \tp}\sum_{r=1}^{\infty}\frac{\sigma\cdot \hat{L}_{\tp}(r,\tx_i)t_{\tp}^r e^{\beta\cdot\sigma\cdot \hat{L}_{\tp}(r,\tx_i)}}{N_{\tp}r}\right)^{2}\right.\nonumber\\
+ & \left.-\frac{1}{|G|}\sum_{\sigma\in G}\left(\sum_{\tp}\sum_{\tx_i\in \tp}\sum_{r=1}^{\infty}\frac{\vert \sigma\cdot \hat{L}_{\tp}(r,\tx_i)\vert^{2}t_{\tp}^{r}e^{\beta\cdot\sigma\cdot \hat{L}_{\tp}(r,\tx_i)}}{N_{\tp}r}\right)\right).
 \eea
-The first term in the formula corresponds to $ \langle\hx\rangle^2 $ and second to $ \langle\hx^2\rangle $
+The first term in the formula corresponds to $ \langle\hx\rangle^2 $ and second to $ \langle\hx^2\rangle $. It is trivial to see that the terms in the sum \[\sum_{\sigma\in G}\frac{\sigma\cdot \hat{L}_{\tp}(r,\tx_i)t_{\tp}^r e^{\beta\cdot\sigma\cdot \hat{L}_{\tp}(r,\tx_i)}}{N_{\tp}r}\right)^{2}\]
+cancels out each other exactly, and the above formula produce a zero mean drift.
 
 \subsection{Grammar of Fundamental Domain cycle}
 \begin{figure}[tbp]
@@ -383,7 +399,7 @@ The first term in the formula corresponds to $ \langle\hx\rangle^2 $ and second 
 (a) \includegraphics[width=0.45\textwidth]{diffuse7diskFundDflips}
 (b) \includegraphics[width=0.45\textwidth]{diffuse7diskFundDtiles}
 \end{center}
-\caption{\label{fig-7diskFundDflips} (a) The three generators of tiling of the plane by a fundamental domain: two generators of \Dn{12} tiling, reflection $s$ across the short disk-disk separation, reflection  $\ell$  across the long disk-disk separation; and a translation generator $f$ that pivots (`flips') a disk center to disk center by flip across the symmetry line normal to the short disk-disk separation. (5) Tiling of the 7-disk by copies of the fundamental domain, labelled by a (not unique) sequence of the three generators $\{s,\ell,f\}$, chosen so that each sequence contain one and only on disk-to-disk pivot $f$. }
+\caption{\label{fig-7diskFundDflips} (a) The three generators of tiling of the plane by a fundamental domain: two generators of \Dn{12} tiling, reflection $s$ across the short disk-disk separation, reflection  $\ell$  across the long disk-disk separation; and a translation generator $f$ that pivots (`flips') a disk center to disk center by flip across the symmetry line normal to the short disk-disk separation. (5) Tiling of the 7-disk by copies of the fundamental domain, labeled by a (not unique) sequence of the three generators $\{s,\ell,f\}$, chosen so that each sequence contain one and only on disk-to-disk pivot $f$. }
 \end{figure}
 XX I do not really use the three generators to compute the FD domain cycles, instead I use the idea of topological flights (\reffig{fig-fdflights}).
 
