@@ -351,40 +351,43 @@ We can apply this fact to the displacement associated with a prime periodic orbi
 \[
 \hn_{\tp}(\tx_{0})=\sum_{i=0}^{N_\tp-1}\hn(\tx_{i},g_{\tp,\tx_0}(\tx_{i}))=\sum_{i=0}^{\vert\tp\vert-1}g_{\tp,\tx_{0}}(\tx_{i})\circ\hn(\tx_{i},e),
 \]
-where $g_{\tp,\tx_{0}}(\tx_i)=\prod_0^{j-1} g_\tp(\tx_{j+1},\tx_{j})$ is the accumulated orientation changes along the orbit when starting from $\tx_{0}$. The displacement now has its dependence on the starting point we choose. Though one may not appreciate immediately, we denote the total group action for the orbit \[h_{\tp}(\tx_i)\equiv g_\tp(\tx_{i},\tx_{i-1})\circ\ldots\circ g_\tp(\tx_{0},\tx_{N_\tp-1})\circ g_\tp(\tx_{N_\tp-1},\tx_{N_\tp-2})\circ \ldots\circ g_\tp(\tx_{i+1},\tx_{i}),\] and define the quantity:
+where $g_{\tp,\tx_{0}}(\tx_i)=\prod_0^{j-1} g_\tp(\tx_{j+1},\tx_{j})$ is the accumulated orientation changes along the orbit when starting from $\tx_{0}$. The displacement now has its dependence on the starting point we choose. We denote the total group action for the orbit \[h_{\tp}(\tx_i)\equiv g_\tp(\tx_{i},\tx_{i-1})\circ\ldots\circ g_\tp(\tx_{0},\tx_{N_\tp-1})\circ g_\tp(\tx_{N_\tp-1},\tx_{N_\tp-2})\circ \ldots\circ g_\tp(\tx_{i+1},\tx_{i}),\] and define the quantity:
 \beq
-\hat{L}_{\tp}^{r}(\tx_i)\equiv (e+\hp^{1}(\tx_i)\cdots+\hp^{r-1}(\tx_i))\cdot\hn_{\tp}(\tx_i),
+\hat{L}_{\tp}^{r}(\tx_i)\equiv (e+\hp^{1}(\tx_i)+\cdots+\hp^{r-1}(\tx_i))\cdot\hn_{\tp}(\tx_i),
+\label{eq-fdDisplacement}
 \eeq
-to be the displacement traveled along the orbit $r$ times, when starting at $\tx_i$. Although the group action $h_{\tp}(\tx_i)\in G$ depends on the initial points on the orbit, It directly reflects the symmetry of the orbit, and subsequently all $h_{\tp}(\tx_i), \tx_i\in G$ belongs to the \emph{same} subgroup. 
+to be the displacement traveled along the orbit $r$ times, when starting at $\tx_i$. Although the group action $h_{\tp}(\tx_i)\in G$ depends on the initial points on the orbit, It directly reflects the symmetry of the orbit, and subsequently all $h_{\tp}(\tx_i), \tx_i\in G$ belongs to the \emph{same} subgroup. Though one may not appreciate immediately, \refeq{eq-fdDisplacement} takes care of the rotational symmetries that does not commute with translation, and we will show that it gives the proper displacement needed for computing diffusion coefficient.
 
 % Also, one notice that after traveling along a fundamental domain cycle once, the displacement in full space depends on where we start from on the cycle.  
 
 \subsection{Gymnastics of equations}
 
-\Group-equivariance of the displacement in the full space.
-
-\begin{align}
+We properly treat the discrete symmetry by projecting the trace of \evOper to the group's subspace:
+\bea
 \tr{\cal L}^t &= \sum_{\alpha \in\II_G} \tr{\cal L}_{\alpha}^t\nonumber\\
-\tr{\cal L}_{\alpha}^t &= \frac{d_\alpha}{|G|}\sum_{\sigma \in G}\sum_{h\in G}\chi_\alpha(h)\int_{\t {\cal M}} d\tx \delta (h\tx - f^t(\tx))e^{\beta\cdot\sigma\cdot\hphi^t(\tx)}~,
-\label{e1}
-\end{align}
+\tr{\cal L}_{\alpha}^t &= \frac{d_\alpha}{|G|}\sum_{\sigma \in G}\sum_{h\in G}\chi_\alpha(h)\int_{\t {\cal M}} d\tx \delta (h\tx - f^t(\tx))e^{\beta\cdot\sigma\cdot\hn^t(\tx)},
+\label{eq-traceSum}
+\eea
 
-\begin{align}
+The delta function part in the integral $\delta (h\tx - f^t(\tx))$ selects the fundamental domain periodic points that satisfy the group condition $h\equiv h^r_{\tp}(\tx_i)$, and the displacement traveled along the orbit $r$ times takes the form in \refeq{eq-fdDisplacement}. The rest is straight forward gymnastics of algebra, which yields the dynamical zeta function for the $\alpha$ irreducible representation:
+\bea
 \frac{1}{\zeta_{\alpha}(\beta,s,z)} &=\exp\left(-\frac{d_\alpha}{|G|}\sum_{\sigma\in G}\sum_{\tp}\frac{1}{N_{\tp}}\sum_{\tx_{i}\in\tp}\sum_{r=1}^{\infty}\frac{t_{\tp}^{r}}{r}\chi_{\alpha}(\hp^{r}(\tx_i))e^{\beta\cdot\sigma\cdot\hat{L}_{\tp}(r,\tx_i)}\right)
-\end{align}
+\label{eq-fdZeta}
+\eea
 where we have defined
 \begin{equation}
-t_{\tp}\equiv \frac{z^{n_{\tp}}e^{-sT_{\tp}}}{|\ExpaEig_\tp|}
+t_{\tp}\equiv \frac{z^{n_{\tp}}e^{-sT_{\tp}}}{|\ExpaEig_\tp|},
 \end{equation}
+the ``weight'' associated to the orbit. Equation \refeq{eq-fdZeta} differs from  XX but can be casted back, if the symmetry group contains only $e$.
 
-We are interested in the one dimensional, symmetric trivial representation with $ d_\alpha = 1 $ and all $ \chi(h) = 1 $,; there by we drop the subscript $ \alpha $ in the following calculation. Partial derivative with respect to $\beta$ gives:
+We are interested in the one dimensional, symmetric trivial representation with $ d_\alpha = 1 $ and all $ \chi(h) = 1 $; there by we drop the subscript $ \alpha $ in the following calculation. Partial derivative with respect to $\beta$ gives:
 \bea
 \frac{\partial^{2}}{\partial\beta^{2}}\frac{1}{\zeta(\beta,s,z)}
- &=\frac{1}{\zeta(\beta,s,z)}\left(\left(\frac{1}{|G|} \sum_{\sigma\in G}\sum_{\tp}\sum_{\tx_i\in \tp}\sum_{r=1}^{\infty}\frac{\sigma\cdot \hat{L}_{\tp}(r,\tx_i)t_{\tp}^r e^{\beta\cdot\sigma\cdot \hat{L}_{\tp}(r,\tx_i)}}{N_{\tp}r}\right)^{2}\right.\nonumber\\
- & \left.-\frac{1}{|G|}\sum_{\sigma\in G}\left(\sum_{\tp}\sum_{\tx_i\in \tp}\sum_{r=1}^{\infty}\frac{\vert \sigma\cdot \hat{L}_{\tp}(r,\tx_i)\vert^{2}t_{\tp}^{r}e^{\beta\cdot\sigma\cdot \hat{L}_{\tp}(r,\tx_i)}}{N_{\tp}r}\right)\right).
+ &=\frac{1}{\zeta(\beta,s,z)}\left(\left(\frac{1}{|G|} \sum_{\sigma\in G}\sum_{\tp}\sum_{\tx_i\in \tp}\sum_{r=1}^{\infty}\frac{\sigma\cdot \hat{L}_{\tp}(r,\tx_i)t_{\tp}^r e^{\beta\cdot\sigma\cdot \hat{L}_{\tp}^{r}(\tx_i)}}{N_{\tp}r}\right)^{2}\right.\nonumber\\
+ & \left.-\frac{1}{|G|}\sum_{\sigma\in G}\left(\sum_{\tp}\sum_{\tx_i\in \tp}\sum_{r=1}^{\infty}\frac{\vert \sigma\cdot \hat{L}_{\tp}(r,\tx_i)\vert^{2}t_{\tp}^{r}e^{\beta\cdot\sigma\cdot \hat{L}_{\tp}^r(\tx_i)}}{N_{\tp}r}\right)\right).
 \eea
-The first term in the formula corresponds to $ \langle\hx\rangle^2 $ and second to $ \langle\hx^2\rangle $. It is trivial to see that the terms in the sum \[\sum_{\sigma\in G}\frac{\sigma\cdot \hat{L}_{\tp}(r,\tx_i)t_{\tp}^r e^{\beta\cdot\sigma\cdot \hat{L}_{\tp}(r,\tx_i)}}{N_{\tp}r}\right)^{2}\]
-cancels out each other exactly, and the above formula produce a zero mean drift.
+The first term in the formula corresponds to $ \langle\hx\rangle^2 $ and second to $ \langle\hx^2\rangle $. It is trivial to see that the first term \[\sum_{\sigma\in G}\frac{\sigma\cdot \hat{L}_{\tp}(r,\tx_i)t_{\tp}^r e^{\beta\cdot\sigma\cdot \hat{L}_{\tp}(r,\tx_i)}}{N_{\tp}r}\]
+cancels out each other exactly due to the summation over the discrete symmetry group, and the above formula produce a zero mean drift.
 
 \subsection{Grammar of Fundamental Domain cycle}
 \begin{figure}[tbp]
