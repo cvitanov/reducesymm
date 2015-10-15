@@ -1,0 +1,141 @@
+% reducesymm/linresp/linrespDefs.tex
+% $Author: predrag $ $Date: 2015-10-14 00:30:40 -0400 (Wed, 14 Oct 2015) $
+
+% Predrag                       Jul 15 2014
+% Note: {apsrev} has been replaced by {apsrev4-1} by APS
+%       revert to {revtex4} if you have an old configuration
+
+%\usepackage{
+%    amsmath,
+%    amssymb,
+%    latexsym,
+%    float,
+%    epsfig,
+%    subfig
+%            }
+
+\usepackage[export]{adjustbox} % http://ctan.org/pkg/adjustbox
+\graphicspath{{figs/}{../figs/}}  %% directories with graphics
+
+\ifpreparepdf
+    \bibliographystyle{apsrev4-1} %with DOI hyperlinks
+    \usepackage{color} % dvips allows for colors
+    \usepackage[colorlinks]{hyperref} %% hyperlinks
+    % \usepackage[pdfauthor={D. Lippolis}%
+    %           pdftitle={Noise},%
+    %           pdfmark,colorlinks]{hyperref} %% hyperlinks
+\else % prepare B&W file
+    \bibliographystyle{apsrev}
+\fi
+    \usepackage{graphicx}
+    \usepackage{ifthen}
+
+%%%%%%%%%%%%%%%%%%%%%%% set up draft, hyperlinked %%%%%%%%%%%
+
+\ifpreparepdf % hyperlinked pdf, keep homepage flexible:
+    \newcommand{\wwwcb}[1]{
+                  {\tt \href{http://ChaosBook.org#1}
+              {ChaosBook.org#1}}}
+    \newcommand{\weblink}[1]{{\tt \href{http://#1}{#1}}}
+    \newcommand{\HREF}[2]{{\href{#1}{#2}}}
+    \newcommand{\arXiv}[1]{
+              {\tt \href{http://arXiv.org/abs/#1}{arXiv:#1}}}
+\else  %% prepare for postscript printing:
+    \newcommand{\wwwcb}[1]{{\tt ChaosBook.org#1}}
+    \newcommand{\weblink}[1]{{\tt #1}}
+    \newcommand{\HREF}[2]{{#2}}
+    \newcommand{\arXiv}[1]{ {\tt arXiv:#1}}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%% PRLett STYLE COMMENTS %%%%%%%%%%%%%%%%%%%
+        \ifboyscout % if draft, display comments in text
+   \newcommand{\PCedit}[1]{{\color{blue}#1}}
+   \newcommand{\PC}[2]{\begin{quote}\PCedit{[#1 Predrag] #2}\end{quote}}
+   \newcommand{\DLedit}[1]{{\color{red}#1}}
+   \newcommand{\DL}[2]{\begin{quote}\DLedit{[#1 Domenico] #2}\end{quote}}
+   \definecolor{darkgreen}{rgb}{0,.6,.25}
+   \newcommand{\JMHedit}[1]{{\color{darkgreen}#1}}
+   \newcommand{\JMH}[2]{\begin{quote}\JMHedit{[#1 Jeffrey] #2}\end{quote}}
+   \newcommand{\toCB}{\marginpar{\footnotesize 2CB}}  % to compare with ChaosBook
+   \newcommand{\inCB}{\marginpar{\footnotesize now in CB}}
+        \else  % drop comments
+   \newcommand{\PC}[2]{}{}
+   \newcommand{\PCedit}[1]{#1}
+   \newcommand{\DL}[2]{}{}
+   \newcommand{\DLedit}[1]{#1}
+   \newcommand{\JMH}[2]{}{}
+   \newcommand{\JMHedit}[1]{#1}
+   \newcommand{\toCB}{}
+   \newcommand{\inCB}{}
+        \fi
+
+
+%%%%%%%%%%%%%%% REFERENCING EQUATIONS ETC. %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\rf}     [1] {~\cite{#1}}
+\newcommand{\refref} [1] {ref.~\cite{#1}}
+\newcommand{\refRef} [1] {Ref.~\cite{#1}}
+\newcommand{\refrefs}[1] {refs.~\cite{#1}}
+\newcommand{\refeq}  [1] {(\ref{#1})}
+\newcommand{\reffig} [1] {figure~\ref{#1}}
+\newcommand{\refFig} [1] {Figure~\ref{#1}}
+
+%%%%%%%%%%%%%%% EQUATIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\continue}{\nonumber \\ }
+\newcommand{\nnu}{\nonumber}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\ee}[1] {\label{#1} \end{equation}}
+\newcommand{\bea}{\begin{eqnarray}}
+\newcommand{\ceq}{\nonumber \\ & & }
+\newcommand{\eea}{\end{eqnarray}}
+
+%%%%%%%%%%%%%%  Abbreviations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\etc}{{\em etc.}}       % etcetera in italics
+\newcommand{\ie}{{i.e.}}            % APS
+
+\newcommand{\statesp}{state space}
+\newcommand{\Statesp}{State space}
+\newcommand{\eqv}{equi\-lib\-rium}
+\newcommand{\Eqv}{Equi\-lib\-rium}
+\newcommand{\eqva}{equi\-lib\-ria}
+\newcommand{\Eqva}{Equi\-lib\-ria}
+\newcommand{\po}{periodic orbit}
+\newcommand{\Po}{Periodic orbit}
+\newcommand{\dmn}{\ensuremath{\,d}}  %  n-dimensional
+\newcommand{\Fd}{spec\-tral det\-er\-min\-ant}
+\newcommand{\fd}{spec\-tral det\-er\-min\-ant}
+\newcommand{\stabmat}{stability matrix}     % stability matrix, velocity gradients
+\newcommand{\Stabmat}{Stability matrix}     % Stability matrix
+\newcommand{\stabmats}{stability matrices}
+\newcommand{\monodromyM}{monodromy matrix} % monodromy matrix, Poincare cut
+\newcommand{\MonodromyM}{Monodromy matrix} % monodromy matrix, Poincare cut
+\newcommand{\optPart}{optimal partition}
+\newcommand{\OptPart}{Optimal partition}
+\newcommand{\Fokker}{Fokker-Planck}
+
+\newcommand{\ssp}{\ensuremath{x}}    % state space point
+\newcommand{\Mvar}{\ensuremath{A}}  % stability matrix
+\newcommand{\ExpaEig}{\Lambda}
+\newcommand{\Lyap}{\ensuremath{\lambda}}            %Lyapunov exponent
+\newcommand{\cl}[1]{{n_{#1}}}   % discrete length of a cycle, Predrag
+\newcommand{\msr}{{\rho}}               % measure
+\newcommand{\SRB}{{\rho_0}}             % natural measure
+\newcommand{\pS}{{\cal M}}          % symbol for state space space
+\newcommand{\spaceAver}[1]{\left\langle {#1} \right\rangle}
+\newcommand{\diffCon}{\ensuremath{D}}       % diffusion constant
+\newcommand{\diffTen}{\ensuremath{\Delta}}  % diffusion tensor
+\newcommand{\covMat}{\ensuremath{Q}}             % covariance matrix
+\newcommand{\Lnoise}[1]{{\cal L}^{#1}}    % noisy evolution operator
+\newcommand{\Lmat}[1]{{{\bf L}_{#1}}}      % evolution matrix
+\newcommand{\orbitDist}{{z}}     % Langevin distance from orbit point
+\newcommand{\transp}[1]{{#1}{}^\top}
+\newcommand{\matId}{\ensuremath{{\bf 1}}}      % matrix identity
+\newcommand{\Df}[1]{{f'_{#1}}}
+\newcommand{\monodromy}{\ensuremath{M}}   % monodromy matrix, full Poincare cut
+\newcommand{\tr}{\mbox{\rm tr}\,}
+\newcommand{\cycle}[1]{\ensuremath{\overline{#1}}}
+
+\newcommand{\MatrixII}[4]{\left(
+\begin{array}{cc}
+{#1}  &  {#2} \\
+{#3}  &  {#4} \end{array} \right)}
