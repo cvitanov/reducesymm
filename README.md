@@ -1,4 +1,0 @@
-reducesymm
-==========
-
-Burak's project

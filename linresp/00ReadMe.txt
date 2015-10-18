@@ -1,44 +1,43 @@
-slice/00ReadMe.txt
-$Author: heninger $ $Date: 2014-06-06 01:39:37 -0400 (Fri, 06 Jun 2014) $
+reducesymm/linresp/00ReadMe.txt
+$Author: predrag $ $Date: 2014-10-14 01:39:37 -0400 (Fri, 14 Oct 2014) $
 ===========================================================
-How well can one ...?
-... and Predrag Cvitanovi\'c
+Periodic Orbit Theory of Linear Response
+Benjamin McInroe and Predrag Cvitanovic
 
 -----------------------------------------------------------
 
-                    PRL proofs:                
-                    PRL acceptance:            
-		    lett-v3 submis:   
-                    PRL pre-acceptance:        
-                    PRL resubmission: 
-                    arXiv submission: 
-                    finished writing: 
-                    finished writing: 
-                    PRL submission:   
-                    arXiv submission: 
-                    finished writing: 
-                    started writing:  Jeffrey	Jun 02 2014
+                    PRE proofs:
+                    PRE acceptance:
+		    lett-v3 submis:
+                    PRE pre-acceptance:
+                    PRE resubmission:
+                    arXiv submission:
+                    finished writing:
+                    finished writing:
+                    PRE submission:
+                    arXiv submission:
+                    finished writing:
+                    started writing:  Benjamin	Jun 02 2014
 
 
 arXiv submission notes
 ----------------------
 
-Burak   @gatech.edu                             Feb 24, 2014
+Benjamin   @gatech.edu                          Feb 24, 2014
 1403.????
 
-see lippolis/slice/arXiv-v1/00ReadMe.txt
-see lippolis/slice/arXiv-v2/00ReadMe.txt
+see reducesymm/linresp/arXiv-v1/00ReadMe.txt
+see reducesymm/linresp/arXiv-v2/00ReadMe.txt
 
-PRLett submission notes
+PREett submission notes
 ---------------------
 
-see lippolis/slice/PRlett-v1/00ReadMe.txt
-see lippolis/slice/PRlett-v2/00ReadMe.txt
-see lippolis/slice/PRlett-v3/00ReadMe.txt
+see reducesymm/linresp/PRlett-v1/00ReadMe.txt
+see reducesymm/linresp/PRlett-v2/00ReadMe.txt
+see reducesymm/linresp/PRlett-v3/00ReadMe.txt
 
 
 Notes ====================================================
 
-- remember to copy all commented-out stochastic corrections text
-  and figures from slice.tex rev. 235 to burak/thesis    [ ] mark here when done [Burak    Apr ?? 2014]
-
+- remember to copy all ...
+  [ ] mark here when done [Benjamin Oct ?? 2015]
