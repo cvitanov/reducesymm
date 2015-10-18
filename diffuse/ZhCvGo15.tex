@@ -266,12 +266,14 @@ gas from the leading eigenvalue of the Rulle-Frobenius-Perron \evOper\
 \ee{lor-diff-1}
 where the average is over all initial points in the elementary cell,
 $x \in \pS$. If all odd derivatives vanish by symmetry, there is no drift and the second derivatives
+\begin{widetext}
 \[
 2d D_{ij} = \left . {\frac{\partial}{\partial \beta_i}}
   {\frac{\partial} {\partial \beta_j}} \eigenvL(\beta)\right
 |_{\beta=0} \,=\,\lim_{t\rightarrow \infty} {\frac{1}{t}} \langle
 {(\hx(t) -x)_i (\hx(t) -x)_j } \rangle_\pS ~,
 \]
+\end{widetext}
 yield a diffusion matrix.  This symmetric matrix can, in general, be
 anisotropic (\ie, have $d$ distinct eigenvalues and
 eigen\-vectors). The spatial diffusion constant is then given by the
@@ -300,6 +302,7 @@ the elementary cell
 given the linear \evOper operator
 \beq
 {\cal L}^t(y,x) = e^{\beta\cdot(\hx(t)-x)}\delta(y-x(t))
+\label{eq-eOper}
 \eeq
 The interesting dynamical averages is determined by the spectrum of the
 operator
@@ -417,18 +420,20 @@ $g_\tp(\tx_{i+1},\tx_{i})$ to keep track of changes in absolute
 orientation. We may now write the displacement traveled along the
 orbit, after finishing a full cycle:
 \[
-\hn_{\tp}(\tx_{0})=\sum_{i=0}^{N_\tp-1}\hn(\tx_{i},g_{\tp,\tx_0}(\tx_{i}))=\sum_{i=0}^{\vert\tp\vert-1}g_{\tp,\tx_{0}}(\tx_{i})\circ\hn(\tx_{i},e),
+\hn_{\tp}(\tx_{0})=\sum_{i=0}^{N_\tp-1}\hn(\tx_{i},g_{\tp,\tx_0}(\tx_{i}))=\sum_{i=0}^{N_\tp-1}g_{\tp,\tx_{0}}(\tx_{i})\circ\hn(\tx_{i},e),
 \]
 where $g_{\tp,\tx_{0}}(\tx_i)=\prod_0^{j-1} g_\tp(\tx_{j+1},\tx_{j})$
 is the accumulated orientation changes along the orbit when starting
 from $\tx_{0}$. The displacement now has its dependence on the
 starting point we choose. We denote the total group action for the
 orbit
+\begin{widetext}
 \[h_{\tp}(\tx_i)\equiv g_\tp(\tx_{i},\tx_{i-1})\circ\ldots\circ
 g_\tp(\tx_{0},\tx_{N_\tp-1})\circ
 g_\tp(\tx_{N_\tp-1},\tx_{N_\tp-2})\circ \ldots\circ
 g_\tp(\tx_{i+1},\tx_{i}),\]
-which one can immediately see the connection $\flow{t_\tp}{\tx_i}=h_{\tp}(\tx_i)\tflow{t_\tp}{\tx_i}$. Although the group action $h_{\tp}(\tx_i)$ depends on the initial points on the orbit, it is a property of the orbit's symmetry, and subsequently all $h_{\tp}(\tx_i), \tx_i\in G$ belongs to the \emph{same} subgroup.
+\end{widetext}
+which one can immediately see the connection $\flow{t_\tp}{\tx_i}=h_{\tp}(\tx_i)\tflow{t_\tp}{\tx_i}$. Although the group action $h_{\tp}(\tx_i)$ depends on the initial points on the orbit, it is a property of the orbit's symmetry, and subsequently all $h_{\tp}(\tx_i), \tx_i\in \tp$ belong to the \emph{same} subgroup of $G$.
 
 We also want to define the quantity:
 \beq
@@ -436,35 +441,35 @@ We also want to define the quantity:
 (e+\hp^{1}(\tx_i)+\cdots+\hp^{r-1}(\tx_i))\cdot\hn_{\tp}(\tx_i),
 \label{eq-fdDisplacement}
 \eeq
-to be the displacement traveled along the orbit $r$ times, starting from $\tx_i$.  Though one may not appreciate immediately, \refeq{eq-fdDisplacement} takes care of the rotational symmetries that does not commute with translation, and we will show that it gives the proper displacement needed for computing diffusion coefficient.
+to be the displacement traveled along the orbit $r$ times, starting from $\tx_i$.  Though one may not appreciate immediately, \refeq{eq-fdDisplacement} takes care of the rotational symmetry that does not commute with translation, and we will show that it gives the proper displacement needed for computing diffusion coefficient in fundamental domain.
 
 
 \subsection{Gymnastics of equations}
 
 We properly treat the discrete symmetry by projecting the trace of
-\evOper \refeq{} to the group's subspace:
+\evOper \refeq{eq-eOper} to the group's subspace:
  \bea
 \tr{\cal L}^t &=& \sum_{\alpha \in\II_G} \tr{\cal L}_{\alpha}^t\nonumber\\
 \tr{\cal L}_{\alpha}^{t} &=& \frac{d_\alpha}{|G|}\sum_{\sigma \in
   G}\sum_{h\in G}\chi_\alpha(h)\int_{\t {\cal M}} d\tx \delta (h\tx -
-\flow{}(\tx))e^{\beta\cdot\sigma\cdot\hn^t(\tx)},
+\flow{t}{\tx})e^{\beta\cdot\sigma\cdot\hn^t(\tx)}.\nonumber\\
 \label{eq-traceSum}
 \eea
 
-The delta function part in the integral $\delta (h\tx - \flow{}(\tx))$
+The delta function part $\delta (h\tx - \flow{t}{\tx})$ in the integral 
 selects the fundamental domain periodic points that satisfy the group
 condition $h\equiv h^r_{\tp}(\tx_i)$. The displacement traveled
 starting from each of those points and along the orbit $r$ times takes
 the form already computed in \refeq{eq-fdDisplacement}. The rest is
 straight forward gymnastics of algebra, which yields the dynamical
 zeta function for the $\alpha$ irreducible representation:
-
+\begin{widetext}
  \beq
 \frac{1}{\zeta_{\alpha}(\beta,s,z)}
 =\exp\left(-\frac{d_\alpha}{|G|}\sum_{\sigma\in G}\sum_{\tp}\frac{1}{N_{\tp}}\sum_{\tx_{i}\in\tp}\sum_{r=1}^{\infty}\frac{t_{\tp}^{r}}{r}\chi_{\alpha}(\hp^{r}(\tx_i))e^{\beta\cdot\sigma\cdot\hat{L}_{\tp}(r,\tx_i)}\right),
 \label{eq-fdZeta}
 \eeq
-
+\end{widetext}
 
 where
  \beq t_{\tp}\equiv
@@ -477,14 +482,18 @@ only $e$.
 We are interested in the one dimensional, symmetric trivial
 representation with $ d_\alpha = 1 $ and all $ \chi(h) = 1 $; there by
 we drop the subscript $ \alpha $ in the following calculation. Partial
-derivative with respect to $\beta$ gives: \bea
+derivative with respect to $\beta$ gives: 
+\begin{widetext}
+\bea
 \frac{\partial^{2}}{\partial\beta^{2}}\frac{1}{\zeta(\beta,s,z)}
 &=\frac{1}{\zeta(\beta,s,z)}\left(\left(\frac{1}{|G|} \sum_{\sigma\in G}\sum_{\tp}\sum_{\tx_i\in \tp}\sum_{r=1}^{\infty}\frac{\sigma\cdot \hat{L}_{\tp}^{r}(\tx_i)t_{\tp}^r e^{\beta\cdot\sigma\cdot \hat{L}_{\tp}^{r}(\tx_i)}}{N_{\tp}r}\right)^{2}\right.\nonumber\\
 &\left.-\frac{1}{|G|}\sum_{\sigma\in G}\left(\sum_{\tp}\sum_{\tx_i\in
       \tp}\sum_{r=1}^{\infty}\frac{\vert \sigma\cdot
       \hat{L}_{\tp}^{r}(\tx_i)\vert^{2}t_{\tp}^{r}e^{\beta\cdot\sigma\cdot
-        \hat{L}_{\tp}^{r}(\tx_i)}}{N_{\tp}r}\right)\right).  \eea The
-first term in the formula corresponds to $ \langle\hx\rangle^2 $ and
+        \hat{L}_{\tp}^{r}(\tx_i)}}{N_{\tp}r}\right)\right).  
+        \eea
+\end{widetext} 
+The first term in the formula corresponds to $ \langle\hx\rangle^2 $ and
 second to $ \langle\hx^2\rangle $. It is trivial to see
 that \[\sum_{\sigma\in G}\frac{\sigma\cdot
   \hat{L}_{\tp}^r(\tx_i)t_{\tp}^r e^{\beta\cdot\sigma\cdot
@@ -509,9 +518,9 @@ truncated to the topological length of the longest periodic orbits
 find in calculation.
 
 \subsection{Grammar of Fundamental Domain cycle}
-\begin{figure}[tbp]
-  (a)\includegraphics[width=0.45\textwidth]{diffuseFDSymbolIllustration}
-  (b)\includegraphics[width=0.45\textwidth]{diffuseFDSymbolOrbits}
+\begin{figure}[htbp]
+  (a)\includegraphics[width=0.35\textwidth]{diffuseFDSymbolIllustration}
+  (b)\includegraphics[width=0.35\textwidth]{diffuseFDSymbolOrbits}
 
   \caption{\label{fig-fdflights} Fundamental domain symbolic
     dynamics. (a) With imposed finite horizon and starting on the edge
@@ -532,10 +541,10 @@ find in calculation.
     also rotated according to the point group actions.}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[htbp]
   \begin{center}
-    (a) \includegraphics[width=0.45\textwidth]{diffuse7diskFundDflips}
-    (b) \includegraphics[width=0.45\textwidth]{diffuse7diskFundDtiles}
+    (a) \includegraphics[width=0.35\textwidth]{diffuse7diskFundDflips}
+    (b) \includegraphics[width=0.35\textwidth]{diffuse7diskFundDtiles}
   \end{center}
   \caption{\label{fig-7diskFundDflips} (a) The three generators of
     tiling of the plane by a fundamental domain: two generators of
@@ -549,8 +558,7 @@ find in calculation.
     each sequence contain one and only on disk-to-disk pivot $f$. }
 \end{figure}
 XX I do not really use the three generators to compute the FD domain
-cycles, instead I use the idea of topological flights
-(\reffig{fig-fdflights}).
+cycles, instead I use the idea of topological flights (\reffig{fig-fdflights}).
 
 
 \section{Results and discussion}
