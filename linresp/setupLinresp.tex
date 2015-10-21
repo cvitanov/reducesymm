@@ -4,12 +4,30 @@
 
 \usepackage{amsmath}
 \usepackage{ifthen}
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
+%\usepackage[latin1]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{times}
 \usepackage[pdftex]{graphicx}
 \usepackage{array}
 \usepackage{verbatim}
+
+\usepackage[
+    backend=bibtex,
+    sorting=nyt,
+    style=alphabetic, %numeric, %style=authoryear,
+    natbib=true,
+    sortlocale=en_US,
+    url=false,
+    doi=true,
+    eprint=false
+]{biblatex}
+\ExecuteBibliographyOptions{doi=false}
+\newbibmacro{string+doi}[1]{%
+  \iffieldundef{doi}{#1}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
+\DeclareFieldFormat{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
+\DeclareFieldFormat[article]{title}{\usebibmacro{string+doi}{\mkbibquote{#1}}}
+
 \usepackage[pdftex,colorlinks]{hyperref}
 \hypersetup{
    pdfauthor=Benjamin McInroe
