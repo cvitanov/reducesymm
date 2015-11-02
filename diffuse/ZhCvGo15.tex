@@ -236,7 +236,6 @@ With the symbolic dynamics, we use the least action principle to compute the cyc
 
 \begin{table}[htbp]
 %\begin{center}
-(a)\\
 \begin{tabular}{|r|r|r|l|l|}
 \hline
 $\period{p}$ & \# cycles & $\zeta$(0,0) & $\lambda$ & D \\ \hline\hline
@@ -427,9 +426,13 @@ f s \ell &=& s f \ell\,,\nonumber\\
 \ell f\ell s &=& f \ell s f\,.
 \eea
 
-There are also some pruning rules to keep in mind. Because a free flight cannot cross the same border twice, sequences including $\ell\ell,ff,ss$ are forbidden. $C^3$ (and all higher orders) is also pruned because the particle cannot cross the hard disk, nor swirling around it. 
+There are also some pruning rules to keep in mind. Because a free flight cannot cross the same border twice, sequences including $\ell\ell,ff,ss$ are forbidden. $C^3$ (and all higher orders) is also pruned as the particle cannot cross the center hard disk; nor swirl around it. 
 
-While the string description of flight is mathematically rigorous and accurate, it is hard to encode into programs to practically compute the orbits, because the number of equivalent strings increases exponentially when the length (of a single string) increases. However, there is a more physically intuitive way of organize the type of flight, by means of ``topological flight'', \reffig{fig-fdflights} (a). In this representation, a equivalence relation like $sf\equiv fs$ can be uniquely identified by a combination of disk number of partition number $\{\overline{0},\underline{6}\}$. 
+While the string description of flight is mathematically rigorous and accurate, it is practically hard to be encoded into programs for computing the orbits, because the number of equivalent strings increases exponentially when the length (of a single string) increases. However, there is a more physically intuitive way to organize the type of flight, by means of ``topological flight'', \reffig{fig-fdflights} (a). In this representation, a equivalence relation like $sf\equiv fs$ can be uniquely identified by a combination of a disk number and a partition number $\{\overline{0},\underline{6}\}$. Longer flight such like $\ell f \ell s \ell f \equiv  f \ell f s \ell f \equiv f \ell s f \ell f \equiv f \ell s \ell f \ell$ that cross many boundaries now yields a very simple symbol pair $\{\overline{1},\underline{5}\}$. 
+
+The topological flight leads to a straight forward numerical scheme to find cycles. The disk number fixes the two ends of the free flight while the partition number limits the range of angles on the disk. Similar to searching cycles in elementary cell, we now have a constrained version of numerical minimization problem which can be solved using standard non-linear optimization approach. 
+
+ \TZ{2015-11-02}{I have not yet talked about the pruning rule in detail here; it is more complicated bases on the reflection angle}
 
 \subsection{Diffusion in fundamental domain}
 \begin{table}[htbp]
@@ -458,7 +461,7 @@ $\period{p}$ & \# cycles & $\zeta$(0,0) & $\lambda$ & D \\ \hline\hline
 
 \begin{figure}[htbp]
   \includegraphics[width=0.45\textwidth]{diffuseCycleExpansionResults}
-  \caption[]{\label{fig-results} The convergence of diffusion coefficients  calculated using cycle expansion in elementary cell (green squares),  fundamental domain(orange squares). We  also show the convergence of ``periodic orbit expansion'' method, with and  without Shanks transformation (circles and diamonds) discussed in  \rf{Morriss1994}. Here $w = 0.3$.  }
+  \caption[]{\label{fig-convergence} The convergence of diffusion coefficients  calculated using cycle expansion in elementary cell (green squares),  fundamental domain(orange squares). We  also show the convergence of ``periodic orbit expansion'' method, with and  without Shanks transformation (circles and diamonds) discussed in  \rf{Morriss1994}. Here $w = 0.3$.  }
    \TZ{2015-10-19}{Any comment on this?}
 \end{figure}
 
@@ -466,10 +469,15 @@ $\period{p}$ & \# cycles & $\zeta$(0,0) & $\lambda$ & D \\ \hline\hline
 \includegraphics[width=0.45\textwidth]{diffuseDiffCoefPlot}
   \caption[]{\label{fig-results} Diffusion coefficients as a function $w$.  Figure generated using data from various resources. Diamonds are results from  Green-Kubo numerical experiments\rf{MacZwa83}; stars\rf{BaEvCo93} and  circles\rf{GasBar95} are calculated from escape rate; and triangles are  given by Hausdorff fractal dimension calculation\rf{GasBar95}; dashed line  is a statistical approximation\rf{Angstmann20121819}}.
 \end{figure}
-The discussion is here. Compared with various methods, the symmetry reduced cycle expansion method converges the fastest.
 
-\section{Further discussion}
+Compared with various methods, the symmetry reduced cycle expansion method converges the fastest, table \ref{TCELL2} and \reffig{fig-convergence}. Diffusion coefficient computed from $\sim2000$ fundamental domain cycles of topological length up to 6 gives two significant digits, while the elementary cell calculation needs $\sim 10000$ cycles just to converge. In other words, the fundamental domain cycles suggests a better and denser partition of the phase space.
 
+To further test the new formula, we compute the diffusion coefficient for $w/r = 0.05, 0.10, 0.15, 0.20, 0.25, 0.30$, and compare the results with existing numerical experiments and a recent statistical estimation, \reffig{fig-results}. In Green-Kubol velocity auto-correlation method the  diffusion coefficient can be extrapolated to the accurate reference value $0.250$ (at $w/r=0.30$), using ensembles of $10^6\sim10^7$ gas particles flying for long time $T>20$ (and the number of bounces is greater than this)\rf{MacZwa83}. On the one hand, while statistical approach yields a smooth analytical formula\rf{Angstmann20121819}, the diffusion property is fundamentally never a smooth, monotonically increasing function of $w$ 
+\TZ{2015-11-02}{what is that 1D diffusion reference that shows the anywhere continuous, nowhere smooth curve?}. Again, the effectiveness (yet correctness) of the cycle expansion is proved by those comparison.
+
+\section{Conclusion}
+
+ \TZ{2015-11-02}{What else do we put here?}
 % Specify following sections are appendices. Use \appendix* if there
 % only one appendix.
 %\appendix
