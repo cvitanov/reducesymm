@@ -46,7 +46,7 @@
 
 \begin{document}
 
-\title{Diffuse globally, compute locally: a cyclist tale}
+\title{Discrete factorization of deterministic diffusion}
 \TZ{2015-11-02}{Dan is not a big fan of the title. Do we have a more formal version?}
 \author{Tingnan Zhang}
 \author{Daniel I. Goldman}
@@ -98,7 +98,7 @@
 
 
 
-The advances in the theory of dynamical systems have brought a new life toBoltzmann's mechanical formulation of statistical mechanics. Sinai, Ruelle andBowen (SRB) have generalized Boltzmann's notion of ergodicity for a constant energy surface for a Hamiltonian system in equilibrium to dissipative systems in{nonequilibrium} stationary states. In this more general setting the attractor plays the role of a constant energy surface, and the SRB measure x is a generalization of the Liouville measure. Such measures are purely microscopic and indifferent to whether the system is at equilibrium, close to equilibrium or far from it. ``Far for equilibrium'' in this context refers to systems with large deviations from Maxwell's equilibrium velocity distribution. Furthermore,the theory of dynamical systems has yielded new sets of microscopic dynamics formulas for macroscopic observables such as diffusion constants, to which we turn now.
+The advances in the theory of dynamical systems have brought a new life to Boltzmann's mechanical formulation of statistical mechanics. Sinai, Ruelle and Bowen (SRB) have generalized Boltzmann's notion of ergodicity for a constant energy surface for a Hamiltonian system in equilibrium to dissipative systems in{nonequilibrium} stationary states. In this more general setting the attractor plays the role of a constant energy surface, and the SRB measure is a generalization of the Liouville measure. Such measures are purely microscopic and indifferent to whether the system is at equilibrium, close to equilibrium or far from it. ``Far for equilibrium'' in this context refers to systems with large deviations from Maxwell's equilibrium velocity distribution. Furthermore, the theory of dynamical systems has yielded new sets of microscopic dynamics formulas for macroscopic observables such as diffusion constants, to which we turn now.
 
 Chaotic motions exist in many systems. There are physical problems such as beam defocusing in particle accelerators \TZ{2015-11-02}{reference?} or chaotic behavior of passive tracers in $2$\dmn\ rotating flows\rf{solomon1994chaotic} which can be described as deterministic diffusion in periodic arrays. In the macroscopic world, there are recent studies shown that robotic locomotion in heterogeneous granular environment also demonstrates scattering-diffusive pattern.
 
@@ -109,11 +109,11 @@ Chaotic motions exist in many systems. There are physical problems such as beam 
 
 As a gedanken experiment, suppose a passively controlled robot is moving in a boulder field at constant speed. The diffusion coefficient, which describes roughly how much area the robot explored in a unit time, is the key quantity we would like to investigate. We place the boulder in a regular, periodic array and assume that we are in the heavy boulder limit such that after each collision event, only the robot is deflected and boulders remain immobilized. With the presumptions we effectively created a periodic Lorentz gas model\rf{Dettm14} for locomotion in a boulder field.
 
-To investigate the transport property of such system, we apply cycle expansions to the analysis of {\em diffusion} coefficient. The resulting formulas are exact; no probabilistic assumptions are made, and all correlations are taken into account by the  inclusion of cycles of all periods. While existing cycle expansion theory yields the correct result by tiling the {\statesp} into elementary cell, the convergence rate is generally low because of bad shadowing and poor choice of symbolic grammar\rf{CGS92}. In this paper we developed a novel approach that significantly improves the efficiency of cycle expansion formula, by correctly handling the non-commuting rotational and translational symmetry and use periodic orbits in ``dense'' fundamental domain. 
+To investigate the transport property of such systems, we apply cycle expansions\rf{DasBuch} to the analysis of {\em diffusion coefficient}. The resulting formulas are exact; no probabilistic assumptions are made, and all correlations are taken into account by the  inclusion of cycles of all periods. While existing cycle expansion theory yields the correct result by tiling the {\statesp} into elementary cells, the convergence rate is slow because of bad shadowing and poor choice of symbolic grammar\rf{CGS92}. In this paper we propose a novel approach that significantly improves the efficiency of cycle expansion formula, by factorizing the non-commuting rotational and translational symmetry and using periodic orbits in the fundamental domain. 
 
 % The infinite extent systems for which the  periodic orbit theory yields formulas for diffusion and other transport  coefficients are spatially periodic, the global {\statesp} being tiled with  copies of a elementary cell. 
 
-In \refsect{s-DiffPerArr} we briefly review the formulas for diffusion coefficients in the $2$\dmn\ periodic Lorentz gas, using dynamics restricted in elementary cell. In\refsect{s-SymmetryReduction} we consider further the rotational symmetry of the lattice and derive the diffusion coefficients using fundamental domain cycles. Because we will work with different kinds of \statesp, through out the text we will repeatedly using tildes ($\tilde{\quad}$),nothings and hats ($\hat{\quad}$) atop symbols to signify the dynamical quantities in fundamental domain, elementary cell and full state space,respectively.
+In \refsect{s-DiffPerArr} we briefly review the formulas for diffusion coefficients in the $2$\dmn\ periodic Lorentz gas, using dynamics restricted in elementary cell. In\refsect{s-SymmetryReduction} we factorize the rotational symmetry and derive the diffusion coefficient using fundamental domain cycles. Because we will work with different kinds of \statesp, through out the text we will repeatedly using tildes ($\tilde{\quad}$), nothings and hats ($\hat{\quad}$) atop symbols to signify the dynamical quantities in the fundamental domain, elementary cell and full state space, respectively.
 
 \section{Diffusion in periodic arrays}
 \label{s-DiffPerArr}
@@ -126,35 +126,26 @@ In \refsect{s-DiffPerArr} we briefly review the formulas for diffusion coefficie
   \caption[]{\label{fig-chaoticBouncing} Motion in the Lorentz gas system. (a)  The chaotic trajectory of a ``gas'' particle bouncing in the array of disks  arranged in a hexagonal lattice pattern. The distance between disks are close  enough such that the particle has no infinite free flight (finite horizon).  (b) A portion of the triangular Lorentz gas    system. The ratio of distance $w$ between the nearest pair of disks to the    disk radius $r$ determines the dynamical properties in the system. }
 \end{figure}
 
-The $2$\dmn\ Lorentz gas is an infinite scatterer array in which diffusion of a 
-light molecule in a gas of heavy scatterers is modeled by the motion of a point 
-particle in a plane bouncing off an array of reflecting disks. The Lorentz gas 
-is called ``gas'' as one can equivalently think of it as consisting of any 
-number of point-like fast ``light molecules'' interacting only with the 
-stationary ``heavy molecules'' and not among themselves.  As the scatterer 
-array is built up from only defocusing concave surfaces, it is a pure 
-hyperbolic system, and one of the simplest nontrivial dynamical systems that 
-exhibits deterministic diffusion, \reffig{fig-chaoticBouncing}.
+The $2$\dmn\ Lorentz gas is an infinite scatterer array in which diffusion of a light molecule in a gas of heavy scatterers is modeled by the motion of a point particle in a plane bouncing off an array of reflecting disks. The Lorentz gas is called ``gas'' because one can equivalently think of it as consisting of any number of point-like fast ``light molecules'' interacting only with the stationary ``heavy molecules'' and not among themselves.  As the scatterer array is built up from only defocusing concave surfaces, it is a pure hyperbolic system, and one of the simplest nontrivial dynamical systems that exhibits deterministic diffusion, \reffig{fig-chaoticBouncing}.
 
 % The original Lorentz gas assumed a random distribution of heavy
 % scatterers; in this case a probabilistic description is unavoidable.
 
 \subsection{Periodic orbit theory}
 
-In \refrefs{DasBuch, art91,LorentzDiff,CGS92,Artuso94} it was shown that deterministic diffusion tensor in the {\em periodic} Lorentz gas is can be expressed in terms of (relative) \po s, and exact \cycForm\ for such global dynamical averages as Lyapunov exponent and diffusion tensor were derived, using only the dynamics in the elementary cell. For any dynamical system that has translational symmetry,the full state space $\hM$ (i.e., both spatial coordinates and momenta) has aperiodic tiling 
+In \refrefs{DasBuch, art91,LorentzDiff,CGS92,Artuso94} it was shown that deterministic diffusion tensor in the {\em periodic} Lorentz gas can be expressed in terms of (relative) \po s, and exact \cycForm\ for such global dynamical averages as Lyapunov exponent and diffusion tensor were derived, using only the dynamics in the elementary cell. For any dynamical system that has translational symmetry,the full state space $\hM$ (i.e., both spatial coordinates and momenta) has aperiodic tiling 
 \beq
 \hM=\bigcup_{ \hn \in T} \pS_{\hn},
 \eeq 
-by {\em translating}$\pS_{\hn}$ of an {\em elementary cell} $\pS$, with $T$ the abelian group of lattice translations.
+by {\em translating} $\pS_{\hn}$ of an {\em elementary cell} $\pS$, with $T$ the abelian group of lattice translations.
 
-In the context of Lorentz gas system, the elementary cell is the hexagonal region centered at the scatterer, see \reffig{fig-schrieberFig1}. The dynamics restricted inside the elementary cell is understood as the periodic boundary condition: when the particle leaves the edge of the hexagon cell, it immediately enters the region again from the opposite edge. We distinguish two types of diffusive behavior; the {\em infinite horizon} case, which allows for infinite length flights, and the {\em finite horizon} case, where any free particle trajectory must hit a disk in finite time. The transition between horizon and infinite horizon is controlled by the ratio of $w/r$, where $w$ is the gap between nearest pair of disk and $r$ the radius of the disk.
+In the context of Lorentz gas system, the elementary cell is the hexagonal region centered at the scatterer, see \reffig{fig-chaoticBouncing} (a). The dynamics restricted inside the elementary cell is understood as the periodic boundary condition: when the particle leaves the edge of the hexagon cell, it immediately enters the region again from the opposite edge. We distinguish two types of diffusive behavior; the {\em infinite horizon} case, which allows for infinite length flights, and the {\em finite horizon} case, where any free particle trajectory must hit a disk in finite time. The transition between horizon and infinite horizon is controlled by the ratio of $w/r$, where $w$ is the gap between nearest pair of disk and $r$ the radius of the disk.
 
-We shall now relate the dynamics in $\pS$ to diffusive properties of the Lorentz gas in $\hM$. Let $\hx(t)\,=\,\hflow{t}{\hx_0}$ denotes the point in the global space $\hM$ reached by the flow in time $t$. $x(t)\,=\,\flow{t}{\xInit}$ denotes the corresponding flow in the elementary cell; the two are related by
+We now relate the dynamics in $\pS$ to diffusive properties of the Lorentz gas in $\hM$. Let $\hx(t)\,=\,\hflow{t}{\hx_0}$ denotes the point in the global space $\hM$ reached by the flow in time $t$. $x(t)\,=\,\flow{t}{\xInit}$ denotes the corresponding flow in the elementary cell; the two are related by
 
 \beq
 \hn_t(\xInit)=\hflow{t}{\xInit} - \flow{t}{\xInit} \in T \,,
 \ee{l-diff-hatn}
-
 the translation of the endpoint of the global path into the elementary cell $\pS$.
 
 Fix a vector $\beta \in \reals^d$, where $d$ is the dimension of the{\statesp}. We will compute the diffusive properties of the Lorentz gas from the leading eigenvalue of the Rulle-Frobenius-Perron \evOper\
@@ -202,9 +193,10 @@ The interesting dynamical averages is determined by the spectrum of the operator
 or the corresponding \dzeta\
 \beq
 1/\zeta(\beta, s)\,=\,\prod_{p}\left( 1 - \frac{e^{(\beta \cdot \hn_p-
-      s \period{p})}}{|\ExpaEig_p|} \right) ~.
+      s \period{p})}}{|\ExpaEig_p|} \right) ~,
 \label{zeta-diff}
 \eeq
+where $\period{p}$ is the period of the cycle and $\ExpaEig_p$ the product of expanding eigenvalues of the cycle\rf{DasBuch}. 
 
 The \dzeta\ \cycForm\ for the diffusion constant, zero mean drift
 $ \expct{ \hat{x}_i } = 0 \,, $ is given by
@@ -217,7 +209,7 @@ $ \expct{ \hat{x}_i } = 0 \,, $ is given by
 \eeq
 where the sum is over all distinct non-repeating combination of prime cycles (in the elementary cell). The derivation is standard, still the formula is strange.Diffusion is unbounded motion across an infinite lattice; nevertheless, the reduction to the elementary cell enables us to compute relevant quantities in the usual way, in terms of periodic orbits.
 
-\subsection{Cycles in elementary cell}
+\subsection{Cycles in the elementary cell}
 \begin{figure}
   \begin{center}
     (a)\includegraphics[width=0.27\textwidth]{diffuseDiskDirectionsElCell}
@@ -230,16 +222,17 @@ where the sum is over all distinct non-repeating combination of prime cycles (in
 
 We use the symbolic dynamics developed in \refref{CGS92} and briefly review the concepts here. With imposed finite horizon there are 12 possible ways of jump from a disk (\reffig{fig-diskDirectionsElCell}\,(a)). Any trajectory in the full space can always be constructed from a series of flights, each belongs to  the 12 ``signature jumps''. In particular, a periodic orbit in the elementary cell is represented as a repeatable string of such symbols. For example, the bouncing mode between nearest disks is written as \cycle{06}, meaning that the periodic orbit is consisted of two successive flights, one traveling towards right (symbol $0$) and the next reflecting backwards (symbol $6$). 
 
-Periodic orbits in elementary cell can either be stationary in the full space and goes back to its original place after completing a full cycle (e.g.,\cycle{06}); or can be in a running mode that generates a net displacement along the trajectory (e.g., \cycle{05}, \reffig{fig-diskDirectionsElCell}\,b and c).The stationary cycles ``trap'' the  particle locally for a finite amount of time while the running cycles advance it. The final diffusion \refeq{eq-ecDiffCoef}can be conceptually understood as the result of competition between the two modes.
+Periodic orbits in the elementary cell can either be stationary in the full space that goes back to its original place after completing a full cycle (e.g., \cycle{06} that represents the bouncing of the particle between two nearest disk); or can be in a running mode that generates a net displacement along the trajectory (e.g., \cycle{05}, \reffig{fig-diskDirectionsElCell}\,b and c). The stationary cycles ``trap'' the  particle locally for a finite amount of time while the running cycles advance it. The final diffusion \refeq{eq-ecDiffCoef} can be conceptually understood as the result of competition between the two type of cycles.
 
-With the symbolic dynamics, we use the least action principle to compute the cycles~\rf{DasBuch}. In a planetary Hamiltonian billiard system, the Maupertuis' principle indicates that the traveling length along a cycle is minimized. In numerical schemes, it turns into a problem of optimizing the total link length for the specific sequence of disks visited along the orbit. 
+With the symbolic dynamics, we then use the least action principle to compute the periodic orbits\rf{DasBuch}. In a planetary Hamiltonian billiard system, the Maupertuis' principle indicates that the traveling length along a cycle is minimized. We can solve the problem by optimizing the total free flight distance with the constraint that links have to connect the specific disks visited along the orbit. 
 
+Elementary cycles found using this method and the corresponding cycle expansion calculation results are listed in \reftab{TCELL1}. Although the diffusion coefficient computed using elementary cycles up to $n_p = 8$ matches the numerical experiment value $0.25$, the convergence is not promising.
 
 \begin{table}[htbp]
 %\begin{center}
 \begin{tabular}{|r|r|r|l|l|}
 \hline
-$\period{p}$ & \# cycles & $\zeta$(0,0) & $\lambda$ & D \\ \hline\hline
+${n_p}$ & \# cycles & $\zeta$(0,0) & $\lambda$ & D \\ \hline\hline
 1      & 0      &   -    &   -  &   - \\
 2      & 24     & -0.31697 & 1.330 & 0.375\\
 3      & 64     & -0.54152 & 1.435 & 0.339\\
@@ -251,8 +244,8 @@ $\period{p}$ & \# cycles & $\zeta$(0,0) & $\lambda$ & D \\ \hline\hline
 
 \end{tabular}
 \caption{\label{TCELL1}
-Schreiber 1992 calculation\rf{CGS92} (and
-  this paper) in EC.
+Cycle expansion results computed Schreiber 1992 calculation\rf{CGS92} (and
+  this paper) in elementary cell.
 }
 \end{table}
 
@@ -263,7 +256,7 @@ Schreiber 1992 calculation\rf{CGS92} (and
     (a)\includegraphics[width=0.45\textwidth]{diffuseSchreiberFig1}
     (b)\includegraphics[width=0.45\textwidth]{diffuseSchreiberFig2}
   \end{center}
-  \caption[]{\label{fig-schrieberFig12} (a) Motion in fundamental domain (top   left), elementary cell (top right) and  in full space (bottom). (b) An (unwrapped) trajectory (in full  space) and its 12 copies after applying point group actions to it.   }
+  \caption[]{\label{fig-schrieberFig12} (a) Motion in the fundamental domain (top left), elementary cell (top right) and  in full space (bottom). (b) An (unwrapped) trajectory (in full  space) and its 12 copies after applying point group actions to it.   }
 \end{figure}
 
 %\begin{figure}[htbp]
@@ -276,15 +269,15 @@ Schreiber 1992 calculation\rf{CGS92} (and
 %  Multiplicity of periodic orbits in fundamental domain.}
 %\end{figure}
 
-When the scattering array has further discrete symmetries, such as reflection symmetry, each elementary cell may be built from a {\em fundamental domain}${\widetilde \pS}$ by the action of a discrete (not necessarily abelian) group$G$. The quantity $\tx(t)\,=\,\tflow{t}{\tx}$ denotes the flow in the fundamental domain ${\widetilde \pS}$; $\tflow{t}{\tx}$ is related to$\flow{}{\tx}$ by a discrete symmetry $g \in G$ which maps $\tx(t)\in{\widetilde \pS}$ to ${x}(t) \in {\pS}$. The full $\hM \rightarrow {\widetilde\pS}$ reduction is complicated by the non-abelian nature of $G$, and will be illustrated in this section in detail.
+When the scattering array has further discrete symmetries, such as reflection symmetry, each elementary cell may be built from a {\em fundamental domain} ${\widetilde \pS}$ by the action of a discrete (not necessarily abelian) group $G$. The quantity $\tx(t)\,=\,\tflow{t}{\tx}$ denotes the flow in the fundamental domain ${\widetilde \pS}$; $\tflow{t}{\tx}$ is related to$\flow{}{\tx}$ by a discrete symmetry $g \in G$ which maps $\tx(t)\in{\widetilde \pS}$ to ${x}(t) \in {\pS}$. The full $\hM \rightarrow {\widetilde\pS}$ reduction is complicated by the non-abelian nature of $G$, and will be illustrated in this section in detail.
 
 \subsection{How point group changes translation}
 
-In fundamental domain, one has to realize a few facts before proceeding to the cycle expansion derivation. A point $x$ in the elementary cell can be uniquely identified by its ``mirror image'' in the fundamental domain:
+In the fundamental domain, one has to realize a few facts before proceeding to the cycle expansion derivation. A point $x$ in the elementary cell can be uniquely identified by its ``mirror image'' in the fundamental domain:
 \beq
 x=g\circ\tx,
 \eeq
-given a group action $g\in G$ the discrete symmetry group. In the triangular periodic Lorentz gas the underlying point group is $C_{6v}$ (isomorphic to$D_6$), and the hexagonal elementary cell is partitioned into 12 identical triangular domains. We have to appreciate that the flow $\hat{\phi}^t$ is G-equivariant under the lattice group symmetry, and proceed with the argument that the displacement in full space is also equivariant under the point group symmetry (which is a subset of the lattice group):
+given a group action $g\in G$ the discrete symmetry group. In the triangular periodic Lorentz gas the underlying point group is $C_{6v}$ (isomorphic to $D_6$), and the hexagonal elementary cell is partitioned into 12 identical triangular domains. We have to appreciate that the flow $\hat{\phi}^t$ is G-equivariant under the lattice group symmetry, and proceed with the argument that the displacement in full space is also equivariant under the point group symmetry (which is a subset of the lattice group):
 \beq
 \hn_t(x)\equiv\hn_t(g\circ\tx)= g\circ\hn_t(\tx).
 \eeq
@@ -301,8 +294,7 @@ g_\tp(\tx_{0},\tx_{N_\tp-1})\nonumber\\
 && \circ g_\tp(\tx_{N_\tp-1},\tx_{N_\tp-2})\circ \ldots\circ
 g_\tp(\tx_{i+1},\tx_{i}),
 \eea
-
-which one can immediately see the connection$\flow{t_\tp}{\tx_i}=h_{\tp}(\tx_i)\tflow{t_\tp}{\tx_i}$. Although the group action $h_{\tp}(\tx_i)$ depends on the initial points on the orbit, it is a property of the orbit's symmetry, and subsequently all $h_{\tp}(\tx_i), \tx_i\in\tp$ belong to the \emph{same} subgroup of $G$.
+which one can immediately see the connection $\flow{t_\tp}{\tx_i}=h_{\tp}(\tx_i)\tflow{t_\tp}{\tx_i}$. Although the group action $h_{\tp}(\tx_i)$ depends on the initial points on the orbit, it is a property of the orbit's symmetry, and subsequently all $h_{\tp}(\tx_i), \tx_i\in\tp$ belong to the \emph{same} subgroup of $G$.
 
 We also want to define the quantity:
 \beq
@@ -310,7 +302,7 @@ We also want to define the quantity:
 (e+\hp^{1}(\tx_i)+\cdots+\hp^{r-1}(\tx_i))\cdot\hn_{\tp}(\tx_i),
 \label{eq-fdDisplacement}
 \eeq
-to be the displacement traveled along the orbit $r$ times, starting from $\tx_i$.  Though one may not appreciate immediately, \refeq{eq-fdDisplacement} takes care of the rotational symmetry that does not commute with translation, and we will show that it gives the proper displacement needed for computing diffusion coefficient in fundamental domain.
+to be the displacement traveled along the orbit $r$ times, starting from $\tx_i$.  Though one may not appreciate immediately, \refeq{eq-fdDisplacement} takes care of the rotational symmetry that does not commute with translation, and we will show that it gives the proper displacement needed for computing diffusion coefficient in the fundamental domain.
 
 
 \subsection{Gymnastics of equations}
@@ -375,7 +367,7 @@ average square displacement in full space when traveling along a fundamental dom
     (a) \includegraphics[width=0.35\textwidth]{diffuse7diskFundDflips}
     (b) \includegraphics[width=0.35\textwidth]{diffuse7diskFundDtiles}
   \end{center}
-  \caption{\label{fig-7diskFundDflips} (a) The three generators of tiling of the  plane by a fundamental domain: two generators of \Dn{12} tiling, reflection  $s$ across the short disk-disk separation, reflection $\ell$ across the long  disk-disk separation; and a translation generator $f$ that pivots (`flips') a  disk center to disk center by flip across the symmetry line normal to the  short disk-disk separation. (5) Tiling of the 7-disk by copies of the  fundamental domain, labeled by a (not unique) sequence of the three generators  $\{s,\ell,f\}$, chosen so that each sequence contain one and only on  disk-to-disk pivot $f$. }
+  \caption{\label{fig-7diskFundDflips} (a) The three generators of tiling of the  plane by a fundamental domain: two generators of \Dn{12} tiling, reflection  $s$ across the short disk-disk separation, reflection $\ell$ across the long  disk-disk separation; and a translation generator $f$ that pivots (`flips') a  disk center to disk center by flip across the symmetry line normal to the short disk-disk separation. (5) Tiling of the 7-disk by copies of the fundamental domain, labeled by a (not unique) sequence of the three generators  $\{s,\ell,f\}$, chosen so that each sequence contain one and only on  disk-to-disk pivot $f$. }
 \end{figure}
     \TZ{2015-10-19}{I do not really use the three generators to compute the fundamental domain cycles, instead I use the idea of topological distinct flights (\reffig{fig-fdflights}). We have yet to discuss the equivalence between the 3-generators and topological distinct flight in the two  figures. }
 
@@ -411,7 +403,7 @@ s  =  C_6^+ \ell
 
 \TZ{2015-10-22}{The idea is that the topological periodic orbit in the fundamental domain is not sensitive to the order of flips. When $w$ increases, one might notice that a single flight along the orbit changes from $sf$ to $fs$. However, the relative position between the start and end triangular cells are always the same.}
 
-A free flight between two disks in the full space may then be wrapped into fundamental domain, according to the sequence cell edges $\{s,\ell,f\}$ it passed. For example, there are different paths when jump to disk $0$: it can be as simple as a single pivot about $f$, or can be more complex such like $\ell f s$ that involves multiple flips, ~\reffig{fig-7diskFundDflips} b. Although we can associate each free flight with a chain of the generators, some of combinations are equivalent. The short jump $sf$ is topologically equivalent to $fs$, in the sense that the particle ends up in the same copy of fundamental domain before next collision.
+A free flight between two disks in the full space may then be wrapped into fundamental domain, according to the sequence cell edges $\{s,\ell,f\}$ it passed. For example, there are different paths when jump to disk $0$: it can be as simple as a single pivot about $f$, or can be more complex such like $\ell f s$ that involves multiple flips, ~\reffig{fig-7diskFundDflips} b. Although we can associate each free flight with a chain of the generators, some of the combinations are equivalent. The short jump $sf$ is topologically equivalent to $fs$, in the sense that the particle ends up in the same copy of fundamental domain before next collision.
 
 Our task is to generate all distinct itineraries from $\{s,\ell,f\}$. One can immediately realize a partial list of the equivalence relations:
 \bea
