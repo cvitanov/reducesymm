@@ -1,22 +1,29 @@
-% diffuse/intro.tex
+% diffuse/intro.tex          pdflatex ZhCvGo15
 
+% Tingnan                                2nov2015
 % Predrag initial draft                 21nov2014
 %         extracted from ChaosBook.org
 % \Chapter{diffusion}{2apr2014}{Deterministic diffusion}
 
+\section{Introduction}
 
-The advances in the theory of dynamical systems have brought a new life to
-Boltzmann's mechanical formulation of statistical mechanics. Sinai, Ruelle and
-Bowen (SRB) have generalized Boltzmann's notion of ergodicity for a constant
-energy surface for a Hamiltonian system in equilibrium to dissipative systems in
-{nonequilibrium} stationary states. In this more general setting the attractor
-plays the role of a constant energy surface, and the SRB measure x is a
-generalization of the Liouville measure. Such measures are purely microscopic
-and indifferent to whether the system is at equilibrium, close to equilibrium or
-far from it.  ``Far for equilibrium'' in this context refers to systems with
-large deviations from Maxwell's equilibrium velocity distribution. Furthermore,
-the theory of dynamical systems has yielded new sets of microscopic dynamics
-formulas for macroscopic observables such as diffusion constants, to which we turn now.
+The advances in the theory of dynamical systems have brought a new life
+to Boltzmann's mechanical formulation of statistical mechanics,
+especially for systems near or far from equilibrium, and yielded new sets
+of microscopic dynamics formulas for macroscopic observables such as the
+transport coefficients. Sinai,
+Ruelle and Bowen (SRB) have generalized Boltzmann's notion of ergodicity
+for a constant energy surface for a Hamiltonian system in equilibrium to
+dissipative systems in{nonequilibrium} stationary states. In this more
+general setting the attractor plays the role of a constant energy
+surface, and the SRB measure is a generalization of the Liouville
+measure. Such measures are purely microscopic and indifferent to whether
+the system is at equilibrium, close to equilibrium or far from it. ``Far
+for equilibrium'' in this context refers to systems with large deviations
+from Maxwell's equilibrium velocity distribution. Furthermore, the theory
+of dynamical systems has yielded new sets of microscopic dynamics
+formulas for macroscopic observables such as diffusion constants, to
+which we turn now.
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\SFIG{fig_lor_4}
@@ -28,1183 +35,155 @@ formulas for macroscopic observables such as diffusion constants, to which we tu
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 
-Chaotic motions exist in many field of physics systems, blah. Thre are physical
-problems such as beam defocusing in particle accelerators or chaotic behavior of
-passive tracers in $2$\dmn\ rotating flows which can be described as
-deterministic diffusion in periodic arrays. In the field of animal/robotic
-locomotion, we will show that a macroscopic ``diffusion view'' also applies.
 
-Lately, there has been an increased focus on locomotion in complex environments. Researches in the physical sciences and in the field of robotics all find interest/relevance to this topic. (Now we can have a list of reference and recent studies in this topic). Many of those studies uses substrates that are spatially homogeneous and we have a relatively good understanding of it. Little is understood for locomotion in heterogeneous environment and principles are still lacking. Our lab is interested to study the transport properties of locomotors moving on heterogeneous terrain. Such study may potentially be beneficial to practical applications such mars navigation, hazardous rescue.
+Chaotic motions exist in many field of physics systems, blah. Thre are
+physical problems such as beam defocusing in particle accelerators or
+chaotic behavior of passive tracers in $2$\dmn\ rotating flows which can
+be described as deterministic diffusion in periodic arrays. In the field
+of animal/robotic locomotion, we will show that a macroscopic ``diffusion
+view'' also applies.
 
-We consider the following locomotion problem. A passively controlled robot is moving in a boulder field at constant speed. We would want to study the long term dynamics of the system. The diffusion coefficient, which describes roughly how much area the robot explored in a unit time, is the key quantity here. We may place the boulder in a regular, periodic array and assume that we are in the heavy boulder limit such that after each collision event, only the robot is deflected and boudlers remain immobalized. With these preasumptions we effectively created a lorentz gas model for locomotion in a boulder field.
+Chaotic motions exist in many systems. There are physical problems such
+as beam defocusing in particle accelerators \TZ{2015-11-02}{reference?}
+or chaotic behavior of passive tracers in $2$\dmn\ rotating
+flows\rf{solomon1994chaotic} which can be described as deterministic
+diffusion in periodic arrays. In the macroscopic world, there are recent
+studies shown that robotic locomotion in heterogeneous granular
+environment also demonstrates scattering-diffusive pattern.
 
-We shall apply cycle expansions to the analysis of {\em transport} properties of
-chaotic systems. The resulting formulas are exact; no probabilistic assumptions
-are made, and the all correlations are taken into account by the inclusion of
-cycles of all periods.  The infinite extent systems for which the periodic orbit
-theory yields formulas for diffusion and other transport coefficients are
-spatially periodic, the global {\statesp} being tiled with copies of a
-elementary cell.
+%In biological field,  many important dynamical processes (often at
+%cellular level) are described in  terms of diffusion coefficients. Such
+%examples include the transport of ions  across the cell
+%membranes\rf{stein2012transport} and the movement of  microorganism(e.g.
+%bacterials) through natural  ecosystems\rf{koch1990diffusion}. In this
+%paper we will discuss the transport  property of more "macroscopic"
+%systems (such as moving  robots\rf{saranli2001rhex}) where a ``diffusive
+%description'' also applies.
 
-In \refsect{s-DiffPerArr} we derive the formulas for diffusion
-coefficients in a simple physical setting, the $2$\dmn\ periodic Lorentz
-gas.
+%Lately, there has been an increased focus on robot locomotion in complex
+%environments (check Science and ROPP reference, the systematic study of
+%interactions between environment and locomotion, which we now
+%call``robophysics''). Many of those studies use substrates that are
+%spatially homogeneous and we have a good
+%understanding\rf{li2009sensitive,li2013terradynamics}. However, little is
+%known for locomotion in heterogeneous environment. There are some limited
+%experimental/theoretical studies for relatively simple settings (e.g.
+%slopes,ref). In this paper we intend to approach the longterm transport
+%properties of locomotion in a more complex environment, i.e. in a field
+%of scatterers of which the scales are comparable to the locomotor.
 
-the Lorentz systems in \refsect{s-lorentz}.
+In \refref{LorentzDiff} some effort was made to derive a diffusion
+formula for the fully symmetry-reduced dynamics, involving only
+quantities computed within the fundamental domain. The fact that lattice
+translations do not commute with the symmetry group within the elementary
+cell makes this apparently a difficult task.
 
-\section{Diffusion in periodic arrays}
-\label{s-DiffPerArr}
+As a gedanken experiment, suppose a passively controlled robot is moving
+in a boulder field at constant speed. The diffusion coefficient, which
+describes roughly how much area the robot explored in a unit time, is the
+key quantity we would like to investigate. We place the boulder in a
+regular, periodic array and assume that we are in the heavy boulder limit
+such that after each collision event, only the robot is deflected and
+boulders remain immobilized. With the presumptions we effectively created
+a periodic Lorentz gas model\rf{Dettm14} for locomotion in a boulder
+field.
 
-The $2$\dmn\ {\em Lorentz gas} is an infinite scatterer array in which
-diffusion of a light molecule in a gas of heavy scatterers is modeled
-by the motion of a point particle in a plane bouncing off an array of
-reflecting disks.  The Lorentz gas is called ``gas'' as one can
-equivalently think of it as consisting of any number of pointlike fast
-``light molecules'' interacting only with the stationary ``heavy
-molecules'' and not among themselves.  As the scatterer array is built
-up from only defocusing concave surfaces, it is a pure hyperbolic
-system, and one of the simplest nontrivial dynamical systems that
-exhibits deterministic diffusion, \reffig{fig-lor-4}.
-% The original Lorentz gas assumed a random distribution of heavy
-% scatterers; in this case a probabilistic description is unavoidable.
-We shall now show that the {\em periodic} Lorentz gas is amenable to a
-purely deterministic treatment.  In this class of open dynamical
-systems quantities characterizing global dynamics, such as the
-Lyapunov exponent, pressure and diffusion constant, can be computed
-from the dynamics restricted to the elementary cell.  The method
-applies to any hyperbolic dynamical system that is a periodic tiling
-$\hM=\bigcup_{ \hn \in T} \pS_{\hn}$ of the dynamical {\statesp} $\hM$
-by {\em translates} $\pS_{\hn}$ of an {\em elementary cell} $\pS$,
-with $T$ the abelian group of lattice translations.  If the scattering
-array has further discrete symmetries, such as reflection symmetry,
-each elementary cell may be built from a {\em fundamental domain}
-${\widetilde \pS}$ by the action of a discrete (not necessarily
-abelian) group $G$.  The symbol $\hM$ refers here to the full
-{\statesp}, \ie,, both the spatial coordinates and the momenta.  The
-spatial component of $\hM$ is the complement of the disks in the {\em
-whole} space.
+To investigate the transport property of such systems, we apply cycle
+expansions\rf{DasBuch} to the analysis of {\em diffusion coefficient}.
+The resulting formulas are exact; no probabilistic assumptions are made,
+and all correlations are taken into account by the  inclusion of cycles
+of all periods. While existing cycle expansion theory yields the correct
+result by tiling the {\statesp} into elementary cells, the convergence
+rate is slow because of bad shadowing and poor choice of symbolic
+grammar\rf{CGS92}. In this paper we propose a novel approach that
+significantly improves the efficiency of cycle expansion formula, by
+factorizing the non-commuting rotational and translational symmetry and
+using periodic orbits in the fundamental domain.
 
-We shall now relate the dynamics in $\pS$ to diffusive properties of
-the Lorentz gas in $\hM$.
+% The infinite extent systems for which the  periodic orbit theory yields
+% formulas for diffusion and other transport  coefficients are spatially
+% periodic, the global {\statesp} being tiled with  copies of a elementary
+% cell.
 
-These concepts are best illustrated by a specific example, a Lorentz
-gas based on the hexagonal lattice Sinai billiard of
-\reffig{fig-lor-1}.
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\SFIG{fig_lor_1.ps}
-%{}{
-%Tiling of $\hM$, a periodic lattice of reflecting disks, by the
-%fundamental domain ${\widetilde \pS}$. Indicated is an example of a
-%global trajectory $\hx(t)$ together with the corresponding
-%elementary cell trajectory ${x}(t)$ and the fundamental domain
-%trajectory $\tx(t)$.
-%(Courtesy of J.-P. Eckmann)
-%}{fig-lor-1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-We distinguish two types of diffusive behavior; the {\em infinite
-horizon} case, which allows for infinite length flights, and the {\em
-finite horizon} case, where any free particle trajectory must hit a
-disk in finite time.  In this chapter we shall restrict our
-consideration to the finite horizon case, with disks sufficiently
-large so that no infinite length free flight is possible.  In this
-case the diffusion is normal, with $\hat{x}(t)^2$ growing like $t$.
-We shall discuss the anomalous diffusion case in
-\refsect{intersec:andiff}.
-
-PC{ask J.-P. Eckmann for permission to use his figures}
-
-As we will work with three kinds of \statesp s, good manners require
-that we repeat what tildes, nothings and hats atop symbols signify:
-\bea
-\tilde{\ }     &&
-    \mbox{fundamental domain, triangle in \reffig{fig-lor-1}}
-        \continue
-%[nothing] \qquad \qquad &&
-[0pt] \qquad \qquad &&
-    \mbox{elementary cell, hexagon in \reffig{fig-lor-1}}
-        \continue
-\hat{\ }   &&
-    \mbox{full {\statesp}, lattice in \reffig{fig-lor-1}}
-\label{atops}
-\eea
-It is convenient to define an \evOper\ for each of the 3 cases of
-\reffig{fig-lor-1}.
-$\hx(t)\,=\,\hflow{t}{\hx}$
-denotes the point in the global space
-$\hM$
-reached by the flow in time $t$.
-$x(t)\,=\,\flow{t}{\xInit}$
-denotes the corresponding flow in the elementary cell; the two are
-related by
-\beq
-\hn_t(\xInit)= \hflow{t}{\xInit} - \flow{t}{\xInit} \in T
-\,,
-\ee{l-diff-hatn}
-the translation of the endpoint of the global path into the elementary
-cell $\pS$.  The quantity $\tx(t)\,=\,\tflow{t}{\tx}$ denotes the flow
-in the fundamental domain
-${\widetilde \pS}$;
-$\tflow{t}{\tx}$ is related to
-$\flow{t}{\tx}$ by a discrete symmetry
-$g \in G$ which maps $\tx(t)\in {\widetilde \pS}$ to
-${x}(t) \in {\pS}$ .
-
-Fix a vector $\beta \in \reals^d$, where $d$ is the dimension of the
-{\statesp}. We will compute the diffusive properties of the Lorentz
-gas from the leading eigenvalue of the
-\evOper\ \refeq{(2)}
-\beq
-\eigenvL(\beta)\,=\, \lim_{t \rightarrow \infty} \frac{1}{t} \log
-\langle e^{\beta \cdot (\hx(t) -x) } \rangle_\pS
-~, \quad
-\ee{lor-diff-1}
-where the average is over all initial points in the elementary cell,
-$x \in \pS$. %, $\tx \in {\widetilde \pS}$ respectively.
-
-If all odd derivatives vanish by symmetry, there is no drift and the
-second derivatives
-\[
-2d D_{ij} =
-\left . {{\partial} \over {\partial \beta_i}}
-{{\partial} \over {\partial \beta_j}}
-\eigenvL(\beta)\right |_{\beta=0} \,=\,\lim_{t\rightarrow \infty} {1\over t}
-\langle {(\hx(t) -x)_i (\hx(t) -x)_j } \rangle_\pS ~,
-\] %ee{lor-diff-4}
-yield a diffusion matrix.  This symmetric matrix can, in general, be
-anisotropic (\ie, have $d$ distinct eigenvalues and eigen\-vectors).
-The spatial diffusion constant is then given by the Einstein relation
-\refeq{(5)}
-\[
-D\,=\,{1\over 2 d} \sum_i
-\left .{{\partial}^2 \over {\partial \beta^2_i}}
-\eigenvL(\beta)\right |_{\beta=0}
-\,=\, \lim_{t\rightarrow \infty} {1\over{2d t}}
-\langle {(\hat{q}(t) -q)^2 } \rangle_\pS~
-~,
-\] %ee{lor_diff_5}
-where the $i$ sum is restricted to the spatial components $q_i$ of the
-{\statesp} vectors $x=(q,p)$, \ie, if the dynamics is Hamiltonian, the
-sum is over the $d$ degrees of freedom.
-
-PC{reinstate mass, velocity, size to get $\beta$, $m$, $\sigma$
-    dependencies right}
-
-We now turn to the connection between \refeq{lor-diff-1} and periodic
-orbits in the elementary cell.As the full $\hM \rightarrow {\widetilde
-\pS}$ reduction is complicated by the non-abelian nature of $G$, we
-discuss only the abelian $\hM \rightarrow \pS$ reduction.
+In \refsect{s-DiffPerArr} we briefly review the formulas for diffusion
+coefficients in the $2$\dmn\ periodic Lorentz gas, using dynamics
+restricted in elementary cell. In\refsect{s-SymmetryReduction} we
+factorize the rotational symmetry and derive the diffusion coefficient
+using fundamental domain cycles. Because we will work with different
+kinds of \statesp, through out the text we will repeatedly using tildes
+($\tilde{\quad}$), nothings and hats ($\hat{\quad}$) atop symbols to
+signify the dynamical quantities in the fundamental domain, elementary
+cell and full state space, respectively.
 
 
-\subsection{Reduction from $\hM$ to $\pS$}
-\label{s-Red-hMto-pS}
+===================================== TO REUSE ==========================
 
-The key idea follows from inspection of the relation
-\bea
-\expct{ e^{\beta \cdot (\hx(t) -x)} }_\pS
-&=& {1 \over {|\pS|}} \int_{x \in \pS \atop \hat{y} \in \hM}
-dx d\hat{y}\,
-e^{\beta \cdot (\hat{y} -x) }
-\delta(\hat{y} - \hflow{t}{x})~.
-\nnu
-%\ee{lor-diff-6}
-\eea
- ${|\pS|=\int_\pS dx}$ is the volume of the elementary cell $\pS$.
-Due to translational symmetry, it suffices to start with a density of
-trajectories defined over a single elementary cell $\pS$.
-As in \refsect{s_aver_ev_op}, we have used the identity $ 1 = \intM{y}
-\prpgtr{y - \hx(t)}$ to motivate the introduction of the {\evOper} $
-\Lop^t(\hat{y},x)$.  There is a unique lattice translation $\hn$ such
-that $\hat{y}=y - \hn$, with the endpoint $y \in \pS$ translated back
-to the elementary cell, and $\flow{t}{x}$ given by
-\refeq{l-diff-hatn}. The difference is a translation by a constant
-lattice vector $\hn$, and the Jacobian for changing integration from
-$d\hat{y}$ to $dy$ equals unity.  Therefore, and this is the main
-point, translation invariance can be used to reduce this average to
-the elementary cell:
-\beq
-\langle e^{\beta \cdot (\hx(t) -x) } \rangle_\pS
-\,=\, {1 \over {|\pS|}} \int_{x,y \in \pS} dx dy\,
-e^{\beta \cdot (\hflow{t}{x} -x) }
-\delta(y - \flow{t}{x})~.
-\ee{lor-diff-7}
-As this is a translation, the Jacobian is $|\partial \hat{y}/\partial
-y| = 1$.  In this way the global $\hflow{t}{x}$ flow, infinite volume
-\statesp\ averages can be computed by following the flow
-$\flow{t}{\xInit}$ restricted to the compact, finite volume elementary
-cell $\pS$.  The equation \refeq{lor-diff-7} suggests that we study
-the
-\evOper
-\beq
-\Lop^t(y,x)\,=\,e^{\beta \cdot (\hx(t) -x) } \delta(y-\flow{t}{x})
-\,,
-\ee{lor-diff-8}
-where $\hx(t)\,=\,\hflow{t}{x} \in \hM$ is the displacement in the
-full space, but $x$, $\flow{t}{x}$, $y \in \pS$.  It is
-straightforward to check that this operator satisfies the semigroup
-property \refeq{SemiGrp},
-\[
-\int_{\pS} dz\,
-\Lop^{t_2}(y,z) \Lop^{t_1}(z,x) \,=\,
-\Lop^{t_2+t_1}(y,x)~
-\,.
-\]
-For $\beta=0$, the operator \refeq{lor-diff-8} is the \FPoper\
-\refeq{TransOp1}, with the leading eigenvalue $e^{\eigenvL_0}=1$
-because there is no escape from this system (see the flow conservation
-sum rule \refeq{prob-cons}).
+    \PC{the text from Cvitanovi\'c, Gaspard and Schreiber\rf{CGS92}}
+The Lorentz gas\rf{Lorentz1905} is one of the simplest nontrivial models
+of deterministic diffusion.
+Diffusion of a light molecule in a gas of heavy scatterers
+is modelled
+by a point particle in a plane bouncing off an array of reflecting disks.
+As a billiard built up completely of
+concave surfaces and as a pure hyperbolic system, the
+Lorentz gas is a good candidate for description in terms of cycle
+expansions\rf{AACI}.
+This might seem a hopeless task, as one
+has to deal with all periodic and aperiodic
+solutions of an infinitely extended system. An
+approach based on larger and larger finite portions of the system is described
+in \refref{GasNic90}, with the diffusion constant related to
+%the scaling behaviour of
+the escape rates from such finite portions.
+%with its size.
+%PG
+As far as escape rates are obtained in direct numerical simulations
+this approach has been shown to be effective\rf{GaBaMaHo92}.
+However, from the cyclists point of view
+%PG
+where the rates are calculated from the periodic orbits,
+this approach is impractical; with each added disk new peculiarities arise
+in the enumeration of periodic orbits, and with current
+methods there is little hope of getting results for more than a few disks,
+and no hope of approaching the desired scaling limit.
 
-The rest is old hat.
-% \toSect{s-tr-flows}
-The spectrum of $ \Lop$ is evaluated by taking the trace
-\[
-\tr\Lop^t\,=\,\int_\pS dx\,
- e^{\beta \cdot \hn_t(x) } \delta(x-x(t))~.
-\] %ee{lor_diff_10}
-Here $\hn_t(x)$ is the discrete lattice translation defined in
-\refeq{l-diff-hatn}.  Two kinds of orbits periodic in the elementary
-cell contribute.  A periodic orbit is called {\em standing}
-\index{standing orbit!Lorentz gas} if it is also periodic orbit of the
-infinite {\statesp} dynamics, $\hflow{\period{p}}{x}=x$, and it is
-called {\em running} \index{running orbit!Lorentz gas} if it
-corresponds to a lattice translation in the dynamics on the infinite
-{\statesp}, $\hflow{\period{p}}{x}=x+\hn_p$.  We recognize the
-shortest repeating segment of a running orbit as our old `\rpo' friend
-from \refchap{c-discrete}.
-In the theory of area--preserving maps such as the standard map of
-\refexam{s:StandMap} these orbits are called {\em accelerator modes},
-as the diffusion takes place along the momentum rather than the
-position coordinate.  The traveled distance
-$\hn_p=\hn_{\period{p}}(\xInit)$ is independent of the starting point
-$\xInit$, as can be easily seen by continuing the path periodically in
-$\hM$.
-\index{accelerator mode}
+A recent approach, introduced in \refref{LorentzDiff} and
+tested in this paper, exploits the fact that the periodic Lorentz
+gas
+%(and many other systems)
+can be constructed by putting together
+translated copies of an elementary cell.
+%When this elementary cell is
+%itself invariant under a discrete symmetry group $G$ the lattice can be tiled
+%into images under $G$ and the lattice translations of a fundamental
+%domain.
+Therefore quantities characterizing global dynamics, such as
+the Lyapunov exponent and the diffusion constant, can be
+computed from the dynamics restricted to the elementary cell.
 
-PC{recheck usage ``standing,'' ``running'' with the literature.}
+The classical Boltzmann equation for evolution of 1-particle density is
+based on stosszahlansatz, neglect of particle correlations prior to, or
+after a 2-particle collision. It is a very good approximate description
+of dilute gas dynamics, but a difficult starting point for inclusion of
+systematic corrections. In the theory of deterministic diffusion
+developed in recent years, no correlations are neglected - they are all
+included in the exact cycle expansions for transport coefficients such as
+the diffusion constant.
 
-The final result is the \Fd\  \refeq{Z(s)}
-\beq
-\det(\eigenvL (\beta) - \Aop)  \,=\,\prod_{p}
-\exp \left( - {
-               \sum_{r=1}^\infty {1 \over r}
-               {
-                e^{(\beta \cdot \hn_p- s \period{p}) r}
-                    % z^{\cl{p} r}
- \over  \oneMinJ{r}
-                }
-  % { | \det \left( {\bf 1}-\monodromy_p^{r} \right) | } }
-              } \right)
-\,,
-\ee{lor-diff-14}
-or the corresponding \dzeta\ \refeq{zet}
-\beq
-1/\zeta(\beta, s)\,=\,\prod_{p}\left( 1 - \frac{e^{(\beta \cdot
-\hn_p- s \period{p})}}{|\ExpaEig_p|} \right)
-~.
-\label{zeta-diff}
-\eeq
-The \dzeta\ \cycForm\ \refeq{dzeta} for the diffusion constant
-\refeq{(5)}, zero mean drift
-$
-\expct{ \hat{x}_i } = 0
-\,,
-$
-is given by
-\beq
-D \,=\,{1 \over 2 d} { \expct{\hat{x}^2}_\zeta \over \expct{\period{}}_\zeta }
-  \,=\,{1 \over 2 d } \, {1 \over \expct{\period{}}_\zeta}
-  \sumprime \frac{(-1)^{k+1}
-  (\hn_{p_1}+ \cdots+ \hn_{p_k})^2}
-  {|\ExpaEig_{p_1}\cdots \ExpaEig_{p_k}|}
-\, .
-\label{(17)}
-\eeq
-where the sum is over all distinct non-repeating combination of prime
-cycles.  The derivation is standard, still the formula is strange.
-Diffusion is unbounded motion across an infinite lattice;
-nevertheless, the reduction to the elementary cell enables us to
-compute relevant quantities in the usual way, in terms of periodic
-orbits.
+The exact results are sometimes counterintuitive, and might help us
+decide whether a diffusive phenomenon whose microscopic dynamics is hard
+to observe directly, such as conductance fluctuations in a mesoscopic
+device, is due to impurities or to deterministic transport. For example,
+as some parameter (such as mean free flight time) is increased, the
+deterministic diffusion coefficient reveals a non-monotone, fractal
+dependence.
 
-A sleepy reader might protest that $x(\period{p})-x(0)$ is manifestly
-equal to zero for a periodic orbit. That is correct; $\hn_p$ in the
-above formula refers to a displacement $\hat{x}(\period{p})$ on the
-{\em infinite} periodic lattice, while $p$ refers to closed orbit of
-the dynamics $\flow{t}{x}$ reduced to the elementary cell, with $x_p$
-a periodic point in the closed prime cycle $p$.
-
-Even so, this is not an obvious formula. Globally periodic orbits have
-$\hat{x}_p^2 =0$, and contribute only to the time normalization
-$\expct{\period{}}_\zeta$. The mean square displacement
-$\expct{\hat{x}^2}_\zeta$ gets contributions only from the periodic
-runaway trajectories; they are closed in the elementary cell, but on
-the periodic lattice each one grows like $\hat{x}(t)^2 =
-(\hn_{p}/\period{p})^2 t^2 = v^2_p t^2$.  So the orbits that
-contribute to the trace formulas and \Fd s exhibit either ballistic
-transport or no transport at all: diffusion arises as a balance
-between the two kinds of motion, weighted by the $1/|\ExpaEig_p|$
-measure. If the system is not hyperbolic such weights may be
-abnormally large, with $1/|\ExpaEig_p| \approx 1/\period{p}^\alpha$
-rather than $1/|\ExpaEig_p| \approx e^{-\period{p}\Lyap}$, where
-$\Lyap$ is the Lyapunov exponent, and they may lead to anomalous
-diffusion - accelerated or slowed down depending on whether the
-probabilities of the running or the standing orbits are enhanced.
-% \toSect{intersec:andiff}
-
-We illustrate the main idea, tracking of a globally diffusing
-orbit by the associated confined orbit restricted to the
-elementary cell, with the Lorentz gas.
-
-
-\PublicPrivate{ }{% switch \PublicPrivate{
-
-\section{Lorentz gas}
-\label{s-lorentz}
-%old \file{nordita.dk:home/predrag/book/b\_lorentz.tex     \hfill 26/3-95}
-% in part based on
-% Transport Properties of the Lorentz Gas in Terms of Periodic Orbits
-% CVITANOVI\'C ECKMANN GASPARD
-% 17 October 1993
-
-
-We now return to the problem of computing the diffusion coefficient
-for a ``finite horizon'' Lorentz gas on a hexagonal lattice introduced
-in \refsect{s-DiffPerArr}.
-%By finite horizon we mean any arrangement of scatterers which does
-%not allow for infinitely long free flights of the moving particle.
-%A random arrangement of scatterers always produces finite horizon,
-%while for a regular lattice of scatterers different conditions on
-%their spacing must be imposed, depending on the particular arrangement.
-
-{Comment by Lamberto}
-
-We are not going to describe in full detail all the calculations that
-have performed for such a system, our main goal is to provide a
-physically relevant example where the symbolic dynamics is enormously
-complicated, and application of formulas like \refeq{(17)} is
-problematic. The complexity of symbolic dynamics for this system has a
-very clear and profound mathematical justification:
-
-In practice we will point out how serious are the problems encountered
-in applying formulas like \refeq{(17)} to this system.  From the point
-of view of From a general point of view these difficulties are
-expected, since the organization of cycles suffers from the complexity
-of the symbolic dynamics for such systems.
-
-Markov partitions for disperse billiards are made of an infinite
-countable collection of pieces, very unevenly sized. The source of
-troubles are the grazing singularities, corresponding to the orbits
-that are tangent to a disk: a cone of trajectories close to the
-tangent one is split into two pieces at the tangency point, and the
-process repeats at every tangency. This mechanism causes the global
-unstable and stable manifolds to consist of a countable number of
-smooth components.  Thus the presence of singularities in a sense
-weakens the strong chaotic properties induced by complete
-hyperbolicity (due to the fact that any single collision leads to
-defocusing, and that the time between two successive collisions if
-bounded from above by a finite quantity).
-
-Let us first define the parameters of the model: we set the disk
-radius $R=1$ and denote by $w$ the disk to disk distance, so that the
-centers of two neighboring disks are separated by a distance
-$2+w$. For a hexagonal lattice we require $0\leq w \leq 4/\sqrt{3}-2$
-in order that the finite horizon condition be satisfied.
-
-\subsection{Lorentz gas: symbolic dynamics}
-
-If we start a trajectory from any scatterer in the lattice, under the
-condition of finite horizon, there are two possibilities for the next
-hit: either it takes place on one of the six neighboring disks, or on
-one of the six next-to-nearest disks. Hence we may introduce an
-alphabet, by labeling these disks clockwise from $0$ to $11$: if we
-assign the label $0$ to one of the closest obstacles, even labels will
-then correspond to short flights, see \reffig{f_simb_lor}.
-%as in \reffig{f_simb_lor}
-%\PC{get Fig.9.3 ?}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\FIG{
-%\includegraphics[width=0.60\textwidth]{lor_011}
-%}{}{
-%Symbolic dynamics for closely packed Lorentz gas.
-%}{f_simb_lor}
-
-Then, any trajectory (without grazing collisions) may be uniquely
-identified by assigning one of these twelve symbols to each free
-flight. The way this is done is to let the symbol for a free flight
-depend on the vector separation between initial and final point of
-such a segment of trajectory. Then, one should imagine that the center
-of \reffig{f_simb_lor} is always translated to the scatterer where the
-free flight starts, and that the symbol for the flight is the one of
-the scatterer where it ends. So, in practice, for a spacing $w=0.3$,
-which is just below the finite horizon condition, one has only four
-types of cycles with two collisions, \ie, orbits which indefinitely
-repeat the same symbol sequence of two symbols:
-%\cite{MR94}:
-the are of course short orbits between two neighboring scatterers,
-like $(0~6)$ (next neighbors) or $(1~7)$ (next to nearest neighbors),
-as well as $(1~5)$ and $(0~5)$ orbits. All these orbits belong to {\em
-groups}, characterized by the same layout, and differing just in the
-orientation: this is of course due to the symmetry properties of the
-system: as the symmetry group is discrete there is a maximum number of
-different orbits in each group (which is $24$ in the case under
-consideration).  The fact that the different orbits of one kind are
-oriented in different directions does not affect their length $\tau$
-and their Lyapunov exponent $\lambda$, which are exactly the same for
-all orbits within a group.  The number of distinct orbits within one
-group, and the corresponding product $\tau \lambda$, which appears in
-the definition of the Floquet multipliers are listed in
-\reftab{t-diff-1}, for cycles of length 2 and 3.
-%
-%%%%% Table 1 %%%%%%%%%%%%%%%%%%%%%%%%
-%\begin{table}
-%{\small
-%\begin{tabular}{|c|c|c|}
-%\hline
-%Orbit & Degeneracy & ~$\tau \lambda$ \\ \hline\hline
-%$S$    & 3      & 1.51286399  \\
-%$L$    & 3      & 3.51394510  \\
-%$V$    & 6      & 4.65944481  \\
-%$T$    & 12     & 3.15831208  \\ \hline\hline
-%\end{tabular}
-%\caption[]{\small
-%Dynamical properties of length-2 cycles, at $w=0.3$.
-%}
-%\label{t-diff-1}
-%}  %end of \small
-%\end{table}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%In \reftab{t-diff-2-3} we report the same quantities for cycles of length 3,
-%along with one representative sysmbol string, for each orbit type.
-%
-%%%%% Table 2 %%%%%%%%%%%%%%%%%%%%%%%%
-%\begin{table}
-%{\small
-%\begin{tabular}{|c|c|c|}
-%\hline
-%Orbit type & Degeneracy & ~$\tau \lambda$ \\ \hline\hline
-%(0~4~8) & 4      & 3.27128792  \\
-%(0~2~7) & 12     & 6.23520184  \\
-%(0~2~6) & 24     & 6.31880379  \\
-%(0~2~5) & 24     & 8.30080318  \\ \hline\hline
-%\end{tabular}
-%\caption[]{\small
-%Dynamical properties of length-3 cycles, at $w=0.3$.
-%}
-%\label{t-diff-2}
-%}  %end of \small
-%\end{table}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%%%%% Table 1 %%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}
-{\small
-\begin{tabular}{|c|c|c|}
-\hline
-Orbit & Degeneracy & ~$\tau \lambda$ \\ \hline\hline
-(0~6)    & 3      & 1.51286399  \\
-(1~7)    & 3      & 3.51394510  \\
-(1~5)    & 6      & 4.65944481  \\
-(0~5)    & 12     & 3.15831208  \\
-(0~4~8) & 4      & 3.27128792  \\
-(0~2~7) & 12     & 6.23520184  \\
-(0~2~6) & 24     & 6.31880379  \\
-(0~2~5) & 24     & 8.30080318  \\ \hline\hline
-\end{tabular}
-\caption[]{\small
-Dynamical properties of length-2 and 3 cycles, at $w=0.3$.
-}
-\label{t-diff-1}
-}  %end of \small
-\end{table}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%Note that for the hexagonal Lorentz gas
-%$24$ is the highest degeneracy any orbit can have.
-
-It is clear from these considerations that not all possible symbol
-strings actually give rise to cycles. This is because the symbolic
-dynamics for the Lorentz gas is marred by a large amount of pruning.
-For instance, there is an obvious pruning rule that the same symbol
-cannot be repeated twice, as this would correspond to a trajectory
-crossing a disk.  Many more pruning rules are present: for instance,
-in the dense gas we consider here not only a letter cannot repeat, but
-the next symbol has to vary at least by two units after a short
-flight, and by three units after a long flight. The immense amount of
-pruning present in the problem may be appreciated by looking at the
-second column of \reftab{t-diff-3},
-%{t-diff-4}
-in which the number of cycles is reported as a function of cycle
-length: order by order we get roughly an increase by $3$, instead of
-the factor $11$ which would come from an unrestricted grammar (keeping
-into account only the non--crossing condition, which effectively
-reduces by one the possible symbols that can follow any given one).
-
-
-\subsection{Diffusion}
-
-We now apply the formula \refeq{(17)} for a particular value of the
-spacing $w=0.3$.
-
-Together with estimates of the diffusion coefficient we may also
-provide estimates for the Lyapunov exponent (see
-\refsect{s-Lyapunovs}).  Moreover, since no trajectory escapes, the
-escape rate is zero, and the \Fd\ and the \dzeta\ must satisfy the
-material flow conservation rule \refeq{prob-cons}: the results for all
-these quantities are reported in \reftab{t-diff-3}, where cells have
-been sampled with the variational method described in
-\refrem{r-varPrinc}.
-% In \reftab{t-diff-4}, we report the corresponding results as
-% obtained with the cycle sorting method of \refrem{r-ergSys} for
-% comparison.
-%
-%%%%% Table 3 %%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}
-\caption[]{\small
-Elementary cell, $w$=0.3.
-The cycles are sorted with the
-method of \refrem{r-varPrinc}.
-The last column is taken from \refref{MR94}.
-}
-{\small
-\begin{tabular}{rrlll}
-\hline
-length & \# cycles & ~$\zeta$(0,0) & ~~$\Lyap$ & ~~D \\ \hline
-1      & 0      &   -    &   -  &   - \\
-2      & 24     & -0.31697 & 1.330 & 0.375 \\
-3      & 64     & -0.54152 & 1.435 & 0.338 \\
-4      & 156    & -0.09718 & 1.902 & 0.282 \\
-5      & 492    &  0.02383 & 2.324 & 0.212 \\
-6      & 1484   &  0.02812 & 1.931 & 0.129 \\
-7      & 5244   &  0.02044 & 1.836 & 0.185 \\
-8      & 19008  & -0.00036 & 1.754 & 0.256 \\ \hline
-\multicolumn{4}{l}{\refref{MZ}, numerical experiment} & 0.25(1) \\
-\multicolumn{4}{l}{\refref{MR94}, numerical experiment} & 0.2492(3)
-\end{tabular}
-}  %end of \small
-\label{t-diff-3}
-\end{table}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-
-{column 5 fixed by Lamberto}
-%
-%%%%% Table 4 %%%%%%%%%%%%%%%%%%%%%%%%
-% \begin{table}
-%{\small
-%\begin{tabular}{|r|r|l|l|l|l|}
-%\hline
-%length & \# cycles & ~$\zeta$(0,0) & ~~$\Lyap$ & ~~D & ~~D${}_{trace}$ \\ \hline\hline
-%1      & 0      &   -    &   -  &   - & - \\
-%2      & 24     & -0.3170 & 1.330 & 0.3754 & 0.3754 \\
-%3      & 64     & -0.5415 & 1.435 & 0.3388 & 0.1624 \\
-%4      & 168    & -0.0976 & 1.902 & 0.2548 & 0.3800 \\
-%5      & 516    &  0.0196 & 2.298 & 0.1772 & 0.1979 \\
-%6      & 1262   &  0.0300 & 1.870 & 0.1842 & 0.3109 \\
-%7      & 4200   &  0.0264 & 1.789 & 0.2255 & 0.2418 \\
-%8      & 14652  & -0.0015 & 1.702 & 0.2684 & 0.2658 \\
-%9      & 51252  & -0.0055 & 1.690 & 0.2560 & 0.2400 \\
-%10     & 165150 & -0.0071 & 1.740 & 0.2384 & 0.2501 \\ \hline\hline
-%\end{tabular}
-%\caption[]{\small
-%Elementary cell, $w$=0.3. The cycles are sorted with the
-%ergodic method of \refrem{r-ergSys}.
-%(or \refrem{r-varPrinc}??).
-%The last column is taken from \refref{MR94}.
-%(drop \reftab{t-diff-3}??)
-%}
-%\label{t-diff-4}
-%}  %end of \small
-%\end{table}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%\LR{Table added by Lamberto}
-
-As mentioned above a lot of symbol sequences are pruned when the
-required finite horizon is achieved by making the spacing between
-disks small enough. So very poor convergence of cycle expansions has
-to be expected. With this in mind the numbers given in
-\reftab{t-diff-3} are in a reasonable accord with the probability
-conservation and offer a rather poor, but not unreasonable, estimate
-of the Lyapunov exponent.
-% (compare with the more accurate estimates of \reftab{t-diff-5a}).
-Nevertheless, the estimates of the diffusion constant up to the number
-of cycles employed so far appear to converge very slowly. They seem to
-be more sensitive to the bad shadowing than the Lyapunov exponent and
-the probability conservation. Of course, one should remember that the
-diffusion coefficient is a higher order moment of the generating
-function, hence it should be expected to be harder to get.
-%
-% \subsection{Dilute Lorentz gas}
-%
-% In order to test the diffusion formula under less trying conditions,
-% we eliminate pruning by making the spacing between disks larger, and
-% imposing the finite horizon by fiat; in this section we consider the
-% measure zero subset of those orbits which after each bounce travel
-% only to one of the nearest or next nearest disks. This Cantor set is
-% a repeller, and the material flow is not conserved. Estimates of the
-% Lyapunov exponent and the diffusion constant for trajectories
-% restricted to this set are given in \reftab{t-diff-2a}.
-%
-%%%%% Table 2 %%%%%%%%%%%%%%%%%%%%%%%%
-% \begin{table}
-%{\small
-%\begin{tabular}{|r|r|l|l|}
-%\hline
-%length & \# cycles & ~~$\Lyap$ & ~~D \\ \hline\hline
-%1      & 0      &   -    &    - \\
-%2 &     54      & 0.5528 &  1.6716\\
-%3 &    440      & 0.5588 &  1.7006\\
-%4 &   3234      & 0.5604 &  1.7054\\
-%5 &  27856      & 0.5605 &  1.7049\\ \hline
-%\end{tabular}
-%\caption[]{\small
-%Elementary cell, $w$=2.0, imposed finite horizon.
-%}
-%\label{t-diff-2a}
-%}  %end of \small
-%\end{table}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%PG for the closed infinite horizon billiard when w=2, I have that the
-% Lyapunov exponent = 0.4893 +/- 0.0003 which is lower than on the
-% fractal since orbits which are tangent to the disks are absent in
-% the fractal but have lower Lyapunov exponents.
-% \caption{Elementary cell, $w$=2.0, finite horizon} \label{TDIF}
-% \end{table}
-% \eject
-
-% As the set is not the full set of orbits contributing to diffusion,
-% there are no results obtained by other means that these numbers
-% could be compared with.  Note that as expected the Lyapunov exponent
-% is now smaller because the average time of straight motion between
-% bounces is larger due to the wider spacing.  Encouragingly, the
-% diffusion constant exhibits reasonable convergence, supporting the
-% claim that the cycle expansions are in principle convergent, but for
-% high density of scatterers the convergence is adversely affected by
-% the strong pruning of the allowed orbits.
-%
-% \subsection{Trace formulas, numerical simulations}
-%
-% \%authorLR
-%
-% \noindent
-A way to circumvent the poorness of shadowing, due to severe and badly
-controllable pruning, is just going back to trace formulas
-% $D$ values listed in the last column in \reftab{t-diff-3} are
-% calculated from the trace formula
-\refeq{averf} \beq D_{tr}\,=\frac{1}{4} \lim_{n \to
-  \infty}\frac{\sum_{x\in Fix(n)}\, \hn_x^2 /|\ExpaEig_x|}{\sum_{x\in
-    Fix(n)}\, T_x/|\ExpaEig_x|}
-\label{DL-trace}
-\eeq
-% of the same form we used to derive exact results for cat maps
-% \refeq{Dcat}.  A very long trajectory of the order of $10^{10}$
-% collisions was used to find cycles as described in the previous
-% remark.  This way, they were able to carry on their calculation up
-% to cycle length $10$, missing a number of cycles, for the reasons
-% explained in the previous remark.
-For cycle length $9$ \refref{MR94} reports $D_{tr}\simeq 0.240$, and
-for cycle length $10$ $D_{tr}\simeq 0.2501$, which is not too far from
-the result of direct simulations (see \reffig{f-diff-dpolt}).  The
-apparent better performance of trace formulas over cycle expansions in
-this context is rather unexpected, and no strong theoretical clue is
-offered to justify this observation, but the very simple fact that
-trace formulas automatically include probability conservation, as the
-average is always computed by using a normalized measure.
-%
-% and only a partial explanation has been provided so far.  (see
-% following Remark) \FIG{} %\input{dpolt}}
-{}{ Figure was here Finite order estimates for the diffusion
-  coefficient from cycle expansions and trace formulas.  }
-% {f-diff-dpolt}
-%
-% The numerical experiment values reported at the bottom of
-% \reftab{t-diff-3} come from the simulations performed in \refref{MZ}
-% and in \refref{MR94}. In particular, in \refref{MR94} there is also
-% a check that both Einstein relation and Green-Kubo formulas lead to
-% the same estimate.  A combination of the two methods produced the
-% observed accuracy of the result.
-%
-%
-% \subsection{On the effect of pruning on cycle expansions}
-%
-% \authorLR
-%
-%\noindent
-%The unexpected better performance of trace formulas over cycle
-% expansions, in the study of the Lorentz gas is even more pronounced
-% at smaller spacings $w$. This suggests that pruning has something to
-% do with that, and that there may be a way of limiting its disastrous
-% effects.
-%
-% First observe the following. In order to have good convergence in
-% cycle expansions it is necessary that the curvature correction terms
-% like $(t_{ab} - t_a t_b)$, where $ab$ is a generic symbol string,
-% ``shadowed'' by the product of strings $a$ and $b$, rapidly tend to
-% zero. However, because of pruning in the Lorentz gas, there is a
-% large mismatch in the number of prime and shadowing strings.  For
-% instance, at $w$=0.3 there are $24$ cycles of length $2$, which
-% means that $276$ shadowing approximants of length $4$ can be formed
-% by taking their products.  However, there are only $168$ prime
-% cycles of length $4$.  At length $5$, there are $1536$ product
-% strings to match with only $516$ prime cycles. Similarly, at length
-% $6$ there are $6480$ product strings contributing a positive amount
-% to the cycle expansion, $2024$ product strings contributing a
-% negative amount, and $1262$ prime strings contributing a negative
-% amount. Moreover, there are many prime strings which do not even
-% have a shadowing approximant. These problems do not ease at higher
-% periods, which makes the convergence of the cycle expansions rather
-% slow.
-%
-% On the other hand, trace formulas do not arrange the different terms
-% into curvature correction blocks, and they are explicitly normalized
-% at all periods. This produces two effects. First, taking longer and
-% longer cycles simply makes each single cycle look closer and closer
-% to an ergodic trajectory itself (from a numerical point of
-% view). Secondly, if the cycles are selected with the method of
-% \refrem{r-ergSys}, their contributions are naturally distributed in
-% a range wich contains the correct average, and weighing them with a
-% probability measure can only produce a number in the same range.
-%
-% This somehow gives an idea of why trace formulas performed better
-% than cycle expansions in Lorentz gas calculations. At the same time,
-% these facts
-This fact suggests that the performance of cycle expansions for
-systems with strong pruning, might be improved by imposing by hand the
-condition of probability conservation at all orders of approximation.
-
-PC{\reffig{f-diff-dpolt} tex file is using too much memory, cannot
-  latex book}
-
-PC{add to remarks, index: far from equilibrium: NESS = nonequilibrium
-  steady state, perhaps with some snide Loch Ness monster quote}
-
-% \subsection{Reduction to the fundamental domain}
-%
-%
-%
-% \subsection{Lattice symmetry and diffusion}
-% \label{s-Latt-sym}
-% \hfill (P. Gaspard)
-%
-%\noindent
-%In order to perform the full reduction for diffusion one has to
-% express the \dzeta\ \refeq{zeta-diff} in terms of the prime cycles
-% of the fundamental domain $\tilde \pS$ of the lattice (see
-% \reffig{fig-lor-1}) rather than \PC{need here fig-lor-2 - where did
-% it go?}  those of the elementary (Wigner-Seitz) cell $\pS$.  This
-% problem presents the following difficulty. The stumbling block
-% appears to be the breaking of the rotational symmetry by the
-% auxiliary vector $\beta$, or, in other words, the non-commutativity
-% of translations and rotations.  More precisely, the global distance
-% $ \hat\phi^{r \period{p}} (\tx{\tpk}) - \tx{\tpk} $, $\tx{\tpk} \in
-% {\tilde p}$, $ \hn_{r |\tilde p|}(\tx{\tpk}) $ depends on the
-% starting periodic point if ${\tilde p}$ is only a segment of the
-% global cycle $p$. An example is the diamond-shaped cycle of
-% \reffig{fig-lor-3}; the problem is that the ${\tilde p}$ segment of
-% the global trajectory is not a translation in $\hM$.  depending on
-% whether one starts at $\tx_1$ or $\tx_2$, the global distance
-% covered in time $\period{p}$ is either the short or the long
-% diagonal.  This difficulty can be handled in the following way.
-%
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \figurewithtex ps/fig3.ps ps/fig3.tex 12 16 \FIG{
-% \includegraphics[width=0.80\textwidth]{fig_lor_3.ps}
-% }{}{ A fundamental domain 2-cycle ${\tilde p}$ which covers in one
-%   return time only 1/2 of the corresponding global cycle $\hat p$.
-%   $\hat f(x)$ is the collision-to-collision mapping induced by the
-%   flow.  To make the figure more readable, the disks have radii
-%   smaller than those needed for the finite horizon condition.  Note
-%   that each fundamental domain cycle corresponds to 12 distinct
-%   global cycles.  (PC suggestion; four disks in $\hM$ with fund
-%   domains indicated lightly, $\tx_{1}$, $\hf^{\ttime}(\tx_{1})$,
-%   $\tx_{2}$, $\hf^{\ttime}(\tx_{2})$ marked, so reader can see that
-%   the corresponding global distances travelled correspond to two
-%   (unequal length) diagonals) (Courtesy of J.-P. Eckmann)
-% }{fig-lor-3}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%   We can introduce the flow $\tilde\phi^t$ on the fundamental domain
-%   $\tilde \pS$ using the full point group of the lattice.  Moreover,
-%   the density $\rho(x)$ on which the Perron-Frobenius operator
-%   \evOper\ $\Lop^t$ acts can always be decomposed using the
-%   projectors onto the irreducible representations of the full point
-%   group.  For an arbitrary wavenumber $k=-i \beta$, the
-%   Perron-Frobenius operator \evOper\ will mix the different
-%   components of the density $\rho(x)$, which we can express by
-%   \PC{harmonize ${\bf R}$ with symmetry chapter} \beq \Lop^t(y,x) \
-%   = \ {\bf R}(x;k,t) \ \delta \lbrack y \ - \ \tilde \phi^t (x)
-%   \rbrack ~, \ee{dif-lor-3.2} where ${\bf R}(x;k,t)$ is a matrix
-%   ruling the dynamics of the different components of the density.
-%   With \refeq{dif-lor-3.2}, the Perron-Frobenius operator \evOper\
-%   is reduced to the flow in the fundamental domain $\tilde \pS$.
-%   The \dzeta\ can then be written as a product over the prime cycles
-%   $\tilde p$ of the fundamental domain \beq Z(k,s) \ = \
-%   \prod_{\tilde p \in \tilde{\cal P}} \ \exp\Biggl\lbrace \ - \
-%   \sum_{r=1}^{\infty} \ {1 \over r} \ {\rm tr} \lbrack \tilde {\bf
-%   R}_{\tilde p}(k)^r\rbrack \ {{\exp ( - s \ttime r)} \over {\vert
-%   \oneMinJ{r} \vert}}\Biggr\rbrace~ , \ee{dif-lor-3.3} where
-%   $\tilde{\bf R}_{\tilde p}(k)$ is the matrix ${\bf R}(x;k,t)$
-%   associated with the prime cycle $\tilde p$.  It is only when the
-%   little group of the wavenumber $k$ has nontrivial irreducible
-%   representations that the matrices $\tilde{\bf R}_{\tilde p}(k)^r$
-%   split into block-diagonal submatrices which can be assigned to
-%   each irreducible representation so that the \dzeta\ factorizes as
-%   explained in \refchap{c-symm}.  \PC{elaborate for
-%   \refeq{dif-lor-3.2}}
-%
-%   The search for a cycle with a given symbol sequence may be carried
-%   out in as described in \refsect{s_orbit_min}
-%   \refsect{s_long_time}.
-
-}% end \PublicPrivate{
-
-
-Resume
-
-
-\noindent
-With initial data accuracy $\delta x = |\delta {\bf x}(0)| $ and
-system size $L$, a trajectory is predictable only to the finite
-Lyapunov time $ \LyapTime \approx {\Lyap}^{-1}\ln {|L / \delta x|} \,.
-$ %ee{LyapTime}
-Beyond that, chaos rules. We have discussed the implications in
-\refsect{s:ChaosGood}: chaos is good news for prediction of long term
-observables such as transport in statistical mechanics.
-\index{Lyapunov!time}
-
-PC{Boltzmann refs.}
-
-
-The classical Boltzmann equation for evolution of 1-particle density
-is based on {\em stosszahlansatz}, neglect of particle correlations
-prior to, or after a 2-particle collision.  \index{stosszahlansatz} It
-is a very good approximate description of dilute gas dynamics, but a
-difficult starting point for inclusion of systematic corrections.
-\index{Boltzmann!equation} In the theory developed here, no
-correlations are neglected - they are all included in the \cycForm\
-such as the cycle expansion for the diffusion constant
-\[
-D \,=\,{1 \over 2 d } \, {1 \over \expct{\period{}}_\zeta} \sumprime
-(-1)^{k+1} \frac{ (\hn_{p_1} + \cdots + \hn_{p_k})^2 }{
-  |\ExpaEig_{p_1} \cdots\ExpaEig_{p_k}| } \, .
-\]
-Such formulas are {\em exact}; the issue in their applications is what
-are the most effective schemes of estimating the infinite cycle sums
-required for their evaluation. Unlike most statistical mechanics, here
-there are no phenomenological macroscopic parameters; quantities such
-as transport coefficients are calculable to any desired accuracy from
-the microscopic dynamics.
-
+We will illustrate the theory with a computation of the
+diffusion constant for deterministic diffusion in periodic Lorentz gas.
 For systems of a few degrees of freedom these results are on rigorous
 footing, but there are indications that they capture the essential
 dynamics of systems of many degrees of freedom as well.
 
-Though superficially indistinguishable from the probabilistic random
-walk diffusion, deterministic diffusion is quite recognizable, at
-least in low dimensional settings, through fractal dependence of the
-diffusion constant on the system parameters, and through non-Gaussion
-relaxation to equilibrium (non-vanishing Burnett coefficients).
-\index{Burnett coefficients}
-
-That Smale's ``structural stability" conjecture turned out to be wrong
-is not a bane of chaotic dynamics - it is actually a virtue, perhaps
-the most dramatic experimentally measurable prediction of chaotic
-dynamics. As long as microscopic periodicity is exact, the prediction
-is counterintuitive for a physicist - transport coefficients are {\em
-  not} smooth functions of system parameters, rather they are
-non-monotonic, {\em nowhere differentiable} functions.
-\index{structural stability}
-
-Actual evaluation of transport coefficients is a test of the
-techniques developed above in physical settings. In cases of severe
-pruning the trace formulas and ergodic sampling of dominant cycles
-might be more effective strategy than the cycle expansions of \dzeta s
-and systematic enumeration of all cycles.
-
-
-{Lorentz gas.}{ The original pinball model proposed by
-  Lorentz\rf{lore} consisted of randomly, rather than regularly placed
-  scatterers.  \index{Lorentz gas} } %end \remark{Original model}{
-%
-
-
-{Who's dunnit?}{ Cycle expansions for the diffusion constant of a
-  particle moving in a periodic array have been introduced
-  % in May-June 1991
-  by R.~Artuso\rf{art91} (exact \dzeta\ for $1$\dmn\ chains of maps
-  \refeq{(17)}), by W.N. Vance\rf{vance}%
-  \PublicPrivate{,}{% switch \PublicPrivate{
-    (the trace formula \refeq{DL-trace} for the Lorentz gas),
-  }% end \PublicPrivate{
-  and by P. Cvitanovi\'c, J.-P. Eckmann, and
-  P. Gaspard\rf{LorentzDiff} (the \dzeta\ cycle expansion \refeq{(17)}
-  applied to the Lorentz gas).
-  % Vance refers to the Artuso article and Gaspard-Baras\rf{GB92}, so
-  % perhaps his only independent contribution was to apply the method
-  % to the Lorentz gas.
-} %end \remark{Who's dunne it?}{
-
-PC{add Schreiber ref.; write about Gallavotti-Cohen}
-
-{Lack of structural stability for D.}{ Expressions like \refeq{D-KD}
-  may lead to an expectation that the diffusion coefficient (and thus
-  transport properties) are smooth functions of the chaoticity of the
-  system (parameterized, for example, by the Lyapunov exponent $\Lyap
-  = \ln \ExpaEig$). This turns out not to be true: $D$ as a function
-  of $\ExpaEig$ is a fractal, nowhere differentiable curve shown in
-  \reffig{f-Klage}. The dependence of $D$ on the map parameter
-  $\ExpaEig$ is rather unexpected - even though for larger $\ExpaEig$
-  more points are mapped outside the unit cell in one iteration, the
-  diffusion constant does not necessarily grow. We refer the reader to
-  \refrefs{detdiff1,detdiff2} for early work on the deterministic
-  diffusion induced by 1\dmn\ maps. The sawtooth map \refeq{KD-map}
-  was introduced by Grossmann and Fujisaka\rf{gro} who derived the
-  integer slope formulas \refeq{D-KD} for the diffusion constant. The
-  sawtooth map is also discussed in \refrefs{GB92}. The fractal
-  dependence of diffusion constant on the map parameter is discussed
-  in \refrefs{RKdiss,KlaDor95,KlaDor97}. \refSect{s:ChaosGood} gives a
-  brief summary of the experimental implications; for the the current
-  state of the art of fractal transport coefficients consult the first
-  part of Klage's monograph\rf{RKbook07}. Would be nice if someone
-  would eventually check these predictions in experiments...
-  Statistical mechanicians tend to believe that such complicated
-  behavior is not to be expected in systems with very many degrees of
-  freedom, as the addition to a large integer dimension of a number
-  smaller than $1$ should be as unnoticeable as a microscopic
-  perturbation of a macroscopic quantity. No fractal-like behavior of
-  the conductivity for the Lorentz gas has been detected so
-  far\rf{LNRM94}.  \index{Lorentz gas} \hfill (P. Cvitanovi\'c and
-  L. Rondoni) } %end \remark{Structural stability for D}
-
-{Symmetry factorization in one dimension.}{ In the $\beta=0$ limit the
-  dynamics \refeq{sym2} is symmetric under $x \rightarrow -x$, and the
-  zeta functions factorize into products of zeta functions for the
-  symmetric and antisymmetric subspaces, as described in
-  \refsect{Reflecti}: \bea {1 \over \zeta(0,z)} &=& {1 \over
-    \zeta_{s}(0,z)}\,{1 \over \zeta_{a}(0,z)} \continue {\pde \over
-    \pde z} { 1 \over \zeta} &=& { 1 \over \zeta_s} {\pde \over \pde
-    z} { 1 \over \zeta_a} + { 1 \over \zeta_a} {\pde \over \pde z} { 1
-    \over \zeta_s} \,.
-  \label{diffSymmetr}
-  \eea The leading (material flow conserving) eigenvalue $z=1$ belongs
-  to the symmetric subspace \( {1 / \zeta_s(0,1)}=0 \), so the
-  derivatives \refeq{MeanTime} also depend only on the symmetric
-  subspace: \bea \expct{n}_\zeta &=& \left. z{\pde \over \pde z} {1
-      \over \zeta(0,z)}\right|_{z=1} \continue &=& {1 \over
-    \zeta_{a}(0,z)}\, z{\pde \over \pde z} \left.{1 \over
-      \zeta_{s}(0,z)}\right|_{z=1} \, .
-  \label{symm_der}
-  \eea Implementing the symmetry factorization is convenient, but not
-  essential, at this level of computation.
-}  %end \remark{Symmetry factorization in one dimension}
-
-{Lorentz gas in the fundamental domain.}{ The vector valued nature of
-  the generating function \refeq{lor-diff-1} in the case under
-  consideration makes it difficult to perform a calculation of the
-  diffusion constant within the fundamental domain.  Yet we point out
-  that, at least as regards scalar quantities, the full reduction to
-  $\tilde{\pS}$ leads to better estimates.  A proper symbolic dynamics
-  in the fundamental domain has been introduced in \refref{freddy}%
-  \PublicPrivate{.}{% switch \PublicPrivate{
-    , numerical estimates for scalar quantities are reported in
-    \reftab{t-diff-5a}, taken from \refref{CGS}.
-  }% end \PublicPrivate{
-  % The fundamental domain symbolic dynamics used here due to
-  % F.~Christiansen~\cite{freddy}, is given in figs.~3?, 4? and
-  % \reftab{t-diff-3a}.  \RA{insert figs. 3 and 4 from \refref{CGS}}
-  % Now the symbols indicate relative direction changes instead of the
-  % absolute directions.
-%
-  %%%%% Table 3 %%%%%%%%%%%%%%%%%%%%%%%%
-  % \begin{table}
-  %   {\small
-  %   \begin{tabular}{|c||r|r||c|c|}
-  %     \hline symbol & \multicolumn{2}{|c||}{amount of change} &
-  %     \multicolumn{2}{|c|}{direction of change} \\
-  %     & last long & last short & next the same & next other way \\
-  %     \hline
-  %     a      &    1      &     2      &     x      &       \\
-  %     b      &    3      &     4      &     x      &       \\
-  %     c      &    5      &     6      &     x      &       \\
-  %     d      &    5      &     4      &            &   x    \\
-  %     e      &    3      &     2      &            &    x   \\
-  %     f & 1 & - & & x \\ \hline
-  %     A      &    2      &     1      &     x      &       \\
-  %     B      &    4      &     3      &     x      &       \\
-  %     C      &    6      &     5      &     x      &       \\
-  %     D      &    4      &     5      &            &    x   \\
-  %     E      &    2      &     3      &            &    x   \\
-  %     F & - & 1 & & x \\ \hline
-  %   \end{tabular}
-  %   \caption[]{\small Symbols in the fundamental domain.  }
-  %   \label{t-diff-3a}
-  % } %end of \small
-  % \end{table}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-  % \caption{Symbols in the fundamental domain} \label{TSYM}
-  % \end{table}
-  % \eject The reflection symmetry of the problem also should be taken
-  % into account by the symbols.  The right and left turns are not
-  % distinguished - instead, one reads off a symbol whether the next
-  % turn has to be taken in the same or in the opposite sense.
-%
-  % Lower case letters denote short flights between closeby disks,
-  % upper case denotes the long flights to the next nearest disks.
-  % Each symbol corresponds to a given relative change in
-  % direction. The exact amount of change depends on whether the last
-  % flight was long (odd label in the notation of the last section) or
-  % short (even label).  Table~\ref{TSYM} and figures~\ref{FUN1}
-  % and~\ref{FUN2} give the definition of the symbols.
-%
-  % Christiansen~\cite{freddy} had originally proposed to denote
-  % symbols `f' and `F' by the same letter, thus reducing the size of
-  % the alphabet.  We use two letters `f' and `F' together with the
-  % pruning rule that `f' can only follow an uppercase letter (\ie, a
-  % long segment) and `F' only a lowercase letter.  The symbols given
-  % to an orbit by this scheme are invariant under all spatial
-  % symmetries of the system but not under the time reversal.  The
-  % fact is that time reversal symmetry is included in the spatial
-  % symmetries, at least for running orbits, as a consequence of the
-  % absence of external fields, and of the geometry of the model.
-%
-  % \LR{PLEASE, make sure that this comment makes sense}
-%
-  % Of the possible twelve symbols, `A', `B', `f' and `F' are pruned
-  % as soon as the horizon gets finite.
-  % \\
-  % (PC: finite or densely packed???)\\
-  % TS: finite !  Among the remaining symbols there is still strong
-  % pruning, reflected in the fact that for $w = 0.3$ the number of
-  % cycles of symbol length $n$ does not grow like $8^n$ but roughly
-  % as $3^n$. Figure~5? shows \RA{insert fig. 5 from \refref{CGS}} all
-  % the fundamental domain fixed points which are not pruned at
-  % $w=0.3$ together with an example of a pruned fixed point.
-%
-%
-  % Table~4 gives some impression of the pruning involved.  In order
-  % that longer orbits be shadowed by shorter ones, for every
-  % combination of two symbols a two-cycle, and the fixed points
-  % corresponding to each of the symbols should exist.  Two-cycles
-  % such as `ac', `aC', \ldots are missing while corresponding
-  % ``shadowing'' pseudo-cycles `a~c', `a~C' exist, and conversely,
-  % two-cycles occur where one of the symbols has no corresponding
-  % fixed point (e.g. the symbol `d' in `ad'). So the shadowing is
-  % largely disfunctional, at least as long as finite approximate
-  % Markov partitions are not developed.  Nevertheless the finite
-  % order estimates for the Lyapunov exponent and material flow
-  % conservation, reported in \reftab{t-diff-5a}, are rather good, and
-  % noticeably better than the corresponding calculation using
-  % elementary cell dynamics (\reftab{t-diff-1}).  \PC{recheck if
-  % indeed \reftab{t-diff-1}?}.
-%
-  %%%%% Table 5 %%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}
-{\small
-\begin{tabular}{|r|r|r|r|}
-\hline
-length & \# cycles & $\zeta$(0,0) & $\Lyap$ \\ \hline\hline
-1      &    5     &  -1.216975 &     -    \\
-2      &   10     &  -0.024823 & 1.745407 \\
-3      &   32     &  -0.021694 & 1.719617 \\
-4      &  104     &   0.000329 & 1.743494 \\
-5      &  351     &   0.002527 & 1.760581 \\
-6      & 1243     &   0.000034 & 1.756546 \\ \hline
-\end{tabular}
-\caption[]{\small
-Fundamental domain, w=0.3 .
-}
-\label{t-diff-5a}
-}  %end of \small
-\end{table}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% \caption{Fundamental domain, w=0.3} \label{CONV}
-% \end{table}
-% \eject Both in the elementary cell and in the fundamental domain
-% convergence is dramatically better with more separated disks because
-% there is no more pruning.  Unfortunately, then the dynamics is
-% artificially reduced to the cantor set of those orbits which travel
-% only over the finite distance imposed by the possible symbols. So
-% any diffusion constant cannot be compared to numerical values.
-% \PC{remember the table correction by factor 2!}
-%
-% \begin{table}
-%\caption{Elementary cell, $w$=0.3} \label{TCELL}
-%\end{table}
-%PG I have the following numerical estimate for the Lyapunov exponent
-% when w=0.3, Lyap = 1.760 +/- 0.002 which supports the result of this
-% table.  \eject
-
-
-
-% \begin{table}
-%\begin{minipage}{5cm}
-%  {\sl Row/column 1 contains a cross when a fixed point of this
-%  symbol exists.  Existing two-cycles are marked by crosses in the
-%  corresponding places.}
-%\end{minipage}\hspace{1cm}
-%\begin{minipage}{8cm}
-%  \begin{quote} \begin{center}
-%      \begin{tabular}{|c|c||c|c|c|c|c|c|c|c|}
-% \hline
-%   &   & a & b & c & d & e & C & D & E \\ \hline
-%   & 1 & x & x & x &   &   & x & x &   \\ \hline\hline
-% a & x & - & x &   & x &   &   &   &   \\
-% b & x & x & - & x & x & x &   &   & x \\
-% c & x &   & x & - & x & x &   & x &   \\
-% d &   & x & x & x & - &   &   & x &   \\
-% e &   &   & x & x &   & - &   &   &   \\
-% C & x &   &   &   &   &   & - &   &   \\
-% D & x &   &   & x & x &   &   & - &   \\
-% E &   &   & x &   &   &   &   &   & - \\ \hline
-% \end{tabular}\\[10pt]
-% \end{minipage}
-% \caption{ (no) shadowing, w=0.3}\label{NO}
-% {Table 4: (no) shadowing, w=0.3} {Table 4: Problematic shadowing,
-% w=0.3}
-% \end{center}\end{quote}
-% % \end{table}
-% \eject
-%
-In order to perform the full reduction for diffusion one should
-express the \dzeta\ \refeq{zeta-diff} in terms of the prime cycles of
-the fundamental domain $\tilde \pS$ of the lattice (see
-\reffig{fig-lor-1}) rather than
-%\PC{need here fig-lor-2 - where did it go?}
-those of the elementary (Wigner-Seitz) cell $\pS$.  This problem is
-complicated by
-%presents the following
-%difficulty. The stumbling block appears to be
-the breaking of the rotational symmetry by the auxiliary vector
-$\beta$, or, in other words, the non-commutativity of translations and
-rotations: see
-%f.ex.
-\refref{CEG}.
-%for a discussion of the problem.
-\label{r:LorentzFundDomain}
-}%end \remark{Lorentz gas in the fundamental domain}
-
-{Molecular chaos.}{ Read Gilbert and Lefevere\rf{GilbLef08}, ``Heat
-  conductivity from molecular chaos hypothesis in locally confined
-  billiard systems,'' } % end \remark{Molecular chaos.}{
-
-Read ``From Deterministic Chaos to Deterministic Diffusion'' by
-R. Klages, \arXiv{0804.3068}: `` A set of easy-to-read lecture notes
-for a short first-year Ph.D.  student course. The notes cover five
-hours of lectures and do not require any prior knowledge on dynamical
-systems. The first part introduces to deterministic chaos in
-one-dimensional maps in form of Lyapunov exponents and the metric
-entropy. The second part first outlines the concept of deterministic
-diffusion. Then the escape rate formalism for deterministic diffusion,
-which expresses the diffusion coefficient in terms of the above two
-chaos quantities, is worked out for a simple map. The notes conclude
-with a very brief sketch of anomalous diffusion.
-
-{for `fundamental domain' in hyperbolic geometry, see for example
-  \HREF{http://www.math.ou.edu/~kmartin/mfs/ch3.pdf}{these notes} by
-  \HREF{http://www.math.ou.edu/~kmartin}{Kimball Martin}.  }
+Honesty in
+advertising requires disclaimer; no such fractal behavior of the
+conductance has been detected experimentally so far.
