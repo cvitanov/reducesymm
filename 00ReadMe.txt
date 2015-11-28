@@ -1,7 +1,7 @@
 
 --------------------------------------------------------
 
-Burak Badanur thesis, publications and working notes
+CNS publications and working notes on GitHub
 ========================================================
 GitHub.com/cvitanov/reducesymm/		created 2013-07-07
 
@@ -43,9 +43,10 @@ QFT/
     quantum field theory blog
 
 tingnan/
-    Tingnan Zhang, Pavel M. Svetlichnyy
-    Spring 2014 chaos course term paper.
+    Tingnan Zhang Spring 2014 deterministic diffusion project
     
+diffuse/
+    Tingnan Zhang deterministic diffusion paper
 
 ---------------------------------------------------------------
 TO FIX:

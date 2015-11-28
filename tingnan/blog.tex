@@ -34,78 +34,12 @@
 \usepackage{array}
 \providecommand\phantomsection{} % with this it works without hyperref as well
 \usepackage{verbatim}
-%\input ../inputs/layout         %% page layout, ChaosBook environments
-\input ../inputs/setupSveZha
-
-%%%%%%%%%%%%%%%%%%  BIBLATEX EXPERIMENTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % AIP, APS style source: https://github.com/josephwright/biblatex-phys
-\usepackage[
-    backend=bibtex,
-    sorting=nyt,
-    style=numeric, %alphabetic, % %style=authoryear,
-    natbib=true,
-    style=phys, % aps
-    biblabel= brackets, % superscript, %
-    articletitle=true,  % false, % aps
-    chaptertitle=true,  % aip;  % false, % aps
-    pageranges = true , % aip: the full range
-             % = false, % aps: only the first page being printed
-    sortlocale=en_US,
-    firstinits=true,
-    url=false, %true,  %
-    doi=false, %true,
-    eprint=false
-            ]{biblatex}
-%\AtEveryBibitem{\clearfield{issn}} \AtEveryCitekey{\clearfield{issn}}
-%\ExecuteBibliographyOptions{doi=false}
-%\newbibmacro{string+doi}[1]{%
-%  \iffieldundef{doi}{#1}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
-%\DeclareFieldFormat{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
-%\DeclareFieldFormat[article]{title}{\usebibmacro{string+doi}{\mkbibquote{#1}}}
-
-    % http://tex.stackexchange.com/questions/133373/biblatex-adding-url-to-techreport-title-doesnt-work/133374#133374
-\DeclareFieldFormat
-  [article,
-   inbook,
-   incollection,
-   inproceedings,
-   patent,
-   thesis, % also phdthesis
-   unpublished,
-   report, % also techreport
-   misc,
-  ]{title}{\href{\thefield{url}}{#1}}
-
-\newbibmacro{string+doiurlisbn}[1]{%
-  \iffieldundef{doi}{%
-    \iffieldundef{url}{%
-      \iffieldundef{isbn}{%
-        \iffieldundef{issn}{%
-          #1%
-        }{%
-          \href{http://books.google.com/books?vid=ISSN\thefield{issn}}{#1}%
-        }%
-      }{%
-        \href{http://books.google.com/books?vid=ISBN\thefield{isbn}}{#1}%
-      }%
-    }{%
-      \href{\thefield{url}}{#1}%
-    }%
-  }{%
-    \href{http://dx.doi.org/\thefield{doi}}{#1}%
-  }%
-}
-
-\DeclareFieldFormat{title}{\usebibmacro{string+doiurlisbn}{\mkbibemph{#1}}}
-\DeclareFieldFormat[article,incollection]{title}%
-    {\usebibmacro{string+doiurlisbn}{\mkbibquote{#1}}}
-
-% \DeclareFieldFormat[norm]{chapter}{Chapter #1} % did nothing????
-%%%%%%%%%%%%%%%%%%  BIBLATEX END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\input ../inputs/editsDasbuch   %% editing comments, DasBuch style
-\input ../inputs/def            %% do not edit; update from dasbuch/book/inputs/def.tex
-\input ../inputs/defsSveZha     %% all diffusion project edits: \renewcommand, etc
+%\input{../inputs/layout}         %% page layout, ChaosBook environments
+\input{../inputs/setupSveZha}
+\input{../inputs/biblatex}
+\input{../inputs/editsDasbuch}   %% editing comments, DasBuch style
+\input{../inputs/def}            %% do not edit; update from dasbuch/book/inputs/def.tex
+\input{../inputs/defsSveZha}     %% all diffusion project edits: \renewcommand, etc
 
 \renewcommand{\TZ}[2]{$\footnotemark\footnotetext{Tingnan #1: #2}$} %date, comment
 \renewcommand{\PC}[2]{$\footnotemark\footnotetext{Predrag #1: #2}$} %date, comment
@@ -141,7 +75,7 @@
 \thispagestyle{empty}
 \tableofcontents
 
-\input clipsSchreiber
+\input{clipsSchreiber}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
@@ -152,9 +86,9 @@
 %\bibliography{../bibtex/siminos}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\input spaceGroups
-\input 3gener
-\input dailyBlog
+\input{spaceGroups}
+\input{3gener}
+\input{dailyBlog}
 
 
 \end{document}
