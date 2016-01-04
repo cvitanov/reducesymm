@@ -1,21 +1,16 @@
 reducesymm/bibtex/00ReadMe.txt
 ===========================================================
-Burak Budanur and Evangelos Siminos
 
-    remember to diff and merge with siminos/bibtex/siminos.bib
-    every so often...
+following files home is here
+    reducesymm/bibtex/QFT.bib
+    reducesymm/bibtex/diffuse.bib   (Zhang entries)
+    reducesymm/bibtex/linresp.bib   (McInroe  entries)
 
-              ***
-Maintain only ONE bib file for all dynamical systems publications
-New entries at THE TOP of this file
-              ***
-
-	bibtex/siminos.bib
-		all references should go here
-    bibtex/05bibTools.txt
-        notes about BibTeX tools, web resources, etc
-    bibtex/zotero.txt
-        if we return to zotero...
+following files are copied to here, and not to be edited here
+    always edit siminos/bibtex/siminos.bib
+then copy to here
+    always edit dasbuch/bibtex/ChaosBook.bib
+then copy to here
 
 bibtex/bibreduce
 	perl script that examines article.aux, creates a list of
@@ -24,6 +19,17 @@ bibtex/bibreduce
 
 NOTES
 -----
+
+reducesymm/bibtex/QFT.bib
+2013-11-23 Predrag % Partially extracted from
+siminos/bibtex/siminos.bib
+
+see also svn
+    dasgroup/thepaper/groups-bibliography.bib
+which already includes
+    dasgroup/WWW/PUPress/WestburyVogel.bib
+
+----------
 
 Zoteromania: do not rename any existing citation, either
 in siminos.bib or when you are adding a bibTeX entry to
