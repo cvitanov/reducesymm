@@ -19,6 +19,13 @@
   }
 \end{figure}
 
+In addition to translational invariance, many systems bear other type of symmetries blah, and why we are interested in reduce the symmetry. 
+
+The space group $p6mm$ in the triangular periodic Lorentz gas has an underlying point subgroup $C_{6v}=D_6$. Leaving the mathematical representation of group for later discussion, we can now intuitively understand the symmetry by decomposing the hexagonal elementary cell into 12 identical triangular tiles (~\reffig{fig-schrieberFig12}(a), upper left), the fundamental domains. Each fundamental domain can be used to generate the full hexagon, by rotating around the center or applying reflection along some symmetry lines, i.e. the point group actions.
+
+
+In the previous sections, we have reduced a trajectory from full space to elementary cell (~\reffig{fig-schrieberFig12}(a), upper right) using the translational symmetry, and are able to compute various quantities by means of elementary cell cycles. In this section we will further use the point group symmetry to derive the fully symmetry-reduced trace formula and, for the first time, the diffusion constant using cycles restricted inside the fundamental domain.
+
 As we will work with three kinds of \statesp s,
 we state here what tildes, nothings and hats atop symbols signify:
 \bea
@@ -50,7 +57,9 @@ the translation of the endpoint of the global path into the elementary
 cell $\pS$. The quantity $\tx(t)\,=\,\tflow{t}{\tx}$ denotes the flow in
 the fundamental domain ${\widetilde \pS}$; $\tflow{t}{\tx}$ is related to
 $\flow{t}{\tx}$ by a discrete symmetry $g \in G$ which maps
-$\tx(t)\in {\widetilde \pS}$ to ${x}(t) \in {\pS}$ .
+$\tx(t)\in {\widetilde \pS}$ to ${x}(t) \in {\pS}$. 
+
+Starting any point $\ssp$ on a elementary cell cycle $p$, after completing a cycle the particle crosses each cell boundary the same number of times. Because translations are commutative, the particle will always reach the same copy of elementary cell. By eq. \refeq{l-diff-hatn} the total displacement along the cycle is independent of the point of choice. In other words, the displacement is an invariant of the elementary cell cycle. However, when we take into account the point group symmetry (i.e. rotations and reflections), the above statement does not stand. We will need to address the non-commutativity of symmetries and develop new invariants to compute diffusion coefficient.
 
 %\begin{figure}[htbp]
 %  \begin{center}
@@ -62,82 +71,76 @@ $\tx(t)\in {\widetilde \pS}$ to ${x}(t) \in {\pS}$ .
 %  Multiplicity of periodic orbits in fundamental domain.}
 %\end{figure}
 
-When the scattering array has a discrete symmetries, such as
-reflection symmetry, each elementary cell may be built from a {\em
-fundamental domain} ${\widetilde \pS}$ by the action of a discrete (not
-necessarily abelian) group $G$. The quantity $\tx(t)\,=\,\tflow{t}{\tx}$
-denotes the flow in the fundamental domain ${\widetilde \pS}$;
-$\tflow{t}{\tx}$ is related to$\flow{}{\tx}$ by a discrete symmetry $g
-\in G$ which maps $\tx(t)\in{\widetilde \pS}$ to ${x}(t) \in {\pS}$. The
-full $\hM \rightarrow {\widetilde\pS}$ reduction is complicated by the
-non-abelian nature of $G$, and will be illustrated in this section in
-detail.
+%When the scattering array has a discrete symmetries, such as
+%reflection symmetry, each elementary cell may be built from a {\em
+%fundamental domain} ${\widetilde \pS}$ by the action of a discrete (not
+%necessarily abelian) group $G$. The quantity $\tx(t)\,=\,\tflow{t}{\tx}$
+%denotes the flow in the fundamental domain ${\widetilde \pS}$;
+%$\tflow{t}{\tx}$ is related to$\flow{}{\tx}$ by a discrete symmetry $g
+%\in G$ which maps $\tx(t)\in{\widetilde \pS}$ to ${x}(t) \in {\pS}$. The
+%full $\hM \rightarrow {\widetilde\pS}$ reduction is complicated by the
+%non-abelian nature of $G$, and will be illustrated in this section in
+%detail.
 
 \PC{2016-01-01}{explain that any elementary cycle point translate by the
 same amount in the full {\statesp}}
 
-\subsection{How point group changes translation}
+\subsection{Point group changes translation}
 
-In the fundamental domain, one has to realize a few facts before
-proceeding to the cycle expansion derivation. A point $\ssp$ in the
-elementary cell is be uniquely identified by its
-fundamental domain ``mirror image'':
+While a full space (or elementary cell) trajectory can be uniquely reduced to its fundamental domain counter part by wrapping (reflecting and rotating) all the individual segments in different fundamental domain into a single one, the reverse process is always one-to-many. Because the fundamental domain do not have the concepts of absolute orientation, a single unwrapped trajectory may have up-to 12 isometric copies after we apply the discrete group actions. Even worse, depending on where we start to unwrap the trajectory, the full space trajectories can be completely different in shape. A precise mathematical treatment is necessary to address the above effects, before we can proceed to the complete formula for diffusion, which depends on descriptions of displacements.
+
+We start by first working on the relation of translation and discrete symmetry. A point $\ssp$ in the elementary cell is identified by its
+fundamental domain mirror image:
 \[ %beq
 \ssp=g\,\tx,
 \] %eeq
-given a group action the discrete symmetry group,  $g\in G$. In the
-triangular periodic Lorentz gas the underlying point group is $C_{6v}=D_6$),
-and the hexagonal elementary cell is tiled by
-12 identical triangular tiles. We have to appreciate that the flow
-$\hat{\phi}^t$ is G-equivariant under the lattice group symmetry, and
-proceed with the argument that the displacement in full space is also
-equivariant under the point group symmetry (which is a subset of the
-lattice group):
+given a group action $g\in G$. We have to appreciate that both the full space flow $\hflow{t}{\ssp}$ and elementary flow $\flow{t}{\ssp} $ is G-equivariant under the lattice group symmetry,.
+\[
+\hflow{t}{g\,\tx} = g\,\hflow{t}{\tx}\,,
+\flow{t}{g\,\tx} = g\,\flow{t}{\tx}
+\]
+
+Then the displacement in full space is also G-equivariant:
 \[ %beq
-\hn_t(\ssp)\equiv\hn_t(g\,\tx)= g\,\hn_t(\tx).
+\hn_t(\ssp)= \hflow{t}{g\,\tx} - \flow{t}{g\,\tx}=g\,(\hflow{t}{\tx} - \flow{t}{\tx}) = g\,\hn_t(\tx)\,.
 \] %eeq
-We can apply this fact to the displacement associated with a prime
+
+We apply this rule to the displacement associated with a prime
 periodic orbit $\tp$ restricted in the fundamental domain.
 Let $\tp\equiv\{\tx_0,\tx_1,\ldots,\tx_{\cl{\tp}}\}$, with topological length
-$\cl{\tp}$ and $\tx_i$ the bouncing points on the orbit. For each flight
-(\eg, from $\tx_i$ to $\tx_{i+1}$) we denote the associated displacement
-in full space $\hn(\tx_i,e)$. However, one has to be careful when adding
-the individual displacements together when moving along a fundamental
-domain orbit. Unlike in elementary cell, the fundamental domain point
-$\tx_i$ does not distinguish in which triangular piece it is. Instead, we
-assign a point group element $g_\tp(\tx_{i+1},\tx_{i})$ to keep track of
-changes in absolute orientation. We now write the displacement traveled
-along the orbit, after finishing a full cycle:
+$\cl{\tp}$ and $\tx_i$ the bouncing points on the orbit. 
+
+
+For each free flight (\eg, from $\tx_i$ to $\tx_{i+1}$) we denote the associated
+displacement in full space $\hn(\tx_i,e)$. Special caution has to be
+taken when we add the individual displacements together as the particle moves
+along a fundamental domain orbit. Each time the particle crosses a boundary (the
+symmetry lines), it is deflected back in the same domain as if it hits a wall.
+However, in the elementary cell the particle has already entered another triangular pieces, and we have to record the associated group actions that can maps it back. Before the next collision, we assign $g_\tp(\tx_{i+1},\tx_{i})$  as the total group element during the flight to keep track of changes in absolute orientation. We can now write the displacement traveled along the orbit, after finishing a full cycle:
 \beq
 \hn_{\tp}(\tx_{0})=\sum_{i=0}^{\cl{\tp}-1}\hn(\tx_{i},g_{\tp,\tx_0}(\tx_{i}))
 =\sum_{i=0}^{\cl{\tp}-1}g_{\tp,\tx_{0}}(\tx_{i})\,\hn(\tx_{i},e),
 \eeq
 where $g_{\tp,\tx_{0}}(\tx_i)=\prod_0^{j-1} g_\tp(\tx_{j+1},\tx_{j})$ is
 the accumulated orientation changes along the orbit when starting from
-$\tx_{0}$. The displacement now depends on the starting point. We denote
-the total group action for the orbit
+$\tx_{0}$. The displacement has an explicit dependence on starting point. We denote the total group action (orientation change) for the orbit
 \bea
 h_{\tp}(\tx_i)&\equiv& g_\tp(\tx_{i},\tx_{i-1})\,\ldots\,
 g_\tp(\tx_{0},\tx_{\cl{\tp}-1})\nonumber\\
 && \, g_\tp(\tx_{\cl{\tp}-1},\tx_{\cl{\tp}-2})\, \ldots\,
 g_\tp(\tx_{i+1},\tx_{i}),
 \eea
-which one can immediately see the connection
-$\flow{t_\tp}{\tx_i}=h_{\tp}(\tx_i)\tflow{t_\tp}{\tx_i}$.
-Although the group action $h_{\tp}(\tx_i)$ depends on the initial points
-on the orbit, it is a property of the orbit's symmetry, and subsequently
-all $h_{\tp}(\tx_i), \tx_i\in\tp$ belong to the \emph{same} subgroup of
-$G$.
 
-We define the quantity:
+which also immediately connects the flow in fundamental domain and elementary cell by
+\[\flow{t_\tp}{\tx_i}=h_{\tp}(\tx_i)\tflow{t_\tp}{\tx_i}.\]
+
+Although the group action $h_{\tp}(\tx_i)$ depends on the initial points
+on the orbit as well, it is a property of the orbit's symmetry. One can easily show that all $h_{\tp}(\tx_i), \tx_i\in\tp$ belong to the \emph{same} subgroup of $G$.
+
+
+If we let the particle (starting from $\tx_i$) travel along the fundamental domain orbit $r$ times, the cumulated displacement is then given by:
 \beq
 \hat{L}_{\tp}^{r}(\tx_i)\equiv
 (e+\hp^{1}(\tx_i)+\cdots+\hp^{r-1}(\tx_i))\cdot\hn_{\tp}(\tx_i),
 \label{eq-fdDisplacement}
 \eeq
-to be the displacement traveled along the orbit $r$ times, starting from
-$\tx_i$.  Though one may not appreciate immediately,
-\refeq{eq-fdDisplacement} takes care of the rotational symmetry that does
-not commute with translation, and we will show that it gives the proper
-displacement needed for computing diffusion coefficient in the
-fundamental domain.
