@@ -1,7 +1,6 @@
-% siminos/figSrc/00ReadMe.txt
-% $Author$ $Date$
+reducesymm/figSrc/00ReadMe.txt
 
-Siminos, Froehlich, ... source programs for figures
+Zhang, Siminos, Froehlich, ... source programs for figures
 ===================================================
 
 TO ALL:
