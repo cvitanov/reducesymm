@@ -55,10 +55,7 @@
   % Similar to how elementary cell symbolic dynamics are created,
   The reflection symmetry axes partition the circumference of
   a disk into 12 segments which we
-  label counterclockwise, from $\underline{0}$ to $\underline{11}$. The
-  combination of a disk  label and a triangular piece label
-  $\{\overline{i},\underline{j}\}$ uniquely  identifies a topologically
-  distinct flight.
+  label counterclockwise, from $\underline{0}$ to $\underline{11}$. 
   (b) The fundamental domain fixed point
   $\{\overline{2},\underline{10}\}$, which corresponds to a periodic
   orbit of length 6 in elementary cell ($\cycle{0246810}$), is unwrapped
@@ -74,7 +71,7 @@
 %called $p6mm$, with point group $6mm$, where prefix $p$ indicates that
 %the unit cell is primitive (not centered),
 
-Existing elementary cell symbolic dynamics cannot generate the prime fundamental domain orbits for the reasons below. While the 12 symbols partition the elementary cell state space $\Omega=[0, 2\pi)\times [-\pi/2, \pi/2]$ into distinct regions, when wrapped into the fundamental domain state space $\tilde{\Omega}=[0, \pi/6)\times [-\pi/2, \pi/2]$, the regions begin to overlap. Thus, we developed a new symbolic description to numerically compute the cycles in the fundamental domain, by means of tile generators, which we quantify now. 
+Existing elementary cell symbolic dynamics cannot generate the prime fundamental domain orbits. While the 12 symbols partition the elementary cell state space $\Omega=[0, 2\pi)\times [-\pi/2, \pi/2]$ into distinct regions, when wrapped into the fundamental domain state space $\tilde{\Omega}=[0, \pi/6)\times [-\pi/2, \pi/2]$, the regions begin to overlap. Thus, we developed a new symbolic description to numerically compute the cycles in the fundamental domain, by means of tile generators, which we quantify now. 
 
 Tracking an arbitrary trajectory in the fundamental domain, we can distinguish two types of bounces: those on the disk edge and on one of the symmetry lines. As discussed in \ref{sec-point-group-translation}, the latter will add group operations on the trajectory. We enumerate all the elements in the point group $C_{6v}$:
 
@@ -109,19 +106,19 @@ s  =  C_6^+ \ell
     one might notice that a single flight along the orbit changes from
     $sf$ to $fs$. However, the relative position between the start and
     end triangular cells are always the same.}
-A free flight between two disks in the full space may then be wrapped
-into fundamental domain, according to the sequence cell edges
-$\{s,\ell,f\}$ it passed. For example, there are different paths when
-jump to disk $0$: it can be as simple as a single pivot about $f$, or can
-be more complex such like $\ell f s$ that involves multiple flips,
-~\reffig{fig-7diskFundDflips}\,(b). Although we can associate each free
-flight with a chain of the generators, some of the combinations are
-equivalent. The short jump $sf$ is topologically equivalent to $fs$, in
-the sense that the particle ends up in the same copy of fundamental
-domain before next collision.
 
-Our task is to generate all distinct itineraries from $\{s,\ell,f\}$. One
-can immediately realize a partial list of the equivalence relations:
+A free flight between two disks in the full space may then be wrapped into
+fundamental domain, according to the sequence of edges $\{s,\ell,f\}$ it
+passed. There are many different paths when jump to the nearest disk: it can be
+as simple as a single pivot $f$, or can be more complex such like $\ell f s$
+that involves crossing multiple symmetry lines,
+~\reffig{fig-7diskFundDflips}\,(b). We also notice that some symbol combinations
+are topologically equivalent, in the sense that they yield the same group
+actions. For example, the short jump $sf$ is topologically equivalent to $fs$,
+because the particle ends up in the same copy of fundamental domain before the
+next collision.
+
+Our next task is to generate all topologically distinct itineraries from $\{s,\ell,f\}$. We can immediately realize a partial list of the equivalence relations:
 \bea
 f s &=& s f
 \,,\nonumber\\
@@ -140,25 +137,29 @@ cannot cross the same border twice, sequences including $\ell\ell,ff,ss$
 are forbidden. $C^3$ (and all higher orders) is also pruned as the
 particle cannot cross the center hard disk; nor swirl around it.
 
-While the string description of flight is mathematically rigorous and
-accurate, it is practically hard to be encoded into programs for
-computing the orbits, because the number of equivalent strings increases
-exponentially when the length (of a single string) increases. However,
-there is a more physically intuitive way to organize the type of flight,
-by means of ``topological flight'', \reffig{fig-fdflights}\,(a). In this
-representation, a equivalence relation like $sf\equiv fs$ can be uniquely
-identified by a combination of a disk number and a partition number
-$\{\overline{0},\underline{6}\}$. Longer flight such like $\ell f \ell s
-\ell f \equiv  f \ell f s \ell f \equiv f \ell s f \ell f \equiv f \ell s
-\ell f \ell$ that cross many boundaries now yields a very simple symbol
-pair $\{\overline{1},\underline{5}\}$.
+While the string description of flight is mathematically rigorous, it is
+practically impossible to be encoded into programs for computing the orbits,
+because the number of equivalent strings increases exponentially when the length
+of the orbit (and also the string) increases. However, there is a more
+physically intuitive way to organize the symbols, by means of ``topological
+flight'', \reffig{fig-fdflights}\,(a). In this representation, a equivalence
+relation like $sf\equiv fs$ can be uniquely identified by a combination of a
+disk number and a partition number $\{\overline{0},\underline{6}\}$. Longer
+flight such like $\ell f \ell s \ell f \equiv  f \ell f s \ell f \equiv f \ell s
+f \ell f \equiv f \ell s \ell f \ell$ that cross many boundaries now yields a
+very simple symbol pair $\{\overline{1},\underline{5}\}$. 
 
-The topological flight leads to a straight forward numerical scheme to
-find cycles. The disk number fixes the two ends of the free flight while
-the partition number limits the range of angles on the disk. Similar to
-searching cycles in elementary cell, we now have a constrained version of
-numerical minimization problem which can be solved using standard
+Because this compact representation only takes into consideration the starting
+and ending points of a free flight, the exponentially long list of equivalent
+strings are ignored. The topological flight leads to a straight forward
+numerical scheme to find cycles. The disk number fixes the two ends of the free
+flight while the partition number limits the range of angles on the disk.
+Similar to searching cycles in elementary cell, we now have a constrained
+version of numerical minimization problem which can be solved using standard
 non-linear optimization approach.
+
+
+
  \TZ{2015-11-02}
     {I have not yet talked about the pruning rule in detail here; it is
     more complicated bases on the reflection angle}
