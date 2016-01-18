@@ -107,17 +107,17 @@ gained in the dynamics of the system. Instead,
 \cite{art91,LorentzDiff,CGS92,Artuso94,CBdiffusion} suggest we study
 the quantity 
 \beq
-\eigenvL(\beta)\,=\, \lim_{t \rightarrow \infty} \frac{1}{t} \log
+Q(\beta)\,=\, \lim_{t \rightarrow \infty} \frac{1}{t} \log
 \langle e^{\beta \cdot \hn_t(x)} \rangle_{\hM} ~, \quad
 \label{eq-diff-1}
 \eeq
 where $\beta$ is an auxiliary vector quantity. The interesting
 dynamical averages such like mean drift and diffusion can be easily
-obtained by taking derivatives of $\eigenvL(\beta)$ and set $\beta =
+obtained by taking derivatives of $Q(\beta)$ and set $\beta =
 0$, e.g.: 
 \bea
 2d D_{ij} &=& \left . {\frac{\partial}{\partial \beta_i}} {\frac{\partial}
-{\partial \beta_j}} \eigenvL(\beta)\right\vert_{\beta=0}\\\nonumber
+{\partial \beta_j}} Q(\beta)\right\vert_{\beta=0}\\\nonumber
 &=&\lim_{t\rightarrow
 \infty} {\frac{1}{t}} \langle {\hn_t(x)_i \hn_t(x)_j } \rangle_{\hM} \,,
 \eea
@@ -127,7 +127,7 @@ eigen\-vectors). The spatial diffusion constant is then given by the
 Einstein relation
 \beq
 D\,=\,{1\over 2 d} \sum_i^d \left .{{\partial}^2 \over {\partial
-\beta^2_i}} \eigenvL(\beta)\right |_{\beta=0} \,=\, \lim_{t\rightarrow
+\beta^2_i}} Q(\beta)\right |_{\beta=0} \,=\, \lim_{t\rightarrow
 \infty} {1\over{2d t}} \langle {(\hat{q}(t) -q)^2 } \rangle_{\hM}~ ~,
 \eeq
 
@@ -143,8 +143,8 @@ given the Ruelle-Perron-Frobenius \evOper
 {\cal L}^t(y,x) = e^{\beta\cdot(\hx(t)-x)}\delta(y-x(t))\,,
 \label{eq-evo-flow}
 \eeq
-for the flow, which is linear in that it satisfy the semi-group
-property: 
+for the flow. It is a linear operator such that it satisfies the
+semi-group property: 
     
 We may also introduce the same operator for discrete maps, after we
 have chosen the appropriate Poincar\'e section and study the dynamics
@@ -154,32 +154,77 @@ restricted to the intersections of the flow on the hyper-surface:
 \label{eq-evo-map}
 \eeq 
 
-For the system under consideration, a convenient choice of poincare
-section would be the edge of the disk--due to finite horizon, the
-particle will collide with a disk in finite time and the poincare map
-is truely a ``return map''. Once we have specified the arch length
-$\phi$ at which the collision takes place on the disk and the incident
-angle $\psi$ (which gives the tangent velocity component at
-collision), the dynamics is fully determined. There are two other  
-marginal directions along which the dynamics is trivial, because the
-system is Hamiltonian.
+For the system under consideration, a convenient choice of Poincar\'e
+section is the edge of the disk--due to finite horizon, the particle
+will collide with a disk in finite time and the poincare map is truely
+a ``return map''. Once we have specified the arch length $\phi$ at
+which the collision takes place on the disk and the incident angle
+$\psi$ (which gives the tangent velocity component at collision), the
+dynamics is fully determined. There are two other  marginal directions
+along which the dynamics is trivial, because the system is
+Hamiltonian.
 
 For sake of simplicity, we will proceed with the derivation for the
-poincare map and eventually generalize to the continuous flow.
+return map and in the end generalize to the continuous flow.
 
-Because we are interested in the long term dynamics $t\to\infty$ (or
-$n\to\infty$ for the map), the average quantity is dominated by the
-leading eigen value of the evolution operator. To evaluate the spectrum of
-\refeq{eq-evo-map}, consider the trace:
+The dynamical averages we are interested does not belong to a
+particular finite time (or a finite number of returns). As
+$t\to\infty$ (or $n\to\infty$ for the map), the average quantities are
+dominated by the leading eigenvalue of ${\cal L}^n$, $\lambda_0 =
+e^{\eigenvL(\beta)n}$. While the evolution operator
+\refeq{eq-evo-flow}\refeq{eq-evo-map} act on a functional space of
+infinite dimension, their spectrum may still be extracted by the trace
+formula:
 \beq
-\Tr{{\cal L}^n(x, x)} = \int_{\pS}dx ~
-e^{\beta\cdot(\hat{f}^n(x)-x)}\delta(x-f^n(x))
+\det(1-z{\cal L}) =
+\exp\left(-\sum_{n=0}^{\infty}\frac{z^n}{n}\tr{\cal L}^n\right)\,,
+\label{eq-det-disci}
 \eeq
+where $z$ is an auxiliary variable, and the trace:
+\beq
+\Tr{{\cal L}^n} = \int_{\pS}dx ~
+e^{\beta\cdot(\hat{f}^n(x)-x)}\delta(x-f^n(x))\,.
+\label{eq-trace-disc}
+\eeq
+
+With the $\delta$ functon inside, Eq.~\refeq{eq-diff-trace} picks up a
+contribution whenever $x = f^n(x)$, e.g. when $x$ is the fixed point
+of the map $f^n$. If $n$ is not a prime number, it is possible that
+$x$ belongs to a periodic orbit $p$ of $f$ of shorter topological
+length $n_p$, and satisfies the muliplicity $n_p r = n$, where $r$ is
+the repeat number.
+
+We may now restrict the integral only in the vicinites of the prime
+periodic orbts (i.e. those who are not the repeat of other periodic
+orbits) of the return map, and write:
+\beq
+\Tr{{\cal L}^n} = \sum_p\delta_{n,
+n_pr}\sum_{x\in p}\frac{e^{r\beta\cdot\hat{n}_p(x)}}{\vert\det\left({\bf 1 -
+J}_p^{r}(x)\right)\vert}\,,
+\label{eq-trace-expan}
+\eeq 
+where ${\bf J}_p(x) = Df^{n_p}(x)$ is the Jacobian.  Both ${\bf
+J}_p(x) = {\bf J}_p $ and $\hat{n}_p(x) = \hat{n}_p$ are independent
+of the point $x$ on the cycle. For the jacobian this follows by the
+chain rule of differentiation. For the displacement it is because the
+translations are commutative: no matter where the particle starts on
+the cycle it will go through the same set of free flights and
+translate the same amount in total after finishing the cycle. 
+
+Summing the terms in the determinant \refeq{eq-det-disc}, we finally
+obtain:
+\beq
+\det(1-z{\cal L}) = \prod_p exp\left(-\sum_{r =
+1}^{\infty}\frac{z^{n_p r}}{r}
+\frac{e^{r\beta\cdot\hat{n}_p}}{\vert\det\left({\bf 1 -
+J}_p^{r}\right)\vert}\right)\,.
+\eeq
+where the product runs over all prime periodic cycles.
 
 Generalization to continuous time\rf{bowen,pexp} amounts to the
 replacement
 %$ z\,=\,e^{-s} $,
-$ z^{\period{p}} \rightarrow e^{-s \period{p}} $, where $\period{p}$
+$ z^{n_p r} \rightarrow e^{-s \period{p}} $, where $\period{p}$
 is now the (not necessarily integer)
 %{\sl time-}
 period of the prime cycle $p$:
@@ -192,27 +237,26 @@ Z(\beta,s)\,=\,\prod_{p\in\PP} \exp \left( - {
 \,\, .
 $$
 
-
 \beq
 1/\zeta(\beta, s)\,=\,\prod_{p}\left( 1 - \frac{e^{(\beta \cdot \hn_p-
       s \period{p})}}{|\ExpaEig_p|} \right) ~,
 \label{zeta-diff}
 \eeq
-where $\period{p}$ is the period of the cycle and $\ExpaEig_p$ the
-product of expanding eigenvalues of the cycle\rf{DasBuch}.
+where $\ExpaEig_p$ the product of expanding eigenvalues of the
+cycle\rf{DasBuch}.
 
 The \dzeta\ \cycForm\ for the diffusion constant, zero mean drift
 $ \expct{ \hat{x}_i } = 0 \,, $ is given by
- \beq D \,=\,{1 \over 2 d}
-{ \expct{\hat{x}^2}_\zeta \over \expct{\period{}}_\zeta } \,=\,{1
-  \over 2 d } \, {1 \over \expct{\period{}}_\zeta} \sumprime
-\frac{(-1)^{k+1} (\hn_{p_1}+ \cdots+ \hn_{p_k})^2}
-{|\ExpaEig_{p_1}\cdots \ExpaEig_{p_k}|} \, ,
+ \beq 
+ D \,=\,{1 \over 2 d} { \expct{\hat{x}^2}_\zeta \over
+ \expct{\period{}}_\zeta } \,=\,{1 \over 2 d } \, {1 \over
+ \expct{\period{}}_\zeta} \sumprime \frac{(-1)^{k+1} (\hn_{p_1}+
+ \cdots+ \hn_{p_k})^2} {|\ExpaEig_{p_1}\cdots \ExpaEig_{p_k}|} \, ,
 \label{eq-ecDiffCoef}
 \eeq
 where the sum is over all distinct non-repeating combination of prime
 cycles (in the elementary cell). The derivation is standard, still the
-formula is strange.Diffusion is unbounded motion across an infinite
-lattice; nevertheless, the reduction to the elementary cell enables us to
-compute relevant quantities in the usual way, in terms of periodic
+formula is strange. Diffusion is unbounded motion across an infinite
+lattice; nevertheless, the reduction to the elementary cell enables us
+to compute relevant quantities in the usual way, in terms of periodic
 orbits.
