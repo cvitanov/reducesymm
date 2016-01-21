@@ -5,7 +5,7 @@
 %\subsection{Fundamental domain diffusion tensor}
 %\label{s-fundDiff}
 
-
+While the fundamental domain blah,
 
 Earlier work\rf{LorentzDiff} has failed to obtain a formula for the
 diffusion matrix expressed in terms of the fundamental domain cycles.
@@ -21,96 +21,129 @@ quantities like the displacement when $\beta \neq 0$, for reasons
 discussed in \refsect{s-FundTranslation}. 
     
 
-Instead, we start from the trace trace of \evOper\ 
-\refeq{eq-evo-flow} and project it into the individual 
-representations of the discrete group:
+Instead, we follows the approach proposed in \rf{} and factorize the 
+spectral determinant \refeq{} according to the little group's 
+symmetry. blah
+
+We start from the trace trace of elementary cell \evOper\ 
+\refeq{eq-trace-disc} and project it into the irreducible 
+representations $\II_G$ of the discrete group:
 \bea
-\tr{\cal L}^t &=& \sum_{\alpha \in\II_G} \tr{\cal L}_{\alpha}^t\nonumber\\
-\tr{\cal L}_{\alpha}^{t} &=& \frac{d_\alpha}{|G|}\sum_{h \in
-  G}\chi_\alpha(h)\int_{\t {\cal M}} d\tx \sum_{\sigma \in G}\delta (h\tx -
-\flow{t}{\sigma\tx})e^{\beta\cdot\hn^t(\sigma\tx)}\,,\nonumber\\
-\label{eq-traceSum}
+\tr{\cal L}^n &=& \sum_{\alpha \in\II_G} \tr{\cal
+L}_{\alpha}^n\nonumber\\ \tr{\cal L}_{\alpha}^{n} &=&
+\frac{d_\alpha}{|G|}\sum_{h \in
+G}\chi_\alpha(h)\times\nonumber\\&&\int_{\t {\cal M}} d\tx
+\sum_{\sigma \in G}\delta (h\tx -
+f^n(\sigma\tx))e^{\beta\cdot\left(\hat{f}^n(\sigma\tx)-\sigma\tx\right)}\,.\nonumber\\
+\label{eq-trace-ir}
 \eea
-where the double summation are all over the point group. Using the G-equivariance of the flow~\refeq{eq-equivariance-flow} and displacement~\refeq{eq-equivariance-disp}, and noticing that the little group is closed, we can swap the order of the double sum and replacing $h\to \sigma^{-1} h$:
+Again, we first derive the map version and will discuss the continuous
+flow later. Using the equivariance relations
+\refeq{eq-equivariance-flow} and \refeq{eq-equivariance-disp}, and
+noticing that the little group is closed, we swap the order of the
+double sum and replacing $h\to \sigma^{-1} h$:
 
-\[
-\tr{\cal L}_{\alpha}^{t} = \frac{d_\alpha}{|G|}\sum_{\sigma \in
-  G}\sum_{h \in G}\chi_\alpha(h)\int_{\t {\cal M}} d\tx \delta (h\tx -
-\flow{t}{\tx})e^{\beta\cdot\sigma\cdot\hn^t(\tx)}\,.
-\]
-
-
-The $\delta$-function part $\delta (h\tx - \flow{t}{\tx})$ in the integral selects only those points $\tx$ in ${\cal M}$ which belong to the relative periodic orbit and also satisfy the group condition $h^t(\tx) = h$. Thus, it is convenient to restrict the integral in the adjacency of fundamental domain periodic orbits. We may thus write the integral part as:
-
-\[
-\int_{\t {\cal M}} d\tx \delta (h\tx -
-\flow{t}{\tx})e^{\beta\cdot\sigma\cdot\hn^t(\tx)} = \sum_{}
-\]
-
-The displacement traveled starting from each of those points and along the orbit
-$r$ times takes the form already computed in~\refeq{eq-fdDisplacement}. The rest
-is straight forward gymnastics of algebra,which yields the dynamical zeta
-function for the $\alpha$ irreducible representation:
-\begin{widetext}
- \beq
-\frac{1}{\zeta_{\alpha}(\beta,s,z)}
-=\exp\left(-\frac{d_\alpha}{|G|}\sum_{\sigma\in G}\sum_{\tp}
-    \frac{1}{\cl{\tp}}\sum_{\tx_{i}\in\tp}\sum_{r=1}^{\infty}
-    \frac{t_{\tp}^{r}}{r}
-    \chi_{\alpha}(\hp^{r}(\tx_i))e^{\beta\cdot\sigma\cdot\hat{L}_{\tp}(r,\tx_i)}
-    \right),
-\label{eq-fdZeta}
-\eeq
-\end{widetext}
-
-where
-\[
-  t_{\tp}\equiv
-\frac{z^{\cl{\tp}}e^{-sT_{\tp}}}{|\ExpaEig_\tp|}
-\,,
-\]
-is the weight associated to the orbit. Equation \refeq{eq-fdZeta}
-differs from its counterpart in elementary cell, but can be reduced to if
-the symmetry group contains only $e$.
-
-We are interested in the one dimensional, symmetric trivial
-representation with $ d_\alpha = 1 $ and all $ \chi(h) = 1 $; there by we
-drop the subscript $\alpha $ in the following calculation. Partial
-derivative with respect to $\beta$ gives:
-\begin{widetext}
 \bea
-\frac{\partial^{2}}{\partial\beta^{2}}\frac{1}{\zeta(\beta,s,z)}
-&=\frac{1}{\zeta(\beta,s,z)}\left(\left(\frac{1}{|G|}
-\sum_{\sigma\in G}\sum_{\tp}\sum_{\tx_i\in \tp}
-\sum_{r=1}^{\infty}\frac{\sigma\cdot \hat{L}_{\tp}^{r}(\tx_i)t_{\tp}^r
-e^{\beta\cdot\sigma\cdot \hat{L}_{\tp}^{r}(\tx_i)}}{\cl{\tp}r}\right)^{2}
-    \right.
-    \nonumber\\
-&\left.-\frac{1}{|G|}\sum_{\sigma\in G}\left(\sum_{\tp}\sum_{\tx_i\in
-      \tp}\sum_{r=1}^{\infty}\frac{\vert \sigma\cdot
-      \hat{L}_{\tp}^{r}(\tx_i)\vert^{2}t_{\tp}^{r}e^{\beta\cdot\sigma\cdot
-        \hat{L}_{\tp}^{r}(\tx_i)}}{\cl{\tp}r}\right)\right).
-        \eea
-\end{widetext}
+\tr{\cal L}_{\alpha}^{n} &=& \frac{d_\alpha}{|G|}\sum_{\sigma \in
+  G}\sum_{h \in G}\chi_\alpha(h)\times
+  \nonumber\\
+  &&\int_{\t {\cal M}} d\tx \delta (h\tx -
+f^n(\tx))e^{\beta\cdot\sigma\cdot(\hat{f}^n(\tx)-\tx)}\,.
+\label{eq-trace-ir-disc}
+\eea
+
+Similar to the analysis in \refsect{s-POT}, the $\delta$-function part
+$\delta (h\tx - f^n(\tx))$ in the integral selects only those points
+$\tx$ in ${\cal M}$ which belong to the relative periodic orbit $\tp$
+in the fundamental domain which satisfies the group condition
+$h^{r}_{\tp}(\tx) = h$, where $r$ is the repeat number $r n_\tp = n$.
+It follows that the integral in \refeq{eq-trace-ir-disc} takes the
+form
+
+\beq
+\int_{\t {\cal M}} = \sum_{\tp}\delta_{n, n_pr}\sum_{\tx\in
+\tp}\delta_{h^r_{\tp}(\tx), h}
+\frac{e^{\beta\cdot\sigma\cdot\hat{L}_\tp(r,
+\tx)}}{\vert\det\left({\bf 1 - J}_\tp^r(\tx)\right)\vert}\,.
+\label{eq-trace-ir-expan}
+\eeq 
+The displacement $\hat{L}_\tp(r, \tx)$ along the orbit $r$ 
+times takes the form already computed  in~\refeq{eq-fdDisplacement}. 
+The Jacobian blah
+The spectral determinant for the $\alpha-$irreducible representation 
+is:
+
+ \beq
+ Z_{\alpha}(\beta,z)
+=\exp\left(-\frac{d_\alpha}{|G|}\sum_{\sigma\in G}\sum_{\tp}
+    \frac{1}{\cl{\tp}}\sum_{\tx\in\tp}\sum_{r=1}^{\infty}
+    \frac{t_\tp(r, \tx)}{r}
+    \right)\,,
+\label{eq-fd-zeta}
+\eeq
+where
+\beq
+    t_{\tp} =\frac {z^{n_\tp
+    r}{\chi_{\alpha}(\hp^{r}(\tx))e^{\beta\cdot\sigma\cdot\hat{L}_{\tp}(r,\tx)}}}{\vert\det\left({\bf
+     1 - J}_\tp^r(\tx)\right)\vert }
+\,,
+\eeq
+is the weight associated with the orbit. Equation \refeq{eq-fd-zeta}
+takes a much more complicated form than its counterpart in the
+elementary cell. As a sanity check, if the little group contains only
+the identity element $e$, i.e. there is no additional symmetry. it is
+reduced to \refeq{eq-det-disc}. Generalization to continuous flow is
+also different. Besides replacing $z^{n_p}\to e^{-s\period{\tp}}$, the
+summation is changed to an integral
+\beq
+\frac{1}{n_{\tp}}\sum_{\tx\in\tp}\to 
+\frac{1}{\period{\tp}}\oint_{\cal P}d\tau\tx(\tau)\,,
+\eeq
+which runs along the tangent (marginal) direction of the orbit. Here 
+is the interesting discovery, changing the sum to 
+the integral will produce \emph{different} results for any 
+non-trivial symmetry, which we will discuss later.
+
+The important long term dynamics is contained in the one dimensional, 
+symmetric representation: $ d_\alpha = 1 $ and all $ \chi(h) = 1 
+$; there by we drop the subscript $\alpha $ in the following 
+calculation. The cycle average quantities:
+
+%\bea
+%\frac{\partial^{2}}{\partial\beta^{2}}\frac{1}{\zeta(\beta,s,z)}
+%&=\frac{1}{\zeta(\beta,s,z)}\left(\left(\frac{1}{|G|}
+%\sum_{\sigma\in G}\sum_{\tp}\sum_{\tx_i\in \tp}
+%\sum_{r=1}^{\infty}\frac{\sigma\cdot 
+%\hat{L}_{\tp}^{r}(\tx_i)t_{\tp}^r
+%e^{\beta\cdot\sigma\cdot 
+%\hat{L}_{\tp}^{r}(\tx_i)}}{\cl{\tp}r}\right)^{2}
+%    \right.
+%    \nonumber\\
+%&\left.-\frac{1}{|G|}\sum_{\sigma\in G}\left(\sum_{\tp}\sum_{\tx_i\in
+%      \tp}\sum_{r=1}^{\infty}\frac{\vert \sigma\cdot
+%      
+%\hat{L}_{\tp}^{r}(\tx_i)\vert^{2}t_{\tp}^{r}e^{\beta\cdot\sigma\cdot
+%        \hat{L}_{\tp}^{r}(\tx_i)}}{\cl{\tp}r}\right)\right).
+%\eea
 The first term in the formula corresponds to $ \langle\hx\rangle^2 $ and
 second to $ \langle\hx^2\rangle $. It is trivial to see that
 \beq\sum_{\sigma\in G}\frac{\sigma\cdot
   \hat{L}_{\tp}^r(\tx_i)t_{\tp}^r e^{\beta\cdot\sigma\cdot
   \hat{L}_{\tp}(r,\tx_i)}}{\cl{\tp}r} \equiv 0,
 \eeq
-because of the summation over the discrete group $\Group$. Thus the calculated
-mean drift is zero, consistent with the symmetry of the system. Observing
-that the length$\vert \sigma\cdot \hat{L}_{\tp}^{r}(\tx_i) \vert$ does
-not change under rotation, we write
+because of the summation over the discrete group $\Group$. Thus the
+calculated mean drift is zero, consistent with the symmetry of the
+system. Observing that the length$\vert \sigma\cdot
+\hat{L}_{\tp}^{r}(\tx_i) \vert$ does not change under rotation, we
+write
 \bea
 \langle\hx^2\rangle &=& \left.\frac{1}{\zeta(\beta,s,z)}\sum_{\tp}
-\sum_{r=1}^{\infty}\frac{t_{\tp}^{r}}{r}
-\sum_{\tx_i\in \tp}\frac{\vert\hat{L}_{\tp}^{r}(\tx_i)\vert^{2}}{\cl{\tp}}
-    \right\vert_{\beta=0,s=0, z=1}
-\nonumber\\
-&=& \left.\prod_{\tp}\left(1-\frac{z^{\cl{\tp}}}{\vert\ExpaEig_\tp\vert
-    }\right)\sum_{\tp}\sum_{r=1}^{\infty}\left(\frac{z^{\cl{\tp}}}{\vert\ExpaEig_\tp\vert
-    }\right)^r\frac{\vert\hat{L}_{\tp}^{r}\vert^2}{r}\right\vert_{z=1}
+\sum_{r=1}^{\infty}\frac{t_{\tp}^{r}}{r} \sum_{\tx_i\in
+\tp}\frac{\vert\hat{L}_{\tp}^{r}(\tx_i)\vert^{2}}{\cl{\tp}}
+\right\vert_{\beta=0,s=0, z=1} \nonumber\\ &=&
+\left.\prod_{\tp}\left(1-\frac{z^{\cl{\tp}}}{\vert\ExpaEig_\tp\vert
+}\right)\sum_{\tp}\sum_{r=1}^{\infty}\left(\frac{z^{\cl{\tp}}}{\vert\ExpaEig_\tp\vert
+ }\right)^r\frac{\vert\hat{L}_{\tp}^{r}\vert^2}{r}\right\vert_{z=1}
 \label{eq-meanSquareDisp}
 \eea
 
