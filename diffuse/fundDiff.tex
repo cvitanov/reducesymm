@@ -67,56 +67,63 @@ orbit takes the form computed in~\refeq{eq-fd-displacement},
 and ${\bf J}_\tp^r(\tx)$ absorbs the cycle group element
 $h^r_{\tp}(\tx)$. The spectral determinant for the $\alpha-$irrep is:
  \beq
- Z_{\alpha}(\beta,z)
+Z_{\alpha}(\beta,z)
 =\exp\left(-\frac{d_\alpha}{|G|}\sum_{\sigma\in
-G}\sum_{r=1}^{\infty}\sum_{\tp}
-    \frac{1}{\cl{\tp}}\sum_{\tx\in\tp}
-    t_\tp(r, \tx)
-    \right)\,,
+G}\sum_{\tp}
+\frac{1}{\cl{\tp}}\sum_{\tx\in\tp}\sum_{r=1}^{\infty}
+t_\tp(r, \tx)
+\right)\,,
 \label{eq-fd-zeta}
 \eeq
 where
 \beq
-    t_{\tp} =\frac{z^{n_\tp r}{\chi_{\alpha}(\hp^{r}(\tx))
-    e^{\beta\cdot\sigma\cdot\hat{L}_{\tp}(r,\tx)}}}
-    {r\vert\det\left({\bf 1 - J}_\tp^r(\tx)\right)\vert }
+t_{\tp} =\frac{z^{n_\tp r}{\chi_{\alpha}(\hp^{r}(\tx))
+e^{\beta\cdot\sigma\cdot\hat{L}_{\tp}(r,\tx)}}}
+{r\vert\det\left({\bf 1 - J}_\tp^r(\tx)\right)\vert }
 \,,
 \eeq
-is the weight associated with the orbit. Eq.~\refeq{eq-fd-zeta} takes a
-more complicated form than its counterpart in the elementary cell. As a
-sanity check, note that if the little group contains only the identity
-element $e$, i.e. there is no additional symmetry, it is reduced to
-\refeq{eq-det-disc}. Generalization to continuous flow is also different.
-Besides replacing $z^{n_p}\to e^{-s\period{\tp}}$, the summation is
-changed to an integral
+is the weight associated with the orbit. Eq.~\refeq{eq-fd-zeta} takes
+a more complicated form than its counterpart in the elementary cell.
+As a sanity check, note that if the little group contains only the
+identity element $e$, i.e. there is no additional symmetry, it is
+reduced to \refeq{eq-det-disc}. Generalization to continuous flow is
+also different. Besides replacing $z^{n_p}\to e^{-s\period{\tp}}$, the
+summation is changed to an integral
 \beq
 \frac{1}{n_{\tp}}\sum_{\tx\in\tp}\to
 \frac{1}{\period{\tp}}\oint_{\cal P}d\tau\tx(\tau)\,,
 \eeq
 which runs along the tangent (marginal) direction of the orbit. Here
-comes an interesting discovery (to which we return in \refsect{##}):
-changing the sum to the integral will produce \emph{different} results
-for any non-trivial symmetry. For consistency, we define
-$\langle\rangle_{\tp}$ as the cycle average to replace the sum/integral.
+comes an interesting discovery (to which we return in
+\refsect{s-numerics}): changing the sum to the integral will produce
+\emph{different} results for any non-trivial symmetry. For
+consistency, we define $\langle\rangle_{\tp}$ as the cycle average to
+replace the sum/integral.
 
 The important long term dynamics is contained in the one-dimensional,
-symmetric representation: $d_\alpha = 1$ and all $\chi(h)=1$. The cycle
-averaged mean drift vanishes by symmetry,
+symmetric representation: $d_\alpha = 1$ and all $\chi(h)=1$. The
+cycle averaged mean drift vanishes,
 \bea
-\langle\hx\rangle_{\cal M} &=& -\left.\frac{\partial Z_\alpha}{\partial
+\langle\hx\rangle_{\cal M} &=& -\left.\frac{\partial 
+Z_\alpha}{\partial
 \beta} \right\vert_{\beta = 0, s = 0} \\\nonumber
-&=& \frac{Z_\alpha}{|G|}\sum_{\sigma\in
-G}\sum_{r=1}^{\infty}\sum_{\tp}\langle \sigma\cdot \hat{L}_{\tp}(r,
-\tx)t_\tp(r, \tx)\rangle_{\tp}\equiv 0\,,
+&=& Z_\alpha (0, 0)\sum_{\sigma\in
+G}\sum_{\tp}\sum_{r=1}^{\infty}\sum_{\sigma\in
+G} \frac{\left\langle\sigma\cdot 
+\hat{L}_{\tp}(r,
+\tx)\right\rangle_{\tp}}{\vert G\ExpaEig_\tp^r\vert}\equiv 
+0\,,
 \eea
-because the direction of $\sigma\cdot \hat{L}_{\tp}(r, \tx)t_\tp(r, \tx)$
-cancel
-each other when we sum all the group elements $\sigma$. The mean
-squared displacement is, observing that the length$\vert \sigma\cdot
-\hat{L}_{\tp}(r, \tx) \vert$ does not change under rotation or reflection:
+because the direction of $\sigma\cdot \hat{L}_{\tp}(r, \tx)$ cancel 
+each other when we sum all the group elements $\sigma$. Observing 
+that the length$\vert \sigma\cdot \hat{L}_{\tp}(r, \tx) \vert$ does 
+not change under rotation or reflection, the mean squared 
+displacement is, :
 \bea
-\langle\hx^2\rangle_{\cal M} &=& \frac{1}{\zeta_\alpha}
-\sum_{r=1}^{\infty}\sum_{\tp}\langle \vert\hat{L}_{\tp}(r,
-\tx)\vert^2 t_\tp(r, \tx)\rangle_{\tp}\,.
+\langle\hx^2\rangle_{\cal M} &=& \prod_{\tp}\left(1 - 
+\frac{1}{\vert\Lambda_\tp\vert}\right)
+\sum_{\tp}\sum_{r=1}^{\infty} \frac{\left\langle\vert\hat{L}_{\tp}(r,
+\tx)\vert^2\right\rangle_{\tp}}{\vert\ExpaEig_\tp\vert^r} 
+\,.\nonumber\\
 \label{eq-msd}
 \eea
