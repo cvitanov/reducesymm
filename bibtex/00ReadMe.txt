@@ -3,10 +3,18 @@ reducesymm/bibtex/00ReadMe.txt
 
 following files home is here
     reducesymm/bibtex/QFT.bib
+
+    reducesymm/bibtex/DasGroup.bib  % include, harmonize with:
+                      [ ] dasgroup/thepaper/groups-bibliography.bib
+                      [ ] 2016-12-01 Alcock-Zeilinger GroupTheory.bib
+                      [ ] extracted reducesymm/bibtex/QFT.bib parts
+                      [ ] dasgroup/book/chapter/refs.tex
+                      [ ] dasgroup/book/toInclude/refsInsert.tex
+
     reducesymm/bibtex/diffuse.bib   (Zhang entries)
     reducesymm/bibtex/linresp.bib   (McInroe  entries)
 
-following files are copied to here, and not to be edited here
+following files are copied to here, and NOT TO be edited here
     always edit siminos/bibtex/siminos.bib
 then copy to here
     always edit dasbuch/bibtex/ChaosBook.bib
