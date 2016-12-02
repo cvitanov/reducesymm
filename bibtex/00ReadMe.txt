@@ -5,9 +5,9 @@ following files home is here
     reducesymm/bibtex/QFT.bib
 
     reducesymm/bibtex/DasGroup.bib  % include, harmonize with:
-                      [ ] dasgroup/thepaper/groups-bibliography.bib
-                      [ ] 2016-12-01 Alcock-Zeilinger GroupTheory.bib
-                      [ ] extracted reducesymm/bibtex/QFT.bib parts
+                      [x] dasgroup/thepaper/groups-bibliography.bib
+                      [x] 2016-12-01 Alcock-Zeilinger GroupTheory.bib
+                      [x] 2016-12-01 extracted reducesymm/bibtex/QFT.bib parts
                       [ ] dasgroup/book/chapter/refs.tex
                       [ ] dasgroup/book/toInclude/refsInsert.tex
 
