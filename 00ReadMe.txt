@@ -9,8 +9,9 @@ includes some of svn repo siminos (Evangelos Siminos)
 but only up to creation of gitHub reducesymm 2013-07-07
 
 bibtex/siminos.bib
-    one bibliography for all projects - DO NOT EDIT here
-    edit only svn repo siminos/bibtex/... then copy to here  
+       ChaosBook.bib
+    DO NOT EDIT here
+    edit only svn repo siminos/bibtex/... then copy to here
 
 figs/
     one directory for thesis and blog figures .eps figures
@@ -36,17 +37,28 @@ scripts/
 blog/
     all matters pertaining to symmetry reduction reading
 
-cgang/
-    2-modes model worked out in great detail
-
 QFT/
+bibtex/QFT.bib
     quantum field theory blog
+
+dasgroup/
+bibtex/dasgroup.bib
+    group theory blog
 
 tingnan/
     Tingnan Zhang Spring 2014 deterministic diffusion project
-    
+
 diffuse/
+bibtex/diffuse.bib
     Tingnan Zhang deterministic diffusion paper
+
+linresp/
+bibtex/linresp.bib
+    McInroe paper
+
+cgang/
+    2-modes model worked out in great detail
+
 
 ---------------------------------------------------------------
 TO FIX:
