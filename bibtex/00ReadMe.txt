@@ -8,7 +8,7 @@ following files home is here
                       [x] dasgroup/thepaper/groups-bibliography.bib
                       [x] 2016-12-01 Alcock-Zeilinger GroupTheory.bib
                       [x] 2016-12-01 extracted reducesymm/bibtex/QFT.bib parts
-                      [ ] dasgroup/book/chapter/refs.tex
+                      [.] dasgroup/book/chapter/refs.tex
                       [ ] dasgroup/book/toInclude/refsInsert.tex
 
     reducesymm/bibtex/diffuse.bib   (Zhang entries)
