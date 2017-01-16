@@ -1,14 +1,26 @@
 % reducesymm/linresp/McICvi15.tex
 % $Author: predrag $ $Date: 2015-10-14 00:30:40 -0400 (Wed, 14 Oct 2015) $
 
+%% -------- editors/public switch ------------------
                   %%   logical setup, no need to edit %%%%%%%%%%
-                  \newif\ifpaper \paperfalse \newif\ifPDF \PDFtrue %%
-                  \newif\ifboyscout %%
+                  \newif\ifpaper \paperfalse \newif\ifPDF \PDFtrue  %%
+                  \newif\ifblog \blogfalse                          %%
+                  \newif\ifboyscout                                 %%
                   \boyscouttrue %% commented, WWW/drafts %%
 %%%% Toggle between draft and public versions
 % \boyscoutfalse % public, for hyperlinked pdf
 
-% Predrag                       2015-10-17
+%% ------------------ for arXiv submission ----------------------------
+%
+% Title:    Periodic Orbit Theory of Linear Response
+% Authors:  Benjamin McInroe and Predrag Cvitanovic
+% Comments: ? pages, ? pdf figures, uses revtex4
+% Files:    McICvi15.tex sliceDefs.tex McICvi15.bbl
+%           fig??.pdf fig??.pdf
+%
+%% ------------------ cut here ----------------------------------------
+
+
 
 %                    PRE resubmission:
 %                    arXiv submission:
@@ -24,20 +36,8 @@
 % Predrag completed rewrite
 % Predrag
 %%                   started writing:  Predrag
+% Predrag                       2015-10-17
 % Benjamin    1. draft McICvi15.tex             2015-10-17
-
-
-%% ------------------ for arXiv submission ----------------------------
-%
-% Title:    Periodic Orbit Theory of Linear Response
-% Authors:  Benjamin McInroe and Predrag Cvitanovic
-% Comments: ? pages, ? pdf figures, uses revtex4
-% Files:    McICvi15.tex sliceDefs.tex slice.bbl
-%           fig??.pdf fig??.pdf
-%
-%% ------------------ cut here ----------------------------------------
-
-
 
         \ifboyscout
 \documentclass[aps,pre,
@@ -45,6 +45,7 @@
                 twocolumn,
                 %preprint,      %uncomment for double spacing
                 groupedaddress,
+                superscriptaddress,
                 floatfix]{revtex4-1}
         \else
 \documentclass[pre,aps,
@@ -52,8 +53,9 @@
                 showpacs,
                 superscriptaddress,
                 groupedaddress,
-                floatfix,
-                hyperref]{revtex4-1}
+                floatfix%,
+                %hyperref
+                ]{revtex4-1}
         \fi
 %   REVTeX 4 Version 4.1r August 2010
 %   Phys. Rev. appearance, change preprint to twocolumn.  Choose pra,
@@ -61,11 +63,6 @@
 %   'draft' option to mark overfull boxes with black boxes Add
 %   'showpacs' option to make PACS codes appear Add 'showkeys' option
 %   to make keywords appear
-% Use the \preprint command to place your local institutional report
-% number in the upper righthand corner of the title page in preprint
-% mode.  Multiple \preprint commands are allowed.  Use the
-% 'preprintnumbers' class option to override journal defaults to
-% display numbers if necessary \preprint{}
 
 \input setupLinresp
 \ifPDF
@@ -75,9 +72,6 @@
 \fi
 \input ../inputs/editsDasbuch %% editing comments, DasBuch style
 \input defsLinresp %% all diffusion project edits: \renewcommand, etc
-
-\usepackage{graphicx}% Include figure files
-\usepackage{grffile}
 
 \begin{document}
 \title{Periodic Orbit Theory of Linear Response}
@@ -92,19 +86,19 @@
 
 \begin{abstract}
 We apply periodic orbit theory to dynamical systems of
-the form $\frac{dx_{i}}{dt}+\epsilon \delta v_{i}(x), \epsilon \ll 1$,
-where $\delta v_{i}(x)$ is a spatial perturbation to the flow. Such a
+the form $\frac{d\ssp_{i}}{dt}+\epsilon \delta v_{i}(\ssp), \epsilon \ll 1$,
+where $\delta v_{i}(\ssp)$ is a spatial perturbation to the flow. Such a
 perturbation results in a small shift of the eigenvalue spectrum of the
-evolution operator of the dynamical system, which to linear order for
+{\evOper} of the dynamical system, which to linear order for
 structurally stable dynamics can be computed in terms of the cycle
 expansion of the flow. Assuming the perturbations to the local traces
 vary smoothly with the parameter $\epsilon$, the variation of the
-weighted average of a given observable with respect to $\epsilon$ can
+ given observable with respect to $\epsilon$ can
 also be computed. We apply this formalism to computation of the leading
 eigenvalues of two one-dimensional maps, the tent map and the logistic
 map, to demonstrate the results for both a structurally stable and
 structurally unstable case, respectively. Finally, we apply the formalism
-to computation of a 'real' observable, the Lyapunov exponent.
+to computation of the Lyapunov exponent.
 \end{abstract}
 
 \maketitle
@@ -115,52 +109,56 @@ to computation of a 'real' observable, the Lyapunov exponent.
 \label{sect:intro}
 
 In this paper we consider the dynamics of weakly perturbed systems of
-the form $\frac{dx_{i}}{dt}=v_{i}(x) + \epsilon \delta v_{i}(x)$. The
-study of such systems is relevant to the statistical mechanics of
+the form
+\(
+\frac{d\ssp_{i}}{dt}=v_{i}(\ssp) + \epsilon \delta v_{i}(\ssp)
+\,.
+\) %ee{peturbDynSys}
+The study of such systems is relevant to the statistical mechanics of
 nonequilibrium systems, in which the perturbation might signify an
-external force that driving the system away from equilibrium. The
+external force that driving the system away from a steady state. The
 parameter $\epsilon$ is taken to be sufficiently small such that the
-perturbing flow may be approximated to linear order, and the
-well-established approach to problems of this nature has come to be
-called linear response theory (for a review, see ref). We consider an
-alternative approach to linear response problems, employing the periodic
-orbit theory (for example, see (ref 2)) to make predictions for average
-values of observables.  \refSect{sect:review} is an overview of periodic orbit
+perturbing flow may be approximated to linear order. The
+theory problems of this nature has come to be
+called linear response theory (for a review, see Ruelle\rf{Ruelle09}).
+We consider here an
+approach to linear response problems based on the periodic
+orbit theory\rf{DasBuch} to make predictions for expectation values of
+observables.  \refSect{sect:review} is an overview of periodic orbit
 theory used in developing the linear response formalism in
 \refsect{sect:LinRespPO}. In \refsect{sect:tests}, the linear response
 theory is applied to computations of eigenvalues for one dimensional
 maps. In \refsect{sect:LyapExp} and \refsect{sect:concl}, we expand these
-results to computation of the Lyapunov exponent of these maps, and compare
-the results to the 'classical' computation by Abramov\rf{Abramov14}.
+results to computation of the Lyapunov exponent of these maps, and
+compare the results to the `classical' computation by
+Abramov\rf{Abramov14}.
 
 \section{A brief review of cycling}
 \label{sect:review}
 
-This section contains an overview of concepts from periodic orbit theory
-used in this study. For a more thorough introduction, 'chaosbook' is
-strongly recommended.
+This section contains an overview of concepts from periodic orbit
+theory\rf{DasBuch} used in this study.
 
-\subsection{Zeta Functions, cycle expansions, and all that}
+\subsection{Zeta functions, cycle expansions, and all that}
 \label{sect:ZetaFcts}
 
-Consider a dynamical system given by a measure preserving flow, $f:
-M\rightarrow M$, where $M$ is a locally Euclidean manifold, the \statesp.
-If the dynamical system is chaotic, then it is impossible to compute
-asymptotic trajectories for a single initial point in $M$. But all is not
-lost, and we can trade the notion of a single initial point, $x_{0}\in
-M$, evolved forward in time by the flow $f$, for an initial 'density' of
-points, $\rho (x, 0), x\in M$, evolved forward in time by an evolution
-operator, $L^{t}$.
-
-Our ultimate goal is the computation of average values of observables for
-the system $(M, f)$, and thus we turn our attention to the spectrum of
-the evolution operator. Our method of choice here is by construction of
+Consider a dynamical system  $(\pS,f)$ given by a measure preserving
+flow, $f: \pS\rightarrow \pS$, where $\pS$ is the \statesp. If the
+dynamical system is chaotic, then it is impossible to compute the
+long-time trajectory for a generic initial point $\ssp_{0}\in \pS$. But all
+is not lost, as we can trade the notion of a single initial point
+$\ssp_{0}$ evolved forward in time by the flow $f$, for an initial
+density of points, $\rho (\ssp, 0), \ssp\in \pS$, evolved forward in time by
+the {\evOper} $\Lop^{t}$.
+Our ultimate goal is the computation of expectation values of observables for
+the dynamical system $(\pS,f)$, and thus we turn our attention to the spectrum of
+the {\evOper}. Our method of choice here is by construction of
 the dynamical zeta function, which has the Euler product form,
 \beq
 \frac{1}{\zeta} = \prod_{p} (1 - t_{p})
 \eeq
 where $t_{p}$ is the weight associated with the prime cycle p. The
-eigenvalues of the evolution operator are then given by the zeros of the
+eigenvalues of the {\evOper} are then given by the zeros of the
 dynamical zeta function, that is,
 \beq
 {1}/{\zeta (s_{\alpha})} = 0
@@ -168,15 +166,15 @@ dynamical zeta function, that is,
 For the $\alpha^{th}$ eigenvalue, $s_{\alpha}$. To compute the zeros,
 consider the expansion of the zeta function in a formal power series,
 \beq
-\frac{1}{\zeta} = 1 - \sum_{p_{1}+p_{2}+...p_{k}}^{'}t_{p_{1}+p_{2}+...p_{k}}
+\frac{1}{\zeta} = 1 - \sum_{p_{1}+p_{2}+\cdots+p_{k}}^{'}t_{p_{1}+p_{2}+\cdots+p_{k}}
 \eeq
-for $t_{p_{1}+p_{2}+...p_{k}} =
-(-1)^{k+1}t_{p_{1}}t_{p_{2}}...t_{p_{k}}$, where the prime on the sum
+for $t_{p_{1}+p_{2}+\cdots+p_{k}} =
+(-1)^{k+1}t_{p_{1}}t_{p_{2}}\cdots t_{p_{k}}$, where the prime on the sum
 indicates that the sum is taken over all distinct, non-repeating
-combinations of prime cycles. When $k>1$, $t_{p_{1}+p_{2}+...p_{k}}$ are
+combinations of prime cycles. When $k>1$, $t_{p_{1}+p_{2}+\cdots+p_{k}}$ are
 weights of pseudocycles, sequences of shorter cycles the shadow a cycle
-with symbol sequence $p_{1}p_{2}...p_{k}$, along the segments $p_{1},
-p_{2}, ..., p_{k}$. This series representation of a dynamical zeta
+with symbol sequence $p_{1}p_{2}\cdots p_{k}$, along the segments $p_{1},
+p_{2}, \cdots, p_{k}$. This series representation of a dynamical zeta
 function or spectral determinant is known as the cycle expansion. It is a
 sum over pseudocycles, ordered by increasing cycle length and
 instability.
@@ -205,52 +203,62 @@ The cycle expansion for binary symbolic dynamics is computed in
 \subsection{Averaging for cyclists}
 \label{sect:AverCycl}
 
-We now use the formalism of the previous section to compute averages of
+We now use the formalism of the previous section to compute expectation values of
 observables. Consider the weight for the cycle $p$,
-\beq
-t_{p} = t_{p}(\beta, s(\beta)) = \frac{1}{\mid \Lambda_{p} \mid} e^{\beta A_{p} - s(\beta)T_{p}}
+\bea
+t_{p} &=& t_{p}(\beta, s(\beta))
+       = \frac{1}{|\ExpaEig_{p}|} e^{\beta \Obser_{p} - s(\beta)\period{p}}
+\continue
+       &=& \exp\left[\beta \Obser_{p} - (s(\beta)+\eigRe_p)\period{p}\right]
 \,,
-\ee{cyclWeight}
-where $\Lambda_{p}$ is the Floquet multiplier, $A_{p}$ is an observable
-of interest, and $T_{p}$ is cycle period (or topological cycle length for
-discrete dynamics). With this weight, \refeq{zetaZero} is now an implicit
-equation for $s=s(\beta)$, for arbitrary parameter $\beta$, of the form
-$G(\beta, s(\beta)) = 0$. The cycle averaging formulas for the slope and
+\label{cyclWeight}
+\eea
+where $\ExpaEig_{p}$ is the Floquet multiplier, $\eigRe_{p}$ the real
+part of the Floquet exponent, $\Obser_{p}$ is the integrated observable
+of interest, and $\period{p}$ is cycle period (or topological cycle
+length for discrete dynamics). With this weight, \refeq{zetaZero} is now
+an implicit equation for $s=s(\beta)$, for arbitrary parameter $\beta$,
+of the form $G(\beta, s(\beta)) = 0$. The {\cycForm s} for the slope and
 curvature of $s(\beta)$ follow from differentiation of the eigenvalue
 condition with respect to $\beta$,
 \begin{eqnarray*}
-0 = \frac{d G}{d\beta} = \frac{\partial G}{\partial \beta} + \frac{\partial s}{\partial \beta}\frac{\partial G}{\partial s}
-\\ \Rightarrow \frac{\partial s}{\partial \beta} = -\frac{\partial_{\beta}G}{\partial_{s} G}
+0 = \frac{d G}{d\beta}
+= \frac{\pde G}{\pde \beta} + \frac{\pde s}{\pde \beta}\frac{\pde G}{\pde s}
+\\
+\Rightarrow \frac{\pde s}{\pde \beta} = -\frac{\pde_{\beta}G}{\pde_{s} G}
 \end{eqnarray*}
 Denoting by
 \begin{eqnarray*}
-&\langle A\rangle_{G}& = -\frac{\partial G}{\partial \beta}\mid_{\beta, s=s(\beta)},\\ &\langle T \rangle_{G}& = \frac{\partial G}{\partial s}\vert_{\beta, s=s(\beta)}
+&\expct{\Obser}_{G}& = -\frac{\pde G}{\pde \beta}|_{\beta, s=s(\beta)}
+,\\ &\expct{\period{}}_{G}& = \frac{\pde G}{\pde s}\vert_{\beta, s=s(\beta)}
 \,,
 \end{eqnarray*}
-respectively the mean cycle expectation value of $A$ and the mean cycle
-period, both weighted by $G$. The cycle averaging formula for the
+respectively the mean cycle expectation value of $\Obser$ and the mean cycle
+period, both weighted by $G$. The {\cycForm} for the
 expectation value of the observable is then
 \beq
-\langle a\rangle = \frac{\langle A \rangle_{G}}{\langle T \rangle_{G}}
+\expct{\obser} = \frac{\expct{\Obser}_{G}}{\expct{\period{}}_{G}}
 \ee{expectObserv}
-For $G = 1/\zeta$, we obtain the zeta - weighted average formulas. Using
+For $G = 1/\zeta$, we obtain the zeta - weighted {\cycForm s}. Using
 the cycle expansion representation,
 \begin{eqnarray*}
-&\langle A \rangle_{\zeta}&:=-\frac{\partial}{\partial \beta}\frac{1}{\zeta}=\sum^{'}(A_{p_{1}}+A_{p_{2}}+...+A_{p_{k}})t_{p_{1}+p_{2}+...+p_{k}} \\
-&\langle T \rangle_{\zeta}&:=\frac{\partial}{\partial s}\frac{1}{\zeta}=\sum^{'}(T_{p_{1}}+T_{p_{2}}+...+T_{p_{k}})t_{p_{1}+p_{2}+...+p_{k}}
+&\expct{\Obser}_{\zeta}
+  &:=-\frac{\pde}{\pde \beta}\frac{1}{\zeta}
+  =\sum^{'}(\Obser_{p_{1}}+\Obser_{p_{2}}+\cdots+\Obser_{p_{k}})t_{p_{1}+p_{2}+\cdots+p_{k}} \\
+&\expct{\period{}}_{\zeta}&:=\frac{\pde}{\pde s}\frac{1}{\zeta}=\sum^{'}(T_{p_{1}}+T_{p_{2}}+\cdots+T_{p_{k}})t_{p_{1}+p_{2}+\cdots+p_{k}}
 \end{eqnarray*}
 These are the dynamical zeta function averages over prime cycles, with
 cycle weights evaluated at leading eigenvalues $t_{p} =
 t_{p}(\beta,s(\beta))$. For bounded flow, $s(0)=0$, so
 \begin{eqnarray*}
-&\langle A \rangle_{\zeta}& = \sum^{'}(-1)^{k+1}\frac{A_{p_{1}}+A_{p_{2}}+...+A_{p_{k}}}{\vert \Lambda_{p_{1}}...\Lambda_{p_{k}}\vert}\\
-&\langle T \rangle_{\zeta}& = \sum^{'}(-1)^{k+1}\frac{T_{p_{1}}+T_{p_{2}}+...+T_{p_{k}}}{\vert \Lambda_{p_{1}}...\Lambda_{p_{k}}\vert}
+&\expct{\Obser}_{\zeta}& = \sum^{'}(-1)^{k+1}\frac{\Obser_{p_{1}}+\Obser_{p_{2}}+\cdots+\Obser_{p_{k}}}{\vert \ExpaEig_{p_{1}}\cdots\ExpaEig_{p_{k}}\vert}\\
+&\expct{\period{}}_{\zeta}& = \sum^{'}(-1)^{k+1}\frac{T_{p_{1}}+T_{p_{2}}+\cdots+T_{p_{k}}}{\vert \ExpaEig_{p_{1}}\cdots\ExpaEig_{p_{k}}\vert}
 \,.
 \end{eqnarray*}
-As before, these cycle expansions are grouped as fundamental and
+As before, these cycle expansions are grouped into fundamental and
 curvature terms, with nearby pseudoorbits nearly vanishing. All zeta
 weighted averages in this paper are weighted with \refeq{cyclWeight}. The
-cycle expansion averages are worked out explicitly for binary symbolic
+{\cycForm s} are worked out explicitly for binary symbolic
 dynamics in \refappe{appe:cyclBinarySymbolic}.
 
 \section{Linear response in terms of periodic orbits}
@@ -265,33 +273,36 @@ the continuous time case.
 \subsection{Eigenvalue shift using dynamical zeta function}
 \label{sect:EigeShiftZeta}
 
-Consider a dynamical system of the form,
+Consider an autonomous dynamical system of the form
 \beq
-\frac{dx_{i}}{dt}=v_{i}(x)
+\frac{d\ssp_{i}}{dt}=v_{i}(\ssp)
+\,.
 \ee{eqMotion}
-The eigenvalues of the evolution operator of \refeq{eqMotion}, $s_{\alpha}$, satisfy
-the condition on the dynamical zeta function \refeq{zetaZero},
+The eigenvalues $s_{\alpha}$ of the associated {\evOper} satisfy
+the dynamical zeta function condition
+%\refeq{zetaZero},
 \beq
 {1}/{\zeta_{0} (s)} = 0
 \,.
 \ee{invZeta}
-Under a small perturbation to the flow, $\epsilon \delta v_{i}(x)$, the
-system becomes
+Under a small perturbation to the flow
+% $\epsilon \delta v_{i}(\ssp)$,
+the system becomes
 \beq
-\frac{dx_{i}}{dt}=v_{i}(x) + \epsilon \delta v_{i}(x), \vert\epsilon\vert \ll 1
+\frac{d\ssp_{i}}{dt}=v_{i}(\ssp) + \epsilon \delta v_{i}(\ssp), \vert\epsilon\vert \ll 1
 \,.
 \eeq
 The result of such a perturbation is a small shift in the eigenvalues of
-the evolution operator, such that $s_{\alpha}\rightarrow s_{\alpha} +
-\delta s_{\alpha}$. Then the new condition on the dynamical zeta function
-is
+the {\evOper}, $s_{\alpha}\rightarrow s_{\alpha} +
+\delta s_{\alpha}$. The eigenvalue condition for the dynamical zeta function
+of the perturbed system is
 \beq
-\frac{1}{\zeta(s_{\alpha}+\delta s_{\alpha})} = 0
-\,,
+1/\zeta(s_{\alpha}+\delta s_{\alpha}) = 0
+\,.
 \eeq
-which can be expanded to linear order and solved for $\delta s_{\alpha}$ as,
+Expanding to linear order and solving for $\delta s_{\alpha}$ yields
 \beq
-\delta s_{\alpha} = -\frac{1/\zeta(s_{\alpha})}{\frac{\partial}{\partial s}\zeta (s_{\alpha})}
+\delta s_{\alpha} = -\frac{1/\zeta(s_{\alpha})}{\frac{\pde}{\pde s}\zeta (s_{\alpha})}
 \,.
 \ee{cyclExpDeform}
 The cycle expansion of $1/\zeta(s)$ is a cycle by cycle deformation of
@@ -307,40 +318,58 @@ of \refeq{cyclExpDeform} may be evaluated by noting that to leading order,
 $1/\zeta(s_{\alpha}) \cong 1/\zeta_{0}(s_{\alpha})$, then from
 \refsect{sect:AverCycl},
 \begin{eqnarray*}
-\frac{\partial}{\partial s}\frac{1}{\zeta (s_{\alpha})} = \frac{\partial}{\partial s}\frac{1}{\zeta_{0} (s_{\alpha})} = \sum_{p}\frac{\partial}{\partial s}t_{p}(s_{\alpha}) \\ =  \sum_{p}T_{p}t_{p}(s_{\alpha}) =  \langle T_{p}\rangle_{\zeta}
+\frac{\pde}{\pde s}\frac{1}{\zeta (s_{\alpha})}
+= \frac{\pde}{\pde s}\frac{1}{\zeta_{0} (s_{\alpha})}
+= \sum_{p}\frac{\pde}{\pde s}t_{p}(s_{\alpha}) \\
+=  \sum_{p}\period{p}t_{p}(s_{\alpha})
+=  \expct{\period{p}}_{\zeta}
 \end{eqnarray*}
 The numerator may be evaluated by expanding $\delta t_{p}$ in terms of
-variations of $A_{p}$, $T_{p}$, and $\Lambda_{p}$. Substituting for
+variations of $\Obser_{p}$, $\period{p}$, and $\ExpaEig_{p}$. Substituting for
 \refeq{cyclExpDeform}, we find
 \beq
-\delta s_{\alpha} = -\frac{\beta \langle\delta A_{p}\rangle_\zeta - s\langle\delta T_{p}\rangle_{\zeta} - \langle\frac{\delta \Lambda_{p}}{\Lambda_{p}}\rangle_{\zeta}}{\langle T\rangle_{\zeta}}\vert_{s=s_{\alpha}}
+\delta s_{\alpha}
+=
+-\frac{\beta \expct{\delta \Obser_{p}}_\zeta - s\expct{\delta \period{p}}_{\zeta}
+- \expct{\frac{\delta \ExpaEig_{p}}{\ExpaEig_{p}}}_{\zeta}}
+  {\expct{\period{}}_{\zeta}\vert_{s=s_{\alpha}}}
 \,,
 \ee{pertEigShift}
 which is the expression for the shift of the perturbed eigenvalues.
 
-\subsection{Cycle averaging formulas for linear response of observables}
+\subsection{{\CycForm s} for linear response of observables}
 \label{sect:CyclAver}
 
 We have found that for structurally stable, hyperbolic dynamics, the
 eigenvalue $s_{\alpha}$ and the characteristics of the orbits depend on
 the variation parameter of the system, $\epsilon$. However, for each
-fixed value of $\epsilon$, the cycle averaging formula should be
+fixed value of $\epsilon$, the {\cycForm} should be
 applicable, thus
 \begin{eqnarray}
-\frac{\partial \langle a\rangle_{\zeta}}{\partial \epsilon} = \frac{\partial}{\partial \epsilon}\frac{\langle A \rangle_{\zeta}}{\langle T \rangle_{\zeta}} =
-\frac{\frac{\partial \langle A \rangle_{\zeta}}{\partial \epsilon} - \langle a \rangle_{\zeta}\frac{\partial \langle T \rangle_{\zeta}}{\partial \epsilon}}{\langle T \rangle_{\zeta}}
+\frac{\pde \expct{a}_{\zeta}}{\pde \epsilon}
+= \frac{\pde}{\pde \epsilon}\frac{\expct{A}_{\zeta}}{\expct{\period{}}_{\zeta}}
+= \frac{\frac{\pde \expct{A}_{\zeta}}{\pde \epsilon}
+   - \expct{a}_{\zeta}
+   \frac{\pde \expct{\period{}}_{\zeta}}
+        {\pde \epsilon}}
+     {\expct{\period{}}_{\zeta}}
 \,,
 \label{varObserv}
 \end{eqnarray}
 where we have simplified the final expression with \refeq{expectObserv}.
 
-We remark that in a typical calculation of a physical average, $\beta$ is
-put to zero. For a bounded system the leading eigenvalue $s_{0}=0$, is
-independent of the perturbation. In \refappe{appe:cyclBinarySymbolic}
-(14?), we evaluate \refeq{varObserv} step-by-step. The result is,
+In a typical calculation of a physical average, $\beta$ is put to zero.
+For a bounded system the leading eigenvalue $s_{0}=0$ is independent of
+the perturbation. In \refappe{sect:VarObsEps}, we evaluate
+\refeq{varObserv} step-by-step. The result is,
 \begin{eqnarray*}
-&\frac{\partial \langle a\rangle_{\zeta}}{\partial \epsilon}& = \frac{1}{\langle T \rangle_{\zeta}}\Bigg( \left\langle (\beta(A-\langle a\rangle T + 1)\frac{\partial A}{\partial \epsilon}\right\rangle \\ &-& \left\langle (s_{\alpha}-(1-s_{\alpha})\langle a\rangle)\frac{\partial T}{\partial \epsilon}\right\rangle  \\
-&-&\left\langle (A-\langle a \rangle T) \frac{\frac{\partial \Lambda}{\partial \epsilon}}{\Lambda}\right\rangle \Bigg)
+&\frac{\pde \expct{a}_{\zeta}}{\pde \epsilon}
+& = \frac{1}{\expct{\period{}}_{\zeta}}
+        \Bigg(
+    \expct{(\beta(A-\expct{a} T + 1)\frac{\pde A}{\pde \epsilon}} \\
+&-& \expct{(s_{\alpha}-(1-s_{\alpha})\expct{a})\frac{\pde T}{\pde \epsilon}}  \\
+&-& \expct{(A-\expct{a} T) \frac{\frac{\pde \ExpaEig}{\pde \epsilon}}{\ExpaEig}}
+        \Bigg)
 \end{eqnarray*}
 This completes the analysis of periodic orbit theory of linear response.
 
@@ -357,31 +386,31 @@ consider the tent map of the form
 \beq
 f(x) = \left\{
      \begin{array}{lr}
-       \Lambda_{0} x & : x \in M_{0}\\
-       \Lambda_{1} (1-x) & : x \in M_{1}
+       \ExpaEig_{0} x & : x \in \pS_{0}\\
+       \ExpaEig_{1} (1-x) & : x \in \pS_{1}
      \end{array}
    \right.
 \,,
 \eeq
-where the two \statesp\ regions, $M_{0}$ and $M_{1}$, are partitioned by
+where the two \statesp\ regions, $\pS_{0}$ and $\pS_{1}$, are partitioned by
 the critical point at which the two sides of the map are equal. This type
-of unimodal map is particularly desirable, as its evolution operator has
-a simple, finite dimensional form (see \refref{??}). As a result, the leading
+of unimodal map is particularly desirable, as its {\evOper} has
+a simple, finite dimensional form\rf{Driebe99}. As a result, the leading
 eigenvalue $s_{0}$ may be written analytically as
 \beq
 s_{0} =
-\ln\left( \frac{1}{\mid \Lambda_{0}\mid}+\frac{1}{\mid \Lambda_{0}\mid}\right)
+\ln\left( \frac{1}{|\ExpaEig_{0}|}+\frac{1}{|\ExpaEig_{0}|}\right)
 \ee{leadEig}
-where $\mid \Lambda_{i} \mid$ are the slopes of the left and right sides
+where $|\ExpaEig_{i}|$ are the slopes of the left and right sides
 of the map, see \reffig{fig:tentmapexample}.
 
 \begin{figure}[htbp]
 \includegraphics[width=0.45\textwidth]{tentmapexample}
 \caption{\label{fig:tentmapexample}
-An example plot of the tent map repeller. The black lines correspond to
-the unperturbed tent map with $\mid \Lambda_{0}\mid=4$, $\mid
-\Lambda_{1}\mid=6$. The red lines correspond to a possible perturbed tent
-map, with perturbation...
+The tent map repeller \refeq{eq:tentmapexample}. (black lines)
+The unperturbed tent map with $|\ExpaEig_{0}|=4$,
+$|\ExpaEig_{1}|=6$. (red lines) A perturbed tent
+map, with perturbation  $\epsilon=0.1$.
         }
 \end{figure}
 Consider a perturbation to the tent map that slightly shifts the slopes
@@ -389,13 +418,16 @@ of the two sides. That is, a perturbation of the form,
 \beq
 f(x) = \left\{
      \begin{array}{lr}
-       \Lambda_{0} x+\epsilon x & : x \in M_{0}\\
-       \Lambda_{1} (1-x)-\epsilon x & : x \in M_{1}
+       \ExpaEig_{0} x+\epsilon x & : x \in \pS_{0}\\
+       \ExpaEig_{1} (1-x)-\epsilon x & : x \in \pS_{1}
      \end{array}
    \right.
-\eeq
-for $\mid \epsilon \mid \ll 1$. The example for $\mid \epsilon \mid =
-0.1$ is plotted in \reffig{fig:tentmapexample}. The perturbation is
+\ee{eq:tentmapexample}
+for $|\epsilon |\ll 1$. The example for $\epsilon=
+0.1$ is plotted in \reffig{fig:tentmapexample}.
+    \PC{2017-01-15}{ Is $\epsilon= 0.1$ really what is plotted in
+    \reffig{fig:tentmapexample}? }
+The perturbation is
 conveniently chosen such that it shifts the values of the Floquet
 multipliers by $+\epsilon$, and the leading eigenvalue can be computed
 exactly from \refeq{leadEig}. Using the periodic orbit theory approach from
@@ -406,29 +438,28 @@ $\epsilon\in [0,1]$, the perturbation does not change the symbolic
 dynamics, so that the second term in the numerator also vanishes,
 \beq
 \delta s_{\alpha}
-  = \frac{1}{\langle T \rangle}_{\zeta}
-    \left\langle \frac{\delta \Lambda_{p}}{\Lambda_{p}} \right\rangle_{\zeta}
+  = \frac{1}{\expct{\period{}}_{\zeta}}
+    \expct{\frac{\delta \ExpaEig_{p}}{\ExpaEig_{p}}}_{\zeta}
 \,.
 \eeq
 The computation is straightforward for binary symbolic dynamics, and may
 be found in \refappe{appe:cyclBinarySymbolic}. A comparison of the exact
 and linear response results is plotted in \reffig{fig:numeric}. In
-particular, curvature terms are neglected when computing the cycle
-averages used in \reffig{fig:numeric} in order to simplify computations.
+particular, curvature terms are neglected when evaluating the {\cycForm
+s} used in \reffig{fig:numeric} in order to simplify computations.
 
 \begin{figure}[htbp]
 \includegraphics[width=0.45\textwidth]{numeric}
     \caption{\label{fig:numeric}
 Results of the tent map repeller exact (black), linear response (red),
 and numerical (blue points) calculations of eigenvalue shift for the map
-in \reffig{fig:tentmapexample}. For $\epsilon$ sufficiently small, the
-results agree to high precision. The numerical calculation is done for
+in \reffig{fig:tentmapexample}.
+% For $\epsilon$ sufficiently small, the results agree to high precision.
+The numerical calculation is done for
 the physical interpretation of the leading eigenvalue as the escape rate
 of the repeller, $\gamma = -s_{0}$.
     }
 \end{figure}
-
-\PC{2015-10-18}{\refFig{fig:numeric} not referred to in the text}
 
 \subsection{Logistic map}
 \label{sect:logstMap}
@@ -445,9 +476,10 @@ f(x) = rx(1 - x), x\in [0, 1]
 \,,
 \ee{logstMap}
 for which a small perturbation to the parameter r can result in a period
-doubling bifurcation. We consider a perturbation of the form,
+doubling bifurcation. We consider a parameter perturbation of the form
+$r \to r+\epsilon$,
 \beq
-\epsilon \delta f(x) = \epsilon x(1-x), \mid \epsilon \mid \ll 1
+\epsilon \delta f(x) = \epsilon x(1-x), |\epsilon|\ll 1
 \eeq
 The symbolic dynamics are again binary, so computation of the actual
 eigenvalues is done as in the previous section.
@@ -475,21 +507,21 @@ to exponential divergence of flows for nearby initial conditions.
 \subsection{Derivation of Lyapunov exponent}
 
 Let $\bf x(t)$ be an orbit of the set of differential equations (7) with
-initial state $\bf x_{0}$, that is, $\textbf{x(t)} = f^{t}(\textbf{$\bf
-x_0$})$, where $f^t$ is the flow of (7). For a small perturbation to this
-initial state, $\bf \delta x_{0}$, we have another orbit, $\textbf{x(t)}
-+ \textbf{$\bf \delta x(t)$}$ = $f^{t}(\textbf{$\bf x_{0}$} +
-\textbf{$\bf \delta x_{0}$})$. As our ansatz, suppose that as the orbits
-evolve, the separation $\bf \delta x_{0}$ grows as,
+initial state $\bf \ssp_{0}$, that is, $\textbf{x(t)} = f^{t}(\textbf{$\bf
+\ssp_0$})$, where $f^t$ is the flow of (7). For a small perturbation to this
+initial state, $\bf \delta \ssp_{0}$, we have another orbit, $\textbf{x(t)}
++ \textbf{$\bf \delta x(t)$}$ = $f^{t}(\textbf{$\bf \ssp_{0}$} +
+\textbf{$\bf \delta \ssp_{0}$})$. As our ansatz, suppose that as the orbits
+evolve, the separation $\bf \delta \ssp_{0}$ grows as,
 
 \beq
-e^{\lambda t} \approx \left\Vert \frac{\bf \delta x(t)}{\bf \delta x_{0}} \right\Vert
+e^{\lambda t} \approx \left\Vert \frac{\bf \delta x(t)}{\bf \delta \ssp_{0}} \right\Vert
 \eeq
 
 Rearranging, this expression becomes exact in the limit,
 
 \beq
-\lambda = \lim_{t\rightarrow \inf} \frac{1}{t} \sum_{i} t_{i} \lambda_{i}
+\lambda = \lim_{t\rightarrow \infty} \frac{1}{t} \sum_{i} t_{i} \lambda_{i}
 \eeq
 Where $t = \sum_{i} t_{i}$. In practice, one would let the separation
 grow until $\Vert \bf \delta x(t_{1}) \Vert$ is sufficiently large (at
@@ -498,13 +530,18 @@ to the linear regime, and continue ad infinitum.
 
 If we let the initial separation tend to zero, then,
 \beq
-\lim_{\bf \delta x_{0} \rightarrow 0} \frac{\bf \delta x(t)}{\bf \delta x_{0}} = \frac{\bf \partial x(t)}{\bf \partial x_{0}} = J^{t}(\bf x_{0})
+\lim_{\bf \delta \ssp_{0} \rightarrow 0} \frac{\bf \delta x(t)}{\bf \delta \ssp_{0}}
+= \frac{\bf \pde x(t)}{\bf \pde \ssp_{0}}
+= J^{t}(\bf \ssp_{0})
 \,,
 \eeq
 where $J^{t}$ is the Jacobian matrix of the flow at time $t$. It follows
 then that the leading Lyapunov exponent is
 \beq
-\lambda(\textbf{$x_{0}$}) = \lim_{t\rightarrow \inf}\frac{1}{t} ln \frac{\Vert J^{t}(\textbf{$x_{0}$}) \textbf{$\delta x_{0}$} \Vert}{\Vert \textbf{$\delta x_{0}$} \Vert}
+\lambda(\textbf{$\ssp_{0}$})
+= \lim_{t\rightarrow \infty}\frac{1}{t}
+\ln \frac{\Vert J^{t}(\textbf{$\ssp_{0}$}) \textbf{$\delta \ssp_{0}$} \Vert}
+         {\Vert \textbf{$\delta \ssp_{0}$} \Vert}
 \,.
 \eeq
 
@@ -514,10 +551,10 @@ then that the leading Lyapunov exponent is
 \subsection{Linear response for Lyapunov exponent - cyclist's formulation}
 \label{sect:LinrespLyapCycl}
 
-\section{Conclusions}
+\section{Summary and conclusions}
 \label{sect:concl}
 
-We developed the periodic orbit formalism for the computation of the
+We have developed here the periodic orbit formalism for the computation of the
 linear response of eigenvalues for a general, $d$-dimensional system of
 differential equations. Furthermore, we applied our result to the
 calculation of the shift in the eigenvalue spectrum of one dimensional
@@ -536,92 +573,183 @@ dimensional maps from before. We recover the result from Abramov's
 calculation, but exchange integrals over long trajectories for finite
 sums over a few prime cycles.
 
-A natural expansion of this work would be to compute observables for a
+A natural extension of this work would be to compute observables for a
 higher dimensional system, in which case the utility of the periodic
 orbit approach will be even more obvious.
 
+We find that while the linear response theory can provide a reasonable
+approximation to the shift in spectrum brought on by a small
+perturbations for hyperbolic, structurally stable dynamics, the
+approximation fails for flows without these properties, even in the case
+of simple one dimensional maps. Although the linear perturbation approach
+seems like a natural solution for analyzing dynamical systems subject to
+small perturbations, it is complicated by the high sensitivity to
+parameters and potential for bifur- cations present in chaotic systems.
+In particular, there is no reason to assume that cycle expectation values
+vary continuously with the perturbation parameter as we assumed in
+\refsect{sect:LinRespPO}, rendering our equations for spectrum variation
+nearly useless, as in \reffig{fig:logisticnumeric}.
+While the tent and logistic map examples provide a taste of how the
+spectra of evolution operators respond to linear perturbations, some
+interesting examples had to be left out of this draft. In particular, the
+dike map\rf{dasBuch}, a tent map with a slice taken of the top, provides
+an example of structurally unstable dynamics similar to the logistic map.
+The possibility of symmetry breaking perturbations is particularly
+interesting, and although attempts at computing linear response for
+continuous flows are a work in progress at the time of this writing,
+discrete maps provide perhaps a more tractable take on this problem.
+Study of the Gallavotti- Cohen theorem\rf{??} for non-equilibrium systems
+with periodic orbit theory might also be an interesting avenue of future
+work.
+
+
 \begin{acknowledgments}
-This project is a continuation of a project started by S{\o}ndergaard and
+This report is a continuation of a project started by S{\o}ndergaard and
 Cvitanovi\'c in 1995.
 We are grateful to ... for many fruitful discussions in
 the early stages of this project, and ...
 BM was supported by NSF grant ???-?????.
-PC thanks to the family of late G. Robinson, Jr. and NSF grant
-DMS-1211827 for partial support.
+PC thanks to the family of late G. Robinson, Jr. for partial support.
 \end{acknowledgments}
 
 % Specify following sections are appendices. Use \appendix* if there
 % only one appendix.
-%\appendix
-%\section{}
 \appendix
+
 \section{Cycle expansion for binary symbolic dynamics}
 \label{appe:cyclBinarySymbolic}
 
 The simplest example of the cycle expansion is that for the binary
-symbolic dynamics, of interest when the \statesp\ $M$ may be partitioned
-into two regions, labeled $M_{0}$ and $M_{1}$. The Euler product
+symbolic dynamics, of interest when the \statesp\ $\pS$ may be partitioned
+into two regions, labeled $\pS_{0}$ and $\pS_{1}$. The Euler product
 representation of the dynamical zeta function is then,
 \begin{eqnarray*}
 \frac{1}{\zeta} &=& (1 - t_{0})(1-t_{1})(1-t_{01})(1-t_{001})(1-t_{011})
-\\ &(1-t_{0001})&(1-t_{0011})(1-t_{0111})...
+\\ &(1-t_{0001})&(1-t_{0011})(1-t_{0111})\cdots
 \end{eqnarray*}
 for cycles up to topological length four. Expanding the product, we
 obtain the cycle expansion form of the zeta function,
 \begin{eqnarray*}
-\frac{1}{\zeta} &=& 1 - t_{0} - t_{1} - t_{001} - t_{011} - t_{0001} - t_{0011} - t_{0111} - ...
-\\ &-& t_{0+1} - t_{01+1} - t_{0+001} - t_{0+011} - ...
+\frac{1}{\zeta}
+&=& 1 - t_{0} - t_{1} - t_{001} - t_{011} - t_{0001} - t_{0011} - t_{0111} - \cdots
+\\
+&-& t_{0+1} - t_{01+1} - t_{0+001} - t_{0+011} - \cdots
 \end{eqnarray*}
 Next, we regroup the terms in the above expansion into fundamental and
 curvature contributions. In this example, there are only two fundamental
-contributions to the cycle expansion, corresponding to the $M_{0}$ and
-$M_{1}$ fixed points,
+contributions to the cycle expansion, corresponding to the $\pS_{0}$ and
+$\pS_{1}$ fixed points,
 \begin{eqnarray*}
-\frac{1}{\zeta} &=& 1 - t_{0} - t_{1} \\ &-& [(t_{01} - t_{1}t_{0})] \\ &-& [(t_{001} - t_{01}t_{0}) + (t_{011} - t_{01}t_{1})] - ...
+\frac{1}{\zeta} &=& 1 - t_{0} - t_{1} \\
+&-& [(t_{01} - t_{1}t_{0})] \\
+&-& [(t_{001} - t_{01}t_{0}) + (t_{011} - t_{01}t_{1})] - \cdots
 \end{eqnarray*}
 As expected, the curvature terms nearly cancel, leaving the fundamental
 contributions as the dominant terms in the series, a result used to
-simplify computations of averages in \refsect{sect:tests}. For example,
+simplify computations of {\cycForm s} in \refsect{sect:tests}. For example,
 for the average cycle period, the cycle expansion with the usual weight
 is,
 \begin{eqnarray*}
-\langle T \rangle_{\zeta} &=& \frac{T_{0}}{\Lambda_{0}} + \frac{T_{1}}{\Lambda_{1}} + \left( \frac{T_{01}}{\Lambda_{01}}-\frac{T_{0} + T_{1}}{\Lambda_{0}\Lambda_{1}}\right)
-\\ &+& \left( \frac{T_{001}}{\Lambda_{001}}-\frac{T_{01} + T_{0}}{\Lambda_{01}\Lambda_{0}}\right) +...
+\expct{\period{}}_{\zeta}
+&=& \frac{T_{0}}{\ExpaEig_{0}} + \frac{T_{1}}{\ExpaEig_{1}}
++   \left( \frac{T_{01}}{\ExpaEig_{01}}-\frac{T_{0} + T_{1}}{\ExpaEig_{0}\ExpaEig_{1}}\right)
+\\
+&+& \left( \frac{T_{001}}{\ExpaEig_{001}}-\frac{T_{01} + T_{0}}{\ExpaEig_{01}\ExpaEig_{0}}\right)
++\dots
 \end{eqnarray*}
-This is the cycle expansion average calculated in \refsect{sect:AverCycl}
-for symbolic dynamics. A similar result is found for the cycle expansion
-average of $A$.
+This is the {\cycForm} calculated in \refsect{sect:AverCycl}
+for symbolic dynamics. A similar result is found for the {\cycForm} for $\Obser$.
 
-\subsection{Variation of $\langle a \rangle_{\zeta}$ in $\epsilon$}
+\subsection{Variation of $\expct{\obser}_{\zeta}$ in $\epsilon$}
 \label{sect:VarObsEps}
 
 Here we derive final equation in \refsect{sect:CyclAver} for the
-variation of $\langle a\rangle_{\zeta}$ in the parameter $\epsilon$. We
-start by computing the variations of the cycle expectation values of $A$
-and $T$,
+variation of $\expct{a}_{\zeta}$ in the parameter $\epsilon$.
+We
+start by computing the variations of the cycle expectation value of $\Obser$,
 \begin{eqnarray*}
-\frac{\partial \langle A \rangle_{\zeta}}{\partial \epsilon} = \frac{\partial}{\partial \epsilon}\sum_{p}t_{p}A_{p} = \sum_{p}\frac{\partial t_{p}}{\partial \epsilon}A_{p} + \sum_{p} \frac{\partial A_{p}}{\partial \epsilon} t_{p}
-\\ = \sum_{p}t_{p}\Bigg( \Bigg( -s\frac{\partial T_{p}}{\partial \epsilon} + \beta \frac{\partial A_{p}}{\partial \epsilon} - \frac{\frac{\partial \Lambda_{p}}{\partial \epsilon}}{\Lambda_{p}}\Bigg) A_{p} +\frac{\partial A_{p}}{\partial \epsilon} \Bigg)
+\frac{\pde \expct{\Obser}_{\zeta}}{\pde \epsilon}
+= \frac{\pde}{\pde \epsilon}\sum_{p}t_{p}\Obser_{p}
+= \sum_{p}\left(\frac{\pde t_{p}}{\pde \epsilon}\Obser_{p}
+                + t_{p} \frac{\pde \Obser_{p}}{\pde \epsilon} \right)
 \end{eqnarray*}
-and for $T$,
+
+\[
+\frac{\pde t_{p}}{\pde \epsilon}
+    =
+\left(
+  \beta \frac{\pde \Obser_{p}}{\pde \epsilon}
+ -(s+\eigRe_p)\frac{\pde \period{p}}{\pde \epsilon}
+ - \period{p}\frac{\pde \eigRe_p}{\pde \epsilon}
+\right) t_{p}
+\]
+
 \begin{eqnarray*}
-\frac{\partial \langle T \rangle_{\zeta}}{\partial \epsilon} = \frac{\partial}{\partial \epsilon}\sum_{p}t_{p}T_{p} = \sum_{p}\frac{\partial t_{p}}{\partial \epsilon}T_{p} + \sum_{p} \frac{\partial T_{p}}{\partial \epsilon} t_{p}
-\\ = \sum_{p}t_{p}\Bigg( \Bigg( -s\frac{\partial T_{p}}{\partial \epsilon} + \beta \frac{\partial A_{p}}{\partial \epsilon} - \frac{\frac{\partial \Lambda_{p}}{\partial \epsilon}}{\Lambda_{p}}\Bigg) A_{p} +\frac{\partial T_{p}}{\partial \epsilon} \Bigg)
+\frac{\pde \expct{\Obser}_{\zeta}}{\pde \epsilon}
+= \frac{\pde}{\pde \epsilon}\sum_{p}t_{p}\Obser_{p}
+= \sum_{p}\frac{\pde t_{p}}{\pde \epsilon}\Obser_{p} + \sum_{p} \frac{\pde \Obser_{p}}{\pde \epsilon} t_{p}
+\\ = \sum_{p}t_{p}\Bigg( \Bigg( -s\frac{\pde \period{p}}{\pde \epsilon} + \beta \frac{\pde \Obser_{p}}{\pde \epsilon} - \frac{\frac{\pde \ExpaEig_{p}}{\pde \epsilon}}{\ExpaEig_{p}}\Bigg) \Obser_{p} +\frac{\pde \Obser_{p}}{\pde \epsilon} \Bigg)
+\end{eqnarray*}
+
+
+The variation of the cycle expectation value of $\period{}$ is computed the same way,
+\begin{eqnarray*}
+\frac{\pde \expct{\period{}}_{\zeta}}
+     {\pde \epsilon}
+= \frac{\pde}{\pde \epsilon}\sum_{p}t_{p}\period{p}
+=   \sum_{p}\frac{\pde t_{p}}{\pde \epsilon}\period{p}
+  + \sum_{p}\frac{\pde \period{p}}{\pde \epsilon} t_{p}
+\\
+= \sum_{p}t_{p}
+      \Bigg(
+          \Bigg(
+-s\frac{\pde \period{p}}{\pde \epsilon}
++ \beta \frac{\pde \Obser_{p}}{\pde \epsilon}
+- \frac{\frac{\pde \ExpaEig_{p}}{\pde \epsilon}}{\ExpaEig_{p}}
+          \Bigg) \Obser_{p}
++\frac{\pde \period{p}}{\pde \epsilon}
+      \Bigg)
 \end{eqnarray*}
 Substituting back into \refeq{varObserv}, we get
 \begin{eqnarray*}
-\frac{\partial \langle a \rangle_{\zeta}}{\partial \epsilon} &=&
-\\ \frac{1}{\langle T\rangle_{\zeta}}\Bigg( &\sum_{p}&t_{p}\Bigg( \Bigg( -s\frac{\partial T_{p}}{\partial \epsilon} + \beta \frac{\partial A_{p}}{\partial \epsilon} - \frac{\frac{\partial \Lambda_{p}}{\partial \epsilon}}{\Lambda_{p}}\Bigg) A_{p} +\frac{\partial A_{p}}{\partial \epsilon} \Bigg)
-\\ - \langle a \rangle_{\zeta} &\sum_{p}&t_{p}\Bigg( \Bigg( -s\frac{\partial T_{p}}{\partial \epsilon} + \beta \frac{\partial A_{p}}{\partial \epsilon} - \frac{\frac{\partial \Lambda_{p}}{\partial \epsilon}}{\Lambda_{p}}\Bigg) A_{p} +\frac{\partial T_{p}}{\partial \epsilon} \Bigg) \Bigg)
+\frac{\pde \expct{a}_{\zeta}}{\pde \epsilon}
+&=&\\
+\frac{1}{\expct{\period{}}_{\zeta}}
+    \Bigg(&\sum_{p}&
+    t_{p}\Bigg(
+            \Bigg(
+-s\frac{\pde \period{p}}{\pde \epsilon}
++ \beta \frac{\pde \Obser_{p}}{\pde \epsilon}
+- \frac{\frac{\pde \ExpaEig_{p}}{\pde \epsilon}}{\ExpaEig_{p}}
+            \Bigg) \Obser_{p} +\frac{\pde \Obser_{p}}{\pde \epsilon}
+        \Bigg)\\
+- \expct{a}_{\zeta} &\sum_{p}&t_{p}
+        \Bigg(
+            \Bigg(
+-s\frac{\pde \period{p}}{\pde \epsilon}
++ \beta \frac{\pde \Obser_{p}}{\pde \epsilon}
+- \frac{\frac{\pde \ExpaEig_{p}}{\pde \epsilon}}{\ExpaEig_{p}}
+            \Bigg) \Obser_{p} +\frac{\pde \period{p}}{\pde \epsilon}
+        \Bigg)
+    \Bigg)
 \,.
 \end{eqnarray*}
-Regrouping terms with the same partials, and substituting re-writing the
+Regrouping terms with the same partials, and re-writing the
 sums  over cycles as cycle average values, we obtain,
 \begin{eqnarray*}
-&\frac{\partial \langle a\rangle_{\zeta}}{\partial \epsilon}& = \frac{1}{\langle T \rangle_{\zeta}}\Bigg( \left\langle (\beta(A-\langle a\rangle T + 1)\frac{\partial A}{\partial \epsilon}\right\rangle \\ &-& \left\langle (s_{\alpha}-(1-s_{\alpha})\langle a\rangle)\frac{\partial T}{\partial \epsilon}\right\rangle  \\
-&-&\left\langle (A-\langle a \rangle T) \frac{\frac{\partial \Lambda}{\partial \epsilon}}{\Lambda}\right\rangle \Bigg)
+&\frac{\pde \expct{\obser}_{\zeta}}{\pde \epsilon}
+& = \frac{1}{\expct{\period{}}_{\zeta}}
+    \Bigg(
+\expct{(\beta(\Obser-\expct{\obser} T + 1)\frac{\pde \Obser}{\pde \epsilon}} \\
+&-& \expct{(s_{\alpha}-(1-s_{\alpha})\expct{a})\frac{\pde T}{\pde \epsilon}}  \\
+&-& \expct{(\Obser-\expct{\obser} T) \frac{\frac{\pde \ExpaEig}{\pde \epsilon}}{\ExpaEig}}
+    \Bigg)
 \end{eqnarray*}
 
+\bibliographystyle{apsrev4-1}
+\bibliography{../bibtex/siminos,../bibtex/linresp}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \ifboyscout
 \newpage
     \section{McICvi15 flotsam}
@@ -629,9 +757,5 @@ sums  over cycles as cycle average values, we obtain,
     \input flotsam
 \newpage
 \fi
-
-\bibliographystyle{apsrev4-1}
-\bibliography{../bibtex/siminos,../bibtex/linresp} % 2015-10-17 this was missing: {lrp}{}
-
 
 \end{document}
