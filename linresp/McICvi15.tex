@@ -374,7 +374,7 @@ the perturbation. In \refappe{sect:VarObsEps}, we evaluate
 &-& \expct{(A-\expct{a} T) \frac{\frac{\pde \ExpaEig}{\pde \epsilon}}{\ExpaEig}}
         \Bigg)
 \end{eqnarray*}
-
+\BM{2017-02-20}{To leading order, these partials are just the shifts $\delta A$, etc as above. Maybe add a note in text, the notation here is exact but not so practical}
 To first order, the asymptotic average value of the observable $a(x)$ is then,
 
 \begin{eqnarray*}
@@ -390,8 +390,53 @@ The class of perturbations allowed in \refeq{pertflow} are such that topological
 
 \par The flow on a nominal periodic orbit is topologically equivalent to dynamics on $S^{1}$. Floquet theory provides a change of coordinates from dynamics on the cycle to a linearized flow on the circle. Let $Dv_{p} = \frac{\pde v_{i}}{\pde x_{j}}$ be the matrix of velocity gradients, or stability matrix for \refeq{eqmotion}. The Floquet matrix is $J_{p}$, and for a T-periodic orbit is given by $e^{T Dv_{p}}$. The Floquet multipliers are the eigenvalues of the Floquet matrix. Given the Floquet multipliers of \refeq{eqmotion}, ${\lbrace \Lambda_{p,i}^{0} \rbrace}$,
 
-    \BM{2017-02-07}{ adding this section to bring the theory full circle. the rest(ie how to perturb cycles) is in my notes to be added in next update, im not yet convinced its correct }
+\par To employ the techniques developed in the previous sections, we must compute the response of periodic orbits to the perturbation. Specifically, we will first need the metric perturbation to an arbitrary initial state on the cycle, $\delta x$. We will then proceed to compute the shift to Floquet multipliers $\delta \Lambda_{p}$, the cycle period $\delta T_{p}$, and the observable in question $\delta A_{p}$. 
 
+\par Begin by letting $x_{p}$ be the initial point to a periodic solution of \refeq{eqmotion} on a prime cycle $p$. For compactness, let $\dot{x}(x_{p})=v_{i}(x_{p})$ be the flow evaluated at $x_{p}$. Then let $x_{p, \epsilon} = x_{p} + \epsilon \delta x$ be a periodic solution of \refeq{pertflow}, such that,
+\beq
+\dot{x}(x_{p} + \epsilon \delta x) = v_{i}(x_{p} + \epsilon \delta x) + \epsilon \delta v_{i} (x_{p} + \epsilon \delta x)
+\eeq
+Then expanding to leading order in $\epsilon$, and using \refeq{eqmotion}, we can then compute the point $x_{p, \epsilon}$ on the perturbed prime cycle to first order as,
+\beq
+x_{p, \epsilon} = x_{p} -\epsilon \frac{\delta v_{i}(x_{p})}{\frac{\pde (\delta v_{i})}{\pde x} \vert_{x_{p}}}
+\eeq
+The shift in cycle period follows similarly, by letting the period of the perturbed cycle be $T_{p, \epsilon} = T_{p} + \epsilon \delta T_{p}$, and noting that $x_{p, \epsilon}(0) = x_{p, \epsilon}(T_{p, \epsilon})$, expanding the right hand side to first order in $\delta T_{p}$ and solving gives,
+\beq
+\delta T_{p} = \frac{x_{p, \epsilon}(0) - x_{p, \epsilon}(T_{p})}{\frac{\pde x_{p, \epsilon}}{\pde t}\vert_{\epsilon = 0}}
+\,,
+\eeq
+where the denominator is simply the perturbed flow \refeq{pertflow} evaluated at $x_{p, \epsilon}$. 
+
+\par To compute $\delta A_{p}$, we begin by noting the definition,
+\beq
+A_{p} = \frac{1}{T_{p}}\oint_{0}^{T_{p}} d \tau a[(x_{p}(\tau))]
+\,,
+\eeq
+where $a$ is the observable evaluated at a point on the cycle. Let $A_{p, \epsilon} = A_{p} + \epsilon \delta A_{p}$ be the linear response of the observable on the perturbed orbit. Then expanding the product $A_{p, \epsilon}T_{p, \epsilon}$ to $o(\epsilon^{2})$, we get the shift in the observable to leading order,
+\beq
+\delta A_{p} = \frac{1}{T_{p}}\oint_{0}^{T_{p,\epsilon}} d \tau \left[-  \frac{\delta v_{i}(x_{p})}{\frac{\pde (\delta v_{i})}{\pde x} \vert_{x_{p}}}(\tau)\right]
+\,,
+\eeq
+where the term in brackets is the shift $\delta x$ computed above.
+\BM{2017-02-20}{This is very general, but it feels lazy. It would be nice in practice to approximate this without having to integrate all over again. Outside of some special cases (like escape rate or velocity observables) maybe this is wishful thinking}
+
+\par Finally, we compute the shift of Floquet multipliers, $\delta \Lambda_{p}$. The Floquet multipliers are the eigenvalues of the Floquet matrix, which is defined by the linear set of ODEs $\dot{J_{p}} = Dv_{p}J_{p}$. To compute the Floquet matrix on the perturbed cycle, $J_{p, \epsilon}$, one must solve,
+\beq
+\dot{J}_{p, \epsilon} = Dv_{p, \epsilon}J_{p, \epsilon}
+\,,
+\label{pjacob}
+\eeq
+where $Dv_{p, \epsilon} = Dv_{p} + \epsilon D \delta v_{p}$. The shift to the Jacobian can be computed without having to integrate \refeq{pjacob} through regular perturbation theory. To first order in $\epsilon$,
+\beq
+\delta J_{p} = \int_{0}^{T_{p, \epsilon}} d\tau e^{(t-\tau)Dv_{p}} D\delta v_{p}(\tau)
+\eeq
+The shifts in the Floquet multipliers then follow trivially,
+\beq
+\delta \Lambda_{p} = \nu_{p}^{T}\delta J_{p} \nu_{p}
+\,,
+\eeq
+where ${\nu_{p}}$ are the eigenvectors of $J_{p}$.
+\BM{2017-02-20}{This is done in the spirit of previous calculations but is maybe excessive. Is it really so bad to just solve \refeq{pjacob} exactly, using whatever numerical scheme was used on \refeq{eqMotion}? }
 \section{Results of analytic and numerical tests}
 \label{sect:tests}
 
@@ -786,3 +831,4 @@ sums  over cycles as cycle average values, we obtain,
 \fi
 
 \end{document}
+
