@@ -30,7 +30,7 @@ NOTES
 
 reducesymm/bibtex/QFT.bib
 2013-11-23 Predrag % Partially extracted from
-siminos/bibtex/siminos.bib
+    siminos/bibtex/siminos.bib
 
 see also svn
     dasgroup/thepaper/groups-bibliography.bib
