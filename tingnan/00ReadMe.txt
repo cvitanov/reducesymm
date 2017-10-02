@@ -1,11 +1,13 @@
 
 --------------------------------------------------------
+deterministic diffusion
 
     Tingnan Zhang 		tingnan.zhang@gmail.com
-    Pavel M Svetlichnyy 	psvetlichny3@gatech.edu
-    Spring 2014 chaos course term paper.
 
 ========================================================
+
+GitHub/reducesymm/diffuse/ZhCvGo15.tex
+    Tingnan Zhang, Daniel I. Goldman and P. Cvitanovi\'c paper
 
 tingnan/
     schreiber.tex
@@ -60,6 +62,10 @@ How do you add time-stamp to git modified files?
 
 ----------------------------------------------------------------
 HISTORY:
+
+    Pavel M Svetlichnyy 	psvetlichny3@gatech.edu
+    contributed to the Spring 2014 chaos course term paper
+
                         Predrag 2013-07-07
     created gitHub reducesymm repo
 						Predrag Jul 26 2008
