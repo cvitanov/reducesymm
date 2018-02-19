@@ -1,28 +1,19 @@
 % reducesymm/QFT/dailyBlogAC.tex
 % Predrag  created              Jan 31 2018
 
-\section{Chen QFT self-study notes}
-\label{c-dailyBlogAC}
+\section{Quantum Field Theory Spring 2018 Report}
 
 %\noindent
-%Andy Chen \\final term paper for Spring 2018 QFT self-study course.
+%Andy Chen and Guopeng Xu <guopengxu@gatech.edu> \\
+% term paper for Spring 2018 QFT self-study course.
 %\\
 
-\begin{description}
-\item[2013-11-25  Predrag to Andy] Created \refsect{c-dailyBlogAC} for
-    you to write your QFT study notes in.
-
 \paragraph{The goal.}
-    Take a narrow path, learn enough QFT (and Green's functions and such, but
-    no more) to be able to digest \refsect{sect:worldline}~{\em Worldline
-    formalism} and check James \refsect{sect:magMomWorldline}~{\em Electron
-    magnetic moment in worldline formalism} calculations.
-
-
-\end{description}
-
-
-\section{Gauge theories}
+    Take a narrow path, learn enough Quantum Field Theory (QFT) (and
+    Green's functions and such, but no more) to be able to digest
+    \refsect{sect:worldline}~{\em Worldline formalism} and check James
+    \refsect{sect:magMomWorldline}~{\em Electron magnetic moment in
+    worldline formalism} calculations.
 
  \paragraph{What is a gauge theory?}
 According to\rf{belot2002} there are two types of theories
@@ -33,6 +24,323 @@ constrained Hamiltonian theories.
 In order to get correct predictions from non-Abelian field theories,
 which are susceptible to large number of gauge copies, we need to choose
 a representative of each gauge orbit.
+
+\section{Morelia Worldline Formalism course}
+\label{c-MoreliaCourse}
+
+\begin{description}
+
+\item[2017-07-03 Predrag] First Morelia discussion (all errors are mine):
+
+Christian is inclined to compute (g-2) starting with their two-field
+spinor QED Bern-Kosower formula. In that formulation all photons are born equal;
+one of them is kept as the external field (the seagull vertex, or the $k^\mu$
+coefficient) is the
+magnetic moment $\sigma_{\mu\nu}$), and the rest are contracted pairwise in
+all possible ways. In the quenched case, this yields one gauge invariant set,
+the self-energy set of \refsect{sect:selfEnergy}.
+
+James would like to start with their electron propagator in constant
+external field, and keep the term linear in the external field. I vastly
+prefer that, because it should be possible to distinguisn in- and
+out-legs, and the three kinds of $N$-photon propagators that yield the
+minimal gauge sets.
+
+I probably need to got through the proof of gauge invariance with them.
+
+\item[2017-07-04 Predrag] Morelia Schubertiad day 1:
+the lecture written up in Schubert\rf{Schubert12} 2012 {\em Lectures on
+the worldline formalism}, sects. 1.4~{\em Gaussian integrals} and
+1.5~{\em The N-photon amplitude}.
+
+Christian was right. One has to start with scalar QED one-loop effective
+action to understand the Bern-Kosowar type master formulas. That yields a
+loop with any number of photons attached, each photon vertex carrying a
+1D proper time Green's function. This could be computed by usual math
+methods techniques for computing Green's functions, but they find it
+useful for reasons that will be understood later to compute it as a sum
+of Fourier modes. The marginal modes (4 space-time translations) are fixed
+in the Gauss way, by shifting the origin to loops center of mass (\ie,
+different symmetry reduction for each loop).
+
+We then separate the integration over $x_0$, thus reducing the path integral
+to an integral over the relative coordinate $q$:
+\beq
+x^{\mu}(\tau) = x_0^{\mu}(\tau) + q^{\mu}(\tau),
+\ee{Schubert12(1.31)}
+with  the relative coordinate $q$ periodic and satisfying constraint
+\beq
+\int_0^T d\tau\, q^{\mu}(\tau) = 0
+\,.
+\ee{Schubert12(1.32)}
+In the symmetry-reduce$q$-space the zero-mode integral then yields
+the energy-momentum conservation $\delta$ function. The 1D Laplacian
+$M=-d^2/d\tau^2$ has positive eigenvalues (the usual $k^2$ Fourier modes),
+(do the exercise!)
+\beq
+\det M = (4T)^D
+\,,
+\ee{Schubert12(1.34)}
+and the bosonic Green's function of $-\frac{1}{2}\frac{d^2~}{d\tau^2}$ in
+the symmetry-reduced space is
+(this ${}^{-2}$ should presumably be ${}^{-1}$?)
+\beq
+G^c_B(\tau,\tau')
+= 2 \bra{\tau}\left(\frac{d^2~}{d\tau^2}\right)^{-2}\ket{\tau'}
+= |\tau-\tau'| - \frac{(\tau,\tau')^2}{T} - \frac{T}{6}
+\,.
+\ee{Schubert12(1.35)}
+The first derivative $\dot{G}$  has a sign function, and $\ddot{G}$ has a
+$\delta(\tau-\tau')$ (because of the translation invariance, $d/d\tau$
+can always e taken to act on the left variable $\tau$).
+
+This results in a Bern-Kosower\rf{BerKos91} type master formula
+\begin{eqnarray}
+&&\!\!\!\!\!\!\!
+\Gamma_{\rm scal}[k_1,\varepsilon_1;\ldots;k_N,\varepsilon_N]
+=
+\label{Schubert12(1.43)}\\
+&&\quad{(-ie)}^N
+{(2\pi )}^D\delta (\sum k_i)
+{\displaystyle\int_{0}^{\infty}}{dT\over T}
+{(4\pi T)}^{-{D\over 2}} e^{-m^2T}
+\prod_{i=1}^N \int_0^T\!\!\!d\tau_i
+\continue
+&&
+\quad %\!\!\!\!\!\!\!
+\times
+\exp\biggl\lbrace\sum_{i,j=1}^N
+\Bigl\lbrack  \half G_{Bij} k_i\cdot k_j
+-i\dot G_{Bij}\varepsilon_i\cdot k_j
++\half\ddot G_{Bij}\varepsilon_i\cdot\varepsilon_j
+\Bigr\rbrack\biggr\rbrace
+\mid_{\rm {\rm lin}(\varepsilon_i)}
+\nonumber
+\end{eqnarray}
+for the one-loop
+$N$-photon amplitude in scalar QED, with photon
+momenta $k_i$ and polarization vectors
+$\varepsilon_i$. $m$ denotes the mass, $e$ the charge and $T$ the total proper time
+of the scalar loop particle.
+
+
+This method is not applicable to open
+fermion lines.
+
+A scary realisation. This is a special case of our general, nonlinear,
+arbitrary order interaction vertex smooth conjugacy calculation of
+\refsect{sect:scfpo}. In other words, our calculation is not just for
+scalar theory in vacuum, it is for any nonconstant background, and any
+order of interaction, \ie, inter alia general relativity. As we start from
+a saddlepoint (classical periodic solution) that is not translation
+invariant, we do not have to worry about fixing the marginal modes -
+there are none.
+
+I fear having to explain the smooth conjugacy method to civilians.
+
+\item[2017-07-05 Predrag] Morelia Schubertiad day 2:
+the $N=2$ photon legs case is worked out in Schubert\rf{Schubert12} 2012
+lectures sect. 1.6~{\em The vacuum polarization}.
+
+Even though the result is strictly zero (by Furry theorem, or by time
+reversal of odd number of $\dot{G}$ functions),
+$N=3$ is useful to start understanding how integrations by parts work.
+
+For $N$ photon legs, see sect. 2.5~{\em Integration-by-parts and the
+replacement rule} and Ahmadiniaz, Schubert and Villanueva\rf{AhScVi13}
+{\em String-inspired representations of photon/gluon amplitudes},
+\arXiv{1211.1821}:
+``The Bern-Kosower rules provide an efficient way for obtaining parameter
+integral representations of the one-loop $N$-photon/gluon amplitudes
+involving a scalar, spinor or gluon loop, starting from a master formula
+and using a certain integration-by-parts (``IBP'') procedure. Strassler
+observed that this algorithm also relates to gauge invariance, since it
+leads to the absorption of polarization vectors into field strength
+tensors. Here we present a systematic IBP algorithm that works for
+arbitrary $N$ and leads to an integrand that is not only suitable for the
+application of the Bern-Kosower rules but also optimized with respect to
+gauge invariance. In the photon case this means manifest transversality
+at the integrand level, in the gluon case that a form factor
+decomposition of the amplitude into transversal and longitudinal parts is
+generated naturally by the IBP, without the necessity to consider the
+nonabelian Ward identities. Our algorithm is valid off-shell, and
+provides an extremely efficient way of calculating the one-loop
+one-particle-irreducible off-shell Green's functions (``vertices'') in
+QCD. In the abelian case, we study the systematics of the IBP also for
+the practically important case of the one-loop $N$-photon amplitudes in a
+constant field.''
+
+\item[2017-07-06 Predrag] Morelia Schubertiad day 3:
+
+Idrish Huet explained to me how the numerical Monte-Carlos of
+worldline path integrals work.
+% his partner Christina actually spent a year in Atlanta, working
+
+\item[2017-07-05 Christian] says there is a relevant new arXiv from some Vietnamese
+authors, but I couldn't find it.
+
+\item[2017-07-07 Predrag] Morelia Schubertiad day 4:
+
+\item[2017-07-09 5:22 am Predrag]
+had a panic attack that we'll never get started on (g-2). Forgot all
+about going to Patzquaro, spent entire Sunday writing up the new
+\refsect{sect:magMom}~{\em Electron magnetic moment} and
+\refsect{sect:magMomWorldline}~{\em Electron magnetic moment in worldline
+formalism}.
+
+\item[2017-07-10 Predrag] Morelia Schubertiad day 5:
+handwritten notes only.
+
+\item[2017-07-11 Predrag] Morelia Schubertiad day 6:
+
+Christian assigned homework: reformulate the magnetic moment vertex
+operator \refeq{BAGTB17(35-1)}, projections \refeq{PRD10-74-III(2.3)} and
+\refeq{PRD10-74-III(2.2)} in configuration coordinates.
+
+\item[2017-07-12 Predrag] Morelia Edwardsiad day 7: {\bf Scalar QED open lines}.
+Following Ahmadiniaz, Bashir and Schubert\rf{AhBaSc16} 2016
+{\em Multiphoton amplitudes and generalized {Landau-Khalatnikov-Fradkin}
+transformation in scalar {QED}},  	\arXiv{1511.05087}, and
+Ahmadiniaz, Bastianelli and Corradini\rf{AhBaCo16} {\em Dressed scalar
+propagator in a non-Abelian background from the worldline formalism},
+\arXiv{1508.05144}.
+
+Worldline is sum of N! photon insertions, spinor indices and gauge
+transformations at the endpoints. In 1950 Feynman\rf{Feynman50} gave the
+scalar QED worldline integral \refeq{AhBaSc16(1)}. Note $dT$ for the open
+line, as opposed to $dT/T$ for the closed loop: due to einbein gauge
+fixing that leads to different Fadeev-Popov for the loop or for the
+line. The worldine Green's function is now
+\bea
+\Delta(\tau_1,\tau_2) &=& \frac{1}{2}|\tau_1-\tau_2|
+          - \frac{1}{2}(\tau_1-\tau_2) + \frac{\tau_1\tau_2}{T}
+\label{EdwardsScProp}\\
+                     &=&
+\frac{1}{2}\left(G_B(\tau_1,\tau_2)
+-G_B(\tau_1,0)-G_B(0,\tau_2)+G_B(0,0)
+            \right)
+\,.
+\nnu
+\eea
+
+\item[2017-07-13 Predrag] Morelia Edwardsiad day 8:
+handwritten notes only.
+
+\item[2017-07-14 Predrag] Morelia Edwardsiad day 9:
+
+Wrote down the master formula for $S^{xx'}_{(N)}$ and its kernel
+$K^{xx'}_{(N)}$. Rewrote it in momentum space. Verified that $N=0$
+generates the free propagator. Checked the $N=1$ vertex. The hardest was
+computing the fermion self-energy, in terms of 2 dimensional
+regularization hypergeometric functions. Currently can compare to
+Davydychev\rf{DaOsSa00} only numerically.
+
+Read also
+Davydychev\rf{Davydychev06}
+{\em Geometrical methods in loop calculations and the three-point function}
+
+
+\end{description}
+
+
+\section{Chen and Xu QFT self-study notes}
+\label{c-dailyBlogAC}
+
+\begin{description}
+
+\item[2018-01-25  Predrag to Andy and Guopeng]
+    Created \refsect{c-dailyBlogAC} for you to write your QFT study notes
+    in (to James: they are both undergraduate students, and they are
+    expected to form a study group. Andy is from Georgia Tech, has no
+    prior exposure to QFT. Guopeng is from Jilin University, has gone
+    through the first part of Peskin and Schroeder\rf{PesSch95}.
+
+\item[2018-01-06 Andy]
+For the QFT self-course, I am able to dedicate 10-15 hours a week.
+
+\item[2018-01-08 Christian Schubert]
+that's great the Andy wants to learn the worldline formalism. The problem
+is that on the part that interests you most, the open fermion line, we
+still have not written up anything intelligible. But James is in
+the process of writing up his part of the lectures that we gave for you,
+which is going to be incorporated into the lecture notes that I have on
+the web with Olindo Corradini. So maybe for the time being Andy might
+want to work through the lectures as they are, and hopefully by the time
+he is through with this, James' fermion line part may already be in shape.
+Any questions, we are available.
+
+\item[2018-01-09 James Edwards ]
+It's great to hear that Andy is getting involved in the worldline
+formalism. Christian's suggests that you begin with the Olindo Corradini
+and Christian Schubert and
+ notes\rf{CorSch15}, \arXiv{1512.08694}. 2012 notes by
+Schubert\rf{Schubert12},
+\HREF{https://indico.cern.ch/event/206621/attachments/317309/442801/lectures_morelia_CS.pdf}
+{(click here)} may be also helpful
+(Predrag: I think the 2012 notes are included in the entirety into the
+Corradini and Schubert  notes\rf{CorSch15}. However, you might find parts of
+Corradini 2012 lectures useful,
+\HREF{https://indico.cern.ch/event/206621/attachments/317310/442802/LecturesMorelia_OC.pdf}
+{(click here)}).
+
+In the meantime, I will write up my notes on open fermion lines and share
+them with you as soon as possible. Needless to say, if Andy has any
+questions he is most welcome to get in touch with us to discuss things in
+more detail.
+
+\item[2018-01-16 James Edwards ]
+Would Andy like to get involved in some ongoing calculations pertaining
+to g-2? Our worldline representation of the fermion propagator provides a
+new technique for attacking this problem and there has already been some
+progress in calculating some of the ingredients for the 3 loop
+contribution, but we would also like to look at 1+ loop rainbow diagrams.
+
+To achieve this, we would study the open fermion line with a low energy
+photon attached along with a certain number of virtual photon loops.
+Now we know how to deal with the fermion line we have a good idea
+of how to calculate these quantities in a particularly efficient way
+(that automatically picks out the term linear in $k$ with the right gamma
+matrix structure to allow for extraction of the structure constant we
+seek). We expect to be able to streamline the calculation  and maybe even
+earn some advantages in the limit of large numbers of virtual photons. In
+principle, this can be extended to the case of a constant electromagnetic
+background too.
+
+We can begin working by checking the one loop contribution as a warm-up
+(I have notes on this already) before looking at the 2-loop rainbow. This
+requires familiarity with the scalar propagator in the worldline approach
+before looking at open spinor lines and the coupling to external photons.
+The latter remain as my job to write up our notes from Predrag's visit,
+and I will strive to do this asap.
+
+\item[2018-02-13 Predrag]
+    I find discrete lattice problems very useful in understanding
+    concepts in QFT. Study
+    \HREF{http://chaosbook.org/FieldTheory/postscript.html}
+    {ChaosBook.org/FieldTheory/postscript.html} Chapter~1 {Lattice field
+    theory}. You will learn that Laplacian generates all walks on a
+    lattice (making it easier to understand path integrals), that a
+    Green's function is the propagator (sum over all walks), that the
+    mysterious $e^{iET/\hbar}$ and $e^{ip\cdot{x}/\hbar}$'s of Quantum
+    Mechanics are roots of unity (a consequence of time and space
+    translation invariance), and how that enables you to compute the
+    propagators / Green's functions.
+
+    All of the above can be then continued in the small lattice spacing
+    limit into things you accept on faith when you read QFT textbook.
+    But here it is just matrices and vectors, and you can check every
+    step.
+
+    Do not use much time on the discrete lattice formalism, as we shall
+    not use it in the current project.
+
+\item[2018-02-18 Predrag] To see whether you have actually understood
+Green's function on the level needed for our term's goals, see whether
+you can follow worldine Green's function calculations following
+eq.~\refeq{AhBaSc16(1)i}, eq.~\refeq{EdwardsScProp} above, eqs.~(2.35)
+and (2.41) in Corradini and Schubert notes\rf{CorSch15}.
+
+\end{description}
 
 %\newpage %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \printbibliography[heading=subbibintoc,title={References}]
