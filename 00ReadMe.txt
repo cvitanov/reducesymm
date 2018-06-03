@@ -5,13 +5,11 @@ CNS publications and working notes on GitHub
 ========================================================
 GitHub.com/cvitanov/reducesymm/		created 2013-07-07
 
-includes some of svn repo siminos (Evangelos Siminos)
-but only up to creation of gitHub reducesymm 2013-07-07
-
 bibtex/siminos.bib
        ChaosBook.bib
     DO NOT EDIT here
     edit only svn repo siminos/bibtex/... then copy to here
+    edit only svn repo dasbuch/bibtex/... then copy to here
 
 figs/
     one directory for thesis and blog figures .eps figures
@@ -41,6 +39,9 @@ QFT/
 bibtex/QFT.bib
     quantum field theory blog
 
+presentations/
+    beamer talks
+
 dasgroup/
 bibtex/dasgroup.bib
     group theory blog
@@ -58,7 +59,8 @@ bibtex/linresp.bib
 
 cgang/
     2-modes model worked out in great detail
-
+includes some of svn repo siminos (Evangelos Siminos)
+but only up to creation of gitHub reducesymm 2013-07-07
 
 ---------------------------------------------------------------
 TO FIX:
