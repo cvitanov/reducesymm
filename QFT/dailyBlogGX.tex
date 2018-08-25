@@ -411,7 +411,7 @@ Feynman integrals like those you see in Peskin and Schroeder.
 \item[2018-04-16 Predrag to Guopeng]
 Go through
 Stone and Goldbart\rf{StGo09}, {\em Mathematics for Physics: A Guided Tour
-for Graduate Students}, Chapter~5  \emph{Green Functions}.
+for Graduate Students}, Chapter~5  \emph{Green's Functions}.
 A pre-publication draft can be found
 \HREF{http://www.goldbart.gatech.edu/PostScript/MS\_PG\_book/bookmaster.pdf}
 {here}.
@@ -463,24 +463,44 @@ The next five files are gauge sets $a_{km'm}$ defined in \refeq{quenchAnom}:
   \item[a111old.pdf]
   \item[a120.pdf]
   \item[a210.pdf]
-  \item[1loopPhi3.pdf] is an outline of Edwards purported 1-loop calculation.
+  \item[1loopPhi3.pdf] is an outline of Edwards 1-loop calculation.
 \end{description}
+%\JPE{2018-08-21}{
+    There are two ways to turn the line into a loop with a virtual photon:
+    \begin{enumerate}
+	\item
+Start with the line with $N \geqslant 2$ photons and sew a pair of photons
+together; this is the Ahmadiniaz, Bashir and Schubert\rf{AhBaSc16} approach to
+doing one-loop vertex corrections for scalar QED (compare to
+\refeq{EdwardsScProp}).
+	\item
+Incorporate the virtual photon loop at the level of the worldline
+action, which is the approach advocated by Edwards in
+the calculations followed here. Note that the boundary conditions
+for the open line in both cases\rf{AhBaSc16} are Dirichlet; the
+difference lies in the modification to the kinetic operator.
+    \end{enumerate}
+Possibly Davydychev\rf{Davydychev06} is also relevant.
+
 
 \item[2018-07-13 Guopeng]
 working through Edwards' {\em 1loopPhi3.pdf} calculation sketch:
 
-The note starts out with the $N$ photon insertions propagator for a
-charged scalar field in external field \refeq{Nprop}
-    \GX{2018-07-29} {\GXedit{
-    A confusing point about the master formula at the top of the {\em
-    1loopPhi3.pdf} calculation: it seems like there is no linear part of
-    the polarization vector. Where have those vectors gone?
-    }}
-    \JPE{2018-08-21}{External scalar particles have no polarisation - the
-    vertex operator would be
-    $V_{\textrm{scal}}[k] = \int_{0}^{T}d\tau\, e^{i k \cdot x(\tau)}$
-    in this case. Therefore, the amplitude for
-    scalars is related to that of photons by setting all $\varepsilon = 0$.}
+The note starts out with the $N$ ``photon'' (actually, scalar) insertions
+propagator for a charged scalar field in external field
+\refeq{Schubert12(1.43)}. %{Nprop}
+%    \GX{2018-07-29} {\GXedit{
+%    A confusing point about the master formula at the top of the {\em
+%    1loopPhi3.pdf} calculation: it seems like there is no linear part of
+%    the polarization vector. Where have those vectors gone?
+%    }}
+%   \JPE{2018-08-21}{
+As the external scalar particles have no polarisation, the vertex operator is
+$V_{\textrm{scal}}[k] = \int_{0}^{T}d\tau\, e^{i k \cdot x(\tau)}$ in this
+case. Therefore, the amplitude for scalars is related to that of photons by
+setting all $\varepsilon = 0$.
+    %}
+    \PC{2018-08-21 draw the figure}
 \bea
 \mbox{$N$ photon ins. fig}
 %\langle 0|T \phi (x) \phi (y) |0\rangle_{(N)}
@@ -499,7 +519,7 @@ e^{ -\int_0^Td\tau\, {1\over 4} \dot x^2}
 \label{Nprop1}
 \eea
 The expression
-$\#/[(x_a-x_b)^2]^{D/2-1}$ can be obtained by change of variable
+$\#/[(x_a-x_b)^2]^{D/2-1}$ is obtained by change of variable
 $u=1/T$, and evaluating the Gaussian integral
 \[
 \int_{0}^{\infty} \!\frac{dT}{(4\pi T)^{D/2}} e^{-(x_a-x_b)^2/4T}
@@ -513,51 +533,68 @@ $u=1/T$, and evaluating the Gaussian integral
     eq.~(2.11) of ``Spinning particles in the QM and QFT"\rf{CorSch15}.
     }
 \JPE{2018-07-29} {
-    It is probable that in the notes you refer to the
-    authors had made a rescaling of the interval $[0, T]$ to the unit
-    interval, which induces a $1/T$ for the derivative term.
+    It is probable that in \refref{CorSch15} the authors had made a rescaling
+    of the interval $[0, T]$ to the unit interval, which induces a $1/T$ for
+    the derivative term; please recheck, and comment out these two footnotes
+    once you have corrected the text.
     }
 I calculate this by factorizing the Laplacian,
-\JPE{2018-08-21}{\textbf{The $T$ in this equation should be a} $\bar{T}$}
+%\JPE{2018-08-21}{\textbf{The $T$ in this equation should be a} $\bar{T}$}
+%\PC{2018-08-21}{$T$ replaced here by $\bar{T}$}
 \bea
-\Det\!\left(-\frac{1}{4}\frac{\partial^2}{\partial\tau^2}+\frac{B_{ab}}{4T}\right)
+\Det\!\left(-\frac{1}{4}\frac{\partial^2}{\partial\tau^2}+\frac{B_{ab}}{4\bar{T}}\right)
 &=& \Det\!\left[-\frac{1}{4}\frac{\partial^2}{\partial\tau^2}
-            \left(1-(\frac{\partial^2}{\partial\tau^2})^{-1}\frac{B_{ab}}{T}\right)
+            \left(1-(\frac{\partial^2}{\partial\tau^2})^{-1}\frac{B_{ab}}{\bar{T}}\right)
         \right]
 \label{GXgreen1}\\
 &=& \Det\!\left(-\frac{1}{4}\frac{\partial^2}{\partial\tau^2}\right)
     \,
-    \Det\!\left(1-(\frac{\partial^2}{\partial\tau^2})^{-1}\frac{B_{ab}}{T}\right)
+    \Det\!\left(1-(\frac{\partial^2}{\partial\tau^2})^{-1}\frac{B_{ab}}{\bar{T}}\right)
 \,.
 \nnu
 \eea
 where
 $\Det\!\left(-\frac{1}{4}\frac{\partial^2}{\partial\tau^2}\right)
-=(4\pi T)^{-\frac{D}{2}}$.
+=(4\pi \bar{T})^{-\frac{D}{2}}$ is evaluated in \refeq{Schubert12(1.34)}.
     \PC{2018-08-04 to Guopeng:
     Have you gone through exercise of evaluating \refeq{Schubert12(1.34)}?
     If so, write it up.
     }
 As for the
-$\Det\!\left(1-(\frac{\partial^2}{\partial\tau^2})^{-1}\frac{B_{ab}}{T}\right)$,
-it would appear that
-    \JPE{2018-07-29} {
-    This is not correct! See Chris' review eq.~(8.9) (you are missing
-    some delta functions).
+$\Det\!\left(1-(\frac{\partial^2}{\partial\tau^2})^{-1}\frac{B_{ab}}{T}\right)$
+term, it would appear that
+    \JPE{2018-07-29, 2018-08-21} {
+    This is not correct! See eq.~(8.9) in \refref{Schubert01}: you are missing
+    some delta functions. Schubert 1999 literature review\rf{Schubert01} {\em
+    Perturbative Quantum Field Theory in the String-Inspired Formalism},
+    \arXiv{hep-th/0101036}, is a first base for just about any question on the
+    early development of worldline techniques. There you will find section 8 of
+    great use...
     }
-    \GX{2018-08-03} {
-What's the eq.~(8.9) in Chris's review that you refer
-to? I have looked at tree level notes and ``Spinning particles in QM and
-QFT''\rf{CorSch15}, and I find no eq.~(8.9).
-    }
-   \JPE{2018-08-21}{I'm terribly sorry for the confusion! I assumed you were familiar with the review from 1999, \textit{Perturbative Quantum Field Theory in the String-Inspired Formalism.} This is a literature review, that is a first base for just about any question on the early development of worldline techinques. See https://arxiv.org/abs/hep-th/0101036. There you will find section 8 of great use...}
 \[
 -(\frac{\partial^2}{\partial\tau^2})^{-1}\frac{B_{ab}}{T}=\frac{G_{Bab}}{T}
 \,,
 \]
 so that the determinant could be $(1+\frac{G_{Bab}}{T})^{-\frac{D}{2}}$,
 where $G_{Bab}$ is the loop Green's function.
-\JPE{2018-08-21}{The result you need is $\left(\,B_{ab} (\frac{d^{2}}{dt^{2}})^{-1}B_{ab} \,\right)(\tau, \tau^{\prime}) = -G_{Bab}B_{ab}(\tau, \tau^{\prime})$ which is equation (8.9) in the literature review mentioned above. To prove this, insert two complete sets of states: $\left<\tau \left| B_{ab} (\frac{d^{2}}{dt^{2}})^{-1}B_{ab} \right| \tau^{\prime}\right> = \int_{0}^{T}ds \int_{0}^{T} ds^{\prime} \left<\tau \left| B_{ab} \right| s\right>\left<s\left| (\frac{d^{2}}{dt^{2}})^{-1} \right| s^{\prime}\right>\left<s^{\prime}\left| B_{ab} \right| \tau^{\prime}\right>$, write the matrix elements as functions of $\tau$ and $s$, $\tau^{\prime}$ and $s^{\prime}$ and compute the $s$ and $s^{\prime}$ integrals.  }
+    \JPE{2018-08-21}{
+    The result you need is $\left(\,B_{ab} (\frac{d^{2}}{dt^{2}})^{-1}B_{ab}
+    \,\right)(\tau, \tau^{\prime}) = -G_{Bab}B_{ab}(\tau, \tau^{\prime})$ which
+    is eq.~(8.9) in \refref{Schubert01}. To prove this,
+    insert two complete sets of states:
+\[
+    \bra{\tau} B_{ab} (\frac{d^{2}}{dt^{2}})^{-1}B_{ab} \ket{\tau^{\prime}}
+    =
+    \int_{0}^{T}\!\!ds \int_{0}^{T}\!\!ds^{\prime}
+    \bra{\tau} B_{ab} \ket{s}
+    \bra{s} (\frac{d^{2}}{dt^{2}})^{-1} \ket{s^{\prime}}
+    \bra{s^{\prime}} B_{ab} \ket{\tau^{\prime}}
+\,,
+\]
+    write the matrix elements as functions of $\tau$ and
+    $s$, $\tau^{\prime}$ and $s^{\prime}$ and compute the $s$ and $s^{\prime}$
+    integrals.
+    }
 As
 \[
 B_{ab}(\tau_1,\tau_2)
@@ -577,10 +614,21 @@ since
 \,.
 \label{GXgreen2}
 \eea
-\GX{2018-07-29} {
-    I don't know why this is equal to the loop Green's function.
-    }
-    \JPE{2018-08-21}{As you will read in the Literature Review I mentioned above, the incorporation of a photon propagator between two points on a one loop diagram (that turns it into a two loop diagram) can be incorporated into the worldline action at the expense of changing the kinetic term -- see equations (8.2) - (8.4) of the review :-). Finding the Green function and the functional determinant of the new kinetic operator then ensures that the effect of the internal photon is automatically included into all futher worldline calcultions. So the one-loop calculation turns into a two loop calculation upon application of the new Green function. The same happens below for the open line: the incororation of a virtual photon between two points on the line turns a tree level process into a one loop process. The effect of this photon can be absorbed into the worldline calculations by using $\Delta_{(1)}$ instead of the open line's $\Delta$.}
+% \GX{2018-07-29} {I don't know why this is equal to the loop Green's function.}
+    \JPE{2018-08-21}{
+    As discussed in \refref{Schubert01}, the
+    incorporation of a photon propagator between two points on a one loop
+    diagram (that turns it into a two loop diagram) can be incorporated into
+    the worldline action at the expense of changing the kinetic term -- see
+    eqs.~(8.2) - (8.4) of  \refref{Schubert01} :-). Finding the Green's function and
+    the functional determinant of the new kinetic operator then ensures that
+    the effect of the internal photon is automatically included into all further
+    worldline calcultions. So the one-loop calculation turns into a two loop
+    calculation upon application of the new Green's function. The same happens
+    below for the open line: the incorporation of a virtual photon between two
+    points on the line turns a tree level process into a one loop process. The
+    effect of this photon can be absorbed into the worldline calculations by
+    using $\Delta_{(1)}$ instead of the open line's $\Delta$.}
 %\item[2018-07-16 Guopeng]
 \noindent
 {\bf The Ingredient \#2}:
@@ -591,7 +639,7 @@ since
 \,.
 \ee{1loopPhi3GX1}
 %    \JPE{2018-07-29} {
-%    The Green function is defined as the matrix element of the
+%    The Green's function is defined as the matrix element of the
 %    \emph{inverse} of the operator you have written: it's $(...)^{-1}$
 %    that should be between your bra and ket.
 %    }
@@ -602,7 +650,7 @@ since
 %=\bra{\tau_1}-\frac{1}{4T}\frac{\partial^2~}{\partial\tau^2}\ket{\tau_2}
 %+\bra{\tau_1}\frac{B_{ab}}{4\bar{T}}\ket{\tau_2}
 %\]
-%The first term is the Green function with DBC. According to James'
+%The first term is the Green's function with DBC. According to James'
 %calculation, the second term should be
 %\[
 % \frac{[\Delta_{1a}-\Delta_{1b}][\Delta_{a2}-\Delta_{b2}]}{\bar{T}+G_{Bab}}
@@ -614,11 +662,22 @@ since
 %$1+{G_{Bab}}/{\bar{T}}$, which is relevant to the ingredient \#1.
 %    }
 
+%\JPE{2018-08-21}
+For $\bra{\tau_1}\frac{B_{ab}}{4\bar{T}}\ket{\tau_2}$ ,
+the operator $\hat{B}_{ab}$ has matrix elements
+\[
+B_{ab}(\tau_1,\tau_2)
+    := \bra{\tau_1}\hat{B}_{ab}\ket{\tau_2}
+    =[\delta(\tau_a-\tau_1)-\delta(\tau_b-\tau_1]\,
+    [\delta(\tau_a-\tau_2)-\delta(\tau_b-\tau_2)]
+\,.
+\]
+    \JPE{2018-08-21}{Be careful here about definitions of operators and their
+    functional form (matrix elements) with respect to a given basis.
+    Your calculation below doesn't really look right as it stands. }
 %\item[2018-07-29 Guopeng]
-For $\bra{\tau_1}\frac{B_{ab}}{4\bar{T}}\ket{\tau_2}$ , we have
-\JPE{2018-08-21}{Be careful here about definitions of operators and their functional form (matrix elements) with respect to a given basis. For example, the operator $\hat{B}_{ab}$ has matrix elements $$B_{ab}(\tau, \tau^{\prime}) := \left< \tau \left| \hat{B}_{ab} \right| \tau^{\prime}\right> =[\delta(\tau_a-\tau)-\delta(\tau_b-\tau)][\delta(\tau_a-\tau^{\prime})-\delta(\tau_b-\tau^{\prime})]$$. Your calculation below doesn't really look right as it stands. }
 \bea
-&&<\tau_1|B_{ab}(\tau_1,\tau_2)|\tau_2>
+&& B_{ab}(\tau_1,\tau_2) %<\tau_1|B_{ab}(\tau_1,\tau_2)|\tau_2>
 \continue
 &=&<\tau_1|[\delta(\tau_a-\tau_1)-\delta(\tau_b-\tau_1)][\delta(\tau_a-\tau_2)-\delta(\tau_b-\tau_2)]|\tau_2>
 \continue
@@ -642,14 +701,34 @@ $-(\frac{\partial^2}{\partial\tau^2})^{-1}\frac{B_{ab}}{T}=\frac{G_{Bab}}{T}$,
     \JPE{2018-08-21}{This is not the correct result -- see my comment above.}
 so the matrix is diagonal matrix, that's why we have
 \[
-\Det\!\left(1-(\frac{\partial^2}{\partial\tau^2})^{-1}\frac{B_{ab}}{T}\right)=(1+\frac{G_{Bab}}{T})^{-\frac{D}{2}}
+\Det\!\left(1-(\frac{\partial^2}{\partial\tau^2})^{-1}\frac{B_{ab}}{T}\right)
+=(1+\frac{G_{Bab}}{T})^{-\frac{D}{2}}
 \]
-\JPE{2018-08-21}{The result requires application of the $\textrm{Det} = e^{\textrm{Tr} \log}$ formula and a subsequent expansion of the logorithm. This is a main result of the new work that I must write up for you.}
+    \JPE{2018-08-21}{The result requires application of the $\ln\det = \tr\ln$
+    formula, and a subsequent expansion of the logarithm. This is a main result of
+    the new work that I must write up for you.
+    }
 but in terms of the result in James calculation,
 \[
 <\tau_1|B_{ab}(\tau_1,\tau_2)|\tau_2>=\frac{(\Delta_{1a}-\Delta_{1b})(\Delta_{a2}-\Delta_{b2})}{\bar{T}+G_Bab}
 \]
-\JPE{This is not what I'm saying, because you have in fact to calculate (see you equation 13) the matrix elements to all orders in the expansion of the $\left(1 + (\frac{d^{2}}{dt^{2}})^{-1} \frac{B_{ab}}{\bar{T}}\right)^{-1}(\frac{d^{2}}{dt^{2}})^{-1}$. Again, I must write this up and send it to you.}
+\JPE{2018-08-21}{
+This is not what I'm saying, because you have in fact to calculate (see
+your \refeq{XG2beExpanded}) the matrix elements to all orders in the expansion of the
+$\left(1 + (\frac{d^{2}}{dt^{2}})^{-1}
+\frac{B_{ab}}{\bar{T}}\right)^{-1}(\frac{d^{2}}{dt^{2}})^{-1}$. Again, I must
+write this up and send it to you.
+All worldline Green's functions are exact. As
+        commented above, the final result represents an all orders summation
+        of the matrix elements in the expansion of
+        $\bra{\tau_1}
+        [1+(-\frac{1}{4T}\frac{\partial^2~}{\partial\tau^2})^{-1}\frac{B_{ab}}{4\bar{T}}]^{-1}
+        \ket{\tau_2}$.
+        The error is in the claim
+        $\bra{\tau_1}-\frac{B_{ab}}{4\bar{T}} \ket{\tau_2}
+        =\frac{(\Delta_{1a}-\Delta_{1b})(\Delta_{a2}-\Delta_{b2})}{\bar{T}+G_{Bab}}$
+        .}
+
 when $\tau_1\neq\tau_2$, the matrix element should be zero if it is
 diagonal, so the matrix shouldn't be diagonal, then how is the determinant
 to be calculated?
@@ -660,27 +739,11 @@ intermediate calculation questions into footnotes, which you then comment out
 as you correct (or expand upon) the steps in the calculation as you fix them,
 so the resulting blog is the clean, correct calculation.
 
-Also, one always has a space after `,' and `.' but not a space before them.
+% Also, one always has a space after `,' and `.' but not a space before them.
 
 \item[2018-08-01 Predrag]
 to Guopeng: A crucial ingredient in any research is keeping up with
-literature. I did not write down the lecture notes for {\bf 2017-07-12
-Predrag} Morelia Edwardsiad day 7 (above), but presumably the reference
-Ahmadiniaz, Bashir and Schubert\rf{AhBaSc16}
-preceding \refeq{EdwardsScProp} teaches you how to do one-loop vertex
-corrections for scalar QED. Though I have to admit that I do not see
-Edwards' Green's functions with different boundary conditions there. So
-just give a quick read to the two articles, and than maybe we go in depth
-in some calculation in them.
-\JPE{2018-08-21}{
-    Good point. The reason is that there are two ways to turn the line into a
-    loop with a virtual photon:
-    \begin{enumerate}
-	\item Start with the line with $N \geqslant 2$ photons and sew a pair of photons together; this is what the guys did in the article you mention above
-	\item Incorporate the virtual photon loop at the level of the worldline action, which is the appoach I advocate now. Note that the boundary conditions for the open line in both cases (check the paper above) are Dirichlet; the difference lies in the modification to the kinetic operator.
-    \end{enumerate}
-Possibly references listed under {\bf 2017-07-14 Predrag} are also relevant.
-    }
+literature.
 
 \item[2018-08-03 Guopeng]
 In {\em 1loopPhi3.pdf} note the $\Delta_{(1)}$ is defined as in
@@ -689,20 +752,9 @@ If I extract
 $-\frac{1}{4T}\frac{\partial^2}{\partial\tau^2}$,
 and expand the latter term,
     \PC{2018-08-04 to Guopeng:
-    I hope we are not allowed any such ``small deviation''
-    approximations, and that Edwards' Green's functions are exact. But I
-    have not gone through {\em 1loopPhi3.pdf} myself.
+    We are not allowed any such ``small deviation''
+    approximations, as Edwards' Green's functions are exact.
     }
-        \JPE{2018-08-21}{Indeed all worldline Green functions are exact. As
-        commented above, the final result represents an all orders summation
-        of the matrix elements in the expansion of
-        $\bra{\tau_1}
-        [1+(-\frac{1}{4T}\frac{\partial^2~}{\partial\tau^2})^{-1}\frac{B_{ab}}{4\bar{T}}]^{-1}
-        \ket{\tau_2}$.
-        The error is in the claim
-        $\bra{\tau_1}-\frac{B_{ab}}{4\bar{T}} \ket{\tau_2}
-        =\frac{(\Delta_{1a}-\Delta_{1b})(\Delta_{a2}-\Delta_{b2})}{\bar{T}+G_{Bab}}$
-        .}
 I obtain
 \bea
 &&\Delta_{(1)}(\tau_1,\tau_2|\tau_a,\tau_b)
@@ -714,7 +766,7 @@ I obtain
 \continue
 &=& \bra{\tau_1}[(-\frac{1}{4T}\frac{\partial^2~}{\partial\tau^2})^{-1}-\frac{B_{ab}}{4\bar{T}}] \ket{\tau_2}
 \,.
-\label{XG??}
+\label{XG2beExpanded}
 \eea
 Using
 \[
@@ -746,10 +798,10 @@ When we derive the master formula for scalar QED, we assume that the electromagn
 \[
 \epsilon_\mu\epsilon_\nu\longrightarrow\int\frac{d^{D}k}{(2\pi)^{D}}\frac{\eta_{\mu\nu}}{k^2}
 \]
-in master formula. This is obtained from "sew" two photon together.
+in master formula. This is obtained by ``sewing" two photon vertices together.
 
 
-In 1loopPhi3 calculation. The extra term behind the master formula
+In {\em 1loopPhi3.pdf} calculation: The extra term behind the master formula
 \[
 \int_0^T \! d\tau_a\int_0^T \! d\tau_b  \,\frac{\sharp}{[(x(\tau_a)-x(\tau_b))^2]^{D/2-1}}
 \]
