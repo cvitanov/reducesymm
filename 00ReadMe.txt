@@ -8,8 +8,10 @@ GitHub.com/cvitanov/reducesymm/		created 2013-07-07
 bibtex/siminos.bib
        ChaosBook.bib
     DO NOT EDIT here
-    edit only svn repo siminos/bibtex/... then copy to here
-    edit only svn repo dasbuch/bibtex/... then copy to here
+        edit only svn repo siminos/bibtex/... then copy to here
+        edit only svn repo dasbuch/bibtex/... then copy to here
+bibtex/DasGroup.bib, QFT.bib, diffuse.bib, linresp.bib
+    edit here
 
 figs/
     one directory for thesis and blog figures .eps figures
