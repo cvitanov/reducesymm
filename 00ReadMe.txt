@@ -40,6 +40,11 @@ blog/
 QFT/
 bibtex/QFT.bib
     quantum field theory blog
+    Finkelstein notes
+
+UFO/
+bibtex/feigenbaum.bib
+    Feigenbaum blog
 
 presentations/
     beamer talks
