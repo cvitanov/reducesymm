@@ -42,7 +42,7 @@ bibtex/QFT.bib
     quantum field theory blog
     Finkelstein notes
 
-UFO/
+UFO/blog.txt
 bibtex/feigenbaum.bib
     Feigenbaum blog
 
