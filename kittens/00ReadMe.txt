@@ -48,7 +48,7 @@ of siminos/kittens/CL18.tex :
 Processing
 ==========
 
-make sure that you are in repository reducesymm//kittens/
+make sure that you are in repository reducesymm/kittens/
     then:
 pdflatex CL18; bibtex CL18; pdflatex CL18
 
