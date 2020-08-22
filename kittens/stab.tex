@@ -1,0 +1,291 @@
+% siminos/kittens/stab.tex  % called by CL18.tex
+% $Author: predrag $ $Date: 2020-07-27 18:29:43 -0500 (Mon, 27 Jul 2020) $
+
+\section{\Spt\ stability}
+\label{s:stab}
+% was siminos/spatiotemp/stability.tex  % called by blogCats.tex
+
+\renewcommand{\deltaX}{\ensuremath{{\Delta \ssp}}}       %trajectory displacement
+
+Here we address two questions:
+(i) how is the high-dimensional orbit \jacobianM\ $\jMorb$ related
+to the temporal [$d\!\times\!d$] \jacobianM\ $\jMps$?
+and
+(ii) how does one evaluate the orbit \jacobianM\ $\jMorb$?
+
+\subsection{Temporal lattice}
+\label{s:TempLatt}
+% excerpted from \Chapter{cycles}{28sep2019}{Fixed points, and how to get them}
+%
+
+    \PCedit{
+\beq
+\jMorb_\Mm  = \unit-\jMps \otimes \hopMat^{-1}
+\,,
+\ee{dDmnForwardJacobianTMP}
+
+the {temporal Bernoulli}
+condition \refeq{tempBern} is the zero of function
+\beq
+F[\Xx;\Mm[ = \jMorb\Xx+\Mm = 0
+\,,\qquad
+\jMorb = \unit-{s}{\hopMat}^{-1}
+\,,
+\ee{tempBernFix-TMP}
+    }
+
+For a $d$\dmn\ discrete time map $\map$, with the lattice state $\Xx$ of
+discrete period $\cl{}$, every temporal lattice site satisfies
+\beq
+\ssp_{\zeit+1}=\map(\ssp_\zeit)
+\,,
+\ee{CyclePntErr}
+where $\ssp_\zeit$ is a $d$\dmn\ field at lattice site $\zeit$.
+Consider an approximate lattice state, known only to a finite precision
+\beq
+\hat{\Xx}=(\hat{\ssp}_1,\hat{\ssp}_2,\cdots,\hat{\ssp}_\cl{})
+\,,\quad
+\hat{\ssp}_\zeit = \ssp_\zeit+\deltaX_\zeit
+\,,
+\ee{nXdCycleErr}
+where $\ssp_\zeit$ is the exact field at lattice site \zeit.
+Define the error field by
+$F[\hat{\Xx}]=\map(\hat{\Xx})-\hopMat^{-1}\otimes\hat{\Xx}$, an operator
+which compares the forward map of every point in $\hat{\Xx}$ with the
+next point $\hat{\Xx}\otimes\hopMat$.
+
+$F[\hat{\Xx}]$ is a $(\cl{}\!\times\!d)$\dmn\ temporal
+lattice field obtained by stacking a $d$\dmn\ field $\hat{\ssp}_\zeit$ at
+each of the $\cl{}$ lattice sites,
+\beq
+ F[\hat{\Xx}] \, = \, F
+\left (
+\begin{array}{l}
+ \hat{\ssp}_1 \\ \hat{\ssp}_2 \\ \cdots \\ \hat{\ssp}_\cl{}
+\end{array}
+\right )
+=
+\left (
+\begin{array}{l}
+  \hat{\ssp}_1 - \hat{\map}_\cl{} \\ \hat{\ssp}_2 - \hat{\map}_1 \\
+  ~~~\cdots \\ \hat{\ssp}_\cl{} - \hat{\map}_{\cl{}-1}
+\end{array}
+\right )
+\,,\qquad \hat{\map}_\zeit = \map(\hat{\ssp}_\zeit)
+\,,
+\ee{errorVecs1D}
+which measures the misalignment of every finite forward-in-time segment
+$\map(\hat{\ssp})_\zeit$ with the next site $\hat{\ssp}_{\zeit+1}$ on the
+lattice state $\hat{\Xx}$.
+
+By \refeq{CyclePntErr}, the exact lattice state $\Xx$
+% \refeq{nXdCycle}
+is a zero of this vector field, $F[\Xx]=0$. Assuming that the $d$\dmn\
+error vectors $\deltaX_\zeit$ are small in magnitude, and Taylor expanding the
+{one discrete time-step} map $\map$ to linear order around the exact
+solution,
+\[
+\map(\ssp_\zeit + \deltaX_\zeit)
+   = \ssp_{\zeit+1} + \jMps_\zeit \deltaX_\zeit
+    + (\cdots)
+%\,,\qquad \map_\zeit = \map(\ssp_\zeit) = \ssp_{\zeit+1}
+\,,
+\]
+where
+\beq
+[\jMps_\zeit]_{ij} = \frac{\pde \map_i(\ssp_\zeit)}{\pde \ssp_j}
+    \,,\quad
+\zeit
+    = (1,2,\cdots,\cl{})
+    \,,\quad
+i,j
+    \,=\, (1,2,\cdots,d)
+\label{Hill:FntTimeJac}
+\eeq
+one finds that the neigh\-bor\-hood of entire cycle $p$ is
+linearly deformed by the $[\cl{}d\times\cl{}d]$ orbit \jacobianM\
+\beq
+    \deltaX' = \jMorb(\ssp) \, \deltaX
+    \,, \qquad
+\jMorb_{ij}(\ssp)
+  =  \frac{\delta F[\ssp]_i}{\delta \ssp_j}
+\,,
+\ee{stab:hOdes}
+with
+\[
+{\cal J} \,=\,
+1 - \hopMat \jMps
+\,,
+\]
+the one discrete time-step temporal [$d\!\times\!d$] \jacobianM\
+$\jMps$ evaluated on the entire cycle $p$, and $\hopMat$ the {\shiftOp}
+\beq
+\hopMat
+= \left(
+\begin{array}{cccccc}
+%=\begin{bmatrix}
+             0    &       &        &        &   &  \unit\cr
+           \unit  &  0    &        &        &   &  \cr
+                  & \unit &   0    &        &   &  \cr
+                  &       & \unit  &        &  &  \cr
+                  &       &        &   \ddots & 0 &  \cr
+                  &       &        &        & \unit & 0
+%        \end{bmatrix}
+\end{array}
+\right)
+\,,\quad
+\jMps
+= \left(
+\begin{array}{cccccc}
+%=\begin{bmatrix}
+          \jMps_1 &      &        &        &   &  \cr
+                  & \jMps_2 &    &        &   &  \cr
+                  &       &\jMps_3 &      &   &  \cr
+                  &       &        & \ddots & &  \cr
+                  &       &        & & \jMps_{\cl{}-1} &  \cr
+                  &       &        &      &   & \jMps_{\cl{}}
+%         \end{bmatrix}
+\end{array}
+\right)
+\,,
+\ee{shiftMatrix}
+with $\unit$ in the upper right corner assuring periodicity,
+$\hopMat^\cl{}=\unit$.
+
+Consider a $d$-\dmn\ map $\ssp_{\zeit+1}=\map(\ssp_{\zeit})$, where
+$\ssp_{\zeit}=\{\ssp_{\zeit,1},\ssp_{\zeit,2},\dots,\ssp_{\zeit,d}\}$ is
+the state of the system at time $\zeit$. In case at hand, the one time step \jacobianM\
+\beq
+\jMps(\ssp_{\zeit})_{ij}
+=
+\left.\frac{\partial \map(\ssp)_i}{\partial \ssp_{j}}\right|_{\ssp_{i}=\ssp_{i,\zeit}}
+%\,.
+\ee{dDmn1stepJac}
+stretches uniformly, so the \jacobianM\ does not depend on
+the field value $\ssp_{\zeit}$ or time $\zeit$, $\jMps(\ssp_{\zeit}) =
+\jMps$.
+
+For a lattice state $\Xx_p$ with period $\cl{}$, the \jacobianOrb\ is a
+$[\cl{}d\times\cl{}d]$ block matrix
+\beq
+\begin{array}{cc}
+ \\ \\ \jMorb & = \\ \\
+\end{array}
+\left(
+\begin{array}{ccccc}
+\matId & & & & -\jMps \\
+-\jMps & \matId & \\
+& ~~\cdots~~ & \matId \\
+ & & ~~\cdots~~ & \matId \\
+ & & &-\jMps & \matId
+\end{array}
+\right)
+= \unit-\jMps \otimes \hopMat^{-1}
+\,,
+\ee{dDmnForwardJacobian}
+where \matId\ is a $d$-\dmn\ identity matrix, $\jMps$ is the
+one time step $[d\times d]$ \jacobianM\ \refeq{dDmn1stepJac},
+and $\hopMat$ is the $[\cl{}\times\cl{}]$ {\shiftOp} matrix with period $\cl{}$.
+
+To evaluate the {\HillDet} of the \jacobianOrb, expand $\ln \Det \jMorb_p = \Tr \ln \jMorb_p$:
+\bea
+\ln \Det \jMorb_p
+&=& \Tr \ln (\unit-\jMps \otimes \hopMat^{-1}) \continue
+&=& - \sum_{k=1}^{\infty} \frac{\Tr (\jMps \otimes \hopMat^{-1})^k}{k}
+\, .
+\label{dDmnForwardJacobianLnDet}
+\eea
+Note that $(\jMps \otimes \hopMat^{-1})^k = \jMps^k \otimes \hopMat^{-k}$ and
+$\Tr (\jMps^k \otimes \hopMat^{-k})
+= \Tr (\jMps^{\cl{}r} \otimes \unit_{[\cl{}\times\cl{}]}) \delta_{k,\cl{}r}
+= \cl{} \tr (\jMps^{\cl{}r}) \delta_{k,\cl{}r}
+$
+ which is not 0 only when $k$ is a multiple of $\cl{}$.
+\bea
+\ln \Det \jMorb_p
+&=& - \sum_{r=1}^{\infty} \frac{\cl{} \tr (\jMps^{r\cl{}})}{r\cl{}}
+ =  \tr [- \sum_{r=1}^{\infty} \frac{(\jMps^{\cl{}})^r}{r}] \continue
+&=& \tr \ln (\unit - \jMps^{\cl{}})
+ =  \ln \det (\unit - \jMps^{\cl{}})
+\, .
+\label{dDmnForwardJacobianLnDet2}
+\eea
+So the {\HillDet} of the \jacobianOrb\ is $\Det \jMorb = \det (\unit - \jMps^{\cl{p}})$.
+
+\HL{2020-01-21}{
+A possible problem is $\jMorb_p$ could be negative. And here we have the one time step
+ \jacobianM\ instead of a scalar $s$ so I'm not sure if we can expand $\ln (\unit-\jMps \otimes \hopMat^{-1})$
+ as a series in $\jMps \otimes \hopMat^{-1}$...
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Temporal stability}
+
+% ``Hill's formula''
+To summarize, a discretized, temporal lattice \po\ linear stability can
+be computed in two ways - either by computing the
+$[\cl{}d\times\cl{}d]$ {\jacobianOrb} $jMorb$, or by computing $\jMps_p$
+\beq
+\Det \jMorb_\Mm = \det (1-\jMps_\Mm)
+\,,
+\ee{dissipHill}
+where $\jMps_\Mm$ is the $\cl{}$ time-steps $[d\!\times\!d]$ forward-time
+\jacobianM. In the limit of discretization $\cl{}\to\infty$ the left
+hand side is a {\em functional} {\HillDet} of an $\infty$\dmn\ {\em
+operator}. Nevertheless, thanks to the discrete Fourier diagonalization
+of $\jMorb(x)$, \refappe{appe:Fourier}, the {\HillDet} $\Det \jMorb_\Mm$ is easier to compute
+than the ill-posed $\jMps_\Mm$.
+    \PC{2019-10-10}{
+$\jMorb(x)$ is block-diagonalized by the discrete Fourier transform on a
+periodic lattice of three sites.
+Write up next the discrete Fourier evaluation of $\Det \jMorb_p$.
+    }
+    \PC{2019-10-10}{
+Rewrite the derivation of the Hill-\Poincare-Van Vleck stability matrix
+\refeq{HL2DJacobianUpperTriangular} for symplectic / Lagrangian {\jacobianOrb}
+using the {\shiftOp} \refeq{tempStab3cyc:shift}.
+    }
+
+The projection operator on the $k$th Fourier mode is
+\beq
+P_k = \prod_{j\not= k}^{} \frac{\hopMat-\omega_j \unit }
+                           {\omega_k - \omega_j}
+\,.
+\ee{hToN-ProjOp}
+The set of the projection operators is complete,
+\beq
+\sum_k P_k = \unit
+\,,
+\label{compl-ProjOp}
+\eeq
+ and orthonormal
+\beq
+P_k P_j = \delta_{kj} P_k
+ \qquad (\hbox{no sum on} \ k)
+\label{orthon-ProjOp}
+\,.
+\eeq
+[TO BE CONTINUED]
+
+
+\section{\Spt\ lattice}
+\label{s:SptLatt}
+
+In \spt\ settings, $\jMps_p$ can be defined only for finite numbers of
+spatial sites, and it gets funkier and funkier as the spatial direction
+increases (that is why we are able to work only with very small spatial
+domain \KS\ discretizations). But, as shown for the \catlatt\ in
+\refref{CL18}, $\Det {\cal J}_p$ works just fine on any
+\spt\ torus. In particular, for any \twot\ \KS\ discretization.
+
+\PC{2020-05-31} {
+Politi and Torcini\rf{PolTor92} numerical method for finding \twots\ of
+\emph{\spt\ H{\'e}non} is an extension of Biham and Wenzel\rf{afind} for
+a single H{\'e}non map. Any fixed point in Biham-Wenzel fictitious time
+corresponds to a doubly-periodic \spt\ cycle
+$\BravCell{\speriod{}}{\period{}}{\slant{}}$.
+    }
+
+
+\renewcommand{\deltaX}{\ensuremath{{\delta \ssp}}}       %trajectory displacement

@@ -1,0 +1,508 @@
+% siminos/kittens/defsKittens.tex
+% $Author: predrag $ $Date: 2020-07-27 18:29:43 -0500 (Mon, 27 Jul 2020) $
+
+%%%%%%%%%%%%%% CL18 specific %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\fundPip}{fundamental parallelepiped}
+\newcommand{\FundPip}{Fundamental parallelepiped}
+
+%%%%%% Referencing equations etc, Nonlinearity style only %%%%%%%
+\newcommand{\conf}{\ensuremath{x}} %Configuration space coordinate
+\newcommand{\Fu}{\tilde{u}}
+\newcommand{\twot}{periodic orbit} %Predrag experiment 2020-03-18
+\newcommand{\twots}{periodic orbits}
+\newcommand{\twoT}{Periodic orbit}
+\newcommand{\twoTs}{Periodic orbits}
+%\newcommand{\twot}{invariant 2-torus}
+%\newcommand{\twots}{invariant 2-tori}
+%\newcommand{\twoT}{Invariant 2-torus}
+%\newcommand{\twoTs}{Invariant 2-tori}
+\newcommand{\dtor}{invariant $d$-torus} % Predrag, to distinguish from a PO
+\newcommand{\dtors}{invariant $d$-tori}
+\newcommand{\dTor}{Invariant $d$-torus}
+\newcommand{\dTors}{Invariant $d$-tori}
+\newcommand{\templatt}{temporal cat}     % Predrag, experimental
+\newcommand{\tempLatt}{Temporal cat}     % Predrag, experimental
+\newcommand{\spt}{spatiotemporal}
+\newcommand{\Spt}{Spatiotemporal}
+\newcommand{\catlatt}{spatiotemporal cat}     % Predrag, experimental
+\newcommand{\catLatt}{Spatiotemporal cat}     % Predrag, experimental
+%\newcommand{\catlatt}{spatiotemporal cat map}     % Predrag, this cat is no map
+%\newcommand{\catLatt}{Spatiotemporal cat map}     % Predrag, experimental
+%\newcommand{\catlatt}{coupled cat maps lattice}    % Boris
+%\newcommand{\catLatt}{Coupled cat maps lattice}    % Boris
+\newcommand{\bcs}{bc's}
+\newcommand{\PV}{Percival-Vivaldi}
+\newcommand{\AW}{Adler-Weiss}
+\newcommand{\GO}{Gutkin-Osipov}
+\newcommand{\sPe}{screened Poisson equation}
+\newcommand{\SPe}{Screened Poisson equation}
+\newcommand{\zetatop}{\ensuremath{1/\zeta_{\mbox{\footnotesize top}} }}
+\newcommand{\msr}{\ensuremath{\rho}}                % measure
+%\newcommand{\Msr}{{f(}}                 % Boris frequency AKA measure
+\newcommand{\Msr}{{\mu}}                % Predrag, experimental: measure
+\newcommand{\dMsr}{{d\mu}}              % measure infinitesimal
+\newcommand{\SRB}{{\rho_0}}             % natural measure
+\newcommand{\coord}{q}        % configuration space q coordinate, dual to p
+\newcommand{\jMps}{\ensuremath{J}}   % jacobian matrix, phase space/state space
+% \newcommand{\jMps}{\ensuremath{{\bf J}}}  % bold fundamental matrix phase space
+
+%%%%%% Boris definitions
+\newcommand{\Aa}{\ensuremath{\bar{\A}}}
+\newcommand{\A}{\ensuremath{\mathcal{A}}}       % alphabet
+\newcommand{\Ai}{\ensuremath{\mathcal{A}_0}}    % alphabet interior (was inner)
+\newcommand{\Ae}{\ensuremath{\mathcal{A}_1}}    % alphabet exterior (was outer)
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\R}{\ensuremath{\mathcal{R}}}
+\newcommand{\Pol}{\mathcal{P}}                  % Boris
+\newcommand{\gd}{\mathsf{g}}
+% Dirichlet Green's function
+\newcommand{\gp}{\mathsf{g}^0}
+% Periodic Green's function
+%\newcommand{\m}{\ensuremath{\mathsf{m}}}     % Boris
+\newcommand{\m}{\ensuremath{m}}     % Predrag experimental 2016-11-08
+%\newcommand{\q}{\ensuremath{\mathsf{m}}}     % Boris
+\newcommand{\q}{\ensuremath{q}}     % Predrag experimental 2016-11-08
+\newcommand{\Mm}{\ensuremath{\mathsf{M}}}
+%\newcommand{\Xx}{\ensuremath{\mathsf{X}}}      % Boris
+\newcommand{\Xx}{\ensuremath{\mathsf{\Phi}}}      % kittens lattice field
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\naturals}{\mathbb{N}}
+\newcommand{\integers}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Zz}{\ensuremath{\mathbb{Z}^2}}
+%\newcommand{\Det}{\mbox{\rm Det}\,}
+%\newcommand{\ZNT}{\mathbb{Z}^2_{\mbox{\scriptscriptstyle{NT}}}}
+\newcommand{\ZLT}{\mathbb{Z}^2_{\scriptscriptstyle\mathrm{LT}}}
+\newcommand{\MmR}{\Mm_\R}
+\newcommand{\length}{\mathcal{D}}
+\newcommand{\deltaX}{\ensuremath{{\delta x}}}       %trajectory displacement
+%! Undefined control sequence.
+%   \example
+\newcommand{\pde}{\partial}
+\newcommand{\vel}{\ensuremath{v}}   % state space velocity
+\newcommand{\Idg}{\ensuremath{\mathbf{1}}}
+\newcommand{\Cn}[1]{\ensuremath{\textrm{C}_{#1}}}
+\newcommand{\jMorb}{{\ensuremath{\cal \jMps}}}
+\newcommand{\jacobianOrb}{orbit Jacobian matrix}
+\newcommand{\JacobianOrb}{Orbit Jacobian matrix}
+\newcommand{\jacobianOrbs}{orbit Jacobian matrices}
+\newcommand{\JacobianOrbs}{Orbit Jacobian matrices}
+\newcommand{\HillDet}{Hill determinant}
+\newcommand{\ecs}{exact coherent structure}
+\newcommand{\Ecs}{Exact coherent structure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\NBBpost}[2]{\item[#1 Burak] {#2}}
+\newcommand{\PCpost}[2]{\item[#1 Predrag] {#2}}
+\newcommand{\BGpost}[2]{\item[#1 Boris] {#2}}
+\newcommand{\AKSpost}[2]{\item[#1 Adrien] {#2}}
+\newcommand{\RJpost}[2]{\item[#1 Rana] {#2}}
+\newcommand{\LHpost}[2]{\item[#1 Li Han] {#2}}
+\newcommand{\MNGpost}[2]{\item[#1 Matt] {#2}}
+\newcommand{\XDpost}[2]{\item[#1 Xiong] {#2}}
+\newcommand{\HLpost}[2]{\item[#1 Han] {#2}}
+
+\ifboyscout %%%%%%%% DISPLAY COMMENTS IN THE TEXT %%%%%%%%%%%%%%%%%%%%
+            %%%%%%%% turn on labeling of equations on margins %%%%%%%%
+    % also search the text for lines starting with %%  to
+    % locate various internal comments, recent edits etc.
+    \typeout{============ COMMENTED =====}
+  \newcommand{\PublicPrivate}[2]
+    {\marginpar{\color{blue}$\Downarrow$\footnotesize PRIVATE}%
+    {\color{blue}#2}%
+    \marginpar{\color{blue}$\Uparrow$\footnotesize PRIVATE}}
+  \newcommand{\PC}[2]% {$\footnotemark\footnotetext{Predrag #1: #2}$}
+                     {\begin{quote}\PCedit{[#1 Predrag] \small #2}\end{quote}}
+  \newcommand{\PCedit}[1]{{\color{magenta}#1}}
+  \newcommand{\HL}[2]%{$\footnotemark\footnotetext{Han: #1}$}
+                     {\begin{quote}\HLedit{[#1 Han] \small #2}\end{quote}}
+  \newcommand{\HLedit}[1]{{\color{blue}#1}}
+  \newcommand{\BG}[2]% {$\footnotemark\footnotetext{Boris #1: #2}$}
+                     {\begin{quote}\BGedit{[#1 Boris] \small #2}\end{quote}}
+  \newcommand{\BGedit}[1]{{\color{red}#1}}
+  \newcommand{\AKS}[2]{$\footnotemark\footnotetext{Adrien #1: #2}$}
+  \newcommand{\AKSedit}[1]{{\color{green}#1}}
+  \newcommand{\RJ}[2]%{$\footnotemark\footnotetext{Rana #1: #2}$}
+                     {\begin{quote}\RJedit{[#1 Rana] \small #2}\end{quote}}
+  \newcommand{\RJedit}[1]{{\color{green}#1}}
+  \newcommand{\MNG}[2]{$\footnotemark\footnotetext{Matt #1: #2}$}
+  \newcommand{\MNGedit}[1]{{\color{red}#1}}
+  \newcommand{\LH}[2]%{$\footnotemark\footnotetext{Rana #1: #2}$}
+                     {\begin{quote}\LHedit{[#1 Li] \small #2}\end{quote}}
+  \newcommand{\LHedit}[1]{{\color{green}#1}}
+  \newcommand{\Private}[1]{{\color{blue}#1}}
+  \newcommand{\toCB}{\marginpar{\footnotesize 2CB}}  % to compare with ChaosBook
+  \newcommand{\inCB}{\marginpar{\footnotesize now in CB}} % entered in ChaosBook
+  \newcommand{\CBlibrary}[1]
+             {\href{http://ChaosBook.org/library/#1.pdf} { (click here)}}
+\else % drop comments
+      % do not turn on labeling of equations on margins
+  \typeout{============ UNCOMMENTED =====}
+  \newcommand{\PublicPrivate}[2]{#1}
+  \newcommand{\PC}[2]{}{}
+  \newcommand{\PCedit}[1]{#1}
+  \newcommand{\HL}[2]{}
+  \newcommand{\HLedit}[1]{#1}
+  \newcommand{\BG}[2]{}{}
+  \newcommand{\BGedit}[1]{#1}
+  \newcommand{\AKS}[2]{}{}
+  \newcommand{\AKSedit}[1]{#1}
+  \newcommand{\RJ}[2]{}{}
+  \newcommand{\RJedit}[1]{#1}
+  \newcommand{\LH}[2]{}{}
+  \newcommand{\LHedit}[1]{#1}
+  \newcommand{\Private}[1]{}
+  \newcommand{\toCB}{}
+  \newcommand{\inCB}{}
+  \newcommand{\CBlibrary}[1]{}
+\fi  %%%%%%%%%%%% END OF ON/OFF COMMENTS SWITCH %%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%% set up submission, hyperlinked %%%%%%%%%%%
+\ifsubmission % keep homepage flexible:
+    \newcommand{\wwwcb}[1]{{\tt ChaosBook.org#1}}
+    \newcommand{\weblink}[1]{{\tt #1}}
+    \newcommand{\HREF}[2]{{#2}}
+    \newcommand{\arXiv}[1]{ {\tt arXiv:#1}}
+\else  %% hyperlinked pdf
+    \newcommand{\wwwcb}[1]{
+                  {\tt \href{http://ChaosBook.org#1}
+              {ChaosBook.org#1}}}
+    \newcommand{\weblink}[1]{{\tt \href{http://#1}{#1}}}
+    \newcommand{\HREF}[2]{{\href{#1}{#2}}}
+    \newcommand{\arXiv}[1]{
+              {\tt \href{http://arXiv.org/abs/#1}{arXiv:#1}}}
+\fi
+
+%%%%%%%%%%%%%%% EQUATIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\continue}{\nonumber \\ }
+\newcommand{\nnu}{\nonumber}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\ee}[1] {\label{#1} \end{equation}}
+\newcommand{\bea}{\begin{eqnarray}}
+\newcommand{\ceq}{\nonumber \\ & & }
+\newcommand{\eea}{\end{eqnarray}}
+\newcommand{\barr}{\begin{array}}
+\newcommand{\earr}{\end{array}}
+
+%%%%%%%%%%%%%%% REFERENCING EQUATIONS ETC, Nonlinearity style only %%%%%%%
+\newcommand{\rf}     [1] {~\cite{#1}}
+\newcommand{\refref} [1] {\cite{#1}}
+\newcommand{\refRef} [1] {\cite{#1}}
+\newcommand{\refrefs}[1] {\cite{#1}}
+\newcommand{\refRefs}[1] {\cite{#1}}
+\newcommand{\refeq}  [1] {(\ref{#1})}
+            % in amstex, \eqref is predefined and better than \refeq
+\newcommand{\refeqs} [2]{(\ref{#1}--\ref{#2})}
+\newcommand{\reffig} [1] {figure~\ref{#1}}
+\newcommand{\reffigs} [2] {figures~\ref{#1} and~\ref{#2}}
+\newcommand{\refFig} [1] {Figure~\ref{#1}}
+\newcommand{\refFigs} [2] {Figures~\ref{#1} and~\ref{#2}}
+\newcommand{\reftab} [1] {table~\ref{#1}}
+\newcommand{\refTab} [1] {Table~\ref{#1}}
+\newcommand{\reftabs}[2] {tables~\ref{#1} and~\ref{#2}}
+\newcommand{\refsect}[1] {section~\ref{#1}}
+\newcommand{\refsects}[2] {sections~\ref{#1} and \ref{#2}}
+\newcommand{\refSect}[1] {Section~\ref{#1}}
+\newcommand{\refSects}[2] {Sections~\ref{#1} and \ref{#2}}
+\newcommand{\refsecttosect}[2] {Sections~\ref{#1} to~\ref{#2}}
+\newcommand{\refSecttosect}[2] {Sections~\ref{#1} to~\ref{#2}}
+\newcommand{\refappe}[1] {\ref{#1}} % Nonlinearity only
+\newcommand{\refAppe}[1] {\ref{#1}} % Nonlinearity only
+%\newcommand{\refappe}[1] {appendix~\ref{#1}}
+%\newcommand{\refappes}[2] {appendices~\ref{#1} and~\ref{#2}}
+%\newcommand{\refAppe}[1] {Appendix~\ref{#1}}
+\newcommand{\refpage}[1] {page~\pageref{#1}}
+%\newcommand{\refexam}[1] {example~\ref{#1}}
+\newcommand{\refExam}[1] {Example~\ref{#1}}
+
+%%%%%%%%%% periods: %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\period}[1]{{\ensuremath{T_{#1}}}}         %continuous cycle period
+\newcommand{\cl}[1]{{\ensuremath{n_{#1}}}}   % discrete length of a cycle, Predrag
+%\newcommand{\cl}[1]{|#1|}  % the length of a periodic orbit, Ronnie
+\newcommand{\speriod}[1]{{\ensuremath{L_{#1}}}}  %spatial period
+\newcommand{\slant}[1]{{\ensuremath{S_{#1}}}}  %relative shift
+\newcommand{\LTS}[3]{{\ensuremath{[\speriod{#1}\!\times\!\period{#2}]_\slant{#3}}}}
+\newcommand{\BravCell}[3]{{\ensuremath{[#1\!\times\!#2]_{#3}}}}
+
+%%%%%%%%%%%%%%% ChaosBook Abbreviations %%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\statesp}{state space}
+\newcommand{\Statesp}{State space}
+\newcommand{\stateDsp}{state-space}
+\newcommand{\StateDsp}{State-space}
+%%%%%% BORIS convention start %%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\statesp}{phase space}
+\renewcommand{\Statesp}{Phase space}
+\renewcommand{\stateDsp}{phase-space}
+\renewcommand{\StateDsp}{Phase-space}
+%%%%%% BORIS convention end   %%%%%%%%%%%%%%%
+\newcommand{\fixedpnt}{fixed point}
+\newcommand{\Fixedpnt}{fixed point}
+\newcommand{\jacobian}{Jacobian}        % determinant
+% \newcommand{\jacobianM}{fundamental matrix} % no known standard name?
+% \newcommand{\jacobianMs}{fundamental matrices}  %
+% \newcommand{\JacobianM}{Fundamental matrix} %
+% \newcommand{\JacobianMs}{Fundamental matrices}  %
+\newcommand{\jacobianM}{Jacobian matrix}  % back to Predrag's name 20oct2009
+\newcommand{\jacobianMs}{Jacobian matrices}   % matrices
+\newcommand{\JacobianM}{Jacobian matrix} %
+\newcommand{\JacobianMs}{Jacobian matrices}  %
+\newcommand{\FloquetM}{Floquet matrix} % specialized to periodic orb
+\newcommand{\FloquetMs}{Floquet matrices}  %
+% \newcommand{\stabmat}{matrix of variations}   % Arnold, says Vattay
+\newcommand{\stabmat}{stability matrix}     % stability matrix, velocity gradients
+\newcommand{\Stabmat}{Stability matrix}     % Stability matrix
+\newcommand{\stabmats}{stability matrices}
+\newcommand{\monodromyM}{monodromy matrix} % monodromy matrix, Poincare cut
+\newcommand{\MonodromyM}{Monodromy matrix} % monodromy matrix, Poincare cut
+\newcommand{\FPoper}{Perron-Frobenius oper\-ator} % Pesin's ordering
+\newcommand{\dzeta}{dyn\-am\-ic\-al zeta func\-tion}
+\newcommand{\Dzeta}{Dyn\-am\-ic\-al zeta func\-tion}
+\newcommand{\tzeta}{top\-o\-lo\-gi\-cal zeta func\-tion}
+\newcommand{\Tzeta}{Top\-o\-lo\-gi\-cal zeta func\-tion}
+%\newcommand{\tzeta}{Artin-Mazur zeta func\-tion} %alternative to topological
+\newcommand{\Gt}{Gutz\-willer trace formula}
+\newcommand{\Fd}{spec\-tral det\-er\-min\-ant}
+%\newcommand{\fd}{spec\-tral det\-er\-min\-ant} %in many articles
+\newcommand{\FD}{Spec\-tral det\-er\-min\-ant}
+\newcommand{\cycForm}{cycle averaging formula}
+\newcommand{\CycForm}{Cycle averaging formula}
+\newcommand{\pdes}{partial differential equations}
+\newcommand{\Pdes}{Partial differential equations}
+\newcommand{\dof}{dof}         % Hamiltonian deegree of freedom
+% \newcommand{\dof}{deegree of freedom}
+\newcommand{\nws}{non--wandering set}
+\newcommand{\NWS}{\ensuremath{\Omega}}     % symbol for the non--wandering set
+\newcommand{\MarkGraph}{Transition graph} % following Yorke
+\newcommand{\markGraph}{transition graph} % following Yorke
+% \newcommand{\MarkGraph}{Markov graph}
+\newcommand{\admissible}{admissible}
+\newcommand{\Admissible}{Admissible}
+\newcommand{\inadmissible}{inadmissible}
+% \newcommand{\obser}{\ensuremath{a}} % CBook: an observable from statespace to R^n
+\newcommand{\obser}{\ensuremath{A}} % Boris: an observable from phase space to R^n
+
+\newcommand\map{f}                  % other people like \phi's etc
+\newcommand{\ExpaEig}{\ensuremath{\Lambda}}
+\newcommand{\Lyap}{\ensuremath{\lambda}}            %Lyapunov exponent
+\newcommand{\jEigvec}[1][]{\ensuremath{{\bf e}^{(#1)}}} % right jacobiam eigenvector
+\newcommand{\Det}{\mbox{\rm Det}\,}
+\newcommand{\mod}{\mbox{\rm mod}\,}
+\newcommand\xInit{{\ssp_0}}        %initial x
+\newcommand{\cycle}[1]{{\ensuremath{\overline{#1}}}}
+\newcommand{\block}[1]{\ensuremath{#1}} % PC 07sep2008: conflict with beamer
+\newcommand{\brick}{block}
+\newcommand{\Brick}{Block}
+\newcommand{\prune}[1]{\ensuremath{\_{#1}\_}}        % fits into math env.
+\newcommand{\biinf}[2]{\ensuremath{\cdots#1.#2\cdots}}
+\newcommand{\rctngl}[2]{\ensuremath{[#1.#2]}}
+\newcommand{\Spast}{\ensuremath{S^\textrm{-}}}       % past itenerary
+\newcommand{\Sfuture}{\ensuremath{S^\textrm{\scriptsize +}}} % future itenerary
+\newcommand{\Sbiinf}{\ensuremath{S}}             % biinf. itenerary
+\newcommand{\Ssym}[1]{{\ensuremath{m_{#1}}}}    % Boris
+% \newcommand{\Ssym}[1]{{\ensuremath{s_{#1}}}}  % ChaosBook
+\newcommand{\AdmItnr}{\Sigma}      % set of admissible itineraries
+\newcommand{\action}{W}                 % PC 07jan2018
+% \newcommand{\action}{S}               % Boris
+%\newcommand{\genF}{F}                  % Li and Tomsovic generating function
+%\newcommand{\genF}{F}                  % Li and Tomsovic generating function
+\newcommand{\genF}{L}                   % McKay generating function
+\newcommand{\hopMat}{\mathbf{\sigma}} % Dec 2012 experimental
+\newcommand{\hop}{\sigma} % Dec 2012 experimental
+\newcommand{\shiftOp}{shift operator}  % was \stepOp
+\newcommand{\ShiftOp}{Shift operator}
+\newcommand{\Laplacian}{\square}
+
+%%%%%%%%%%%%%%% Lorentz gas section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\flow[2]{{f^{#1}(#2)}}
+\newcommand\hflow[2]{{\hat{f}^{#1}(#2)}}
+\newcommand\hx{\hat \ssp}
+
+%%%%%%%%%%%%%%% relative periodic orbits: %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\po}{periodic orbit}
+\newcommand{\Po}{Periodic orbit}
+\newcommand{\rpo}{rela\-ti\-ve periodic orbit}
+\newcommand{\Rpo}{Rela\-ti\-ve periodic orbit}
+\newcommand{\ppo}{pre-periodic orbit}
+\newcommand{\Ppo}{Pre-periodic orbit}
+\newcommand{\eqv}{equi\-lib\-rium}
+\newcommand{\Eqv}{Equi\-lib\-rium}
+\newcommand{\eqva}{equi\-lib\-ria}
+\newcommand{\Eqva}{Equi\-lib\-ria}
+\newcommand{\reqv}{rela\-ti\-ve equi\-lib\-rium}
+%   \newcommand{\reqv}{travelling wave}
+\newcommand{\Reqv}{Rela\-ti\-ve equi\-lib\-rium}
+%   \newcommand{\Reqv}{travelling wave}
+\newcommand{\reqva}{rela\-ti\-ve equi\-lib\-ria}
+\newcommand{\Reqva}{Rela\-ti\-ve equi\-lib\-ria}
+\newcommand{\equilibrium}{equi\-lib\-rium}
+\newcommand{\equilibria}{equi\-lib\-ria}
+\newcommand{\Equilibria}{Equi\-lib\-ria}
+% \newcommand{\equilibrium}{steady state}
+% \newcommand{\equilibria}{steady states}
+% \newcommand{\Equilibria}{Steady states}
+
+
+%%%%%%%%%%%%%%% SECTIONS, SLICES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\expct}    [1]{\langle {#1} \rangle}
+\newcommand{\spaceAver}[1]{\langle {#1} \rangle}
+%\newcommand{\expct}    [1]{\left\langle {#1} \right\rangle}
+%\newcommand{\spaceAver}[1]{\left\langle {#1} \right\rangle}
+\newcommand{\timeAver} [1]{\overline{#1}}
+\newcommand{\norm}[1]{\left\Arrowvert \, #1 \, \right\Arrowvert}
+\newcommand{\pS}{\ensuremath{{\cal M}}}          % symbol for state space
+%\newcommand{\ssp}{\ensuremath{x}}               % state space point
+\newcommand{\ssp}{\ensuremath{\phi}}             % kittens lattice site field
+\newcommand{\Poincare}{Poincar\'e }
+\newcommand{\PoincSec}{Poincar\'e section}
+% \newcommand{\equivariantsp}{equivariant {\statesp}} % full state space
+% \newcommand{\Equivariantsp}{Equivariant {\statesp}}
+% \newcommand{\reducedsp}{orbit space}
+% \newcommand{\Reducedsp}{Orbit space}
+\newcommand{\reducedsp}{reduced state space}
+\newcommand{\Reducedsp}{Reduced state space}
+\newcommand{\fixedsp}{fixed-point subspace}
+\newcommand{\Fixedsp}{Fixed-point subspace}
+\newcommand{\mslices}{method of slices}
+\newcommand{\Mslices}{Method of slices}
+\newcommand{\mframes}{method of moving frames}
+\newcommand{\Mframes}{Method of moving frames}
+\newcommand{\templates}{templates} % {slice-fixing point} % {reference state}
+\newcommand{\movframe}{moving frame}
+\newcommand{\movFrame}{Moving frame}
+\newcommand{\comovframe}{comoving frame}
+\newcommand{\comovFrame}{Comoving frame}
+\newcommand{\mconn}{method of \comovframe s}
+\newcommand{\Mconn}{Method of \comovframe s}
+\newcommand{\fFslice}{first Fourier mode slice}
+\newcommand{\FFslice}{First Fourier mode slice}
+\newcommand{\poincBord}{section border}
+\newcommand{\PoincBord}{Section border}
+% \newcommand{\poincBord}{\PoincSec\ border}
+% \newcommand{\PoincBord}{\PoincSec\ border}
+% \newcommand{\poincBord}{border of transversality}
+\newcommand{\template}{template} % {slice-fixing point} % {reference state}
+\newcommand{\pSRed}{\ensuremath{\hat{\cal M}}} % reduced state space Jan 2012
+%\newcommand{\pSRed}{\ensuremath{\bar{\cal M}}} % reduced state space
+\newcommand{\sspRed}{\ensuremath{\hat{\ssp}}}    % reduced state space point Jan 2012
+% \newcommand{\sspRed}{\ensuremath{y}}    % reduced state space point, experiment
+% \newcommand{\sspRed}{\ensuremath{\bar{x}}}    % reduced state space point
+\newcommand{\csspRed}{\ensuremath{\hat{u}}}      % Symmetry reduced complex state space point
+\newcommand{\velRed}{\ensuremath{\hat{\vel}}}    % ES reduced state space velocity Jan 2012
+% \newcommand{\velRed}{\ensuremath{\bar{v}}}    % PC reduced state space velocity
+% \newcommand{\velRed}{\ensuremath{u}}    % ES reduced state space velocity
+\newcommand{\MvarRed}{\ensuremath{\hat{\Mvar}}}  %Reduced stability matrix
+\newcommand{\velRel}{\ensuremath{c}}    % relative state or phase velocity
+\newcommand{\phaseVel}{phase velocity}      % pipe slicing
+\newcommand{\phaseVels}{phase velocities}   % pipe slicing
+\newcommand{\PhaseVel}{Phase velocity}      % pipe slicing
+\newcommand{\PhaseVels}{Phase velocities}   % pipe slicing
+
+\newcommand{\slicep}{{\ensuremath{\sspRed'}}}   % slice-fixing point Jan 2012
+% \newcommand{\slicep}{{\ensuremath{y'}}}   % slice-fixing point, experimental
+% \newcommand{\slicep}{\ensuremath{\ssp'}}   % slice-fixing point
+%\newcommand{\sliceTan}[1]{\ensuremath{t_{#1}(y')}}    % tangent at slice-fixing, experimental
+\newcommand{\sliceTan}[1]{\ensuremath{t'_{#1}}}    % group orbit tangent at slice-fixing
+\newcommand{\groupTan}{\ensuremath{t}}    % group orbit tangent
+
+\newcommand{\zeit}{\ensuremath{t}}  %time variable Ashley
+\newcommand{\sspSing}{\ensuremath{\ssp^\ast}} 	% inflection point
+\newcommand{\sspRSing}{\ensuremath{\sspRed^\ast}} 	% inflection point, reduced space
+
+\newcommand{\dual}[1]{{#1}^\dag}
+% \newcommand{\dual}[1]{{#1}^\ast}
+% \newcommand{\transp}[1]{\bar{#1}}
+% \newcommand{\transp}[1]{{#1}{}^T}
+\newcommand{\transp}[1]{{#1}{}^\top}
+
+%%%%%%%%%%%%%%% Group theory %%%%%%%%%%%%%%%%%%%%%%
+%\newcommand{\Group}{\ensuremath{\Gamma}}    % Siminos Lie group
+\newcommand{\Group}{\ensuremath{G}}         % Predrag Lie or discrete group
+\newcommand{\LieEl}{\ensuremath{g}}  % Predrag group element
+%\newcommand{\Lg}{\mathfrak{a}}             % Siminos Lie algebra generator
+\newcommand{\Lg}{\ensuremath{\mathbf{T}}}   % Predrag Lie algebra generator
+\newcommand{\gSpace}{\ensuremath{{\bf \phi}}}   % MA group rotation parameters
+% \newcommand{\gSpace}{\ensuremath{{\bf \theta}}}   % PC group rotation parameters
+\newcommand{\matId}{\ensuremath{{\bf 1}}}       % matrix identity
+\newcommand{\unit}{\mathsf{1}}
+
+%%%%%%%% Siminos macros %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\Rls}[1]{\ensuremath{\mathbb{R}^{#1}}}
+\newcommand{\ii}{\ensuremath{\mathrm{i}}} % sqrt{-1}
+\newcommand{\Un}[1]{\ensuremath{\textrm{U}(#1)}}         % in DasBuch
+\newcommand{\SUn}[1]{\ensuremath{\textrm{SU}(#1)}}         % in DasBuch
+%\newcommand{\On}[1]{\ensuremath{\mathbf{O}(#1)}}
+\newcommand{\On}[1]{\ensuremath{\textrm{O}(#1)}}
+%\newcommand{\SOn}[1]{\ensuremath{\mathbf{SO}(#1)}} % in Siminos thesis
+\newcommand{\SOn}[1]{\ensuremath{\textrm{SO}(#1)}}         % in DasBuch
+\newcommand{\Spn}[1]{\ensuremath{\textrm{Sp}(#1)}}         % in DasBuch
+%\newcommand{\Dn}[1]{\ensuremath{\mathbf{D}_{#1}}    % in Siminos thesis
+\newcommand{\Dn}[1]{\ensuremath{\textrm{D}_{#1}}}              % in DasBuch
+\newcommand{\Zn}[1]{\ensuremath{\textrm{C}_{#1}}}              % in DasBuch
+\newcommand{\Ztwo}{\ensuremath{\textrm{C}_2}}                % in DasBuch
+%\newcommand{\Refl}{\ensuremath{\kappa}}            % Siminos uses R for rotations.
+\newcommand{\Refl}{\ensuremath{\sigma}}            % in DasBuch
+\newcommand{\Rot}[1]{\ensuremath{C^{#1}}}           % in DasBuch, e.g. C^{1/3}
+%\newcommand{\Rot}[1]{\ensuremath{R(#1)}}           % Siminos uses R for rotations.
+%\newcommand{\Drot}{\ensuremath{\zeta}}
+%\newcommand{\Lg}{\mathcal{G}}
+%\newcommand{\stab}[1]{\ensuremath{\Sigma_{#1}}}
+\newcommand{\stab}[1]{\ensuremath{G_{#1}}}
+%\newcommand{\Shift}{\ensuremath{\tau}}             % in DasBuch
+%\newcommand{\shift}{\ensuremath{d}}                 % in DasBuch
+\newcommand{\shift}[1]{\ensuremath{\sigma_{#1}}}
+\newcommand{\Fix}[1]{\ensuremath{\mathrm{Fix}\left(#1\right)}}
+
+%%%%%%%%%%%%%% ks.tex specific %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\KS}{Ku\-ra\-mo\-to-Siva\-shin\-sky}
+\newcommand{\KSe}{Ku\-ra\-mo\-to-Siva\-shin\-sky equation}
+\newcommand{\pCf}{plane Couette flow}
+\newcommand{\PCf}{Plane Couette flow}
+\newcommand{\dmn}{-dimensional}  %  experimental 220ct2009
+%\newcommand{\dmn}{\ensuremath{d}}  %  n-dimensional
+%\newcommand{\dmn}{\ensuremath{\!-\!d}}  %  n-dimensional
+\newcommand{\expctE}{\ensuremath{E}}    % E space averaged
+\newcommand{\tildeL}{\ensuremath{\tilde{L}}}
+\newcommand{\EQV}[1]{\ensuremath{EQ_{#1}}} %experimental
+% \newcommand{\EQV}[1]{\ensuremath{q_{#1}}} %ChaosBook
+% \newcommand{\EQV}[1]{\ensuremath{E_{#1}}} %Ruslan
+% E_0: u = 0 - trivial equilibrium
+% E_1,E_2,E_3, for 1,2,3-wave equilibria
+\newcommand{\REQV}[2]{\ensuremath{TW_{#1#2}}} % #1 is + or -
+% TW_1^{+,-} for 1-wave traveling waves (positive and negative velocity).
+\newcommand{\PO}[1]{\ensuremath{PO_{#1}}}
+% PO_{period to 2-4 significant digits} - periodic orbits
+\newcommand{\RPO}[1]{\ensuremath{\overline{rpo}_{#1}}} % Xiang experimental
+%\newcommand{\RPO}[1]{\ensuremath{RPO_{#1}}}
+% RPO_{period to 2-4 significant digits} - relative PO.  We use ^{+,-}
+% to distinguish between members of a reflection-symmetric pair.
+% \newcommand{\PPO}[1]{\ensuremath{PPO_{#1}}}
+\newcommand{\PPO}[1]{\ensuremath{\overline{ppo}_{#1}}} % Xiang experimental
+% Gibson likes:
+\newcommand{\tEQ}{\ensuremath{{EQ}}}
+
+%%%%%%%%%%%%%%  Abbreviations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% APS (American Physiology Society, it seems) style:
+%%%     Latin or foreign words or phrases should be roman, not italic.
+%%%     Insert a `hard' space after full points
+%%%                                         that do not end sentences.
+
+\newcommand{\etc}{{etc.}}       % APS
+%\newcommand{\etal}{{\em et al.}}    % etal in italics, APS too
+\newcommand{\ie}{{i.e.}}        % APS
+\newcommand{\cf}{{\em cf.\ }}     % APS
+\newcommand{\eg}{{e.g.\ }}        % APS, OUP, hard space '\eg\ NextWord'
+% \newcommand{\etc}{{\em etc.}}     % etcetera in italics
+% \newcommand{\ie}{{that is}}       % use Latin or English?  Decide later.
+% \newcommand{\cf}{{cf.}}
+% \newcommand{\eg}{{\it e.g.,\ }}   % Wirzba 2sep2001
+
+
+%%%%%%%%%%%% REMOVE THIS EVENTUALLY %%%%%%%%%%%
+%
+\newcommand{\fastTrackExam}[1]{}        %ChaosBook stuff
+\newcommand{\refexam}[1]{}              %ChaosBook stuff
+\newcommand{\refrem}[1]{}               %ChaosBook stuff
+\newcommand{\ChapterEnd}{}               %ChaosBook stuff
