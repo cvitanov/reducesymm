@@ -60,6 +60,10 @@ diffuse/
 bibtex/diffuse.bib
     Tingnan Zhang deterministic diffusion paper
 
+kittens/
+spatiotemporal/
+    Sidney Williams Fall 2020 project
+
 linresp/
 bibtex/linresp.bib
     McInroe paper
