@@ -220,34 +220,18 @@ translate the field by one lattice spacing in the spatial, temporal
 direction, respectively. The inverses $\hopMat_{i}^{-1}$ translate the
 field in the opposite directions.
 
-A periodic field $\Xx = \{\ssp_z\}$ over the 2\dmn\ \spt\ lattice
-$z=(n,\zeit)\in\integers^2$ takes values in the
-$\speriod{}\period{}$\dmn\ unit hyper-cube
-$\Xx\in[0,1)^{\speriod{}\period{}}$, where $\speriod{}$ is the `spatial',
-and $\period{}$ the `temporal' lattice period.
-    \PC{2020-02-23} { %Woods\rf{Woods12}:
-A 2D field $\ssp_{n \zeit}$ is periodic with period
-$\BravCell{\speriod{}}{\period{}}{0}$, if the
-following equalities hold for all integers $n$, $\zeit$:
-\beq
-\ssp_{n\zeit} = \ssp_{n + \speriod{}, \zeit}
-                 = \ssp_{n, \zeit+ \period{}}
-\,,
-\ee{Woods12p6}
-where \speriod{} and \period{} are positive integers.
-    }
-The \brick\ $\Mm=\{\Ssym{n\zeit}\}$ is composed from alphabet
+The \brick\ $\Mm=\{\Ssym{n\zeit}\}$ is composed of symbols from alphabet
 \beq
 \Ssym{n\zeit}\in\A
 \,,\qquad
  \A  =
  \{\underline{3},\underline{2},\underline{1},0,\cdots,2{s}\!-\!2,2{s}\!-\!1\}
-\,.
-%\ee{2dCatLattAlph}
+\,,
 \label{catLatt2d}
 \eeq
-The  symbol $\underline{\Ssym{n\zeit}}$  here denotes $\Ssym{n\zeit}$ with the
+where symbol $\underline{\Ssym{}}{}_{n\zeit}$ denotes $\Ssym{n\zeit}$ with the
 negative sign, \ie, `$\underline{3}$' stands for symbol `$-3$'.
+
 In explicit computational examples,
 we always set ${s}$ to
 \beq
@@ -312,15 +296,43 @@ acts on the lattice state \Xx\ by the usual matrix multiplication. We
 illustrate how that works by working out  in detail an example in
 \refappe{s:catLattRel3x2}.
 
+    \PCedit{ %2020-09-05
+\subsection{Symmetries of the integer lattice}
+\label{s:lattSymm}
+
+The \catlatt\ equation \refeq{catLatt} is \emph{equi}variant under
+the discrete spacetime translations;
+the space $\sigma_{x}$ and time $\sigma_{y}$ reflections $n\to -n$,
+$t\to-t$;
+as well as under $\sigma_{a}$ exchange $n\longleftrightarrow t$ of space
+and time.
+{\catLatt} thus has the point-group symmetries of the square lattice:
+rotations by $\pi/2$, and reflection across $x$-axis, $y$-axis, and
+diagonals $a$ and $b$,
+\beq
+C_{4v} = \Dn{4} = \{
+E, C_{4z}^+, C_{4z}^-, C_{2z},
+\sigma_{y}, \sigma_{x},
+\sigma_{a},\sigma_{b},
+\}
+\,.
+\ee{eq:C4v}
+In the international crystallographic notation, the square lattice space
+group of symmetries is referred to as $p4mm$\rf{Dresselhaus07}.
+    }
+
 
 \subsection{Bravais lattices}
 \label{s:BravaisLatt}
 
 For the 1\dmn\ temporal lattices considered so far,
 a lattice is tiled by repeats of a \brick\ of temporal period \period{}.
-In higher dimensions the repertoire of tilings is described by
-Bravais lattices.
-A 2\dmn\ \emph{Bravais lattice} $\Lambda$ is an infinite array of points
+    \PCedit{ %2020-09-05
+For a $d$\dmn\ integer lattice $\integers^d$, a $d$-periodic
+sublattice that tiles the spacetime is called a
+\emph{Bravais lattice}.
+    }
+A 2\dmn\ {Bravais lattice} $\Lambda$ is an infinite array of points
 \beq
 \Lambda = \{n_1 \mathbf{a}_1 + n_2 \mathbf{a}_2\,|\,n_i \in \mathbb{Z}\}
 \,,
@@ -334,13 +346,6 @@ where $\{n_{1},n_{2}\}$ are any integers, and
 $(\mathbf{a}_{1},\mathbf{a}_{2})$ is a pair of $\integers^2$ integer
 lattice vectors that defines a \emph{Bravais cell}, a tile that tiles the
 Bravais lattice.
-A \emph{lattice state} $\Xx({z})$ is a Bravais lattice $\Lambda$ {\em
-\twot} if it satisfies
-\beq
-\Xx({z} + {R}) = \Xx({z})
-% \,, \quad
-\ee{dDprimePO}
-for all  Bravais lattice translations ${R} \in \Lambda$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % figSrc/han/Mathematica/HLBravaisLattice.nb
@@ -359,8 +364,10 @@ for all  Bravais lattice translations ${R} \in \Lambda$.
     basis vector $\mathbf{a}_1=(3,0)$ and the (blue) basis vector
     $\mathbf{a}_2=(1,2)$ form a $\LTS{}{}{}=\BravCell{3}{2}{1}$ Bravais
     cell. The intersections (red points) of the black dashed lines form
-    the Bravais lattice $\Lambda$, \ie, the tiles on which the field \Xx\
-    is periodic.
+    the Bravais lattice $\Lambda$.
+        \PCedit{ %2020-09-05
+    DROPPED ``\ie, the tiles on which the field \Xx\ is periodic.''
+        }
 % dropped \reffig{fig:HLReciprocalLattice}\'(b)
 }
 \end{figure}
@@ -368,8 +375,13 @@ for all  Bravais lattice translations ${R} \in \Lambda$.
 
 A given Bravais lattice $\Lambda$  can be tiled by any of the infinity of
 equivalent tiles, each defined by a different pair of basis vectors
-$(\mathbf{a}_{1},\mathbf{a}_{2})$. Each such family contains a unique
-Bravais cell of the {Hermite normal form}\rf{Cohen93}, which, for a
+$(\mathbf{a}_{1},\mathbf{a}_{2})$.
+    \PC{2020-09-05}{
+Explain Bravais {\em lattice} invariance under \SLn{2}{\integers} Bravais cell
+mappings, give literature reference (to modular group?).
+    }
+Each such family contains a unique
+Bravais cell of the \emph{Hermite normal form}\rf{Cohen93}, which, for a
 2\dmn\ square lattice, can be chosen to have the first basis vector
 pointing in the spatial direction\rf{Lind96}
 \beq
@@ -379,20 +391,33 @@ pointing in the spatial direction\rf{Lind96}
   \end{array}\right)
   \,,\qquad
 \mathbf{a}_2=\left(\begin{array}{c}
-  \slant{}\\
+  \tilt{}\\
   \period{}
   \end{array}\right)
   \,,
 \ee{Hermite2d}
 where $\speriod{}$, $\period{}$ are respectively the spatial, temporal
-lattice periods, and the `slant' $0\leq\slant{}<\speriod{}$ imposes the
-relative-periodic `shift' boundary condition. We label Bravais cell
-\refeq{Hermite2d} and the corresponding Bravais lattice
-$\Lambda$ by \LTS{}{}{}. An example is the $\BravCell{3}{2}{1}$ Bravais
-lattice is shown in \reffig{fig:BravaisLatt}.
+lattice periods, and the `tilt'\rf{OKKH99} $0\leq\tilt{}<\speriod{}$ imposes the
+relative-periodic `shift' {\bcs}\rf{ChaosBook}
+(in the integer lattices literature these are also
+referred to as
+\emph{`helical'}\rf{LHCLL06} vs. \emph{`toroidal'}\rf{IzOgCh02};
+\emph{`twisted'} and
+\emph{`twisting factor'}\rf{LHCLL06};
+\emph{`screw'}
+{\bcs}).
+We label Bravais cell \refeq{Hermite2d} and the corresponding Bravais
+lattice $\Lambda$ by \LTS{}{}{}. An example is the $\BravCell{3}{2}{1}$
+Bravais lattice is shown in \reffig{fig:BravaisLatt}.
 
-\subsection{Prime \twots}
+\PC{2020-06-16 Predrag}{
+The number of Bravais lattices is\rf{Lind96}
+    }
+
+
+\subsection{Prime Bravais lattices}
 \label{s:primeLatt}
+% PC{2020-09-05}{ This section was called ``{\em Prime \twots}'' }
 
 It might be possible to tile a given Bravais lattice $\Lambda$
 by a finer lattice $\Lambda_p$. Lattice $\Lambda_p$, defined
@@ -404,7 +429,7 @@ by a Bravais cell
   \end{array}\right)
   \,,\qquad
 \mathbf{a}^p_{2}=\left(\begin{array}{c}
-  \slant{}_{p}\\
+  \tilt{}_{p}\\
   \period{p}
   \end{array}\right)
 \,,
@@ -443,67 +468,124 @@ observe that a prime tile
 \)
 tiles the larger tile only if larger tile's width
 $\speriod{}$ is a multiple of $\speriod{p}$, the height
-$\period{}$ is a multiple of $\period{p}$, and the two tile `slants'
+$\period{}$ is a multiple of $\period{p}$, and the two tile `tilts'
 satisfy
 \[ %beq
-\mathbf{a}_2 = {m} \mathbf{a}^p_{1} + \frac{\period{}}{\period{p}} \mathbf{a}^p_{2}
+\mathbf{a}_2 = {m}\,\mathbf{a}^p_{1} + \frac{\period{}}{\period{p}} \mathbf{a}^p_{2}
 \quad\rightarrow\quad
-\slant{} = {m} \speriod{p} + \frac{\period{}}{\period{p}} \slant{p}
+\tilt{} = {m} \speriod{p} + \frac{\period{}}{\period{p}} \tilt{p}
 \,.
 \] %\ee{primeTiling}
 Hence a prime lattice $\Lambda_p$ tiles the given lattice $\Lambda$ only if
-the area spanned by the two `slanted' basis vectors
+the area spanned by the two `tilted' basis vectors
 \beq
-\mathbf{a}_2\times\mathbf{a}^p_{2}=\slant{}\period{p}-\period{}\slant{p}
+\mathbf{a}_2\times\mathbf{a}^p_{2}=\tilt{}\period{p}-\period{}\tilt{p}
 \ee{primeTiling}
-is a multiple of the prime tile
-area $\speriod{p}\period{p}$.
+is a multiple of the prime tile area $\speriod{p}\period{p}$.
 
-If a given {\twot} over \LTS{}{}{} is not periodic under a subgroup of
-translations \({R}\in\Lambda_p\) on any sublattice $\Lambda_p$, we refer
-to it here as a \emph{prime {\twot}}, a \po\ of minimal periodicity in both
-space and time directions.
-We return to explicit construction of prime \twots\ in \refsect{s:prime}.
-Prime \twots\ are the basic building blocks of
-\tzeta s (see \refsect{s:bernZeta} and \ref{s:tempCatZeta}).
+    \PCedit{ %2016-11-08
+\subsection{Lattice states}
+\label{s:lattState}
 
-So far we have taken care only of the invariance under shifts in time and
-space directions. To correctly define  a {\em prime}
-{\twot}\rf{DasBuchMirror}, we also have take care of invariance of
-\catlatt\ equations \refeq{CatMap2d} under the space $\sigma_{x}$ and
-time $\sigma_{y}$ reflections $n\to -n$, $t\to -t$, as well as under
-$\sigma_{a}$ exchange $n\longleftrightarrow t$ of space and time.
-{\catLatt} thus has the point-group symmetries of the square lattice:
-rotations by $\pi/2$, and reflection across $x$-axis, $y$-axis, and
-diagonals $a$ and $b$,
+A \emph{lattice state} is a set of all field values $\Xx = \{\ssp_z\}$
+over the $d$\dmn\ lattice $z\in\integers^d$ that satisfies the
+\catlatt\ equation \refeq{catLatt}, with all field values constrained to
+$0\leq\ssp_z<1$.
+
+While the {\catlatt} equation \refeq{catLatt} is \emph{equivariant} under
+the integer lattice \emph{space group} $p4mm$ symmetry operations
+\refeq{eq:C4v}, the individual lattice states either have no symmetry at
+all (they are, after all, `turbulent'), or are invariant under subgroups
+of space group $p4mm$.  In what follows we quotient only the translational
+symmetries, and postpone dazzling the captive reader with the full \Dn{4}
+point group reduction to a later, more ponderous publication.
+}
+
+    \PCedit{ %2020-09-05
+Furthermore, inspection of the \templatt\
+\reffig{fig:catCycJacob} suggests that there is a \emph{field symmetry}
+under inversion though the center of the $0\leq\ssp_z<1$ unit interval.
+Indeed, if
+$\Mm=\{\Ssym{n\zeit}\}$, composed of symbols from alphabet
+\refeq{catLatt2d}, corresponds to a 2\dmn\ lattice state
+${\Xx}_{\Mm}=\{\ssp_{n\zeit}\}$, its conjugation symmetry partner
 \beq
-C_{4v} = \Dn{4} = \{
-E, C_{4z}^+, C_{4z}^-, C_{2z},
-\sigma_{y}, \sigma_{x},
-\sigma_{a},\sigma_{b},
-\}
-\,.
-\ee{eq:C4v}
-In the international crystallographic notation, the square lattice space
-group of symmetries is referred to as $p4mm$\rf{Dresselhaus07}.
+\bar{\Mm}=\{\bar{\Ssym{}}_{n\zeit}\}
+\,,\qquad \bar{\Ssym{}}_{n\zeit} =
+2(s-2)-\Ssym{n\zeit}
+\,,
+\ee{Mconjug}
+corresponds to lattice state
+${\bar{\Xx}}_{\bar{\Mm}}=\{1-\ssp_{n\zeit}\}$. So, every lattice state
+either belongs to a conjugate pair
+$\{{\Xx}_{\Mm},\bar{\Xx}_{\bar{\Mm}}\}$, or is self-dual under
+conjugation.
+%  P 2020-09-05 tests: $2s-4-(2{s}\!-\!1)=-3$; $2s-4-(0)=2s-4 \Rightarrow 1$
+}
 
-    \PC{2016-11-08} {
-This needs a rewrite:
-In addition, if $\Mm=\{\Ssym{n\zeit}\}$ is an {\admissible} state, so is its
-conjugation symmetry partner $\bar{\Mm}=\{\bar{m}_{n\zeit}\}$, where
-$\bar{m}_{n\zeit} = s-4-\Ssym{n\zeit}$.
+    \PCedit{ %2020-09-05
+While the action of {\jacobianOrb} $\jMorb$ \refeq{dDCatsT} maps
+fields $\ssp_{n\zeit}$ to values outside the unit interval, such values
+that are then returned back to the  unit interval by integer
+\Ssym{n\zeit}. This `$\integers^1$ lattice action' at every \spt\ lattice site
+is a peculiarity of the coupled Bernoulli and cat map lattice models, not
+a condition that a \spt\ discretization of a generic field theory would
+satisfy, and should never be confused with a discretization of spacetime
+continuum to integer lattice $\integers^d$.
     }
 
-While the {\catlatt} equations are invariant under the point group
-\refeq{eq:C4v}, the individual \catlatt\ \twots\
-either have no symmetry at all (they are, after all, `turbulent'),
-or are invariant
-under subgroups of space group $p4mm$. In what follows we
-% shall use the standard crystallographic methods to describe \catlatt\ in
-% its first Brillouin zone by
-quotient only the translational symmetries, and postpone dazzling the
-captive reader with the full \Dn{4} point group reduction to a later,
-more ponderous publication.
+
+
+    \PCedit{ %2020-09-05
+For brevity, we shall refer to lattice state $\Xx_{\Lambda}$ as a
+\emph{\twot} if it satisfies
+\beq
+\Xx_{\Lambda}({z} + {R}) = \Xx_{\Lambda}({z})
+\ee{dDprimePO}
+for any discrete translation
+\(
+{R} =n_{1}\mathbf{a}_{1}+n_{2}\mathbf{a}_{2}
+\in \Lambda
+\,,
+\)
+where $\{n_{1},n_{2}\}$ are any integers, and
+$(\mathbf{a}_{1},\mathbf{a}_{2})$ is a pair of $\integers^2$ integer
+lattice vectors that define a \emph{Bravais cell}.
+We shall always refer to a Bravais sublattice by its unique
+{Hermite normal form} {Bravais cell} \refeq{Hermite2d}, and
+denote it
+$\Lambda=\LTS{}{}{}$.
+
+
+COMBINE WITH RELATIVE
+we shall refer to 2\dmn\ doubly-periodic \spt\ lattice state $\Xx$
+\beq
+\ssp_{n\zeit} = \ssp_{n + \speriod{}, \zeit}
+                 = \ssp_{n, \zeit+ \period{}}
+    \,,\qquad
+(n,\zeit)\in\integers^2
+\ee{Woods12p6}
+as a \emph{\twot} with periods $(\speriod{},\period{})$.
+
+    }
+
+
+
+    \PCedit{ %2020-09-05
+To correctly define  a {\em prime}
+{\twot}\rf{DasBuchMirror},
+
+If a given {\twot} over \LTS{}{}{} is not periodic under translations
+\({R}\in\Lambda_p\) on any sublattice $\Lambda_p$, we shall refer to it
+here as a \emph{prime {\twot}}, a \po\ of minimal periodicity in all
+spacetime directions.
+We return to explicit construction of prime \twots\ in \refsect{s:prime}.
+Prime \twots\ are the basic building blocks of \tzeta s (see
+\refsect{s:bernZeta} and \ref{s:tempCatZeta}).
+
+    }
+
+
 
 Explicitly verifying the periodic lattice states counting formulas for
 several 2\dmn\ \catlatt\ examples is now in order.
@@ -513,9 +595,9 @@ The simplest examples of {\twots} are
 (ii) space-\eqva\ over $\BravCell{1}{\period{}}{0}$,
 (iii) time-\eqva\  over $\BravCell{\speriod{}}{1}{0}$,
 and
-(iv) time-\reqva\ over $\BravCell{\speriod{}}{1}{\slant{}}$,  $\slant{}\neq0$,
+(iv) time-\reqva\ over $\BravCell{\speriod{}}{1}{\tilt{}}$,  $\tilt{}\neq0$,
 stationary patterns in a time-reference frame\rf{PolTor92} moving with a constant
-velocity $\slant{}/\period{}$.
+velocity $\tilt{}/\period{}$.
 
 \subsubsection{Spacetime \eqva\ over $\BravCell{1}{1}{0}$.}
 \label{s:catLatt1x1}
@@ -558,8 +640,8 @@ and
 the two counts happen to be the same and given by \refeq{catMapN_n-s=3}.
 
 However, already the smallest \emph{relative}-periodic
-\BravCell{\speriod{}}{1}{\slant{}}
-%$\BravCell{\speriod{}}{1}{0}_\slant{}$
+\BravCell{\speriod{}}{1}{\tilt{}}
+%$\BravCell{\speriod{}}{1}{0}_\tilt{}$
 Bravais lattices are new, and perhaps
 surprising.
 
@@ -568,7 +650,7 @@ surprising.
 
 % was in siminos/spatiotemp/chapter/CL18blog.tex
 % \HLpost{2019-08-08}{
-Consider a $\BravCell{2}{1}{1}$ \twot\ with relative (screw) periodic bc's,
+Consider a $\BravCell{2}{1}{1}$ \twot\ with tilt periodic \bcs,
 periodic state
 \(
 \Xx_{\Ssym{1}\Ssym{2}} =
