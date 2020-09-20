@@ -2,138 +2,96 @@
 % $Author: predrag $ $Date: 2020-08-02 22:02:31 -0500 (Sun, 02 Aug 2020) $
 
 
-\section{Introduction}
-\label{s:intro}
+% \section{Introduction}
+% \label{s:intro}
+\bigskip
 
+\noindent
 A temporally chaotic system is exponentially unstable with time: double the
-time, and exponentially more \po s are required to cover its strange
+time, and exponentially more orbits are required to cover its strange
 attractor to the same accuracy. For large spatial extents, the complexity of
 the spatial shapes also needs to be taken into account; double the spatial
-extent in a given direction, and exponentially as many distinct
+extent, and exponentially as many distinct
 {\spt} patterns will be required to describe the repertoire of
 system's shapes to the same accuracy.
 The systems whose temporal and spatial correlations decay sufficiently fast,
 and whose ``physical'' dimension\rf{ginelli-2007-99,DCTSCD14} grows with
 system size, are said to be ``{\spt}ly chaotic.''
 
-    \PC{2019-12-27}{
-\catlatt\ = classical field theory on a $d$\dmn\ hyper-cubic lattice, with an
-``anti-harmonic" rotor at each site, coupled to its nearest neighbors
-    }
-
-    \PC{2019-06-26}{
-Physical picture:
-
-Turbulence everywhere in space, with a range of length scales. Discretize into
-cells, with each cell turbulent, and cells coupled
-to their nearest neighbors\rf{Kaneko83}.
-
-As a function of the strengths of cell-cell couplings, dynamics can exhibit rich
-phase-transitions structure\rf{Kaneko84}. In this paper we chose couplings such
-that the system is fully turbulent.
-
-Explain word ``turbulence" as used here.
-
-Hamiltonan, so symplectic or area preserving, but that is not essential.
-Cite the Hamiltonian zeta function
-from ChaosBook.
-
-The main point: we've been doing it all wrong, and we know that since
-\Poincare.
-In ``explaining'' chaos we talk the talk as though we never moved beyond Newton.
-But people who actually compute solutions do something altogether different,
-closer to Lagrange (and the late 20th century, `spacetime' physics).
-This paper realigns the theory to what we actually {\em do} when
-solving ``chaos'' equations, using nothing more than the well known linear
-algebra.
-    }
-
-coupled map lattice models
-
-the spacetime discretized
-
-dynamics of small-scale spatial structures modeled by discrete time
-maps
-
-single cell dynamics  attached to lattice sites,
-
-coupling to neighboring sites
-
-the Gutkin and Osipov\rf{GutOsi15}
-$d$\dmn\ coupled cat maps lattice
-(``{\catlatt}'' for short, in what follows),
-a {\spt} generalization of the Percival and Vivaldi\rf{PerViv} {linear
-code} for temporal evolution of a single cat map
-
-
-the $d$\dmn\ lattice {\sPe}
+Our goal here is to make this ``{\spt} chaos'' tangible and precise, by
+offering the reader what we believe is its simplest explicit
+manifestation, the {\em \catlatt} (a $d$\dmn\ lattice {\sPe})
 \[
  (\Box -s+2d)\,\ssp_{z}  =  -\Ssym{z}
- \,.
+ \,,
 \]
-
-from the cat maps (modeling the
-Hamiltonian dynamics of individual ``particles'') at sites of a
-$(d\!-\!1)$\dmn\ spatial lattice, linearly coupled to their nearest
+a classical field theory on a $d$\dmn\ hyper-cubic lattice, with an
+``anti-harmonic" rotor $\ssp_{z}$ at each site $z$ coupled to its nearest
 neighbors.
+In contrast to a field theory described by harmonic, Helmholtz equation
+oscillatory solutions, {\catlatt} solutions are hyperbolic and
+`turbulent', in the same sense that in contrast to stable oscillations of
+a harmonic oscillator, Bernoulli coin flip solutions are unstable and
+`chaotic'.
 
-solution $\Xx$ of a global fixed-point condition
-$F[\Xx]=0$ is uniquely encoded by a finite alphabet $d$\dmn\ symbol
-lattice state  $\Mm$
+A physical motivation for the model comes from studies of {\spt}ly
+homogenous turbulent flows: a very rough approximation to such flows is
+discretizing them into {\spt} cells, with each cell turbulent, and cells
+coupled to their nearest neighbors.  {\catLatt} is arguably the simplest
+such model, no closer to physical turbulence than the Lorenz
+model\rf{lorenz} is to weather, but still capturing the essential
+qualitative features of such phenomena.
 
+The main thrust of this paper is, however, much more radical: we've been
+doing `turbulence' all wrong, and we even know that since \Poincare's
+time. In ``explaining'' chaos we talk the talk as though we have never
+moved beyond Newton; there is the initial states of a system, and there
+are differential equations that evolve it forward in time. But when we
+-all of us- do the work we do something altogether different, closer to
+Lagrange (and the 20th century `spacetime' physics). This paper realigns
+the theory to what we actually {\em do} when solving ``chaos'' equations,
+using not much more than linear algebra. In our formulation, there is no
+time, and there are no ``Lyapunov" horizons; every solution $\Xx$ is a
+solution of a \spt\ fixed point condition $F[\Xx]=0$, and there is no
+exponential blowup of anything.
 
+As in what we present here we cross much unfamiliar territory to many, we
+follow Mephistopheles pedagogical dictum ``You have to say it three
+times"\rf{GoetheIstuZim1806}, and we sing our song thrice.
 
-which symbol \brick s are {\admissible}?
-
-The  linearity of the {\catlatt} enables us to
-
-standard crystallographic  methods\rf{Dresselhaus07} and
-integer lattices counting\rf{Barvinok08} enable us to count {\spt}ly finite \brick s,
-and give explicit formulas for the number of \dtor\ solutions
-for \brick s of any size.
-
-Implementing this program requires several tools not standard in
-dynamicist's tool box: lattice Green's functions; lattice determinants.
-
-We start the paper with a reformulation of the 1 degree of freedom
-Bernoulli map, because our goal, the \catlatt\ is nothing but its
-generalization to a mechanical system in spacetimes of arbitrary
-dimension, and thus arguably the simplest possible example of a `chaotic
-field theory'.
-
-\bigskip
-
-The paper is organized as follows:
-For a reader too busy\rf{focusPOT} to read the book\rf{ChaosBook}, we
-start in \refsect{s:coinToss} with a brief course on `chaos' theory,
-disguised as a humble coin toss. The deep insight here is the realization
-that the volume \refeq{detBern0} of the {\jacobianOrb} (the functional
-determinant of the {\fundPip} or the {\HillDet}, see
+The first time, for a reader too busy\rf{focusPOT} to read the
+book\rf{ChaosBook}, we disguise a brief course on chaos theory as
+something everyone understands, a Bernoulli coin toss,
+\refsect{s:coinToss}.
+In \refsect{s:1D1dLatt} we introduce the `\templatt', a lattice
+reformulation of the Bernoulli map.
+The deep insight here is the realization that the volume \refeq{detBern0}
+of the {\em\jacobianOrb} (the {\em\HillDet},
 \reffig{fig:BernCyc2Jacob}, \ref{fig:catCycJacob} and
-\ref{fig:BravaisLatt}), counts the numbers of global solutions for a
-given `law', true at all times and at all spatial positions.
-Before turning to the spatially infinite field theory in
-\refsect{s:catlatt}, it is instructive to motivate our formulation of the
-{\catlatt} by investigating the temporal lattice Bernoulli and cat
-systems (\ie, `\spt\ lattices' with only one site in the spatial
-direction).
-In \refsect{s:catPV} we review the traditional cat map in its usual,
-Hamiltonian formulation,  and \refappe{s:catMapHam} construct an explicit
-generating (\AW) partition of the cat map \statesp.
-In \refsect{s:catLagrange} we introduce the `\templatt', a global lattice
-reformulation of the cat map.
-The \po s theory of cat maps, \refsect{s:tempCatCount}, can be developed in either
-formulation:
-both the Hamiltonian cat map \po s counting (\refappe{s:catHamCount}) and
-the Lagrangian {\templatt} \po s counting (\refsect{s:tempCatCount}) lead
-to the same {\tzeta}, with the two formulations related by {Hill's
-formula} (\refsect{s:HillForm}).
-A reader may skip \refSecttosect{s:catPV}{s:tempCatCount} on the
-first reading, as the paper proper starts with \refsect{s:catlatt}.
+\ref{fig:BravaisLatt}), counts all global solutions of the
+defining equations.
 
-In \refsect{s:catlatt} (after a brief review of the traditional coupled
-map lattices, \refsect{s:CCMs}), we extend the \templatt\ to
-the $d$\dmn\ \catlatt, \refsect{s:dDcatLatt}.
+The second time, as a `\templatt', a 1\dmn\ lattice of rotors that all
+dynamicists understand, \refsect{s:kickRot}.
+In \refsect{s:catPV} we review the traditional cat map in its
+Hamiltonian formulation (relegating to \refappe{s:catMapHam} the explicit
+\AW\ generating partition of the cat map \statesp).
+In \refsect{s:catLagrange} we introduce the `\templatt', a lattice
+reformulation of the cat map.
+The \po s theory of cat maps, \refsect{s:tempCatCount}, can be developed
+in either formulation: both the forward-in-time Hamiltonian cat map \po s
+counting (\refappe{s:catHamCount}) and the Lagrangian {\templatt} \po s
+counting (\refsect{s:tempCatCount}) lead to the same {\tzeta}, with the
+two formulations related by {Hill's formula} (to which we return in
+\refsect{s:HillForm}).
+
+The third time, herding cats all over spacetime, as a field theory
+similar to ones studied by statistical mechanicians and field theorists,
+\refsect{s:catlatt}.
+After a brief review of the traditional coupled map lattices,
+\refsect{s:CCMs}, we extend the \templatt\ to the $d$\dmn\ {\em\spt} cat,
+\refsect{s:catLatt}. The reader who already knows everything can start
+here.
 In \refsect{s:BravaisLatt} we show that the system admits  a natural
 $d$\dmn\ symbolic  code with a finite alphabet, and then study finite
 {\spt} symbol \brick s.
@@ -145,8 +103,13 @@ $d$\dmn\ \catlatt.
 In \refsect{s:catLattShadow}  we use these  results to construct
 sets of {\spt} \twots\ that partially shadow each other.
 
+The key to solution counting problem is the enumeration of \emph{prime}
+{\twots}, with the notion of `prime' different for
+lattices (the coordinate system) and \twots\ (the fields over these
+coordinates, \refsect{s:prime}.
+
 The results are summarized and some open questions discussed in the
 \refsect{s:summary}.
 
-In \refappe{s-SymbDynGloss} we collect the symbolic dynamics definitions
-needed throughout the paper.
+Finally, in \refappe{s-SymbDynGloss} we collect the symbolic dynamics
+definitions used throughout the paper.

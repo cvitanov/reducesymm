@@ -13,6 +13,16 @@ toss}. Starting with a random initial state, the map generates,
 deterministically,  a sequence of tails and heads with the 50-50\%
 probability.
 
+We introduce the model in its conventional, time-evolution dynamical
+formulation, than reformulate it as a lattice `field theory', solved by
+enumeration of all admissible \emph{lattice states}, field configurations that
+satisfy a  global fixed point condition, and use this simple setting to
+motivate (1) the \emph{fundamental fact}: for a given lattice period,
+the {\em \HillDet} of stabilities of
+global solutions counts their number, and (2) the
+{\tzeta} counts their symmetry orbits, with a \emph{prime} lattice state per
+each orbit.
+
 \subsection{Bernoulli map} %Doubling map}
 \label{s:Bernoulli}
 %ChaosBook return to
@@ -147,9 +157,8 @@ N_{\cl{}} = s^{\cl{}} - 1
 
 To motivate our formulation of a \spt\ chaotic field theory to be
 developed below, we now recast the local initial value, time-evolution
-Bernoulli map problem as a \emph{temporal lattice} Bernoulli condition,
-the problem of enumerating and determining all global solutions stripped
-to its bare essentials.
+Bernoulli map problem as a \emph{temporal lattice} fixed point condition,
+the problem of enumerating and determining all global solutions.
 
 `Temporal' here refers to the state (field) $\ssp_\zeit$, and the
 winding number (source) $\Ssym{\zeit}$ taking their values on the lattice
@@ -172,9 +181,12 @@ difference equation
 \,,\qquad  \ssp_{\zeit} \in [0,1)
 \,,
 \ee{1stepDiffEq}
-is now
+takes the matrix form
 \beq
-\left(\unit-{s}\hopMat^{-1}\right)\,\Xx = - \Mm
+\jMorb\,\Xx = - \Mm
+\,,\qquad
+\jMorb = \unit-{s}{\hopMat}^{-1}
+% former \ee{tempBernFix}
 \,,
 \ee{tempBern}
 where the $[\cl{}\!\times\!\cl{}]$ matrix
@@ -224,12 +236,7 @@ F[\Xx] = \jMorb\Xx+\Mm = 0
 with the entire periodic \emph{lattice state} ${\Xx}_{\Mm}$ treated as a
 single fixed \emph{point} $(\ssp_1,\ssp_{2},\cdots,\ssp_{\cl{}})$ in the
 \cl{}\dmn\ unit hyper-cube $\Xx\in[0,1)^\cl{}$, where
-the $[\cl{}\!\times\!\cl{}]$ matrix $\jMorb$ is given by
-\beq
-\jMorb % = - 1/\gd
-         = \unit-{s}{\hopMat}^{-1}
-\,.
-\ee{tempBernFix}
+the $[\cl{}\!\times\!\cl{}]$ matrix $\jMorb$ is given by \refeq{tempBern}.
 
 The
 $F[\Xx]=0$ fixed point condition \refeq{tempFixPoint} is central to the
@@ -250,7 +257,7 @@ an evaluation of the $[\cl{}\!\times\!\cl{}]$ \emph{\jacobianOrb}
 \,.
 \ee{jacobianOrb}
 For the particularly simple, linear case at hand, the {\jacobianOrb}
-\refeq{tempBernFix} is the same for all lattice states of period $\cl{}$.
+\refeq{tempBern} is the same for all lattice states of period $\cl{}$.
 
 \subsection{Fundamental fact} %{Integer lattices}
 \label{s:bernIntLat}
@@ -305,7 +312,7 @@ satisfy the fixed point condition \refeq{tempFixPoint}. Note that this
 The action of {\jacobianOrb}
 $\jMorb$ for the period-2 lattice states (periodic points) of the Bernoulli map of
 \reffig{fig:BernPart}\,(a), suffices to convey the idea. In this
-case, the $[2\!\times\!2]$ {\jacobianOrb} \refeq{tempBernFix}, the unit
+case, the $[2\!\times\!2]$ {\jacobianOrb} \refeq{tempBern}, the unit
 square basis vectors, and their images are
 \beq
 \jMorb =
@@ -333,19 +340,18 @@ in agreement with the periodic orbit count \refeq{noPerPtsBm}.
 
 In general, the basis vectors of the unit hyper-cube $\Xx\in[0,1)^\cl{}$
 point along the \cl{} axes; \jMorb\ maps them into a {\fundPip} basis
-vectors \jEigvec[j], each one given by a column of the {\jacobianOrb}
+vectors \jEigvec[j], each one given by a column of the
+$[\cl{}\!\times\!\cl{}]$ {\jacobianOrb}
 \beq
-\jMorb = (\jEigvec[1]|\jEigvec[2]|\cdots|\jEigvec[\cl{}])
+\jMorb = [\jEigvec[1]\jEigvec[2]\cdots\jEigvec[\cl{}]]
 \,.
 \ee{lattJac}
-The {\HillDet} (`discriminant' or volume of the {\fundPip}) is
+The {\HillDet} (`discriminant', volume of the {\fundPip}) is
 then
 \beq
-\Det \jMorb = \Det(\jEigvec[1]|\jEigvec[2]|\cdots|\jEigvec[\cl{}])
+\Det \jMorb = \Det[\jEigvec[1]\jEigvec[2]\cdots\jEigvec[\cl{}]]
 \,.
 \ee{lattVol}
-For an explicit example, see \refsect{s:catLattRel3x2}.
-
 Note that the unit hypercubes and {\fundPip}s are
 half-open, as indicated by dashed lines in \reffig{fig:BernCyc2Jacob}, so
 that their translates form a partition of the whole space.
@@ -356,7 +362,7 @@ that their translates form a partition of the whole space.
 \label{s:bernCount}
 
 To evaluate the {\HillDet} \refeq{detBern0}, observe that
-from \refeq{tempBernFix} it follows that
+from \refeq{tempBern} it follows that
 \[
 \Det(-\jMorb)=\Det({s}/\hopMat)\Det(\unit- {\hopMat}/{s})
 \,,
@@ -458,6 +464,7 @@ chain rule the period-$\cl{}$ \jacobianM\ would be of form
 $\jMps_\Mm=\prod_{\zeit=1}^{\cl{}}\jMps_\zeit$, so the {\jacobianOrb}
 evaluated on a lattice state $\Xx_\Mm$, and the dynamical, forward in
 time \jacobianM\ are related by
+Hill's formula (see \refsect{s:HillForm}):
 \beq
 |\Det\jMorb_\Mm|=|\det (\unit-\jMps_\Mm)|
 \,.
@@ -560,7 +567,7 @@ is controlled by the \refeq{detDet} prefactor
 1/|\Det\jMorb| = 1/|\det(\unit - \jMps_\Mm)|\,,
 \)
 with the determinant arising from inverting the {\jacobianOrb}
-$\jMorb$ to obtain the Green's function \refeq{tempBernFix}.
+$\jMorb$ to obtain the Green's function \refeq{tempBern}.
 
 This error estimate is deeper than what it might seem at the first
 glance. In fluid dynamics, pattern recognition, neuroscience and other
