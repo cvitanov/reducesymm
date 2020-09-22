@@ -1,5 +1,5 @@
 % siminos/kittens/Bernoulli.tex      pdflatex CL18
-% $Author: predrag $ $Date: 2020-09-20 22:51:09 -0500 (Sun, 20 Sep 2020) $
+% $Author: predrag $ $Date: 2020-09-21 23:51:15 -0500 (Mon, 21 Sep 2020) $
 
 \section{A fair coin toss}
 \label{s:coinToss}
@@ -80,6 +80,8 @@ or `stretching' parameter $s\geq2$,
 \beq
 \ssp_{\zeit+1} \,=\, {s} \ssp_{\zeit}
 \ee{BerStretch}
+that maps state $\ssp_{\zeit}$ into a state in the `extended \statesp',
+outside the unit interval,
 the $(\mbox{mod}\;1)$ operation results in the base-${s}$ Bernoulli
 circle map,
 \renewcommand{\ssp}{\ensuremath{\phi}}             % lattice site field
@@ -235,7 +237,7 @@ F[\Xx] = \jMorb\Xx+\Mm = 0
 \ee{tempFixPoint}
 with the entire periodic \emph{lattice state} ${\Xx}_{\Mm}$ treated as a
 single fixed \emph{point} $(\ssp_1,\ssp_{2},\cdots,\ssp_{\cl{}})$ in the
-\cl{}\dmn\ unit hyper-cube $\Xx\in[0,1)^\cl{}$, where
+\cl{}\dmn\ \statesp\ unit hyper-cube $\Xx\in[0,1)^\cl{}$, where
 the $[\cl{}\!\times\!\cl{}]$ matrix $\jMorb$ is given by \refeq{tempBern}.
 
 The
@@ -262,7 +264,7 @@ For the particularly simple, linear case at hand, the {\jacobianOrb}
 \subsection{Fundamental fact} %{Integer lattices}
 \label{s:bernIntLat}
 
-The {\jacobianOrb} \jMorb\ stretches the unit hyper-cube
+The {\jacobianOrb} \jMorb\ stretches the \statesp\ unit hyper-cube
 $\Xx\in[0,1)^\cl{}$ into the \cl{}\dmn\ {\em \fundPip}, and maps each
 periodic point ${\Xx}_{\Mm}$ into an integer lattice $\integers^\cl{}$
 site, which is then translated by the winding numbers $\Mm$ into the
@@ -314,49 +316,70 @@ $\jMorb$ for the period-2 lattice states (periodic points) of the Bernoulli map 
 \reffig{fig:BernPart}\,(a), suffices to convey the idea. In this
 case, the $[2\!\times\!2]$ {\jacobianOrb} \refeq{tempBern}, the unit
 square basis vectors, and their images are
-\beq
-\jMorb =
+\bea
+\jMorb &=&
  \left(\begin{array}{cc}
   1 & -2 \\
  -2 &  1
  \end{array} \right)
-;\quad
-\Xx_B =
+    \continue
+\Xx^{(B)} &=&
  \left(\begin{array}{c}
  1  \\
  0
  \end{array} \right)
 \;\to\;
-\Xx_{B'} = \jMorb\,\Xx_B =
+\Xx^{(B')} = \jMorb\,\Xx^{(B)} =
  \left(\begin{array}{c}
   1  \\
  -2
  \end{array} \right)
-\cdots\,,
+\,,\quad \cdots
+\nnu
+\eea
+\ie, the columns of the {\jacobianOrb} are the edges of the {\fundPip},
+\beq
+\jMorb = \left(\Xx^{(B')}\Xx^{(D')}\right)
+\,,
 \ee{bernFundPar}
-with the resulting {\fundPip}
-shown in \reffig{fig:BernCyc2Jacob}, and $N_2=|\Det\jMorb|=3$,
+see \reffig{fig:BernCyc2Jacob}, and $N_2=|\Det\jMorb|=3$,
 in agreement with the periodic orbit count \refeq{noPerPtsBm}.
 
-In general, the basis vectors of the unit hyper-cube $\Xx\in[0,1)^\cl{}$
+In general, the unit vectors of the \statesp\ unit hyper-cube $\Xx\in[0,1)^\cl{}$
 point along the \cl{} axes; \jMorb\ maps them into a {\fundPip} basis
-vectors \jEigvec[j], each one given by a column of the
+vectors $\Xx^{(j)}$, each one given by a column of the
 $[\cl{}\!\times\!\cl{}]$ {\jacobianOrb}
 \beq
-\jMorb = [\jEigvec[1]\jEigvec[2]\cdots\jEigvec[\cl{}]]
+\jMorb = \left(\Xx^{(1)}\Xx^{(2)}\cdots\Xx^{(\cl{})}\right)
 \,.
 \ee{lattJac}
-The {\HillDet} (`discriminant', volume of the {\fundPip}) is
+The {\HillDet} (discriminant, volume of the {\fundPip}) is
 then
 \beq
-\Det \jMorb = \Det[\jEigvec[1]\jEigvec[2]\cdots\jEigvec[\cl{}]]
+\Det \jMorb = \Det\left(\Xx^{(1)}\Xx^{(2)}\cdots\Xx^{(\cl{})}\right)
 \,.
 \ee{lattVol}
-Note that the unit hypercubes and {\fundPip}s are
-half-open, as indicated by dashed lines in \reffig{fig:BernCyc2Jacob}, so
-that their translates form a partition of the whole space.
-\refFig{fig:catCycJacob} is another example of a
-{\fundPip}.
+Note that the unit hypercubes and {\fundPip}s are half-open, as indicated
+by dashed lines in \reffig{fig:BernCyc2Jacob}, so that their translates
+form a partition of the extended \statesp\ \refeq{BerStretch}.
+\refFig{fig:catCycJacob} is another example of a {\fundPip}.
+
+Note that in the {temporal lattice} reformulation, the Bernoulli system
+happens to exhibit two unrelated lattices:
+\begin{itemize}
+  \item[(i)]
+In the latticization of a time continuum, one replaces a time-dependent
+field $\ssp(\zeit)$ at time $\zeit\in\reals$ of any dynamical system by a
+discrete set of its values $\ssp_\zeit=\ssp(\zeit\Delta{T})$,
+$\zeit\in\integers$. Here the index $`\zeit'$ is a \emph{coordinate} over
+which the field $\ssp$ lives.
+  \item[(ii)]
+A peculiarity of the Bernoulli system is that the \emph{state}
+$\ssp_{\zeit}$ \refeq{n-tuplingMap} is confined to the unit interval
+$[0,1)$, imparting a lattice structure onto the calculationally
+intermediate, extended \statesp\ \refeq{BerStretch}.
+\end{itemize}
+
 
 \subsection{Counting {temporal Bernoulli} lattice states}
 \label{s:bernCount}
@@ -376,7 +399,7 @@ where $|\Det({s}/\hopMat)|=s^n$. Expand $\ln\Det(\unit- {\hopMat}/{s}) =
 \,,
 \ee{LnDet=TrLn}
 and use
-$\Tr \hopMat^k= \cl{}\delta_{k,r\cl{}}$ 
+$\Tr \hopMat^k= \cl{}\delta_{k,r\cl{}}$
 if $k$ is a multiple of $\cl{}$,
 0 otherwise
 (follows from $\hopMat^\cl{}=\unit$):
