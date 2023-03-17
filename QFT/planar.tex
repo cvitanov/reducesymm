@@ -1,5 +1,4 @@
 % reducesymm/QFT/planar.tex
-% Predrag  switched to github.com               jul  8 2013
 
 \chapter{Planar field theory}
 \label{c-planar}
@@ -28,6 +27,7 @@ that generalize the Steinmann relations.  I still do not know what hit
 me.
 
 \item[2019-12-06 Predrag]
+\phantomsection\label{post:PSSY19}
 Penington, Shenker, Stanford and Yang\rf{PSSY19}
 {\em Replica wormholes and the black hole interior},
 \arXiv{1911.11977}:
@@ -207,8 +207,186 @@ the adjacency matrix A (actually its skew-symmetric version, called Tutte
 matrix) of the oriented graph. A result due to Cayley then shows that the
 Pfaffian is the square root of the determinant of A.
 
-In particular, all planar graphs are Pafaffian, says a very unhelpful 
+In particular, all planar graphs are Pafaffian, says a very unhelpful
 (\HREF{https://en.wikipedia.org/wiki/Pfaffian_orientation} {wiki}).
+
+   \item[2023-03-02 Predrag]
+Notes on `free probability'.
+
+In 1980 I formulated {\em planar field theory}\rf{PlanFieldThe,NPB82};
+the two published papers are
+\HREF{https://cns.gatech.edu/~predrag/papers/preprints.html\#PlanFieldThe} {here}).
+A bosonic field theory an $n$-point Green function is fully symmetric, so its
+symmetry factor is $1/n!$.
+In planar field theory sources $J$ do not commute (they are `free'), and an
+$n$-point Green function is only cyclically symmetric, with symmetry factor
+$1/n$ (as in Ruelle's dynamical zeta function, as periodic orbits
+are generally only cyclically symmetric). I give the Dyson-Schwinger
+equation, e.g. figure 1 of my
+\refref{PlanFieldThe}.
+
+Speicher explains the 1991  work of Voiculescu\rf{Voiculescu91}: ``Free probability theory was
+created by Dan Voiculescu around 1985, motivated by his efforts to
+understand special classes of von Neumann algebras.'' He writes about
+Cvitanovi{\'c}, Lauwers and Scharbach\rf{NPB82} {\em The planar sector of
+field theories}: ``This description of freeness in terms of free
+cumulants is related to the planar approximations in random matrix theory.
+In a sense some aspects of this theory of freeness were anticipated (but
+mostly neglected) in the physics community in the \refref{NPB82} paper.''
+Voiculescu does not seem to cite us at all.
+
+(see also {\bf 2019-12-06} post on \refpage{post:PSSY19})
+
+Laura Foini and Jorge Kurchan\rf{FoiKur19}
+{\em The Eigenstate Thermalization Hypothesis and Out of Time Order Correlators},
+\arXiv{1803.10658} (2019),
+and
+Silvia Pappalardi, Felix Fritzsch and Toma{\v{z}} Prosen\rf{PaFrPr23}
+{\em General eigenstate thermalization via free cumulants in quantum lattice systems},
+\arXiv{2303.00713} (2023)
+emphasize the role that free cumulants play in `eigenstate thermalization'.
+Pappalardi \etal\rf{PaFrPr23} eq.~(S3d) for the 4th cumulant
+\begin{subequations}
+	\begin{align}
+		k_1(A) & = \langle A \rangle\ ,
+		\\
+		\label{k2}
+		k_2(A) & = \langle A^2 \rangle - \langle A \rangle^2\ ,
+		\\
+		k_3(A) & = \langle A^3 \rangle - 3 \langle A \rangle \langle A^2 \rangle +2 \langle A \rangle^3\ ,
+		\\
+		k_4(A) & = \langle A^4 \rangle - 2\langle A^2 \rangle^2 - 4 \langle A \rangle\langle A^3\rangle + 10\langle A \rangle^2\langle A^2 \rangle - 5 \langle A \rangle^4 \ .
+	\end{align}
+\end{subequations}
+differs from ChaosBook
+\HREF{https://chaosbook.org/chapters/ChaosBook.pdf\#equation.T.1.10}{(A20.6)}.
+That is because their formula is for \emph{free} cumulants.
+
+For comparisonm here is the relevant clipping from ChaosBook Appendix A20:
+
+    \begin{quote}
+Moments can be collected into the (exponential) moment-generating function
+\index{moment!-generating function}
+\index{generating!function, exponential}
+\index{exponential!generating function}
+\beq
+\expct{e^{\beta\obser}}
+    = 1 + \sum_{k=1}^\infty \frac{\beta^k}{k!}\expct{\obser^k}
+\,.
+\ee{MomGenFct}
+Why the prefactor $1/k!$ (a Taylor series), and not $1/k$ (a logarithmic
+series), or $1$ (discrete Laplace transform or $Z$-transform)?
+In statistical,
+stochastic and quantum mechanics / quantum field theory applications one
+is solving linear ODEs or PDEs, and their solutions are always
+exponential in form.
+
+Hardly any experiment measures $\obser^k$ for $k>2$
+and raising approximate numbers to high powers is not smart:
+if $|\obser| <1$, $\obser^k$ gets very small very fast, and conversely if
+$|\obser| >1$, $\obser^k$ gets very big. Still, with a bit of hindsight,
+one finds that moments do play a natural,
+fundamental role if folded into
+the \emph{cumulant-generating function}
+\index{cumulant} \index{cumulant!generating function}
+\beq
+\ln \expct{e^{\beta\obser}}
+  = \sum_{k=1}^\infty \frac{\beta^k}{k!}\expct{\obser^k}_c
+\,,
+\ee{MomGenFct1}
+where the subscript $c$ indicates a \emph{cumulant}, or, in statistical
+mechanics and quantum field theory contexts, the `connected Green's
+function'. Were $\expct{\obser^k}=\expct{\obser}^k$, we would have only
+one term in the series \refeq{MomGenFct1},
+\(
+\ln \expct{e^{\beta\obser}}
+  = \ln e^{\beta\expct{\obser}}
+  = \beta\expct{\obser}
+\,,
+\)
+and that would be that. So cumulants $\expct{\obser^k}_c$ measure
+fluctuations about the mean $\expct{\obser}$. Indeed, expanding the
+logarithm of the series \refeq{MomGenFct}, it is easy to check that the
+first cumulant is the {mean}, the second is the {variance},
+\beq
+\expct{\obser^2}_c
+   = \expct{(\obser-\expct{\obser})^2}
+   = \expct{{\obser}^2} - \expct{\obser}^2
+   = \sigma^2
+\,,
+\ee{variance}
+and $\expct{\obser^3}_c$ is the third central moment, or the
+\emph{skewness},
+\index{skewness}
+\beq
+\expct{\obser^3}_c
+   = \expct{(\obser-\expct{\obser})^3}
+   = \expct{{\obser}^3}
+    -3 \expct{\obser^2} \expct{\obser}
+    +2 \expct{\obser}^3
+\,.
+\ee{skewness}
+% The higher cumulants, however, are \emph{not} central moments.
+The fourth cumulant,
+\bea
+\expct{\obser^4}_c
+  &=& \expct{(\obser-\expct{\obser})^4}
+      -3 \expct{(\obser-\expct{\obser})^2}^2
+  \continue
+  &=& \expct{{\obser}^4}
+     -4 \expct{\obser^3} \expct{\obser}
+     -3 \expct{{\obser}^2}^2
+   +12 \expct{\obser^2} \expct{\obser}^2
+    -6 \expct{\obser}^4
+\label{4thCumulant}
+\,,
+\eea
+rewritten in terms of standardized moments, is known as the
+\emph{kurtosis}:
+\index{kurtosis}
+\beq
+\frac{1}{\sigma^4}\expct{\obser^4}_c
+  = \frac{1}{\sigma^4}\expct{(\obser-\expct{\obser})^4} -3
+\,.
+\ee{kurtosis}
+
+The reason why cumulants are preferable to moments is that
+for a normalized Gaussian distribution all cumulants beyond the
+second one vanish, so they are a measure of deviation of statistics
+from Gaussian.
+For a `free' or `Gaussian' field theory the only non-vanishing cumulant
+is the second one; for field theories with interactions the derivatives
+of
+\(
+\ln \expct{\exp(\beta\obser)}
+\)
+ with respect to $\beta$ then yield cumulants, or the
+Burnett coefficients, % \refeq{trans-k},
+or `effective' $n$-point Green's functions or $n$-point correlations.
+    \end{quote}
+
+
+Speicher {\em Free probability (FP) theory and non-crossing partitions},
+S{\'e}minaire Lotharingien de Combinatoire
+\HREF{https://www.emis.de/journals/SLC/wpapers/s39speicher.pdf}
+     {{\bf 39}, B39c} (1997),
+built upon fundamental work of Rota.
+
+Mingo and Speicher\rf{MinSpe17}
+{\em Free Probability and Random Matrices} (2017).
+
+In general, the $n$-th moment is a polynomial in the cumulants $c_1, \cdots ,
+c_n$, but it is very hard to write down a concrete formula for this.
+Nevertheless there is a very nice way to understand the combinatorics
+behind this connection, and this is given by the concept of multiplicative
+functions on the lattice of all partitions.
+
+Introduces zeta function and its inverse, M{\"o}bius function. Has nice
+graphical illustration of 4th cumulant on p.~14; FP is related to my planar
+field theory in which external legs cannot be crossed (but my traces have
+cyclic symmetry).
+
+
 
 
 
