@@ -60,10 +60,6 @@ diffuse/
 bibtex/diffuse.bib
     Tingnan Zhang deterministic diffusion paper
 
-kittens/
-spatiotemporal/
-    Sidney Williams Fall 2020 project
-
 linresp/
 bibtex/linresp.bib
     McInroe paper
@@ -89,6 +85,11 @@ How do you add time-stamp to git modified files?
 
 ----------------------------------------------------------------
 HISTORY:
+
+% kittens/ moved to svn siminos/    2021
+% spatiotemporal/   removed         2021
+%    Sidney Williams Fall 2020 project
+
                         Predrag 2013-07-07
     created gitHub reducesymm repo
 						Predrag Jul 26 2008
