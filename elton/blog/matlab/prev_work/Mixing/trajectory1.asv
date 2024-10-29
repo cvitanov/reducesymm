@@ -1,0 +1,48 @@
+Mx = 48; My = 35; Mz = 25; Nx = 48; Ny = 35; Nz = 48; Nd = 3; a = -1; b = 1;
+Lx = 5.511566058929462; Lz =  2.513274122871834;
+
+N = size(uNB_test,1);
+
+uspec1 = zeros(N/3,1);
+uspec1 = uNB_test(1:N/3,1) + i*uNB_test(1:N/3,2);
+
+uspec2 = zeros(N/3,1);
+uspec2 = uNB_test(N/3+1:2*N/3,1) + i*uNB_test(N/3+1:2*N/3,1);
+
+uspec3 = zeros(N/3,1);
+uspec3 = uNB_test(2*N/3+1:N,1) + i*uNB_test(2*N/3+1:N,2);
+
+x = 1; y = 1; z = 1;
+
+vec = [];
+
+    for my = 0:My-1
+        if my = 0
+         T = 1;
+         Told = 1;
+        elseif my = 1
+         T = y;
+         Tprev = y;
+        else
+         T = 2*y*T - jj;
+         Tprev = T
+         Told = Tprev;
+        end
+        T = cheby(my,y);      %cheby poly of degree my
+        for mx = 0:Mx-1
+            if 0 <= mx & mx <= Mx/2;
+                kx = mx;
+            else
+                kx = mx - Mx;
+            end
+            xterm = exp(2*pi*i*x*kx/Lx);
+            for mz = 0:Mz-1
+                vec = [vec; T*xterm*exp(2*pi*i*z*mz/Lz)];
+            end
+        end
+    end
+    
+u1 = uspec1'*vec;
+u2 = uspec2'*vec;
+u3 = uspec3'*vec;
+u = [u1;u2;u3];

@@ -1,0 +1,209 @@
+#include "mex.h"
+#include <math.h>
+typedef struct 
+{
+    double Lx;
+    double Lz;
+    double *uspc1;
+    double *uspc2;
+    double *uspc3;
+    double *scratch;
+    int Mx;
+    int My;
+    int Mz;
+} SUM_PARMS;
+static void sum_c(double *kk, double *r, SUM_PARMS *p);
+
+void mexFunction(int nlhs, mxArray *plhs[], 
+    int nrhs, const mxArray *prhs[])
+{
+    /* There are supposed to be 3 input items (nrhs = 5), which we do not check, assume it is called correctly */
+    /* Inputs are pointers to: initial(rx,ry,rz) vector, parameters, and usp1,usp2,usp3.  The parameters are:
+       h,np,Lx,Lz,Mx,My,Mz where 
+       h is step-size, np = num.pts, not counting initial pt; the other parameters are used summing. */
+    /* There is one ouput item (nlhs = 1).  It is a 3 by (np+1) matrix */
+    SUM_PARMS sp;
+    double *ptr_r0_vect,*ptr_parms_vect,*ptr_r_matrix;
+    double r[3],k1[3],k2[3],k3[3],k4[3],h,h2,h6;
+    int n,np;
+    
+    /* get r0 ptr that was input */
+    ptr_r0_vect = mxGetPr(prhs[0]);
+    /* get input parms ptr */
+    ptr_parms_vect = mxGetPr(prhs[1]);
+    h = ptr_parms_vect[0];
+    h2 = h*.5;
+    h6 = h/6.0;
+    np = (int)(ptr_parms_vect[1]);
+    sp.Lx = ptr_parms_vect[2];
+    sp.Lz = ptr_parms_vect[3];
+    sp.Mx = (int)(ptr_parms_vect[4]);
+    sp.My = (int)(ptr_parms_vect[5]);
+    sp.Mz = (int)(ptr_parms_vect[6]);
+    /* get v_grid ptr */
+    sp.uspc1 = mxGetPr(prhs[2]);
+    sp.uspc2 = mxGetPr(prhs[3]);
+    sp.uspc3 = mxGetPr(prhs[4]);
+    /* create scratch space for sum function to use */
+    sp.scratch = (double *)malloc((2*sp.Mx*sp.Mz + 2)*sizeof(double)); /* this is for the Kronecker product of xvec and zvec */
+    if (sp.scratch == NULL)
+        mexErrMsgTxt("Not enough memory.");  /* this prints and error exits to command prompt */
+       
+    /* create an output matrix and a pointer to it */
+    plhs[0] = mxCreateDoubleMatrix(3, np+1, mxREAL); /* three rows, np+1 columns */
+    ptr_r_matrix = mxGetPr(plhs[0]);
+    /* put first column to be the initial point */
+    ptr_r_matrix[0] = ptr_r0_vect[0];
+    ptr_r_matrix[1] = ptr_r0_vect[1];
+    ptr_r_matrix[2] = ptr_r0_vect[2];
+    //mexPrintf("j_mult = %d dr[0] = %g\n",ip.j_mult,ip.dr[0]);
+    for(n = 0;n < np;++n)  //np
+    {
+        sum_c(k1,ptr_r_matrix,&sp);  /* returns answer in k1 */
+        r[0] = ptr_r_matrix[0] + h2*k1[0];
+        r[1] = ptr_r_matrix[1] + h2*k1[1];
+        r[2] = ptr_r_matrix[2] + h2*k1[2];
+        
+        sum_c(k2,r,&sp);  /* returns answer in k2 */
+        r[0] = ptr_r_matrix[0] + h2*k2[0];
+        r[1] = ptr_r_matrix[1] + h2*k2[1];
+        r[2] = ptr_r_matrix[2] + h2*k2[2];
+        
+        sum_c(k3,r,&sp);  /* returns answer in k3 */
+        r[0] = ptr_r_matrix[0] + h*k3[0];
+        r[1] = ptr_r_matrix[1] + h*k3[1];
+        r[2] = ptr_r_matrix[2] + h*k3[2];
+    
+        sum_c(k4,r,&sp);  /* returns answer in k4 */
+     
+        ptr_r_matrix[3] = ptr_r_matrix[0] + h6*(k1[0] + 2.0*k2[0] + 2.0*k3[0] + k4[0]);
+        ptr_r_matrix[4] = ptr_r_matrix[1] + h6*(k1[1] + 2.0*k2[1] + 2.0*k3[1] + k4[1]);
+        ptr_r_matrix[5] = ptr_r_matrix[2] + h6*(k1[2] + 2.0*k2[2] + 2.0*k3[2] + k4[2]);
+        ptr_r_matrix += 3; /* move to next column of output matrix */
+    }
+    free(sp.scratch);
+}
+
+void sum_c(double *kk, double *r, SUM_PARMS *p)
+{   /* kk is size-3 array of outputs, r is size-three array of inputs, p is ptr to structure containing needed parameters for interpolation */
+    
+    double x,y,z;
+    int i,j,k;
+    
+    x = r[0];
+    y = r[1]+1;
+    z = r[2];
+    
+    /* Check y. If y outside the box, just return with a fixed vector that runs along the bdry */
+    if (y > 2 || y < 0)
+    {
+        if(y > 2)
+            kk[0] = 1.0; /* run forward at top of box */
+        else
+            kk[0] = -1.0; /* run backwards at bottom of box */            
+        kk[1] = 0.0;
+        kk[2] = 0.0;
+        return;
+    }
+    
+    
+    
+    
+
+    kk[0] = 
+    kk[1] = 
+    kk[2] = 
+}
+    
+#define TWOPI  (6.283185307179586477)
+static void sum_c(double *kk, double *r,SUM_PARMS *p)
+{   /* v_grid is output (3 values), r is input (e values), p is ptr to structure containing needed parameters for summing */
+    double x,y,z,theta,T,T1,T0,sum1,sum2,sum3,v1,v2,v3,xvec_re,xvec_im;
+    double *zvec,*w, *wptr,*zvecptr, *wend;
+    double *u1,*u2,*u3;
+    int Mx,My,Mz,Mx2,mx,my,mz,sizw;
+    
+    Mx = p->Mx;
+    My = p->My;
+    Mz = p->Mz;
+    sizw = 2*Mx*Mz;
+    //w = (double *)malloc((sizw+2)*sizeof(double)); /* this is for the Kronecker product of xvec and zvec */
+    w = p->scratch;
+    zvec = w + (sizw+2 - 2*Mz); /* put zvec at tail end of w, will be overwritten "just in time " */
+    z = r[2]*TWOPI/p->Lz;
+    x = r[0]*TWOPI/p->Lx;
+    y = r[1];
+    zvec[0] = 0.5; /* real part */
+    zvec[1] = 0.0;  /* imaginary part */
+    zvecptr = zvec + 2;
+    for(mz = 1;mz < Mz;++mz)
+    {
+        theta = z*(double)mz;
+        zvecptr[0] = cos(theta); /* real part */
+        zvecptr[1] = sin(theta); /* im part */
+        zvecptr += 2;
+    }
+    Mx2 = Mx/2;
+    /* compute Kron(xvec,zvec), and store the re/im parts in interlaced fashion in w */
+    wptr = w;
+    for(mx = 0;mx < Mx;++mx)
+    {
+        if(mx <= Mx2)
+            theta = x*(double)mx;
+        else
+            theta = x*(double)(mx - Mx);
+        xvec_re = cos(theta);
+        xvec_im = sin(theta);
+        zvecptr = zvec;
+        for(mz = 0;mz < Mz;++mz)
+        {
+            wptr[0] = xvec_re*zvecptr[0] - xvec_im*zvecptr[1]; /*real part */
+            wptr[1] = xvec_re*zvecptr[1] + xvec_im*zvecptr[0]; /* im part */
+            wptr += 2;
+            zvecptr += 2;
+        }
+    }
+            
+    T = 1.0;  /* Chebyshev polys in y */
+    T1 = 1.0;
+    v1 = v2 = v3 = 0.0;
+    u1 = p->uspc1;
+    u2 = p->uspc2;
+    u3 = p->uspc3;
+    wend = w + sizw;
+    for(my = 0; my < My;++my)
+    {
+        sum1 = sum2 = sum3 = 0.0;
+        wptr = w;
+        while(wptr < wend)
+        {
+            sum1 += wptr[0]*u1[0] - wptr[1]*u1[1]; /* the real and im parts are interlaced in all these arrays */
+            u1 += 2;
+            sum2 += wptr[0]*u2[0] - wptr[1]*u2[1]; 
+            u2 += 2;
+            sum3 += wptr[0]*u3[0] - wptr[1]*u3[1]; 
+            u3 += 2;
+            wptr += 2;
+        }
+        v1 += sum1*T;
+        v2 += sum2*T;
+        v3 += sum3*T;
+        /* update Chebyshev poly */
+        if(my == 0)
+            T = y;
+        else
+            T = 2*y*T1 - T0;
+        T0 = T1;
+        T1 = T;
+    }
+    kk[0] = 2*v1 + y;
+    kk[1] = 2*v2;
+    kk[2] = 2*v3;
+    //free(w);
+
+}
+
+    
+    
+    
+    

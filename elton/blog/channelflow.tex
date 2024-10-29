@@ -1,0 +1,102 @@
+\svnkwsave{$RepoFile: elton/blog/channelflow.tex $}
+\svnidlong
+{$HeadURL: svn://zero.physics.gatech.edu/elton/blog/channelflow.tex $}
+{$LastChangedDate: 2013-12-29 14:03:13 -0500 (Sun, 29 Dec 2013) $}
+{$LastChangedRevision: 176 $}
+{$LastChangedBy: predrag $}
+\svnid{$Id: channelflow.tex 176 2013-12-29 19:03:13Z predrag $}
+
+\chapter{Channelflow}
+\label{chap:channelflow}
+$\footnotemark\footnotetext{{\tt \svnkw{RepoFile}}, rev. \svnfilerev:
+ last edit by \svnFullAuthor{\svnfileauthor},
+ \svnfilemonth/\svnfileday/\svnfileyear}$
+
+\section{Lagrangian streamlines}
+\label{sec:streaml}
+
+\noindent {\bf JRE  April 25, 2008}:
+ In order to integrate streamlines of {\pCf}
+and follow the paths of tracer particles, it is first
+necessary to have a numerically accurate \eqv\ $3D$-velocity field.
+
+The starting point for this task is to obtain the previously
+computed FlowField data for a given \eqv, e.g. upper branch,
+lower branch, etc... These are made available at the website
+{\tt Channelflow.org} as is most of the information I am about to
+summarize about FlowFields. Essentially, the FlowField data contains
+a long array of numbers which are the spectral coefficients of the
+expansion of a velocity field $\mathbf{u(x)}$. The form of the
+expansion is
+\begin{equation}
+ \mathbf{u(x)} = \sum_{m_{y}=0}^{M_{y}-1}\sum_{m_{x}=0}^{M_{x}-1}\sum_{m_{z}=0}^{M_{z}-1}
+ {\mathbf{\hat{u}}_{m_{x},m_{y},m_{z}} \bar{T}_{m_{y}}(y)e^{2\pi i(k_{x}x/L_{x} + k_{z}z/L_{z})}
+ + \text{\small{(c.c.)}}}
+\label{eqn:spectralsum}
+ \end{equation}
+
+ The $\mathbf{\hat{u}}$'s are the spectral coefficients
+ - the information stored in a FlowField. The
+ $\bar{T}(y)$'s are Chebyshev polynomials defined on the interval [a,b] (in
+ most cases [-1,1]). The order of the summations, although
+ mathematically irrelevant, reflects the order in which the spectral
+ coefficients are stored as a data array. $z$ is the innermost loop,
+ then $x$, then $y$, and finally the vector component of $\mathbf{u(x)}$
+ is the outermost loop. For a given FlowField the upper bounds on the sums are known
+ from the geometry, and the $k$'s are related to the $m$'s through
+ the following relations:
+ \beq k_{x} = \left \{ \begin{array}{l}
+m_{x} \hspace{20 mm} 0 \leq m_{x} \leq M_{x}/2   \\
+m_{x} - M_{x} \hspace{10 mm} M_{x} < m_{x} < M_{x}  \\
+\end{array}  \right.
+\eeq \beq k_{z} = m_{z} \hspace{10 mm} 0 \leq m_{z} < M_{z}
+\,.
+\eeq
+Hence, with a knowledge of the spectral coefficients we can
+compute $\mathbf{u(x)}$ by evaluating
+this sum at a particular $\bx = (x,y,z)$.
+
+Various internal functions within {\tt Channelflow.org} have been written to
+compute $\bu$ on a set of gridpoints. It is possible, by
+interpolation of the velocity fields on these gridpoint values, to
+integrate a trajectory with great computational speed. However this
+will not be nearly as accurate as evaluating the sum
+\refeq{eqn:spectralsum}, and currently we don't really know whether
+the first method would give a reasonable approximation at all. For
+this reason the current strategy is to evaluate
+\refeq{eqn:spectralsum} to give the exact velocity field at every
+point along a trajectory. Summing over $10^5$ coefficients at every
+step sounds slow and inefficient, and it surely is compared to the
+interpolation method. But luckily it doesn't seem to be \emph{too}
+slow. I have written a function in Matlab that performs this
+computation for a single point in about 0.01 seconds. It is
+certainly possible that this could be made faster. The code has been
+checked to be correct by picking an $(x,y,z)$ coordinate that
+\emph{happens} to lie on a gridpoint value and then comparing the
+result to the value given by the internal {\tt Channelflow.org} functions. If,
+for example, we wanted to compute trajectories for 50 initial points
+for 500 time steps each this would still only take less than 5
+minutes (ignoring the time needed to perform a Runge-Kutta step, or
+whatever).
+
+\subsection{Specifics}
+
+The new {\tt Channelflow.org} function "field2ascii-spectral.cpp" converts the
+spectral coefficients to ascii format, which is readable by Matlab.
+The command \\ ./field2ascii-spectral.x u u-whatev \\ takes in the
+FlowField u.ff and produces the files u-whatev.asc and
+u-whatev-geom.asc. In Matlab, the commands load('u-whatev.asc') and
+load('u-whatev-geom.asc') create vectors containing all of the
+necessary data. The newly written Matlab script "trajectory.m" takes
+this information and performs the sum \refeq{eqn:spectralsum}. (Note
+that all of the hyphens in these file names should actually be
+underscores, I just don't know how to display underscores in LaTEX).
+So I am now basically ready to start playing with tracers.
+
+
+\subsection{OpenMP-parallelize channelflow}
+\subsection{Benchmark channelflow against similar codes}
+
+\subsection{Get channelflow running on cluster (as is)}
+
+Aug 2007: DONE now runs on PACE cluster

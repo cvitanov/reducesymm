@@ -1,0 +1,49 @@
+function trajectory3(u_in,u_geom)
+
+Mx = u_geom(1); My = u_geom(2); Mz = u_geom(3);
+Nd = u_geom(7); Lx = u_geom(8); Lz =  u_geom(9);
+a = u_geom(10); b = u_geom(11);
+
+
+
+N = size(uNB_test2b,1);
+
+uspec1 = zeros(N/3,1);
+uspec1 = uNB_test2b(1:N/3,1) + i*uNB_test2b(1:N/3,2);
+
+uspec2 = zeros(N/3,1);
+uspec2 = uNB_test2b(N/3+1:2*N/3,1) + i*uNB_test2b(N/3+1:2*N/3,1);
+
+uspec3 = zeros(N/3,1);
+uspec3 = uNB_test2b(2*N/3+1:N,1) + i*uNB_test2b(2*N/3+1:N,2);
+
+x = pi/2.28; y = 0; z = pi/5;
+
+zvec = [];
+for mz = 0:Mz-1
+    zvec = [zvec; exp(2*pi*i*mz*z/Lz)];
+end
+
+xvec = [];
+for mx = 0:Mx-1
+    xvec = [xvec; exp(2*pi*i*mx*x/Lx)];
+end
+
+T = zeros(My,1);                    % should generalize to [a,b].
+T(1) = 1;
+T(2) = y;
+for my = 3:My
+    T(my) = 2*y*T(my-1) - T(my-2);
+end
+
+v = kron(xvec,zvec);
+w = kron(T,v);
+
+u1 = 2*real(uspec1'*w);
+u2 = 2*real(uspec2'*w);
+u3 = 2*real(uspec3'*w);
+u = [u1;u2;u3];
+toc
+
+
+

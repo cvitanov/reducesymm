@@ -1,0 +1,131 @@
+% elton/blog/blog.tex     pdflatex blog; bibtex blog
+\input{inclOnly}        % process only the file you are editing
+
+                        %% logical setup, no need to edit %%%%%%%%%%
+                        \newif\ifpaper \newif\ifPDF               %%
+                        \newif\ifOUP \newif\ifboyscout            %%
+                        \newif\ifdasbuch \newif\ifarticle         %%
+                        \newif\ifsolutions                        %%
+                        \dasbuchfalse %% not DasBuch, not QFT lectures %%
+                        \boyscouttrue %% commented, WWW/boyscouts %%
+                        \solutionstrue %% include solutions       %%
+                        \paperfalse\PDFtrue %% hyperlinked        %%
+                        \OUPfalse \articlefalse  %% ChaosBook %%%%%%
+    % Toggle between draft and non-draft versions
+%\boyscoutfalse                 % public, for hyperlinked ChaosBook/projects
+    % Toggle between draft and non-draft
+%\articletrue                   %editing the article (May 2012: nonesuch)
+%\articletrue\boyscoutfalse     % article for submission
+
+\documentclass[letter,10pt,openany]{book}
+
+        \title{
+all mixed up
+% Lagrangian mixing in \pCf %%% Predrag dropped the title 2014/11/07
+        \\\vspace{0.5cm}
+        {\Huge a blog}
+        \\\vspace{1.0cm} {\footnotesize {\tt \svnkw{RepoFile}}, rev. \svnfilerev:
+        last edit by \svnFullAuthor{\svnfileauthor},
+        \svnfilemonth/\svnfileday/\svnfileyear}
+        }\author{
+Mohammad M. Farazmand,
+Adam Fox,
+John R. Elton,
+and Predrag Cvitanovi\'{c}
+%Greg Byrne
+%John F. Gibson,
+%Jonathan Halcrow, and Divakar Viswanath
+    }
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{color}
+\usepackage{url}
+\usepackage{fancyhdr}
+\usepackage{alltt}
+\usepackage{ifthen}
+%\usepackage{../inputs/svn-multi} %experimenting with svn integration
+\usepackage{svn-multi}
+
+\usepackage[latin1]{inputenc}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage[pdftex]{graphicx}
+\usepackage{array}
+\usepackage[pdftex,colorlinks]{hyperref}
+\graphicspath{{../figs/}{../Fig/}}  %% directories with  graphics files
+\hypersetup{
+   pdfauthor=Mohammad M. Farazmand,
+   pdfkeywords=Lagrangian mixing,
+   pdftitle=Lagrangian mixing in NS flows}
+
+\svnidlong          %experimenting with svn-multi
+{$HeadURL: svn://zero.physics.gatech.edu/elton/blog/blog.tex $}
+{$LastChangedDate: 2018-07-25 16:48:43 -0400 (Wed, 25 Jul 2018) $}
+{$LastChangedRevision: 545 $}
+{$LastChangedBy: predrag $}
+\svnid{$Id: blog.tex 545 2018-07-25 20:48:43Z predrag $}
+\svnkwsave{$RepoFile: elton/blog/blog.tex $}
+\svnRegisterAuthor{jhalcrow}{Jonathan Halcrow}
+\svnRegisterAuthor{elton}{John R. Elton}
+\svnRegisterAuthor{predrag}{Predrag Cvitanovi{\'c}}
+\svnRegisterAuthor{gibson}{John F. Gibson}
+\svnRegisterAuthor{viswanath}{Divakar Viswanath}
+\svnRegisterAuthor{afox33}{Adam Fox}
+\svnRegisterAuthor{mfarazmand3}{Mohammad M. Farazmand}
+
+%% If the svn information should be also placed
+%% on the chapter page use:
+%\fancypagestyle{plain}{%
+%% otherwise use
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[er,ol]{\slshape \leftmark }
+\fancyfoot[er,ol]{rev. \svnrev\ (\svnfileauthor, rev. \svnfilerev )}
+%\fancyfoot[or]{\svnyear -\svnmonth -\svnday \
+%\svnhour :\svnminute }
+\fancyfoot[el,or]{\svnfilemonth/\svnfileday/\svnfileyear}
+%}
+%URL \svnmainurl \svnkw{URL}
+%Filename \svnmainfilename
+
+\input ../inputs/layout         %% page layout, ChaosBook environments
+\input{../inputs/editsDasbuch}  %% editing comments, DasBuch style
+\input{../inputs/def} %% do not edit; update from dasbuch/book/inputs/def.te
+\input{../inputs/contrib}       %% contributr bylines, DasBuch style
+\input{../inputs/defsElton}
+
+
+\begin{document}
+
+\maketitle
+
+\thispagestyle{empty}
+%\setcounter{page}{1}
+\tableofcontents
+
+\include{adjoint}
+
+\include{proforma}
+
+\include{lit}
+\include{EltonBlog}
+
+  \renewcommand{\ssp}{x}            %state space point
+  \renewcommand\xInit{{x_0}}        %initial x
+  \renewcommand\velField[1]{{u(#1)}}    %Eulerian statespace velocity field
+  \renewcommand{\deltaX}{{\delta x}}    %trajectory displacement
+
+\include{strategy}
+\include{channelflow}
+\include{ChaosBook}
+
+  \renewcommand{\ssp}{a}            %state space point
+  \renewcommand\xInit{{a_0}}        %initial x
+  \renewcommand{\deltaX}{{\delta a}}    %trajectory displacement
+  \renewcommand\velField[1]{{F(#1)}}    %Gibson statespace velocity field
+\include{KStori}
+\include{AdamBlog}
+\bibliographystyle{unsrt} %prsty} %apsrev} %plain}
+\bibliography{../bibtex/elton}
+
+\end{document}

@@ -1,0 +1,329 @@
+\svnkwsave{$RepoFile: elton/blog/ChaosBook.tex $}
+\svnidlong{$HeadURL: svn://zero.physics.gatech.edu/elton/blog/ChaosBook.tex $}
+{$LastChangedDate: 2014-11-17 19:43:32 -0500 (Mon, 17 Nov 2014) $}
+{$LastChangedRevision: 212 $} {$LastChangedBy: mfarazmand3 $}
+\svnid{$Id: ChaosBook.tex 212 2014-11-18 00:43:32Z mfarazmand3 $}
+
+\chapter{Snippets for/from ChaosBook}
+\label{chap:ChaosBook}
+
+\begin{description}
+
+\item[2014-11-16 Predrag] I have created this chapter to collect
+    all your ChaosBook.org notes in one place.
+
+Get the dasbuch/book/chapter/*.tex source
+code, you can just clip and paste formulas to here.
+
+I never refer to a chapter by it's current number,
+as chapter numbers change from edition to edition - latter on (years
+hence) trying to figure out what ``Chapter 17'' is can be quite
+confusing. Internally, each chapter is kept track off by its file name,
+for example, in this blog ``stability'' refers to  \refchap{c-stability} {\em
+Local stability}.
+
+\end{description}
+
+%%-------------------------------------------------------
+%%-----   Cycle stability
+\section{Chapter: Cycle stability}
+\label{c-invariants}\noindent dasbuch/book/chapter/invariants.tex
+\begin{description}
+
+\item[2014-11-16 Predrag]
+Always plot ...
+
+\end{description}
+
+%%%%%%%%%%%%%%%%%% EXERCISES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\exercise{A limit cycle with analytic Floquet exponent.}{
+	  \label{exer:ExactLyap}
+\index{stability!exact}
+There are only two examples of nonlinear flows for which the
+Floquet multipliers can be evaluated analytically.
+Both are cheats.
+One example is the $2$\dmn\ flow
+\bea
+        \dot{q}  &=&  ~p + q(1-q^2-p^2)
+		\continue
+        \dot{p}  &=&  -q + p(1-q^2-p^2)
+        \nnu
+\,.
+\eea %{eqBE4} %{eqCV4}
+Determine all periodic solutions of this flow, and determine
+analytically their Floquet exponents.
+Hint: go to polar coordinates
+$(q,p) = (r \cos \theta,r \sin \theta)$.
+%    \label{eqBE5} %{eqCV5}
+%
+\hfill 				G. Bard Ermentrout % Aug 3 2005
+	} %end \exercise{A limit cycle with analytic stability
+
+\solution{exer:ExactLyap}
+         {A limit cycle with analytic Floquet exponent.}{
+\index{coordinate!change}
+\index{stability!exact}
+Transforming to the polar coordinates, we have
+\begin{equation}
+\dot r = r(1-r^2), \quad
+\dot \theta = -1.
+\label{eq:polar}
+\end{equation}
+This system has a fixed point at $r=0$. Moreover, for $r_c=1$, $\dot r$ vanishes.
+Therefore, $r_c=1$ is an invariant circle in the phase space. Since $\theta$ is constant and independent of $r$, the circle $r_c=1$ is a periodic orbit.
+
+For any initial condition $r_0<1$, the solutions $r(t;r_0)$ increase monotonically since
+$r(1-r^2)>0$. Similarly, for initial conditions with $r_0>1$, the solutions $r(t;r_0)$
+decrease monotonically. Therefore, $r_c=1$ is the only periodic orbit; it is in fact a
+stable limit cycle.
+
+Now let $f^t(r_0,\theta_0)=(r(t;r_0),\theta(t,\theta_0))$ be the solution map of
+\refeq{eq:polar}. Then, 
+\begin{equation*}
+Df^t=
+\begin{pmatrix}
+\frac{\partial r}{\partial r_0} & 0\\
+0 & \frac{\partial \theta}{\partial \theta_0}
+\end{pmatrix}.
+\end{equation*}
+On the other hand, $\theta(t;\theta_0)=\theta_0-t$; therefore $\partial\theta/\partial\theta_0=1$.
+It remains to compute $\partial r/\partial r_0$. Taking the derivative with respect to
+$r_0$ in \refeq{eq:polar}, we get
+$$ \frac{d}{dt}\frac{\partial r}{\partial r_0}=(1-r^2)\frac{\partial r}{\partial r_0}-2r^2\frac{\partial r}{\partial r_0}.$$
+Therefore, on the periodic orbit $r_c=1$, we have
+$$ \frac{d}{dt}\frac{\partial r}{\partial r_0}=-2\frac{\partial r}{\partial r_0},$$
+which implies $\partial r/\partial r_0(t;r_c)=\exp(-2t)$. 
+
+Therefore, for one period $T=2\pi$ of the orbit $r_c=1$,
+\begin{equation*}
+Df^T(r_0=1,\theta_0)=
+\begin{pmatrix}
+e^{-2T} & 0\\
+0 & 1
+\end{pmatrix},
+\end{equation*}
+i.e., the Floquet exponents are $\mu_1=-2$ and $\mu_2=0$.
+\authorMMF{12 Nov. 2014}
+    } %end \solution{exer:ExactLyap}{A limit cycle
+
+
+
+
+
+
+
+%%-----   PDEs
+\section{Chapter: Turbulence?}
+\label{c-PDEs}\noindent dasbuch/book/chapter/PDEs.tex
+\begin{description}
+
+\item[2014-11-16 Predrag]
+Always plot ...
+
+\end{description}
+
+%%%%%%%%%%%%%%%%%% EXERCISES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\exercise{In high dimensions any two vectors are (nearly) orthogonal.}{
+\label{exer:2vecOrthog}
+Among humble
+plumbers laboring with extremely high\dmn\ ODE discretizations of fluid
+and other PDEs, there is an inclination to visualize the $\infty$\dmn\
+\statesp\ flow by projecting it onto a basis constructed from a few
+random coordinates, let's say the 2nd Fourier mode along the spatial $x$
+direction against the 4th Chebyshev mode along the $y$ direction. It's
+easy, as these are typically the computational degrees of freedom. As we
+will now show, it's easy but not smart, with vectors representing the
+dynamical states of interest being almost orthogonal to any such random
+basis.
+
+Suppose your \statesp\ $\pS$ is a real 10\,247\dmn\ vector space, and you
+pick from it two vectors $\ssp_1, \ssp_2\in \pS$ at random. What is the
+angle between them likely to be?
+
+By asking for `angle between two vectors' we have implicitly assumed that
+there exist is a dot product
+\[
+\transp{\ssp_1} \cdot \ssp_2
+=
+\norm{\ssp_1} \norm{\ssp_2} \cos(\theta_{12})
+\,,
+\]
+so let's make these vectors unit vectors,
+\(
+\norm{\ssp_j} = 1
+\,.
+\)
+When you think about it, you would be hard put to say what 'uniform
+probability' would mean for a vector $\ssp \in \pS= \reals^{10\,247}$,
+but for a unit vector it is obvious: probability that $\ssp$ direction
+lies within a solid angle $d\Omega$ is $d\Omega/($unit~hyper-sphere~surface).
+
+So what is the surface of the unit sphere (or, the total solid angle)
+in $d$~dimensions?
+One way to compute it is to evaluate the Gaussian integral
+\beq
+I_d =
+\int_{-\infty}^\infty\!\!\! d x_1 \cdots d x_d \,
+e^{-\frac{1}{2}\left(x_1^2+\cdots +x_d^2\right)}
+\ee{2vecOrth1}
+in cartesian and polar coordinates. Show that
+\begin{itemize}
+  \item [(a)]
+In cartesian coordinates
+\(
+I_d = (2\pi)^{d/2}
+\,.
+\)
+  \item [(b)]
+Recast the integrals in polar coordinate form. You know how to compute
+this integral in 2 and 3 dimensions. Show by induction that the surface
+$S_{d-1}$ of unit $d$-ball, or the total solid angle in even and odd
+dimensions is given by
+\beq
+S_{2k} = \frac{2 (2\pi)^k}{(2 k-1)!!}
+\,,\qquad
+S_{2k+1} = \frac{2\pi^{k+1}}{ k!}
+% fix this:  = \frac{2 k! (4\pi)^k}{(2k+1)!}
+\,.
+\ee{2vecOrth3}
+  \item [(c)]
+Show, by examining the form of the integrand in the polar coordinates,
+ that for arbitrary, perhaps even complex dimension $d\in\complex$
+\[
+S_{d-1} = 2 \pi^{d/2}/\Gamma(d/2)
+\,.
+\]
+In Quantum Field Theory integrals over 4-momenta are brought to polar
+  form and evaluated as functions of a complex dimension parameter $d$.
+  This procedure is called the `dimensional regularization'.
+  \item [(d)]
+Check your formula for $d=2$ (1-sphere, or the circle) and $d=3$
+(2-sphere, or the sphere).
+  \item [(e)]
+  %(bonus)
+What limit does $S_{d}$ does tend to for large $d$? (Hint: it's not what
+you think. Try Sterling's formula).
+\end{itemize}
+So now that we know the volume of a sphere, what is a the most likely
+angle between two vectors $\ssp_1, \ssp_2$ picked at random? We
+can rotate coordinates so that $\ssp_1$ is aligned with the `$z$-axis' of
+the hypersphere. An angle $\theta$ then defines a meridian around the
+`$z$-axis'.
+\begin{itemize}
+  \item [(f)]
+Show that probability $P(\theta)d\theta$ of finding two vectors at angle
+$\theta$ is given by the area of the meridional strip of width $d\theta$,
+and derive the formula for it:
+\[
+P(\theta) = \frac{1}{\sqrt{\pi}} \,\frac{\Gamma(d/2)} {\Gamma((d-1)/2)}
+\,.
+\]
+(One can write analytic expression for this in terms of beta functions,
+but it is unnecessary for the problem at hand).
+  \item [(g)]
+Show that for large $d$
+the probability $P(\theta)$ tends to a normal distribution
+with mean $\theta = \pi / 2$ and variance $1/d$.
+\end{itemize}
+So, in $d$\dmn\ vector space the two random vectors are nearly
+orthogonal, within accuracy of $\theta = \pi/2 \pm 1/d$.
+
+If you are a humble plumber, and the notion of a vector space is some
+abstract hocus-pocus to you, try thinking this way. Your 2nd Fourier mode
+basis vector is something that wiggles twice along your computation
+domain. Your turbulent state is very wiggly. The product of the two
+functions integrated over the computational domain will average to zero,
+with a small leftover. We have just estimated that with dumb choices of
+coordinate bases this leftover will be of order of $1/10\,247$, which is
+embarrassingly small for displaying a phenomenon of order $\approx 1$.
+
+Several intelligent choices of coordinates for \statesp\ projections are
+described in Gibson \etal\rf{GHCW07} and the web tutorial
+\wwwcb{/tutorials}.
+
+\hfill                  Sara A. Solla
+                        and P. Cvitanovi\'c
+} %end \exercise{Trace-log of a matrix}{
+
+
+\solution{exer:2vecOrthog}
+{In high dimensions any two vectors are (nearly) orthogonal.}{
+\begin{itemize}
+  \item [(a)] The $d$ Gaussian integrals ...
+
+  \item [(b)] You can Google ...
+
+  \item [(c)] There are two ways of ...
+
+  \item [(d)] ...
+
+  \item [(e)] (bonus) ...
+
+\end{itemize}
+\authorMMF{16nov2014}
+    } %end \solution{e-Tr-logM}{Trace-log of a matrix.}{
+
+
+
+
+
+%%-----   Finding cycles variationally
+%\section{Chapter: Relaxation for cyclists}
+%\label{c-relax}\noindent dasbuch/book/chapter/relax.tex
+%\begin{description}\item[2012-01-?? JMH]
+%
+%\end{description}
+
+
+%%%-----   Appendices
+%%\appendix
+%
+%
+%%%-----   A brief history of chaos
+%\section{Chapter: }\label{c-flows}\noindent dasbuch/book/chapter/appendHist.tex
+%
+%
+%%%-----   Maps and billiards
+%\section{Chapter: }\label{c-flows}\noindent dasbuch/book/chapter/appendB.tex
+%
+%
+%%%-----   Linear algebra, Hamiltonian Jacobians
+%\section{Chapter: }\label{c-flows}\noindent dasbuch/book/chapter/appendStability.tex
+%
+%
+%%%-----   Cycles
+%\section{Chapter: }\label{c-flows}\noindent dasbuch/book/chapter/appendCycle.tex
+%
+%%%-----   Symbolic dynamics techniques
+%\section{Chapter: }\label{c-flows}\noindent dasbuch/book/chapter/appendSymb.tex
+%
+%
+%%%-----   Counting
+%\section{Chapter: }\label{c-flows}\noindent dasbuch/book/chapter/appendCount.tex
+%
+%
+%%%-----   Implementing evolution
+%\section{Chapter: }\label{c-flows}\noindent dasbuch/book/chapter/appendMeasure.tex
+%
+%%%-----   Applications
+%\section{Chapter: }\label{c-flows}\noindent dasbuch/book/chapter/appendApplic.tex
+%
+%
+%%%-----   Discrete symmetries
+%\section{Chapter: }\label{c-flows}\noindent dasbuch/book/chapter/appendSymm.tex
+%
+%
+%%%-----   Coveregence of spectral determinants
+%\section{Chapter: }\label{c-flows}\noindent dasbuch/book/chapter/appendConverg.tex
+%
+%%%-----   Stat mech
+%\section{Chapter: }\label{c-flows}\noindent dasbuch/book/chapter/appendStatM.tex
+%
+%
+%%%-----   Infinite dimensional operators
+%\section{Chapter: }\label{c-flows}\noindent dasbuch/book/chapter/appendWirzba.tex
+%
+%
+%%%-----   Statistical Mechanics
+%\section{Chapter: }\label{c-flows}\noindent dasbuch/book/chapter/statmech.tex
