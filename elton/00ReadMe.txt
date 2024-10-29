@@ -1,6 +1,15 @@
-ChaosBook.org/projects/Elton/00ReadMe.txt
+https://github.com/cvitanov/reducesymm folder [elton]         
+
+--------------------------------------------------------------------------
+moved to GitHub                                                 2024-10-29
+Do not edit CNS subversion repo   elton       any longer:
 svn $Author: predrag $ $Date: 2018-12-07 13:04:16 -0500 (Fri, 07 Dec 2018) $
 --------------------------------------------------------------------------
+
+John R Elton            
+ - fluids blog/blog.tex Fall 2007, Spring, Summer 2008, Fall 2024
+ - elton/blog/EltonBlog.tex
+ - GaTech Spring 2007 PHYS-4699 undergraduate project
 
 Mohammad Farazmand
  - Fall 2014 - ... LCS + mixing project
@@ -8,20 +17,21 @@ Mohammad Farazmand
 Adam Fox
  - Fall 2013 tori determination project
 
-John R Elton
- - GaTech Spring 2007 PHYS-4699 undergraduate project
- - fluids blog/blog.tex Fall 2007, Spring, Summer 2008
+--------------------------------------------------------------------------
+TO DO
+  [ ] change \bibliography{../bibtex/elton} to reducesym *.bib  2024-10-29
 
 --------------------------------------------------------------------------
 
 blog/
     all matters pertaining to
         mixing, invariant tori, adjoint descent for 2D Kolmogorov,
+        Elton lands
 	
 bibtex/elton.bib
 	one bibliography for all projects
 
-	inputs/
+inputs/
 	one directory for all LaTeX macros
 
 figs/
@@ -102,7 +112,7 @@ into the file, and then
 HISTORY:
 
                                                 Predrag Jan 17 2007
-installed MicTeX, WinEdt, ghostscript on John's notebook
+installed MikTeX, WinEdt, ghostscript on John's notebook
 
                                                 Predrag Jan 13 2007
 created project LaTeX template
