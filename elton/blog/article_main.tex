@@ -54,7 +54,7 @@
 
 
 \title{
-Lagrangian mixing in Plane Couette Turbulence
+Lagrangian Dynamics in Plane Couette Turbulence
         }
 \author{
 John R. Elton,
@@ -72,7 +72,7 @@ Jonathan Halcrow
 
 \begin{abstract}
 \noindent 
-Tracer particle trajectories for equilibrium solutions of the Navier-Stokes equations confined to a planar geometry are studied. A given equilibrium velocity field may be treated as a dynamical system, and by analyzing the behavior of flow trajectories within the velocity field, we uncover special features where there is no fluid movement as well as heteroclinic connections between these points of stagnation. These topological features provide a Lagrangian skeleton of the flow dynamics that may be used as a first step to studying bulk fluid properties such as mixing efficiency and diffusion.
+Tracer particle trajectories for equilibrium solutions of the Navier-Stokes equations confined to a planar geometry are studied. A given equilibrium velocity field may be treated as a dynamical system, and by analyzing the behavior of flow trajectories within the velocity field, we analytically and numerically uncover special features where there is no fluid movement as well as heteroclinic connections between these points of stagnation. These topological features provide a Lagrangian skeleton of the flow dynamics for a turbulent fluid that may be used as a first step to studying bulk fluid properties such as mixing efficiency and diffusion.
 \end{abstract}
 
 
@@ -81,15 +81,160 @@ Tracer particle trajectories for equilibrium solutions of the Navier-Stokes equa
 \section{Introduction}
 \label{sec:intro}
 
-Intro stuff.
+We give a 
+Lagrangian transport interpretation to equilibrium solutions of the Navier-Stokes equations and study the motion of tracer particles moving through a fluid.  Symmetry
+arguments and numerical results allow us to make a phase portrait of such a flow by determining the fixed points and their stabilities.  Our eventual goal is putting this information
+together to calculate quantities to characterize turbulent fluid mixing. The geometry used in this work is a planar shear flow in which two infinite plates move in opposite directions. This plane Couette geometry is studied extensively in (refs). Much of the work here is carried out on a particular equilibrium velocity field known as the Upper Branch or EQ2.
+    We also repeat some of our analysis  for another equilibrium velocity field \tEQeight, for which the flow is more turbulent
+    and possesses different invariant symmetries.
+
+
+Eulerian equilibria have been computed for \pCf\ over a number of years. Nagata discovered the Upper Branch and Lower Branch equilibria in
+1990 (ref) by continuing a known solution from Taylor-Couette flow to plane
+Couette. Later Waleffe (ref)
+calculated the same solutions a different way and noted that they
+satisfy 'shift-rotate' and 'shift-reflect' symmetry. PC and JFG (ref) began explorations of plane Couette dynamics around
+those equilibria, noting that the symmetries form a group 
+and that the subspace of velocity fields under the action of the group was invariant under Navier-Stokes.
+The search for new equilibria focused on this subspace, since it
+fixes the $x,z$ phase of solutions and since the symmetry restriction
+reduces the dimensionality of the equilibria unstable manifolds. The subspace is however unstable, and
+some numerical simulations had sufficient deviation from the symmetric
+subspace that the Newton search was able to detect equilbiria that lied
+close to but were not actually within that subspace. That produced several new equilibria.
+
+For analyzing fluid particle trajectories from the Lagrangian perspective, where we follow the motion of a tracer within a fixed velocity field,  we need to distinguish between
+$3D$ physical fluid flow for a given invariant solution of Navier-Stokes
+and the dynamical $\infty$-dimensional \statesp\ flow. We distinguish the two by using physically motivated nomenclature
+for $3D$ physical fluid flow: We shall refer to the $3D$ position
+ for which
+$\bu(\bx_{_{SP}})=0$
+as the {\em \stagp} $\bx_{_{SP}}$ or point $SP$. 
+
+In this work we utilize the known information about equilibria of \pCf\ and their symmetries for studying the Lagrangian transport problem. In \refsect{sec:PCF} we discuss the underlying equations and geometry for plane Couette flow, how the equilibria are computed numerically, and give a deep dive on the symmetries. The group of symmetries for the Upper Branch equilibrium was already known (ref), and here we extend the discussion to show a larger symmetry group under which two of the known equilibria are invariant (EQ7 and EQ8).  In \refsect{sec:symm_stag} we show that the known symmetries automatically provide us with critical information for analyzing trajectories in each equilibrium velocity field by  determining where the velocity field must be 0; In other words we are able to locate the "fixed points" in dynamical systems terminology, or stagnation points in our lingo. In \refsect{sec:Lagrangian} we give our core results: namely a dynamical systems treatment of trajectories within an equilibrium velocity field that shows fixed points and heteroclinic connections, providing the basic dynamical structure for which fluid transport and mixing in a turbulent flow field may be analyzed. We specifically study a portrait of the motion for the Upper Branch equilibrium and also provide some results for EQ8.
+
+
 
 
 
 \section{Plane Couette Flow}
 \label{sec:PCF}
 
-\subsection{Symmetries of PCF}
+\subsection{The Navier-Stokes equations}
+ The underlying equations
+that govern the motion of \pCf\ are the \NS\ equations,
+along with boundary conditions. The boundary conditions for \pCf\ in the $x$
+and $z$ directions are periodic,
+ $ \bu(x, y, z) = \bu(x+L_x, y, z) =
+\bu(x, y, z + L_z) $.
+ In the $y$ direction,
+ $\bu = (1,0,0)$ at $\bx = (0,1,0)$ and $\bu = (-1,0,0)$ at $\bx =
+ (0,-1,0)$.
+
+ The fluid is taken to be incompressible, so in this case the
+ \NS\ equations are
+ \beq
+ \frac{\partial \bu}{\partial t} + (\bu \cdot \nabla)\bu = -\nabla p + \frac{1}{Re} \nabla^{2} \bu
+    \,,\qquad
+\nabla \cdot \bu  = 0 \,. \label{eqn:NavierStokes} \eeq 
+
+
+
+For an equilibrium velocity field that is not changing in time, the first equation in
+\refeq{eqn:NavierStokes} simplifies to \beq
+ (\bu \cdot \nabla)\bu = -\nabla p + \frac{1}{Re} \nabla^{2} \bu
+    \,,\qquad \label{eqn:NavierStokes2} \eeq
+ 
+  The Reynold's number parameter $\Reynolds$, which gives a measure of fluid viscosity and degree to which fluid motion may become turbulent, is given by \beq Re = \frac{\overline{u}L}{\nu}
+\eeq where $\overline{u}$ is the average fluid velocity and $L$ is
+the characteristic length. Thus the form of the NS equations and boundary conditions make use of rescaling to use non-dimensionalized variables. 
+We use $\Reynolds = 400$, in the regime of moderate turbulence, for the \pCf\ simulations throughout the text unless otherwise indicated.
+
+In most of our work  $\bu$
+represents the {\em difference} from the laminar flow. 
+So we can break up the total velocity field into two components: $\butot =
+y \hat{\bf x} + \bu$. Here $y \hat{\bf x}$ is the laminar velocity
+field and $\bu$ is then the difference between the total velocity and
+laminar. Substitute $y \hat{\bf x} + \bu$ for $\bu$ in the
+nondimensionalized Navier-Stokes equations above to get
+
+\beq
+    \frac{\partial \bu}{\partial t}
+    + y  \frac{\partial \bu}{\partial x}
+    + v \, \hat{\bf x}
+    + \bu \cdot \bnabla \bu
+=
+    - \bnabla p
+    + \frac{1}{\Reynolds}
+        \lapl \bu  \,, \quad \nabla \cdot \bu = 0
+\, \label{NavStokesDiff}
+\eeq
+with boundary conditions $\bu = 0 $ at $y \pm 1$.
+
+The equilibrium velocity fields we study satisfy \refeq{NavStokesDiff}. This equation is a little more complicated than
+\refeq{eqn:NavierStokes}, but having Dirichlet boundary conditions on
+$\bu$ makes the analysis much easier, since the set of allowable velocity fields (those fields that satisfy incompressibility and boundary
+conditions)
+form a vector space. (Insert a Figure showing \pCf\ equilibrium velocity field for UB).
+
+
+
+
+
+
+\subsection {\bf Computation of equilibrium velocity fields and trajectories}
+\label{channelflow}
+ In order to integrate streamlines of {\pCf}
+and follow the paths of tracer particles, it is first
+necessary to have numerically accurate \eqv\ $3D$-velocity fields.
+
+
+The starting point for this task is to obtain the necessary data sets for evaluating velocity field values for a given \eqv, e.g. upper branch. These are made available at the website
+{\tt Channelflow.org}. Essentially the data contains the spectral coefficients of the
+expansion of a velocity field $\mathbf{u(x)}$. The form of the
+expansion is
+\begin{equation}
+ \mathbf{u(x)} = \sum_{m_{y}=0}^{M_{y}-1}\sum_{m_{x}=0}^{M_{x}-1}\sum_{m_{z}=0}^{M_{z}-1}
+ {\mathbf{\hat{u}}_{m_{x},m_{y},m_{z}} \bar{T}_{m_{y}}(y)e^{2\pi i(k_{x}x/L_{x} + k_{z}z/L_{z})}
+ + \text{\small{(c.c.)}}}
+\label{eqn:spectralsum}
+ \end{equation}
+
+  The
+ $\bar{T}(y)$'s are Chebyshev polynomials defined on the interval [a,b] (in
+ most cases [-1,1]). For a given velocity field expansion the upper bounds on the sums are known
+ from the geometry, and the $k$'s are related to the $m$'s through
+ the following relations:
+ \beq k_{x} = \left \{ \begin{array}{l}
+m_{x} \hspace{20 mm} 0 \leq m_{x} \leq M_{x}/2   \\
+m_{x} - M_{x} \hspace{10 mm} M_{x} < m_{x} < M_{x}  \\
+\end{array}  \right.
+\eeq \beq k_{z} = m_{z} \hspace{10 mm} 0 \leq m_{z} < M_{z}
+\,.
+\eeq
+Hence, with a knowledge of the spectral coefficients we can
+compute $\mathbf{u(x)}$ by evaluating
+this sum at a particular $\bx = (x,y,z)$.
+
+Various internal functions within {\tt Channelflow.org} have been written to
+compute $\bu$ on a set of gridpoints. It is possible, by
+interpolation of the velocity fields on these gridpoint values, to
+integrate a trajectory with great computational speed. However this
+will not be nearly as accurate as evaluating the sum
+\refeq{eqn:spectralsum} directly. So we evaluate
+\refeq{eqn:spectralsum} to give the exact velocity field at every
+point along a trajectory. We are able to perform these computations in Matlab with enough speed to compute many tracer particle trajectories within an equilibrium velocity for an adequate length of time to study the flow dynamics.  The code has been
+checked to be correct by picking an $(x,y,z)$ coordinate that
+\emph{happens} to lie on a gridpoint value and then comparing the
+result to the value given by the internal {\tt Channelflow.org} functions. 
+
+
+
+
+\subsection{Symmetries of plane Couette flow}
 \label{PCF_symm}
+As part of our theoretical analysis of trajectories of fluid particles within an equilibrium velocity field, it will be critical to use and understand the symmetries involved in the special geometry of plane Couette flow. Thus we take a quick detour to discuss these symmetries from a group-theoretic perspective. More details are provided in (paper).
+
 
 \PCf\ is invariant under two reflections $\sigma_1,\sigma_2$ and a
 continuous two-parameter group of translations $\tau(\shift_x, \shift_z)$:
@@ -111,7 +256,7 @@ conditions of \pCf:
                \; \bu(x, \pm 1, z) = 0, \notag  \\
          &\phantom{=} {} \qquad \qquad \qquad \; \; %\text{and }
           \bu(x, y, z) = \bu(x+L_x, y, z) = \bu(x, y, z + L_z)\}  \,.
-\end{align} \JRE{Shouldn't we say $\mathbf{u}= \pm 1$ at the walls for consistency?}
+\end{align} 
 The continuous symmetry $\tau(\shift_x, \shift_z)$ maps each state
 $\bu \in \bbU$ to a $2d$ torus of states with identical dynamic
 behavior. This torus in turn is mapped to four equivalent tori by
@@ -119,38 +264,30 @@ the subgroup $\{1,\sigma_1,\sigma_2, \sigma_1 \sigma_2\}$. In
 general a given state in $\bbU$ has four $2d$ tori of dynamically
 equivalent states.
 
-Most of the Eulerian \eqva\ that we know of so far
+Most of the Eulerian \eqva\ that are currently known for \pCf\
 are invariant under the `shift-reflect' symmetry
 $s_1 = \tau(L_x/2,0) \, \sigma_1$ and the `shift-rotate' symmetry
 $s_2 = \tau(L_x/2,L_z/2) \, \sigma_2$.  These symmetries form a subgroup
-$S = \{1, s_1, s_2, s_3\}$, $s_3 = s_1 s_2$, which is isomorphic to
+\beq
+S = \{1, s_1, s_2, s_3\}, \qquad s_3 = s_1 s_2, 
+\eeq
+
+which is isomorphic to
 the Abelian dihedral group $D_2$. The group acts on velocity fields
 as:
 \begin{align}
-s_1 \, [u, v, w](x,y,z) &= [u, v, -w](x+L_x/2,\, y,\, -z) \nnu \\
+s_1 \, [u, v, w](x,y,z) &= [u, v, -w](x+L_x/2,\, y,\, -z) \nnu \\ 
 s_2 \, [u, v, w](x,y,z) &= [-u, -v, w](-x+L_x/2,\,-y,\,z+L_z/2) \label{shiftRot} \\
-s_3 \, [u, v, w](x,y,z) &= [-u,-v,-w](-x,\, -y,\, -z+L_z/2) \nnu \,.
+s_3 \, [u, v, w](x,y,z) &= [-u,-v,-w](-x,\, -y,\, -z+L_z/2)  \nnu 
+\,
 \end{align}
 
 Consider next the subgroup $S_3 = \{1,s_3\} \subset S$ (isomorphic to
 dihedral group $D_1$). The $s_3$ operation flips both the streamwise
 $x$ and the spanwise $z$, thus eliminating invariance under both $x$
-and $z$ continuous translations. \PC{do we need this in this paper?:
-\\ ``$s_3 \bu = \bu$ implies $[u,v,w](x,y,z) =
-[-u,-v,-w](-x,-y,-z+L_z/2)$, which requires $\bu = 0$ at four points
-$(x,y,z) = (0,0,L_z/4); (0,0,3L_z/4); (L_x/2,0,L_z/4);
-(L_x/2,0,3L_z/4)$. '' }
+and $z$ continuous translations. 
 
 
-Let $\bbU$ be the space of square-integrable, real-valued velocity
-fields that satisfy the kinematic conditions of \pCf:
-\begin{align}
- \bbU  &= \{\bu \in L^2(\bCell) \; | \; \grad \cdot \bu = 0,
-               \; \bu(x, \pm 1, z) = 0, \notag \\
-         &\phantom{=} {} \qquad \qquad \qquad \; \; %\text{and }
-          \bu(x, y, z) = \bu(x+L_x, y, z) = \bu(x, y, z + L_z)\}
-\,.
-\end{align}
 We denote the $S$-invariant subspace of states invariant under
 symmetries \refeq{shiftRot} by
 \begin{align}
@@ -173,15 +310,7 @@ where $ \bbUsymm \subset \bbUthree \subset \bbU$.
 %
 $\bbUsymm$ and  $\bbUthree$ are flow-invariant subspaces: states initiated
 in either remain within it under the Navier-Stokes dynamics.
-%     \PC{recheck this claim, please}
 
-Idempotency of $s_3$ leads to projection operators
-\beq
-{\PP}_+ =
-   \frac{1}{2} (\matId + s_3) \, ,\qquad
-{\PP}_- =
-   \frac{1}{2} (\matId - s_3) \,.
-\ee{S3project}
 
 Translations of half the cell length in the spanwise and/or streamwise
 directions commute with $S$. These operators generate a discrete
@@ -205,123 +334,1175 @@ the three half-cell translations $\tau_x \bu, \, \tau_z \bu,$ and
 $\tau_{xz} \bu$ of $\bu \in \bbUsymm$ are also in $\bbUsymm$.
 Similarly, $\tau_{xz}$ commutes with $S_3$, so $S_3$-invariant
 solutions appear in eight copies.
-\PC{
-    incorporate halcrow blog JFG comment for the the $S_3$-invariant claim,
-    please: if you agree, comment out this footnote.
-    }
 
+We know that the equilibria denoted EQ1-EQ8 are symmetric in $S = \{1, s_1, s_2, s_3 = s_1
+s_2\}$ because they satisfy those symmetries numerically. There is no
+a priori reason that the equilibria should be $S$-symmetric, other than $S$ symmetry
+fixes $x,z$ phase and so rules out relative equilibria. But $s_3$ symmetry
+alone does the same, and a few equilibria are known that have $s_3$ symmetry
+but neither $s_1$ nor $s_2$ symmetry. There are equilibria with other symmetries
+that fix $x,z$ phase but have other translations than the half-cell shifts.
 
+It is also possible to form other subgroups from the plane Couette symmetries $\tau_x$, $\tau_z$, $\sigma_1$, $\sigma_2$. These elements generate a group of order 16, each of which is it's own inverse. It is known that different equilibria posses different symmetries, corresponding to different subgroups. For example, for equilibrium EQ8,  we find an invariance group of order 8 that is isomorphic to the dihedral group $D_4$. $S_8 = \{e, s1, s2, s3, s4, s5, s6, s7\}$, where $s_4 = \tau_z \, \sigma_1$, $s_5 = s_4 s_2$, $s_6 = \tau_x \tau_z$, $s_7 = \sigma_2$. The action of these additional symmetries on velocity fields is:
+\begin{align}
+s_4 \, [u, v, w](x,y,z) &= [u, v, -w](x,\, y,\, -z + L_z/2) \nnu \\ 
+s_5 \, [u, v, w](x,y,z) &= [-u, -v, -w](-x+L_x/2,\,-y,\,-z) \label{S_8} \\
+s_6 \, [u, v, w](x,y,z) &= [u,v,w](x+L_x/2,\, y,\, z+L_z/2)  \nnu  \\
+s_7 \, [u, v, w](x,y,z) &= [-u,-v,w](-x,\, -y,\, z)  \nnu 
+\,
+\end{align}
 
-
-
-\section{Lagrangian Dynamics}
-\label{sec:intro}
+Which symmetries exist for the different equilibria will have important implications for studying the dynamics of the flow.
 
 \subsection{Symmetry and Stagnation Points}
-\noindent {\bf JH  April 28, 2008}:
-From the form of $s_3$, we can see that any Eulerian $\eqv$ that
-is invariant under has 4 Lagrangian \stagp s
+\label{sec:symm_stag}
+
+
+
+From the form of $s_3$ in \refeq{shiftRot}, we can see that any Eulerian equilibrium that
+is invariant under $S$ has 4 Lagrangian \stagp s
 which satisfy the condition:
 \begin{equation}
  (x,y,z) = (-x, -y, -z+L_z / 2) \label{shiftRot_eqva}
 \end{equation}
 There are 4 points which satisfy this constraint:
 \bea
-  \xSP{1} &=& (L_x/2,0,L_z/4) \continue
-  \xSP{2} &=& (L_x/2,0,3L_z/4) \continue
-  \xSP{3} &=& (0,0,L_z/4) \label{s3lagrange} \\
-  \xSP{4} &=& (0,0,3L_z/4) \nnu
+  \bold{x}_{_{SP_{1}}} &=& (L_x/2,0,L_z/4) \continue
+  \bold{x}_{_{SP_{2}}} &=& (L_x/2,0,3L_z/4) \continue
+  \bold{x}_{_{SP_{3}}} &=& (0,0,L_z/4) \label{s3lagrange} \\
+  \bold{x}_{_{SP_{4}}} &=& (0,0,3L_z/4) \nnu
  \,.
 \eea
-Due to the periodic boundary conditions
- $(L_x,0,L_z/4)=\tSP{3}$ and $(L_x,0,3L_z/4)=\tSP{4}$.
+
+We refer to these as stagnation points $SP_1$-$SP_4$.
+Due to the periodic boundary conditions, we equivalently have
+ $(L_x,0,L_z/4)=SP_3$ and $(L_x,0,3L_z/4)=SP_4$.
 Also of note is the fact that there can exist no $s_3$-invariant \reqva, since
-$s_3$ operation flips both the $x$ and $z$ axes.
+$s_3$ operation flips both the $x$ and $z$ axes. These stagnation points will exist in all of the equilibria with $S$-symmetry. Additionally, for an equilibrium such as EQ8 which possesses $S_8$ symmetry, from the action of $s_5$ in \refeq{S_8}, we will find stagnation points wherever 
+\begin{equation}
+ (x,y,z) = (-x+L_x/2, -y, -z) \label{second_condition}
+\end{equation}
+which gives the additional points:
+\bea
+  \bold{x}_{_{SP_{5}}} &=& (L_x/4,0,0) \continue
+  \bold{x}_{_{SP_{6}}} &=& (3L_x/4,0,0) \continue
+  \bold{x}_{_{SP_{7}}} &=& (L_x/4,0,L_z/2) \label{s3lagrange} \\
+  \bold{x}_{_{SP_{8}}} &=& (3L_x/4,0,L_z/2) \nnu
+ \,.
+\eea
 
 
-\subsection{More \stagp\ arguments}
-\label{arg}
 
-\medskip\noindent {\bf  JRE July 26, 2008}:
+In fact, we can generalize the discussion.
 Looking at the way the plane Couette symmetries act on velocity
-fields
-\begin{align}
-\sigma_1 \, [u,v,w](x,y,z) &= [u, v,-w](x,y,-z) \nnu \\
-\sigma_2 \, [u,v,w](x,y,z) &= [-u,-v,w](-x,-y,z)  \label{reflSfit}\\
-\tau(\shift_x, \shift_z)[u,v,w](x,y,z) &=
-[u,v,w](x+\shift_x,y,z+\shift_z) \nnu\,.
-\end{align}
-we see that, since $\tau$ does not affect the velocity components,
-the \stagp s argument will work only for the combinations of these
+fields in \refeq{reflSfit1},
+we see that since $\tau$ does not affect the velocity components,
+the condition needed to produce a stagnation point (in which all three velocity components are negated at some shifted position) will work only for the combinations of these
 elements which contain both $\sigma_{1}$ and $\sigma_{2}$ an odd
-number of times. Let us restrict ourselves to the plane Couette
-symmetries $\sigma_{1}$, $\sigma_{2}$, $\tau_{x}= \tau(L_{x}/2,0)$,
-$\tau_{z}=\tau(0,L_{z}/2)$ which generate a group of order 16. In
-this simplified Abelian case the requirement that permits the
-argument is just to have a $\sigma_{1}\sigma_{2}$ term.  For this
-case we can write down exactly which elements permit the arguments,
-and the \stagp s they produce.
+number of times. Within the group of order 16 of plane Couette
+symmetries generated by $\sigma_{1}$, $\sigma_{2}$, $\tau_{x}$,
+$\tau_{z}$, the requirement means we just have to identify elements that have a $\sigma_{1}\sigma_{2}$ term. 
 
-There are four elements of this group that contain a
+There are in fact four such elements of the full group that contain a
 $\sigma_{1}\sigma_{2}$ term. These are $g_1 = \sigma_{1}\sigma_{2}$,
 $g_2 = \sigma_{1}\sigma_{2}\tau_{x}$, $g_3 =
 \sigma_{1}\sigma_{2}\tau_{z}$, and $g_4 = \sigma_{1}\sigma_{2}\tau_x
-\tau_z$. \JRE{I don't mean to try and introduce this as any kind of
-permanent notation, I just needed some way to write them down for
-now}
+\tau_z$. 
 \begin{align}
 g_1 \, [u,v,w](x,y,z) &= [-u,-v,-w](-x,-y,-z)  \\
 g_2 \, [u,v,w](x,y,z) &= [-u,-v,-w](-x+L_{x}/2,-y,-z)  \\
 g_3 \, [u,v,w](x,y,z) &= [-u,-v,-w](-x,-y,-z+L_{z}/2)  \\
-g_2 \, [u,v,w](x,y,z) &= [-u,-v,-w](-x+L_{x}/2,-y,-z+L_{z}/2)
+g_4 \, [u,v,w](x,y,z) &= [-u,-v,-w](-x+L_{x}/2,-y,-z+L_{z}/2)
 \end{align}
 
-Each $g$ in turn produces four symmetrically located \stagp s in the
-$y = 0$ plane. Note that $g_2$ and $g_3$ are the ones which have
-already been discussed in \refsect{JHsec:4/28} and
-\refsect{sect:EQ8}.
 
- $g_1$ symmetry implies that there are \stagp s at $(0,0,0)$, $(L_{x}/2,0,0)$, $(0,0,L_{z}/2)$, and
-$(L_{x}/2,0,L_{z}/2)$. $g_2$ symmetry implies that there are \stagp
-s at $(L_{x}/4,0,0)$, $(3L_{x}/4,0,0)$, $(L_{x}/4,0,L_{z}/2)$, and
-$(3L_{x}/4,0,L_{z}/2)$. $g_3$ symmetry implies that there are \stagp
-s at $(L_{x}/2,0,L_{z}/4)$, $(L_{x}/2,0,3L_{z}/4)$, $(0,0,L_{z}/4)$,
-and $(0,0,3L_{z}/4)$. Finally $g_4$ symmetry implies that there are
+Different invariance groups may or may not have a symmetry which corresponds to one of these $g$ elements. Any $g$ that is part of an invariance group for an equilibrium implies the existence of four symmetrically-located \stagp s in the
+$y = 0$ plane. Note that $g_3$ and $g_2$ are the elements
+already  discussed that produce $SP_1$-$SP_8$.
+
+ Any equilibrium with $g_1$ symmetry implies that there would additionally be \stagp s at $(0,0,0)$, $(L_{x}/2,0,0)$, $(0,0,L_{z}/2)$, and
+$(L_{x}/2,0,L_{z}/2)$. And similarly, $g_4$ symmetry implies the existence of
 \stagp s at $(L_{x}/4,0,L_{z}/4)$, $(L_{x}/4,0,3L_{z}/4)$,
-$(3L_{x}/4,0,L_{z}/4)$, and $(3L_{x}/4,0,3L_{z}/4)$. These sets of
-points are shown in \reffig{eltonFig:stags7_26}.
+$(3L_{x}/4,0,L_{z}/4)$, and $(3L_{x}/4,0,3L_{z}/4)$. The set of all possible stagnation points based on various \pCf\ symmetries
+ is shown in \reffig{eltonFig:stags7_26}.
 
-So the question of \stagp s for a given equilibrium is, which of the
-$g$ symmetries do you possess? This is a question related to
-invariance under the isotropy subgroups. Remember, this doesn't
-address the question of whether other \stagp s may exist, simply
-that these do or do not. For the known equilibria EQ1 - EQ11 all of
-them have $g3$ symmetry and EQ7, EQ8 additionally have $g2$ symmetry
-and that's it. Presumably this is just because searches for
+So the question of existence of \stagp s for a given equilibrium is, which of the
+$g$ symmetries does that equilibrium possess? This is a question related to
+invariance under the isotropy subgroups. Of importance, this does not
+address the question of whether \textit{other} nontrivial \stagp s may exist that are not based on symmetry arguments alone. For the known equilibria EQ1 - EQ11 all of
+them have $g_3$ symmetry and EQ7, EQ8 additionally have $g_2$ symmetry. This is likely related to the fact that searches for
 equilibria were done in a symmetric subspace which contained the
-$g3$ element (the $S$-symmetric subspace as it was called earlier).
-If equilibria are found in other subspaces that contain more $g$'s
-they will have the corresponding \stagp s.
+$g_3$ elements (the $S$-symmetric subspace).
+
 
 \begin{figure}[!h]
-\includegraphics[width=1.2\textwidth]{stags7_26.jpg}
+\includegraphics[width=1.0\textwidth]{stags7_26.jpg}
   \caption{
    Sets of possible \stagp s. If one of the $g$ symmetries is
    possessed, the velocity field will have \stagp s of the color
-   corresponding to that $g$.
+   corresponding to that symmetry.
    }
   \label{eltonFig:stags7_26}
  \end{figure}
 
 
 
+\begin{large}
+\noindent \textbf{Proof that any new \stagp\ must have a partner, symmetric about one of the previously known stagnation points} \\
+\end{large}
+
+
+Though our symmetry arguments do not determine whether or not there may exist \textit{additional} stagnation points which are not forced by the $g$ symmetries in the preceding section, we can in fact that show that for equilibria which exist in one of the flow-invariant subspaces that contains a $g$-symmetry (for example, $S$ has $g_3$ symmetry and $S_8$ has both $g_2$ and $g_3$ symmetry), any additional nontrivial stagnation points that exist must occur in symmetric pairs centered around the other known stagnation points.
+
+Consider one of the equilibria in the $S$-invariant subspace, such as EQ2. Again, the
+ action of $s3 \in S$ on velocity fields gives:
+ \beq    s_3 \, [u, v, w](x,y,z) = [-u,-v,-w](-x,\, -y,\, -z+L_z/2)\nnu\, .
+ \eeq
+ If $(x_{_{SP}},y_{_{SP}},z_{_{SP}})$ is a \stagp, $[u, v,
+ w](x_{_{SP}},y_{_{SP}},z_{_{SP}}) = [0,0,0]$, then
+ \begin{align} s_3 \, [u, v, w](x_{_{SP}},y_{_{SP}},z_{_{SP}}) &= [-u,-v,-w](-x_{_{SP}},\, -y_{_{SP}},\, -z_{_{SP}}+L_z/2) \nnu\, \\
+ &= [0,0,0](-x_{_{SP}},\, -y_{_{SP}},\, -z_{_{SP}}+L_z/2) .
+ \end{align}
+ Thus $(-x_{_{SP}},\, -y_{_{SP}},\, -z_{_{SP}}+L_z/2)$ is also a \stagp.
+
+
+ \noindent We may parameterize a line passing through two points $(x_{1}, y_{1}, z_{1}),(x_{2}, y_{2}, z_{2})$
+ as
+ \begin{align}
+  x &= x_{1} + (x_{2} - x_{1})t \\
+  y &= y_{1} + (y_{2} - y_{1})t \\
+  z &= z_{1} + (z_{2} - z_{1})t \\
+  t &\in (-\infty,\infty)
+ \end{align}
+ 
+ Using the two stagnation points $(x_{_{SP}},y_{_{SP}},z_{_{SP}})$ and $(-x_{_{SP}},-y_{_{SP}},-z_{_{SP}} + L_z/2)$ this becomes
+ 
+ \begin{align}
+  x &= x_{_{SP}}(1-2t) \\
+  y &= y_{_{SP}}(1-2t) \\
+  z &= z_{_{SP}}(1-2t) + \frac{L_{z}}{2} t
+ \end{align}
+ When $t = 1/2$ this system returns $(x,y,z) = (0,0,L_{z}/4)$, showing
+ that $SP_3$ lies on the line between these two \stagp s, halfway
+ in between them.
+
+ If we invoke the box periodicities: $x = x + L_{x}$, $z = z +
+ L_{z}$, it is easy to show that this pair of stagnation points is also symmetric
+ about any of $SP_1$-$SP_4$. For example, \\
+
+ \noindent$\mathbf{x = x + L_{x}}$:
+
+ \noindent $(x_{_{SP}},y_{_{SP}},z_{_{SP}})$ is a \stagp\ $\Rightarrow$
+ $(-x_{_{SP}}+L_{x},-y_{_{SP}},z_{_{SP}}+L_{z}/2)$ a \stagp.
+ \begin{align}
+  x &= x_{_{SP}}(1-2t) + L_{x}t \\
+  y &= y_{_{SP}}(1-2t) \\
+  z &= z_{_{SP}}(1-2t) + \frac{L_{z}}{2} t
+ \end{align}
+ When $t = 1/2$ this returns $(x,y,z) = (L_{x}/2,0,L_{z}/4)$, so that the new stagnation
+ points lie symmetrically on a line passing through $SP_1$. 
+
+ For an equilibrium invariant under $S_8$, such as EQ8, existence of any additional nontrivial stagnation point will then imply \textit{two} additional stagnation points, based on the action of $g_2$ and $g_3$.
+ If $(x_{_{SP}},y_{_{SP}},z_{_{SP}})$ is a \stagp, then  $(-x_{_{SP}},\, -y_{_{SP}},\, -z_{_{SP}}+L_z/2)$ and $(-x_{_{SP}} + L_x/2,\, -y_{_{SP}},\, -z_{_{SP}})$ are also \stagp s. 
+
+ We will investigate numerical methods to determine existence of any such nontrivial stagnation points, in fact for EQ2, as we show in the next section, we do find such a point and it's symmetric partner. These additional stagnation points are critical for understanding the flow dynamics in the equilibrium field, as the stable and unstable manifolds provide us with a skeleton of the overall dynamics.
+ 
+
+ 
+ 
+
+
+
+\section{Lagrangian Dynamics}
+\label{sec:Lagrangian}
+
+
+\subsection{Approach}
+\label{sec:approach}
+
+We know of the existence of  \stagp s in the flow of an equilibrium velocity field
+predicted from the symmetries of \pCf. Thus the starting point for our investigation is clear; treating an equilibrium velocity field as an autonomous dynamical system we have already identified the "fixed points" of the system, which we refer to in this context as the \stagp s.  Starting a small
+sphere of initial conditions around the \stagp s and evolving them
+forward and backward in time gives a good estimate of what the stable and
+unstable manifolds should look like. 
+
+Using the sum formula for computing velocities at
+any point in the \pCf\ domain \refeq{eqn:spectralsum}, by differentiating this formula it is a simple
+matter to compute the $[3\!\times\! 3]$ {\velgradmat}
+at any point. Eigenvalues and eigenvectors of this matrix will
+provide linear stability analysis results and allow for more accurate computation of the stable
+and unstable manifolds by starting our initial points along the directions of the eigenvectors. 
+
+
+ In order to investigate additional places in the domain for which no movement occurs, we may numerically compute $|\bu|^{2}$ along a fine
+grid and try to ascertain regions where it's value falls below a given threshold. Then
+using interpolation in these regions, any additional  \stagp s can be
+pinned down. 
+
+Potential applications that could follow from having an understanding of the Lagrangian dynamics would range from being able to compute mixing
+and diffusion properties, Lyapunov exponents, material stretching,
+striation thickness, time to mix etc... Similar investigations tend to be in two dimensional closed systems (refs), but if we find we
+have good Lagrangian chaos, this could provide a tangible 3D system for such investigations.
+
+
+
+
+
+
+\subsection{A colorful portrait of the Upper Branch equilibrium}
+\label{sec:eq2}
+
+
+Our analysis is carried out for the Nagata/Walleffe
+"Upper Branch" \eqv\ velocity field, EQ2, at $\Reynolds = 400$.
+The cell size parameters are \beq   [L_x,2,L_z]
+         = \; [2\pi/1.14,2,4\pi/5]
+         ~ [5.512,2,2.513].
+\label{cellW03}
+\eeq
+
+To begin, we look at the evolution of Lagrangian tracers starting on a grid of points, shown in \reffig{eltonFig:UBs}. The grid
+is chosen to lie in the $[y,z]$ plane, centered at $x = L_x/2$. The initial
+points are equally spaced, and offset by one position from the edge
+of the box. If the number of points is chosen to be one less than a
+multiple of 4, there will be points starting at $\bold{x}_{_{SP_{1}}}=(L_x/2,0,L_z/4)$ and
+$\bold{x}_{_{SP_{2}}}=(L_x/2,0,3L_z/4)$. The
+trajectories are integrated and run for a relatively short time. Here, the tracers are shown for $\bu$ defined as the difference from laminar flow. Just from evolving the grid of points alone we begin to get a feel for the dynamics.
+
+
+
+
+EQ2 invariance under the symmetry group $S$, explained  in
+\refsect{sec:symm_stag}, implies the existence of 4 \stagp s $SP_1$-$SP_4$,
+\refeq{s3lagrange}.
+%\bea
+%  \xSP{1} &=& (L_x/2,0,L_z/4) \continue
+%  \xSP{2} &=& (L_x/2,0,3L_z/4) \continue
+%  \xSP{3} &=& (0,0,L_z/4) \label{s3lagrange} \\
+%  \xSP{4} &=& (0,0,3L_z/4) \nnu
+% \,.
+%\eea
+In \reffig{eltonFig:UBs}(b) the figure
+from part (a) has been rotated in order
+to reveal these \stagp s. The behavior of trajectories near these
+fixed points reveals their  qualitative nature.
+The point at $3L_z/4$ in \reffig{eltonFig:UBs}(b) appears to be an
+unstable spiral, whereas the point at $L_z/4$ is probably hyperbolic. In order to verify these hypotheses, eigenvalues and
+stable/unstable manifolds for these \stagp s are computed. \\
+
+
+\begin{figure}[!h]
+(a)\includegraphics[width=1.0\textwidth ]{fig_UB1.jpg}
+(b)\includegraphics[width=1.0\textwidth]{fig_UB1eq.jpg}
+  \caption{
+  (a) {Grid of $19 \times 19$  initial points in the $[y,z]$ plane,
+centered at $x = L_x/2$; integrated for 15 time units.}
+    (b) { Rotated to show the 2 \stagp s}.
+      }
+  \label{eltonFig:UBs}
+ \end{figure}
+
+%  \begin{figure}[!h]
+% (a)\includegraphics[width=0.8\textwidth]{fig_UB2.jpg}
+% (b)\includegraphics[width=0.8\textwidth]{fig_UB2eq.jpg}
+%   \caption{
+%   (a) {Grid of $19 \times 19$ initial points in the $[y,z]$ plane,
+% centered at $x = 0$; integrated for 15 time units.}
+%   (b) { Rotated to show the other 2 \stagp s}.
+%          }
+%   \label{eltonFig:UBw}
+%  \end{figure}
+
+
+
+
+\begin{large}
+\noindent \textbf{Linearization and Stability} \\
+\end{large}
+
+For a perturbation $\delta$\bx\ away from one of the stagnation points,
+the change in the velocity field is given by $\delta\bu = \Mvar
+\delta\bx$ where $\Mvar$ is the nine component \velgradmat\ defined
+by $\Mvar_{ij}=\frac{\partial u_{i}}{\partial x_{j}}$. Since \bu\ is
+given by \refeq{eqn:spectralsum}, it is a relatively simple
+extension of this formula to evaluate these partials. To find
+$\partial\bu/\partial y$, one needs to use the relation
+$\frac{\partial}{\partial y}T_{n}(y) = n U_{n-1}(y)$ where $T_{n}$
+is the $n$th Chebyshev polynomial of the first kind and $U_{n}$ is
+the $n$th Chebyshev polynomial of the second kind. Everything else
+is straightforward.
+The eigenvalues of $\Mvar$, evaluated at a \stagp\  give local stability
+and reveal the qualitative nature of the motions nearby the \stagp.
+For the \stagp s $SP_1$ - $SP_4$, the eigenvalues, eigenvectors,
+and velocity gradients matrices are as follows. \\
+
+$\bold{x}_{_{SP_{1}}}=(L_x/2,0,L_z/4)$: There are 3 real eigenvalues, two positive and one
+negative.
+\begin{align}
+&\eigExp[1] = -0.4652099 \,,\quad
+\jEigvec[1] =
+\begin{pmatrix}
+             {0.9844417} \cr
+             {0.1743315} \cr
+             {0.0219779} \cr
+   \end{pmatrix} \\
+    &\eigExp[2] = 0.4008961 \,,\quad \jEigvec[2] =
+\begin{pmatrix}
+             {0.5704000} \cr
+             {-0.7666749} \cr
+             {0.2947091} \cr
+   \end{pmatrix} \\
+    &\eigExp[3] = 0.0643139 \,,\quad \jEigvec[3] =
+\begin{pmatrix}
+             {0.4082166} \cr
+             {0.7525949} \cr
+             {0.5166819} \cr
+   \end{pmatrix} \end{align}
+   The \velgradmat\ is
+\beq
+   \Mvar =
+   \begin{pmatrix}
+   {-0.4305385} &  {-0.3002042} &{0.8282447} \cr
+   {-0.1221356} &   {0.2456107} & {-0.1675796} \cr
+   {0.0001651}  &   {-0.0828951}  & {0.1849278} \cr
+            \end{pmatrix}
+\eeq
+    The point is a saddle; It has 1 stable dimension and a 2D plane
+    of instability spanned by $\jEigvec[2]$ and $\jEigvec[3]$.
+    The eigenvalues sum to 0, as is required by volume conservation.
+    
+     The \stagp\ $SP_4$ at
+    $(0,0,3L_z/4)$ has the same eigenvalues as for $SP_1$. It's
+    eigenvectors and \velgradmat\ differ by a minus sign
+    in the third component (except for $\Mvar_{33}$ where the two minuses
+    cancel). \\
+
+$\bold{x}_{_{SP_{2}}}=(L_x/2,0,3L_z/4)$: There is one real, negative eigenvalue and a complex
+pair with positive real part.
+
+\begin{align}
+&\eigExp[1] = -0.0352362 \,,\quad \jEigvec[1] =
+\begin{pmatrix}
+             {-0.9452459} \cr
+             {-0.1893368} \cr
+             {-0.2658228} \cr
+   \end{pmatrix}
+   \\
+&\eigRe[2] \pm i\,\eigIm[2] = 0.0176181 \pm i\,0.0862176
+   \\
+&\jEigvec[2] =
+\begin{pmatrix}
+             {0.3737950 + 0.0544113i} \cr
+             {0.2098940 - 0.4925773i} \cr
+             {0.7554000} \cr
+   \end{pmatrix}
+\,,\quad
+\jEigvec[3] =
+\begin{pmatrix}
+             {0.3737950 - 0.0544113i} \cr
+             {0.2098940 + 0.4925773i} \cr
+             {0.7554000} \cr
+   \end{pmatrix}
+\nnu\,.
+\end{align}
+The \velgradmat\ is \beq
+   \Mvar =
+   \begin{pmatrix}
+   {-0.0316935} & {-0.0708737} &  {0.0378835} \cr
+  {-0.0250579} & {-0.0218884} &  {0.0795969} \cr
+   {0.0014742} & {-0.1320575} &  {0.0535818} \cr
+   \end{pmatrix}
+                    \eeq
+
+    This \stagp\ spirals out in a plane given by the complex pair of
+    eigenvectors. It is stable in one dimension that is dominantly
+    along the $x$ direction. 
+    
+    $SP_3$
+ at $(0,0,L_z/4)$ has the same eigenvalues as $SP_2$ and again, the
+    \velgradmat\ is the same except for sign changes in
+    the third component. This follows from the plane Couette symmetries. \\
+
+\begin{large}
+\noindent \textbf{Additional Stagnation Points} \\
+\end{large}
+
+Having analyzed stagnation points $SP_1$-$SP_4$, before further investigating the dynamics, it is natural to wonder whether other such stagnation points may exist that do not necessarily follow from a symmetry argument. To answer this question, as mentioned in \refsect{sec:approach}, we numerically compute $|\bu|^{2}$ along a fine
+grid and look for where it's value falls below a given threshold. 
+
+We create a more refined grid of velocities which
+  is $144 \times 105 \times 144$. This is three times the 48 $\times$ 35
+  $\times$ 48 grid in each dimension used to show the initial tracer trajectories, and contains about 2.2 million
+  points. At each point $|\bu|^{2}$ is then calculated and at
+  every point that satisfies $|\bu|^{2} < \epsilon$ for some
+  arbitrarily chosen $\epsilon$, the point is plotted.
+
+In \reffig{eltonFig:fine_usquare} we show regions in the cell where $|\bu|^{2}$ is very small for $\epsilon = 10^{-4}$, notated by the globs of blue dots. The trajectories shown, explained below, are also suggestive of the existence of a stagnation point in this region within the spiraling region. The four previously known stagnation points are identified in the figure, but we also see a couple of additional clumps. Honing in one of the suspicious clusters,
+starting from the gridpoint value with smallest velocity in the suspicious region,
+$\bx_{0} \approx (2.33476, 0.40952, 0.64577)$, and its reflection through
+$\bold{x}_{_{SP_{1}}}$, $\bx_{0}' =2 \bold{x}_{_{SP_{1}}} - \bx_{0}$, the Newton iteration
+ \beq
+ \bx_{k+1} = \bx_{k} -
+          {\Mvar}^{-1}(\bx_{k}) \, \bu(\bx_{k})
+ \eeq
+%  where $\Mvar$ is the \velgradmat.
+converges rapidly to verify \textit{another} pair of \stagp s. Because we have already used notation to define points $SP_1$-$SP_8$ in \refsect{sec:symm_stag}, we refer to these new numerically discovered stagnation points as $SP_{N1}$ and $SP_{N2}$: 
+
+\begin{align}
+&\bold{x}_{_{SP_{N1}}} =(2.35105561774981,0.42293662349708,0.65200166068573)
+\\
+&\bold{x}_{_{SP_{N2}}}=(3.16051044117966,-0.42293662349708,0.60463540075018)
+\label{eqn:newspNewt}
+\,.
+\end{align}
+%         = [5.51156605892946182182,2,2.51327412287183459075]
+We see the
+ symmetry in the $y$-component of this pair, as was expected looking
+ at \reffig{eltonFig:fine_usquare}.
+These points are seen to be
+ symmetric about the point $SP_1$
+ \beq
+    (\bold{x}_{_{SP_{N1}}} +\bold{x}_{_{SP_{N2}}})/2 = \bold{x}_{_{SP_{1}}}
+ \,.
+ \eeq
+
+ 
+
+  \begin{center}
+\begin{figure}[!h]
+\includegraphics[width=1.0\textwidth]{fine_usquare.jpg}
+  \caption{
+   Blue clumps of points are where velocity squared is very close to zero.
+   Shown along with the stable manifold
+   of $SP_3$ (black) and the unstable manifold of $SP_1$ (green).
+          }
+  \label{eltonFig:fine_usquare}
+ \end{figure}
+\end{center}
+
+
+
+ Repeating the linear stability analysis for $SP_{N1}$ and $SP_{N2}$: There is one real, positive eigenvalue
+ and a complex pair with negative real part.
+
+  \begin{align} &\eigExp[1] = 0.1453207 \,,\quad \jEigvec[1] =
+\begin{pmatrix}
+             {0.9307982} \cr
+             {0.3502306} \cr
+             {0.1046576} \cr
+   \end{pmatrix}
+   \\
+&\{ \eigExp[2],\eigExp[3]\}
+  = \eigRe[2] \pm i \,\eigIm[2] =  -0.0726603 \pm i\, 0.3733478
+   \nnu\\
+&\jEigvec[2] =
+\begin{pmatrix}
+             {~0.5226203} \cr
+             {-0.6703938} \cr
+             {~0.2065610} \cr
+   \end{pmatrix}
+    \,,\quad
+\jEigvec[3] =
+\begin{pmatrix}
+             {~0.3779843} \cr
+             {~
+             0} \cr
+             {- 0.3031510} \cr
+   \end{pmatrix}
+\,.
+\end{align}
+The \velgradmat\ is
+\beq
+   {\Mvar} =
+   \begin{pmatrix}
+   {0.0225166} &  {0.0985763} &{0.7623083} \cr
+   {0.1714566} &   {-0.1275193} & {-0.6118476} \cr
+   {-0.0615378}  &   {0.1755954}  & {0.1050028} \cr
+            \end{pmatrix}
+\,.
+\eeq
+We have this time a 1D unstable manifold and a 2D spiraling stable
+manifold. 
+
+ \begin{figure}[!h]
+\includegraphics[width=1.0\textwidth]{stagps_edited.jpg}
+  \caption{
+   The 6 known unique \stagp s within one periodic box for EQ2. $SP_1$-$SP_4$ are guaranteed by EQ2 symmetries, $SP_{N1}$ and $SP_{N2}$ are determined numerically. 
+   }
+  \label{eltonFig:stagps_label}
+ \end{figure}
+
+ \begin{figure}[!h]
+\includegraphics[width=1.0\textwidth]{stagps2_edited.jpg}
+  \caption{
+   The 4 \stagp s that occur within the domain $\Omega$.
+   }
+  \label{eltonFig:stagps_label2}
+ \end{figure}
+
+   We have been describing all \stagp s which are
+   inside a single periodic cell, pictured in \reffig{eltonFig:stagps_label}. However even within this cell
+   there is a redundancy in labeling all of these points as
+   distinct. 
+   The interesting dynamics and connections between the different \stagp s occur
+ along the $x$ direction. To understand what is happening one needs
+ to look only at a subset of these \stagp s that lies in the right or left half of the box, that
+ is, in the interval $[0,L_{z}/2]$ or the interval $[L_{z}/2,L_{z}]$. We have chosen
+ the interval $[0,L_{z}/2]$. In
+ the $x$ direction the most convenient interval is not actually
+ $[0,L_{x}]$, rather we look at the \stagp s in the open interval
+ $(-L_{x}/2,L_{x})$, open so as to ignore the repeated translations on the boundary. Thus an alternate domain of investigation that will be conventient to sometimes use is
+ \beq \Omega = (-L_{x}/2,L_{x}) \times [-1,1] \times [0,L_{z}/2].
+ \eeq
+ Within this domain $\Omega$ there are four \stagp s. They are $SP_1$, $SP_3$, $SP_{N1}$, and
+ $SP_{N2}$, shown in
+  \reffig{eltonFig:stagps_label2}. Note that $SP_{N2}$ is a
+ translated version from the way it was viewed in
+ \reffig{eltonFig:stagps_label}.  \\ \\
+   
+   
+
+\begin{large}
+\noindent \textbf{Phase portrait and heteroclinic connections} \\
+\end{large}
+
+With identification of all of the stagnation points within either the original periodic box or the cell $\Omega$, as well as the corresponding linear stability analysis, we are ready to make a complete phase space portrait for the Upper Branch, EQ2. \\
+
+\begin{figure}[!h]
+\includegraphics[width=1.1\textwidth]{manifolds_both.jpg}
+  \caption{
+   Segments of the stable and unstable manifolds of the \stagp s
+   $\bold{x}_{_{SP_{1}}} = (L_x/2,0,L_z/4)$ and
+   $\bold{x}_{_{SP_{2}}} = (L_x/2,0,3L_z/4)$. Black and green are unstable.
+   }
+  \label{eltonFig:manifolds_both}
+ \end{figure}
+
+
+    \begin{figure}[!h]
+\includegraphics[width=1.1\textwidth]{man14_june3.jpg}
+  \caption{
+   Heteroclinic connections (red trajectories) from $SP_{N1}$ -> $SP_3$ and $SP_{N2}$ -> $SP_3$, shown in cell with $x \in$ [-Lx/2, Lx/2] along with the unstable manifold of $SP_3$.
+   }
+  \label{eltonFig:hetero1}
+ \end{figure}
+
+
+
+
+  \begin{figure}[!h]
+\includegraphics[width=1.1\textwidth]{june4_fig7.jpg}
+  \caption{
+   Portrait of the fundamental dynamics of the \stagp s $SP_1$, $SP_3$, $SP_{N1}$, $SP_{N2}$ within cell $\Omega$.
+   }
+  \label{eltonFig:hetero2}
+ \end{figure}
+
+
+ 
+
+
+The dynamics between the \stagp s and their translations is
+   quite interesting. In \reffig{eltonFig:manifolds_both} we see a partial view of the stable and unstable manifolds of two of the stagnation points, $SP_1$ and $SP_2$, in the original periodic domain, found by integrating trajectories near the fixed points forwards and backwards in time along the stable or unstable eigenvectors. Local stability analysis shows that $SP_1$ has all real eigenvalues
+with a 1D stable manifold,
+and a 2D unstable manifold which is locally a plane. $SP_3$
+ has a 2D unstable manifold with complex eigenvalues which spiral
+ out in a plane and a 1D stable manifold. 
+ 
+ As alluded to in \reffig{eltonFig:fine_usquare}, $SP_{N1}$ and $SP_{N2}$ sit near the center of the swirl of green coming from the unstable direction of $SP_1$. To better understand what is happening here, referring to \reffig{eltonFig:hetero1}, we compute the  stable and unstable manifolds of $SP_{N1}$ and $SP_{N2}$, where we use the shifted translation of $SP_{N2}$, along with the stable and unstable manifolds of $SP_3$. The blue surface is formed by the overlap of trajectories starting along the unstable manifold of $SP_3$ and the stable manifolds of $SP_{N1}$ and $SP_{N2}$.  We see that the stable manifold of $SP_3$ (shown by the red curves) corresponds with the unstable manifolds of $SP_{N1}$ and $SP_{N2}$, thus we have \textit{heteroclinic connections} from $SP_{N1}$ --> $SP_3$ and $SP_{N2}$ --> $SP_3$!
+ The thick appearance of the red curves
+ is simply so that they can be seen within the blue surface. They are actually just a single trajectory.
+ 
+ Next we bring $SP_1$ into the picture to see the full dynamical portrait within $\Omega$. $SP_1$ has a 2D unstable manifold
+ and a 1D stable manifold. The result of all of these manifolds
+ plotted together is \reffig{eltonFig:hetero2}. Compare to \reffig{eltonFig:stagps_label2} to see the locations of the stagnation points. The relation of the
+ stable manifold of $SP_1$ (yellow curve) and the trajectories that are driven away from $SP_1$ in the unstable direction (green)
+ to those of the blue surface is quite interesting. These trajectories
+ tightly hug the blue surface as they spiral around it, appearing to be shielded from entering the volume it encompasses. This could have significant implications for the consideration of fluid mixing within plane Couette flow, perhaps showing that it is difficult to achieve a uniformly mixed space for this particular equilibrium; a blob of ink that starts outside of the blue surface may have a difficult time ever entering the region!
+ 
+ One merely translates the image in \reffig{eltonFig:hetero2} in the
+ $x$ direction by an amount $L_{x}$ to give a complete picture in
+ any periodic cell. The same picture will also occur symmetrically
+ (translated by $L_{x}/2$ and $L_{z}/2$) in the left half of the
+ box.
+  
+ 
+
+
+
+
+
+   \subsection{Equilibrium \tEQeight: Additional Symmetries}
+   \label{sect:EQ8}
+
+   Having thoroughly analyzed the dynamics of the "Upper Branch" Equilibrium EQ2, we next look at another equilibrium velocity field of \pCf\, EQ8. As of the time of this research, a total of 11 known equilibria have been found. EQ2 was one of the first known, dating back to 1990. And numerically it was found that EQ2 possesed the S group symmetry. Equilibrium EQ8 was found... We consider a more turbulent flow with \Reynolds\ 270. \\
+
+
+\begin{large}
+\noindent \textbf{Tracer dynamics and analysis} \\
+\end{large}
+
+ We start once again with a cleverly chosen grid of initial
+ trajectories to get a feel for the significant structures in the
+ flow. The grid is
+ in a plane at $x = L_{x}/2$. The result, after a short integration
+ time, is shown in \reffig{eltonFig:EQ8_grid1}. This perspective
+ view already shows us quite a bit of information. Once again we
+ have symmetries abound, and we know there will be at least 8 stagnation points $SP_1$-$SP_8$.  Another interesting feature of this
+ plot is the four vortical structures on the left half. One final noteworthy point
+  from the figure is the appearance of a perfect line segment connecting two of the
+ stagnation points, which happen to be $SP_1$ and $SP_2$. 
+  This strongly suggests a heteroclinic
+ connection between these two \stagp s. To confirm this we
+ compute the eigenvalues and eigenvectors of the \velgradmat. For
+ $SP_1$, there is
+ indeed a real, unstable eigenvector pointing along (0,0,1) and for
+ $SP_2$ there is a real, stable eigenvector pointing along (0,0,1).
+ This, together with the plot, numerically confirms the existence of the heteroclinic trajectory. The same result  holds for the shifted pair at $x = 0$. The rest of the eigenvalues/eigenvectors are given
+ below. It is curious that for \tEQeight\ there is a heteroclinic connection which is a simple
+ horizontal line connecting the pair of trivial \stagp s in the
+ \textit{spanwise} direction, whereas for \tUB\ the connection was some
+ arbitrary-looking curve in the \textit{streamwise} direction connected to a nontrivial
+ \stagp. Factorization of \tEQeight\
+$SP_1$ and $SP_2$ stability eigenspaces is presumably due to symmetry; the spanwise $z$ direction is a $1D$ flow-invariant subspace at
+the \stagp s. That ensures the simplicity of the \hec.
+
+\tEQeight, $SP_1$: There are two real, positive eigenvalues
+ and one real, negative eigenvalue.
+\bea
+\left(
+    \eigExp[1],\eigExp[2],\eigExp[3]
+\right) &=&
+      (0.363557,0.227831,-0.591389)
+\label{E8SP1} \\
+\left(
+    \jEigvec[1],\jEigvec[2],\jEigvec[3]
+\right) &=&
+\left(
+    \begin{pmatrix}
+             {0} \cr
+             {0} \cr
+             {1}
+    \end{pmatrix} \,,
+    \begin{pmatrix}
+             {-0.733415} \cr
+             {-0.679780} \cr
+             {0}
+    \end{pmatrix} \,,
+    \begin{pmatrix}
+             {0.991005} \cr
+             {0.133824} \cr
+             {0}
+    \end{pmatrix}
+\right) \,.
+\nnu
+\eea
+
+\tEQeight, $SP_2$: There are two real, positive eigenvalues
+ and one real, negative eigenvalue.
+\bea
+\left(
+    \eigExp[1],\eigExp[2],\eigExp[3]
+\right) &=&
+      (0.992857,0.255973,-1.248830)
+\label{E8SP2} \\
+\left(
+    \jEigvec[1],\jEigvec[2],\jEigvec[3]
+\right) &=&
+\left(
+    \begin{pmatrix}
+             {~0.116961} \cr
+             {-0.993136} \cr
+             {0}
+    \end{pmatrix} \,,
+    \begin{pmatrix}
+             {0.957795} \cr
+             {0.287450} \cr
+             {0}
+    \end{pmatrix} \,,
+    \begin{pmatrix}
+             {0} \cr
+             {0} \cr
+             {1}
+    \end{pmatrix}
+\right) \,. \\
+\nnu
+\eea
+
+
+   \begin{figure}[!h]
+\includegraphics[width=1.0\textwidth]{EQ8_grid1.jpg}
+  \caption{
+   A grid of initial trajectories in the plane $x = L_{x}/2$ for EQ8,
+   integrated for short time.
+   }
+  \label{eltonFig:EQ8_grid1}
+ \end{figure}
+
+
+
+\begin{large}
+\noindent \textbf{More symmetries --> More stagnation} \\
+\end{large}
+
+Equilibrium EQ8 (as well as EQ7, not discussed here), possesses additional symmetries compared to EQ2. EQ2 is in the $S$-invariant subspace of velocity fields and EQ8 is in $S_8$ (\refsect{PCF_symm} and \refsect{sec:symm_stag}).
+
+
+From \refeq{second_condition} and \refeq{s3lagrange} we know that we will have the additional stagnation points
+
+ \bea
+  \bold{x}_{_{SP_{5}}} &=& (L_x/4,0,0) \continue
+  \bold{x}_{_{SP_{6}}} &=& (3L_x/4,0,0) \continue
+  \bold{x}_{_{SP_{7}}} &=& (L_x/4,0,L_z/2)  \\
+  \bold{x}_{_{SP_{8}}} &=& (3L_x/4,0,L_z/2) \nnu
+ \,.
+\eea
+ Interestingly these were actually discovered numerically before the symmetry arguments were understood. A Newton search on
+\tEQeight\ revealed that $(L_x/4,0,L_z/2)$ and $(3L_x/4,0,L_z/2)$
+are \stagp s. From this one may deduce that symmetry $s_5$ must
+hold, and it can then be checked that at any position the velocity
+field is indeed invariant under $s_4$ and $s_5$. 
+
+Stability analysis of the new set for \tEQeight\ gives the
+following.
+
+ $SP_5$: There is one real, positive eigenvalue
+ and a complex pair with negative real part.
+  \begin{align} &\eigExp[1] = 0.03109 \,,\quad \jEigvec[1] =
+\begin{pmatrix}
+             {0.85275} \cr
+             {0.41774} \cr
+             {-0.31355} \cr
+   \end{pmatrix}
+   \\
+&\{ \eigExp[2],\eigExp[3]\}
+  = \eigRe[2] \pm i \,\eigIm[2] =  -0.01555 \pm i\, 0.59385
+   \label{EQSP5eigs}\\
+&\jEigvec[2] =
+\begin{pmatrix}
+             {~0.24762} \cr
+             {-0.31442} \cr
+             {~0.69906} \cr
+   \end{pmatrix}
+    \,,\quad
+\jEigvec[3] =
+\begin{pmatrix}
+             {-0.20793} \cr
+             {~0.55489} \cr
+             {~0} \cr
+   \end{pmatrix}
+\,.
+\end{align}
+ We have a 1D unstable manifold and a 2D in-spiral
+stable manifold. All four of the new points have the same
+eigenvalues. $SP_5$ and $SP_8$ have the same eigenvectors, as do $SP_6$
+and $SP_7$ whose eigenvectors differ from $SP_5$ only by the sign of
+the third component for \jEigvec[1] and by the sign of the first and
+second components for \jEigvec[2] and \jEigvec[3].
+
+As another consequence of
+numerically searching for \stagp s, the figures produced by
+plotting gridpoints where velocity is small, using a cutoff
+value of $|\mathbf{u}|^{2}$ which is too large to be useful for
+finding \stagp s, we instead find a plot showing
+intricate patterns in the flow. \reffig{eltonFig:usquare_EQ8_1} shows a 3D
+perspective view of these points, and
+\reffig{eltonFig:usquare_EQ8_2} 
+shows the projection of \reffig{eltonFig:usquare_EQ8_1} onto the $xz$ plane. These plots may indicate the existence of invariant tori and quasiperiodic dynamical behavior. \\
+
+\begin{figure}[!h]
+\includegraphics[width=1.0\textwidth]{usquare_EQ8_cute1.jpg}
+  \caption{
+   A plot of points whose value of velocity squared falls below an
+   arbitrary cutoff of $5\times 10^{-7}$. Perspective view.
+   }
+  \label{eltonFig:usquare_EQ8_1}
+ \end{figure}
+
+ \begin{figure}[!h]
+\includegraphics[width=1.0\textwidth]{usquare_EQ8_cute2.jpg}
+  \caption{
+   A plot of points whose value of velocity squared falls below an
+   arbitrary cutoff of $5\times 10^{-7}$. Projection onto the $xz$
+   plane.
+   }
+  \label{eltonFig:usquare_EQ8_2}
+ \end{figure}
+
+
+
+
+  
+
+ 
+
+
+
+
+
+
+
 \section{Conclusion}
-\label{sec:intro}
+\label{sec:conclusion}
 
 
 %%% Acknowledgements %%%
 \section{Acknowledgments}
 Acknowledgment. 
+
+
+
+
+
+
+
+
+
+
+
+\section{Reading assignments}
+\label{sect:Reading}
+
+
+\subsection{Keywords: Lagrangian mixing in turbulence}
+
+Do literature review for Lagrangian mixing: possible keywords
+to google:
+\begin{itemize}
+\item
+    tracer particles in turbulent ...
+\item
+    Lagrangian dynamics in turbulence
+\item
+    inertial particles
+\item
+    Lyapunov exponents of heavy particles in turbulent flows
+\end{itemize}
+
+Possible authors (still to check)
+\begin{itemize}
+\item
+Krzysztof Gawedzky (Lyon)
+\item
+    B. Eckhardt (Marburg):
+Geometry of particle paths in chaotic and turbulent flows
+\item
+    Jean-Francois Pinton (Lyon): Lagrangian experiments
+\end{itemize}
+
+
+\subsection{Articles and books of potential interest}
+
+\medskip\noindent {\bf  PC 2015-08-09}: This indeed is very interesting,
+thanks!
+
+\medskip\noindent {\bf Mohammad 2015-08-04}: Of possible interest:
+\arXiv{1508.00062} {\em Quantitative Quasiperiodicity}, by
+S. Das et al. (2015).
+
+\medskip\noindent {\bf Mohammad 2015-06-30}: Of potential interest to Predrag:
+\textit{A dynamical Zeta function for group actions}, Richard Miles.
+\arXiv{1506.08555}
+
+\medskip\noindent {\bf  Jean-Luc Thiffeault 2009-3-2}:
+Article with Emmanuelle Gouillart, Olivier Dauchot
+ and St\'ephane Roux\rf{GDTR08},
+``Open-flow mixing: Experimental evidence for strange eigenmodes''
+is perhaps worth a read.
+
+\medskip\noindent {\bf  PC 2009-1-20}:
+This Master's thesis announcement,
+\HREF{http://www.nbi.ku.dk/english/Calendar/Activities_09/msc_abh_23.01.09/}
+     {Semi- Lagrangian Methods in Air Pollutions Models},
+might have some interesting pointers to
+the Lagrangian tracing and mixing literature.
+
+\medskip\noindent {\bf  PC 2008-8-22}:
+check out the talk of (and search for articles by)
+\HREF{http://www.newton.ac.uk/programmes/HRT/seminars/092215003.html}
+     {B. Sawford}:
+  	``A Lagrangian view of scalar transport and mixing.''
+(Webcast on the Newton Institute homepage.)
+
+\noindent
+\HREF{http://www.newton.ac.uk/programmes/HRT/seminars/100210301.html}
+    {GL. Eyink} (Johns Hopkins)
+  	``Turbulent Lagrangian dynamics of vortex and magnetic-field line''
+is a smart guy, this might be worth reading/listening to.
+(Webcast on the Newton Institute homepage.)
+
+\noindent
+I have not had much luck understanding
+\HREF{http://www.newton.ac.uk/programmes/HRT/seminars/100209001.html}
+        {L. Biferale} (Tor Vergata)
+  	``Lagrangian velocity statistics in turbulence: theory, experiments and numerics,''
+in the past, but one could give it a try.
+(Webcast on the Newton Institute homepage.)
+
+
+Ottino\rf{Botti89}
+% , J.M. \underline{The kinematics of mixing: stretching, chaos,
+% and transport}. Cambridge University Press, 1989.
+\\
+
+\noindent
+ Chat\'e, H.; Villermaux, E.; and Chomaz, J.M.
+{\em Mixing: Chaos
+and Turbulence}\rf{chat_mixing99}
+
+\noindent
+    Solomon,T.H. \etal "Lagrangian chaos and multiphase processes in
+    vortex flows"\rf{solLagr03}.
+
+\noindent
+ Fogleman, M.A.; Fawcett, M.J.; and Solomon, "T.H.
+Lagrangian chaos and correlated Lévy flights in a non-Beltrami flow:
+Transient versus
+long-term transport"\rf{fogleman01}.
+
+\noindent
+ Du, Yunson and Ott, Edward.
+"Growth rates for fast kinematic dynamo instabilities of chaotic
+fluid flows"\rf{du_growth06}.
+
+\noindent
+ Castelian, Cathy; Mokrani, Asen; Le Guer, Yves;
+Peerhossaini, Hassan. "Experimental study of chaotic advection
+regime in a twisted duct flow"\rf{castel01}.
+
+
+d'Ovidio \etal\rf{dovidio08}
+     ``Comparison between Eulerian diagnostics and finite-size
+    Lyapunov exponents''
+    might be worth a quick read.
+
+\medskip\noindent {\bf  Jean-Luc Thiffeault 2001-8-29}:
+Read T\'{e}l articles\rf{KarTel97,Tel2000},
+they present the basic ideas: the first\rf{KarTel97} is
+unphysical and the "openness" of the flow comes from having sinks and
+unbounded trajectories.  The second\rf{Tel2000} scatters tracers off a Von Karman
+vortex street, where they get stuck behind the cylinder for a while in
+the mixing region.
+
+\medskip\noindent {\bf  JRE 2008-12-8}:
+G. Haller. "Distinguished material surfaces and coherent structures in three dimensional fluid flows". Physica D, 149. 2001. 248.
+
+
+\medskip\noindent {\bf  PC 2008-7-12}:
+read
+\HREF{http://arxiv.org/abs/0807.0678}
+     {Dullin and Meiss}\rf{dullin-2008} on ``Quadratic
+Volume-Preserving Maps.'' They study the situation when two
+\stagp s are saddle-foci with intersecting two-dimensional
+stable and unstable manifolds that bound a spherical
+``vortex-bubble.'' Probably not seen in your case, but they
+write well, and they give you many pointers to $3D$ flows literature.
+If you read some of that, please enter it into elton.bib, and
+write notes in your blog about what's in these articles.
+
+\medskip\noindent {\bf  PC 2008-7-11}:
+Search for, read (and explain to Predrag)
+literature on $3D$ flows. There are 2 aspects that surely have much
+literature:
+    \begin{enumerate}
+      \item
+$3D$ volume conservation makes these flows
+almost symplectic - in particular, Poincar\'e sections of periodic
+orbits are area-preserving
+      \item
+Reversibility. They are presumably the same forward and
+backward in time. This discrete symmetry leads to infinite families
+of ``symmetry lines'' on which important sets \eqva\ and
+\po s lie, and ease the searches for them, as existence of
+symmetry line reduces the dimensionality of the search,
+They of might be what
+leads to symmetry lines discussed by JRE in \refsect{sect:stagpairs}.
+However, due to the convective term in \NSe\ I have not been able to
+see how reversibility works, other than for
+{\velgradmat} $ {\Mvar} $,
+
+    \end{enumerate}
+
+\begin{description}
+
+
+    \PCpost{2008-5-15}{ Read (and explain to Predrag)
+this frequently cited article on $3D$ flows:
+Chong, {Perry} and {Cantwell}\rf{ChPeCa90}
+    }
+
+    \PCpost{2007-11-2}{ Read (and explain to Predrag)
+Schneider recommendations - Homann, Dreher and Grauer\rf{homann-2007}
+and  P.K. Yeung and Pope\rf{YeuPop06}
+(the P.K. is just next 10 buildings away).
+    }
+
+    \PCpost{2007-12-22}{ Read (and explain to Predrag)
+Mathur, Haller, Peacock, Ruppert-Felsot, and Swinney, ``Uncovering
+the Lagrangian Skeleton of Turbulence''\rf{MHPRS07}. Predrag put a
+copy into
+\HREF{http://ChaosBook.org/library/index.html\#HallerPRL07}
+     {ChaosBook.org/library}.
+     }
+
+    \PCpost{2007-12-22}{ Read (and explain to Predrag)
+Arneodo \etal\rf{ABBBBB08}, ``Universal intermittent properties of
+particle trajectories
+              in highly turbulent flows.''
+    }
+
+
+    \PCpost{2006-06-18}{
+Not directly relevant to us now, but \refref{OleMog07} has exact analytic
+solutions of GOY model - perhaps of interest to make connections with the
+Kolmogorov obsessed.
+    }
+
+    \MMFpost{2014-10-21}{
+Added two references to \texttt{elton/public\_html/papers}
+for mix-norms (measures of mixing efficiency):
+
+\emph{A multiscale measure for mixing},
+George Mathew, Igor Mezi\'c and Linda Petzold (2005)
+
+\emph{Optimal stirring strategies for passive
+scalar mixing},
+Zhi Lin, Jean-Luc Thiffeault
+and Charles R. Doering
+    }
+
+    \PCpost{2014-11-04}{
+    Thanks, will study...
+Repository gets very huge very quickly if we add *.pdf's of papers to it.
+We enter them into \emph{elton/bibtex/elton.bib} and put the pdf's of
+papers into \texttt{ChaosBook.org/library/}. Will show you how.
+    }
+
+    \PCpost{2014-11-04}{
+Noticed two papers of possible interest to Mohammad:
+
+Ajinkya Dhanagare, Stefano Musacchio and Dario Vincenzi,
+{\em Weak-strong clustering transition in renewing compressible flows}
+(\arXiv{1411.0110}; J. Fluid Mech., in press):
+``
+  We investigate the statistical properties of Lagrangian tracers transported
+by a time-correlated compressible renewing flow. We show that the preferential
+sampling of the phase space performed by tracers yields significant differences
+between the Lagrangian statistics and its Eulerian counterpart. In particular,
+the effective compressibility experienced by tracers has a non-trivial
+dependence on the time correlation of the flow. We examine the consequence of
+this phenomenon on the clustering of tracers, focusing on the transition from
+the weak- to the strong-clustering regime. We find that the critical
+compressibility at which the transition occurs is minimum when the time
+correlation of the flow is of the order of the typical eddy turnover time.
+Further, we demonstrate that the clustering properties in time-correlated
+compressible flows are non-universal and are strongly influenced by the
+spatio-temporal structure of the velocity field.''
+
+\emph{On the use of the theory of dynamical systems for transient problems}
+by Ugo Galvanetto and Luca Magri,
+(\arXiv{1411.0111};
+Nonlinear Dynamics 74,  pp 373-380,
+DOI: 10.1007/s11071-013-0976-7)
+\\
+ ... address dynamical systems
+with parameters varying in time. An idea to predict their behaviour is
+proposed. These systems are called \emph{transient systems}, and are
+distinguished from \emph{steady systems}, in which parameters are constant. In
+particular, in steady systems the excitation is either constant (e.g. nought)
+or periodic with amplitude, frequency and phase angle which do not vary in
+time. We apply our method to systems which are subjected to a transient
+excitation, which is neither constant nor periodic. The effect of switching-off
+and full-transient forces is investigated. The former can be representative of
+switching-off procedures in machines; the latter can represent earthquake
+vibrations, wind gusts, etc. acting on a mechanical system. This class of
+transient systems can be seen as the evolution of an ordinary steady system
+into another ordinary steady system, for both of which the classical theory of
+dynamical systems holds. The evolution from a steady system to the other is
+driven by a transient force, which is regarded as a map between the two steady
+systems.''
+
+I have not studied either, so I do not know if they are any good.
+   }
+
+    \MMFpost{2015-02-12}{
+ A cute piece of math: {\it Nonlinear Dynamics of
+the Rock-Paper-Scissors Game with Mutations}
+Toupo and Strogatz.
+Read the paper \arXiv{1502.03370}.
+    }
+
+    \PCpost{2015-02-16}{
+Very cute. But that's the thing about Strogatz - writes beautifully,
+but he'll never leave 2 dimensions :)
+    }
+
+    \PCpost{2015-07-20}{
+Abud and Caldas\rf{AbuCal15} write in {\em On {Slater's} criterion for
+the breakup of invariant curves}: ``Slater's theorem states that an
+irrational translation over a circle returns to an arbitrary interval in
+at most three different recurrence times expressible by the continued
+fraction expansion of the related irrational number. The hypothesis
+ is that Slater's theorem can be also verified in
+the dynamics of invariant curves. Hence, we use Slater's theorem to
+develop a qualitative and quantitative numerical approach to determine
+the breakup of invariant curves in the phase space of area-preserving
+maps.''
+    }
+
+    \PCpost{2015-12-04}{                                        \toCB
+Weiss and Knobloch\rf{WeiKno89} write in
+{\em Mass transport and mixing by modulated traveling waves}:
+``
+Particle transport and mixing in modulated traveling waves in a
+binary-fluid mixture heated from below is studied numerically. The fluid
+divides into three regions separated by Kolmogorov-Arnol'd-Moser curves:
+a core region where particles are carried along with the wave (trapped),
+an outer region where particles are left behind by the wave (untrapped),
+and a separatrix layer between the two where particles chaotically
+alternate between being trapped and untrapped. The probability
+distributions for the lengths of individual trapped and untrapped events
+are sharply peaked at small times, have a power-law decay, and exhibit
+similar complex structure. The core and outer regions are responsible for
+long-range transport with no diffusion. The chaotic separatrix layer
+gives rise to long-range transport with enhanced mixing and anomalous
+diffusion.
+''
+
+Gottwald and Melbourne\rf{GottMel13} make a distinction
+between `strong' and `weak chaos'. They write:
+``
+we adopt the standard perspective of decomposing the dynamics
+into the dynamics on the symmetry group and the dynamics
+orthogonal to it. Systems with symmetry, or ``equivariant dynamical
+systems,'' thus are cast into a so-called skew product
+\[
+\ssp=f(\ssp)
+    \,,\qquad
+\dot{\LieEl} = \LieEl \Lg(\ssp)
+\]
+
+Given a certain shape dynamics
+(regular, strongly chaotic or weakly chaotic), can we say anything
+about the growth rate of solutions on the group? More specifically,
+what is the expected diffusive behavior?
+
+For anisotropic systems, strong chaos leads to diffusive behavior
+(Brownian motion with drift) and weak chaos leads to superdiffusive
+behavior (Lévy processes with drift). For isotropic systems, the drift
+term vanishes and strong chaos again leads to Brownian motion. We
+establish the existence of a nonlinear Huygens principle for weakly
+chaotic systems in isotropic media whereby the dynamics behaves
+diffusively in even space dimension and exhibits superdiffusive behavior
+in odd space dimensions.
+''
+    }
+
+\end{description}
+
+
+
+
 
 
 
