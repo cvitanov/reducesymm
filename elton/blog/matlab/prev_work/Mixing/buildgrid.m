@@ -1,6 +1,6 @@
 
-keep  evecs_q2 %clear
-global uu ug Mx My Mz Nx Ny Nz Nd Lx Lz a b lx lz alpha gamma N uspec1 uspec2 uspec3 v_grid2 r_grid2 dx dy dz
+clear
+global uu ug Mx My Mz Nx Ny Nz Nd Lx Lz a b lx lz alpha gamma N uspec1 uspec2 uspec3 
 
 open('UB.mat');      % Upper Branch equilibrium
 uu = ans.UB;
@@ -21,9 +21,9 @@ uspec3 = zeros(N/3,1);
 uspec3 = uu(2*N/3+1:N,1) + i*uu(2*N/3+1:N,2);
  % end geometry settings
  
-nx = 10;
-ny = 8;
-nz = 10;
+nx = 48;
+ny = 35;
+nz = 48;
 dx = Lx/nx;
 dy = (b-a)/ny;
 dz = Lz/nz;
@@ -34,12 +34,7 @@ for i = 0:nx
         for k = 0:nz
             rr = [i*dx a+j*dy k*dz];
             u = u_sum(0,rr);
-            v_grid2(1,i+1,j+1,k+1) = u(1);
-            v_grid2(2,i+1,j+1,k+1) = u(2);
-            v_grid2(3,i+1,j+1,k+1) = u(3);
-            r_grid2(1,i+1,j+1,k+1) = rr(1);
-            r_grid2(2,i+1,j+1,k+1) = rr(2);
-            r_grid2(3,i+1,j+1,k+1) = rr(3);
+            v_g{i+1,j+1,k+1} = u';
         end
     end
 end

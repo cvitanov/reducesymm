@@ -2,14 +2,17 @@
 % John Elton, updated May 05, 2008
 
 
-keep v_grid
-global uu ug Mx My Mz Nx Ny Nz Nd Lx Lz a b lx lz alpha gamma N uspec1 uspec2 uspec3 nx ny nz dx dy dz 
+clear;
+global uu ug Mx My Mz Nx Ny Nz Nd Lx Lz a b lx lz alpha gamma N uspec1 uspec2 uspec3 nx ny nz dx dy dz v_grid
 
 open('UB.mat');
 uu = ans.UB;
 open('UB_geom.mat');
 ug = ans.UB_geom;
-
+tic
+open('v_g.mat');
+toc
+v_grid = ans.v_g;
 
  % geometry settings, don't edit
  Mx = ug(1); My = ug(2); Mz = ug(3); Nx = ug(4); Ny = ug(5); Nz = ug(6);
@@ -25,9 +28,9 @@ ug = ans.UB_geom;
  uspec3 = uu(2*N/3+1:N,1) + i*uu(2*N/3+1:N,2);
  % end geometry settings
  
- nx = 144;           % interpolation grid size
-ny = 105;
-nz = 144;
+ nx = 48;           % interpolation grid size
+ny = 35;
+nz = 48;
 
 dx = Lx/nx;
 dy = (b-a)/ny;

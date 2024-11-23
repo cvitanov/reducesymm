@@ -61,8 +61,8 @@ uspec3 = uu(2*N/3+1:N,1) + i*uu(2*N/3+1:N,2);
     v2 = [v2; R{1,j}(kk,2)];
     v3 = [v3; R{1,j}(kk,3)];
     end
-   % plot3(v1,v3,v2,'LineStyle','-','Color',[0 0 1],'Marker','.')
-    mesh(v1,v3,v2)
+    plot3(v1,v3,v2,'LineStyle','-','Color',[0 0 1],'Marker','.')
+    % mesh(v1,v3,v2)
    % plot3(R{1,:}(kk,1),R{1,:}(kk,3),R{1,:}(kk,2),'LineStyle','-','Color',[0 0 1],'Marker','.')
     grid on
     axis([0 Lx 0 Lz a b])
