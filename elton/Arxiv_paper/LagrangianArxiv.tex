@@ -69,7 +69,7 @@
 % or {Lagrangian dynamics in plane Couette turbulence} ?
 
 
-\author[1]{John R. Elton} %\thanks{Jelton.physics@gmail.com}}
+\author[1]{John R. Elton\thanks{Jelton.physics@gmail.com}}
 \author[1]{Predrag Cvitanovi\'{c}\thanks{predrag.cvitanovic@physics.gatech.edu}}
 \author[2]{Jonathan Halcrow\thanks{halcrow@gmail.com}}
 \author[3]{John F. Gibson\thanks{John.Gibson@unh.edu}}
@@ -98,7 +98,7 @@
 \section{Plane Couette Flow}
 \label{sec:PCF}
 
-\subsection{\NSe}s
+\subsection{The Navier-Stokes equations}
 \label{sec:NS}
  The underlying equations
 that govern the motion of \pCf\ are the {\NSe}s,
@@ -129,9 +129,9 @@ For an equilibrium velocity field that is not changing in time, the first equati
 the characteristic length. Thus the form of the {\NSe}s and boundary conditions make use of rescaling to use non-dimensionalized variables. 
 We use $\Reynolds = 400$, in the regime of moderate turbulence, for the \pCf\ simulations throughout the text unless otherwise indicated.
 
-In most of our work, velocity field  $\bu$
+For computational purposes, it is easier to work with a velocity field  that
 represents the {\em difference} from the laminar flow. 
-So we can break up the total velocity field into two components: $\butot =
+So we can break up the total field into two components: $\butot =
 y \hat{\bf x} + \bu$. Here $y \hat{\bf x}$ is the laminar velocity
 field and $\bu$ is then the difference between the total velocity and
 laminar. Substitute $y \hat{\bf x} + \bu$ for $\bu$ in the
@@ -147,12 +147,12 @@ nondimensionalized {\NSe}s above to get
         \lapl \bu  \,, \quad \nabla \cdot \bu = 0
 \,,
 \ee{NavStokesDiff}
-with boundary conditions $\bu = 0 $ at $y \pm 1$. The equilibrium 
-velocity fields we study satisfy \refeq{NavStokesDiff}. This equation is 
+with boundary conditions $\bu = 0 $ at $y \pm 1$.  This equation is 
 a little more complicated than \refeq{eqn:NavierStokes}, but having 
 Dirichlet boundary conditions on $\bu$ makes the analysis much easier, 
 since the set of allowable velocity fields (those fields that satisfy 
-incompressibility and boundary conditions) forms a vector space. 
+incompressibility and boundary conditions) forms a vector space. The equilibrium 
+velocity fields we study start from $\bu$ which satisfies \refeq{NavStokesDiff}, and we may then add back the laminar part of the flow to produce physical fluid trajectories. 
 
 \begin{figure}[!h]
  \begin{center} 
@@ -179,7 +179,7 @@ evaluating velocity field values for a given \eqv, e.g. the upper branch
 as shown in \reffig{fig:UB}. These are made available at the website 
 {\tt Channelflow.org} \cite{channelflow}. The data obtained 
 \cite{channelflowDat} stores the spectral coefficients $\mathbf{\hat{u}}$ 
-of the expansion of a velocity field $\mathbf{u(x)}$. The form of the 
+of the expansion of a velocity field $\mathbf{u(x)}$ satisfying \refeq{NavStokesDiff}. The form of the 
 expansion is 
 \begin{equation}
  \mathbf{u(x)} = \sum_{m_{y}=0}^{M_{y}-1}\sum_{m_{x}=0}^{M_{x}-1}\sum_{m_{z}=0}^{M_{z}-1}
@@ -211,7 +211,7 @@ of the velocity fields on these gridpoint values, to integrate a
 trajectory with great computational speed. However this will not be 
 nearly as accurate as evaluating the sum \refeq{eqn:spectralsum} 
 directly. So we evaluate \refeq{eqn:spectralsum} to give the exact 
-velocity field at every point along a trajectory. We are able to perform 
+velocity field at every point along a trajectory, adding back the laminar part of the flow. We are able to perform 
 these computations in Matlab with enough speed to compute many tracer 
 particle trajectories within an equilibrium velocity for an adequate 
 length of time to study the flow dynamics.  The code has been checked to 
@@ -439,7 +439,7 @@ $S$-symmetric subspace).
 
 
 
-\subsection{A \stagp\ has a partner, symmetric about another {\stagp}}
+\subsection{Any nontrivial \stagp\ has a partner, symmetric about another {\stagp}}
 % was {Proof that any new \stagp\ must have a partner, symmetric about one of the previously known {\stagp}s}
 
 Though our symmetry arguments do not determine whether or not there may exist \textit{additional} {\stagp}s which are not forced by the $g_i$ symmetries in the preceding section, we can in fact that show that for equilibria which exist in one of the flow-invariant subspaces that contains a $g_i$-symmetry (for example, $S$ has $g_3$ symmetry and $S_8$ has both $g_2$ and $g_3$ symmetry), any additional nontrivial {\stagp}s that exist must occur in symmetric pairs centered around the other known {\stagp}s.
@@ -462,13 +462,15 @@ $(x_{1}, y_{1}, z_{1}),(x_{2}, y_{2}, z_{2})$
   x &= x_{1} + (x_{2} - x_{1})t \\
   y &= y_{1} + (y_{2} - y_{1})t \\
   z &= z_{1} + (z_{2} - z_{1})t \\
-  t &\in (-\infty,\infty)
+  t &\in (-\infty,\infty) .
  \end{align}
+
+ Using the two stagnation points $(x_{_{SP}},y_{_{SP}},z_{_{SP}})$ and $(-x_{_{SP}},-y_{_{SP}},-z_{_{SP}} + L_z/2)$ this becomes
  
  \begin{align}
   x &= x_{_{SP}}(1-2t) \\
   y &= y_{_{SP}}(1-2t) \\
-  z &= z_{_{SP}}(1-2t) + \frac{L_{z}}{2} t
+  z &= z_{_{SP}}(1-2t) + \frac{L_{z}}{2} t .
  \end{align}
 When $t = 1/2$ this system returns $(x,y,z) = (0,0,L_{z}/4)$, showing 
 that $SP_3$ lies on the line between these two \stagp s, halfway in 
@@ -485,7 +487,7 @@ of $SP_1$-$SP_4$. For example, \\
  \begin{align}
   x &= x_{_{SP}}(1-2t) + L_{x}t \\
   y &= y_{_{SP}}(1-2t) \\
-  z &= z_{_{SP}}(1-2t) + \frac{L_{z}}{2} t
+  z &= z_{_{SP}}(1-2t) + \frac{L_{z}}{2} t .
  \end{align}
 When $t = 1/2$ this returns $(x,y,z) = (L_{x}/2,0,L_{z}/4)$, so that the 
 new stagnation points lie symmetrically on a line passing through $SP_1$. 
@@ -539,7 +541,7 @@ following closely to the manifolds themselves. This provides us with a
 framework for studying how transport may occur within and between the 
 different regions. 
 
-\subsection{A colorful portrait of the upper branch equilibrium}
+\subsection{The upper branch equilibrium}
 \label{sec:eq2}
 
 Our analysis is carried out for the upper branch \eqv\ velocity field, 
@@ -558,8 +560,7 @@ equally spaced, and offset by one position from the edge of the box. If
 the number of points is chosen to be one less than a multiple of 4, there 
 will be points starting at $\bold{x}_{_{SP_{1}}}=(L_x/2,0,L_z/4)$ and 
 $\bold{x}_{_{SP_{2}}}=(L_x/2,0,3L_z/4)$. The trajectories are integrated 
-and run for a relatively short time. Here, the tracers are shown for 
-$\bu$ defined as the difference from laminar flow. Just from evolving the 
+and run for a relatively short time. Just from evolving the 
 grid of points alone, we begin to get a feel for the dynamics and start 
 to see the formation of interesting patterns and vortical structures. 
 
@@ -847,7 +848,7 @@ $[L_{z}/2,L_{z}]$. We have chosen the interval $[0,L_{z}/2]$. In the $x$
 direction the most convenient interval is not actually $[0,L_{x}]$, 
 rather we look at the \stagp s in the open interval $(-L_{x}/2,L_{x})$, 
 open so as to ignore the repeated translations on the boundary. Thus an 
-alternate domain of investigation that will be conventient to sometimes 
+alternate domain of investigation that will be convenient to sometimes 
 use is 
 \[ %beq 
 \Omega = (-L_{x}/2,L_{x}) \times [-1,1] \times [0,L_{z}/2]
@@ -861,7 +862,7 @@ phase portrait of fundamental dynamics for $EQ_2$ will be viewed in
 $\Omega$.
 
 
-\subsection{Flow portraits and {\hc}s}
+\subsection{A colorful flow portrait and {\hc}s}
 
 With identification of all of the {\stagp}s within either the original 
 periodic box or the cell $\Omega$, as well as the corresponding linear 
@@ -958,8 +959,6 @@ $L_{x}/2$ and $L_{z}/2$) in the left half of the box.
 Having analyzed the upper branch equilibrium $EQ_2$, we next look at 
 $EQ_8$, another equilibrium velocity field of {\pCf} which exhibits 
 turbulent behavior at a lower Reynolds number, 270.
-
-\subsection{Tracer dynamics and analysis}
 
 
 We start once again with a cleverly chosen grid of initial trajectories 
@@ -1061,10 +1060,6 @@ $EQ_8$, $SP_2$: There are two real, positive eigenvalues
   \label{fig:EQ8_grid1}
  \end{figure}
 
-
-
-
-\subsection{More symmetries $\to$ more stagnation}
 
 Equilibrium $EQ_8$ (as well as $EQ_7$, not discussed here), possesses 
 additional symmetries compared to $EQ_2$. $EQ_2$ is in the $S$-invariant 
@@ -1199,9 +1194,9 @@ Acknowledge group members not included as authors.
 \fi
 
 \bibliographystyle{unsrt} %prsty} %apsrev} %plain}
-\bibliography{../../bibtex/pipes} % 2024-11-23 Predrag removed JRE's {LagrangianArxiv}
 
-% \bibliography{pipes}  % Use when JRE loading in Overleaf
+\bibliography{../../bibtex/pipes} % 2024-11-23 Predrag removed 
+%\bibliography{pipes}  % Use when JRE loading in Overleaf
 
 \end{document}
 
