@@ -19,12 +19,12 @@ John F. Gibson
 ===== HISTORY  ==========================================
                         (newest on the top)
 
-Predrag ver. 1.0                                    December ??, 2024
+Predrag ver. 1.0                                    December 05, 2024
 
 arXiv submission notes
 ----------------------
 predrag H.......s
-arXiv identifier: 2412.XXXXX
+arXiv identifier: submit/6049466     will become 2412.XXXXX
 The paper password for this article is: XXXXX
 license (chose it without much information):
 CC BY-NC-ND: Creative Commons Attribution-NonCommercial-NoDerivatives
@@ -50,7 +50,7 @@ $d$-dimensional to d-dimensional
 --------------------------------------------------------------------
 
     * removed all \ifboyscout  \ifsubmission
-      in LC21.tex, defsReversal.tex
+      in ECHG24.tex, defsElton.tex
     * comment out \graphicspath{
 
 Figures:
