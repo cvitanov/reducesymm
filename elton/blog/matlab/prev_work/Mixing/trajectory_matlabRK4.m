@@ -65,8 +65,8 @@ dz = Lz/nz;
         %r0 = [2.76244969613140   0.00000000000000   0.62086497079296];
         
 
-         [t,r] = ode45('u_interp',tspan,r0);
-        %[t,r] = ode45('u_sum',tspan,r0);
+        %[t,r] = ode45('u_interp',tspan,r0);
+        [t,r] = ode45('u_sum',tspan,r0);
        % plot3(r0(1),r0(3),r0(2),'.')
        if iii == 1
              plot3(r(:,1),r(:,3),r(:,2),'LineStyle','-','Marker','.','Color','r')

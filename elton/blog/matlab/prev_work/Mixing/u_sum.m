@@ -65,9 +65,9 @@ T31 = 2*real(uspec3.'*v1b);
 T32 = 2*real(uspec3.'*v2b);
 T33 = 2*real(uspec3.'*v3b);
 % velocity gradient tensor
-T = [T11 T12 T13;T21 T22 T23; T31 T32 T33]
-trace = T11 + T22 + T33
-[evecs evals] = eig(T)
+T = [T11 T12 T13;T21 T22 T23; T31 T32 T33];
+trace = T11 + T22 + T33;
+[evecs evals] = eig(T);
 
 
 
