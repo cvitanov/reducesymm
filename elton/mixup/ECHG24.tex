@@ -12,7 +12,7 @@
              \newif\ifboyscout\boyscouttrue          %% comments     %%
              \newif\ifsubmission\submissionfalse     %% internal     %%
 %%%%% Toggle between draft and public versions:  %%%%%%%%%%%%%%%%%%%%%%
-\boyscoutfalse                         % public, hyperlinked       %%
+% \boyscoutfalse                         % public, hyperlinked       %%
 % \boyscoutfalse\submissiontrue          % for journal ???           %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -23,37 +23,57 @@
 %           edited addresses, emails (still to create EJ's gatech email)                        
 % John E.   version 0.1                         2024-11-23                         
 
-\documentclass[letter,12pt,openany]{article}
+   \ifsubmission
+\documentclass[lineno]{jfm}
+ %% https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/information/author-instructions/preparing-your-materials
+ %% https://www.overleaf.com/latex/templates/journal-of-fluid-mechanics/hnmjwjrhcmnf
+ %% PC 2024-12-20 was  \documentclass[letter,12pt,openany]{article}
+    \else
+\documentclass{jfm}
+    \fi
 
 \pdfoutput=1
 
-\usepackage[legalpaper, margin=1in]{geometry}
-\usepackage{amsmath,amsfonts,amssymb,amsthm}
-\usepackage{authblk}
-\usepackage{color}
-\usepackage{url}
-\usepackage{alltt}
-\usepackage{ifthen}
-\usepackage{svn-multi}
-\usepackage[latin1]{inputenc}
-\usepackage{times}
-\usepackage[T1]{fontenc}
-\usepackage[pdftex]{graphicx}
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+    \ifsubmission
+\usepackage{natbib}  %% PC 2024-12-20 used by \bibliographystyle{jfm}
+    \else
+    \fi
 \usepackage{subcaption}
-\usepackage[font={small}]{caption}
-\usepackage{array}
-\usepackage[pdftex,colorlinks]{hyperref}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks = true,
+    urlcolor   = blue,
+    citecolor  = black,
+}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newcommand{\RomanNumeralCaps}[1]
+\linenumbers
+
+%\usepackage[legalpaper, margin=1in]{geometry}
+%% \usepackage{amsmath,amsfonts,amssymb,amsthm} %% PC 2024-12-20 removed
+%\usepackage{authblk}
+%\usepackage{color}
+%\usepackage{url}
+%\usepackage{alltt}
+%\usepackage{ifthen}
+%\usepackage[latin1]{inputenc}
+%\usepackage{times}
+%\usepackage[T1]{fontenc}
+%\usepackage{graphicx}  %% PC 2024-12-20 was \usepackage[pdftex]{graphicx}
+%\usepackage[font={small}]{caption}
+%\usepackage{array}
+%\usepackage[pdftex,colorlinks]{hyperref}
+
+
 \graphicspath{{figs/}} %% directories with  graphics files
 
-% \usepackage{fancyhdr}
-%% If the svn information should be also placed
-%% on the chapter page use:
-%\fancypagestyle{plain}{%
-%% otherwise use
-% \pagestyle{fancy}
-% \fancyhead{}
-% \fancyhead[er,ol]{\slshape \leftmark }
-
+    \ifsubmission\else
+\input{biblatex}    % this makes references hyperlinked
+\addbibresource{../../bibtex/pipes.bib}
+    \fi
 
 \input{defsElton}
 
@@ -62,27 +82,38 @@
 \providecommand{\keywords}[1]
 {
   \small	
-  \textbf{\textit{Keywords--}} #1
+  \textbf{\emph{Keywords--}} #1
 }
 
+
+
+
+\begin{document}
+        \ifboyscout
+\date{{\color{blue}Draft of \today}} %end\color{blue}
+        \else
+\date{Draft, December 20, 2024}
+        \fi 
 
 \title{Chaotic mixing in plane Couette turbulence}
 % or {Lagrangian dynamics in plane Couette turbulence} ?
 
 
-\author[1]{John R. Elton\thanks{jelton8@gatech.edu}} %{Jelton.physics@gmail.com}}
-\author[1]{Predrag Cvitanovi\'{c}\thanks{predrag.cvitanovic@physics.gatech.edu}}
-\author[2]{Jonathan Halcrow\thanks{halcrow@gmail.com}}
-\author[3]{John F. Gibson\thanks{John.Gibson@unh.edu}}
+\author{John R. Elton\aff{1}
+            \corresp{\email{Jelton.physics@gmail.com}},
+        Predrag Cvitanovi\'{c}\aff{1}
+            \corresp{\email{predrag.cvitanovic@physics.gatech.edu}},
+        Jonathan Halcrow\aff{2}
+            \corresp{\email{halcrow@gmail.com}}
+    and
+        John F. Gibson\aff{3}
+            \corresp{\email{John.Gibson@unh.edu}}
+        }
 
-\affil[1]{School of Physics, Georgia Inst. of Technology, Atlanta GA}
-\affil[2]{Google Research, Atlanta, GA}
-\affil[3]{Mathematics and Statistics, Univ. New Hampshire, Durham NH}
-
-
-\begin{document}
-    
-\date{Draft of \today}
+\affiliation{   \aff{1}School of Physics, Georgia Inst. of Technology, Atlanta GA 
+                \aff{2}Google Research, Atlanta, GA 
+                \aff{3}Mathematics and Statistics, Univ. New Hampshire, Durham NH
+            }
 
 \maketitle
 
@@ -178,14 +209,14 @@ necessary to have numerically accurate \eqv\ $3D$-velocity fields.
 The starting point for this task is to obtain the necessary data sets for 
 evaluating velocity field values for a given \eqv, e.g. the upper branch 
 as shown in \reffig{fig:UB}. These are made available at the website 
-{\tt Channelflow.org} \cite{channelflow}. The data obtained 
-\cite{channelflowDat} stores the spectral coefficients $\mathbf{\hat{u}}$ 
+{\tt Channelflow.org} \citep{channelflow}. The data obtained 
+\citep{channelflowDat} stores the spectral coefficients $\mathbf{\hat{u}}$ 
 of the expansion of a velocity field $\mathbf{u(x)}$ satisfying \refeq{NavStokesDiff}. The form of the 
 expansion is 
 \begin{equation}
  \mathbf{u(x)} = \sum_{m_{y}=0}^{M_{y}-1}\sum_{m_{x}=0}^{M_{x}-1}\sum_{m_{z}=0}^{M_{z}-1}
  {\mathbf{\hat{u}}_{m_{x},m_{y},m_{z}} \bar{T}_{m_{y}}(y)e^{2\pi i(k_{x}x/L_{x} + k_{z}z/L_{z})}
- + \text{\small{(c.c.)}}}
+ + \mbox{\small{(c.c.)}}}
 \label{eqn:spectralsum}
  \end{equation}
 
@@ -224,16 +255,21 @@ the internal {\tt Channelflow.org} functions.
 \subsection{Symmetries of {\pCf}}
 \label{s:PCF_symm}
 
-As part of our theoretical analysis of trajectories of fluid particles within an equilibrium velocity field, it will be critical to use and understand the symmetries involved in the special geometry of {\pCf}. Thus we take a quick detour to discuss these symmetries from a group-theoretic perspective. We focus on the symmetries relevant to the equilibria studied in this work; additional details are provided in \cite{HalcrowThesis}.
-
+As part of our theoretical analysis of trajectories of fluid particles 
+within an equilibrium velocity field, it will be critical to use and 
+understand the symmetries involved in the special geometry of {\pCf}. 
+Thus we take a quick detour to discuss these symmetries from a 
+group-theoretic perspective. We focus on the symmetries relevant to the 
+equilibria studied in this work; additional details are provided in 
+\citet{HalcrowThesis}. 
 
 \PCf\ is invariant under two reflections $\sigma_1,\sigma_2$ and a
 continuous two-parameter group of translations $\tau(\shift_x, \shift_z)$:
-\begin{align}
-\sigma_1 \, [u,v,w](x,y,z) &= [u, v,-w](x,y,-z) \nnu \\
-\sigma_2 \, [u,v,w](x,y,z) &= [-u,-v,w](-x,-y,z)  \label{reflSfit1}\\
-\tau(\shift_x, \shift_z)[u,v,w](x,y,z) &= [u,v,w](x+\shift_x,y,z+\shift_z) \nnu\,.
-\end{align}
+\bea
+\sigma_1 \, [u,v,w](x,y,z) &=& [u, v,-w](x,y,-z) \continue
+\sigma_2 \, [u,v,w](x,y,z) &=& [-u,-v,w](-x,-y,z)  \label{reflSfit1}\\
+\tau(\shift_x, \shift_z)[u,v,w](x,y,z) &=& [u,v,w](x+\shift_x,y,z+\shift_z) \nnu\,.
+\eea
 The \NSe s and boundary conditions are invariant for any symmetry $s$
 in the group generated by these elements:
 $\partial (s \bu) / \partial t = s (\partial \bu / \partial t)$.
@@ -242,12 +278,16 @@ The plane Couette symmetries can be interpreted geometrically in the space of
 fluid velocity fields. Let $\bbU$ be the space of
 square-integrable, real-valued velocity fields that satisfy the kinematic
 conditions of \pCf:
-\begin{align}
- \bbU  &= \{\bu \in L^2(\Omega) \; | \; \grad \cdot \bu = 0,
-               \; \bu(x, \pm 1, z) = 0, \notag  \\
-         &\phantom{=} {} \qquad \qquad \qquad \; \; %\text{and }
-          \bu(x, y, z) = \bu(x+L_x, y, z) = \bu(x, y, z + L_z)\}  \,.
-\end{align} 
+\bea
+ \bbU  &=& \{\bu \in L^2(\Omega) \; | \; \grad \cdot \bu = 0,
+               \; \bu(x, \pm 1, z) = 0, 
+ %\notag  
+ \continue
+       &\phantom{=}&  {} \qquad \qquad \qquad \; \; %\mbox{and }
+          \bu(x, y, z) = \bu(x+L_x, y, z) = \bu(x, y, z + L_z)\}  
+\,.
+\nnu
+\eea
 The continuous symmetry $\tau(\shift_x, \shift_z)$ maps each state
 $\bu \in \bbU$ to a $2D$ torus of states with identical dynamic
 behavior. This torus in turn is mapped to four equivalent tori by
@@ -265,22 +305,22 @@ S = \{1, s_1, s_2, s_3\}, \qquad s_3 = s_1 s_2,
 which is isomorphic to the Abelian dihedral group $D_2$, and is a 
 subgroup of a larger group generated by plane Couette symmetries. The 
 group acts on velocity fields as: 
-\begin{align}
-s_1 \, [u, v, w](x,y,z) &= [u, v, -w](x+L_x/2,\, y,\, -z) \nnu \\ 
-s_2 \, [u, v, w](x,y,z) &= [-u, -v, w](-x+L_x/2,\,-y,\,z+L_z/2) \label{shiftRot} \\
-s_3 \, [u, v, w](x,y,z) &= [-u,-v,-w](-x,\, -y,\, -z+L_z/2)  \nnu 
+\bea
+s_1 \, [u, v, w](x,y,z) &=& [u, v, -w](x+L_x/2,\, y,\, -z) \continue 
+s_2 \, [u, v, w](x,y,z) &=& [-u, -v, w](-x+L_x/2,\,-y,\,z+L_z/2) \label{shiftRot} \\
+s_3 \, [u, v, w](x,y,z) &=& [-u,-v,-w](-x,\, -y,\, -z+L_z/2)  \nnu 
 \,
-\end{align}
+\eea
 
 We denote the $S$-invariant subspace of states invariant under
 symmetries \refeq{shiftRot} by
-\begin{align}
-\bbUsymm  &= \{\bu \in \bbU  \: | \;
+\bea
+\bbUsymm  &=& \{\bu \in \bbU  \: | \;
               s_j \bu = \bu\,, \;\;  s_j \in S \}
               % \bu = \frac{1}{4} (1 + s_1 + s_2 + s_3)\,\bu \}
 \,,
 \label{symmSubspU}
-\end{align}
+\eea
 
 where $ \bbUsymm \subset \bbU$.
 %
@@ -327,13 +367,13 @@ isomorphic to the dihedral group $D_4$.
 S_8 = \{e, s1, s2, s3, s4, s5, s6, s7\}
 \]
 where $s_4 = \tau_z \, \sigma_1$, $s_5 = s_4 s_2$, $s_6 = \tau_x \tau_z$, $s_7 = \sigma_2$. The action of these additional symmetries of $S_8$ on velocity fields is:
-\begin{align}
-s_4 \, [u, v, w](x,y,z) &= [u, v, -w](x,\, y,\, -z + L_z/2) \nnu \\ 
-s_5 \, [u, v, w](x,y,z) &= [-u, -v, -w](-x+L_x/2,\,-y,\,-z) \label{S_8} \\
-s_6 \, [u, v, w](x,y,z) &= [u,v,w](x+L_x/2,\, y,\, z+L_z/2)  \nnu  \\
-s_7 \, [u, v, w](x,y,z) &= [-u,-v,w](-x,\, -y,\, z)  \nnu 
+\bea
+s_4 \, [u, v, w](x,y,z) &=& [u, v, -w](x,\, y,\, -z + L_z/2) \continue 
+s_5 \, [u, v, w](x,y,z) &=& [-u, -v, -w](-x+L_x/2,\,-y,\,-z) \label{S_8} \\
+s_6 \, [u, v, w](x,y,z) &=& [u,v,w](x+L_x/2,\, y,\, z+L_z/2)  \nnu  \\
+s_7 \, [u, v, w](x,y,z) &=& [-u,-v,w](-x,\, -y,\, z)  \nnu 
 \,
-\end{align}
+\eea
 
 Which symmetries happen to exist for the different equilibria will have 
 important implications for studying the dynamics of the flow. 
@@ -374,7 +414,7 @@ which gives the additional points:
 \bea
   \bold{x}_{_{SP_{5}}} &=& (L_x/4,0,0) \continue
   \bold{x}_{_{SP_{6}}} &=& (3L_x/4,0,0) \continue
-  \bold{x}_{_{SP_{7}}} &=& (L_x/4,0,L_z/2) \label{s3lagrange} \\
+  \bold{x}_{_{SP_{7}}} &=& (L_x/4,0,L_z/2) \label{s4lagrange} \\ %% PC was {s3lagrange}
   \bold{x}_{_{SP_{8}}} &=& (3L_x/4,0,L_z/2) \nnu
  \,.
 \eea
@@ -395,12 +435,12 @@ $\sigma_{1}\sigma_{2}$ term. We denote these as $g_1 = \sigma_{1}\sigma_{2}$,
 $g_2 = \sigma_{1}\sigma_{2}\tau_{x}$, $g_3 =
 \sigma_{1}\sigma_{2}\tau_{z}$, and $g_4 = \sigma_{1}\sigma_{2}\tau_x
 \tau_z$. 
-\begin{align}
-g_1 \, [u,v,w](x,y,z) &= [-u,-v,-w](-x,-y,-z)  \\
-g_2 \, [u,v,w](x,y,z) &= [-u,-v,-w](-x+L_{x}/2,-y,-z)  \\
-g_3 \, [u,v,w](x,y,z) &= [-u,-v,-w](-x,-y,-z+L_{z}/2)  \\
-g_4 \, [u,v,w](x,y,z) &= [-u,-v,-w](-x+L_{x}/2,-y,-z+L_{z}/2)
-\end{align}
+\bea
+g_1 \, [u,v,w](x,y,z) &=& [-u,-v,-w](-x,-y,-z)  \\
+g_2 \, [u,v,w](x,y,z) &=& [-u,-v,-w](-x+L_{x}/2,-y,-z)  \\
+g_3 \, [u,v,w](x,y,z) &=& [-u,-v,-w](-x,-y,-z+L_{z}/2)  \\
+g_4 \, [u,v,w](x,y,z) &=& [-u,-v,-w](-x+L_{x}/2,-y,-z+L_{z}/2)
+\eea
 
 Different isotropy subgroups of $G$ may or may not contain a symmetry 
 which corresponds to one of these $g_1$-$g_4$ elements, however any $g_i$ 
@@ -420,7 +460,7 @@ possible {\stagp}s based on various \pCf\ symmetries is shown in
 So the question of existence of \stagp s for a given equilibrium is, 
 which of the $g_i$ symmetries does that equilibrium possess? This is a 
 question related to invariance under the isotropy subgroups. Of 
-importance, this does not address the question of whether \textit{other} 
+importance, this does not address the question of whether \emph{other} 
 nontrivial \stagp s may exist that are not based on symmetry arguments 
 alone. For the known equilibria of {\pCf} $EQ_1$-$EQ_{11}$, all of them 
 have $g_3$ symmetry and $EQ_7$, $EQ_8$ additionally have $g_2$ symmetry. 
@@ -443,7 +483,7 @@ $S$-symmetric subspace).
 \subsection{Any nontrivial \stagp\ has a partner, symmetric about another {\stagp}}
 % was {Proof that any new \stagp\ must have a partner, symmetric about one of the previously known {\stagp}s}
 
-Though our symmetry arguments do not determine whether or not there may exist \textit{additional} {\stagp}s which are not forced by the $g_i$ symmetries in the preceding section, we can in fact that show that for equilibria which exist in one of the flow-invariant subspaces that contains a $g_i$-symmetry (for example, $S$ has $g_3$ symmetry and $S_8$ has both $g_2$ and $g_3$ symmetry), any additional nontrivial {\stagp}s that exist must occur in symmetric pairs centered around the other known {\stagp}s.
+Though our symmetry arguments do not determine whether or not there may exist \emph{additional} {\stagp}s which are not forced by the $g_i$ symmetries in the preceding section, we can in fact that show that for equilibria which exist in one of the flow-invariant subspaces that contains a $g_i$-symmetry (for example, $S$ has $g_3$ symmetry and $S_8$ has both $g_2$ and $g_3$ symmetry), any additional nontrivial {\stagp}s that exist must occur in symmetric pairs centered around the other known {\stagp}s.
 
 Consider one of the equilibria in the $S$-invariant subspace, such as $EQ_2$. Again, the
  action of $s_3 \in S$ on velocity fields gives:
@@ -451,28 +491,28 @@ Consider one of the equilibria in the $S$-invariant subspace, such as $EQ_2$. Ag
  \eeq
  If $(x_{_{SP}},y_{_{SP}},z_{_{SP}})$ is a \stagp, $[u, v,
  w](x_{_{SP}},y_{_{SP}},z_{_{SP}}) = [0,0,0]$, then
- \begin{align} s_3 \, [u, v, w](x_{_{SP}},y_{_{SP}},z_{_{SP}}) &= [-u,-v,-w](-x_{_{SP}},\, -y_{_{SP}},\, -z_{_{SP}}+L_z/2) \nnu\, \\
- &= [0,0,0](-x_{_{SP}},\, -y_{_{SP}},\, -z_{_{SP}}+L_z/2) .
- \end{align}
+ \bea s_3 \, [u, v, w](x_{_{SP}},y_{_{SP}},z_{_{SP}}) &=& [-u,-v,-w](-x_{_{SP}},\, -y_{_{SP}},\, -z_{_{SP}}+L_z/2) \nnu\, \\
+ &=& [0,0,0](-x_{_{SP}},\, -y_{_{SP}},\, -z_{_{SP}}+L_z/2) .
+ \eea
  Thus $(-x_{_{SP}},\, -y_{_{SP}},\, -z_{_{SP}}+L_z/2)$ is also a \stagp.
 
 We may parameterize a line passing through two points 
 $(x_{1}, y_{1}, z_{1}),(x_{2}, y_{2}, z_{2})$
  as
- \begin{align}
-  x &= x_{1} + (x_{2} - x_{1})t \\
-  y &= y_{1} + (y_{2} - y_{1})t \\
-  z &= z_{1} + (z_{2} - z_{1})t \\
+ \bea
+  x &=& x_{1} + (x_{2} - x_{1})t \\
+  y &=& y_{1} + (y_{2} - y_{1})t \\
+  z &=& z_{1} + (z_{2} - z_{1})t \\
   t &\in (-\infty,\infty) .
- \end{align}
+ \eea
 
  Using the two stagnation points $(x_{_{SP}},y_{_{SP}},z_{_{SP}})$ and $(-x_{_{SP}},-y_{_{SP}},-z_{_{SP}} + L_z/2)$ this becomes
  
- \begin{align}
-  x &= x_{_{SP}}(1-2t) \\
-  y &= y_{_{SP}}(1-2t) \\
-  z &= z_{_{SP}}(1-2t) + \frac{L_{z}}{2} t .
- \end{align}
+ \bea
+  x &=& x_{_{SP}}(1-2t) \\
+  y &=& y_{_{SP}}(1-2t) \\
+  z &=& z_{_{SP}}(1-2t) + \frac{L_{z}}{2} t .
+ \eea
 When $t = 1/2$ this system returns $(x,y,z) = (0,0,L_{z}/4)$, showing 
 that $SP_3$ lies on the line between these two \stagp s, halfway in 
 between them. 
@@ -485,16 +525,16 @@ of $SP_1$-$SP_4$. For example, \\
 
  \noindent $(x_{_{SP}},y_{_{SP}},z_{_{SP}})$ is a \stagp\ $\Rightarrow$
  $(-x_{_{SP}}+L_{x},-y_{_{SP}},z_{_{SP}}+L_{z}/2)$ a \stagp.
- \begin{align}
-  x &= x_{_{SP}}(1-2t) + L_{x}t \\
-  y &= y_{_{SP}}(1-2t) \\
-  z &= z_{_{SP}}(1-2t) + \frac{L_{z}}{2} t .
- \end{align}
+ \bea
+  x &=& x_{_{SP}}(1-2t) + L_{x}t \\
+  y &=& y_{_{SP}}(1-2t) \\
+  z &=& z_{_{SP}}(1-2t) + \frac{L_{z}}{2} t .
+ \eea
 When $t = 1/2$ this returns $(x,y,z) = (L_{x}/2,0,L_{z}/4)$, so that the 
 new stagnation points lie symmetrically on a line passing through $SP_1$. 
 
 For an equilibrium invariant under $S_8$, such as $EQ_8$, existence of 
-any additional nontrivial {\stagp} will then imply \textit{two} 
+any additional nontrivial {\stagp} will then imply \emph{two} 
 additional {\stagp}s, based on the action of $g_2$ and $g_3$. 
  If $(x_{_{SP}},y_{_{SP}},z_{_{SP}})$ is a \stagp, then  
  $(-x_{_{SP}},\, -y_{_{SP}},\, -z_{_{SP}}+L_z/2)$ and 
@@ -526,7 +566,7 @@ of the eigenvectors, integrating them forwards and backwards in time
 (when the local tangent space is $2D$, trajectories are started 
 throughout a small radius in the plane spanned by the eigenvectors). 
 Though this method may underrepresent a part of the manifold for the $2D$ 
-case \cite{SahVla09}, we find that the approximation works for revealing 
+case \citep{SahVla09}, we find that the approximation works for revealing 
 the interesting and relevant dynamical behaviors we seek. 
 
 In order to investigate additional locations in the domain for which no 
@@ -622,35 +662,40 @@ and velocity gradients matrices are as follows. \\
 
 $\bold{x}_{_{SP_{1}}}=(L_x/2,0,L_z/4)$: There are 3 real eigenvalues, two 
 positive and one negative. 
-\begin{align}
-&\eigExp[1] = -0.4652099 \,,\quad
+\bea
+\eigExp[1] &=& -0.4652099 \,,\quad
 \jEigvec[1] =
-\begin{pmatrix}
+\left[\begin{array}{c}
              {0.9844417} \cr
              {0.1743315} \cr
-             {0.0219779} \cr
-   \end{pmatrix} \\ \label{sp1_evec1}
-    &\eigExp[2] = 0.4008961 \,,\quad \jEigvec[2] =
-\begin{pmatrix}
-             {0.5704000} \cr
+             {0.0219779}
+\end{array}\right]
+                                                \label{sp1_evec1} \\ 
+\eigExp[2]  &=& 0.4008961 \,,\quad 
+\jEigvec[2] =
+\left[\begin{array}{c}
+             {~~0.5704000} \cr
              {-0.7666749} \cr
-             {0.2947091} \cr
-   \end{pmatrix} \\  \label{sp1_evec2}
-    &\eigExp[3] = 0.0643139 \,,\quad \jEigvec[3] =
-\begin{pmatrix}
+             {~~0.2947091} \cr
+\end{array}\right] 
+                                                \label{sp1_evec2} \\  
+\eigExp[3]  &=& 0.0643139 \,,\quad 
+\jEigvec[3] =
+\left[\begin{array}{c}
              {0.4082166} \cr
              {0.7525949} \cr
              {0.5166819} \cr
-   \end{pmatrix} \\ \label{sp1_evec3} 
-   \end{align}
+\end{array}\right]
+                                                \label{sp1_evec3} 
+\eea
    The \velgradmat\ is
 \beq
    \Mvar =
-   \begin{pmatrix}
+\left[\begin{array}{ccc}
    {-0.4305385} &  {-0.3002042} &{0.8282447} \cr
    {-0.1221356} &   {0.2456107} & {-0.1675796} \cr
    {0.0001651}  &   {-0.0828951}  & {0.1849278} \cr
-            \end{pmatrix}
+\end{array}\right]
 \eeq
 The point is a saddle; it has 1 stable dimension and a $2D$ plane of 
 instability spanned by $\jEigvec[2]$ and $\jEigvec[3]$, with the 
@@ -664,39 +709,39 @@ $\bold{x}_{_{SP_{2}}}=(L_x/2,0,3L_z/4)$:
 There is one real, negative eigenvalue and a complex
 pair with positive real part.
 
-\begin{align}
+\bea
 &\eigExp[1] = -0.0352362 \,,\quad \jEigvec[1] =
-\begin{pmatrix}
+\left[\begin{array}{c}
              {-0.9452459} \cr
              {-0.1893368} \cr
              {-0.2658228} \cr
-   \end{pmatrix}
+\end{array}\right]
    \\
 &\eigRe[2] \pm i\,\eigIm[2] = 0.0176181 \pm i\,0.0862176
    \\
 &\jEigvec[2] =
-\begin{pmatrix}
+\left[\begin{array}{c}
              {0.3737950 + 0.0544113i} \cr
              {0.2098940 - 0.4925773i} \cr
              {0.7554000} \cr
-   \end{pmatrix}
+\end{array}\right]
 \,,\quad
 \jEigvec[3] =
-\begin{pmatrix}
+\left[\begin{array}{c}
              {0.3737950 - 0.0544113i} \cr
              {0.2098940 + 0.4925773i} \cr
              {0.7554000} \cr
-   \end{pmatrix}
+\end{array}\right]
 \nnu\,.
-\end{align}
+\eea
 The \velgradmat\ is 
 \[ %beq
    \Mvar =
-   \begin{pmatrix}
+\left[\begin{array}{ccc}
    {-0.0316935} & {-0.0708737} &  {0.0378835} \cr
   {-0.0250579} & {-0.0218884} &  {0.0795969} \cr
    {0.0014742} & {-0.1320575} &  {0.0535818} \cr
-   \end{pmatrix}
+\end{array}\right]
 \] %\eeq
 Trajectories starting near this \stagp\ spiral out in a plane spanned by 
 the complex pair of eigenvectors. The stable direction is one-dimensional 
@@ -737,18 +782,18 @@ Newton iteration
           {\Mvar}^{-1}(\bx_{k}) \, \bu(\bx_{k})
 \] %eeq
 %  where $\Mvar$ is the \velgradmat.
-converges rapidly to verify \textit{another} pair of \stagp s. Because we 
+converges rapidly to verify \emph{another} pair of \stagp s. Because we 
 have already used notation to define points $SP_1$-$SP_8$ in 
 \refsect{s:symm_stag}, we refer to these new numerically discovered 
 {\stagp}s as $SP_{N1}$ and $SP_{N2}$: 
 
-\begin{align}
+\bea
 &\bold{x}_{_{SP_{N1}}} =(2.35105561774981,0.42293662349708,0.65200166068573)
 \\
 &\bold{x}_{_{SP_{N2}}}=(3.16051044117966,-0.42293662349708,0.60463540075018)
 \label{eqn:newspNewt}
 \,.
-\end{align}
+\eea
 %         = [5.51156605892946182182,2,2.51327412287183459075]
 We see the
  symmetry in the $y$-component of this pair, and in fact
@@ -776,40 +821,40 @@ unstable manifold of $SP_1$.
 Repeating the linear stability analysis for $SP_{N1}$ and $SP_{N2}$: 
 There is one real, positive eigenvalue and a complex pair with negative 
 real part. 
-  \begin{align} &\eigExp[1] = 0.1453207 \,,\quad \jEigvec[1] =
-\begin{pmatrix}
+  \bea &\eigExp[1] = 0.1453207 \,,\quad \jEigvec[1] =
+\left[\begin{array}{c}
              {0.9307982} \cr
              {0.3502306} \cr
              {0.1046576} \cr
-   \end{pmatrix}
+\end{array}\right]
    \\
 &\{ \eigExp[2],\eigExp[3]\}
   = \eigRe[2] \pm i \,\eigIm[2] =  -0.0726603 \pm i\, 0.3733478
    \nnu\\
 &\jEigvec[2] =
-\begin{pmatrix}
+\left[\begin{array}{c}
              {~0.5226203} \cr
              {-0.6703938} \cr
              {~0.2065610} \cr
-   \end{pmatrix}
+\end{array}\right]
     \,,\quad
 \jEigvec[3] =
-\begin{pmatrix}
+\left[\begin{array}{c}
              {~0.3779843} \cr
              {~
              0} \cr
              {- 0.3031510} \cr
-   \end{pmatrix}
+\end{array}\right]
 \,.
-\end{align}
+\eea
 The \velgradmat\ is
 \[ %beq
    {\Mvar} =
-   \begin{pmatrix}
+\left[\begin{array}{ccc}
    {0.0225166} &  {0.0985763} &{0.7623083} \cr
    {0.1714566} &   {-0.1275193} & {-0.6118476} \cr
    {-0.0615378}  &   {0.1755954}  & {0.1050028} \cr
-            \end{pmatrix}
+         \end{array}\right]
 \,.
 \] %eeq
 
@@ -927,7 +972,7 @@ $SP_3$. The blue surface is formed by the overlap of trajectories
 starting along the unstable manifold of $SP_3$ and the stable manifolds 
 of $SP_{N1}$ and $SP_{N2}$.  We see that the stable manifold of $SP_3$ 
 (shown by the red curves) corresponds with the unstable manifolds of 
-$SP_{N1}$ and $SP_{N2}$, thus we have \textit{{\hc}s} from $SP_{N1}$ --> 
+$SP_{N1}$ and $SP_{N2}$, thus we have \emph{{\hc}s} from $SP_{N1}$ --> 
 $SP_3$ and $SP_{N2}$ --> $SP_3$! The thick appearance of the red curves 
 is simply so that they can be seen within the blue surface. They are 
 actually just a single trajectory. 
@@ -981,12 +1026,12 @@ confirms the existence of the heteroclinic trajectory. The same result
 holds for the shifted pair at $x = 0$. The rest of the 
 eigenvalues/eigenvectors are given below. We note that for $EQ_8$ there 
 is a {\hc} which is a simple horizontal line connecting the pair of 
-trivial \stagp s in the \textit{spanwise} direction, whereas for \tUB\ 
+trivial \stagp s in the \emph{spanwise} direction, whereas for \tUB\ 
 the connection was some arbitrary-looking curve in the 
-\textit{streamwise} direction connected to a nontrivial \stagp. 
+\emph{streamwise} direction connected to a nontrivial \stagp. 
 Factorization of the $SP_1$ and $SP_2$ stability eigenspaces for $EQ_8$ 
 occurs because the spanwise $z$ direction is a $1D$ flow-invariant 
-subspace at the \stagp s \cite{SiCvi10}. That ensures the simplicity of 
+subspace at the \stagp s \citep{SiCvi10}. That ensures the simplicity of 
 the \hec. 
 
 $EQ_8$, $SP_1$: There are two real, positive eigenvalues
@@ -1001,21 +1046,21 @@ $EQ_8$, $SP_1$: There are two real, positive eigenvalues
     \jEigvec[1],\jEigvec[2],\jEigvec[3]
 \right) &=&
 \left(
-    \begin{pmatrix}
+    \left[\begin{array}{c}
              {0} \cr
              {0} \cr
              {1}
-    \end{pmatrix} \,,
-    \begin{pmatrix}
+ \end{array}\right] \,,
+    \left[\begin{array}{c}
              {-0.733415} \cr
              {-0.679780} \cr
              {0}
-    \end{pmatrix} \,,
-    \begin{pmatrix}
+ \end{array}\right] \,,
+    \left[\begin{array}{c}
              {0.991005} \cr
              {0.133824} \cr
              {0}
-    \end{pmatrix}
+ \end{array}\right]
 \right) \,.
 \nnu
 \eea
@@ -1032,21 +1077,21 @@ $EQ_8$, $SP_2$: There are two real, positive eigenvalues
     \jEigvec[1],\jEigvec[2],\jEigvec[3]
 \right) &=&
 \left(
-    \begin{pmatrix}
+    \left[\begin{array}{c}
              {~0.116961} \cr
              {-0.993136} \cr
              {0}
-    \end{pmatrix} \,,
-    \begin{pmatrix}
+ \end{array}\right] \,,
+    \left[\begin{array}{c}
              {0.957795} \cr
              {0.287450} \cr
              {0}
-    \end{pmatrix} \,,
-    \begin{pmatrix}
+ \end{array}\right] \,,
+    \left[\begin{array}{c}
              {0} \cr
              {0} \cr
              {1}
-    \end{pmatrix}
+ \end{array}\right]
 \right) \,. \\
 \nnu
 \eea
@@ -1076,7 +1121,7 @@ for $EQ_8$ we will have the additional {\stagp}s:
   \bold{x}_{_{SP_{8}}} &=& (3L_x/4,0,L_z/2) \nnu
  \,.
 \eea
-Interestingly these were actually discovered numerically \textit{before} 
+Interestingly these were actually discovered numerically \emph{before} 
 the symmetry arguments were understood. A Newton search on regions of 
 very low velocity for $EQ_8$ revealed that $(L_x/4,0,L_z/2)$ and 
 $(3L_x/4,0,L_z/2)$ are \stagp s. From this, one may deduce that symmetry 
@@ -1088,31 +1133,31 @@ following.
 
  $SP_5$: There is one real, positive eigenvalue
  and a complex pair with negative real part.
-  \begin{align} &\eigExp[1] = 0.03109 \,,\quad \jEigvec[1] =
-\begin{pmatrix}
+  \bea &\eigExp[1] = 0.03109 \,,\quad \jEigvec[1] =
+\left[\begin{array}{c}
              {0.85275} \cr
              {0.41774} \cr
              {-0.31355} \cr
-   \end{pmatrix}
+\end{array}\right]
    \\
 &\{ \eigExp[2],\eigExp[3]\}
   = \eigRe[2] \pm i \,\eigIm[2] =  -0.01555 \pm i\, 0.59385
    \label{EQSP5eigs}\\
 &\jEigvec[2] =
-\begin{pmatrix}
+\left[\begin{array}{c}
              {~0.24762} \cr
              {-0.31442} \cr
              {~0.69906} \cr
-   \end{pmatrix}
+\end{array}\right]
     \,,\quad
 \jEigvec[3] =
-\begin{pmatrix}
+\left[\begin{array}{c}
              {-0.20793} \cr
              {~0.55489} \cr
              {~0} \cr
-   \end{pmatrix}
+\end{array}\right]
 \,.
-\end{align}
+\eea
  We have a $1D$ unstable manifold and a $2D$ inward-spiral
 stable manifold. All four of the new points have the same
 eigenvalues. $SP_5$ and $SP_8$ have the same eigenvectors, as do $SP_6$
@@ -1188,16 +1233,25 @@ could easily extend these analyses to additional invariant solutions for
 {\pCf}, or apply the same methods in other fluid systems which likely 
 posses symmetries. 
 
-\ifboyscout\textcolor{blue}{
+\ifboyscout{\color{blue}
 %%% Acknowledgements %%%
 \section{Acknowledgments}
 Acknowledge group members not included as authors.
-        }\fi %end\textcolor{blue}
+        }\fi %end\color{blue}
 
-\bibliographystyle{unsrt} %prsty} %apsrev} %plain}
-
-\bibliography{../../bibtex/pipes} % 2024-11-23 Predrag removed 
+\bibliographystyle{plain} %{jfm} %% PC 2024-12-20 was {unsrt} %prsty} %apsrev} %plain}
+    \ifsubmission
+\section*{References}
+    % from ctan.org/tex-archive/biblio/bibtex/contrib/iopart-num/ :
+\bibliography{../../bibtex/pipes}{99} %% PC 2024-12-20
 %\bibliography{pipes}  % Use when JRE loading in Overleaf
+    \else
+\printbibliography[
+heading=bibintoc,
+title={References}
+				  ] %, type=online]  % if not using default "Bibliography"
+    \fi
+
 
 \end{document}
 
