@@ -39,9 +39,9 @@
 \usepackage{newtxtext}
 \usepackage{newtxmath}
     \ifsubmission
-\usepackage{natbib}  %% PC 2024-12-20 used by \bibliographystyle{jfm}
+\usepackage[numbers]{natbib}  %% PC 2024-12-20 used by \bibliographystyle{jfm}
     \else
-\usepackage{natbib}  
+\usepackage[numbers]{natbib}  
     \fi
 \usepackage{subcaption}
 \usepackage{hyperref}
@@ -105,7 +105,7 @@
 
 \author[J. R. Elton, P. Cvitanovi\'c, J. Halcrow and J. F. Gibson]
         {John R. Elton\aff{1}
-            \corresp{\email{JElton.physics@gmail.com}}, 
+            \corresp{\email{Jelton.physics@gmail.com}}, 
             Predrag Cvitanovi\'c\aff{1}, 
             Jonathan Halcrow\aff{2} 
             and 
@@ -235,7 +235,6 @@ of this paper, the solutions presented in\rf{N90} have wavenumbers
 $(\alpha, \gamma) = (0.8, 1.5)$ and fit in the cell $[2 \upi/0.8, 2,
 2\upi/1.5] \approx [7.85, 2, 4.18]$.%
 
-\JRE{2022-12-29} {Is it really $\bNarrow$? Recheck!}
 
 %% PC 2024-12-20 copied from n00bs.tex  2009-06-16
 \begin{figure}
@@ -273,18 +272,12 @@ From \citet{HGC08}.
 \subsection{Computation of trajectories from Eulerian equilibrium velocity fields}
 \label{s:channelflow}
 
-    \PC{2022-12-29} {
-    % https://en.wikipedia.org/wiki/Lagrangian_and_Eulerian_specification_of_the_flow_field
-In the Lagrangian description, the flow is described by a function 
-$\mathbf {X}\left(\mathbf{x}_{0},t\right)$, 
-giving the position of the particle labeled $\mathbf{x}_{0}$ at time $t$. 
-                    }
  In order to integrate streamlines of {\pCf}
 and follow the paths of tracer particles, it is first
 necessary to have numerically accurate \eqv\ $3D$-velocity fields.
 
 The starting point for this task is to obtain the necessary data sets for 
-evaluating velocity field values for a given \eqv, e.g. the upper branch 
+evaluating velocity field values for a given \eqv, e.g. the equilibria 
 as shown in \reffig{f:eqbaboxes}. These are made available at the website 
 {\tt Channelflow.org} \citep{channelflow}. The data obtained 
 \citep{channelflowDat} stores the spectral coefficients $\mathbf{\hat{u}}$ 
@@ -292,13 +285,12 @@ of the expansion of a velocity field $\mathbf{u(x)}$ satisfying \refeq{NavStokes
 expansion is 
 \begin{equation}
  \mathbf{u(x)} = \sum_{m_{y}=0}^{M_{y}-1}\sum_{m_{x}=0}^{M_{x}-1}\sum_{m_{z}=0}^{M_{z}-1}
- {\mathbf{\hat{u}}_{m_{x},m_{y},m_{z}} \bar{T}_{m_{y}}(y)e^{2\pi i(k_{x}x/L_{x} + k_{z}z/L_{z})}
- + \mbox{\small{(c.c.)}}}
+ {\mathbf{\hat{u}}_{m_{x},m_{y},m_{z}} \bar{T}_{m_{y}}(y)e^{2\pi i(k_{x}x/L_{x} + k_{z}z/L_{z})}}
 \label{eqn:spectralsum}
  \end{equation}
 
 The $\bar{T}(y)$'s are Chebyshev polynomials defined on the interval 
-[a,b] (in most cases [-1,1]). For a given velocity field expansion, the 
+[-1,1]. For a given velocity field expansion, the 
 upper bounds on the sums are known from the geometry, and the $k$'s are 
 related to the $m$'s through the following relations: 
  \beq 
@@ -323,10 +315,7 @@ directly. So we evaluate \refeq{eqn:spectralsum} to give the exact
 velocity field at every point along a trajectory, adding back the laminar part of the flow. We are able to perform 
 these computations in Matlab with enough speed to compute many tracer 
 particle trajectories within an Eulerian equilibrium velocity for an adequate 
-length of time to study the flow dynamics.  The code has been checked to 
-be correct by picking an $(x,y,z)$ coordinate that \emph{happens} to lie 
-on a gridpoint value and then comparing the result to the value given by 
-the internal {\tt Channelflow.org} functions. 
+length of time to study the flow dynamics.  
 
 
 \subsection{Symmetries of {\pCf}}
@@ -545,8 +534,8 @@ This is likely related to the fact that searches for Eulerian equilibria were do
 in a symmetric subspace which contained the $g_3$ elements (the 
 $S$-symmetric subspace). 
 
-\begin{figure}[!h]
-\includegraphics[width=1.0\textwidth]{stags7_26.jpg}
+\begin{figure}
+\includegraphics[width=0.95\textwidth]{stags7_26.jpg}
   \caption{
    Sets of possible \stagp s. If one of the $g_i$ symmetries is
    possessed, the velocity field will have \stagp s of the color
@@ -596,9 +585,7 @@ between them.
 
 If we invoke the box periodicities: $x = x + L_{x}$, $z = z + L_{z}$, it 
 is easy to show that this pair of {\stagp}s is also symmetric about any 
-of \tSP{1}--\tSP{4}. For example,
-
- \noindent$\mathbf{x = x + L_{x}}$:
+of \tSP{1}--\tSP{4}. For example, consider the translation $\mathbf{x = x + L_{x}}$: \\
 
  \noindent $(x_{_{SP}},y_{_{SP}},z_{_{SP}})$ is a \stagp\ $\Rightarrow$
  $(-x_{_{SP}}+L_{x},-y_{_{SP}},z_{_{SP}}+L_{z}/2)$ a \stagp.
@@ -884,8 +871,8 @@ these points are shown to be
  
 
   \begin{center}
-\begin{figure}[!h]
-\includegraphics[width=1.0\textwidth]{fine_usquare.jpg}
+\begin{figure}
+\includegraphics[width=0.95\textwidth]{fine_usquare.jpg}
   \caption{
 Blue clumps of points indicate where the velocity for {\tEQtwo} is very 
 close to zero. Shown along with the stable manifold of \tSP{3} and the 
@@ -942,8 +929,8 @@ originate close to \tSP{1} and \tSP{3}, wander close to the spiraling stable
 manifold of the numerically discovered \tSP{N1}, showing how the 
 dynamics tends to be dominated by these {\stagp}s. 
 
- \begin{figure}[!h]
-\includegraphics[width=1.0\textwidth]{stagps_edited.jpg}
+ \begin{figure}
+\includegraphics[width=0.95\textwidth]{stagps_edited.jpg}
   \caption{
    The 6 unique \stagp s within one periodic box for {\tEQtwo}. 
    \tSP{1}--\tSP{4} are guaranteed by {\tEQtwo} symmetries, \tSP{N1} and 
@@ -952,8 +939,8 @@ dynamics tends to be dominated by these {\stagp}s.
   \label{fig:stagps_label}
  \end{figure}
 
- \begin{figure}[!h]
-\includegraphics[width=1.0\textwidth]{stagps2_edited.jpg}
+ \begin{figure}
+\includegraphics[width=0.95\textwidth]{stagps2_edited.jpg}
   \caption{
    The 4 \stagp s that occur within the domain $\Omega$.
    }
@@ -993,8 +980,8 @@ periodic box or the cell $\Omega$, as well as the corresponding linear
 stability analysis, we are ready to make a complete phase space portrait 
 for the upper branch, {\tEQtwo}.
 
-\begin{figure}[!h]
-\includegraphics[width=1.0\textwidth]{manifolds_both.jpg}
+\begin{figure}
+\includegraphics[width=0.95\textwidth]{manifolds_both.jpg}
   \caption{
    Segments of the stable (red/blue) and unstable (green/black) manifolds of the \stagp s
    $\xSP{1} = (L_x/2,0,L_z/4)$ and
@@ -1004,8 +991,8 @@ for the upper branch, {\tEQtwo}.
  \end{figure}
 
 
-    \begin{figure}[!h]
-\includegraphics[width=1.0\textwidth]{man14_june3.jpg}
+    \begin{figure}
+\includegraphics[width=0.95\textwidth]{man14_june3.jpg}
   \caption{
 {\Hec}s of the upper branch (red trajectories) from 
 $\tSP{N1} \to \tSP{3}$ and $\tSP{N2} \to \tSP{3}$, shown in a cell with $x \in$ 
@@ -1014,8 +1001,8 @@ $\tSP{N1} \to \tSP{3}$ and $\tSP{N2} \to \tSP{3}$, shown in a cell with $x \in$
   \label{fig:hetero1}
  \end{figure}
 
-  \begin{figure}[!h]
-\includegraphics[width=1.1\textwidth]{june4_fig7.jpg}
+  \begin{figure}
+\includegraphics[width=0.95\textwidth]{june4_fig7.jpg}
   \caption{
 Portrait of the fundamental dynamics along the manifolds of \stagp s 
 \tSP{1}, \tSP{3}, \tSP{N1}, \tSP{N2} within cell $\Omega$ for the upper 
@@ -1062,13 +1049,13 @@ $\Omega$.  The result is shown in \reffig{fig:hetero2}. Compare to
 \reffig{fig:stagps_label2} to see the locations of the {\stagp}s. 
 The relation of the stable manifold of \tSP{1} (yellow curve) and the 
 trajectories that are driven away from \tSP{1} in the unstable direction 
-(green) to those of the blue surface is quite interesting. These 
+(green) to those of the blue surface is significant. These 
 trajectories tightly hug the blue surface as they spiral around it, 
 appearing to be shielded from entering the volume it encompasses. This 
-could have significant implications for the consideration of fluid mixing 
-within {\pCf}, perhaps showing that it is difficult to achieve a 
+has important implications for the consideration of fluid mixing 
+within {\pCf},  showing that it is difficult to achieve a 
 uniformly mixed space for this particular Eulerian equilibrium; a blob of ink that 
-starts outside of the blue surface may have a difficult time ever 
+starts outside of the blue surface will have a difficult time ever 
 entering the region! 
  
 One merely translates the image in \reffig{fig:hetero2} in the $x$ 
@@ -1077,7 +1064,7 @@ cell. The same picture will also occur symmetrically (translated by
 $L_{x}/2$ and $L_{z}/2$) in the left half of the box. 
 
 
-\subsection{Eulerian equilibrium {\tEQeight}: additional aymmetries}
+\subsection{Eulerian equilibrium {\tEQeight}: additional symmetries}
 \label{sect:EQ8}
 
 Having analyzed the upper branch Eulerian equilibrium {\tEQtwo}, we next look at 
@@ -1175,7 +1162,7 @@ the \hec.
 \eea
 
 
-   \begin{figure}[!h]
+   \begin{figure}
 \includegraphics[width=0.9\textwidth]{EQ8_grid1.jpg}
   \caption{
     Grid of initial points in the $[y,z]$ plane, centered at $x = L_x/2$; 
@@ -1260,7 +1247,7 @@ projection plot in \reffig{fig:usquare_EQ8_2} are not actual tracer
 trajectories, they are suggestive that a search for such invariant tori 
 in future work may be a fruitful endeavor.  
 
-\begin{figure}[!h]
+\begin{figure}
 \centering
     \begin{subfigure}{0.9\textwidth}
     \includegraphics[width=1.0\textwidth]{usquare_EQ8_cute1.jpg}
@@ -1290,8 +1277,8 @@ A plot of points where the velocity field falls below a small cutoff for
 \label{s:conclusion}
 
 We have taken a step towards a deeper understanding of the  turbulent 
-fluid flow in a $3D$ system from the Lagrangian perspective by studying 
-tracer trajectory dynamics in {\pC} geometry. Potential 
+fluid flow in a $3D$ system  by studying 
+tracer trajectory dynamics in the Lagrangian frame for {\pC} geometry. Potential 
 applications that could follow from having a grasp of the Lagrangian 
 dynamics and being able to accurately compute tracer particle 
 trajectories are wide-ranging: velocity profile statistics or correlation 
@@ -1299,19 +1286,19 @@ functions taken over an ensemble of particle trajectories within
 different regions, calculations of mixing time and diffusion properties 
 for the flow, Lyapunov exponents and material stretching, striation 
 thickness, among others, are some of the various possible measures of 
-chaotic advection that could be investigated. By extending the dynamical 
+chaotic advection that could be investigated.  
+
+By extending the dynamical 
 systems methods that are often confined to simpler $2D$ systems to the 
-$3D$ world of {\pCf}, we encounter complex coherent structures that 
+$3D$ world of {\pCf}, we encounter complex structures that 
 partition the physical space of the fluid into regions which exhibit 
 distinct types of motion and allow us to visualize the fundamental 
 motions driven by trajectories which lie close to invariant manifolds. 
 Relying on the symmetries of the geometry to shine light upon the 
 situation and guide us, we are able to construct phase portraits for 
 {\pC} Eulerian equilibria starting with the identification and stability 
-determination of stagnation or fixed points of the system. Future work 
-could easily extend these analyses to additional invariant solutions for 
-{\pCf}, or apply the same methods in other fluid systems which likely 
-posses symmetries. 
+determination of stagnation or fixed points of the system. As a turbulent fluid evolves by visiting equilibria and periodic solutions in a recurrent manner, understanding the limitations on mixing between different regions of each equilibrium solution provides important information for the overall ability of a fluid to become thoroughly mixed.  Future work could thus extend these analyses to forming a dynamical portrait for all invariant solutions of plane
+ Couette flow, or apply the same methods in other fluid systems which likely posses symmetries.
 
 \ifboyscout{\color{blue}
 %%% Acknowledgements %%%
@@ -1331,9 +1318,10 @@ Blah, blah
 \section*{References}
     % from ctan.org/tex-archive/biblio/bibtex/contrib/iopart-num/ :
 \bibliography{../../bibtex/pipes}{99} %% PC 2024-12-20
-%\bibliography{pipes}  % Use when JRE loading in Overleaf
+% \bibliography{pipes}  % Use when JRE loading in Overleaf
     \else
 \bibliography{../../bibtex/pipes}{99} %% PC 2024-12-20
+%  \bibliography{pipes}  % Use when JRE loading in Overleaf
 %\printbibliography[
 %heading=bibintoc,
 %title={References}
