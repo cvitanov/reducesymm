@@ -1,0 +1,676 @@
+% reducesymm/presentations/BadHonnef25/finiteQED.tex    pdflatex finiteQED; biber finiteQED
+% Predrag 2018-05-30
+
+% if you get        LaTeX Error: Command \block already defined.
+%                   l.512 \newcommand{\block}[1]{\ensuremath{#1}}
+% press [Enter] once
+
+% start GitHub/reducesymm/presentations/LesHouch18/00ReadMe.txt  2019-06-25 
+% start siminos/presentations/GTmath18/GTmath18.tex 2018-03-02
+
+\input{../../inputs/layoutBeamer}
+\usepackage{booktabs} % for the gauge sets table
+\usepackage[font=scriptsize, labelfont=bf]{caption}
+\usepackage[
+    backend=biber,  %bibtex,
+    sorting=nyt,
+    %refsection=chapter,
+    %citereset=chapter,
+    style=numeric, %alphabetic, % %style=authoryear,
+    natbib=true,
+    style=phys, % aps
+    biblabel= brackets, % superscript, %
+    articletitle=false, % true,  % false, % aps
+    %chaptertitle=true,  % aip;  % false, % aps
+    pageranges = true , % aip: the full range
+             % = false, % aps: only the first page being printed
+    sortlocale=en_US,
+    firstinits=true,
+    url=false, %true,  %
+    doi=false, %true,
+    eprint=false
+]{biblatex}
+\addbibresource{../../bibtex/QFT.bib}
+\setbeamerfont{footnote}{size=\tiny}
+\input{../../inputs/def} % no edits, always from dasbuch/book/inputs
+\input{../../inputs/defsBeamer}
+\renewcommand{\Ssym}[1]{{\ensuremath{m_{#1}}}}    % Boris
+% \newcommand{\Ssym}[1]{{\ensuremath{s_{#1}}}}  % ChaosBook
+
+\begin{document}
+
+
+\title{
+{\huge is QED finite?}
+}
+\author{Predrag Cvitanovi\'c}
+\author[Cvitanovi\'c]
+{
+  \textcolor{green!50!black}{
+  {Predrag~Cvitanovi\'c
+  }	%\inst{1}
+  }
+}
+\institute
+{
+%  \inst{1}%
+summer school on structures in local quantum field theory
+\\
+Les Houches ~~~ June 5, 2018\\[1ex]
+QCD birdtracks master class 2019\\Saint-Jacut-de-la-Mer ~~~ June 21, 2019
+%                Georgia Tech
+ }
+\date{} %June 21, 2019}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\section[what this talk is about]
+ {what this talk is about}
+
+\begin{frame}{overview}
+\begin{enumerate}
+              \item {\Large
+what this is about
+                  }\textcolor{gray}{\small
+%\\{\scriptsize \em
+%  skip the motivational blah blah: go to part \textcolor{red}{\ref{spacetimeFT}}
+%  }
+              \item
+QED finiteness conjecture
+              \item
+bye bye, Feynman diagrams
+              \item
+worldline approach
+                    }
+\end{enumerate}
+\end{frame}
+
+\section[prelude]
+{prelude}
+
+\begin{frame}{4- and 5-loop contributions to the anomaly}
+
+in 2017 Laporta completed \\
+the twenty-year
+project of computing analytically \\the
+891 4-loop electron
+magnetic moment diagrams\footfullcite{Laporta17}
+
+\medskip
+
+here we shall discuss \textcolor{red!90!black}{only the quenched set},
+\ie, the contributions of diagrams with no lepton loops
+\bigskip
+
+the 4- and 5-loop contributions  to the  anomaly $a=\frac{1}{2}(g-2)$:
+\bea
+ a^{(8)} &=& -2.176866027739540077443259355895893938670
+%\continue
+%        &\approx& 0 \,\qquad\qquad\quad\quad \mbox{Cvitanovi\'c 1977\footfullcite{Cvit77b}}
+\continue
+ a^{(10)} &=& ~~~7.606(192)\dots \,\; \mbox{   Aoyama \etal\ 2018\footfullcite{AoKiNi18}}
+\continue
+          &=& ~~~6.782(113) \dots \,\; \mbox{   Volkov 2019\footfullcite{Volkov19}}
+\nnu %\label{anomalValues}
+\eea
+
+    \bigskip\hfill
+\textcolor{red!90!black}{awesome, heroic achievements}
+
+\end{frame}
+
+\begin{frame}{request \#1}
+\begin{center}
+{\huge please always do look at the quenched set separately}
+\end{center}
+\vfill
+\hfill{\scriptsize
+renormalons schnormalons, they will go
+\HREF{https://soundcloud.com/poets-org/notgogentle-mp3-5/s-2o7zI}
+{gently into that good night} :)}
+\end{frame}
+
+\section[electron magnetic moment $g$]
+{electron magnetic moment $g$}
+
+
+\begin{frame}{notation : electron-photon vertex $\Gamma_{\mu}$}
+
+out-, in- electron momenta : $p_{\pm}=p \mp q/2$
+\\
+evaluated on the mass shell $p_{\pm}^2=m^2 = 1$
+\medskip
+
+Dirac, Pauli form factors $F_1(q^2)$ and $F_2(q^2)$:
+\[
+\overline{u}(p_{+}) \Gamma_{\mu}(p,q) %\Big|_{k^2=p^2=m^2}
+u(p_{-})
+    =    %    && \hspace{-4.5cm}
+\overline{u}(p_{+}) \Bigg\{ F_1(q^2) \gamma_{\mu} -
+\frac{F_2 (q^2)}{2m} \; \sigma_{\mu \nu} q^{\nu} \Bigg\} u(p_{-}) \,,
+\] %\label{BAGTB17(35-1)}
+spinors  $\overline{u}(p_{+})$ and $u(p_{-})$  satisfy the Dirac
+equation
+\[
+\overline{u}(p_{+}) \not\!{p}_{+} = \overline{u}(p_{+})\,m
+\,, \qquad
+\not\!{p}_{-} \, u(p_{-})  =  m \, u(p_{-}) \,.
+\]
+\end{frame}
+
+\begin{frame}{notation : renormalized vertex}
+%our notation\footfullcite{BjoDre65,CviKin74c}.
+$Z_1=1+L$ : vertex renormalization constant
+
+$Z_2$ : electron wave function renormalization constant
+
+Ward identity %\footfullcite{Ward50}
+ : $Z_1=Z_2$.
+
+
+\end{frame}
+
+\begin{frame}{renormalized vertex}
+%QED charge conservation $\Rightarrow$
+by definition, the renormalized charge
+form factor $\tilde{F}_1(0) = 1$
+
+\bigskip
+The vertex renormalization constant $L$ is given by the
+on-shell value of the unrenormalized charge form factor\footfullcite{BroSul67}
+\[ %beq
+1+L = F_1(0)
+    = \frac{1}{4}\tr\left[(\not\!{p}+1)p^{\nu}\Gamma^{\nu}\right]_{q=0}
+\label{PRD10-74-III(2.3)}
+\] %\eeq
+(the electron mass set to $m = 1$ throughout)
+\end{frame}
+
+\begin{frame}{magnetic moment}
+\begin{block}{the anomalous magnetic moment of an electron}
+\[a = (g-2)/2\]
+\end{block}
+  is given by the static limit of the magnetic form factor
+
+$a=\tilde{F}_2(0)=M/(1+L)$, where\footfullcite{BroSul67}
+\[ %beq
+M = \lim_{q\to0}
+% \frac{1}{4p^4q^2} % simplified by P^2=1
+\frac{1}{4q^2}
+\tr\left\{
+\left[\gamma^{\nu}p^2-(1+q^2/2)p^{\nu}\right]
+(\not\!{p}_++1)\Gamma_{\nu}(\not\!{p}_-+1)
+\right\}
+\] %\label{PRD10-74-III(2.2)}
+\end{frame}
+
+\begin{frame}{perturbative expansion for the
+magnetic moment anomaly}
+% is defined as %\footfullcite{CviKin74c}
+\[ %\beq
+a = \frac{M(\alpha)}{1+L(\alpha)}
+  =  \sum_{n=1}^\infty
+          a^{(2n)}\left(\frac{\alpha}{\pi}\right)^{n}
+\,,
+\] %ee{IRstruct(1)}
+where $1+L =F_1(0)$, $M=F_2(0)$ are computed from the unrenormalized
+proper vertex, %\refeq{BAGTB17(35-1)},
+given by the sum of all one-particle
+irreducible electron-electron-photon vertex diagrams with internal
+photons and electron mass counterterms.
+Expanding $M$ and $L$ we have
+\bea
+a^{(2)} &=& M^{(2)}
+            \continue
+a^{(4)} &=& M^{(4)} - L^{(2)}M^{(2)}
+            \continue %\label{PRD10-74-III(2.6)}\\
+a^{(6)} &=& M^{(6)} - L^{(2)}M^{(4)} - (L^{(4)} - (L^{(2)})^2) M^{(2)}
+\nnu
+\eea
+\end{frame}
+
+\begin{frame}{request \#2}
+\begin{center}
+{\huge look at physical, mass-shell observables}
+\end{center}
+\end{frame}
+
+\begin{frame}{4- and 5-loop contributions to the anomaly}
+
+4-loop : 518  diagrams
+
+\medskip
+
+5-loop : 6\,354  diagrams
+
+\medskip
+
+each of size $\approx \pm 10$, add them up:
+\bea
+ a^{(2)} &=& +0.5
+\continue
+ a^{(4)} &=& -0.33
+\continue
+ a^{(6)} &=& +0.92
+\continue
+ a^{(8)} &=& -2.18
+\continue
+ a^{(10)} &=& +7.60 ~~~~~~~\mbox{
+        \textcolor{red!90!black}{(not random graphs sum $\approx \pm800$ !!!)}}
+%\continue
+%        &\approx& 3/2  \,\qquad\qquad\quad \mbox{Cvitanovi\'c 1977\footfullcite{Cvit77b}}
+\nnu %\label{anomalValues}
+\eea
+
+    \bigskip\hfill
+\textcolor{red!90!black}{Q : why are these numbers {\huge so} insanely {\huge  small?}}
+
+    \bigskip\hfill
+\textcolor{red!90!black}{Q : what is the {\huge sign} of $n$th contribution?}
+
+\end{frame}
+
+\begin{frame}{gauge cancellations?}
+as a prelude, you might enjoy the
+Dunne and Schubert\footfullcite{DunSch06}
+historical review of ideas about the QED
+
+perturbation series
+\bigskip
+
+they note:
+\medskip
+
+\begin{block}{a point which remains poorly understood}
+``is the influence of gauge
+cancellations on the divergence structure of a gauge theory.''
+\end{block}
+\end{frame}
+
+\begin{frame}{gauge invariance induced cancellations}
+%\begin{center}
+If gauge invariance of QED guarantees that all UV and on-mass shell IR
+divergences cancel, could it be that it also enforces cancellations among
+the finite parts of contributions of different Feynman graphs?
+%\end{center}
+\end{frame}
+
+\begin{frame}{gauge invariance}
+A gauge change generates a $k^\mu$ term in a photon propagator,
+ and that affects a photon-electron vertex in a very simple way.
+
+\medskip
+from \(
+\not\!{k} = (\not\!{p}+\not\!{k}+m) - (\not\!{p}+m)
+%\,,
+\)
+it follows that
+\begin{align}
+  \begin{tabular}{ccccc}
+$\!{\begin{aligned}\frac{1}{\not\!{p}+\not\!{k}-m}\not\!{k}\frac{1}{\not\!{p}-m}\end{aligned}}$ &
+$=$ &    $\!{\begin{aligned}\frac{1}{\not\!{p}-m}\end{aligned}}$ &
+$-$ &    $\!{\begin{aligned}\frac{1}{\not\!{p}+\not\!{k}-m},\end{aligned}}$
+  \end{tabular}
+  \nnu %\label{KisKre16eq:treeLevel1}
+\end{align}
+neighbouring photon insertions cancel, leading to
+
+\vfill\hfill \textcolor{blue!90!black}{gauge invariant sets}
+\end{frame}
+
+\section[spacetime field theory]
+ {spacetime field theory}
+\label{spacetimeFT}
+
+\begin{frame}{gauge sets}
+A gauge set $kmm'$ consists of all 1-particle irreducible vertex
+diagrams, with $k$ photons crossing the external
+vertex (cross-photons) and $m$ $[m']$ photons originating and terminating
+on the incoming [outgoing] electron leg (leg-photons)
+\[ %beq
+a=\frac{1}{2}(g-2)
+       =  \sum_{k=1}^\infty\sum_{m=0}^\infty\sum_{m'=0}^\infty
+          a_{kmm'}\left(\frac{\alpha}{\pi}\right)^{k+m+m'}
+\,.
+\] %ee{quenchAnom}
+\end{frame}
+
+
+\begin{frame}{representative 4-loop gauge set graphs}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{Laporta17figuragauShort1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{frame}
+
+\begin{frame}{there are very few gauge sets}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+\includegraphics[width=0.80\textwidth]{../../figs/Cvit77bTab1}
+\end{center}
+{\scriptsize  %\caption{\label{Cvit77bTab1}
+Comparison of the number of vertex diagrams without fermion loops, gauge
+sets, and the ``gauge-set approximation''\footfullcite{Cvit77b} for the magnetic
+moment in $2n$th order.
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{frame}
+
+\begin{frame}{Feynman's challenge, 12th Solvay Conference}
+Is there any method of computing the anomalous moment of the
+electron which, on first approximation, gives a fair approximation to the
+$\alpha$ term and a crude one to $\alpha^2$; and when improved, increases
+the accuracy of the $\alpha^2$ term, yielding a rough estimate to
+$\alpha^3$ and beyond?\footfullcite{Feynman62}
+\end{frame}
+
+\begin{frame}{the unreasonable smallness of gauge sets}
+%\label{sect:gaugeSetsSmall}
+
+When the diagrams are grouped into
+gauge sets,
+a surprising thing happens; while the
+finite part of each Feynman diagram is of order of 10 to 100,
+and each one is UV and IR divergent, for $n=2,3$
+every gauge set adds up to approximately
+\[
+		   \pm {1 \over 2} \left(\frac{\alpha}{\pi}\right)^n
+\,,
+\]
+with the sign given by a simple empirical rule
+\[
+a_{kmm'} = (-1)^{m+m'}\frac{1}{2}
+\] % ee{Cvit77b(5)}
+\end{frame}
+
+
+\begin{frame}{1977 (slightly wrong) four-loop prediction}
+\begin{center}
+\includegraphics[width=0.50\textwidth]{Cvit77bFig3}
+\end{center}
+
+{\scriptsize  %\caption{\label{Cvit77bFig3}
+new ``prediction'' : $a^{(8)}=-2$, rather than 0.
+}
+\end{frame}
+
+\begin{frame}{2019 five-loop status}
+%\begin
+\begin{center}
+\includegraphics[width=0.65\textwidth]{finiteQEDtab1_2}
+\end{center}
+
+%\medskip
+
+\begin{block} {gauge-set $(k,m,m')$}
+{\scriptsize
+[ naive ansatz $\pm\frac{1}{2}$ ] $\cdot$
+[ \textcolor{red}{integer} ] $\approx$ %$\times$
+[ $(\cdots)$ Volkov 2019 numerical value ]
+            } % end {\scriptsize
+\end{block}
+\end{frame}
+
+
+\begin{frame}{an example of (slightly wrong) gauge-set approximation}
+With prediction \(
+a_{kmm'} = (-1)^{m+m'}\!/2
+\) % ee{Cvit77b(5)}
+, the ``zeroth'' order estimate of the electron
+magnetic moment anomaly is given by the ``gauge-set
+approximation,'' convergent and summable to all orders
+\[ %\beq
+a=\frac{1}{2}(g-2) =  \frac{1}{2} \frac{\alpha}{\pi}
+                     \frac{1}
+           {\left( 1 - \left(\frac{\alpha}{\pi}\right)^2
+			\right)^2
+		      } + \mbox{``corrections"}
+\,.
+\] %ee{Cvit77b(1)}
+\end{frame}
+
+\begin{frame}{request \#3}
+\begin{center}
+{\huge gauge invariance matters}
+\end{center}
+\end{frame}
+
+
+\begin{frame}{forget Dyson}
+most
+colleagues believe that in 1952 Dyson\footfullcite{Dyson52} had  shown that the
+QED perturbation expansion is an asymptotic series (for a discussion, see
+Dunne and Schubert\footfullcite{DunSch06,HuTrSc17a}), in the sense that the $n$-th order
+contribution should be exploding combinatorially
+$$
+{1 \over 2} (g-2) \approx
+\cdots + n^n \left(\frac{\alpha}{\pi}\right)^n + \cdots
+\,,
+$$
+
+contrast with my estimate
+\[
+{1 \over 2} (g-2) \approx
+\cdots + \frac{n}{2}\left(\frac{\alpha}{\pi}\right)^{2n} + \cdots
+\,.
+\]
+hence ``QED is finite'' claim
+\end{frame}
+
+\begin{frame}{request \#4 : prove that quenched QED is finite}
+\begin{center}
+{\huge any bound on a gauge set, exponential or slower, will do the trick!}
+\end{center}
+\end{frame}
+
+\begin{frame}{so far facts ; next, speculation with Edwards and Schubert}
+\begin{enumerate}
+              \item
+QED finiteness conjecture
+              \item {\Large
+bye bye, Feynman diagrams
+                  }\textcolor{gray}{\small
+              \item
+worldline approach
+                    }
+\end{enumerate}
+\end{frame}
+
+
+\begin{frame}{bye bye, Feynman diagrams}
+it's been a good ride, but there are way too many of you
+\end{frame}
+
+\begin{frame}{a fun fact}
+the idea of how to avoid Feynman diagrams can be traced to 1950 Feynman
+paper\footfullcite{Feynman50}, though it took a long time for it to gain
+traction
+
+\bigskip
+
+by the time I explained the gauge set conjecture to
+him in 1975, Feynman had forgotten all about it
+\end{frame}
+
+\begin{frame}{worldline path integral for the free scalar propagator}
+propagator for the Euclidean
+Klein-Gordon equation\footfullcite{Schubert12} is
+\[ %\beq
+D_0(x,x')=\bra{x}\frac{1}{-\Box +m^2}\ket{x'}
+\,,
+\] %ee{Schubert12(1.1)}
+exponentiate the
+denominator
+\[ %\beq
+D_0(x,x')=\int_0^\infty\!\!dT\,{e}^{-m^2T}\bra{x}e^{-T(-\Box)}\ket{x'}
+\,,
+\] %ee{Schubert12(1.4)}
+replace the the $D$-dimensional Laplacian by a path integral
+to obtain
+\[ %\beq
+D_0(x,x')=\int_0^\infty\!\!dT\,e^{-m^2T}
+\int_{x(0)=x'}^{x(T)=x}\!\!\!\!\mathcal{D}x(\tau)\,
+    e^{-\int_0^T\!\!d\tau \frac{1}{4}\dot{x}^2}
+\,,
+\] %ee{Schubert12(1.7)}
+\end{frame}
+
+\begin{frame}{worldline formula for charged propagator}
+that emits and reabsorbs $N$ photons as it
+propagates%\footfullcite{AhBaSc16}
+
+\medskip
+
+Adding the QED
+interaction terms leads to the Feynman's worldline path integral
+representation\footfullcite{Feynman50} of the charged scalar propagator
+in the presence of a background field $A(x)$,
+\[ %\beq
+D(x,x')=\int_0^\infty\!\!dT\,e^{-m^2T}
+    \int_{x(0)=x'}^{x(T)=x}\!\!\mathcal{D}x(\tau)\,
+            {e}^{-S_0-S_e-S_i}
+\,,
+\] %ee{AhBaSc16(1)}
+where the suffix (0) indicates the free propagation
+\[ %\beq
+S_0 = \int_0^T\!\!d\tau \frac{1}{4}\dot{x}^2
+\,,
+\] %ee{Ahmadiniaz1}
+(e) is the interaction of the charged scalar with the external field
+\[ %\beq
+S_e = -ie\int_0^T\!\!d\tau\,\dot{x}^\mu A_\mu(x(\tau))
+\,,
+\] %ee{Ahmadiniaz2}
+\end{frame}
+
+\begin{frame}{worldline formula for $N$-photon propagator}
+and (i) are the virtual photons exchanged along the charged particle's
+trajectory
+\[ %\beq
+S_i = \frac{e^2}{2}\int_0^T\!\!d\tau_1\int_0^T\!\!d\tau_2\,
+      \dot{x}_1^\mu\,D_{\mu\nu}(x_1-x_2)\,\dot{x}_2^\nu
+\,,
+\] %ee{Ahmadiniaz3}
+where $D_{\mu\nu} $ is the $x$-space photon propagator.
+
+\medskip
+The object of great interest to us is the internal virtual
+photons term
+\[ %\beq
+\int_{x(0)=x'}^{x(T)=x}\!\!\mathcal{D}x(\tau)\,
+            {e}^{-S_i}
+=
+\int_{x(0)=x'}^{x(T)=x}\!\!\mathcal{D}x(\tau)\,
+            {e}^{-\frac{e^2}{2}\int_0^T\!\!d\tau_1\int_0^T\!\!d\tau_2\,
+      \dot{x}_1^\mu\,D_{\mu\nu}(x_1-x_2)\,\dot{x}_2^\nu}
+\] %ee{AhBaSc16(1)i}
+expanded perturbatively in $\alpha/\pi$, this yields \\
+the
+usual $n!$ Feynman-parametric vertex diagrams
+\end{frame}
+
+\begin{frame}{worldline formalism}
+however, the path integral is Gaussian in
+$\dot{x}^\mu$, and if by integration by parts, $\dot{x}^\mu$ are
+eliminated in favor of $x^\mu$, internal photons can be integrated over
+directly, prior to an expansion in $(\alpha/\pi)^n$, and one gets
+integrals in terms of
+
+\begin{block}{$N$-photon propagators}
+symmetrized sums over $N$ photons
+\end{block}
+and not the usual
+Feynman graphs
+
+\bigskip
+each usual Feynman graph corresponds to one particular
+permutation of internal photon insertions, and from that comes the
+factorial growth in the number of graphs
+\end{frame}
+
+\begin{frame}{worldline formalism}
+note : the worldline integrals are expressed
+in terms of $N$-photon propagators, \\
+the central ingredient that defines
+the \textcolor{red!80!black}{gauge sets}
+
+\bigskip
+unlike the Feynman parameter integrals for individual vertex graphs, they are
+independent of the ordering of the momenta $k_1,\ldots,k_N$; the worline formula
+contains all $\approx N!$ ways of attaching the $N$ internal
+photons to the charged particle propagator
+
+\bigskip
+worldline representation combines
+\\
+\textcolor{green!80!black}{combinatorially many} Feynman diagrams into
+
+\medskip\hfill
+a \textcolor{green!80!black}{{\Huge single}} integral
+
+\end{frame}
+
+\begin{frame}{worldline formalism}
+In QED the $N$-photon propagator formulation combines into one integral
+all Feynman graphs related by permutations of photon legs along fermion
+lines, that is, it yield a \emph{single} integral for a gauge set
+$kmm'$
+\end{frame}
+
+\begin{frame}{worldline formalism}
+\begin{center}
+\includegraphics[width=0.90\textwidth]{worldlinProp}
+\end{center}
+\end{frame}
+\begin{frame}{worldline formalism}
+\begin{center}
+\includegraphics[width=0.90\textwidth]{worldlineGsets}
+\end{center}
+\end{frame}
+\begin{frame}{worldline formalism}
+\begin{center}
+\includegraphics[width=0.50\textwidth]{gaugeSets}
+\end{center}
+\end{frame}
+\begin{frame}{worldline formalism}
+\begin{center}
+\includegraphics[width=0.90\textwidth]{WardIds}
+\end{center}
+\end{frame}
+\begin{frame}{worldline formalism}
+\begin{center}
+\includegraphics[width=0.90\textwidth]{a111a}
+\end{center}
+\end{frame}
+\begin{frame}{worldline formalism}
+\begin{center}
+\includegraphics[width=0.90\textwidth]{a111b}
+\end{center}
+\end{frame}
+
+\begin{frame}{summary}
+\begin{enumerate}
+              \item
+a proof of the QED finiteness conjecture might be within reach
+
+              \item
+so might be methods for computing gauge invariant QFT sets without
+recourse to Feynman diagrams
+
+\end{enumerate}
+
+\vfill
+\bigskip\noindent{\scriptsize
+you can download the current version of full notes here:
+\HREF{http://chaosbook.org/~predrag/papers/finiteQED.pdf}
+{ChaosBook.org/$\sim$predrag/papers/finiteQED.pdf}
+\\The source code:
+\HREF{https://GitHub.com/cvitanov/reducesymm/QFT}
+{GitHub.com/cvitanov/reducesymm/QFT}
+            }
+\end{frame}
+
+
+
+\end{document}
