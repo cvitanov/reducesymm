@@ -34,17 +34,22 @@ inputs/
 scripts/
     potentially useful scripts
 
+===============================================
+
 blog/
     all matters pertaining to symmetry reduction reading
 
-QFT/
+QFT/blog.tex			quantum field theory blog
 bibtex/QFT.bib
-    quantum field theory blog
-    Finkelstein notes
+    \include{finiteQED,worldlineBlog,WDSmith,planar}
+    \include{Gribov,GR,Finkelstein,QFTBlog}
 
-UFO/blog.txt
+finiteQED/Cvitanovic25a.tex	finite QED blog
+    subset of the above QFT/blog.tex, only
+    \include{finiteQED,worldlineBlog,QFTBlog}    
+
+UFO/blog.txt		    Feigenbaum blog
 bibtex/feigenbaum.bib
-    Feigenbaum blog
 
 presentations/
     beamer talks
