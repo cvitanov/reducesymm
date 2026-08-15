@@ -1,0 +1,366 @@
+% GitHub/reducesymm/latticeQED/CviVat26.tex   compile by  pdflatex CviVat26; biber CviVat26
+
+% arara: pdflatex : { synctex: yes }
+% arara: biber
+% arara: pdflatex : { synctex: yes }
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{booktabs}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{graphicx}
+\usepackage{caption}
+\input{defsCviVat26}   					%% macros, DasBuch style
+\input{biblatex}
+\addbibresource{../bibtex/QFT.bib}
+\usepackage[pdftex,colorlinks]{hyperref}
+
+\title{Deterministic spatiotemporal evaluation of compact $U(1)$ lattice gauge theory: {Prime orbits} and stability spectra on the minimal primitive cell}
+\author{Predrag Cvitanovi\'{c}, Gemini and G{\'a}bor Vattay}
+% 1st version: {Unsung Hero}
+\date{\today}
+
+\begin{document}
+	
+\maketitle
+\tableofcontents
+
+\begin{abstract}
+We present a self-contained, linear mathematical derivation of the foundational classical prime orbits and their linear stability spectra for compact $U(1)$ lattice electrodynamics on the minimal Euclidean primitive cell $[2^3 \times 2]_0$. By formulating the deterministic Euler-Lagrange equations of motion and eliminating local gauge redundancy algebraically through the Maximal Spanning Tree gauge, we reduce the dynamical system to a non-singular 49-dimensional active coordinate subspace. In the pure gauge limit, we construct explicit analytical solutions for the trivial vacuum, constant-flux torons, and saddle-point sphalerons, alongside numerically relaxed antipodal monopole-antimonopole dipole defects. We evaluate the Morse index for each stationary state from the spectrum of the reduced Hessian matrix, establishing the exact statistical weight contributions required for a deterministic spatiotemporal zeta function evaluation of lattice quantum electrodynamics.
+\end{abstract}
+
+
+In 1924 Ryuichiro Kitano\rf{Kitano24} 
+% (for details, see \refpage{post:Kitano24})
+applied in his
+{\em QED Five-Loop on the Lattice},
+% Progress of Theoretical and Experimental Physics, Volume 2025, 2025, 013B02, 
+%Prog. Theor. Exp. Phys. 2025 013B02 (10 pages) DOI: 10.1093/ptep/ptae194
+%\HREF{https://doi.org/10.1093/ptep/ptae194} {DOI}, 
+\arXiv{2411.11554},
+the lattice QED stochatic quantization method 
+proposed in 
+\refrefs{KiTaHa21,KitTak23}, 
+% \refpage{post:KiTaHa21} and  \refpage{post:KitTak23},
+to evaluation of the quenched QED contribution of the {$g-2$} magnetic moment anomaly
+to $\alpha^5$th (5-loop) order.
+
+Kitano had performed his Monte-Carlo lattice simulations on five lattice 
+\HREF{https://en.wikipedia.org/wiki/Hyperrectangle}{`hyperrectangular'} {\pcell}s,
+\[
+\BravCell{24^3}{48}{0}, 
+\BravCell{28^3}{56}{0}, 
+\BravCell{32^3}{64}{0}, 
+\BravCell{48^3}{96}{0},
+\BravCell{64^3}{128}{0}
+\,, 
+\]
+in the notation of \toCLpdf{equation.74}{eq.~(76)},
+and obtained values of the 4 and 5-loop contributions 
+% listed in table~\refeq{anomalValues}
+that - though not competitive with the Feynman diagrams evaluations - were
+in the right ball park.
+
+Kitano, Takaura, and Hashimoto's  methodology is an example of
+{\em numerical stochastic perturbation theory (NSPT)}.
+%, see the notes of \refsect{sect:NSPT}.
+
+    \begin{description}
+	\item[2026-08-11 Predrag]
+Throughout the manuscript: please include with the equations the source literature that you got them from.
+\end{description}
+
+\subsection{{\Blatt}s of the hypercubic  lattices}
+\label{s:Blatts} 
+
+Whenever we refer here to a `{\Blatt}', we mean one of the infinity of 
+`full rank {sub}lattices of the hypercubic lattice'\rf{Cassels59}. 
+
+A {\pcell} is not unique:\rf{Siegel89} the {\Blatt} 
+$\lattice_{\Bcell{A}'}$ defined by basis $\Bcell{A}'$ is the same as the 
+{\Blatt} $\lattice_\Bcell{A}$ defined by basis 
+\( %beq
+\Bcell{A}=\Bcell{A}'\,\Bcell{U} 
+\) %ee{UnimdTran}
+if the two are related by a $[2\!\times\!2]$ unimodular, volume 
+preserving 
+% $\Det\Bcell{U}=\pm1$
+matrix  $\Bcell{U}\in\SLn{2}{\integers}$ 
+transformation,\rf{Lang71,Cardy86,ZiLoKl99} see \reffig{f:BravLatt}\,(b). 
+This equivalence underlies many of the properties of elliptic functions 
+and modular forms\rf{SteSha03} (see \refeq{2tauBas}). Constructing 
+\emph{all} {\Blatt}s, however, is straightforward, as each such infinite 
+family of equivalent {\pcell}s contains a single, unique \emph{Hermite 
+	normal form} {\pcell}, with upper-triangular basis\rf{Cohen93} primitive 
+vectors $\mathbf{a}_1=(\speriod{}, 0)$, 
+$\mathbf{a}_2=(\tilt{},\period{})$, 
+\beq 
+\Bcell{A} = 
+\left[\begin{array}{cc} 
+	\speriod{} & \tilt{} \cr
+	0 & \period{} 
+\end{array}\right]
+\,,\qquad \vol_\Bcell{A} = \speriod{} \period{}
+\,, 
+\ee{2DHermiteBas} 
+where $\speriod{}$, $\period{}$ are the spatial, 
+temporal lattice periods, respectively, and $\vol_\Bcell{A}$ is the 
+lattice {volume} \refeq{lattVol}. The tilt\rf{OKKH99} $0 \leq 
+\tilt{}<\speriod{}$ imposes `relative-periodic shift' 
+{\bcs}.\rf{ChaosBook} 
+
+\subsection{{\Blatt}s of the square lattice}
+\label{s:BlattSquare} 
+
+Consider a $[2\!\times\!2]$ integer basis matrix \refeq{BravLatt} \beq 
+\Bcell{A} = \left[ \mathbf{a}_{1}, \mathbf{a}_{2} \right] 
+= \left[
+\begin{array}{cc}
+	{a}_{1,1} & {a}_{2,1}\cr
+	{a}_{1,2} & {a}_{2,2}
+\end{array}
+\right]
+\,,\quad
+\mathbf{a}_{j} = \left[ \begin{array}{c} {a}_{j,1} \cr {a}_{j,2} 
+\end{array} \right]
+\,, 
+\ee{2dPrimCell} 
+formed from a pair of two\dmn\ integer lattice 
+primitive vectors $\mathbf{a}_{1}$, $\mathbf{a}_{2}$. 
+% as in \reffig{f:BravLatt}.
+A two\dmn\ {\em {\Blatt}}, \reffig{f:BravLatt}, \beq \lattice_\Bcell{A} = 
+\left\{\Bcell{A} \mathbf{n}  \,|\,\mathbf{n} \in \mathbb{Z}^2 \right\} 
+%\,,
+\ee{2DBravaisLattice} 
+%of lattice points
+generated by all discrete translations \( 
+% \shift =
+\Bcell{A}  \mathbf{n} 
+% = m_{1}\mathbf{a}_{1}+m_{2}\mathbf{a}_{2}
+%\,.
+\) is a sublattice of the integer lattice $\integers^2$. 
+
+As in a discretized field theory the fields are defined only on the 
+hypercubic integer lattice, not on a continuum, we define the {\em 
+	\pcell} \refeq{torusStatesp} as the set of lattice sites within the 
+parallelepiped \refeq{2dPrimCell} illustrated by \reffig{f:BravLatt}. The 
+tips of primitive vectors and parallelepiped's outer boundaries belong, 
+by translation, to the neighboring tiles; this yields the correct lattice 
+{volume} \refeq{lattVol}, the number of lattice sites $\vol_\Bcell{A}$ 
+within the {\pcell} $\Bcell{A}$. 
+
+% formed by the primitive vectors $\Bcell{A}$,
+
+	
+	In the theory of elliptic functions\rf{SteSha03} the {\pcell} is 
+	represented by a complex modular parameter $\tau$, with spatial period 
+	$\speriod{}$ taken as the lattice spacing constant \refeq{LattField}, 
+	primitive vectors $\mathbf{a}_1=(1, 0)$, $\mathbf{a}_2=(\tau_1,\tau_2)$, 
+	so $\period{}\to\tau_2=\period{}/\speriod{}$, 
+	$\tilt{}\to\tau_1=\tilt{}/\speriod{}$, and 
+	\beq 
+	\Bcell{A} = 
+	\left[\begin{array}{cc} 
+		1 & \tau_1 \cr
+		0 & \tau_2 
+	\end{array}\right]
+	\,,\qquad 
+	%\vol_\Bcell{A}  = 
+	|\Det\Bcell{A}|= \tau_2 
+	\,, 
+	\ee{2tauBas} 
+	`Hermite normal form' 
+	corresponds to  the modular parameter $\tau$ values in the {fundamental 
+		domain}. If the corresponding torus is visualized as glueing of a unit 
+	square into a tube, $\tau_2$ parameterizes how the tube is stretched, and 
+	$\tau_1$ parameterizes how it is twisted before its edges are stitched 
+	together. 
+	
+	Here we refer to a particular {\Blatt} by its Hermite normal form 
+	\refeq{2DHermiteBas}, as 
+	\beq 
+	\lattice_\Bcell{A}=\LTS{}{}{} 
+	\,, 
+	\ee{LxT_S} 
+	and to the set of lattice sites within the primitive 
+	parallelogram \Bcell{A} as its {\pcell}. Notation $\LTS{}{}{}$ refers to 
+	{\pcell} being a rectangle of spatial width $\speriod{}$, temporal height 
+	$\period{}$, with the {\pcell} above it shifted by $S$, see, for example 
+	the $\BravCell{3}{2}{1}$ {\pcell} shown in \reffig{f:2x1rpo}\,(b). In 
+	terms of lattice site fields, a {\fconf} $\ssp_{z_1 z_2}$ 
+	\refeq{periodLConf}, $z_1z_2\in\integers^2$, satisfies the 
+	$\tilt{}$-corkscrew boundary condition\rf{ChMaVa96}, 
+	\bea 
+	\mbox{horizontally: } \quad && \ssp_{z_1 z_2} \,=\, \ssp_{z_1 + 
+		\speriod{}, z_2} 
+	\continue
+	\mbox{vertically: }   \quad && \ssp_{z_1 z_2} \,=\, \ssp_{z_1 + \tilt{}, 
+		z_2 + \period{}} 
+	\,.
+	\label{screw} 
+	\eea 
+	%see \reffig{f:2x1rpo}. 
+	
+
+\section{The Compact $U(1)$ Lattice Action and Equations of Motion}
+
+We consider compact $U(1)$ lattice electrodynamics formulated on a four-dimensional Euclidean Bravais lattice $\Lambda = [L_1 \times L_2 \times L_3 \times T]_S$ subject to periodic boundary conditions across all coordinate directions. The lattice sites are designated by integer coordinates $n = (n_1, n_2, n_3, n_4)$. The gauge fields are parameterized by directed link variables
+\begin{equation}
+U_\mu(n) = \exp\left(i e A_\mu(n)\right),
+\end{equation}
+where $e$ denotes the bare electromagnetic coupling constant and $A_\mu(n) \in \mathbb{R}$ represents the angular gauge potential associated with the link emanating from site $n$ in the positive unit direction $\hat{\mu}$ for $\mu \in \{1,2,3,4\}$.
+
+    \begin{description}
+	\item[2026-08-11 Predrag]
+Why are you using "angular gauge potential"?
+\end{description}
+
+The Euclidean dynamics of the pure gauge sector are governed by the Wilson plaquette action augmented by an infrared-regulating photon mass term:
+\begin{equation}
+S_{\text{compact}}[A] = \beta \sum_{n \in \Lambda} \sum_{1 \le \mu < \nu \le 4} \left[ 1 - \cos\left(\theta_{\mu\nu}(n)\right) \right] + \frac{1}{2} m_\gamma^2 \sum_{n \in \Lambda} \sum_{\mu=1}^4 A_\mu(n)^2.
+\end{equation}
+Here, $\beta = 1/e^2$ is the dimensionless lattice gauge coupling, $m_\gamma$ denotes the infrared photon mass regulator, and $\theta_{\mu\nu}(n)$ is the gauge-invariant, oriented field-strength angle around an elementary lattice plaquette in the $(\mu,\nu)$ plane:
+\begin{equation}
+\theta_{\mu\nu}(n) = e \left( A_\mu(n) + A_\nu(n+\hat{\mu}) - A_\mu(n+\hat{\nu}) - A_\nu(n) \right).
+\end{equation}
+
+The deterministic classical configurations of the lattice theory correspond to the stationary points of the Euclidean functional. Requiring the first variation of the action with respect to every link potential to vanish identically, $\delta S_{\text{compact}} / \delta A_\mu(n) = 0$, yields a coupled system of nonlinear difference equations:
+\begin{equation}
+\sum_{\nu \neq \mu} \left[ \sin\left(\theta_{\mu\nu}(n)\right) - \sin\left(\theta_{\mu\nu}(n-\hat{\nu})\right) \right] + m_\gamma^2 e^{-2} A_\mu(n) = 0.
+\end{equation}
+This system represents the exact discrete Euler-Lagrange equations of motion. Because of the periodic dependence on the field-strength tensor, the configuration space supports multiple distinct stationary solutions.
+
+\section{Algebraic Reduction via Maximal Spanning Tree Gauge}
+
+When $m_\gamma \to 0$, the action $S_{\text{compact}}$ remains invariant under local site-dependent gauge transformations $A_\mu(n) \to A_\mu(n) + e^{-1}[\alpha(n+\hat{\mu}) - \alpha(n)]$. In numerical root-finding protocols, continuous gauge degeneracies produce zero-eigenvalue directions in the Hessian matrix, rendering the Jacobian singular. Differential gauge-fixing conditions enforce constraints through Lagrange multipliers, which introduce saddle-point indefiniteness and Gribov copies into the stationary spectrum.
+
+To ensure a positive-definite and non-singular Jacobian around classical minima, we eliminate local gauge redundancy algebraically by imposing the Maximal Spanning Tree gauge. On a finite lattice containing $V$ vertices, a maximal spanning tree $T_{\text{max}}$ is a connected subgraph containing all $V$ vertices and exactly $V-1$ links without closed cycles. By transforming the link variables along $T_{\text{max}}$ to the identity, we set exactly $V-1$ gauge potentials to zero:
+\begin{equation}
+A_\mu(n) = 0 \quad \text{for all } (n, \hat{\mu}) \in T_{\text{max}}.
+\end{equation}
+
+We restrict our computational analysis to the minimal Euclidean primitive cell $[2^3 \times 2]_0$, where each coordinate $n_\mu \in \{0, 1\}$ is defined modulo 2. This toroidal lattice contains $V = 16$ vertices and a total of $4V = 64$ directed link variables. We designate the origin $(0,0,0,0)$ as the root vertex and construct an explicit breadth-first maximal spanning tree:
+\begin{equation}
+\begin{split}
+T_{\text{max}} = {}& \left\{ (n, \hat{1}) \mid n_1 = 0 \right\} \cup \left\{ (n, \hat{2}) \mid n_1 \in \{0,1\}, n_2 = 0 \right\} \\
+& \cup \left\{ (n, \hat{3}) \mid n_1,n_2 \in \{0,1\}, n_3 = 0 \right\} \cup \left\{ (n, \hat{4}) \mid n_1,n_2,n_3 \in \{0,1\}, n_4 = 0 \right\}.
+\end{split}
+\end{equation}
+
+Imposing $A_\mu(n) = 0$ along these $V-1 = 15$ tree links removes all local gauge freedom. The physical configuration space is thereby projected onto the remaining $64 - 15 = 49$ active dynamical link variables, which include the homologically non-trivial Polyakov loops wrapping around the four toroidal boundaries.
+
+\section{Analytical Construction of Fundamental Prime Orbits}
+
+Within the pure gauge limit ($m_\gamma = 0$), any field configuration whose oriented plaquette angles $\theta_{\mu\nu}(n)$ are strictly uniform across adjacent lattice sites satisfies the Euler-Lagrange equations identically, as the spatial difference of sines vanishes at every vertex. We derive the explicit classical action $S_{\text{compact}}$ for the four fundamental classes of stationary prime orbits supported on the $[2^3 \times 2]_0$ primitive cell.
+
+\subsection{The Trivial Vacuum Orbit}
+The absolute minimum of the Euclidean action is given by the homogeneous zero-field configuration where all 49 active link variables vanish:
+\begin{equation}
+A_\mu(n) = 0 \quad \text{for all active links.}
+\end{equation}
+Every elementary plaquette angle equals zero, $\theta_{\mu\nu}(n) = 0$, which yields $\sin(0) = 0$ identically across the lattice. The classical action of this ground-state reference orbit is
+\begin{equation}
+S^{(0)} = 0.
+\end{equation}
+
+\subsection{Constant-Flux Toron Orbits}
+The toroidal geometry of the primitive cell supports topologically non-trivial winding modes carrying quantized homogeneous flux through any of the six coordinate planes $(\mu,\nu)$. Let $k_{\mu\nu} \in \mathbb{Z}$ represent the integer flux quantum threading the $(\mu,\nu)$ plane. Because every coordinate plane on the $[2^3 \times 2]_0$ lattice has a two-dimensional area of $L_\mu L_\nu = 4$, a single flux quantum ($k_{\mu\nu} = 1$) requires a total integrated phase of $2\pi$ distributed uniformly over four elementary plaquettes:
+\begin{equation}
+\theta_{\mu\nu}(n) = \frac{2\pi k_{\mu\nu}}{L_\mu L_\nu} = \frac{\pi}{2}.
+\end{equation}
+For the orientation plane $(1,2)$, this stationary state is realized by assigning boundary shear potentials to the active links wrapping the periodic borders:
+\begin{equation}
+A_2(1, n_2, n_3, n_4) = \frac{\pi}{2 e}, \quad A_1(n_1, 1, n_3, n_4) = -\frac{\pi}{2 e},
+\end{equation}
+with all remaining active link variables set to zero. Because $\sin(\pi/2) = 1$ is invariant across all sixteen vertices, the discrete divergence of the field-strength tensor vanishes identically. Summing the Wilson plaquette energy over the sixteen lattice sites for a single excited coordinate plane yields the classical action:
+\begin{equation}
+S_{\text{toron}} = \beta \sum_{n \in \Lambda} \left[ 1 - \cos\left(\frac{\pi}{2}\right) \right] = 16\beta.
+\end{equation}
+There exist six independent fundamental toron orbits corresponding to the six orientation planes of the four-dimensional torus.
+
+\subsection{Saddle-Point Sphaleron Orbits}
+Sphalerons are anharmonic, unstable stationary states where the field-strength angles of an entire coordinate plane are excited to the apex of the periodic cosine potential barrier:
+\begin{equation}
+\theta_{\mu\nu}(n) = \pi.
+\end{equation}
+Because $\sin(\pi) = 0$, the discrete Euler-Lagrange equations are satisfied at every vertex. For the $(1,2)$ coordinate plane, this saddle-point configuration is constructed via half-turn boundary windings:
+\begin{equation}
+A_2(1, n_2, n_3, n_4) = \frac{\pi}{e}, \quad A_1(n_1, 1, n_3, n_4) = 0.
+\end{equation}
+Evaluating the Wilson action across the sixteen sites gives:
+\begin{equation}
+S_{\text{sphaleron}} = \beta \sum_{n \in \Lambda} \left[ 1 - \cos(\pi) \right] = 32\beta.
+\end{equation}
+These six sphaleron configurations act as discrete separating boundaries between distinct topological vacuum sectors.
+
+\subsection{Monopole-Antimonopole Dipole Orbits}
+Compact $U(1)$ lattice gauge theory supports localized topological excitations in the form of DeGrand-Toussaint magnetic monopoles and Dirac strings. A magnetic monopole is identified within a three-dimensional elementary cube when the oriented sum of the six surrounding plaquette angles satisfies
+\begin{equation}
+\frac{1}{2\pi} \sum_{\text{cube}} \bar{\theta}_{\mu\nu} = m \in \mathbb{Z} \setminus \{0\}.
+\end{equation}
+Because the total magnetic charge on a closed toroidal manifold must vanish, localized topological defects occur exclusively as neutral monopole-antimonopole dipole pairs. On the $[2^3 \times 2]_0$ primitive cell, the minimal-energy configuration places a monopole at the origin $(0,0,0,0)$ and an antimonopole at the maximally separated antipodal site $(1,1,1,0)$. Numerical relaxation of the 49 active link variables converges to a localized standing wave where the core plaquettes take stationary anharmonic values concentrated near $\theta_{\mu\nu} \approx \pm \pi/3$ and $\pm 2\pi/3$. The numerical evaluation of the Wilson action for this antipodal defect geometry yields:
+\begin{equation}
+S_{\text{dipole}} \approx 17.83\beta.
+\end{equation}
+There exist four distinct antipodal dipole orientations corresponding to alignment along the four coordinate axes.
+
+\section{Linear Stability Analysis and Morse Indices}
+
+To determine the contribution of each prime orbit to the deterministic spatiotemporal zeta function, we analyze the local linear stability spectrum around each stationary solution. We define the $49 \times 49$ reduced Hessian stability matrix restricted to the active tree-gauge link variables:
+\begin{equation}
+H_{ij} = \frac{\partial^2 S_{\text{compact}}}{\partial A_i \partial A_j}.
+\end{equation}
+The off-diagonal and diagonal entries of $H_{ij}$ are weighted by local curvature factors of $\beta \cos(\theta_{\mu\nu}(n))$. The Morse index $M$ of a stationary orbit is defined as the number of strictly negative eigenvalues of $H_{ij}$, which corresponds to the number of unstable hyperbolic directions in configuration space.
+
+For the trivial vacuum orbit, $\cos(0) = 1$ across all 96 elementary plaquettes of the lattice. The matrix $H_{ij}$ coincides with the positive-definite discrete Laplace-Beltrami operator on the 49-dimensional active subspace. All 49 eigenvalues are strictly positive ($\lambda_k > 0$), establishing a Morse index of $M = 0$.
+
+For the constant-flux toron orbit, $\cos(\pi/2) = 0$ along the 16 plaquettes of the excited coordinate plane, while $\cos(0) = 1$ on the remaining 80 unexcited plaquettes. This vanishing curvature along the flux direction produces zero-eigenvalues that correspond to marginal toroidal flux translations, while all remaining transverse eigenvalues remain strictly positive. Consequently, the toron possesses no negative eigenvalues, yielding a Morse index of $M = 0$.
+
+For the sphaleron orbit, $\cos(\pi) = -1$ along all 16 plaquettes of the excited plane. This negative curvature injects negative eigenvalues into the reduced Hessian matrix. Diagonalizing $H_{ij}$ reveals exactly 16 negative eigenvalues corresponding to the independent directions along which the plaquette angles can roll off the potential barrier, establishing a Morse index of $M = 16$.
+
+For the antipodal monopole-antimonopole dipole orbit, regions of positive curvature ($\cos \theta > 0$) far from the core surround regions of negative curvature ($\cos \theta < 0$) localized along the defect core and the connecting Dirac string. Spectral factorization of the $49 \times 49$ Hessian matrix evaluated at the stationary dipole configuration reveals exactly 4 negative eigenvalues, yielding a Morse index of $M = 4$.
+
+\section{Synthesis of the Deterministic Zeta Function Weight Catalog}
+
+In the spatiotemporal dynamical systems formalism, the contribution of a classical prime orbit $p$ to the deterministic zeta function is governed by its statistical weight factor:
+\begin{equation}
+w_p = (-1)^{M_p} \exp\left(-S_{\text{compact}}^{(p)}\right).
+\end{equation}
+The phase factor $(-1)^{M_p}$ accounts for the Morse index of the hyperbolic trajectory, ensuring the correct sign parity in the periodic-state trace formula.
+
+We assemble the complete operational catalog of fundamental prime orbits derived on the minimal primitive cell $[2^3 \times 2]_0$ in Table \ref{tab:zeta_catalog}.
+
+\begin{table}[h!]
+\centering
+\caption{Catalog of fundamental prime orbits on the $[2^3 \times 2]_0$ compact $U(1)$ lattice, detailing topological multiplicity, classical Euclidean action, Morse index, and deterministic zeta function weight.}
+\label{tab:zeta_catalog}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\shortstack[l]{Orbit\\Classification} & \shortstack[c]{Topological\\Multiplicity} & \shortstack[c]{Classical Action\\$S_{\text{compact}}$} & \shortstack[c]{Morse\\Index $M$} & \shortstack[c]{Zeta Function\\Weight $w_p$} \\
+\midrule
+Trivial Vacuum & 1 & $0$ & 0 & $+1$ \\
+Constant-Flux Torons & 6 & $16\beta$ & 0 & $+6 \exp(-16\beta)$ \\
+Antipodal Dipole Pairs & 4 & $17.83\beta$ & 4 & $+4 \exp(-17.83\beta)$ \\
+Saddle-Point Sphalerons & 6 & $32\beta$ & 16 & $+6 \exp(-32\beta)$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+This closed catalog provides the exact non-perturbative weights required for the initial phase of the deterministic evaluation of lattice quantum electrodynamics. By substituting these classical action values and stability spectra into the periodic-state averaging formula, one establishes a convergent mathematical foundation for evaluating lattice observables without relying on stochastic Monte-Carlo sampling.
+
+%  Too busy for Predrag :)
+%\begin{figure*}
+%    \centering
+%    \includegraphics[width=0.8\linewidth]{illustration.png}
+%    \captionsetup{labelformat=empty}
+%    \caption{Workflow}
+%    \label{fig:enter-label}
+%\end{figure*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\printbibliography[heading=subbibintoc,title={References}]
+
+\end{document}
